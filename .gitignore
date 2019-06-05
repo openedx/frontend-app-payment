@@ -1,0 +1,17 @@
+.DS_Store
+.eslintcache
+.idea
+node_modules
+npm-debug.log
+coverage
+
+dist/
+src/i18n/transifex_input.json
+
+### pyenv ###
+.python-version
+
+### Emacs ###
+*~
+/temp
+/.vscode
