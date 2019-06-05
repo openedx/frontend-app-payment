@@ -47,6 +47,7 @@ function PageContent({
     {
       type: 'item',
       href: `${process.env.MARKETING_SITE_BASE_URL}/schools-partners`,
+
       content: intl.formatMessage(messages['siteheader.links.schools']),
     },
   ];
