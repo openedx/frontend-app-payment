@@ -16,12 +16,11 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { fetchUserAccount } from '../common';
+import { ErrorBoundary, fetchUserAccount } from '../common';
 import { ConnectedPaymentPage } from '../payment';
 
 import FooterLogo from '../assets/edx-footer.png';
 import HeaderLogo from '../assets/logo.svg';
-import ErrorPage from './ErrorPage';
 import NotFoundPage from './NotFoundPage';
 
 import messages from './App.messages';
@@ -146,7 +145,6 @@ function PageContent({
       <main>
         <Switch>
           <Route path="/" component={ConnectedPaymentPage} />
-          <Route path="/error" component={ErrorPage} />
           <Route path="/notfound" component={NotFoundPage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
@@ -206,17 +204,19 @@ class App extends Component {
 
   render() {
     return (
-      <IntlProvider locale={getLocale()} messages={getMessages()}>
-        <Provider store={this.props.store}>
-          <ConnectedRouter history={this.props.history}>
-            <IntlPageContent
-              configuration={this.props.configuration}
-              username={this.props.username}
-              avatar={this.props.avatar}
-            />
-          </ConnectedRouter>
-        </Provider>
-      </IntlProvider>
+      <ErrorBoundary>
+        <IntlProvider locale={getLocale()} messages={getMessages()}>
+          <Provider store={this.props.store}>
+            <ConnectedRouter history={this.props.history}>
+              <IntlPageContent
+                configuration={this.props.configuration}
+                username={this.props.username}
+                avatar={this.props.avatar}
+              />
+            </ConnectedRouter>
+          </Provider>
+        </IntlProvider>
+      </ErrorBoundary>
     );
   }
 }
