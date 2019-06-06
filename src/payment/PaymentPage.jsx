@@ -64,7 +64,7 @@ class PaymentPage extends React.Component {
       orderTotal,
     } = this.props;
     const loaded = !loading && !loadingError;
-    const basketHasItems = orderTotal;
+    const basketHasItems = orderTotal !== undefined;
 
     return (
       <div className="page__payment container-fluid py-5">
