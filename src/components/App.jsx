@@ -145,7 +145,7 @@ function PageContent({
       />
       <main>
         <Switch>
-          <Route path="/payment" component={ConnectedPaymentPage} />
+          <Route path="/" component={ConnectedPaymentPage} />
           <Route path="/error" component={ErrorPage} />
           <Route path="/notfound" component={NotFoundPage} />
           <Route path="*" component={NotFoundPage} />
