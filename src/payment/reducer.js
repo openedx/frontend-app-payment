@@ -3,7 +3,6 @@ import { FETCH_BASKET } from './actions';
 export const initialState = {
   loading: false,
   loadingError: null,
-  payments: {},
 };
 
 const paymentsPage = (state = initialState, action) => {
@@ -16,14 +15,14 @@ const paymentsPage = (state = initialState, action) => {
       };
     case FETCH_BASKET.SUCCESS:
       return {
-        ...action.payload,
         ...state,
+        ...action.payload,
         loading: false,
       };
-    case FETCH_BASKET.RESET:
+    case FETCH_BASKET.ERROR:
       return {
         ...state,
-        loadingError: null,
+        loadingError: action.payload,
         loading: false,
       };
     default:

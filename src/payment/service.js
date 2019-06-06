@@ -7,7 +7,7 @@ let config = {
   LMS_BASE_URL: null,
 };
 
-let apiClient = null;
+let apiClient = null; // eslint-disable-line no-unused-vars
 
 function validateConfiguration(newConfig) {
   Object.keys(config).forEach((key) => {
@@ -24,14 +24,21 @@ export function configureApiService(newConfig, newApiClient) {
 }
 
 export async function getBasket() {
-  return {};
+  const data = require('./__mocks__/getBasket.json'); // eslint-disable-line
+  // const { data } = await apiClient.get(`${config.ECOMMERCE_API_BASE_URL}/baskets/wip-api`);
 
-  // eslint-disable-next-line no-unreachable
-  const { data } = await apiClient.get(`${config.ECOMMERCE_API_BASE_URL}/baskets/wip-api`);
   const transformedResults = {
-    total: data.order_total.excl_tax,
+    showVoucherForm: data.show_voucher_form,
+    paymentProviders: data.payment_providers,
+    orderTotal: data.order_total,
+    lineDiscount: data.line_discount,
+    sdnCheck: data.sdn_check,
+    lineTotal: data.line_total,
+    products: data.products.map(({ img_url: imgUrl, name, seat_type: seatType }) => ({
+      imgUrl, name, seatType,
+    })),
+    voucher: data.voucher,
   };
-  return {
-    basket: transformedResults,
-  };
+
+  return transformedResults;
 }

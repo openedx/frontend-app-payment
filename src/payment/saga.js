@@ -5,7 +5,6 @@ import {
   FETCH_BASKET,
   fetchBasketBegin,
   fetchBasketSuccess,
-  fetchBasketReset,
 } from './actions';
 
 // Services
@@ -16,7 +15,6 @@ export function* handleFetchBasket() {
   yield put(fetchBasketBegin());
   const result = yield call(PaymentsApiService.getBasket);
   yield put(fetchBasketSuccess(result));
-  yield put(fetchBasketReset());
 }
 
 

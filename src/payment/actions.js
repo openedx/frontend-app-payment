@@ -19,6 +19,6 @@ export const fetchBasketSuccess = result => ({
   payload: result,
 });
 
-export const fetchBasketReset = () => ({
-  type: FETCH_BASKET.RESET,
+export const fetchBasketFailure = () => ({
+  type: FETCH_BASKET.FAILURE,
 });
