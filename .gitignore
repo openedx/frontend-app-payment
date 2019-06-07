@@ -7,7 +7,7 @@ coverage
 
 dist/
 src/i18n/transifex_input.json
-babel-plugin-react-intl-temp/
+temp/babel-plugin-react-intl
 
 ### pyenv ###
 .python-version
