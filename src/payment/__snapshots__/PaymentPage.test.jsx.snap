@@ -2,11 +2,11 @@
 
 exports[`<PaymentPage /> Renders correctly in various states should render errors 1`] = `
 <div
-  className="page__payment container-fluid py-5"
+  className="page__payment container-fluid p-4 mx-5"
 >
-  <h1>
+  <h2>
     Payment
-  </h1>
+  </h2>
   <div>
     Error: Something went really wrong.
   </div>
@@ -15,11 +15,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render error
 
 exports[`<PaymentPage /> Renders correctly in various states should render its default state 1`] = `
 <div
-  className="page__payment container-fluid py-5"
+  className="page__payment container-fluid p-4 mx-5"
 >
-  <h1>
+  <h2>
     Payment
-  </h1>
+  </h2>
   <div
     className="row"
   >
@@ -30,20 +30,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
         Your basket is empty.
       </p>
     </div>
-    <div
-      className="col-6"
-    />
+    <div />
   </div>
 </div>
 `;
 
 exports[`<PaymentPage /> Renders correctly in various states should render its loading state 1`] = `
 <div
-  className="page__payment container-fluid py-5"
+  className="page__payment container-fluid p-4 mx-5"
 >
-  <h1>
+  <h2>
     Payment
-  </h1>
+  </h2>
   <div>
     <div
       className="d-flex justify-content-center align-items-center flex-column"
@@ -70,11 +68,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
 
 exports[`<PaymentPage /> Renders correctly in various states should render the basket 1`] = `
 <div
-  className="page__payment container-fluid py-5"
+  className="page__payment container-fluid p-4 mx-5"
 >
-  <h1>
+  <h2>
     Payment
-  </h1>
+  </h2>
   <div
     className="row"
   >
@@ -86,15 +84,50 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           paymentProviders: 
           [{"type":"cybersource"},{"type":"paypal"}]
         </li>
-        <li>
-          sdnCheck: 
-          true
-        </li>
-        <li>
-          products: 
-          [{"imgUrl":"https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg","name":"Introduction to Happiness","seatType":"verified-certificate"}]
-        </li>
       </ul>
+      <div
+        className="pb-3"
+      >
+        <h2
+          className="h6"
+        >
+          <span>
+            In your cart
+          </span>
+        </h2>
+        <p>
+          <span>
+            Your purchase contains the following:
+          </span>
+        </p>
+        <div
+          className="row align-items-center"
+        >
+          <div
+            className="col-5"
+          >
+            <img
+              alt="Introduction to Happiness"
+              className="img-thumbnail mb-3"
+              src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+            />
+          </div>
+          <div
+            className="col-7"
+          >
+            <p
+              className="h6"
+            >
+              Introduction to Happiness
+            </p>
+            <p>
+              <span>
+                Verified Certificate
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
       <div
         aria-labelledby="summary-heading"
         aria-live="polite"
@@ -222,20 +255,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         </p>
       </div>
     </div>
-    <div
-      className="col-6"
-    />
+    <div />
   </div>
 </div>
 `;
 
 exports[`<PaymentPage /> Renders correctly in various states should successfully render a basket with no order totals 1`] = `
 <div
-  className="page__payment container-fluid py-5"
+  className="page__payment container-fluid p-4 mx-5"
 >
-  <h1>
+  <h2>
     Payment
-  </h1>
+  </h2>
   <div
     className="row"
   >
@@ -247,15 +278,50 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           paymentProviders: 
           [{"type":"cybersource"},{"type":"paypal"}]
         </li>
-        <li>
-          sdnCheck: 
-          true
-        </li>
-        <li>
-          products: 
-          [{"imgUrl":"https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg","name":"Introduction to Happiness","seatType":"verified-certificate"}]
-        </li>
       </ul>
+      <div
+        className="pb-3"
+      >
+        <h2
+          className="h6"
+        >
+          <span>
+            In your cart
+          </span>
+        </h2>
+        <p>
+          <span>
+            Your purchase contains the following:
+          </span>
+        </p>
+        <div
+          className="row align-items-center"
+        >
+          <div
+            className="col-5"
+          >
+            <img
+              alt="Introduction to Happiness"
+              className="img-thumbnail mb-3"
+              src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+            />
+          </div>
+          <div
+            className="col-7"
+          >
+            <p
+              className="h6"
+            >
+              Introduction to Happiness
+            </p>
+            <p>
+              <span>
+                Verified Certificate
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
       <div
         aria-labelledby="summary-heading"
         aria-live="polite"
@@ -325,9 +391,317 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         </p>
       </div>
     </div>
+    <div />
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
     <div
-      className="col-6"
-    />
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p>
+        <span>
+          Verified Certificate
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details for audit certificate 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
+    <div
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details for honor certificate 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
+    <div
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details for no-id-professional certificate 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
+    <div
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p>
+        <span>
+          Professional Certificate
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details for professional certificate 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
+    <div
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p>
+        <span>
+          Professional Certificate
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details for unknown seat type 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
+    <div
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<ProductLineItem /> Rendering should render the product details for verified certificate 1`] = `
+<div
+  className="pb-3"
+>
+  <h2
+    className="h6"
+  >
+    <span>
+      In your cart
+    </span>
+  </h2>
+  <p>
+    <span>
+      Your purchase contains the following:
+    </span>
+  </p>
+  <div
+    className="row align-items-center"
+  >
+    <div
+      className="col-5"
+    >
+      <img
+        alt="Introduction to Happiness"
+        className="img-thumbnail mb-3"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
+    <div
+      className="col-7"
+    >
+      <p
+        className="h6"
+      >
+        Introduction to Happiness
+      </p>
+      <p>
+        <span>
+          Verified Certificate
+        </span>
+      </p>
+    </div>
   </div>
 </div>
 `;

@@ -15,6 +15,7 @@ import { paymentSelector } from './data/selectors';
 import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
 import OrderDetails from './OrderDetails';
+import ProductLineItems from './ProductLineItems';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -50,9 +51,8 @@ class PaymentPage extends React.Component {
       <React.Fragment>
         <ul>
           <li>paymentProviders: {JSON.stringify(this.props.paymentProviders)}</li>
-          <li>sdnCheck: {JSON.stringify(this.props.sdnCheck)}</li>
-          <li>products: {JSON.stringify(this.props.products)}</li>
         </ul>
+        <ProductLineItems />
         <BasketSummary />
         <OrderDetails />
       </React.Fragment>
@@ -68,9 +68,8 @@ class PaymentPage extends React.Component {
     } = this.props;
 
     return (
-      <div className="page__payment container-fluid py-5">
-        <h1>{this.props.intl.formatMessage(messages['payment.page.heading'])}</h1>
-
+      <div className="page__payment container-fluid p-4 mx-5">
+        <h2>{this.props.intl.formatMessage(messages['payment.page.heading'])}</h2>
         {loadingError ? this.renderError() : null}
         {loading ? this.renderLoading() : null}
         {loaded ? (
@@ -78,7 +77,7 @@ class PaymentPage extends React.Component {
             <div className="col-6">
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
-            <div className="col-6">
+            <div>
               {/* Payment form */}
             </div>
           </div>
@@ -99,12 +98,6 @@ PaymentPage.propTypes = {
   paymentProviders: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['cybersource', 'paypal']),
   })),
-  sdnCheck: PropTypes.bool,
-  products: PropTypes.arrayOf(PropTypes.shape({
-    imgUrl: PropTypes.string,
-    name: PropTypes.string,
-    seatType: PropTypes.string, // TODO: use PropTypes.oneOf([ all, kinds, of, certs ])
-  })),
 };
 
 PaymentPage.defaultProps = {
@@ -113,8 +106,6 @@ PaymentPage.defaultProps = {
   loaded: false,
   isEmpty: false,
   paymentProviders: undefined,
-  sdnCheck: false,
-  products: undefined,
 };
 
 
