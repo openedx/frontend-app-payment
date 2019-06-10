@@ -6,8 +6,8 @@ import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from './actions';
-import { paymentSelector } from './selectors';
+import { fetchBasket } from './data/actions';
+import { paymentSelector } from './data/selectors';
 import { PageLoading } from '../common';
 
 

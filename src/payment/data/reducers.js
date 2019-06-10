@@ -5,7 +5,7 @@ export const initialState = {
   loadingError: null,
 };
 
-const paymentsPage = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_BASKET.BEGIN:
       return {
@@ -30,4 +30,4 @@ const paymentsPage = (state = initialState, action) => {
   }
 };
 
-export default paymentsPage;
+export default reducer;
