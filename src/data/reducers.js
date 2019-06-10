@@ -4,7 +4,7 @@ import { connectRouter } from 'connected-react-router';
 import {
   reducer as paymentReducer,
   storeName as paymentStoreName,
-} from './payment';
+} from '../payment';
 
 
 const identityReducer = (state) => {

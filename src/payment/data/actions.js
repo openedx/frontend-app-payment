@@ -1,4 +1,4 @@
-import { utils } from '../common';
+import { utils } from '../../common';
 
 const { AsyncActionType } = utils;
 

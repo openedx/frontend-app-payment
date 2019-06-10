@@ -1,5 +1,5 @@
 export { default as ConnectedPaymentPage } from './PaymentPage';
-export { default as reducer } from './reducer';
-export { default as saga } from './saga';
-export { configureApiService } from './service';
-export { storeName } from './selectors';
+export { default as reducer } from './data/reducers';
+export { default as saga } from './data/sagas';
+export { configureApiService } from './data/service';
+export { storeName } from './data/selectors';
