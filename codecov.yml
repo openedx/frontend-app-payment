@@ -8,9 +8,3 @@ coverage:
       default:
         target: 100%
         threshold: 0%
-
-ignore:
-  - "src/components"
-  - "src/i18n"
-  - "src/store"
-  - "environment.js"

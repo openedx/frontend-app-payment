@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PaymentPage /> Renders correctly in various states app loading 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <h1>
+    Payment
+  </h1>
+  <div
+    className="row"
+  >
+    <div
+      className="col-6"
+    >
+      <p>
+        Your basket is empty.
+      </p>
+    </div>
+    <div
+      className="col-6"
+    />
+  </div>
+</div>
+`;
