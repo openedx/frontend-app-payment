@@ -138,7 +138,21 @@
       "/node_modules/",
       "src/setupTest.js",
       "src/index.js",
-      "/tests/"
+      "/tests/",
+      "src/common/components",
+      "src/common/actions.js",
+      "src/common/index.js",
+      "src/components",
+      "src/i18n",
+      "src/store",
+      "environment.js",
+      "src/reducers.js",
+      "src/sagas.js",
+      "src/payment/actions.js",
+      "src/payment/reducer.js",
+      "src/payment/saga.js",
+      "src/payment/selectors.js",
+      "src/payment/service.js"
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(@edx/paragon)/).*/"
