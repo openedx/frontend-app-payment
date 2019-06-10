@@ -23,8 +23,8 @@ module.exports = {
     },
     levelOfEducation: null
   },
-  paymentsPage: {
-    loading: false,
+  payment: {
+    loading: true,
     loadingError: null,
   },
   router: {

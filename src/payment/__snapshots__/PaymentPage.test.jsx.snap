@@ -1,6 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PaymentPage /> Renders correctly in various states app loading 1`] = `
+exports[`<PaymentPage /> Renders correctly in various states should render errors 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <h1>
+    Payment
+  </h1>
+  <div>
+    Error: Something went really wrong.
+  </div>
+</div>
+`;
+
+exports[`<PaymentPage /> Renders correctly in various states should render its default state 1`] = `
 <div
   className="page__payment container-fluid py-5"
 >
@@ -16,6 +29,87 @@ exports[`<PaymentPage /> Renders correctly in various states app loading 1`] = `
       <p>
         Your basket is empty.
       </p>
+    </div>
+    <div
+      className="col-6"
+    />
+  </div>
+</div>
+`;
+
+exports[`<PaymentPage /> Renders correctly in various states should render its loading state 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <h1>
+    Payment
+  </h1>
+  <div>
+    <div
+      className="d-flex justify-content-center align-items-center flex-column"
+      style={
+        Object {
+          "height": "50vh",
+        }
+      }
+    >
+      <div
+        className="spinner-border text-primary"
+        role="status"
+      >
+        <span
+          className="sr-only"
+        >
+          Loading basket...
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`<PaymentPage /> Renders correctly in various states should render the basket 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <h1>
+    Payment
+  </h1>
+  <div
+    className="row"
+  >
+    <div
+      className="col-6"
+    >
+      <ul>
+        <li>
+          showVoucherForm: 
+          false
+        </li>
+        <li>
+          paymentProviders: 
+        </li>
+        <li>
+          orderTotal: 
+          10
+        </li>
+        <li>
+          lineDiscount: 
+        </li>
+        <li>
+          sdnCheck: 
+          false
+        </li>
+        <li>
+          lineTotal: 
+        </li>
+        <li>
+          products: 
+        </li>
+        <li>
+          voucher: 
+        </li>
+      </ul>
     </div>
     <div
       className="col-6"

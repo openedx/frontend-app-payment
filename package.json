@@ -147,7 +147,12 @@
       "src/store",
       "environment.js",
       "src/reducers.js",
-      "src/sagas.js"
+      "src/sagas.js",
+      "src/payment/actions.js",
+      "src/payment/reducer.js",
+      "src/payment/saga.js",
+      "src/payment/selectors.js",
+      "src/payment/service.js"
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(@edx/paragon)/).*/"
