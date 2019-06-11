@@ -1,11 +1,14 @@
-import { FETCH_BASKET } from './actions';
+import { combineReducers } from 'redux';
 
-export const initialState = {
-  loading: true,
+import { FETCH_BASKET } from './actions';
+import { reducer as coupon } from '../coupon';
+
+export const basketInitialState = {
+  loading: false,
   loadingError: null,
 };
 
-const reducer = (state = initialState, action) => {
+const basket = (state = basketInitialState, action = null) => {
   switch (action.type) {
     case FETCH_BASKET.BEGIN:
       return {
@@ -29,5 +32,10 @@ const reducer = (state = initialState, action) => {
       return state;
   }
 };
+
+const reducer = combineReducers({
+  basket,
+  coupon,
+});
 
 export default reducer;

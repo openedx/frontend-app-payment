@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 // Actions
 import {
@@ -10,6 +10,8 @@ import {
 // Services
 import * as PaymentApiService from './service';
 
+import { saga as couponSaga } from '../coupon';
+
 
 export function* handleFetchBasket() {
   yield put(fetchBasketBegin());
@@ -20,4 +22,7 @@ export function* handleFetchBasket() {
 
 export default function* saga() {
   yield takeEvery(FETCH_BASKET.BASE, handleFetchBasket);
+  yield all([
+    couponSaga(),
+  ]);
 }

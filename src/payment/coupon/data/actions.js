@@ -2,6 +2,7 @@ import { AsyncActionType } from '../../../common/utils';
 
 export const ADD_COUPON = new AsyncActionType('PAYMENT', 'ADD_COUPON');
 export const REMOVE_COUPON = new AsyncActionType('PAYMENT', 'REMOVE_COUPON');
+export const UPDATE_COUPON_DRAFT = 'PAYMENT__UPDATE_COUPON_DRAFT';
 
 // ADD COUPON
 
@@ -16,10 +17,11 @@ export const addCouponBegin = () => ({
   type: ADD_COUPON.BEGIN,
 });
 
-export const addCouponSuccess = result => ({
+export const addCouponSuccess = (code, voucherId) => ({
   type: ADD_COUPON.SUCCESS,
   payload: {
-    result,
+    code,
+    voucherId,
   },
 });
 
@@ -63,4 +65,11 @@ export const removeCouponFailure = message => ({
 
 export const removeCouponReset = () => ({
   type: REMOVE_COUPON.RESET,
+});
+
+export const updateCouponDraft = code => ({
+  type: UPDATE_COUPON_DRAFT,
+  payload: {
+    code,
+  },
 });

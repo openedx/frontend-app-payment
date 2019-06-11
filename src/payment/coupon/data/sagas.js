@@ -5,8 +5,8 @@ import { postCoupon } from './service';
 function* handleAddCoupon(action) {
   yield put(addCouponBegin());
   try {
-    const result = yield call(postCoupon, action.payload.codel);
-    yield put(addCouponSuccess(result));
+    const { code, voucherId } = yield call(postCoupon, action.payload.codel);
+    yield put(addCouponSuccess(code, voucherId));
   } catch (e) {
     addCouponFailure(e.message);
     addCouponReset();

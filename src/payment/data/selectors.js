@@ -1,6 +1,6 @@
 export const storeName = 'payment';
 export const paymentSelector = (state) => {
-  const paymentState = state[storeName];
+  const paymentState = state[storeName].basket;
   const loaded = !paymentState.loading && !paymentState.loadingError;
 
   return {
@@ -10,4 +10,4 @@ export const paymentSelector = (state) => {
   };
 };
 
-export const basketSelector = state => ({ ...state[storeName] });
+export const basketSelector = state => ({ ...state[storeName].basket });

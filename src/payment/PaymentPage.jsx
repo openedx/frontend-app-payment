@@ -7,9 +7,13 @@ import messages from './PaymentPage.messages';
 
 // Actions
 import { fetchBasket } from './data/actions';
-import { paymentSelector } from './data/selectors';
-import { PageLoading } from '../common';
 
+// Selectors
+import { paymentSelector } from './data/selectors';
+
+// Components
+import { PageLoading } from '../common';
+import { CouponForm } from './coupon';
 import BasketSummary from './components/BasketSummary';
 import OrderDetails from './components/OrderDetails';
 
@@ -73,6 +77,7 @@ class PaymentPage extends React.Component {
         {loaded ? (
           <div className="row">
             <div className="col-6">
+              <CouponForm />
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
             <div className="col-6">
