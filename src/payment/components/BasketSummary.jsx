@@ -20,15 +20,17 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
           </th>
 
           <td className="text-right">
-            <FormattedNumber
-              value={totalExclDiscount}
-              style="currency" // eslint-disable-line react/style-prop-object
-              currency="USD"
-            />
+            {totalExclDiscount !== undefined ? (
+              <FormattedNumber
+                value={totalExclDiscount}
+                style="currency" // eslint-disable-line react/style-prop-object
+                currency="USD"
+              />
+            ) : null}
           </td>
         </tr>
 
-        {calculatedDiscount ? (
+        {calculatedDiscount !== undefined ? (
           <tr>
             <th className="font-weight-normal" scope="row">
               <FormattedMessage
@@ -76,11 +78,13 @@ function TotalTable({ orderTotal }) {
           </th>
 
           <td className="text-right">
-            <FormattedNumber
-              value={orderTotal}
-              style="currency" // eslint-disable-line react/style-prop-object
-              currency="USD"
-            />
+            {orderTotal !== undefined ? (
+              <FormattedNumber
+                value={orderTotal}
+                style="currency" // eslint-disable-line react/style-prop-object
+                currency="USD"
+              />
+            ) : null}
           </td>
         </tr>
       </tbody>
