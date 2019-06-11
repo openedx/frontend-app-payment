@@ -1,7 +1,10 @@
 import pick from 'lodash.pick';
 
+import { configureApiService as configureCouponApiService } from '../coupon';
+
 let config = {
   ACCOUNTS_API_BASE_URL: null,
+  ECOMMERCE_BASE_URL: null,
   ECOMMERCE_API_BASE_URL: null,
   ECOMMERCE_RECEIPT_BASE_URL: null,
   LMS_BASE_URL: null,
@@ -21,6 +24,8 @@ export function configureApiService(newConfig, newApiClient) {
   validateConfiguration(newConfig);
   config = pick(newConfig, Object.keys(config));
   apiClient = newApiClient;
+
+  configureCouponApiService(config, apiClient);
 }
 
 export async function getBasket() {

@@ -62,7 +62,7 @@ class CouponForm extends Component {
 
 CouponForm.propTypes = {
   code: PropTypes.string,
-  voucherId: PropTypes.string,
+  voucherId: PropTypes.number,
   error: PropTypes.string,
   addCoupon: PropTypes.func.isRequired,
   removeCoupon: PropTypes.func.isRequired,
