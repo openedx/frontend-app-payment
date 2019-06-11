@@ -195,3 +195,106 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
   </div>
 </div>
 `;
+
+exports[`<PaymentPage /> Renders correctly in various states should successfully render a basket with no order totals 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <h1>
+    Payment
+  </h1>
+  <div
+    className="row"
+  >
+    <div
+      className="col-6"
+    >
+      <ul>
+        <li>
+          paymentProviders: 
+          [{"type":"cybersource"},{"type":"paypal"}]
+        </li>
+        <li>
+          sdnCheck: 
+          true
+        </li>
+        <li>
+          products: 
+          [{"imgUrl":"https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg","name":"Introduction to Happiness","seatType":"verified-certificate"}]
+        </li>
+      </ul>
+      <div
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        className="basket-section"
+        role="region"
+      >
+        <h2
+          className="h6"
+          id="summary-heading"
+        >
+          <span>
+            Summary
+          </span>
+        </h2>
+        <table
+          className="w-100"
+        >
+          <tbody>
+            <tr>
+              <th
+                className="font-weight-normal"
+                scope="row"
+              >
+                <span>
+                  Price
+                </span>
+              </th>
+              <td
+                className="text-right"
+              />
+            </tr>
+          </tbody>
+        </table>
+        <table
+          className="w-100"
+        >
+          <tbody>
+            <tr
+              className="font-weight-bold"
+            >
+              <th
+                scope="row"
+              >
+                <span>
+                  TOTAL
+                </span>
+              </th>
+              <td
+                className="text-right"
+              />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        className="basket-section"
+      >
+        <h2
+          className="h6"
+        >
+          <span>
+            Order Details
+          </span>
+        </h2>
+        <p>
+          After you complete your order you will be automatically enrolled in the verified track of the course.
+        </p>
+      </div>
+    </div>
+    <div
+      className="col-6"
+    />
+  </div>
+</div>
+`;
