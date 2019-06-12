@@ -17,23 +17,20 @@ export const addCouponBegin = () => ({
   type: ADD_COUPON.BEGIN,
 });
 
-export const addCouponSuccess = (code, voucherId) => ({
+export const addCouponSuccess = (voucherId, code, benefit) => ({
   type: ADD_COUPON.SUCCESS,
   payload: {
+    benefit,
     code,
     voucherId,
   },
 });
 
-export const addCouponFailure = message => ({
+export const addCouponFailure = error => ({
   type: ADD_COUPON.FAILURE,
   payload: {
-    message,
+    error,
   },
-});
-
-export const addCouponReset = () => ({
-  type: ADD_COUPON.RESET,
 });
 
 // REMOVE COUPON
@@ -56,16 +53,14 @@ export const removeCouponSuccess = result => ({
   },
 });
 
-export const removeCouponFailure = message => ({
+export const removeCouponFailure = error => ({
   type: REMOVE_COUPON.FAILURE,
   payload: {
-    message,
+    error,
   },
 });
 
-export const removeCouponReset = () => ({
-  type: REMOVE_COUPON.RESET,
-});
+// UPDATE COUPON DRAFT
 
 export const updateCouponDraft = code => ({
   type: UPDATE_COUPON_DRAFT,

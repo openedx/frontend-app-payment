@@ -1,6 +1,7 @@
 import { ADD_COUPON, REMOVE_COUPON, UPDATE_COUPON_DRAFT } from './actions';
 
 const defaultState = {
+  benefit: null,
   code: null,
   voucherId: null,
   error: null,
@@ -24,6 +25,7 @@ const reducer = (state = defaultState, action = null) => {
           loading: false,
           loaded: true,
           error: null,
+          benefit: action.payload.benefit,
           code: action.payload.code,
           voucherId: action.payload.voucherId,
         };
@@ -47,11 +49,12 @@ const reducer = (state = defaultState, action = null) => {
       case REMOVE_COUPON.SUCCESS:
         return {
           ...state,
-          loading: false,
-          loaded: true,
-          error: null,
+          benefit: null,
           code: null,
           voucherId: null,
+          loading: false,
+          loaded: false,
+          error: null,
         };
       case REMOVE_COUPON.FAILURE:
         return {

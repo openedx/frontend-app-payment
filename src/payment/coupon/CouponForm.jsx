@@ -5,8 +5,9 @@ import { Button, Input, ValidationFormGroup } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 
 import messages from './messages';
-
 import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
+import { PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT } from './data/constants';
+import Benefit from './Benefit';
 
 class CouponForm extends Component {
   componentDidMount() {}
@@ -16,32 +17,26 @@ class CouponForm extends Component {
     this.props.updateCouponDraft(value);
   };
 
-  handleSubmit = (event) => {
+  handleAddSubmit = (event) => {
     event.preventDefault();
-
-    if (this.props.voucherId) {
-      this.props.removeCoupon(this.props.voucherId);
-    } else {
-      this.props.addCoupon(this.props.code);
-    }
+    this.props.addCoupon(this.props.code);
   };
 
-  render() {
-    const {
-      code, voucherId, intl, error,
-    } = this.props;
+  handleRemoveSubmit = (event) => {
+    event.preventDefault();
+    this.props.removeCoupon(this.props.voucherId);
+  };
+
+  renderAdd() {
+    const { code, intl, error } = this.props;
 
     const id = 'couponField';
-    const label = intl.formatMessage(messages['payment.coupon.label']);
-    const buttonLabel =
-      voucherId !== null
-        ? intl.formatMessage(messages['payment.coupon.remove'])
-        : intl.formatMessage(messages['payment.coupon.submit']);
+
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleAddSubmit}>
         <ValidationFormGroup for={id} invalid={error !== null} invalidMessage={error}>
           <label className="h6 d-block" htmlFor={id}>
-            {label}
+            {intl.formatMessage(messages['payment.coupon.label'])}
           </label>
           <Input
             className="mb-2"
@@ -52,11 +47,33 @@ class CouponForm extends Component {
             onChange={this.handleChange}
           />
           <Button className="btn-primary" type="submit">
-            {buttonLabel}
+            {intl.formatMessage(messages['payment.coupon.submit'])}
           </Button>
         </ValidationFormGroup>
       </form>
     );
+  }
+
+  renderRemove() {
+    const { intl } = this.props;
+    return (
+      <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
+        {this.props.benefit !== null ? (
+          <Benefit code={this.props.code} {...this.props.benefit} />
+        ) : null}
+        <Button className="btn-link display-inline p-0 pl-3 border-0" type="submit">
+          {intl.formatMessage(messages['payment.coupon.remove'])}
+        </Button>
+      </form>
+    );
+  }
+
+  render() {
+    if (this.props.voucherId !== null) {
+      return this.renderRemove();
+    }
+
+    return this.renderAdd();
   }
 }
 
@@ -68,12 +85,17 @@ CouponForm.propTypes = {
   removeCoupon: PropTypes.func.isRequired,
   updateCouponDraft: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  benefit: PropTypes.shape({
+    type: PropTypes.oneOf([PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT]).isRequired,
+    value: PropTypes.number.isRequired,
+  }),
 };
 
 CouponForm.defaultProps = {
   code: '',
   voucherId: null,
   error: null,
+  benefit: null,
 };
 
 const mapStateToProps = state => state.payment.coupon;
