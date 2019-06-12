@@ -20,6 +20,7 @@
     }
   ],
   "voucher": {
+    "id": 12345,
     "benefit": {
       "type": "Percentage",
       "value": 20
