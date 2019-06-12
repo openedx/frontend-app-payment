@@ -13,6 +13,7 @@
     "is-es5": "es-check es5 ./dist/*.js",
     "lint": "eslint --ext .js --ext .jsx .",
     "precommit": "npm run lint",
+    "snapshot": "jest --updateSnapshot",
     "start": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev.config.js --progress",
     "test": "jest --coverage --passWithNoTests",
     "travis-deploy-once": "travis-deploy-once"
@@ -63,6 +64,7 @@
     "react-transition-group": "^2.5.3",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.2",
+    "redux-form": "^8.2.3",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.1",
     "redux-thunk": "^2.2.0",

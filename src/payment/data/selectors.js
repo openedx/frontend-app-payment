@@ -1,3 +1,9 @@
+import { createSelector } from 'reselect';
+import {
+  localeSelector,
+  getCountryList,
+} from '@edx/frontend-i18n';
+
 export const storeName = 'payment';
 export const paymentSelector = (state) => {
   const paymentState = state[storeName].basket;
@@ -9,6 +15,12 @@ export const paymentSelector = (state) => {
   };
 };
 
+export const countryOptionsSelector = createSelector(
+  localeSelector,
+  locale => ({
+    countryOptions: getCountryList(locale).map(({ code, name }) => ({ value: code, label: name })),
+  }),
+);
 
 export const basketSelector = state => ({ ...state[storeName].basket });
 

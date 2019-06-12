@@ -15,6 +15,7 @@ import { paymentSelector } from './data/selectors';
 import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
 import OrderDetails from './OrderDetails';
+import PaymentForm from './PaymentForm';
 import ProductLineItems from './ProductLineItems';
 
 class PaymentPage extends React.Component {
@@ -74,11 +75,11 @@ class PaymentPage extends React.Component {
         {loading ? this.renderLoading() : null}
         {loaded ? (
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-6">
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
-            <div>
-              {/* Payment form */}
+            <div className="col-md-6">
+              <PaymentForm />
             </div>
           </div>
         ) : null}

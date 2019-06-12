@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { userAccount } from '@edx/frontend-auth';
 import { connectRouter } from 'connected-react-router';
+import { reducer as formReducer } from 'redux-form';
+import { reducer as i18nReducer } from '@edx/frontend-i18n';
 import {
   reducer as paymentReducer,
   storeName as paymentStoreName,
@@ -21,6 +23,8 @@ const createRootReducer = history =>
     userAccount,
     [paymentStoreName]: paymentReducer,
     router: connectRouter(history),
+    form: formReducer,
+    i18n: i18nReducer,
   });
 
 export default createRootReducer;
