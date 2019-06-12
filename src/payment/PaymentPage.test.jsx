@@ -16,6 +16,7 @@ const storeMocks = {
   loading: require('./__mocks__/loading.mockStore.js'),
   loadingError: require('./__mocks__/loadingError.mockStore.js'),
   loadedBasket: require('./__mocks__/loadedBasket.mockStore.js'),
+  loadedBasketWithNoTotals: require('./__mocks__/loadedBasketWithNoTotals.mockStore.js'),
 };
 const requirePaymentPageProps = {
   fetchBasket: () => {},
@@ -79,6 +80,20 @@ describe('<PaymentPage />', () => {
         .create((
           <IntlProvider locale="en">
             <Provider store={mockStore(storeMocks.loadedBasket)}>
+              <ConnectedPaymentPage {...requirePaymentPageProps} />
+            </Provider>
+          </IntlProvider>
+        ))
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should successfully render a basket with no order totals', () => {
+      analytics.sendTrackingLogEvent = jest.fn();
+      const tree = renderer
+        .create((
+          <IntlProvider locale="en">
+            <Provider store={mockStore(storeMocks.loadedBasketWithNoTotals)}>
               <ConnectedPaymentPage {...requirePaymentPageProps} />
             </Provider>
           </IntlProvider>

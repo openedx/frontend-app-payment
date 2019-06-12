@@ -1,7 +1,7 @@
 import { FETCH_BASKET } from './actions';
 
 export const initialState = {
-  loading: false,
+  loading: true,
   loadingError: null,
 };
 

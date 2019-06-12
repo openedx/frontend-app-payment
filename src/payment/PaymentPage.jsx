@@ -10,6 +10,8 @@ import { fetchBasket } from './data/actions';
 import { paymentSelector } from './data/selectors';
 import { PageLoading } from '../common';
 
+import BasketSummary from './components/BasketSummary';
+import OrderDetails from './components/OrderDetails';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -44,15 +46,12 @@ class PaymentPage extends React.Component {
     return (
       <React.Fragment>
         <ul>
-          <li>showVoucherForm: {JSON.stringify(this.props.showVoucherForm)}</li>
           <li>paymentProviders: {JSON.stringify(this.props.paymentProviders)}</li>
-          <li>orderTotal: {this.props.orderTotal}</li>
-          <li>lineDiscount: {this.props.lineDiscount}</li>
           <li>sdnCheck: {JSON.stringify(this.props.sdnCheck)}</li>
-          <li>lineTotal: {this.props.lineTotal}</li>
           <li>products: {JSON.stringify(this.props.products)}</li>
-          <li>voucher: {JSON.stringify(this.props.voucher)}</li>
         </ul>
+        <BasketSummary />
+        <OrderDetails />
       </React.Fragment>
     );
   }
@@ -60,11 +59,10 @@ class PaymentPage extends React.Component {
   render() {
     const {
       loading,
+      loaded,
       loadingError,
-      orderTotal,
+      isEmpty,
     } = this.props;
-    const loaded = !loading && !loadingError;
-    const basketHasItems = orderTotal !== undefined;
 
     return (
       <div className="page__payment container-fluid py-5">
@@ -75,7 +73,7 @@ class PaymentPage extends React.Component {
         {loaded ? (
           <div className="row">
             <div className="col-6">
-              {basketHasItems ? this.renderBasket() : this.renderEmptyMessage()}
+              {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
             <div className="col-6">
               {/* Payment form */}
@@ -91,41 +89,29 @@ class PaymentPage extends React.Component {
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
+  loaded: PropTypes.bool,
   loadingError: PropTypes.string,
+  isEmpty: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
-  showVoucherForm: PropTypes.bool,
   paymentProviders: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['cybersource', 'paypal']),
   })),
-  orderTotal: PropTypes.number,
-  lineDiscount: PropTypes.number,
   sdnCheck: PropTypes.bool,
-  lineTotal: PropTypes.number,
   products: PropTypes.arrayOf(PropTypes.shape({
     imgUrl: PropTypes.string,
     name: PropTypes.string,
     seatType: PropTypes.string, // TODO: use PropTypes.oneOf([ all, kinds, of, certs ])
   })),
-  voucher: PropTypes.shape({
-    benefit: PropTypes.shape({
-      type: PropTypes.string, // TODO: use PropTypes.oneOf(['Percentage', or other values]),
-      value: PropTypes.number,
-    }),
-    code: PropTypes.string,
-  }),
 };
 
 PaymentPage.defaultProps = {
   loadingError: null,
   loading: false,
-  showVoucherForm: false,
+  loaded: false,
+  isEmpty: false,
   paymentProviders: undefined,
-  orderTotal: undefined,
-  lineDiscount: undefined,
   sdnCheck: false,
-  lineTotal: undefined,
   products: undefined,
-  voucher: undefined,
 };
 
 
