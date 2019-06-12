@@ -28,7 +28,9 @@ class CouponForm extends Component {
   };
 
   renderAdd() {
-    const { code, intl, error } = this.props;
+    const {
+      code, intl, error, loading,
+    } = this.props;
 
     const id = 'couponField';
 
@@ -46,7 +48,7 @@ class CouponForm extends Component {
             value={code || ''}
             onChange={this.handleChange}
           />
-          <Button className="btn-primary" type="submit">
+          <Button disabled={loading} className="btn-primary" type="submit">
             {intl.formatMessage(messages['payment.coupon.submit'])}
           </Button>
         </ValidationFormGroup>
@@ -78,6 +80,7 @@ class CouponForm extends Component {
 }
 
 CouponForm.propTypes = {
+  loading: PropTypes.bool,
   code: PropTypes.string,
   voucherId: PropTypes.number,
   error: PropTypes.string,
@@ -92,6 +95,7 @@ CouponForm.propTypes = {
 };
 
 CouponForm.defaultProps = {
+  loading: false,
   code: '',
   voucherId: null,
   error: null,
