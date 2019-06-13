@@ -13,9 +13,8 @@ import { paymentSelector } from './data/selectors';
 
 // Components
 import { PageLoading } from '../common';
-import { CouponForm } from './coupon';
-import BasketSummary from './components/BasketSummary';
-import OrderDetails from './components/OrderDetails';
+import BasketSummary from './BasketSummary';
+import OrderDetails from './OrderDetails';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -77,7 +76,6 @@ class PaymentPage extends React.Component {
         {loaded ? (
           <div className="row">
             <div className="col-6">
-              <CouponForm />
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
             <div className="col-6">
