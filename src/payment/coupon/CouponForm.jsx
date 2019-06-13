@@ -9,23 +9,29 @@ import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
 import { PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT } from './data/constants';
 import Benefit from './Benefit';
 
-class CouponForm extends Component {
-  componentDidMount() {}
+export class CouponForm extends Component {
+  constructor(props) {
+    super(props);
 
-  handleChange = (event) => {
+    this.handleChange = this.handleChange.bind(this);
+    this.handleAddSubmit = this.handleAddSubmit.bind(this);
+    this.handleRemoveSubmit = this.handleRemoveSubmit.bind(this);
+  }
+
+  handleChange(event) {
     const { value } = event.target;
     this.props.updateCouponDraft(value);
-  };
+  }
 
-  handleAddSubmit = (event) => {
+  handleAddSubmit(event) {
     event.preventDefault();
     this.props.addCoupon(this.props.code);
-  };
+  }
 
-  handleRemoveSubmit = (event) => {
+  handleRemoveSubmit(event) {
     event.preventDefault();
     this.props.removeCoupon(this.props.voucherId);
-  };
+  }
 
   renderAdd() {
     const {

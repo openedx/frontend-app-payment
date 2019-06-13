@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CouponForm should render a percentage coupon 1`] = `
+<form
+  className="d-flex align-items-center mb-3"
+  onSubmit={[Function]}
+>
+  <span>
+    Coupon DEMO25 applied for 25% off
+  </span>
+  <button
+    className="btn btn-link display-inline p-0 pl-3 border-0"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="submit"
+  >
+    Remove
+  </button>
+</form>
+`;
+
+exports[`CouponForm should render an absolute coupon 1`] = `
+<form
+  className="d-flex align-items-center mb-3"
+  onSubmit={[Function]}
+>
+  <span>
+    Coupon DEMO30 applied for $30 off
+  </span>
+  <button
+    className="btn btn-link display-inline p-0 pl-3 border-0"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="submit"
+  >
+    Remove
+  </button>
+</form>
+`;
+
+exports[`CouponForm should render the add coupon form 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div
+    className="form-group"
+  >
+    <label
+      className="h6 d-block"
+      htmlFor="couponField"
+    >
+      Add coupon code (optional)
+    </label>
+    <input
+      aria-describedby=""
+      className="form-control mb-2"
+      id="couponField"
+      name="couponField"
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      type="submit"
+    >
+      Apply
+    </button>
+  </div>
+</form>
+`;
+
+exports[`CouponForm without logging errors should render an unexpected coupon 1`] = `
+<form
+  className="d-flex align-items-center mb-3"
+  onSubmit={[Function]}
+>
+  <span>
+    Coupon DEMO25 applied
+  </span>
+  <button
+    className="btn btn-link display-inline p-0 pl-3 border-0"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="submit"
+  >
+    Remove
+  </button>
+</form>
+`;
