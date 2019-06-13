@@ -1,7 +1,7 @@
 module.exports = {
   authentication: {
     userId: 9,
-    username: 'staff'
+    username: 'staff',
   },
   configuration: {
     VIEW_MY_RECORDS_URL: 'http://localhost:18150/records',
@@ -19,47 +19,58 @@ module.exports = {
     socialLinks: null,
     profileImage: {
       imageUrlMedium: null,
-      imageUrlLarge: null
+      imageUrlLarge: null,
     },
-    levelOfEducation: null
+    levelOfEducation: null,
   },
   payment: {
-    loading: false,
-    loadingError: null,
-    showVoucherForm: true,
-    paymentProviders: [
-      {
-        type: 'cybersource'
+    basket: {
+      loading: false,
+      loadingError: null,
+      showVoucherForm: true,
+      paymentProviders: [
+        {
+          type: 'cybersource',
+        },
+        {
+          type: 'paypal',
+        },
+      ],
+      orderTotal: 149,
+      calculatedDiscount: 12,
+      sdnCheck: true,
+      totalExclDiscount: 161,
+      products: [
+        {
+          imgUrl:
+            'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+          name: 'Introduction to Happiness',
+          seatType: 'verified-certificate',
+        },
+      ],
+      voucher: {
+        benefit: {
+          type: 'Percentage',
+          value: 20,
+        },
+        code: 'SUMMER20',
       },
-      {
-        type: 'paypal'
-      }
-    ],
-    orderTotal: 149,
-    calculatedDiscount: 12,
-    sdnCheck: true,
-    totalExclDiscount: 161,
-    products: [
-      {
-        imgUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
-        name: 'Introduction to Happiness',
-        seatType: 'verified-certificate'
-      }
-    ],
-    voucher: {
-      benefit: {
-        type: 'Percentage',
-        value: 20
-      },
-      code: 'SUMMER20'
-    }
+    },
+    coupon: {
+      benefit: null,
+      code: null,
+      voucherId: null,
+      error: null,
+      loaded: false,
+      loading: false,
+    },
   },
   router: {
     location: {
       pathname: '/',
       search: '',
-      hash: ''
+      hash: '',
     },
-    action: 'POP'
-  }
+    action: 'POP',
+  },
 };

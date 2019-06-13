@@ -1,7 +1,7 @@
 module.exports = {
   authentication: {
     userId: 9,
-    username: 'staff'
+    username: 'staff',
   },
   configuration: {
     VIEW_MY_RECORDS_URL: 'http://localhost:18150/records',
@@ -19,20 +19,27 @@ module.exports = {
     socialLinks: null,
     profileImage: {
       imageUrlMedium: null,
-      imageUrlLarge: null
+      imageUrlLarge: null,
     },
-    levelOfEducation: null
+    levelOfEducation: null,
   },
   payment: {
-    loading: false,
-    loadingError: "Something went really wrong.",
+    basket: { loading: false, loadingError: 'Something went really wrong.' },
+    coupon: {
+      benefit: null,
+      code: null,
+      voucherId: null,
+      error: null,
+      loaded: false,
+      loading: false,
+    },
   },
   router: {
     location: {
       pathname: '/',
       search: '',
-      hash: ''
+      hash: '',
     },
-    action: 'POP'
-  }
+    action: 'POP',
+  },
 };

@@ -141,13 +141,17 @@
       "/tests/",
       "src/common/components",
       "src/common/actions.js",
+      "src/common/serviceUtils.js",
       "src/common/index.js",
       "src/components",
       "src/i18n",
       "src/store",
       "environment.js",
       "src/data",
-      "src/payment/data"
+      "src/payment/data",
+      "src/payment/coupon/data/service",
+      "src/payment/coupon/data/sagas"
+
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(@edx/paragon)/).*/"

@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`redux tests should begin to add a coupon 1`] = `
+Object {
+  "benefit": null,
+  "code": null,
+  "error": null,
+  "loaded": false,
+  "loading": true,
+  "voucherId": null,
+}
+`;
+
+exports[`redux tests should begin to remove a coupon 1`] = `
+Object {
+  "benefit": Object {
+    "type": "Percentage",
+    "value": 25,
+  },
+  "code": "DEMO25",
+  "error": null,
+  "loaded": false,
+  "loading": true,
+  "voucherId": 12345,
+}
+`;
+
+exports[`redux tests should fail to add a coupon 1`] = `
+Object {
+  "benefit": null,
+  "code": null,
+  "error": "oh noes",
+  "loaded": false,
+  "loading": false,
+  "voucherId": null,
+}
+`;
+
+exports[`redux tests should fail to remove a coupon 1`] = `
+Object {
+  "benefit": Object {
+    "type": "Percentage",
+    "value": 25,
+  },
+  "code": "DEMO25",
+  "error": "oh noes it didnt",
+  "loaded": true,
+  "loading": false,
+  "voucherId": 12345,
+}
+`;
+
+exports[`redux tests should match default state 1`] = `
+Object {
+  "benefit": null,
+  "code": null,
+  "error": null,
+  "loaded": false,
+  "loading": false,
+  "voucherId": null,
+}
+`;
+
+exports[`redux tests should successfully add a coupon 1`] = `
+Object {
+  "benefit": Object {
+    "type": "Percentage",
+    "value": 25,
+  },
+  "code": "DEMO25",
+  "error": null,
+  "loaded": true,
+  "loading": false,
+  "voucherId": 12345,
+}
+`;
+
+exports[`redux tests should successfully remove a coupon 1`] = `
+Object {
+  "benefit": null,
+  "code": null,
+  "error": null,
+  "loaded": false,
+  "loading": false,
+  "voucherId": null,
+}
+`;
+
+exports[`redux tests should update the code draft 1`] = `
+Object {
+  "benefit": null,
+  "code": "DEM",
+  "error": null,
+  "loaded": false,
+  "loading": false,
+  "voucherId": null,
+}
+`;
+
+exports[`redux tests should update the code draft 2`] = `
+Object {
+  "benefit": null,
+  "code": "DEMO25",
+  "error": null,
+  "loaded": false,
+  "loading": false,
+  "voucherId": null,
+}
+`;

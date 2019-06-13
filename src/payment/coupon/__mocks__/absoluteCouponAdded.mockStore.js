@@ -1,3 +1,5 @@
+import { ABSOLUTE_BENEFIT } from '../data/constants';
+
 module.exports = {
   authentication: {
     userId: 9,
@@ -29,11 +31,14 @@ module.exports = {
       loadingError: null,
     },
     coupon: {
-      benefit: null,
-      code: null,
-      voucherId: null,
+      benefit: {
+        type: ABSOLUTE_BENEFIT,
+        value: 30,
+      },
+      code: 'DEMO30',
+      voucherId: 12345,
       error: null,
-      loaded: false,
+      loaded: true,
       loading: false,
     }
   },

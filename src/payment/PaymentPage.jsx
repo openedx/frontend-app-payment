@@ -7,11 +7,14 @@ import messages from './PaymentPage.messages';
 
 // Actions
 import { fetchBasket } from './data/actions';
-import { paymentSelector } from './data/selectors';
-import { PageLoading } from '../common';
 
-import BasketSummary from './components/BasketSummary';
-import OrderDetails from './components/OrderDetails';
+// Selectors
+import { paymentSelector } from './data/selectors';
+
+// Components
+import { PageLoading } from '../common';
+import BasketSummary from './BasketSummary';
+import OrderDetails from './OrderDetails';
 
 class PaymentPage extends React.Component {
   componentDidMount() {

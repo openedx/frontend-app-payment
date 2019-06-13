@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedNumber, FormattedMessage } from '@edx/frontend-i18n';
 
-import { basketSelector } from '../data/selectors';
+import { basketSelector } from './data/selectors';
+import { CouponForm } from './coupon';
 
 
 function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
@@ -121,7 +122,7 @@ function BasketSummary(props) {
         calculatedDiscount={props.calculatedDiscount}
       />
 
-      {props.showVoucherForm ? null : null /* TODO: Coupons */}
+      {props.showVoucherForm ? <CouponForm /> : null}
 
       <TotalTable orderTotal={props.orderTotal} />
     </div>
