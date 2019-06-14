@@ -18,7 +18,11 @@ function* handleAddCoupon(action) {
     const { id: voucherId, code, benefit } = result.voucher;
     yield put(addCouponSuccess(voucherId, code, benefit));
   } catch (e) {
-    yield put(addCouponFailure(e.message));
+    if (e.code !== undefined) {
+      yield put(addCouponFailure(e.code));
+    } else {
+      throw e;
+    }
   }
 }
 
@@ -28,7 +32,11 @@ function* handleRemoveCoupon(action) {
     const result = yield call(postCoupon, action.payload.codel);
     yield put(removeCouponSuccess(result));
   } catch (e) {
-    removeCouponFailure(e.message);
+    if (e.code !== undefined) {
+      removeCouponFailure(e.code);
+    } else {
+      throw e;
+    }
   }
 }
 
