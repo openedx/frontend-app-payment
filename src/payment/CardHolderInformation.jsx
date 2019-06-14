@@ -23,8 +23,8 @@ class CardHolderInformation extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid py-5">
-        <h2 className="h6">
+      <div className="mb-3">
+        <h2 className="section-heading">
           <FormattedMessage
             id="payment.card.holder.information.heading"
             defaultMessage="Card Holder Information"

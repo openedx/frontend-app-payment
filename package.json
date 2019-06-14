@@ -153,7 +153,6 @@
       "src/payment/data",
       "src/payment/coupon/data/service",
       "src/payment/coupon/data/sagas"
-
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(@edx/paragon)/).*/"

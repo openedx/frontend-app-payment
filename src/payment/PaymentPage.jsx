@@ -50,9 +50,6 @@ class PaymentPage extends React.Component {
   renderBasket() {
     return (
       <React.Fragment>
-        <ul>
-          <li>paymentProviders: {JSON.stringify(this.props.paymentProviders)}</li>
-        </ul>
         <ProductLineItems />
         <BasketSummary />
         <OrderDetails />
@@ -69,16 +66,15 @@ class PaymentPage extends React.Component {
     } = this.props;
 
     return (
-      <div className="page__payment container-fluid p-4 mx-5">
-        <h2>{this.props.intl.formatMessage(messages['payment.page.heading'])}</h2>
+      <div className="page__payment container-fluid py-5">
         {loadingError ? this.renderError() : null}
         {loading ? this.renderLoading() : null}
         {loaded ? (
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-5 pr-md-5">
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
-            <div className="col-md-6">
+            <div className="col-md-7 pl-md-5">
               <PaymentForm />
             </div>
           </div>
@@ -96,9 +92,6 @@ PaymentPage.propTypes = {
   loadingError: PropTypes.string,
   isEmpty: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
-  paymentProviders: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['cybersource', 'paypal']),
-  })),
 };
 
 PaymentPage.defaultProps = {
@@ -106,7 +99,6 @@ PaymentPage.defaultProps = {
   loading: false,
   loaded: false,
   isEmpty: false,
-  paymentProviders: undefined,
 };
 
 

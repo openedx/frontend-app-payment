@@ -41,23 +41,27 @@ export class CouponForm extends Component {
     const id = 'couponField';
 
     return (
-      <form onSubmit={this.handleAddSubmit}>
-        <ValidationFormGroup for={id} invalid={error !== null} invalidMessage={error}>
+      <form onSubmit={this.handleAddSubmit} className="mb-3 d-flex align-items-end">
+        <ValidationFormGroup
+          for={id}
+          invalid={error !== null}
+          invalidMessage={error}
+          className="mb-0 mr-2"
+        >
           <label className="h6 d-block" htmlFor={id}>
             {intl.formatMessage(messages['payment.coupon.label'])}
           </label>
           <Input
-            className="mb-2"
             name={id}
             id={id}
             type="text"
             value={code || ''}
             onChange={this.handleChange}
           />
-          <Button disabled={loading} className="btn-primary" type="submit">
-            {intl.formatMessage(messages['payment.coupon.submit'])}
-          </Button>
         </ValidationFormGroup>
+        <Button disabled={loading} className="btn-primary" type="submit">
+          {intl.formatMessage(messages['payment.coupon.submit'])}
+        </Button>
       </form>
     );
   }

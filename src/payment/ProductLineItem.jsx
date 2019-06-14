@@ -33,31 +33,15 @@ class ProductLineItem extends React.PureComponent {
       seatType,
     } = this.props;
     return (
-      <div className="pb-3">
-        <h2 className="h6">
-          <FormattedMessage
-            id="payment.productlineitem.purchase.cart.heading"
-            defaultMessage="In your cart"
-            description="Heading of the cart in product details section"
-          />
-        </h2>
-        <p>
-          <FormattedMessage
-            id="payment.productlineitem.purchase.cart.subheading"
-            defaultMessage="Your purchase contains the following:"
-            description="Subheading of the cart in product details section"
-          />
-        </p>
-        <div className="row align-items-center">
-          <div className="col-5">
-            <img className="img-thumbnail mb-3" src={imgUrl} alt={name} />
-          </div>
-          <div className="col-7">
-            <p className="h6">
-              {name}
-            </p>
-            <p>{this.renderSeatType(seatType)}</p>
-          </div>
+      <div className="row align-items-center">
+        <div className="col-5">
+          <img className="img-thumbnail mb-3" src={imgUrl} alt={name} />
+        </div>
+        <div className="col-7">
+          <p className="h6">
+            {name}
+          </p>
+          <p>{this.renderSeatType(seatType)}</p>
         </div>
       </div>
     );
