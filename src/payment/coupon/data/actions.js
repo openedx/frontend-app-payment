@@ -26,10 +26,10 @@ export const addCouponSuccess = (voucherId, code, benefit) => ({
   },
 });
 
-export const addCouponFailure = error => ({
+export const addCouponFailure = errorCode => ({
   type: ADD_COUPON.FAILURE,
   payload: {
-    error,
+    errorCode,
   },
 });
 
@@ -53,10 +53,10 @@ export const removeCouponSuccess = result => ({
   },
 });
 
-export const removeCouponFailure = error => ({
+export const removeCouponFailure = errorCode => ({
   type: REMOVE_COUPON.FAILURE,
   payload: {
-    error,
+    errorCode,
   },
 });
 

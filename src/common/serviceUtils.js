@@ -41,7 +41,9 @@ export function unpackFieldErrors(fieldErrors) {
  * Processes and re-throws request errors.  If the response contains a field_errors field, will
  * massage the data into a form expected by the client.
  *
- * Field errors will be packaged as an api error with a fieldErrors field usable by the client.
+ * If the response contains a single API error, will similarly format that for the client.
+ *
+ * Field errors will be packaged with a fieldErrors field usable by the client.
  * Takes an optional unpack function which is used to process the field errors,
  * otherwise uses the default unpackFieldErrors function.
  *
@@ -50,10 +52,21 @@ export function unpackFieldErrors(fieldErrors) {
  * for the default.
  */
 export function handleRequestError(error, unpackFunction = unpackFieldErrors) {
+  // Validation errors
   if (error.response && error.response.data.field_errors) {
+    const validationError = Object.create(error);
+    validationError.fieldErrors = unpackFunction(error.response.data.field_errors);
+    throw validationError;
+  }
+
+  // API errors
+  if (error.response && error.response.data.error_code !== undefined) {
     const apiError = Object.create(error);
-    apiError.fieldErrors = unpackFunction(error.response.data.field_errors);
+    apiError.code = error.response.data.error_code;
     throw apiError;
   }
+
+  // Other errors
   throw error;
 }
+

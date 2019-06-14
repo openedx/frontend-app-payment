@@ -1,5 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`CouponForm error handling should display already_applied_voucher errors correctly 1`] = `"You have already added coupon code 'DEMO25' to your basket."`;
+
+exports[`CouponForm error handling should display code_does_not_exist errors correctly 1`] = `"Coupon code 'DEMO25' does not exist."`;
+
+exports[`CouponForm error handling should display code_expired errors correctly 1`] = `"Coupon code 'DEMO25' has expired."`;
+
+exports[`CouponForm error handling should display code_not_active errors correctly 1`] = `"Coupon code 'DEMO25'is not active."`;
+
+exports[`CouponForm error handling should display code_not_available errors correctly 1`] = `"Coupon code 'DEMO25'is not available."`;
+
+exports[`CouponForm error handling should display code_not_valid errors correctly 1`] = `"Coupon code 'DEMO25'is not valid for this basket."`;
+
+exports[`CouponForm error handling should display empty_basket errors correctly 1`] = `"Coupon code 'DEMO25' cannot be applied because your basket is empty."`;
+
+exports[`CouponForm error handling should display unknown errors correctly 1`] = `"We couldn't apply that coupon."`;
+
+exports[`CouponForm error handling should match error state snapshot 1`] = `
+<form
+  className="mb-3 d-flex align-items-end"
+  onSubmit={[Function]}
+>
+  <div
+    className="form-group mb-0 mr-2"
+  >
+    <label
+      className="h6 d-block"
+      htmlFor="couponField"
+    >
+      Add coupon code (optional)
+    </label>
+    <input
+      aria-describedby="couponField-invalid-feedback"
+      className="form-control is-invalid"
+      id="couponField"
+      name="couponField"
+      onChange={[Function]}
+      type="text"
+      value="DEMO25"
+    />
+    <strong
+      className="invalid-feedback"
+      id="couponField-invalid-feedback"
+    >
+      We couldn't apply that coupon.
+    </strong>
+  </div>
+  <button
+    className="btn btn-primary"
+    disabled={false}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="submit"
+  >
+    Apply
+  </button>
+</form>
+`;
+
 exports[`CouponForm should render a percentage coupon 1`] = `
 <form
   className="d-flex align-items-center mb-3"
