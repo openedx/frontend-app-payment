@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { reduxForm } from 'redux-form';
 import { FormattedMessage } from '@edx/frontend-i18n';
 
+import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 
 class PaymentForm extends React.Component {
@@ -16,6 +17,7 @@ class PaymentForm extends React.Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <CardHolderInformation />
+        <CardDetails />
 
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">

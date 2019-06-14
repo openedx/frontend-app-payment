@@ -55,6 +55,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -78,6 +79,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -105,6 +107,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -128,6 +131,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -155,6 +159,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -178,6 +183,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <select
                 className="form-control"
+                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1460,6 +1466,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1483,6 +1490,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
+                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1493,6 +1501,271 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 type="text"
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          className="mb-3"
+        >
+          <h2
+            className="section-heading"
+          >
+            <span>
+              Billing Information
+            </span>
+          </h2>
+          <div
+            className="row"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardNumber"
+              >
+                <span>
+                  Card Number (required)
+                </span>
+              </label>
+              <input
+                className="form-control"
+                id="cardNumber"
+                name="cardNumber"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="securityCode"
+              >
+                <span>
+                  Security Code (required)
+                </span>
+              </label>
+              <input
+                className="form-control"
+                id="securityCode"
+                name="securityCode"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            className="row"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardExpirationMonth"
+              >
+                <span>
+                  Expiration Month (required)
+                </span>
+              </label>
+              <select
+                className="form-control"
+                id="cardExpirationMonth"
+                name="cardExpirationMonth"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                value=""
+              >
+                <option
+                  value=""
+                >
+                  Month
+                </option>
+                <option
+                  value={1}
+                >
+                  1
+                </option>
+                <option
+                  value={2}
+                >
+                  2
+                </option>
+                <option
+                  value={3}
+                >
+                  3
+                </option>
+                <option
+                  value={4}
+                >
+                  4
+                </option>
+                <option
+                  value={5}
+                >
+                  5
+                </option>
+                <option
+                  value={6}
+                >
+                  6
+                </option>
+                <option
+                  value={7}
+                >
+                  7
+                </option>
+                <option
+                  value={8}
+                >
+                  8
+                </option>
+                <option
+                  value={9}
+                >
+                  9
+                </option>
+                <option
+                  value={10}
+                >
+                  10
+                </option>
+                <option
+                  value={11}
+                >
+                  11
+                </option>
+                <option
+                  value={12}
+                >
+                  12
+                </option>
+              </select>
+            </div>
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardExpirationYear"
+              >
+                <span>
+                  Expiration Year (required)
+                </span>
+              </label>
+              <select
+                className="form-control"
+                id="cardExpirationYear"
+                name="cardExpirationYear"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                value=""
+              >
+                <option
+                  value=""
+                >
+                  Year
+                </option>
+                <option
+                  value={2019}
+                >
+                  2019
+                </option>
+                <option
+                  value={2020}
+                >
+                  2020
+                </option>
+                <option
+                  value={2021}
+                >
+                  2021
+                </option>
+                <option
+                  value={2022}
+                >
+                  2022
+                </option>
+                <option
+                  value={2023}
+                >
+                  2023
+                </option>
+                <option
+                  value={2024}
+                >
+                  2024
+                </option>
+                <option
+                  value={2025}
+                >
+                  2025
+                </option>
+                <option
+                  value={2026}
+                >
+                  2026
+                </option>
+                <option
+                  value={2027}
+                >
+                  2027
+                </option>
+                <option
+                  value={2028}
+                >
+                  2028
+                </option>
+                <option
+                  value={2029}
+                >
+                  2029
+                </option>
+                <option
+                  value={2030}
+                >
+                  2030
+                </option>
+                <option
+                  value={2031}
+                >
+                  2031
+                </option>
+                <option
+                  value={2032}
+                >
+                  2032
+                </option>
+                <option
+                  value={2033}
+                >
+                  2033
+                </option>
+                <option
+                  value={2034}
+                >
+                  2034
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -1758,6 +2031,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1781,6 +2055,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1808,6 +2083,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1831,6 +2107,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1858,6 +2135,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1881,6 +2159,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
+                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3163,6 +3442,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3186,6 +3466,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3196,6 +3477,271 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 type="text"
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          className="mb-3"
+        >
+          <h2
+            className="section-heading"
+          >
+            <span>
+              Billing Information
+            </span>
+          </h2>
+          <div
+            className="row"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardNumber"
+              >
+                <span>
+                  Card Number (required)
+                </span>
+              </label>
+              <input
+                className="form-control"
+                id="cardNumber"
+                name="cardNumber"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="securityCode"
+              >
+                <span>
+                  Security Code (required)
+                </span>
+              </label>
+              <input
+                className="form-control"
+                id="securityCode"
+                name="securityCode"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            className="row"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardExpirationMonth"
+              >
+                <span>
+                  Expiration Month (required)
+                </span>
+              </label>
+              <select
+                className="form-control"
+                id="cardExpirationMonth"
+                name="cardExpirationMonth"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                value=""
+              >
+                <option
+                  value=""
+                >
+                  Month
+                </option>
+                <option
+                  value={1}
+                >
+                  1
+                </option>
+                <option
+                  value={2}
+                >
+                  2
+                </option>
+                <option
+                  value={3}
+                >
+                  3
+                </option>
+                <option
+                  value={4}
+                >
+                  4
+                </option>
+                <option
+                  value={5}
+                >
+                  5
+                </option>
+                <option
+                  value={6}
+                >
+                  6
+                </option>
+                <option
+                  value={7}
+                >
+                  7
+                </option>
+                <option
+                  value={8}
+                >
+                  8
+                </option>
+                <option
+                  value={9}
+                >
+                  9
+                </option>
+                <option
+                  value={10}
+                >
+                  10
+                </option>
+                <option
+                  value={11}
+                >
+                  11
+                </option>
+                <option
+                  value={12}
+                >
+                  12
+                </option>
+              </select>
+            </div>
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardExpirationYear"
+              >
+                <span>
+                  Expiration Year (required)
+                </span>
+              </label>
+              <select
+                className="form-control"
+                id="cardExpirationYear"
+                name="cardExpirationYear"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                value=""
+              >
+                <option
+                  value=""
+                >
+                  Year
+                </option>
+                <option
+                  value={2019}
+                >
+                  2019
+                </option>
+                <option
+                  value={2020}
+                >
+                  2020
+                </option>
+                <option
+                  value={2021}
+                >
+                  2021
+                </option>
+                <option
+                  value={2022}
+                >
+                  2022
+                </option>
+                <option
+                  value={2023}
+                >
+                  2023
+                </option>
+                <option
+                  value={2024}
+                >
+                  2024
+                </option>
+                <option
+                  value={2025}
+                >
+                  2025
+                </option>
+                <option
+                  value={2026}
+                >
+                  2026
+                </option>
+                <option
+                  value={2027}
+                >
+                  2027
+                </option>
+                <option
+                  value={2028}
+                >
+                  2028
+                </option>
+                <option
+                  value={2029}
+                >
+                  2029
+                </option>
+                <option
+                  value={2030}
+                >
+                  2030
+                </option>
+                <option
+                  value={2031}
+                >
+                  2031
+                </option>
+                <option
+                  value={2032}
+                >
+                  2032
+                </option>
+                <option
+                  value={2033}
+                >
+                  2033
+                </option>
+                <option
+                  value={2034}
+                >
+                  2034
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -3374,6 +3920,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3397,6 +3944,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3424,6 +3972,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3447,6 +3996,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3474,6 +4024,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -3497,6 +4048,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
+                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4779,6 +5331,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4802,6 +5355,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4812,6 +5366,271 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 type="text"
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          className="mb-3"
+        >
+          <h2
+            className="section-heading"
+          >
+            <span>
+              Billing Information
+            </span>
+          </h2>
+          <div
+            className="row"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardNumber"
+              >
+                <span>
+                  Card Number (required)
+                </span>
+              </label>
+              <input
+                className="form-control"
+                id="cardNumber"
+                name="cardNumber"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="securityCode"
+              >
+                <span>
+                  Security Code (required)
+                </span>
+              </label>
+              <input
+                className="form-control"
+                id="securityCode"
+                name="securityCode"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="password"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            className="row"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardExpirationMonth"
+              >
+                <span>
+                  Expiration Month (required)
+                </span>
+              </label>
+              <select
+                className="form-control"
+                id="cardExpirationMonth"
+                name="cardExpirationMonth"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                value=""
+              >
+                <option
+                  value=""
+                >
+                  Month
+                </option>
+                <option
+                  value={1}
+                >
+                  1
+                </option>
+                <option
+                  value={2}
+                >
+                  2
+                </option>
+                <option
+                  value={3}
+                >
+                  3
+                </option>
+                <option
+                  value={4}
+                >
+                  4
+                </option>
+                <option
+                  value={5}
+                >
+                  5
+                </option>
+                <option
+                  value={6}
+                >
+                  6
+                </option>
+                <option
+                  value={7}
+                >
+                  7
+                </option>
+                <option
+                  value={8}
+                >
+                  8
+                </option>
+                <option
+                  value={9}
+                >
+                  9
+                </option>
+                <option
+                  value={10}
+                >
+                  10
+                </option>
+                <option
+                  value={11}
+                >
+                  11
+                </option>
+                <option
+                  value={12}
+                >
+                  12
+                </option>
+              </select>
+            </div>
+            <div
+              className="col-lg-6 form-group"
+            >
+              <label
+                htmlFor="cardExpirationYear"
+              >
+                <span>
+                  Expiration Year (required)
+                </span>
+              </label>
+              <select
+                className="form-control"
+                id="cardExpirationYear"
+                name="cardExpirationYear"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onDragStart={[Function]}
+                onDrop={[Function]}
+                onFocus={[Function]}
+                required={true}
+                value=""
+              >
+                <option
+                  value=""
+                >
+                  Year
+                </option>
+                <option
+                  value={2019}
+                >
+                  2019
+                </option>
+                <option
+                  value={2020}
+                >
+                  2020
+                </option>
+                <option
+                  value={2021}
+                >
+                  2021
+                </option>
+                <option
+                  value={2022}
+                >
+                  2022
+                </option>
+                <option
+                  value={2023}
+                >
+                  2023
+                </option>
+                <option
+                  value={2024}
+                >
+                  2024
+                </option>
+                <option
+                  value={2025}
+                >
+                  2025
+                </option>
+                <option
+                  value={2026}
+                >
+                  2026
+                </option>
+                <option
+                  value={2027}
+                >
+                  2027
+                </option>
+                <option
+                  value={2028}
+                >
+                  2028
+                </option>
+                <option
+                  value={2029}
+                >
+                  2029
+                </option>
+                <option
+                  value={2030}
+                >
+                  2030
+                </option>
+                <option
+                  value={2031}
+                >
+                  2031
+                </option>
+                <option
+                  value={2032}
+                >
+                  2032
+                </option>
+                <option
+                  value={2033}
+                >
+                  2033
+                </option>
+                <option
+                  value={2034}
+                >
+                  2034
+                </option>
+              </select>
             </div>
           </div>
         </div>
