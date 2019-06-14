@@ -37,7 +37,7 @@ module.exports = {
         },
       ],
       orderTotal: 149,
-      calculatedDiscount: 12,
+      totalDiscount: 12,
       sdnCheck: true,
       totalExclDiscount: 161,
       products: [

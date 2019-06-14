@@ -7,7 +7,7 @@ import { basketSelector } from './data/selectors';
 import { CouponForm } from './coupon';
 
 
-function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
+function SummaryTable({ totalDiscount, totalExclDiscount }) {
   return (
     <table className="w-100">
       <tbody>
@@ -31,7 +31,7 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
           </td>
         </tr>
 
-        {calculatedDiscount !== undefined ? (
+        {totalDiscount !== undefined ? (
           <tr>
             <th className="font-weight-normal" scope="row">
               <FormattedMessage
@@ -43,7 +43,7 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
 
             <td className="text-right">
               <FormattedNumber
-                value={calculatedDiscount * -1}
+                value={totalDiscount * -1}
                 style="currency" // eslint-disable-line react/style-prop-object
                 currency="USD"
               />
@@ -56,11 +56,11 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
 }
 
 SummaryTable.propTypes = {
-  calculatedDiscount: PropTypes.number,
+  totalDiscount: PropTypes.number,
   totalExclDiscount: PropTypes.number,
 };
 SummaryTable.defaultProps = {
-  calculatedDiscount: undefined,
+  totalDiscount: undefined,
   totalExclDiscount: undefined,
 };
 
@@ -119,7 +119,7 @@ function BasketSummary(props) {
 
       <SummaryTable
         totalExclDiscount={props.totalExclDiscount}
-        calculatedDiscount={props.calculatedDiscount}
+        totalDiscount={props.totalDiscount}
       />
 
       {props.showVoucherForm ? <CouponForm /> : null}
@@ -133,7 +133,7 @@ function BasketSummary(props) {
 BasketSummary.propTypes = {
   showVoucherForm: PropTypes.bool,
   orderTotal: PropTypes.number,
-  calculatedDiscount: PropTypes.number,
+  totalDiscount: PropTypes.number,
   totalExclDiscount: PropTypes.number,
   voucher: PropTypes.shape({
     benefit: PropTypes.shape({
@@ -147,7 +147,7 @@ BasketSummary.propTypes = {
 BasketSummary.defaultProps = {
   showVoucherForm: false,
   orderTotal: undefined,
-  calculatedDiscount: undefined,
+  totalDiscount: undefined,
   totalExclDiscount: undefined,
   voucher: undefined,
 };
