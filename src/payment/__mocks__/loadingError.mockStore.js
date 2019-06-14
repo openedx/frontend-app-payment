@@ -42,4 +42,7 @@ module.exports = {
     },
     action: 'POP',
   },
+  i18n: {
+    locale: 'en',
+  },
 };

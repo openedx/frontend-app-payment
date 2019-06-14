@@ -13,7 +13,7 @@ class ProductLineItem extends React.PureComponent {
           defaultMessage="Professional Certificate"
           description="Course certificate type on product details section"
         />);
-      case 'verified-certificate':
+      case 'verified':
         return (<FormattedMessage
           id="payment.productlineitem.verified.certificate"
           defaultMessage="Verified Certificate"
@@ -67,7 +67,7 @@ class ProductLineItem extends React.PureComponent {
 ProductLineItem.propTypes = {
   imgUrl: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified-certificate', 'honor', 'audit']),
+  seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified', 'honor', 'audit']),
 };
 
 ProductLineItem.defaultProps = {
