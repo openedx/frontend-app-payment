@@ -2,11 +2,8 @@
 
 exports[`<PaymentPage /> Renders correctly in various states should render errors 1`] = `
 <div
-  className="page__payment container-fluid p-4 mx-5"
+  className="page__payment container-fluid py-5"
 >
-  <h2>
-    Payment
-  </h2>
   <div>
     Error: Something went really wrong.
   </div>
@@ -15,32 +12,29 @@ exports[`<PaymentPage /> Renders correctly in various states should render error
 
 exports[`<PaymentPage /> Renders correctly in various states should render its default state 1`] = `
 <div
-  className="page__payment container-fluid p-4 mx-5"
+  className="page__payment container-fluid py-5"
 >
-  <h2>
-    Payment
-  </h2>
   <div
     className="row"
   >
     <div
-      className="col-md-6"
+      className="col-md-5 pr-md-5"
     >
       <p>
         Your basket is empty.
       </p>
     </div>
     <div
-      className="col-md-6"
+      className="col-md-7 pl-md-5"
     >
       <form
         onSubmit={[Function]}
       >
         <div
-          className="container-fluid py-5"
+          className="mb-3"
         >
           <h2
-            className="h6"
+            className="section-heading"
           >
             <span>
               Card Holder Information
@@ -1502,14 +1496,22 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
             </div>
           </div>
         </div>
-        <button
-          className="btn btn-primary btn-lg float-right"
-          type="submit"
+        <div
+          className="row justify-content-end"
         >
-          <span>
-            Place Order
-          </span>
-        </button>
+          <div
+            className="col-lg-6 form-group"
+          >
+            <button
+              className="btn btn-primary btn-lg btn-block"
+              type="submit"
+            >
+              <span>
+                Place Order
+              </span>
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -1518,11 +1520,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
 
 exports[`<PaymentPage /> Renders correctly in various states should render its loading state 1`] = `
 <div
-  className="page__payment container-fluid p-4 mx-5"
+  className="page__payment container-fluid py-5"
 >
-  <h2>
-    Payment
-  </h2>
   <div>
     <div
       className="d-flex justify-content-center align-items-center flex-column"
@@ -1549,28 +1548,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
 
 exports[`<PaymentPage /> Renders correctly in various states should render the basket 1`] = `
 <div
-  className="page__payment container-fluid p-4 mx-5"
+  className="page__payment container-fluid py-5"
 >
-  <h2>
-    Payment
-  </h2>
   <div
     className="row"
   >
     <div
-      className="col-md-6"
+      className="col-md-5 pr-md-5"
     >
-      <ul>
-        <li>
-          paymentProviders: 
-          [{"type":"cybersource"},{"type":"paypal"}]
-        </li>
-      </ul>
       <div
-        className="pb-3"
+        className="basket-section"
       >
         <h2
-          className="h6"
+          className="section-heading"
         >
           <span>
             In your cart
@@ -1616,7 +1606,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         role="region"
       >
         <h2
-          className="h6"
+          className="section-heading"
           id="summary-heading"
         >
           <span>
@@ -1624,7 +1614,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </span>
         </h2>
         <table
-          className="w-100"
+          className="w-100 mb-3"
         >
           <tbody>
             <tr>
@@ -1664,10 +1654,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </tbody>
         </table>
         <form
+          className="mb-3 d-flex align-items-end"
           onSubmit={[Function]}
         >
           <div
-            className="form-group"
+            className="form-group mb-0 mr-2"
           >
             <label
               className="h6 d-block"
@@ -1677,24 +1668,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </label>
             <input
               aria-describedby=""
-              className="form-control mb-2"
+              className="form-control"
               id="couponField"
               name="couponField"
               onChange={[Function]}
               type="text"
               value=""
             />
-            <button
-              className="btn btn-primary"
-              disabled={false}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onKeyDown={[Function]}
-              type="submit"
-            >
-              Apply
-            </button>
           </div>
+          <button
+            className="btn btn-primary"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            type="submit"
+          >
+            Apply
+          </button>
         </form>
         <table
           className="w-100"
@@ -1725,7 +1716,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         className="basket-section"
       >
         <h2
-          className="h6"
+          className="section-heading"
         >
           <span>
             Order Details
@@ -1737,16 +1728,16 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
       </div>
     </div>
     <div
-      className="col-md-6"
+      className="col-md-7 pl-md-5"
     >
       <form
         onSubmit={[Function]}
       >
         <div
-          className="container-fluid py-5"
+          className="mb-3"
         >
           <h2
-            className="h6"
+            className="section-heading"
           >
             <span>
               Card Holder Information
@@ -3208,14 +3199,22 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </div>
           </div>
         </div>
-        <button
-          className="btn btn-primary btn-lg float-right"
-          type="submit"
+        <div
+          className="row justify-content-end"
         >
-          <span>
-            Place Order
-          </span>
-        </button>
+          <div
+            className="col-lg-6 form-group"
+          >
+            <button
+              className="btn btn-primary btn-lg btn-block"
+              type="submit"
+            >
+              <span>
+                Place Order
+              </span>
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -3224,28 +3223,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
 
 exports[`<PaymentPage /> Renders correctly in various states should successfully render a basket with no order totals 1`] = `
 <div
-  className="page__payment container-fluid p-4 mx-5"
+  className="page__payment container-fluid py-5"
 >
-  <h2>
-    Payment
-  </h2>
   <div
     className="row"
   >
     <div
-      className="col-md-6"
+      className="col-md-5 pr-md-5"
     >
-      <ul>
-        <li>
-          paymentProviders: 
-          [{"type":"cybersource"},{"type":"paypal"}]
-        </li>
-      </ul>
       <div
-        className="pb-3"
+        className="basket-section"
       >
         <h2
-          className="h6"
+          className="section-heading"
         >
           <span>
             In your cart
@@ -3291,7 +3281,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         role="region"
       >
         <h2
-          className="h6"
+          className="section-heading"
           id="summary-heading"
         >
           <span>
@@ -3299,7 +3289,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </span>
         </h2>
         <table
-          className="w-100"
+          className="w-100 mb-3"
         >
           <tbody>
             <tr>
@@ -3342,7 +3332,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         className="basket-section"
       >
         <h2
-          className="h6"
+          className="section-heading"
         >
           <span>
             Order Details
@@ -3354,16 +3344,16 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
       </div>
     </div>
     <div
-      className="col-md-6"
+      className="col-md-7 pl-md-5"
     >
       <form
         onSubmit={[Function]}
       >
         <div
-          className="container-fluid py-5"
+          className="mb-3"
         >
           <h2
-            className="h6"
+            className="section-heading"
           >
             <span>
               Card Holder Information
@@ -4825,14 +4815,22 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
             </div>
           </div>
         </div>
-        <button
-          className="btn btn-primary btn-lg float-right"
-          type="submit"
+        <div
+          className="row justify-content-end"
         >
-          <span>
-            Place Order
-          </span>
-        </button>
+          <div
+            className="col-lg-6 form-group"
+          >
+            <button
+              className="btn btn-primary btn-lg btn-block"
+              type="submit"
+            >
+              <span>
+                Place Order
+              </span>
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </div>
@@ -4841,310 +4839,198 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
 
 exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p>
-        <span>
-          Verified Certificate
-        </span>
-      </p>
-    </div>
+      Introduction to Happiness
+    </p>
+    <p>
+      <span>
+        Verified Certificate
+      </span>
+    </p>
   </div>
 </div>
 `;
 
 exports[`<ProductLineItem /> Rendering should render the product details for audit certificate 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p />
-    </div>
+      Introduction to Happiness
+    </p>
+    <p />
   </div>
 </div>
 `;
 
 exports[`<ProductLineItem /> Rendering should render the product details for honor certificate 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p />
-    </div>
+      Introduction to Happiness
+    </p>
+    <p />
   </div>
 </div>
 `;
 
 exports[`<ProductLineItem /> Rendering should render the product details for no-id-professional certificate 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p>
-        <span>
-          Professional Certificate
-        </span>
-      </p>
-    </div>
+      Introduction to Happiness
+    </p>
+    <p>
+      <span>
+        Professional Certificate
+      </span>
+    </p>
   </div>
 </div>
 `;
 
 exports[`<ProductLineItem /> Rendering should render the product details for professional certificate 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p>
-        <span>
-          Professional Certificate
-        </span>
-      </p>
-    </div>
+      Introduction to Happiness
+    </p>
+    <p>
+      <span>
+        Professional Certificate
+      </span>
+    </p>
   </div>
 </div>
 `;
 
 exports[`<ProductLineItem /> Rendering should render the product details for unknown seat type 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p />
-    </div>
+      Introduction to Happiness
+    </p>
+    <p />
   </div>
 </div>
 `;
 
 exports[`<ProductLineItem /> Rendering should render the product details for verified certificate 1`] = `
 <div
-  className="pb-3"
+  className="row align-items-center"
 >
-  <h2
-    className="h6"
-  >
-    <span>
-      In your cart
-    </span>
-  </h2>
-  <p>
-    <span>
-      Your purchase contains the following:
-    </span>
-  </p>
   <div
-    className="row align-items-center"
+    className="col-5"
   >
-    <div
-      className="col-5"
+    <img
+      alt="Introduction to Happiness"
+      className="img-thumbnail mb-3"
+      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+    />
+  </div>
+  <div
+    className="col-7"
+  >
+    <p
+      className="h6"
     >
-      <img
-        alt="Introduction to Happiness"
-        className="img-thumbnail mb-3"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-    <div
-      className="col-7"
-    >
-      <p
-        className="h6"
-      >
-        Introduction to Happiness
-      </p>
-      <p>
-        <span>
-          Verified Certificate
-        </span>
-      </p>
-    </div>
+      Introduction to Happiness
+    </p>
+    <p>
+      <span>
+        Verified Certificate
+      </span>
+    </p>
   </div>
 </div>
 `;

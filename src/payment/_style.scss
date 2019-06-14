@@ -2,4 +2,11 @@
   .basket-section {
     @extend .mb-4;
   }
+  .section-heading {
+    @extend .h6;
+    margin-bottom: 1.5rem;
+  }
+  label {
+    font-weight: normal;
+  }
 }

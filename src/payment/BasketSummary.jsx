@@ -9,7 +9,7 @@ import { CouponForm } from './coupon';
 
 function SummaryTable({ totalDiscount, totalExclDiscount }) {
   return (
-    <table className="w-100">
+    <table className="w-100 mb-3">
       <tbody>
         <tr>
           <th className="font-weight-normal" scope="row">
@@ -109,7 +109,7 @@ function BasketSummary(props) {
       aria-live="polite"
       className="basket-section"
     >
-      <h2 id="summary-heading" className="h6">
+      <h2 id="summary-heading" className="section-heading">
         <FormattedMessage
           id="payment.order.details.heading"
           defaultMessage="Summary"

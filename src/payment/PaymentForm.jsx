@@ -16,13 +16,18 @@ class PaymentForm extends React.Component {
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <CardHolderInformation />
-        <button type="submit" className="btn btn-primary btn-lg float-right">
-          <FormattedMessage
-            id="payment.form.submit.button.text"
-            defaultMessage="Place Order"
-            description="The label for the payment form submit button"
-          />
-        </button>
+
+        <div className="row justify-content-end">
+          <div className="col-lg-6 form-group">
+            <button type="submit" className="btn btn-primary btn-lg btn-block">
+              <FormattedMessage
+                id="payment.form.submit.button.text"
+                defaultMessage="Place Order"
+                description="The label for the payment form submit button"
+              />
+            </button>
+          </div>
+        </div>
       </form>
     );
   }

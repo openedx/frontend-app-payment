@@ -42,10 +42,11 @@ exports[`CouponForm should render an absolute coupon 1`] = `
 
 exports[`CouponForm should render the add coupon form 1`] = `
 <form
+  className="mb-3 d-flex align-items-end"
   onSubmit={[Function]}
 >
   <div
-    className="form-group"
+    className="form-group mb-0 mr-2"
   >
     <label
       className="h6 d-block"
@@ -55,24 +56,24 @@ exports[`CouponForm should render the add coupon form 1`] = `
     </label>
     <input
       aria-describedby=""
-      className="form-control mb-2"
+      className="form-control"
       id="couponField"
       name="couponField"
       onChange={[Function]}
       type="text"
       value=""
     />
-    <button
-      className="btn btn-primary"
-      disabled={false}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="submit"
-    >
-      Apply
-    </button>
   </div>
+  <button
+    className="btn btn-primary"
+    disabled={false}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="submit"
+  >
+    Apply
+  </button>
 </form>
 `;
 
