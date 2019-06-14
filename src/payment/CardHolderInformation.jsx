@@ -41,7 +41,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder first name field"
               />
             </label>
-            <Field name="firstName" component="input" type="text" required className="form-control" />
+            <Field id="firstName" name="firstName" component="input" type="text" required className="form-control" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="lastName">
@@ -51,7 +51,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder last name field"
               />
             </label>
-            <Field name="lastName" component="input" type="text" required className="form-control" />
+            <Field id="lastName" name="lastName" component="input" type="text" required className="form-control" />
           </div>
         </div>
 
@@ -64,7 +64,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder address field"
               />
             </label>
-            <Field name="address" component="input" type="text" required className="form-control" />
+            <Field id="address" name="address" component="input" type="text" required className="form-control" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="unit">
@@ -74,7 +74,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the card holder suite/apartment number field"
               />
             </label>
-            <Field name="unit" component="input" type="text" required className="form-control" />
+            <Field id="unit" name="unit" component="input" type="text" required className="form-control" />
           </div>
         </div>
 
@@ -87,7 +87,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder city field"
               />
             </label>
-            <Field name="city" component="input" type="text" required className="form-control" />
+            <Field id="city" name="city" component="input" type="text" required className="form-control" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="country">
@@ -97,7 +97,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder country field"
               />
             </label>
-            <Field name="country" component="select" required className="form-control">
+            <Field id="country" name="country" component="select" required className="form-control">
               {this.renderCountryOptions()}
             </Field>
           </div>
@@ -112,7 +112,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the card holder state/province field"
               />
             </label>
-            <Field name="state" component="input" type="text" required className="form-control" />
+            <Field id="state" name="state" component="input" type="text" required className="form-control" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -122,7 +122,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the card holder zip/postal code field"
               />
             </label>
-            <Field name="postalCode" component="input" type="text" required className="form-control" />
+            <Field id="postalCode" name="postalCode" component="input" type="text" required className="form-control" />
           </div>
         </div>
       </div>
