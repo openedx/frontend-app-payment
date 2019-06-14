@@ -82,7 +82,7 @@ describe('saga tests', () => {
       ]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
-        'http://localhost/payment-bff/v0/payment/vouchers/',
+        'http://localhost/bff/payment/v0/vouchers/',
         { code: 'DEMO25' },
         { headers: { 'Content-Type': 'application/json' } },
       );
@@ -113,7 +113,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([addCouponBegin(), addCouponFailure('uhoh')]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
-        'http://localhost/payment-bff/v0/payment/vouchers/',
+        'http://localhost/bff/payment/v0/vouchers/',
         { code: 'DEMO25' },
         { headers: { 'Content-Type': 'application/json' } },
       );
@@ -150,7 +150,7 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual(['oh snap!']);
 
       expect(apiClientPost).toHaveBeenCalledWith(
-        'http://localhost/payment-bff/v0/payment/vouchers/',
+        'http://localhost/bff/payment/v0/vouchers/',
         { code: 'DEMO25' },
         { headers: { 'Content-Type': 'application/json' } },
       );
@@ -205,7 +205,7 @@ describe('saga tests', () => {
         }),
       ]);
 
-      expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/payment-bff/v0/payment/vouchers/12345');
+      expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
     });
 
     it('should handle an API error', async () => {
@@ -232,7 +232,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([removeCouponBegin(), removeCouponFailure('uhoh')]);
 
-      expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/payment-bff/v0/payment/vouchers/12345');
+      expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
     });
 
     it('should handle an unexpected error', async () => {
@@ -265,7 +265,7 @@ describe('saga tests', () => {
 
       expect(caughtErrors).toEqual(['oh snap!']);
 
-      expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/payment-bff/v0/payment/vouchers/12345');
+      expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
     });
   });
 });
