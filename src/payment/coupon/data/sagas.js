@@ -9,9 +9,9 @@ import {
   removeCouponFailure,
   REMOVE_COUPON,
 } from './actions';
-import { postCoupon } from './service';
+import { postCoupon, deleteCoupon } from './service';
 
-function* handleAddCoupon(action) {
+export function* handleAddCoupon(action) {
   yield put(addCouponBegin());
   try {
     const result = yield call(postCoupon, action.payload.code);
@@ -26,14 +26,14 @@ function* handleAddCoupon(action) {
   }
 }
 
-function* handleRemoveCoupon(action) {
+export function* handleRemoveCoupon(action) {
   yield put(removeCouponBegin());
   try {
-    const result = yield call(postCoupon, action.payload.codel);
+    const result = yield call(deleteCoupon, action.payload.voucherId);
     yield put(removeCouponSuccess(result));
   } catch (e) {
     if (e.code !== undefined) {
-      removeCouponFailure(e.code);
+      yield put(removeCouponFailure(e.code));
     } else {
       throw e;
     }

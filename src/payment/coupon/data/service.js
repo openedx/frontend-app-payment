@@ -1,6 +1,6 @@
 import pick from 'lodash.pick';
 
-import { handleRequestError } from '../../../common/serviceUtils';
+import { handleRequestError, applyConfiguration } from '../../../common/serviceUtils';
 
 let config = {
   ECOMMERCE_BASE_URL: null,
@@ -8,16 +8,8 @@ let config = {
 
 let apiClient = null; // eslint-disable-line no-unused-vars
 
-function validateConfiguration(newConfig) {
-  Object.keys(config).forEach((key) => {
-    if (newConfig[key] === undefined) {
-      throw new Error(`Service configuration error: ${key} is required.`);
-    }
-  });
-}
-
 export function configureApiService(newConfig, newApiClient) {
-  validateConfiguration(newConfig);
+  applyConfiguration(config, newConfig);
   config = pick(newConfig, Object.keys(config));
   apiClient = newApiClient;
 }
