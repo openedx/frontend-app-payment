@@ -18,9 +18,13 @@ import configureStore from './store';
 import { configureUserAccountApiService } from './common';
 import { configureApiService as configurePaymentApiService } from './payment';
 
-
 import './index.scss';
 import App from './components/App';
+
+if (configuration.ENVIRONMENT !== 'production') {
+  const axe = require('react-axe'); // eslint-disable-line
+  axe(React, ReactDOM, 1000);
+}
 
 const apiClient = getAuthenticatedAPIClient({
   appBaseUrl: configuration.BASE_URL,
