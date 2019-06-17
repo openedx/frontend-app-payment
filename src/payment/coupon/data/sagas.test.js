@@ -2,7 +2,16 @@ import { runSaga } from 'redux-saga';
 
 import { configureApiService } from './service';
 import saga, { handleAddCoupon, handleRemoveCoupon } from './sagas';
-import { addCoupon, addCouponBegin, addCouponSuccess, addCouponFailure, removeCouponBegin, removeCouponSuccess, removeCoupon, removeCouponFailure } from './actions';
+import {
+  addCoupon,
+  addCouponBegin,
+  addCouponSuccess,
+  addCouponFailure,
+  removeCouponBegin,
+  removeCouponSuccess,
+  removeCoupon,
+  removeCouponFailure,
+} from './actions';
 import { PERCENTAGE_BENEFIT } from './constants';
 
 describe('saga tests', () => {
