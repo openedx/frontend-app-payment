@@ -29,7 +29,7 @@ class CardDetails extends React.Component {
 
   render() {
     return (
-      <div className="mb-3">
+      <div className="basket-section">
         <h2 className="section-heading">
           <FormattedMessage
             id="payment.card.details.billing.information.heading"

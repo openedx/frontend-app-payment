@@ -18,7 +18,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
     className="row"
   >
     <div
-      className="col-md-5 pr-md-5"
+      className="col-md-5 pr-md-5 col-basket-summary"
     >
       <p>
         Your basket is empty.
@@ -31,7 +31,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
         onSubmit={[Function]}
       >
         <div
-          className="mb-3"
+          className="basket-section"
         >
           <h2
             className="section-heading"
@@ -1505,7 +1505,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           </div>
         </div>
         <div
-          className="mb-3"
+          className="basket-section"
         >
           <h2
             className="section-heading"
@@ -1827,7 +1827,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     className="row"
   >
     <div
-      className="col-md-5 pr-md-5"
+      className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div
         className="basket-section"
@@ -1852,19 +1852,21 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           >
             <img
               alt="Introduction to Happiness"
-              className="img-thumbnail mb-3"
+              className="img-thumbnail"
               src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
             />
           </div>
           <div
             className="col-7"
           >
-            <p
-              className="h6"
+            <h6
+              className="m-0"
             >
               Introduction to Happiness
-            </p>
-            <p>
+            </h6>
+            <p
+              className="m-0"
+            >
               <span>
                 Verified Certificate
               </span>
@@ -2007,7 +2009,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         onSubmit={[Function]}
       >
         <div
-          className="mb-3"
+          className="basket-section"
         >
           <h2
             className="section-heading"
@@ -3481,7 +3483,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </div>
         </div>
         <div
-          className="mb-3"
+          className="basket-section"
         >
           <h2
             className="section-heading"
@@ -3775,7 +3777,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
     className="row"
   >
     <div
-      className="col-md-5 pr-md-5"
+      className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div
         className="basket-section"
@@ -3800,19 +3802,21 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           >
             <img
               alt="Introduction to Happiness"
-              className="img-thumbnail mb-3"
+              className="img-thumbnail"
               src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
             />
           </div>
           <div
             className="col-7"
           >
-            <p
-              className="h6"
+            <h6
+              className="m-0"
             >
               Introduction to Happiness
-            </p>
-            <p>
+            </h6>
+            <p
+              className="m-0"
+            >
               <span>
                 Verified Certificate
               </span>
@@ -3896,7 +3900,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         onSubmit={[Function]}
       >
         <div
-          className="mb-3"
+          className="basket-section"
         >
           <h2
             className="section-heading"
@@ -5370,7 +5374,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </div>
         </div>
         <div
-          className="mb-3"
+          className="basket-section"
         >
           <h2
             className="section-heading"
@@ -5665,19 +5669,21 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p>
+    </h6>
+    <p
+      className="m-0"
+    >
       <span>
         Verified Certificate
       </span>
@@ -5695,19 +5701,21 @@ exports[`<ProductLineItem /> Rendering should render the product details for aud
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p />
+    </h6>
+    <p
+      className="m-0"
+    />
   </div>
 </div>
 `;
@@ -5721,19 +5729,21 @@ exports[`<ProductLineItem /> Rendering should render the product details for hon
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p />
+    </h6>
+    <p
+      className="m-0"
+    />
   </div>
 </div>
 `;
@@ -5747,19 +5757,21 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p>
+    </h6>
+    <p
+      className="m-0"
+    >
       <span>
         Professional Certificate
       </span>
@@ -5777,19 +5789,21 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p>
+    </h6>
+    <p
+      className="m-0"
+    >
       <span>
         Professional Certificate
       </span>
@@ -5807,19 +5821,21 @@ exports[`<ProductLineItem /> Rendering should render the product details for unk
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p />
+    </h6>
+    <p
+      className="m-0"
+    />
   </div>
 </div>
 `;
@@ -5833,19 +5849,21 @@ exports[`<ProductLineItem /> Rendering should render the product details for ver
   >
     <img
       alt="Introduction to Happiness"
-      className="img-thumbnail mb-3"
+      className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
   </div>
   <div
     className="col-7"
   >
-    <p
-      className="h6"
+    <h6
+      className="m-0"
     >
       Introduction to Happiness
-    </p>
-    <p>
+    </h6>
+    <p
+      className="m-0"
+    >
       <span>
         Verified Certificate
       </span>

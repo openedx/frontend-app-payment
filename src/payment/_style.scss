@@ -1,10 +1,14 @@
 .page__payment {
+  .col-basket-summary {
+    @include media-breakpoint-up(md) {
+      border-right: solid 1px $border-color;
+    }
+  }
   .basket-section {
-    @extend .mb-4;
+    @extend .mb-5;
   }
   .section-heading {
     @extend .h6;
-    margin-bottom: 1.5rem;
   }
   label {
     font-weight: normal;
