@@ -32,43 +32,11 @@ function PageContent({
   avatar,
   intl,
 }) {
-  const mainMenu = [
-    {
-      type: 'item',
-      href: `${process.env.MARKETING_SITE_BASE_URL}/course`,
-      content: intl.formatMessage(messages['siteheader.links.courses']),
-    },
-    {
-      type: 'item',
-      href: `${process.env.MARKETING_SITE_BASE_URL}/course?program=all`,
-      content: intl.formatMessage(messages['siteheader.links.programs']),
-    },
-    {
-      type: 'item',
-      href: `${process.env.MARKETING_SITE_BASE_URL}/schools-partners`,
-      content: intl.formatMessage(messages['siteheader.links.schools']),
-    },
-  ];
   const userMenu = [
     {
       type: 'item',
       href: `${process.env.LMS_BASE_URL}`,
       content: intl.formatMessage(messages['siteheader.user.menu.dashboard']),
-    },
-    {
-      type: 'item',
-      href: `${process.env.LMS_BASE_URL}/u/${username}`,
-      content: intl.formatMessage(messages['siteheader.user.menu.profile']),
-    },
-    {
-      type: 'item',
-      href: `${process.env.LMS_BASE_URL}/account/settings`,
-      content: intl.formatMessage(messages['siteheader.user.menu.account.settings']),
-    },
-    {
-      type: 'item',
-      href: process.env.ORDER_HISTORY_URL,
-      content: intl.formatMessage(messages['siteheader.user.menu.order.history']),
     },
     {
       type: 'item',
@@ -137,8 +105,6 @@ function PageContent({
         username={username}
         avatar={avatar}
         logoAltText={configuration.SITE_NAME}
-        logoDestination={configuration.MARKETING_SITE_BASE_URL}
-        mainMenu={mainMenu}
         userMenu={userMenu}
         loggedOutItems={loggedOutItems}
       />
