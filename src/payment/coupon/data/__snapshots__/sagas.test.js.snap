@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`saga tests main saga should setup its sub sagas correctly 1`] = `
+Object {
+  "done": false,
+  "value": Object {
+    "@@redux-saga/IO": true,
+    "combinator": false,
+    "payload": Object {
+      "args": Array [
+        "PAYMENT__ADD_COUPON",
+        [Function],
+      ],
+      "context": null,
+      "fn": [Function],
+    },
+    "type": "FORK",
+  },
+}
+`;
+
+exports[`saga tests main saga should setup its sub sagas correctly 2`] = `
+Object {
+  "done": false,
+  "value": Object {
+    "@@redux-saga/IO": true,
+    "combinator": false,
+    "payload": Object {
+      "args": Array [
+        "PAYMENT__REMOVE_COUPON",
+        [Function],
+      ],
+      "context": null,
+      "fn": [Function],
+    },
+    "type": "FORK",
+  },
+}
+`;

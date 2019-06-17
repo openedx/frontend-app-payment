@@ -151,9 +151,7 @@
       "src/store",
       "environment.js",
       "src/data",
-      "src/payment/data",
-      "src/payment/coupon/data/service",
-      "src/payment/coupon/data/sagas"
+      "src/payment/data"
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!(@edx/paragon)/).*/"
