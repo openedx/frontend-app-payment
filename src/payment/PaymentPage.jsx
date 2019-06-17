@@ -71,7 +71,7 @@ class PaymentPage extends React.Component {
         {loading ? this.renderLoading() : null}
         {loaded ? (
           <div className="row">
-            <div className="col-md-5 pr-md-5">
+            <div className="col-md-5 pr-md-5 col-basket-summary">
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
             <div className="col-md-7 pl-md-5">
