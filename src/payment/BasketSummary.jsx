@@ -7,7 +7,7 @@ import { basketSelector } from './data/selectors';
 import { CouponForm } from './coupon';
 
 
-function SummaryTable({ totalDiscount, totalExclDiscount }) {
+function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
   return (
     <table className="w-100 mb-3">
       <tbody>
@@ -31,7 +31,7 @@ function SummaryTable({ totalDiscount, totalExclDiscount }) {
           </td>
         </tr>
 
-        {totalDiscount !== undefined ? (
+        {calculatedDiscount !== undefined ? (
           <tr>
             <th className="font-weight-normal" scope="row">
               <FormattedMessage
@@ -43,7 +43,7 @@ function SummaryTable({ totalDiscount, totalExclDiscount }) {
 
             <td className="text-right">
               <FormattedNumber
-                value={totalDiscount * -1}
+                value={calculatedDiscount * -1}
                 style="currency" // eslint-disable-line react/style-prop-object
                 currency="USD"
               />
@@ -56,11 +56,11 @@ function SummaryTable({ totalDiscount, totalExclDiscount }) {
 }
 
 SummaryTable.propTypes = {
-  totalDiscount: PropTypes.number,
+  calculatedDiscount: PropTypes.number,
   totalExclDiscount: PropTypes.number,
 };
 SummaryTable.defaultProps = {
-  totalDiscount: undefined,
+  calculatedDiscount: undefined,
   totalExclDiscount: undefined,
 };
 
@@ -119,7 +119,7 @@ function BasketSummary(props) {
 
       <SummaryTable
         totalExclDiscount={props.totalExclDiscount}
-        totalDiscount={props.totalDiscount}
+        calculatedDiscount={props.calculatedDiscount}
       />
 
       {props.showVoucherForm ? <CouponForm /> : null}
@@ -133,7 +133,7 @@ function BasketSummary(props) {
 BasketSummary.propTypes = {
   showVoucherForm: PropTypes.bool,
   orderTotal: PropTypes.number,
-  totalDiscount: PropTypes.number,
+  calculatedDiscount: PropTypes.number,
   totalExclDiscount: PropTypes.number,
   voucher: PropTypes.shape({
     benefit: PropTypes.shape({
@@ -147,7 +147,7 @@ BasketSummary.propTypes = {
 BasketSummary.defaultProps = {
   showVoucherForm: false,
   orderTotal: undefined,
-  totalDiscount: undefined,
+  calculatedDiscount: undefined,
   totalExclDiscount: undefined,
   voucher: undefined,
 };

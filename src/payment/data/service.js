@@ -28,7 +28,7 @@ export async function getBasket() {
     showVoucherForm: data.show_voucher_form,
     paymentProviders: data.payment_providers,
     orderTotal: data.order_total,
-    totalDiscount: data.total_discount,
+    calculatedDiscount: data.calculated_discount,
     totalExclDiscount: data.total_excl_discount,
     products: data.products.map(({ img_url: imgUrl, name, seat_type: seatType }) => ({
       imgUrl, name, seatType,
