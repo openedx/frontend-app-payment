@@ -10,6 +10,8 @@ import { ConnectedPaymentPage } from './';
 import { configuration } from '../environment';
 import messages from '../i18n';
 
+import ProductLineItem from './ProductLineItem';
+
 const mockStore = configureMockStore();
 const storeMocks = {
   defaultState: require('./__mocks__/defaultState.mockStore.js'),
@@ -99,6 +101,79 @@ describe('<PaymentPage />', () => {
           </IntlProvider>
         ))
         .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+});
+
+const product = {
+  imgUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+  name: 'Introduction to Happiness',
+  seatType: 'verified',
+};
+
+describe('<ProductLineItem />', () => {
+  describe('Rendering', () => {
+    it('should render the product details', () => {
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the product details for professional certificate', () => {
+      product.seatType = 'professional';
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the product details for no-id-professional certificate', () => {
+      product.seatType = 'no-id-professional';
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the product details for verified certificate', () => {
+      product.seatType = 'verified';
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the product details for unknown seat type', () => {
+      product.seatType = null;
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the product details for honor certificate', () => {
+      product.seatType = 'honor';
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the product details for audit certificate', () => {
+      product.seatType = 'audit';
+      const tree = renderer.create((
+        <IntlProvider locale="en">
+          <ProductLineItem {...product} />
+        </IntlProvider>
+      )).toJSON();
       expect(tree).toMatchSnapshot();
     });
   });

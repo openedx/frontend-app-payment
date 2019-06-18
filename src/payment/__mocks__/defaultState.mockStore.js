@@ -44,5 +44,8 @@ module.exports = {
       hash: ''
     },
     action: 'POP'
+  },
+  i18n: {
+    locale: 'en'
   }
 };

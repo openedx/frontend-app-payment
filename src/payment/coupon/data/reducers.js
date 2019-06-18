@@ -4,7 +4,7 @@ const defaultState = {
   benefit: null,
   code: null,
   voucherId: null,
-  error: null,
+  errorCode: null,
   loaded: false,
   loading: false,
 };
@@ -17,14 +17,14 @@ const reducer = (state = defaultState, action = null) => {
           ...state,
           loading: true,
           loaded: false,
-          error: null,
+          errorCode: null,
         };
       case ADD_COUPON.SUCCESS:
         return {
           ...state,
           loading: false,
           loaded: true,
-          error: null,
+          errorCode: null,
           benefit: action.payload.benefit,
           code: action.payload.code,
           voucherId: action.payload.voucherId,
@@ -34,7 +34,7 @@ const reducer = (state = defaultState, action = null) => {
           ...state,
           loading: false,
           loaded: false,
-          error: action.payload.error,
+          errorCode: action.payload.errorCode,
           voucherId: null,
         };
       case REMOVE_COUPON.BEGIN:
@@ -42,7 +42,7 @@ const reducer = (state = defaultState, action = null) => {
           ...state,
           loading: true,
           loaded: false,
-          error: null,
+          errorCode: null,
         };
       case REMOVE_COUPON.SUCCESS:
         return defaultState;
@@ -51,7 +51,7 @@ const reducer = (state = defaultState, action = null) => {
           ...state,
           loading: false,
           loaded: true, // There's still a loaded coupon.
-          error: action.payload.error,
+          errorCode: action.payload.errorCode,
         };
       case UPDATE_COUPON_DRAFT:
         return {

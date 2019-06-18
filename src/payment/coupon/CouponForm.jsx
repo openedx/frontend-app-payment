@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Input, ValidationFormGroup } from '@edx/paragon';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
+import { logError } from '@edx/frontend-logging';
 
 import messages from './messages';
 import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
@@ -33,31 +34,62 @@ export class CouponForm extends Component {
     this.props.removeCoupon(this.props.voucherId);
   }
 
+  renderInvalidMessage() {
+    const { code, errorCode, intl } = this.props;
+    if (errorCode === null) {
+      return null;
+    }
+    let invalidMessage = null;
+    switch (errorCode) {
+      // Cases that need a `code`
+      case 'empty_basket':
+      case 'already_applied_voucher':
+      case 'code_does_not_exist':
+      case 'code_expired':
+      case 'code_not_active':
+      case 'code_not_available':
+      case 'code_not_valid':
+        invalidMessage = intl.formatMessage(messages[`payment.coupon.error.${errorCode}`], {
+          code,
+        });
+        break;
+      default:
+        invalidMessage = intl.formatMessage(messages['payment.coupon.error.unknown']);
+        logError(`Unexpected payment coupon form errorCode: ${errorCode}`);
+    }
+
+    return invalidMessage;
+  }
+
   renderAdd() {
     const {
-      code, intl, error, loading,
+      code, intl, errorCode, loading,
     } = this.props;
 
     const id = 'couponField';
 
     return (
-      <form onSubmit={this.handleAddSubmit}>
-        <ValidationFormGroup for={id} invalid={error !== null} invalidMessage={error}>
+      <form onSubmit={this.handleAddSubmit} className="mb-3 d-flex align-items-end">
+        <ValidationFormGroup
+          for={id}
+          invalid={errorCode !== null}
+          invalidMessage={this.renderInvalidMessage()}
+          className="mb-0 mr-2"
+        >
           <label className="h6 d-block" htmlFor={id}>
             {intl.formatMessage(messages['payment.coupon.label'])}
           </label>
           <Input
-            className="mb-2"
             name={id}
             id={id}
             type="text"
             value={code || ''}
             onChange={this.handleChange}
           />
-          <Button disabled={loading} className="btn-primary" type="submit">
-            {intl.formatMessage(messages['payment.coupon.submit'])}
-          </Button>
         </ValidationFormGroup>
+        <Button disabled={loading} className="btn-primary" type="submit">
+          {intl.formatMessage(messages['payment.coupon.submit'])}
+        </Button>
       </form>
     );
   }
@@ -89,7 +121,7 @@ CouponForm.propTypes = {
   loading: PropTypes.bool,
   code: PropTypes.string,
   voucherId: PropTypes.number,
-  error: PropTypes.string,
+  errorCode: PropTypes.string,
   addCoupon: PropTypes.func.isRequired,
   removeCoupon: PropTypes.func.isRequired,
   updateCouponDraft: PropTypes.func.isRequired,
@@ -104,7 +136,7 @@ CouponForm.defaultProps = {
   loading: false,
   code: '',
   voucherId: null,
-  error: null,
+  errorCode: null,
   benefit: null,
 };
 

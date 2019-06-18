@@ -15,7 +15,7 @@ describe('redux tests', () => {
       benefit: null,
       code: null,
       voucherId: null,
-      error: null,
+      errorCode: null,
       loaded: false,
       loading: false,
     });

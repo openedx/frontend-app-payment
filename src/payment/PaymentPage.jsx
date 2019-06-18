@@ -15,6 +15,8 @@ import { paymentSelector } from './data/selectors';
 import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
 import OrderDetails from './OrderDetails';
+import PaymentForm from './PaymentForm';
+import ProductLineItems from './ProductLineItems';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -48,11 +50,7 @@ class PaymentPage extends React.Component {
   renderBasket() {
     return (
       <React.Fragment>
-        <ul>
-          <li>paymentProviders: {JSON.stringify(this.props.paymentProviders)}</li>
-          <li>sdnCheck: {JSON.stringify(this.props.sdnCheck)}</li>
-          <li>products: {JSON.stringify(this.props.products)}</li>
-        </ul>
+        <ProductLineItems />
         <BasketSummary />
         <OrderDetails />
       </React.Fragment>
@@ -69,17 +67,15 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="page__payment container-fluid py-5">
-        <h1>{this.props.intl.formatMessage(messages['payment.page.heading'])}</h1>
-
         {loadingError ? this.renderError() : null}
         {loading ? this.renderLoading() : null}
         {loaded ? (
           <div className="row">
-            <div className="col-6">
+            <div className="col-md-5 pr-md-5 col-basket-summary">
               {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
             </div>
-            <div className="col-6">
-              {/* Payment form */}
+            <div className="col-md-7 pl-md-5">
+              <PaymentForm />
             </div>
           </div>
         ) : null}
@@ -96,15 +92,6 @@ PaymentPage.propTypes = {
   loadingError: PropTypes.string,
   isEmpty: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
-  paymentProviders: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['cybersource', 'paypal']),
-  })),
-  sdnCheck: PropTypes.bool,
-  products: PropTypes.arrayOf(PropTypes.shape({
-    imgUrl: PropTypes.string,
-    name: PropTypes.string,
-    seatType: PropTypes.string, // TODO: use PropTypes.oneOf([ all, kinds, of, certs ])
-  })),
 };
 
 PaymentPage.defaultProps = {
@@ -112,9 +99,6 @@ PaymentPage.defaultProps = {
   loading: false,
   loaded: false,
   isEmpty: false,
-  paymentProviders: undefined,
-  sdnCheck: false,
-  products: undefined,
 };
 
 

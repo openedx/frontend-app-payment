@@ -4,7 +4,7 @@ import { FormattedMessage } from '@edx/frontend-i18n';
 function OrderDetails() {
   return (
     <div className="basket-section">
-      <h2 className="h6">
+      <h2 className="section-heading">
         <FormattedMessage
           id="payment.order.details.heading"
           defaultMessage="Order Details"

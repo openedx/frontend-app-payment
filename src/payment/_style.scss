@@ -1,5 +1,34 @@
 .page__payment {
+  .col-basket-summary {
+    @include media-breakpoint-up(md) {
+      border-right: solid 1px $border-color;
+    }
+  }
   .basket-section {
-    @extend .mb-4;
+    @extend .mb-5;
+  }
+  .section-heading {
+    @extend .h6;
+  }
+  label {
+    font-weight: normal;
+  }
+  .form-group {
+    .card-icon {
+      position: relative;
+      float: right;
+      top: -27px;
+      right: 28%;
+      margin-right: -15%;
+      pointer-events: none;
+    }
+    .lock-icon {
+      position: relative;
+      float: right;
+      top: -27px;
+      right: 10%;
+      margin-right: -5%;
+      pointer-events: none;
+    }
   }
 }
