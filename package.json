@@ -40,6 +40,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "babel-polyfill": "^6.26.0",
+    "card-validator": "^6.2.0",
     "classnames": "^2.2.6",
     "connected-react-router": "^5.0.1",
     "email-prop-type": "^1.1.5",
