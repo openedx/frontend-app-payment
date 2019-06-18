@@ -1,9 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCcAmex,
+  faCcDiscover,
+  faCcMastercard,
+  faCcVisa,
+} from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { injectIntl, FormattedMessage } from '@edx/frontend-i18n';
 
-class CardDetails extends React.Component {
+const CardValidator = require('card-validator');
+
+const CardIcons = {
+  'american-express': faCcAmex,
+  discover: faCcDiscover,
+  mastercard: faCcMastercard,
+  visa: faCcVisa,
+};
+
+export class CardDetailsComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cardIcon: null,
+    };
+  }
+
   getNumericOptions(start, end) {
     const items = [];
     for (let i = start; i <= end; i += 1) {
@@ -11,6 +36,15 @@ class CardDetails extends React.Component {
     }
     return items;
   }
+
+  updateCardType = (event, newValue) => {
+    let cardIcon = null;
+    const { card } = CardValidator.number(newValue);
+    if (card) {
+      cardIcon = CardIcons[card.type];
+    }
+    this.setState({ cardIcon });
+  };
 
   renderExpirationMonthOptions() {
     return [
@@ -47,7 +81,17 @@ class CardDetails extends React.Component {
                 description="The label for the required credit card number field"
               />
             </label>
-            <Field id="cardNumber" name="cardNumber" component="input" type="password" required className="form-control" />
+            <Field
+              id="cardNumber"
+              name="cardNumber"
+              component="input"
+              type="password"
+              required
+              className="form-control"
+              onChange={this.updateCardType}
+            />
+            <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
+            <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="securityCode">
@@ -58,6 +102,7 @@ class CardDetails extends React.Component {
               />
             </label>
             <Field id="securityCode" name="securityCode" component="input" type="password" required className="form-control" />
+            <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
         </div>
 
@@ -92,4 +137,4 @@ class CardDetails extends React.Component {
   }
 }
 
-export default connect()(injectIntl(CardDetails));
+export default connect()(injectIntl(CardDetailsComponent));
