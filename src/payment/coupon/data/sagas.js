@@ -9,7 +9,7 @@ import {
   removeCouponFailure,
   REMOVE_COUPON,
 } from './actions';
-import { postCoupon, deleteCoupon } from './service';
+import { deleteCoupon, postCoupon } from './service';
 
 export function* handleAddCoupon(action) {
   yield put(addCouponBegin());

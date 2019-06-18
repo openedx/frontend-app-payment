@@ -17,7 +17,7 @@ export function configureApiService(newConfig, newApiClient) {
 export async function postCoupon(code) {
   const response = await apiClient
     .post(
-      `${config.ECOMMERCE_BASE_URL}/payment-bff/v0/payment/vouchers/`,
+      `${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
       { code },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -30,7 +30,7 @@ export async function postCoupon(code) {
 
 export async function deleteCoupon(voucherId) {
   const response = await apiClient
-    .delete(`${config.ECOMMERCE_BASE_URL}/payment-bff/v0/payment/vouchers/${voucherId}`)
+    .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${voucherId}`)
     .catch(handleRequestError);
 
   return response.data;

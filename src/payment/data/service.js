@@ -22,7 +22,7 @@ export function configureApiService(newConfig, newApiClient) {
 }
 
 export async function getBasket() {
-  const { data } = await apiClient.get(`${config.ECOMMERCE_BASE_URL}/payment-bff/v0/payment/`);
+  const { data } = await apiClient.get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
 
   const transformedResults = {
     showVoucherForm: data.show_voucher_form,
