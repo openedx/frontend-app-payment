@@ -28,6 +28,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
       className="col-md-7 pl-md-5"
     >
       <form
+        noValidate={true}
         onSubmit={[Function]}
       >
         <div
@@ -55,14 +56,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -79,14 +78,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -107,14 +104,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -131,14 +126,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -159,14 +152,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -183,14 +174,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <select
                 className="form-control"
-                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -1466,14 +1455,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -1490,14 +1477,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -1529,14 +1514,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="cardNumber"
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="password"
                 value=""
               />
@@ -1570,14 +1553,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <input
                 className="form-control"
-                id="securityCode"
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="password"
                 value=""
               />
@@ -1615,14 +1596,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <select
                 className="form-control"
-                id="cardExpirationMonth"
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -1704,14 +1683,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               </label>
               <select
                 className="form-control"
-                id="cardExpirationYear"
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -1811,6 +1788,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           >
             <button
               className="btn btn-primary btn-lg btn-block"
+              disabled={false}
               type="submit"
             >
               <span>
@@ -2040,6 +2018,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
       className="col-md-7 pl-md-5"
     >
       <form
+        noValidate={true}
         onSubmit={[Function]}
       >
         <div
@@ -2067,14 +2046,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -2091,14 +2068,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -2119,14 +2094,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -2143,14 +2116,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -2171,14 +2142,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -2195,14 +2164,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
-                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -3478,14 +3445,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -3502,14 +3467,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -3541,14 +3504,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="cardNumber"
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="password"
                 value=""
               />
@@ -3582,14 +3543,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
-                id="securityCode"
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="password"
                 value=""
               />
@@ -3627,14 +3586,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
-                id="cardExpirationMonth"
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -3716,14 +3673,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
-                id="cardExpirationYear"
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -3823,6 +3778,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           >
             <button
               className="btn btn-primary btn-lg btn-block"
+              disabled={false}
               type="submit"
             >
               <span>
@@ -3965,6 +3921,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
       className="col-md-7 pl-md-5"
     >
       <form
+        noValidate={true}
         onSubmit={[Function]}
       >
         <div
@@ -3992,14 +3949,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -4016,14 +3971,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -4044,14 +3997,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -4068,14 +4019,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -4096,14 +4045,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -4120,14 +4067,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
-                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -5403,14 +5348,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -5427,14 +5370,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="text"
                 value=""
               />
@@ -5466,14 +5407,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="cardNumber"
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="password"
                 value=""
               />
@@ -5507,14 +5446,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
-                id="securityCode"
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 type="password"
                 value=""
               />
@@ -5552,14 +5489,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
-                id="cardExpirationMonth"
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -5641,14 +5576,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
-                id="cardExpirationYear"
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                required={true}
                 value=""
               >
                 <option
@@ -5748,6 +5681,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           >
             <button
               className="btn btn-primary btn-lg btn-block"
+              disabled={false}
               type="submit"
             >
               <span>

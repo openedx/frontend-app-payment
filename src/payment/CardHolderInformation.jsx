@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
+import FormInput from '../common/components/FormInput';
+import FormSelect from '../common/components/FormSelect';
+
 import { countryOptionsSelector } from './data/selectors';
 import messages from './CardHolderInformation.messages';
 
@@ -41,7 +44,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder first name field"
               />
             </label>
-            <Field id="firstName" name="firstName" component="input" type="text" required className="form-control" />
+            <Field id="firstName" name="firstName" component={FormInput} type="text" required />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="lastName">
@@ -51,7 +54,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder last name field"
               />
             </label>
-            <Field id="lastName" name="lastName" component="input" type="text" required className="form-control" />
+            <Field id="lastName" name="lastName" component={FormInput} type="text" required />
           </div>
         </div>
 
@@ -64,7 +67,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder address field"
               />
             </label>
-            <Field id="address" name="address" component="input" type="text" required className="form-control" />
+            <Field id="address" name="address" component={FormInput} type="text" required />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="unit">
@@ -74,7 +77,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the card holder suite/apartment number field"
               />
             </label>
-            <Field id="unit" name="unit" component="input" type="text" required className="form-control" />
+            <Field id="unit" name="unit" component={FormInput} type="text" />
           </div>
         </div>
 
@@ -87,7 +90,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder city field"
               />
             </label>
-            <Field id="city" name="city" component="input" type="text" required className="form-control" />
+            <Field id="city" name="city" component={FormInput} type="text" required />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="country">
@@ -97,9 +100,13 @@ class CardHolderInformation extends React.Component {
                 description="The label for the required card holder country field"
               />
             </label>
-            <Field id="country" name="country" component="select" required className="form-control">
-              {this.renderCountryOptions()}
-            </Field>
+            <Field
+              id="country"
+              name="country"
+              component={FormSelect}
+              options={this.renderCountryOptions()}
+              required
+            />
           </div>
         </div>
 
@@ -112,7 +119,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the card holder state/province field"
               />
             </label>
-            <Field id="state" name="state" component="input" type="text" required className="form-control" />
+            <Field id="state" name="state" component={FormInput} type="text" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -122,7 +129,7 @@ class CardHolderInformation extends React.Component {
                 description="The label for the card holder zip/postal code field"
               />
             </label>
-            <Field id="postalCode" name="postalCode" component="input" type="text" required className="form-control" />
+            <Field id="postalCode" name="postalCode" component={FormInput} type="text" />
           </div>
         </div>
       </div>
