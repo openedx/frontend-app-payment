@@ -17,7 +17,11 @@ export function* handleFetchBasket() {
   yield put(addCouponBegin());
   const result = yield call(PaymentApiService.getBasket);
   yield put(fetchBasketSuccess(result));
-  yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+  if (result.voucher === undefined) {
+    yield put(addCouponSuccess(null, null, null));
+  } else {
+    yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+  }
 }
 
 export default function* saga() {
