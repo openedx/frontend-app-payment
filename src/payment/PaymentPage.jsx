@@ -25,9 +25,12 @@ class PaymentPage extends React.Component {
 
   renderEmptyMessage() {
     return (
-      <p>
-        {this.props.intl.formatMessage(messages['payment.empty.basket'])}
-      </p>
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">{this.props.intl.formatMessage(messages['payment.empty.basket'])}</h5>
+          <p className="card-text">If you attempted to make a purchase, you have not been charged. Return to your <a href="https://courses.edx.org/dashboard">dashboard</a> to try again, or <a href="https://courses.edx.org/support/contact_us">contact edX E-commerce Support</a>.</p>
+        </div>
+      </div>
     );
   }
 
@@ -71,11 +74,16 @@ class PaymentPage extends React.Component {
         {loading ? this.renderLoading() : null}
         {loaded ? (
           <div className="row">
-            <div className="col-md-5 pr-md-5 col-basket-summary">
-              {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
-            </div>
+            { isEmpty ?
+              <div className="col-md-5 pr-md-5 col-basket-summary">
+                {this.renderBasket()}
+              </div> :
+              <div>
+                {this.renderEmptyMessage()}
+              </div>
+            }
             <div className="col-md-7 pl-md-5">
-              <PaymentForm />
+              {isEmpty ? <PaymentForm /> : null}
             </div>
           </div>
         ) : null}
