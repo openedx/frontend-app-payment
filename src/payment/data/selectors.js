@@ -13,7 +13,7 @@ export const paymentSelector = (state) => {
     loaded,
     dashboardURL: state.configuration.LMS_BASE_URL,
     supportURL: state.configuration.SUPPORT_URL,
-    isEmpty: loaded && paymentState.products && paymentState.products.length < 1,
+    isEmpty: loaded && paymentState.products && paymentState.products.length > 0,
   };
 };
 
