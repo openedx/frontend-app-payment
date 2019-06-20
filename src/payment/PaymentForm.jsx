@@ -1,27 +1,110 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { reduxForm } from 'redux-form';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { reduxForm, SubmissionError } from 'redux-form';
+import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
-import CardDetails from './CardDetails';
+import CardDetails, { SUPPORTED_CARD_ICONS } from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
+import messages from './PaymentForm.messages';
 
-class PaymentForm extends React.Component {
-  onSubmit(values) {
-    /* istanbul ignore next */
-    alert(JSON.stringify(values)); // eslint-disable-line
+const CardValidator = require('card-validator');
+
+export class PaymentFormComponent extends React.Component {
+  onSubmit = (values) => {
+    const {
+      firstName,
+      lastName,
+      address,
+      city,
+      country,
+      cardNumber,
+      securityCode,
+      cardExpirationMonth,
+      cardExpirationYear,
+    } = values;
+
+    const errors = {
+      ...this.validateRequiredFields({
+        firstName,
+        lastName,
+        address,
+        city,
+        country,
+        cardNumber,
+        securityCode,
+        cardExpirationMonth,
+        cardExpirationYear,
+      }),
+      ...this.validateCardDetails(
+        cardNumber,
+        securityCode,
+        cardExpirationMonth,
+        cardExpirationYear,
+      ),
+    };
+
+    if (Object.keys(errors).length > 0) {
+      throw new SubmissionError(errors);
+    }
+
+    // TODO: implement payment submission
+  };
+
+  validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
+    const errors = {};
+
+    const { card, isValid } = CardValidator.number(cardNumber);
+    if (cardNumber) {
+      if (!isValid) {
+        errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.invalid.card.number']);
+      } else {
+        if (!Object.keys(SUPPORTED_CARD_ICONS).includes(card.type)) {
+          errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.unsupported.card']);
+        }
+        if (securityCode && securityCode.length !== card.code.size) {
+          errors.securityCode = this.props.intl.formatMessage(messages['payment.form.errors.invalid.security.code']);
+        }
+      }
+    }
+
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+    if (
+      cardExpirationMonth &&
+      parseInt(cardExpirationMonth, 10) < currentMonth &&
+      parseInt(cardExpirationYear, 10) === currentYear
+    ) {
+      errors.cardExpirationMonth = this.props.intl.formatMessage(messages['payment.form.errors.card.expired']);
+    }
+
+    return errors;
+  }
+
+  validateRequiredFields(values) {
+    const errors = {};
+
+    Object.keys(values).forEach((key) => {
+      if (!values[key]) {
+        errors[key] = this.props.intl.formatMessage(messages['payment.form.errors.required.field']);
+      }
+    });
+
+    return errors;
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const {
+      handleSubmit,
+      submitting,
+    } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)}>
+      <form onSubmit={handleSubmit(this.onSubmit)} noValidate>
         <CardHolderInformation />
         <CardDetails />
 
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
-            <button type="submit" className="btn btn-primary btn-lg btn-block">
+            <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting}>
               <FormattedMessage
                 id="payment.form.submit.button.text"
                 defaultMessage="Place Order"
@@ -35,10 +118,16 @@ class PaymentForm extends React.Component {
   }
 }
 
-PaymentForm.propTypes = {
+PaymentFormComponent.propTypes = {
+  intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool,
+};
+
+PaymentFormComponent.defaultProps = {
+  submitting: false,
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(PaymentForm);
+export default reduxForm({ form: 'payment' })(injectIntl(PaymentFormComponent));

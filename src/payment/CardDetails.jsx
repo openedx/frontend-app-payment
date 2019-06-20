@@ -11,9 +11,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { injectIntl, FormattedMessage } from '@edx/frontend-i18n';
 
+import FormInput from '../common/components/FormInput';
+import FormSelect from '../common/components/FormSelect';
+
 const CardValidator = require('card-validator');
 
-const CardIcons = {
+export const SUPPORTED_CARD_ICONS = {
   'american-express': faCcAmex,
   discover: faCcDiscover,
   mastercard: faCcMastercard,
@@ -41,7 +44,7 @@ export class CardDetailsComponent extends React.Component {
     let cardIcon = null;
     const { card } = CardValidator.number(newValue);
     if (card) {
-      cardIcon = CardIcons[card.type];
+      cardIcon = SUPPORTED_CARD_ICONS[card.type];
     }
     this.setState({ cardIcon });
   };
@@ -84,10 +87,9 @@ export class CardDetailsComponent extends React.Component {
             <Field
               id="cardNumber"
               name="cardNumber"
-              component="input"
+              component={FormInput}
               type="password"
               required
-              className="form-control"
               onChange={this.updateCardType}
             />
             <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
@@ -101,7 +103,13 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card security code field"
               />
             </label>
-            <Field id="securityCode" name="securityCode" component="input" type="password" required className="form-control" />
+            <Field
+              id="securityCode"
+              name="securityCode"
+              component={FormInput}
+              type="password"
+              required
+            />
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
         </div>
@@ -115,9 +123,13 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card expiration month field"
               />
             </label>
-            <Field id="cardExpirationMonth" name="cardExpirationMonth" component="select" required className="form-control">
-              {this.renderExpirationMonthOptions()}
-            </Field>
+            <Field
+              id="cardExpirationMonth"
+              name="cardExpirationMonth"
+              component={FormSelect}
+              options={this.renderExpirationMonthOptions()}
+              required
+            />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="cardExpirationYear">
@@ -127,9 +139,13 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card expiration year field"
               />
             </label>
-            <Field id="cardExpirationYear" name="cardExpirationYear" component="select" required className="form-control">
-              {this.renderExpirationYearOptions()}
-            </Field>
+            <Field
+              id="cardExpirationYear"
+              name="cardExpirationYear"
+              component={FormSelect}
+              options={this.renderExpirationYearOptions()}
+              required
+            />
           </div>
         </div>
       </div>
