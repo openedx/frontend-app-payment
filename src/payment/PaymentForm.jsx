@@ -5,18 +5,15 @@ import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
 import CardDetails, { SUPPORTED_CARD_ICONS } from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
+import getStates from './data/countryStatesMap';
 import messages from './PaymentForm.messages';
 
 const CardValidator = require('card-validator');
 
 export class PaymentFormComponent extends React.Component {
   onSubmit = (values) => {
+    const requiredFields = this.getRequiredFields(values);
     const {
-      firstName,
-      lastName,
-      address,
-      city,
-      country,
       cardNumber,
       securityCode,
       cardExpirationMonth,
@@ -24,17 +21,7 @@ export class PaymentFormComponent extends React.Component {
     } = values;
 
     const errors = {
-      ...this.validateRequiredFields({
-        firstName,
-        lastName,
-        address,
-        city,
-        country,
-        cardNumber,
-        securityCode,
-        cardExpirationMonth,
-        cardExpirationYear,
-      }),
+      ...this.validateRequiredFields(requiredFields),
       ...this.validateCardDetails(
         cardNumber,
         securityCode,
@@ -49,6 +36,38 @@ export class PaymentFormComponent extends React.Component {
 
     // TODO: implement payment submission
   };
+
+  getRequiredFields(fieldValues) {
+    const {
+      firstName,
+      lastName,
+      address,
+      city,
+      country,
+      state,
+      cardNumber,
+      securityCode,
+      cardExpirationMonth,
+      cardExpirationYear,
+    } = fieldValues;
+
+    const requiredFields = {
+      firstName,
+      lastName,
+      address,
+      city,
+      country,
+      cardNumber,
+      securityCode,
+      cardExpirationMonth,
+      cardExpirationYear,
+    };
+    if (getStates(country)) {
+      requiredFields.state = state;
+    }
+
+    return requiredFields;
+  }
 
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
     const errors = {};

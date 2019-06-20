@@ -1447,7 +1447,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               className="col-lg-6 form-group"
             >
               <label
-                htmlFor="state"
+                htmlFor="country"
               >
                 <span>
                   State/Province
@@ -3437,7 +3437,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <label
-                htmlFor="state"
+                htmlFor="country"
               >
                 <span>
                   State/Province
@@ -5340,7 +5340,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               className="col-lg-6 form-group"
             >
               <label
-                htmlFor="state"
+                htmlFor="country"
               >
                 <span>
                   State/Province

@@ -18,6 +18,67 @@ const storeMocks = {
 configureI18n(configuration, messages);
 
 describe('<PaymentForm />', () => {
+  describe('getRequiredFields', () => {
+    it('returns expected required fields', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <Provider store={mockStore(storeMocks.defaultState)}>
+            <PaymentForm handleSubmit={() => {}} />
+          </Provider>
+        </IntlProvider>
+      ));
+      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+      const testFormValues = [
+        {
+          firstName: '',
+          lastName: '',
+          address: '',
+          city: '',
+          country: 'UK',
+          cardNumber: '',
+          securityCode: '',
+          cardExpirationMonth: '',
+          cardExpirationYear: '',
+          optionalField: '',
+        },
+        {
+          firstName: '',
+          lastName: '',
+          address: '',
+          city: '',
+          country: 'CA',
+          cardNumber: '',
+          securityCode: '',
+          cardExpirationMonth: '',
+          cardExpirationYear: '',
+          optionalField: '',
+        },
+        {
+          firstName: '',
+          lastName: '',
+          address: '',
+          city: '',
+          country: 'US',
+          cardNumber: '',
+          securityCode: '',
+          cardExpirationMonth: '',
+          cardExpirationYear: '',
+          optionalField: '',
+        },
+      ];
+
+      testFormValues.forEach((formValues) => {
+        const requiredFields = paymentForm.getRequiredFields(formValues);
+        if (formValues.country) {
+          const { optionalField, ...expectedRequiredFields } = formValues;
+          expect(requiredFields).toEqual(expectedRequiredFields);
+        } else {
+          const { state, optionalField, ...expectedRequiredFields } = formValues;
+          expect(requiredFields).toEqual(expectedRequiredFields);
+        }
+      });
+    });
+  });
   describe('onSubmit', () => {
     it('throws expected errors', () => {
       const wrapper = mount((
