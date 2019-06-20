@@ -53,6 +53,7 @@
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "lodash.snakecase": "^4.1.1",
+    "lodash.without": "^4.4.0",
     "newrelic": "^5.5.0",
     "prop-types": "^15.5.10",
     "react": "^16.8.3",
