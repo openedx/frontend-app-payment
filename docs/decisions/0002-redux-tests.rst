@@ -72,6 +72,7 @@ Actions that do not directly update the store (ones consumed by a redux-saga, fo
 Finally, selectors can be tested by passing them the store in different states and asserting the result.
 
 ::
+
   it('should select default state correctly', () => {
     const result = couponSelector(store.getState());
     expect(result).toEqual({
