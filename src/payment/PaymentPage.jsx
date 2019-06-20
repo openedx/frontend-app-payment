@@ -72,16 +72,6 @@ class PaymentPage extends React.Component {
     );
   }
 
-  renderError() {
-    return (
-      <div>
-        {this.props.intl.formatMessage(messages['payment.loading.error'], {
-          error: this.props.loadingError,
-        })}
-      </div>
-    );
-  }
-
   renderLoading() {
     return (
       <PageLoading srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])} />
@@ -106,13 +96,11 @@ class PaymentPage extends React.Component {
   render() {
     const {
       loading,
-      loadingError,
       isEmpty,
     } = this.props;
 
     return (
       <div className="page__payment container-fluid py-5">
-        {loadingError ? this.renderError() : null}
         {loading ? this.renderLoading() : null}
         {isEmpty ? this.renderEmptyMessage() : this.renderBasket()}
       </div>
@@ -124,7 +112,6 @@ class PaymentPage extends React.Component {
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
-  loadingError: PropTypes.string,
   isEmpty: PropTypes.bool,
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
@@ -132,7 +119,6 @@ PaymentPage.propTypes = {
 };
 
 PaymentPage.defaultProps = {
-  loadingError: null,
   loading: false,
   isEmpty: false,
 };

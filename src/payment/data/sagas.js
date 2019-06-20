@@ -5,6 +5,7 @@ import {
   FETCH_BASKET,
   fetchBasketBegin,
   fetchBasketSuccess,
+  fetchBasketFailure,
 } from './actions';
 
 // Services
@@ -15,12 +16,16 @@ import { saga as couponSaga, addCouponSuccess, addCouponBegin } from '../coupon'
 export function* handleFetchBasket() {
   yield put(fetchBasketBegin());
   yield put(addCouponBegin());
-  const result = yield call(PaymentApiService.getBasket);
-  yield put(fetchBasketSuccess(result));
-  if (result.voucher === undefined) {
-    yield put(addCouponSuccess(null, null, null));
-  } else {
-    yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+  try {
+    const result = yield call(PaymentApiService.getBasket);
+    yield put(fetchBasketSuccess(result));
+    if (result.voucher === undefined) {
+      yield put(addCouponSuccess(null, null, null));
+    } else {
+      yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+    }
+  } catch (e) {
+    yield put(fetchBasketFailure());
   }
 }
 
