@@ -3,23 +3,12 @@ import { connect, Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'connected-react-router';
-import { sendTrackEvent } from '@edx/frontend-analytics';
 import SiteHeader from '@edx/frontend-component-site-header';
-import SiteFooter from '@edx/frontend-component-footer';
 import { IntlProvider, injectIntl, intlShape, getLocale, getMessages } from '@edx/frontend-i18n';
-import {
-  faFacebookSquare,
-  faTwitterSquare,
-  faYoutubeSquare,
-  faLinkedin,
-  faRedditSquare,
-} from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ErrorBoundary, fetchUserAccount } from '../common';
 import { ConnectedPaymentPage } from '../payment';
 
-import FooterLogo from '../assets/edx-footer.png';
 import HeaderLogo from '../assets/logo.svg';
 import NotFoundPage from './NotFoundPage';
 
@@ -56,46 +45,6 @@ function PageContent({
       content: intl.formatMessage(messages['siteheader.user.menu.register']),
     },
   ];
-  const socialLinks = [
-    {
-      title: 'Facebook',
-      url: configuration.FACEBOOK_URL,
-      icon: <FontAwesomeIcon icon={faFacebookSquare} className="social-icon" size="2x" />,
-      screenReaderText: 'Like edX on Facebook',
-    },
-    {
-      title: 'Twitter',
-      url: configuration.TWITTER_URL,
-      icon: <FontAwesomeIcon icon={faTwitterSquare} className="social-icon" size="2x" />,
-      screenReaderText: 'Follow edX on Twitter',
-    },
-    {
-      title: 'Youtube',
-      url: configuration.YOU_TUBE_URL,
-      icon: <FontAwesomeIcon icon={faYoutubeSquare} className="social-icon" size="2x" />,
-      screenReaderText: 'Subscribe to the edX YouTube channel',
-    },
-    {
-      title: 'LinkedIn',
-      url: configuration.LINKED_IN_URL,
-      icon: <FontAwesomeIcon icon={faLinkedin} className="social-icon" size="2x" />,
-      screenReaderText: 'Follow edX on LinkedIn',
-    },
-    {
-      title: 'Reddit',
-      url: configuration.REDDIT_URL,
-      icon: <FontAwesomeIcon icon={faRedditSquare} className="social-icon" size="2x" />,
-      screenReaderText: 'Subscribe to the edX subreddit',
-    },
-  ];
-  const enterpriseMarketingLinkData = {
-    url: configuration.ENTERPRISE_MARKETING_URL,
-    queryParams: {
-      utm_campaign: configuration.ENTERPRISE_MARKETING_UTM_CAMPAIGN,
-      utm_source: configuration.ENTERPRISE_MARKETING_UTM_SOURCE,
-      utm_medium: configuration.ENTERPRISE_MARKETING_FOOTER_UTM_MEDIUM,
-    },
-  };
 
   return (
     <div id="app">
@@ -115,21 +64,6 @@ function PageContent({
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </main>
-      <SiteFooter
-        siteName={configuration.SITE_NAME}
-        siteLogo={FooterLogo}
-        marketingSiteBaseUrl={configuration.MARKETING_SITE_BASE_URL}
-        enterpriseMarketingLink={enterpriseMarketingLinkData}
-        supportUrl={configuration.SUPPORT_URL}
-        contactUrl={configuration.CONTACT_URL}
-        openSourceUrl={configuration.OPEN_SOURCE_URL}
-        termsOfServiceUrl={configuration.TERMS_OF_SERVICE_URL}
-        privacyPolicyUrl={configuration.PRIVACY_POLICY_URL}
-        socialLinks={socialLinks}
-        appleAppStoreUrl={configuration.APPLE_APP_STORE_URL}
-        googlePlayUrl={configuration.GOOGLE_PLAY_URL}
-        handleAllTrackEvents={sendTrackEvent}
-      />
     </div>
   );
 }
