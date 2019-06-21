@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
+import ReactTooltip from 'react-tooltip';
+import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   faCcAmex,
   faCcDiscover,
@@ -103,6 +104,16 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card security code field"
               />
             </label>
+            <span data-tip data-for="securityCodeHelp">
+              <FontAwesomeIcon icon={faQuestionCircle} />
+            </span>
+            <ReactTooltip id="securityCodeHelp" place="bottom" effect="solid">
+              <FormattedMessage
+                id="payment.card.details.security.code.help.text"
+                defaultMessage="The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card."
+                description="The help text for the required credit card security code field"
+              />
+            </ReactTooltip>
             <Field
               id="securityCode"
               name="securityCode"

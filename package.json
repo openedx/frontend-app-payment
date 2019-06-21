@@ -62,6 +62,7 @@
     "react-responsive": "^6.1.1",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-tooltip": "^3.10.0",
     "react-transition-group": "^2.5.3",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.2",
