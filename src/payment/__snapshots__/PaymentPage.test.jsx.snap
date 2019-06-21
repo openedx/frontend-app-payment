@@ -1,5 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<PaymentPage /> Renders correctly in various states should render an empty basket 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <div
+    className="card"
+  >
+    <div
+      className="card-body"
+    >
+      <h5
+        className="card-title"
+      >
+        <span>
+          Your basket is empty.
+        </span>
+      </h5>
+      <p
+        className="card-text"
+      >
+        <span>
+          If you attempted to make a purchase, you have not been charged. Return to your 
+          <a
+            href="http://localhost:18000"
+            onClick={[Function]}
+            target="_self"
+          >
+            <span>
+              dashboard
+            </span>
+          </a>
+           to try again, or 
+          <a
+            href="http://localhost:18000/support"
+            onClick={[Function]}
+            target="_self"
+          >
+            <span>
+              contact edX E-commerce Support
+            </span>
+          </a>
+          .
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<PaymentPage /> Renders correctly in various states should render its default state 1`] = `
 <div
   className="page__payment container-fluid py-5"

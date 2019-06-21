@@ -10,6 +10,10 @@ module.exports = {
     SUPPORT_URL:'http://localhost:18000/support',
     LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
   },
+  feedback: {
+    byId: {},
+    orderedIds: [],
+  },
   userAccount: {
     loading: false,
     error: null,
@@ -38,17 +42,10 @@ module.exports = {
           type: 'paypal',
         },
       ],
-      orderTotal: 149,
-      calculatedDiscount: 12,
-      totalExclDiscount: 161,
-      products: [
-        {
-          imgUrl:
-            'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
-          name: 'Introduction to Happiness',
-          seatType: 'verified',
-        },
-      ],
+      orderTotal: 0,
+      calculatedDiscount: 0,
+      totalExclDiscount: 0,
+      products: [],
       voucher: {
         benefit: {
           type: 'Percentage',
