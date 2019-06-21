@@ -6,11 +6,6 @@ const messages = defineMessages({
     defaultMessage: 'Payment',
     description: 'The page heading for payment.',
   },
-  'payment.empty.basket': {
-    id: 'payment.empty.basket',
-    defaultMessage: 'Your basket is empty.',
-    description: 'The message displayed when there is no basket.',
-  },
   'payment.loading.payment': {
     id: 'payment.loading.payment',
     defaultMessage: 'Loading basket...',

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from '@edx/frontend-i18n';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
+import { Hyperlink } from '@edx/paragon';
 
 import messages from './PaymentPage.messages';
 
@@ -24,10 +25,50 @@ class PaymentPage extends React.Component {
   }
 
   renderEmptyMessage() {
+    const {
+      dashboardURL,
+      supportURL,
+    } = this.props;
+
     return (
-      <p>
-        {this.props.intl.formatMessage(messages['payment.empty.basket'])}
-      </p>
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">
+            <FormattedMessage
+              id="payment.empty.basket.heading"
+              defaultMessage="Your basket is empty."
+              description="The heading displayed when there is no basket"
+            />
+          </h5>
+          <p className="card-text">
+            <FormattedMessage
+              id="payment.empty.basket.message"
+              defaultMessage="If you attempted to make a purchase, you have not been charged. Return to your {actionLinkOne} to try again, or {actionLinkTwo}."
+              description="The message displayed when there is no basket. Action links will redirect to dashboard or support page"
+              values={{
+              actionLinkOne: (
+                <Hyperlink destination={dashboardURL}>
+                  <FormattedMessage
+                    id="payment.empty.basket.dashboardURL"
+                    defaultMessage="dashboard"
+                    description="The message displayed on the redirect to dashboard link"
+                  />
+                </Hyperlink>
+              ),
+              actionLinkTwo: (
+                <Hyperlink destination={supportURL}>
+                  <FormattedMessage
+                    id="payment.empty.basket.supportURL"
+                    defaultMessage="contact edX E-commerce Support"
+                    description="The message displayed on the redirect to support page link"
+                  />
+                </Hyperlink>
+              ),
+            }}
+            />
+          </p>
+        </div>
+      </div>
     );
   }
 
@@ -49,18 +90,22 @@ class PaymentPage extends React.Component {
 
   renderBasket() {
     return (
-      <React.Fragment>
-        <ProductLineItems />
-        <BasketSummary />
-        <OrderDetails />
-      </React.Fragment>
+      <div className="row">
+        <div className="col-md-5 pr-md-5 col-basket-summary">
+          <ProductLineItems />
+          <BasketSummary />
+          <OrderDetails />
+        </div>
+        <div className="col-md-7 pl-md-5">
+          <PaymentForm />
+        </div>
+      </div>
     );
   }
 
   render() {
     const {
       loading,
-      loaded,
       loadingError,
       isEmpty,
     } = this.props;
@@ -69,16 +114,7 @@ class PaymentPage extends React.Component {
       <div className="page__payment container-fluid py-5">
         {loadingError ? this.renderError() : null}
         {loading ? this.renderLoading() : null}
-        {loaded ? (
-          <div className="row">
-            <div className="col-md-5 pr-md-5 col-basket-summary">
-              {isEmpty ? this.renderBasket() : this.renderEmptyMessage()}
-            </div>
-            <div className="col-md-7 pl-md-5">
-              <PaymentForm />
-            </div>
-          </div>
-        ) : null}
+        {isEmpty ? this.renderEmptyMessage() : this.renderBasket()}
       </div>
     );
   }
@@ -88,16 +124,16 @@ class PaymentPage extends React.Component {
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
-  loaded: PropTypes.bool,
   loadingError: PropTypes.string,
   isEmpty: PropTypes.bool,
+  dashboardURL: PropTypes.string.isRequired,
+  supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
 };
 
 PaymentPage.defaultProps = {
   loadingError: null,
   loading: false,
-  loaded: false,
   isEmpty: false,
 };
 
