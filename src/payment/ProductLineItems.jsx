@@ -24,16 +24,16 @@ function ProductLineItems({ products }) {
           description="Subheading of the cart in product details section"
         />
       </p>
-      {products.map(product => <ProductLineItem {...product} key={product.name} />)}
+      {products.map(product => <ProductLineItem {...product} key={product.title} />)}
     </div>
   );
 }
 
 ProductLineItems.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
-    imgUrl: PropTypes.string,
-    name: PropTypes.string,
-    seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified', 'honor', 'audit']),
+    imageURL: PropTypes.string,
+    title: PropTypes.string,
+    seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
   })),
 };
 
