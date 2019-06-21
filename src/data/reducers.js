@@ -3,11 +3,15 @@ import { userAccount } from '@edx/frontend-auth';
 import { connectRouter } from 'connected-react-router';
 import { reducer as formReducer } from 'redux-form';
 import { reducer as i18nReducer } from '@edx/frontend-i18n';
+
 import {
   reducer as paymentReducer,
   storeName as paymentStoreName,
 } from '../payment';
-
+import {
+  reducer as feedbackReducer,
+  storeName as feedbackStoreName,
+} from '../feedback';
 
 const identityReducer = (state) => {
   const newState = { ...state };
@@ -22,6 +26,7 @@ const createRootReducer = history =>
     configuration: identityReducer,
     userAccount,
     [paymentStoreName]: paymentReducer,
+    [feedbackStoreName]: feedbackReducer,
     router: connectRouter(history),
     form: formReducer,
     i18n: i18nReducer,

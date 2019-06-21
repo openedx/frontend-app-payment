@@ -29,9 +29,9 @@ export async function getBasket() {
   const transformedResults = {
     showVoucherForm: data.show_voucher_form,
     paymentProviders: data.payment_providers,
-    orderTotal: data.order_total,
-    calculatedDiscount: data.calculated_discount,
-    totalExclDiscount: data.total_excl_discount,
+    orderTotal: Number.parseInt(data.order_total, 10),
+    calculatedDiscount: Number.parseInt(data.calculated_discount, 10),
+    totalExclDiscount: Number.parseInt(data.total_excl_discount, 10),
     products: data.products.map(({ img_url: imgUrl, name, seat_type: seatType }) => ({
       imgUrl, name, seatType,
     })),

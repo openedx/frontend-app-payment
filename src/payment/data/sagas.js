@@ -12,6 +12,7 @@ import {
 import * as PaymentApiService from './service';
 
 import { saga as couponSaga, addCouponSuccess, addCouponBegin } from '../coupon';
+import { handleErrors } from '../../feedback';
 
 export function* handleFetchBasket() {
   yield put(fetchBasketBegin());
@@ -26,6 +27,7 @@ export function* handleFetchBasket() {
     }
   } catch (e) {
     yield put(fetchBasketFailure());
+    yield call(handleErrors, e);
   }
 }
 

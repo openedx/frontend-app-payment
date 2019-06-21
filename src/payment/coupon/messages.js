@@ -21,6 +21,16 @@ const messages = defineMessages({
     defaultMessage: 'Coupon {code} applied for {value} off',
     description: 'The description of a coupon for a percentage off the total price. Percentage symbol is included in {value}',
   },
+  'payment.coupon.added': {
+    id: 'payment.coupon.added',
+    defaultMessage: "Coupon code '{code}' was added to your basket.",
+    description: 'Notification to the user that a coupon code has been added to their basket.',
+  },
+  'payment.coupon.removed': {
+    id: 'payment.coupon.removed',
+    defaultMessage: "Coupon code '{code}' was removed from your basket.",
+    description: 'Notification to the user that a coupon code has been removed from their basket.',
+  },
   'payment.coupon.benefit.absolute': {
     id: 'payment.coupon.benefit.absolute',
     defaultMessage: 'Coupon {code} applied for {value} off',

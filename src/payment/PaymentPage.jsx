@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
 
 import messages from './PaymentPage.messages';
+import { messages as couponMessages } from './coupon';
 
 // Actions
 import { fetchBasket } from './data/actions';
@@ -18,6 +19,7 @@ import BasketSummary from './BasketSummary';
 import OrderDetails from './OrderDetails';
 import PaymentForm from './PaymentForm';
 import ProductLineItems from './ProductLineItems';
+import AlertList from '../feedback/AlertList';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -102,6 +104,7 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="page__payment container-fluid py-5">
+        <AlertList intlMessages={Object.assign({}, messages, couponMessages)} />
         {loading ? this.renderLoading() : null}
         {isEmpty ? this.renderEmptyMessage() : null}
         {loaded && !isEmpty ? this.renderBasket() : null}
