@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Field } from 'redux-form';
+import { clearFields, Field } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
 import FormInput from '../common/components/FormInput';
@@ -9,8 +9,20 @@ import FormSelect from '../common/components/FormSelect';
 
 import { countryOptionsSelector } from './data/selectors';
 import messages from './CardHolderInformation.messages';
+import StateProvinceFormInput from './StateProvinceFormInput';
 
-class CardHolderInformation extends React.Component {
+export class CardHolderInformationComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { selectedCountry: null };
+  }
+
+  handleSelectCountry = (event, newValue) => {
+    this.setState({ selectedCountry: newValue });
+    this.props.clearFields('payment', false, false, ['state']);
+  };
+
   renderCountryOptions() {
     const items = [(
       <option key="" value="">
@@ -106,20 +118,14 @@ class CardHolderInformation extends React.Component {
               component={FormSelect}
               options={this.renderCountryOptions()}
               required
+              onChange={this.handleSelectCountry}
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-lg-6 form-group">
-            <label htmlFor="state">
-              <FormattedMessage
-                id="payment.card.holder.information.state.label"
-                defaultMessage="State/Province"
-                description="The label for the card holder state/province field"
-              />
-            </label>
-            <Field id="state" name="state" component={FormInput} type="text" />
+            <StateProvinceFormInput country={this.state.selectedCountry} />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -137,7 +143,8 @@ class CardHolderInformation extends React.Component {
   }
 }
 
-CardHolderInformation.propTypes = {
+CardHolderInformationComponent.propTypes = {
+  clearFields: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   countryOptions: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -145,8 +152,11 @@ CardHolderInformation.propTypes = {
   })),
 };
 
-CardHolderInformation.defaultProps = {
+CardHolderInformationComponent.defaultProps = {
   countryOptions: [],
 };
 
-export default connect(countryOptionsSelector)(injectIntl(CardHolderInformation));
+export default connect(
+  countryOptionsSelector,
+  { clearFields },
+)(injectIntl(CardHolderInformationComponent));
