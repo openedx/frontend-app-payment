@@ -96,13 +96,15 @@ class PaymentPage extends React.Component {
   render() {
     const {
       loading,
+      loaded,
       isEmpty,
     } = this.props;
 
     return (
       <div className="page__payment container-fluid py-5">
         {loading ? this.renderLoading() : null}
-        {isEmpty ? this.renderEmptyMessage() : this.renderBasket()}
+        {isEmpty ? this.renderEmptyMessage() : null}
+        {loaded && !isEmpty ? this.renderBasket() : null}
       </div>
     );
   }
@@ -111,14 +113,16 @@ class PaymentPage extends React.Component {
 
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
-  loading: PropTypes.bool,
   isEmpty: PropTypes.bool,
+  loaded: PropTypes.bool,
+  loading: PropTypes.bool,
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
 };
 
 PaymentPage.defaultProps = {
+  loaded: false,
   loading: false,
   isEmpty: false,
 };

@@ -27,8 +27,8 @@ module.exports = {
   },
   payment: {
     basket: {
+      loaded: true,
       loading: false,
-      loadingError: null,
       showVoucherForm: true,
       paymentProviders: [
         {

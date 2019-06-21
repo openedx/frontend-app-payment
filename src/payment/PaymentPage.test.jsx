@@ -16,7 +16,6 @@ const mockStore = configureMockStore();
 const storeMocks = {
   defaultState: require('./__mocks__/defaultState.mockStore.js'),
   loading: require('./__mocks__/loading.mockStore.js'),
-  loadingError: require('./__mocks__/loadingError.mockStore.js'),
   loadedBasket: require('./__mocks__/loadedBasket.mockStore.js'),
   loadedBasketWithNoTotals: require('./__mocks__/loadedBasketWithNoTotals.mockStore.js'),
 };
@@ -54,20 +53,6 @@ describe('<PaymentPage />', () => {
         .create((
           <IntlProvider locale="en">
             <Provider store={mockStore(storeMocks.loading)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-
-    it('should render errors', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadingError)}>
               <ConnectedPaymentPage {...requirePaymentPageProps} />
             </Provider>
           </IntlProvider>

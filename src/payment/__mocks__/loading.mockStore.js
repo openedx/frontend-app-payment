@@ -26,7 +26,10 @@ module.exports = {
     levelOfEducation: null,
   },
   payment: {
-    basket: { loading: true, loadingError: null },
+    basket: {
+      loaded: false,
+      loading: true,
+    },
     coupon: {
       benefit: null,
       code: null,

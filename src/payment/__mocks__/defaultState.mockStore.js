@@ -27,8 +27,8 @@ module.exports = {
   },
   payment: {
     basket: {
+      loaded: false,
       loading: false,
-      loadingError: null,
     },
     coupon: {
       benefit: null,
