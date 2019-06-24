@@ -1,7 +1,7 @@
 import pick from 'lodash.pick';
 
 import { configureApiService as configureCouponApiService } from '../coupon';
-import { applyConfiguration } from '../../common/serviceUtils';
+import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
 
 let config = {
   ACCOUNTS_API_BASE_URL: null,
@@ -22,14 +22,16 @@ export function configureApiService(newConfig, newApiClient) {
 }
 
 export async function getBasket() {
-  const { data } = await apiClient.get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+  const { data } = await apiClient
+    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`)
+    .catch(handleRequestError);
 
   const transformedResults = {
     showVoucherForm: data.show_voucher_form,
     paymentProviders: data.payment_providers,
-    orderTotal: data.order_total,
-    calculatedDiscount: data.calculated_discount,
-    totalExclDiscount: data.total_excl_discount,
+    orderTotal: Number.parseInt(data.order_total, 10),
+    calculatedDiscount: Number.parseInt(data.calculated_discount, 10),
+    totalExclDiscount: Number.parseInt(data.total_excl_discount, 10),
     products: data.products.map(({ img_url: imgUrl, name, seat_type: seatType }) => ({
       imgUrl, name, seatType,
     })),

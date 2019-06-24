@@ -13,6 +13,7 @@ import {
   removeCouponFailure,
 } from './actions';
 import { PERCENTAGE_BENEFIT } from './constants';
+import { addMessage, INFO, DANGER } from '../../../feedback';
 
 describe('saga tests', () => {
   const configuration = {
@@ -59,16 +60,15 @@ describe('saga tests', () => {
           resolve(responses.successResponse);
         }));
 
-      configureApiService(
-        configuration,
-        {
-          post: apiClientPost,
-        },
-      );
+      configureApiService(configuration, {
+        post: apiClientPost,
+      });
 
       const dispatched = [];
       await runSaga(
-        { dispatch: action => dispatched.push(action) },
+        {
+          dispatch: action => dispatched.push(action),
+        },
         handleAddCoupon,
         addCoupon('DEMO25'),
       ).toPromise();
@@ -79,6 +79,14 @@ describe('saga tests', () => {
           type: PERCENTAGE_BENEFIT,
           value: 25,
         }),
+        addMessage(
+          'payment.coupon.added',
+          null,
+          {
+            code: 'DEMO25',
+          },
+          INFO,
+        ),
       ]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
@@ -94,12 +102,9 @@ describe('saga tests', () => {
           reject(responses.errorResponse);
         }));
 
-      configureApiService(
-        configuration,
-        {
-          post: apiClientPost,
-        },
-      );
+      configureApiService(configuration, {
+        post: apiClientPost,
+      });
 
       const dispatched = [];
       await runSaga(
@@ -110,7 +115,16 @@ describe('saga tests', () => {
         addCoupon('DEMO25'),
       ).toPromise();
 
-      expect(dispatched).toEqual([addCouponBegin(), addCouponFailure('uhoh')]);
+      expect(dispatched).toEqual([
+        addCouponBegin(),
+        addCouponFailure(),
+        addMessage(
+          'uhoh',
+          null,
+          null,
+          DANGER,
+        ),
+      ]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
         'http://localhost/bff/payment/v0/vouchers/',
@@ -125,12 +139,9 @@ describe('saga tests', () => {
           reject(responses.unexpectedErrorResponse);
         }));
 
-      configureApiService(
-        configuration,
-        {
-          post: apiClientPost,
-        },
-      );
+      configureApiService(configuration, {
+        post: apiClientPost,
+      });
 
       const caughtErrors = [];
       const dispatched = [];
@@ -182,16 +193,18 @@ describe('saga tests', () => {
           resolve(responses.successResponse);
         }));
 
-      configureApiService(
-        configuration,
-        {
-          delete: apiClientDelete,
-        },
-      );
+      configureApiService(configuration, {
+        delete: apiClientDelete,
+      });
 
       const dispatched = [];
       await runSaga(
-        { dispatch: action => dispatched.push(action) },
+        {
+          dispatch: action => dispatched.push(action),
+          getState: () => ({
+            payment: { coupon: { code: 'DEMO25' } },
+          }),
+        },
         handleRemoveCoupon,
         removeCoupon(12345),
       ).toPromise();
@@ -203,6 +216,14 @@ describe('saga tests', () => {
           calculated_discount: 12,
           total_excl_discount: 161,
         }),
+        addMessage(
+          'payment.coupon.removed',
+          null,
+          {
+            code: 'DEMO25',
+          },
+          INFO,
+        ),
       ]);
 
       expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
@@ -214,23 +235,32 @@ describe('saga tests', () => {
           reject(responses.errorResponse);
         }));
 
-      configureApiService(
-        configuration,
-        {
-          delete: apiClientDelete,
-        },
-      );
+      configureApiService(configuration, {
+        delete: apiClientDelete,
+      });
 
       const dispatched = [];
       await runSaga(
         {
           dispatch: action => dispatched.push(action),
+          getState: () => ({
+            payment: { coupon: { code: 'DEMO25' } },
+          }),
         },
         handleRemoveCoupon,
         removeCoupon(12345),
       ).toPromise();
 
-      expect(dispatched).toEqual([removeCouponBegin(), removeCouponFailure('uhoh')]);
+      expect(dispatched).toEqual([
+        removeCouponBegin(),
+        removeCouponFailure(),
+        addMessage(
+          'uhoh',
+          null,
+          null,
+          DANGER,
+        ),
+      ]);
 
       expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
     });
@@ -241,12 +271,9 @@ describe('saga tests', () => {
           reject(responses.unexpectedErrorResponse);
         }));
 
-      configureApiService(
-        configuration,
-        {
-          delete: apiClientDelete,
-        },
-      );
+      configureApiService(configuration, {
+        delete: apiClientDelete,
+      });
 
       const caughtErrors = [];
       const dispatched = [];
@@ -255,6 +282,9 @@ describe('saga tests', () => {
           {
             dispatch: action => dispatched.push(action),
             onError: error => caughtErrors.push(error),
+            getState: () => ({
+              payment: { coupon: { code: 'DEMO25' } },
+            }),
           },
           handleRemoveCoupon,
           removeCoupon(12345),

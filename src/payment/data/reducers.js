@@ -5,7 +5,6 @@ import { reducer as coupon } from '../coupon';
 
 export const basketInitialState = {
   loading: false,
-  loadingError: null,
 };
 
 const basket = (state = basketInitialState, action = null) => {
@@ -13,20 +12,21 @@ const basket = (state = basketInitialState, action = null) => {
     case FETCH_BASKET.BEGIN:
       return {
         ...state,
-        loadingError: null,
         loading: true,
+        loaded: false,
       };
     case FETCH_BASKET.SUCCESS:
       return {
         ...state,
         ...action.payload,
         loading: false,
+        loaded: true,
       };
-    case FETCH_BASKET.ERROR:
+    case FETCH_BASKET.FAILURE:
       return {
         ...state,
-        loadingError: action.payload,
         loading: false,
+        loaded: true,
       };
     default:
       return state;

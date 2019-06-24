@@ -10,6 +10,10 @@ module.exports = {
     SUPPORT_URL:'http://localhost:18000/support',
     LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
   },
+  feedback: {
+    byId: {},
+    orderedIds: [],
+  },
   userAccount: {
     loading: false,
     error: null,
@@ -26,7 +30,10 @@ module.exports = {
     levelOfEducation: null,
   },
   payment: {
-    basket: { loading: true, loadingError: null },
+    basket: {
+      loaded: false,
+      loading: true,
+    },
     coupon: {
       benefit: null,
       code: null,

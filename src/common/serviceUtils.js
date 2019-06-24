@@ -37,6 +37,29 @@ export function unpackFieldErrors(fieldErrors) {
   }, {});
 }
 
+function handleFieldErrors(errors) {
+  const fieldErrors = Object.entries(errors).map(([name, value]) => ({
+    code: value.error_code ? value.error_code : null,
+    message: value.user_message,
+    fieldName: name,
+  }));
+
+  const validationError = new Error();
+  validationError.fieldErrors = fieldErrors;
+  throw validationError;
+}
+
+function handleApiErrors(errors) {
+  const apiErrors = errors.map(err => ({
+    code: err.error_code ? err.error_code : null,
+    message: err.user_message ? err.user_message : null,
+  }));
+
+  const apiError = new Error();
+  apiError.errors = apiErrors;
+  throw apiError;
+}
+
 /**
  * Processes and re-throws request errors.  If the response contains a field_errors field, will
  * massage the data into a form expected by the client.
@@ -51,22 +74,27 @@ export function unpackFieldErrors(fieldErrors) {
  * @param unpackFunction (Optional) A function to use to unpack the field errors as a replacement
  * for the default.
  */
-export function handleRequestError(error, unpackFunction = unpackFieldErrors) {
+export function handleRequestError(error) {
   // Validation errors
   if (error.response && error.response.data.field_errors) {
-    const validationError = Object.create(error);
-    validationError.fieldErrors = unpackFunction(error.response.data.field_errors);
-    throw validationError;
+    handleFieldErrors(error.response.data.field_errors);
   }
 
   // API errors
-  if (error.response && error.response.data.error_code !== undefined) {
-    const apiError = Object.create(error);
-    apiError.code = error.response.data.error_code;
-    throw apiError;
+  if (error.response && error.response.data.errors !== undefined) {
+    handleApiErrors(error.response.data.errors);
+  }
+
+  // Single API error
+  if (error.response && error.response.data.error_code) {
+    handleApiErrors([
+      {
+        error_code: error.response.data.error_code,
+        user_message: error.response.data.user_message,
+      },
+    ]);
   }
 
   // Other errors
   throw error;
 }
-

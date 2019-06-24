@@ -10,6 +10,10 @@ module.exports = {
     SUPPORT_URL:'http://localhost:18000/support',
     LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
   },
+  feedback: {
+    byId: {},
+    orderedIds: [],
+  },
   userAccount: {
     loading: false,
     error: null,
@@ -26,7 +30,30 @@ module.exports = {
     levelOfEducation: null,
   },
   payment: {
-    basket: { loading: false, loadingError: 'Something went really wrong.' },
+    basket: {
+      loaded: true,
+      loading: false,
+      showVoucherForm: true,
+      paymentProviders: [
+        {
+          type: 'cybersource',
+        },
+        {
+          type: 'paypal',
+        },
+      ],
+      orderTotal: 0,
+      calculatedDiscount: 0,
+      totalExclDiscount: 0,
+      products: [],
+      voucher: {
+        benefit: {
+          type: 'Percentage',
+          value: 20,
+        },
+        code: 'SUMMER20',
+      },
+    },
     coupon: {
       benefit: null,
       code: null,

@@ -7,13 +7,11 @@ import {
 export const storeName = 'payment';
 export const paymentSelector = (state) => {
   const paymentState = state[storeName].basket;
-  const loaded = !paymentState.loading && !paymentState.loadingError;
   return {
     ...paymentState,
-    loaded,
     dashboardURL: state.configuration.LMS_BASE_URL,
     supportURL: state.configuration.SUPPORT_URL,
-    isEmpty: loaded && (!paymentState.products || paymentState.products.length === 0),
+    isEmpty: paymentState.loaded && (!paymentState.products || paymentState.products.length === 0),
   };
 };
 

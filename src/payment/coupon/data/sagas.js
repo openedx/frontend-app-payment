@@ -1,15 +1,21 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, select } from 'redux-saga/effects';
 import {
   ADD_COUPON,
   addCouponBegin,
   addCouponSuccess,
-  addCouponFailure,
   removeCouponBegin,
   removeCouponSuccess,
-  removeCouponFailure,
   REMOVE_COUPON,
+  addCouponFailure,
+  removeCouponFailure,
 } from './actions';
 import { deleteCoupon, postCoupon } from './service';
+
+import {
+  addMessage,
+  handleErrors,
+  INFO,
+} from '../../../feedback';
 
 export function* handleAddCoupon(action) {
   yield put(addCouponBegin());
@@ -17,26 +23,27 @@ export function* handleAddCoupon(action) {
     const result = yield call(postCoupon, action.payload.code);
     const { id: voucherId, code, benefit } = result.voucher;
     yield put(addCouponSuccess(voucherId, code, benefit));
+    yield put(addMessage('payment.coupon.added', null, {
+      code,
+    }, INFO));
   } catch (e) {
-    if (e.code !== undefined) {
-      yield put(addCouponFailure(e.code));
-    } else {
-      throw e;
-    }
+    yield put(addCouponFailure());
+    yield call(handleErrors, e);
   }
 }
 
 export function* handleRemoveCoupon(action) {
+  const code = yield select(state => state.payment.coupon.code);
   yield put(removeCouponBegin());
   try {
     const result = yield call(deleteCoupon, action.payload.voucherId);
     yield put(removeCouponSuccess(result));
+    yield put(addMessage('payment.coupon.removed', null, {
+      code,
+    }, INFO));
   } catch (e) {
-    if (e.code !== undefined) {
-      yield put(removeCouponFailure(e.code));
-    } else {
-      throw e;
-    }
+    yield put(removeCouponFailure());
+    yield call(handleErrors, e);
   }
 }
 

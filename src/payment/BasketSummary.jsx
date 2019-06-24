@@ -5,6 +5,7 @@ import { FormattedNumber, FormattedMessage } from '@edx/frontend-i18n';
 
 import { basketSelector } from './data/selectors';
 import { CouponForm } from './coupon';
+import { PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT } from './coupon/data/constants';
 
 
 function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
@@ -137,10 +138,10 @@ BasketSummary.propTypes = {
   totalExclDiscount: PropTypes.number,
   voucher: PropTypes.shape({
     benefit: PropTypes.shape({
-      type: PropTypes.string, // TODO: use PropTypes.oneOf(['Percentage', or other values]),
-      value: PropTypes.number,
+      type: PropTypes.oneOf([PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT]).isRequired,
+      value: PropTypes.number.isRequired,
     }),
-    code: PropTypes.string,
+    code: PropTypes.string.isRequired,
   }),
 };
 

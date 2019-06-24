@@ -5,6 +5,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
 
 import messages from './PaymentPage.messages';
+import { messages as couponMessages } from './coupon';
 
 // Actions
 import { fetchBasket } from './data/actions';
@@ -18,6 +19,7 @@ import BasketSummary from './BasketSummary';
 import OrderDetails from './OrderDetails';
 import PaymentForm from './PaymentForm';
 import ProductLineItems from './ProductLineItems';
+import AlertList from '../feedback/AlertList';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -72,16 +74,6 @@ class PaymentPage extends React.Component {
     );
   }
 
-  renderError() {
-    return (
-      <div>
-        {this.props.intl.formatMessage(messages['payment.loading.error'], {
-          error: this.props.loadingError,
-        })}
-      </div>
-    );
-  }
-
   renderLoading() {
     return (
       <PageLoading srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])} />
@@ -106,15 +98,16 @@ class PaymentPage extends React.Component {
   render() {
     const {
       loading,
-      loadingError,
+      loaded,
       isEmpty,
     } = this.props;
 
     return (
       <div className="page__payment container-fluid py-5">
-        {loadingError ? this.renderError() : null}
+        <AlertList intlMessages={Object.assign({}, messages, couponMessages)} />
         {loading ? this.renderLoading() : null}
-        {isEmpty ? this.renderEmptyMessage() : this.renderBasket()}
+        {isEmpty ? this.renderEmptyMessage() : null}
+        {loaded && !isEmpty ? this.renderBasket() : null}
       </div>
     );
   }
@@ -123,16 +116,16 @@ class PaymentPage extends React.Component {
 
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
-  loading: PropTypes.bool,
-  loadingError: PropTypes.string,
   isEmpty: PropTypes.bool,
+  loaded: PropTypes.bool,
+  loading: PropTypes.bool,
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
 };
 
 PaymentPage.defaultProps = {
-  loadingError: null,
+  loaded: false,
   loading: false,
   isEmpty: false,
 };
