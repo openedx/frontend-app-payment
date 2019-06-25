@@ -269,6 +269,37 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     <div
       className="col-md-7 pl-md-5"
     >
+      <div
+        className="basket-section"
+      >
+        <h2
+          className="section-heading"
+        >
+          <span>
+            Select Payment Method
+          </span>
+        </h2>
+        <p
+          className="d-flex "
+        >
+          <button
+            className="payment-method-button active"
+          >
+            <img
+              alt="Credit Card"
+              src="test-file-stub"
+            />
+          </button>
+          <button
+            className="payment-method-button"
+          >
+            <img
+              alt="PayPal"
+              src="test-file-stub"
+            />
+          </button>
+        </p>
+      </div>
       <form
         noValidate={true}
         onSubmit={[Function]}
@@ -2203,6 +2234,37 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
     <div
       className="col-md-7 pl-md-5"
     >
+      <div
+        className="basket-section"
+      >
+        <h2
+          className="section-heading"
+        >
+          <span>
+            Select Payment Method
+          </span>
+        </h2>
+        <p
+          className="d-flex "
+        >
+          <button
+            className="payment-method-button active"
+          >
+            <img
+              alt="Credit Card"
+              src="test-file-stub"
+            />
+          </button>
+          <button
+            className="payment-method-button"
+          >
+            <img
+              alt="PayPal"
+              src="test-file-stub"
+            />
+          </button>
+        </p>
+      </div>
       <form
         noValidate={true}
         onSubmit={[Function]}
