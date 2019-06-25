@@ -31,6 +31,23 @@
       pointer-events: none;
     }
   }
+  .payment-method-button {
+    display: inline-block;
+    padding: map-get($spacers, 2);
+    margin-right: map-get($spacers, 2);
+    border: solid $border-width $border-color;            
+    border-radius: $border-radius;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    &.active {
+      border-bottom: solid 0.1875rem $primary;
+    }
+    img {
+      height: 24px;
+      display: block;
+    }
+  }
 }
 
 #securityCodeHelp {
