@@ -18,6 +18,7 @@ import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
 import OrderDetails from './OrderDetails';
 import PaymentForm from './PaymentForm';
+import PaymentMethodSelect from './PaymentMethodSelect';
 import ProductLineItems from './ProductLineItems';
 import AlertList from '../feedback/AlertList';
 
@@ -89,6 +90,7 @@ class PaymentPage extends React.Component {
           <OrderDetails />
         </div>
         <div className="col-md-7 pl-md-5">
+          <PaymentMethodSelect />
           <PaymentForm />
         </div>
       </div>
