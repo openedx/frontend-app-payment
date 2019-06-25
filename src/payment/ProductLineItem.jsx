@@ -13,7 +13,7 @@ class ProductLineItem extends React.PureComponent {
           defaultMessage="Professional Certificate"
           description="Course certificate type on product details section"
         />);
-      case 'verified':
+      case 'Verified':
         return (<FormattedMessage
           id="payment.productlineitem.verified.certificate"
           defaultMessage="Verified Certificate"
@@ -28,17 +28,17 @@ class ProductLineItem extends React.PureComponent {
 
   render() {
     const {
-      imgUrl,
-      name,
+      imageURL,
+      title,
       seatType,
     } = this.props;
     return (
       <div className="row align-items-center">
         <div className="col-5">
-          <img className="img-thumbnail" src={imgUrl} alt={name} />
+          <img className="img-thumbnail" src={imageURL} alt={title} />
         </div>
         <div className="col-7">
-          <h6 className="m-0">{name}</h6>
+          <h6 className="m-0">{title}</h6>
           <p className="m-0">{this.renderSeatType(seatType)}</p>
         </div>
       </div>
@@ -47,9 +47,9 @@ class ProductLineItem extends React.PureComponent {
 }
 
 ProductLineItem.propTypes = {
-  imgUrl: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified', 'honor', 'audit']),
+  imageURL: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
 };
 
 ProductLineItem.defaultProps = {

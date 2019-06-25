@@ -32,8 +32,8 @@ export async function getBasket() {
     orderTotal: Number.parseInt(data.order_total, 10),
     calculatedDiscount: Number.parseInt(data.calculated_discount, 10),
     totalExclDiscount: Number.parseInt(data.total_excl_discount, 10),
-    products: data.products.map(({ img_url: imgUrl, name, seat_type: seatType }) => ({
-      imgUrl, name, seatType,
+    products: data.products.map(({ image_url: imageURL, title, seat_type: seatType }) => ({
+      imageURL, title, seatType,
     })),
     voucher: data.voucher,
   };

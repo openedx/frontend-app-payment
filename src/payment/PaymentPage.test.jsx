@@ -107,9 +107,9 @@ describe('<PaymentPage />', () => {
 });
 
 const product = {
-  imgUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
-  name: 'Introduction to Happiness',
-  seatType: 'verified',
+  imageURL: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+  title: 'Introduction to Happiness',
+  seatType: 'Verified',
 };
 
 describe('<ProductLineItem />', () => {
@@ -141,7 +141,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for verified certificate', () => {
-      product.seatType = 'verified';
+      product.seatType = 'Verified';
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
