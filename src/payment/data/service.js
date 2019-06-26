@@ -40,3 +40,16 @@ export async function getBasket() {
 
   return transformedResults;
 }
+
+export async function sdnCheck(firstName, lastName, city, country) {
+  const { data } = await apiClient.post(
+    `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
+    {
+      name: `${firstName} ${lastName}`,
+      city,
+      country,
+    },
+  );
+
+  return data;
+}
