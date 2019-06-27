@@ -1,16 +1,21 @@
-import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { all, call, put, select, takeEvery } from 'redux-saga/effects';
 
 // Actions
 import {
   FETCH_BASKET,
-  SDN_CHECK,
+  SUBMIT_PAYMENT,
   fetchBasketBegin,
   fetchBasketSuccess,
   fetchBasketFailure,
+  submitPaymentBegin,
+  submitPaymentFailure,
+  checkoutSuccess,
 } from './actions';
 
 // Services
 import * as PaymentApiService from './service';
+
+import { basketSelector } from './selectors';
 
 import { saga as couponSaga, addCouponSuccess, addCouponBegin } from '../coupon';
 import { handleErrors } from '../../feedback';
@@ -37,24 +42,38 @@ export function* handleFetchBasket() {
   }
 }
 
-export function* handleSdnCheck(action) {
+export function* handleSubmitPayment(action) {
+  yield put(submitPaymentBegin());
   try {
-    const result = yield call(
+    const sdnCheck = yield call(
       PaymentApiService.sdnCheck,
-      ...action.payload,
+      action.payload.cardHolderInfo.firstName,
+      action.payload.cardHolderInfo.lastName,
+      action.payload.cardHolderInfo.city,
+      action.payload.cardHolderInfo.country,
     );
 
-    if (result.hits > 0) {
+    if (sdnCheck.hits > 0) {
       window.location.href = `${configuration.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
     }
+
+    const basket = yield select(basketSelector);
+    const checkout = yield call(
+      PaymentApiService.checkout,
+      basket.basketId,
+      action.payload.cardHolderInfo,
+    );
+
+    yield put(checkoutSuccess(configuration.CYBERSOURCE_URL, checkout.form_fields));
   } catch (e) {
+    yield put(submitPaymentFailure());
     yield call(handleErrors, e);
   }
 }
 
 export default function* saga() {
   yield takeEvery(FETCH_BASKET.BASE, handleFetchBasket);
-  yield takeEvery(SDN_CHECK.BASE, handleSdnCheck);
+  yield takeEvery(SUBMIT_PAYMENT.BASE, handleSubmitPayment);
   yield all([
     couponSaga(),
   ]);

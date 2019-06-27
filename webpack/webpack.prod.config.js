@@ -150,6 +150,7 @@ module.exports = Merge.smart(commonConfig, {
       NEW_RELIC_ADMIN_KEY: null,
       NEW_RELIC_APP_ID: null,
       NEW_RELIC_LICENSE_KEY: null,
+      CYBERSOURCE_URL: null,
     }),
     new HtmlWebpackNewRelicPlugin({
       // This plugin fixes an issue where the newrelic script will break if

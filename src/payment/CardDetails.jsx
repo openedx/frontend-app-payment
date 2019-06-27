@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import ReactTooltip from 'react-tooltip';
@@ -17,11 +18,11 @@ import FormSelect from '../common/components/FormSelect';
 
 const CardValidator = require('card-validator');
 
-export const SUPPORTED_CARD_ICONS = {
-  'american-express': faCcAmex,
-  discover: faCcDiscover,
-  mastercard: faCcMastercard,
-  visa: faCcVisa,
+export const SUPPORTED_CARDS = {
+  'american-express': { id: '003', icon: faCcAmex },
+  discover: { id: '004', icon: faCcDiscover },
+  mastercard: { id: '002', icon: faCcMastercard },
+  visa: { id: '001', icon: faCcVisa },
 };
 
 export class CardDetailsComponent extends React.Component {
@@ -29,7 +30,11 @@ export class CardDetailsComponent extends React.Component {
     super(props);
 
     this.state = {
+      cardId: '',
       cardIcon: null,
+      cardNumber: '',
+      securityCode: '',
+      cardExpiryDate: '-',
     };
   }
 
@@ -41,13 +46,32 @@ export class CardDetailsComponent extends React.Component {
     return items;
   }
 
-  updateCardType = (event, newValue) => {
+  handleCardNumberChange = (event, newValue) => {
     let cardIcon = null;
+    let cardId = '';
     const { card } = CardValidator.number(newValue);
     if (card) {
-      cardIcon = SUPPORTED_CARD_ICONS[card.type];
+      const cardInfo = SUPPORTED_CARDS[card.type];
+      cardId = cardInfo.id;
+      cardIcon = cardInfo.icon;
     }
-    this.setState({ cardIcon });
+    this.setState({ cardId, cardIcon, cardNumber: newValue });
+  };
+
+  handleSecurityCodeChange = (event, newValue) => {
+    this.setState({ securityCode: newValue });
+  };
+
+  updateCardExpiryMonth = (event, newValue) => {
+    const cardExpiryParts = this.state.cardExpiryDate.split('-');
+    cardExpiryParts[0] = newValue.padStart(2, '0');
+    this.setState({ cardExpiryDate: cardExpiryParts.join('-') });
+  };
+
+  updateCardExpiryYear = (event, newValue) => {
+    const cardExpiryParts = this.state.cardExpiryDate.split('-');
+    cardExpiryParts[1] = newValue;
+    this.setState({ cardExpiryDate: cardExpiryParts.join('-') });
   };
 
   renderExpirationMonthOptions() {
@@ -66,6 +90,7 @@ export class CardDetailsComponent extends React.Component {
   }
 
   render() {
+    const { submitting } = this.props;
     return (
       <div className="basket-section">
         <h2 className="section-heading">
@@ -89,10 +114,13 @@ export class CardDetailsComponent extends React.Component {
               id="cardNumber"
               name="cardNumber"
               component={FormInput}
-              type="password"
+              type="text"
               required
-              onChange={this.updateCardType}
+              disabled={submitting}
+              onChange={this.handleCardNumberChange}
             />
+            <input type="hidden" name="card_number" value={this.state.cardNumber} />
+            <input type="hidden" name="card_type" value={this.state.cardId} />
             <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
@@ -120,7 +148,10 @@ export class CardDetailsComponent extends React.Component {
               component={FormInput}
               type="password"
               required
+              disabled={submitting}
+              onChange={this.handleSecurityCodeChange}
             />
+            <input type="hidden" name="card_cvn" value={this.state.securityCode} />
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
         </div>
@@ -140,6 +171,8 @@ export class CardDetailsComponent extends React.Component {
               component={FormSelect}
               options={this.renderExpirationMonthOptions()}
               required
+              disabled={submitting}
+              onChange={this.updateCardExpiryMonth}
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -156,12 +189,23 @@ export class CardDetailsComponent extends React.Component {
               component={FormSelect}
               options={this.renderExpirationYearOptions()}
               required
+              disabled={submitting}
+              onChange={this.updateCardExpiryYear}
             />
+            <input type="hidden" name="card_expiry_date" value={this.state.cardExpiryDate} />
           </div>
         </div>
       </div>
     );
   }
 }
+
+CardDetailsComponent.propTypes = {
+  submitting: PropTypes.bool,
+};
+
+CardDetailsComponent.defaultProps = {
+  submitting: false,
+};
 
 export default connect()(injectIntl(CardDetailsComponent));

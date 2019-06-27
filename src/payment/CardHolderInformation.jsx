@@ -37,6 +37,7 @@ export class CardHolderInformationComponent extends React.Component {
   }
 
   render() {
+    const { submitting } = this.props;
     return (
       <div className="basket-section">
         <h2 className="section-heading">
@@ -56,7 +57,14 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the required card holder first name field"
               />
             </label>
-            <Field id="firstName" name="firstName" component={FormInput} type="text" required />
+            <Field
+              id="firstName"
+              name="firstName"
+              component={FormInput}
+              type="text"
+              required
+              disabled={submitting}
+            />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="lastName">
@@ -66,7 +74,14 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the required card holder last name field"
               />
             </label>
-            <Field id="lastName" name="lastName" component={FormInput} type="text" required />
+            <Field
+              id="lastName"
+              name="lastName"
+              component={FormInput}
+              type="text"
+              required
+              disabled={submitting}
+            />
           </div>
         </div>
 
@@ -79,7 +94,14 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the required card holder address field"
               />
             </label>
-            <Field id="address" name="address" component={FormInput} type="text" required />
+            <Field
+              id="address"
+              name="address"
+              component={FormInput}
+              type="text"
+              required
+              disabled={submitting}
+            />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="unit">
@@ -89,7 +111,13 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the card holder suite/apartment number field"
               />
             </label>
-            <Field id="unit" name="unit" component={FormInput} type="text" />
+            <Field
+              id="unit"
+              name="unit"
+              component={FormInput}
+              type="text"
+              disabled={submitting}
+            />
           </div>
         </div>
 
@@ -102,7 +130,14 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the required card holder city field"
               />
             </label>
-            <Field id="city" name="city" component={FormInput} type="text" required />
+            <Field
+              id="city"
+              name="city"
+              component={FormInput}
+              type="text"
+              required
+              disabled={submitting}
+            />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="country">
@@ -119,13 +154,14 @@ export class CardHolderInformationComponent extends React.Component {
               options={this.renderCountryOptions()}
               required
               onChange={this.handleSelectCountry}
+              disabled={submitting}
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-lg-6 form-group">
-            <StateProvinceFormInput country={this.state.selectedCountry} />
+            <StateProvinceFormInput country={this.state.selectedCountry} disabled={submitting} />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -135,7 +171,13 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the card holder zip/postal code field"
               />
             </label>
-            <Field id="postalCode" name="postalCode" component={FormInput} type="text" />
+            <Field
+              id="postalCode"
+              name="postalCode"
+              component={FormInput}
+              type="text"
+              disabled={submitting}
+            />
           </div>
         </div>
       </div>
@@ -150,10 +192,12 @@ CardHolderInformationComponent.propTypes = {
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })),
+  submitting: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   countryOptions: [],
+  submitting: false,
 };
 
 export default connect(

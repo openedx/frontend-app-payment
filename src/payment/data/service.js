@@ -1,3 +1,4 @@
+import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
 
 import { configureApiService as configureCouponApiService } from '../coupon';
@@ -75,6 +76,30 @@ export async function sdnCheck(firstName, lastName, city, country) {
       name: `${firstName} ${lastName}`,
       city,
       country,
+    },
+  );
+
+  return data;
+}
+
+export async function checkout(basketId, cardHolderInfo) {
+  const { data } = await apiClient.post(
+    `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
+    formurlencoded({
+      basket: basketId,
+      first_name: cardHolderInfo.firstName,
+      last_name: cardHolderInfo.lastName,
+      address_line1: cardHolderInfo.address,
+      address_line2: cardHolderInfo.unit,
+      city: cardHolderInfo.city,
+      country: cardHolderInfo.country,
+      state: cardHolderInfo.state,
+      postal_code: cardHolderInfo.postalCode,
+    }),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     },
   );
 
