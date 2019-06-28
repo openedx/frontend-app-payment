@@ -27,6 +27,7 @@ export async function getBasket() {
     .catch(handleRequestError);
 
   const transformedResults = {
+    basketId: data.basket_id,
     showVoucherForm: data.show_voucher_form,
     paymentProviders: data.payment_providers,
     orderTotal: Number.parseInt(data.order_total, 10),
