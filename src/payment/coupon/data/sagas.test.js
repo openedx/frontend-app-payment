@@ -14,7 +14,10 @@ import {
 } from './actions';
 import { fetchBasketSuccess } from '../../data/actions';
 import { transformResults } from '../../data/service';
+<<<<<<< HEAD
 import { PERCENTAGE_BENEFIT } from './constants';
+=======
+>>>>>>> refactor: change frontend names to reflect backend
 import { addMessage, INFO, DANGER } from '../../../feedback';
 
 describe('saga tests', () => {
@@ -36,6 +39,7 @@ describe('saga tests', () => {
     const responses = {
       successResponse: {
         data: {
+<<<<<<< HEAD
           show_voucher_form: true,
           voucher: {
             id: 12345,
@@ -48,26 +52,54 @@ describe('saga tests', () => {
           total_excl_discount: 161,
           order_total: 149,
           calculated_discount: 12,
+=======
+          show_coupon_form: true,
+          coupons: [
+            {
+              id: 12345,
+              code: 'DEMO25',
+              benefit_value: '25%',
+            },
+          ],
+          summary_price: 161,
+          order_total: 149,
+          summary_discounts: 12,
+>>>>>>> refactor: change frontend names to reflect backend
           products: [
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
+<<<<<<< HEAD
               seat_type: 'Verified',
+=======
+              certificate_type_display_name: 'Verified',
+>>>>>>> refactor: change frontend names to reflect backend
             },
           ],
         },
       },
       blankVoucherResponse: {
         data: {
+<<<<<<< HEAD
           show_voucher_form: true,
           total_excl_discount: 161,
           order_total: 161,
           calculated_discount: 0,
+=======
+          show_coupon_form: true,
+          summary_price: 161,
+          order_total: 161,
+          summary_discounts: 0,
+>>>>>>> refactor: change frontend names to reflect backend
           products: [
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
+<<<<<<< HEAD
               seat_type: 'Verified',
+=======
+              certificate_type_display_name: 'Verified',
+>>>>>>> refactor: change frontend names to reflect backend
             },
           ],
         },
@@ -104,10 +136,14 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
+<<<<<<< HEAD
         addCouponSuccess(12345, 'DEMO25', {
           type: PERCENTAGE_BENEFIT,
           value: 25,
         }),
+=======
+        addCouponSuccess(12345, 'DEMO25', '25%'),
+>>>>>>> refactor: change frontend names to reflect backend
         addMessage(
           'payment.coupon.added',
           null,
@@ -123,6 +159,7 @@ describe('saga tests', () => {
         { headers: { 'Content-Type': 'application/json' } },
       );
     });
+<<<<<<< HEAD
 
     it('should handle an empty vouchers', async () => {
       const apiClientPost = jest.fn(() =>
@@ -143,6 +180,28 @@ describe('saga tests', () => {
         addCoupon('DEMO25'),
       ).toPromise();
 
+=======
+
+    it('should handle an empty coupons', async () => {
+      const apiClientPost = jest.fn(() =>
+        new Promise((resolve) => {
+          resolve(responses.blankVoucherResponse);
+        }));
+
+      configureApiService(configuration, {
+        post: apiClientPost,
+      });
+
+      const dispatched = [];
+      await runSaga(
+        {
+          dispatch: action => dispatched.push(action),
+        },
+        handleAddCoupon,
+        addCoupon('DEMO25'),
+      ).toPromise();
+
+>>>>>>> refactor: change frontend names to reflect backend
       expect(dispatched).toEqual([
         addCouponBegin(),
         fetchBasketSuccess(transformResults(responses.blankVoucherResponse.data)),
@@ -231,6 +290,7 @@ describe('saga tests', () => {
     const responses = {
       successResponse: {
         data: {
+<<<<<<< HEAD
           show_voucher_form: true,
           voucher: {
             id: 12345,
@@ -243,11 +303,28 @@ describe('saga tests', () => {
           total_excl_discount: 161,
           order_total: 149,
           calculated_discount: 12,
+=======
+          show_coupon_form: true,
+          coupons: [
+            {
+              id: 12345,
+              code: 'DEMO25',
+              benefit_value: '25%',
+            },
+          ],
+          summary_price: 161,
+          order_total: 149,
+          summary_discounts: 12,
+>>>>>>> refactor: change frontend names to reflect backend
           products: [
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
+<<<<<<< HEAD
               seat_type: 'Verified',
+=======
+              certificate_type_display_name: 'Verified',
+>>>>>>> refactor: change frontend names to reflect backend
             },
           ],
         },

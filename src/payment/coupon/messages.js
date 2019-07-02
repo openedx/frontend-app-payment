@@ -16,8 +16,8 @@ const messages = defineMessages({
     defaultMessage: 'Remove',
     description: 'Submit button to remove a coupon',
   },
-  'payment.coupon.benefit.percentage': {
-    id: 'payment.coupon.benefit.percentage',
+  'payment.coupon.benefit_value': {
+    id: 'payment.coupon.benefit_value',
     defaultMessage: 'Coupon {code} applied for {value} off',
     description: 'The description of a coupon for a percentage off the total price. Percentage symbol is included in {value}',
   },
@@ -31,16 +31,6 @@ const messages = defineMessages({
     defaultMessage: "Coupon code '{code}' was removed from your basket.",
     description: 'Notification to the user that a coupon code has been removed from their basket.',
   },
-  'payment.coupon.benefit.absolute': {
-    id: 'payment.coupon.benefit.absolute',
-    defaultMessage: 'Coupon {code} applied for {value} off',
-    description: 'The description of a coupon for a fixed amount of currency units off the total price. Currency symbol is included in {value}.',
-  },
-  'payment.coupon.benefit.default': {
-    id: 'payment.coupon.benefit.default',
-    defaultMessage: 'Coupon {code} applied',
-    description: 'The description of a coupon without any specific monetary value off.',
-  },
   'payment.coupon.error.unknown': {
     id: 'payment.coupon.error.unknown',
     defaultMessage: "We couldn't apply that coupon.",
@@ -51,8 +41,8 @@ const messages = defineMessages({
     defaultMessage: "Coupon code '{code}' cannot be applied because your basket is empty.",
     description: 'The error message shown to the user when they try to apply a coupon code when their basket is empty.',
   },
-  'payment.coupon.error.already_applied_voucher': {
-    id: 'payment.coupon.error.already_applied_voucher',
+  'payment.coupon.error.already_applied_coupon': {
+    id: 'payment.coupon.error.already_applied_coupon',
     defaultMessage: "You have already added coupon code '{code}' to your basket.",
     description: 'The error message shown to the user when they have already applied a given coupon code to their basket.',
   },

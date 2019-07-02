@@ -17,12 +17,12 @@ export const addCouponBegin = () => ({
   type: ADD_COUPON.BEGIN,
 });
 
-export const addCouponSuccess = (voucherId, code, benefit) => ({
+export const addCouponSuccess = (id, code, benefitValue) => ({
   type: ADD_COUPON.SUCCESS,
   payload: {
-    benefit,
+    benefitValue,
     code,
-    voucherId,
+    id,
   },
 });
 
@@ -35,10 +35,10 @@ export const addCouponFailure = errorCode => ({
 
 // REMOVE COUPON
 
-export const removeCoupon = voucherId => ({
+export const removeCoupon = id => ({
   type: REMOVE_COUPON.BASE,
   payload: {
-    voucherId,
+    id,
   },
 });
 

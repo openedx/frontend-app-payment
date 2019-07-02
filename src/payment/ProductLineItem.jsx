@@ -4,8 +4,8 @@ import { FormattedMessage, injectIntl } from '@edx/frontend-i18n';
 
 
 class ProductLineItem extends React.PureComponent {
-  renderSeatType(seatType) {
-    switch (seatType) {
+  renderSeatType(certificateType) {
+    switch (certificateType) {
       case 'professional':
       case 'no-id-professional':
         return (<FormattedMessage
@@ -30,7 +30,7 @@ class ProductLineItem extends React.PureComponent {
     const {
       imageUrl,
       title,
-      seatType,
+      certificateType,
     } = this.props;
     return (
       <div className="row align-items-center">
@@ -39,7 +39,7 @@ class ProductLineItem extends React.PureComponent {
         </div>
         <div className="col-7">
           <h6 className="m-0">{title}</h6>
-          <p className="m-0">{this.renderSeatType(seatType)}</p>
+          <p className="m-0">{this.renderSeatType(certificateType)}</p>
         </div>
       </div>
     );
@@ -49,11 +49,11 @@ class ProductLineItem extends React.PureComponent {
 ProductLineItem.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
+  certificateType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
 };
 
 ProductLineItem.defaultProps = {
-  seatType: undefined,
+  certificateType: undefined,
 };
 
 export default injectIntl(ProductLineItem);

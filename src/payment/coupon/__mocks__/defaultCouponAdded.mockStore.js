@@ -1,5 +1,3 @@
-import { PERCENTAGE_BENEFIT } from '../data/constants';
-
 module.exports = {
   authentication: {
     userId: 9,
@@ -31,12 +29,9 @@ module.exports = {
       loadingError: null,
     },
     coupon: {
-      benefit: {
-        type: 'unexpected type',
-        value: null,
-      },
+      benefitValue: null,
       code: 'DEMO25',
-      voucherId: 12345,
+      id: 12345,
       error: null,
       loaded: true,
       loading: false,

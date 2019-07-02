@@ -22,10 +22,14 @@ export function* handleFetchBasket() {
   try {
     const result = yield call(PaymentApiService.getBasket);
     yield put(fetchBasketSuccess(result));
-    if (result.voucher === undefined) {
+    if (result.coupons[0] === undefined) {
       yield put(addCouponSuccess(null, null, null));
     } else {
-      yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+      yield put(addCouponSuccess(
+        result.coupons[0].id,
+        result.coupons[0].code,
+        result.coupons[0].benefit_value,
+      ));
     }
   } catch (e) {
     yield put(fetchBasketFailure());

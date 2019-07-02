@@ -34,15 +34,24 @@ export function configureApiService(newConfig, newApiClient) {
 
 export function transformResults(data) {
   const transformedResults = {
-    showVoucherForm: data.show_voucher_form,
+    basketId: data.basket_id,
+    currency: data.currency,
+    isFreeBasket: data.is_free_basket,
+    showCouponForm: data.show_coupon_form,
     orderTotal: Number.parseInt(data.order_total, 10),
-    calculatedDiscount: data.calculated_discount !== null ?
-      Number.parseInt(data.calculated_discount, 10) : null,
-    totalExclDiscount: Number.parseInt(data.total_excl_discount, 10),
-    products: data.products.map(({ image_url: imageUrl, title, seat_type: seatType }) => ({
-      imageUrl, title, seatType,
+    summaryDiscounts: data.summary_discounts !== null ?
+      Number.parseInt(data.summary_discounts, 10) : null,
+    summaryPrice: Number.parseInt(data.summary_price, 10),
+    products: data.products.map(({
+      image_url: imageUrl,
+      title,
+      certificate_type_display_name: certificateType,
+      sku,
+      type,
+    }) => ({
+      imageUrl, title, certificateType, sku, type,
     })),
-    voucher: data.voucher,
+    coupons: data.coupons,
   };
   return transformedResults;
 }

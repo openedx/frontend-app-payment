@@ -29,9 +29,9 @@ module.exports = {
       loadingError: null,
     },
     coupon: {
-      benefit: null,
+      benefitValue: null,
       code: null,
-      voucherId: null,
+      id: null,
       error: null,
       loaded: false,
       loading: false,

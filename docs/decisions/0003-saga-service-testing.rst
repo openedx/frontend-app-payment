@@ -41,7 +41,7 @@ To mock the API client's methods, configure the service with a mock apiClient ob
   const responseData = {
     data: {
       // Data pertinent to this specific example - yours will be different.
-      voucher: { id: 12345, code: 'DEMO25', benefit: { type: PERCENTAGE_BENEFIT, value: 25 },
+      voucher: { id: 12345, code: 'DEMO25', benefit_value: '25%',
       },
     },
   };
@@ -79,10 +79,7 @@ Finally, we can assert the saga and service have run as expected:
   // Asserting that the actions we expect were dispatched in the correct order, with the correct payloads.
   expect(dispatched).toEqual([
     addCouponBegin(),
-    addCouponSuccess(12345, 'DEMO25', {
-      type: PERCENTAGE_BENEFIT,
-      value: 25,
-    }),
+    addCouponSuccess(12345, 'DEMO25', '25%'),
   ]);
 
   // Assert that the service called our API client method with the correct parameters.

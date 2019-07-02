@@ -28,9 +28,9 @@ export async function postCoupon(code) {
   return transformResults(data);
 }
 
-export async function deleteCoupon(voucherId) {
+export async function deleteCoupon(id) {
   const { data } = await apiClient
-    .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${voucherId}`)
+    .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
     .catch(handleRequestError);
   return transformResults(data);
 }

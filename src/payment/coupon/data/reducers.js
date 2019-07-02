@@ -1,9 +1,9 @@
 import { ADD_COUPON, REMOVE_COUPON, UPDATE_COUPON_DRAFT } from './actions';
 
 const defaultState = {
-  benefit: null,
+  benefitValue: null,
   code: null,
-  voucherId: null,
+  id: null,
   errorCode: null,
   loaded: false,
   loading: false,
@@ -25,9 +25,9 @@ const reducer = (state = defaultState, action = null) => {
           loading: false,
           loaded: true,
           errorCode: null,
-          benefit: action.payload.benefit,
+          benefitValue: action.payload.benefitValue,
           code: action.payload.code,
-          voucherId: action.payload.voucherId,
+          id: action.payload.id,
         };
       case ADD_COUPON.FAILURE:
         return {
@@ -35,7 +35,7 @@ const reducer = (state = defaultState, action = null) => {
           loading: false,
           loaded: false,
           errorCode: action.payload.errorCode,
-          voucherId: null,
+          id: null,
         };
       case REMOVE_COUPON.BEGIN:
         return {

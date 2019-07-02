@@ -5,10 +5,9 @@ import { FormattedNumber, FormattedMessage } from '@edx/frontend-i18n';
 
 import { basketSelector } from './data/selectors';
 import { CouponForm } from './coupon';
-import { PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT } from './coupon/data/constants';
 
 
-function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
+function SummaryTable({ summaryDiscounts, summaryPrice }) {
   return (
     <table className="w-100 mb-3">
       <tbody>
@@ -22,9 +21,9 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
           </th>
 
           <td className="text-right">
-            {totalExclDiscount !== undefined ? (
+            {summaryPrice !== undefined ? (
               <FormattedNumber
-                value={totalExclDiscount}
+                value={summaryPrice}
                 style="currency" // eslint-disable-line react/style-prop-object
                 currency="USD"
               />
@@ -32,8 +31,8 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
           </td>
         </tr>
 
-        {calculatedDiscount !== undefined && calculatedDiscount !== null &&
-        calculatedDiscount > 0 ? (
+        {summaryDiscounts !== undefined && summaryDiscounts !== null &&
+        summaryDiscounts > 0 ? (
           <tr>
             <th className="font-weight-normal" scope="row">
               <FormattedMessage
@@ -45,7 +44,7 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
 
             <td className="text-right">
               <FormattedNumber
-                value={calculatedDiscount * -1}
+                value={summaryDiscounts * -1}
                 style="currency" // eslint-disable-line react/style-prop-object
                 currency="USD"
               />
@@ -58,12 +57,12 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
 }
 
 SummaryTable.propTypes = {
-  calculatedDiscount: PropTypes.number,
-  totalExclDiscount: PropTypes.number,
+  summaryDiscounts: PropTypes.number,
+  summaryPrice: PropTypes.number,
 };
 SummaryTable.defaultProps = {
-  calculatedDiscount: undefined,
-  totalExclDiscount: undefined,
+  summaryDiscounts: undefined,
+  summaryPrice: undefined,
 };
 
 
@@ -115,16 +114,16 @@ function BasketSummary(props) {
         <FormattedMessage
           id="payment.order.details.heading"
           defaultMessage="Summary"
-          description="The heading for the order summary table and voucher section of the basket"
+          description="The heading for the order summary table and coupon section of the basket"
         />
       </h2>
 
       <SummaryTable
-        totalExclDiscount={props.totalExclDiscount}
-        calculatedDiscount={props.calculatedDiscount}
+        summaryPrice={props.summaryPrice}
+        summaryDiscounts={props.summaryDiscounts}
       />
 
-      {props.showVoucherForm ? <CouponForm /> : null}
+      {props.showCouponForm ? <CouponForm /> : null}
 
       <TotalTable orderTotal={props.orderTotal} />
     </div>
@@ -133,25 +132,17 @@ function BasketSummary(props) {
 
 
 BasketSummary.propTypes = {
-  showVoucherForm: PropTypes.bool,
+  showCouponForm: PropTypes.bool,
   orderTotal: PropTypes.number,
-  calculatedDiscount: PropTypes.number,
-  totalExclDiscount: PropTypes.number,
-  voucher: PropTypes.shape({
-    benefit: PropTypes.shape({
-      type: PropTypes.oneOf([PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT]).isRequired,
-      value: PropTypes.number.isRequired,
-    }),
-    code: PropTypes.string.isRequired,
-  }),
+  summaryDiscounts: PropTypes.number,
+  summaryPrice: PropTypes.number,
 };
 
 BasketSummary.defaultProps = {
-  showVoucherForm: false,
+  showCouponForm: false,
   orderTotal: undefined,
-  calculatedDiscount: undefined,
-  totalExclDiscount: undefined,
-  voucher: undefined,
+  summaryDiscounts: undefined,
+  summaryPrice: undefined,
 };
 
 export default connect(basketSelector)(BasketSummary);
