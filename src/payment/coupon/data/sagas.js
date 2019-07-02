@@ -27,10 +27,10 @@ export function* handleAddCoupon(action) {
       yield put(addCouponSuccess(null, null, null));
     } else {
       yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+      yield put(addMessage('payment.coupon.added', null, {
+        code: result.voucher.code,
+      }, INFO));
     }
-    yield put(addMessage('payment.coupon.added', null, {
-      code: result.voucher.code,
-    }, INFO));
   } catch (e) {
     yield put(addCouponFailure());
     yield call(handleErrors, e);

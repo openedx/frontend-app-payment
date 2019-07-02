@@ -57,6 +57,21 @@ describe('saga tests', () => {
           ],
         },
       },
+      blankVoucherResponse: {
+        data: {
+          show_voucher_form: true,
+          total_excl_discount: 161,
+          order_total: 161,
+          calculated_discount: 0,
+          products: [
+            {
+              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              title: 'Introduction to Happiness',
+              seat_type: 'Verified',
+            },
+          ],
+        },
+      },
       errorResponse: {
         response: {
           data: {
@@ -101,6 +116,37 @@ describe('saga tests', () => {
           },
           INFO,
         ),
+      ]);
+      expect(apiClientPost).toHaveBeenCalledWith(
+        'http://localhost/bff/payment/v0/vouchers/',
+        { code: 'DEMO25' },
+        { headers: { 'Content-Type': 'application/json' } },
+      );
+    });
+
+    it('should handle an empty vouchers', async () => {
+      const apiClientPost = jest.fn(() =>
+        new Promise((resolve) => {
+          resolve(responses.blankVoucherResponse);
+        }));
+
+      configureApiService(configuration, {
+        post: apiClientPost,
+      });
+
+      const dispatched = [];
+      await runSaga(
+        {
+          dispatch: action => dispatched.push(action),
+        },
+        handleAddCoupon,
+        addCoupon('DEMO25'),
+      ).toPromise();
+
+      expect(dispatched).toEqual([
+        addCouponBegin(),
+        fetchBasketSuccess(transformResults(responses.blankVoucherResponse.data)),
+        addCouponSuccess(null, null, null),
       ]);
       expect(apiClientPost).toHaveBeenCalledWith(
         'http://localhost/bff/payment/v0/vouchers/',
