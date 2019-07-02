@@ -9,6 +9,7 @@ import {
   addCouponFailure,
   removeCouponFailure,
 } from './actions';
+import { fetchBasketSuccess } from '../../data/actions';
 import { deleteCoupon, postCoupon } from './service';
 
 import {
@@ -21,6 +22,12 @@ export function* handleAddCoupon(action) {
   yield put(addCouponBegin());
   try {
     const result = yield call(postCoupon, action.payload.code);
+    yield put(fetchBasketSuccess(result));
+    if (result.voucher === undefined) {
+      yield put(addCouponSuccess(null, null, null));
+    } else {
+      yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+    }
     const { id: voucherId, code, benefit } = result.voucher;
     yield put(addCouponSuccess(voucherId, code, benefit));
     yield put(addMessage('payment.coupon.added', null, {
