@@ -31,7 +31,7 @@ function ProductLineItems({ products }) {
 
 ProductLineItems.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
-    imageURL: PropTypes.string,
+    imageUrl: PropTypes.string,
     title: PropTypes.string,
     seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
   })),

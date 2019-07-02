@@ -3,6 +3,7 @@ import pick from 'lodash.pick';
 import { configureApiService as configureCouponApiService } from '../coupon';
 import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
 
+
 let config = {
   ACCOUNTS_API_BASE_URL: null,
   ECOMMERCE_BASE_URL: null,
@@ -22,18 +23,18 @@ export function configureApiService(newConfig, newApiClient) {
 }
 
 export function transformResults(data) {
-  return {
+  const transformedResults = {
     showVoucherForm: data.show_voucher_form,
-    paymentProviders: data.payment_providers,
     orderTotal: Number.parseInt(data.order_total, 10),
     calculatedDiscount: data.calculated_discount !== null ?
       Number.parseInt(data.calculated_discount, 10) : null,
     totalExclDiscount: Number.parseInt(data.total_excl_discount, 10),
-    products: data.products.map(({ image_url: imageURL, title, seat_type: seatType }) => ({
-      imageURL, title, seatType,
+    products: data.products.map(({ image_url: imageUrl, title, seat_type: seatType }) => ({
+      imageUrl, title, seatType,
     })),
     voucher: data.voucher,
   };
+  return transformedResults;
 }
 
 export async function getBasket() {

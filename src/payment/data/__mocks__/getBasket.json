@@ -1,13 +1,5 @@
 {
   "show_voucher_form": true,
-  "payment_providers": [
-    {
-      "type": "cybersource"
-    },
-    {
-      "type": "paypal"
-    }
-  ],
   "order_total": 149,
   "calculated_discount": 12,
   "total_excl_discount": 161,
@@ -15,7 +7,7 @@
   "products": [
     {
       "image_url": "https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg",
-      "name": "Introduction to Happiness",
+      "title": "Introduction to Happiness",
       "seat_type": "Verified"
     }
   ],

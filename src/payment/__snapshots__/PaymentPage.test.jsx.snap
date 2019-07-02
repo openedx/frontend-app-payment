@@ -100,7 +100,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           className="section-heading"
         >
           <span>
-            In your cart
+            In Your Cart
           </span>
         </h2>
         <p>
@@ -2124,7 +2124,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           className="section-heading"
         >
           <span>
-            In your cart
+            In Your Cart
           </span>
         </h2>
         <p>

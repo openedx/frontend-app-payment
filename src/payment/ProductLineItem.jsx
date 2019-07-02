@@ -28,14 +28,14 @@ class ProductLineItem extends React.PureComponent {
 
   render() {
     const {
-      imageURL,
+      imageUrl,
       title,
       seatType,
     } = this.props;
     return (
       <div className="row align-items-center">
         <div className="col-5">
-          <img className="img-thumbnail" src={imageURL} alt={title} />
+          <img className="img-thumbnail" src={imageUrl} alt={title} />
         </div>
         <div className="col-7">
           <h6 className="m-0">{title}</h6>
@@ -47,7 +47,7 @@ class ProductLineItem extends React.PureComponent {
 }
 
 ProductLineItem.propTypes = {
-  imageURL: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
 };

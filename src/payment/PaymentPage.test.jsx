@@ -107,7 +107,7 @@ describe('<PaymentPage />', () => {
 });
 
 const product = {
-  imageURL: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+  imageUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
   title: 'Introduction to Happiness',
   seatType: 'Verified',
 };
