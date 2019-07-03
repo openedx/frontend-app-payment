@@ -1,26 +1,25 @@
 // This is the prod Webpack config. All settings here should prefer smaller,
 // optimized bundles at the expense of a longer build time.
 const Merge = require('webpack-merge');
-const commonConfig = require('./webpack.common.config.js');
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackNewRelicPlugin = require('html-webpack-new-relic-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin; // eslint-disable-line prefer-destructuring
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const PostCssRtlPlugin = require('postcss-rtl');
 const PostCssAutoprefixerPlugin = require('autoprefixer');
+
+const commonConfig = require('./webpack.common.config.js');
 
 module.exports = Merge.smart(commonConfig, {
   mode: 'production',
   devtool: 'source-map',
   output: {
     filename: '[name].[chunkhash].js',
-    path: path.resolve(__dirname, '../dist'),
   },
   module: {
     // Specify file-by-file rules to Webpack. Some file-types need a particular kind of loader.
@@ -65,7 +64,7 @@ module.exports = Merge.smart(commonConfig, {
             options: {
               plugins: () => [
                 PostCssRtlPlugin(),
-                PostCssAutoprefixerPlugin({ grid: true, browsers: ['>1%'] }),
+                PostCssAutoprefixerPlugin({ grid: true }),
               ],
             },
           },
@@ -77,43 +76,6 @@ module.exports = Merge.smart(commonConfig, {
                 path.join(__dirname, '../node_modules'),
                 path.join(__dirname, '../src'),
               ],
-            },
-          },
-        ],
-      },
-      {
-        test: /.svg$/,
-        issuer: {
-          test: /\.jsx?$/,
-        },
-        loader: '@svgr/webpack',
-      },
-      // Webpack, by default, uses the url-loader for images and fonts that are required/included by
-      // files it processes, which just base64 encodes them and inlines them in the javascript
-      // bundles. This makes the javascript bundles ginormous and defeats caching so we will use the
-      // file-loader instead to copy the files directly to the output directory.
-      {
-        test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader',
-      },
-      {
-        test: /\.(jpe?g|png|gif|ico)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [
-          'file-loader',
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              optimizationlevel: 7,
-              mozjpeg: {
-                progressive: true,
-              },
-              gifsicle: {
-                interlaced: false,
-              },
-              pngquant: {
-                quality: '65-90',
-                speed: 4,
-              },
             },
           },
         ],
@@ -144,17 +106,12 @@ module.exports = Merge.smart(commonConfig, {
         // Scan files in this app
         glob.sync(`${path.resolve(__dirname, '../src')}/**/*`, { nodir: true }),
         // Scan files in any edx frontend-component
-        glob.sync(`${path.resolve(__dirname, '../node_modules/@edx/frontend-component')}*/**/*`, { nodir: true }),
+        glob.sync(`${path.resolve(__dirname, '../node_modules/@edx/frontend-component')}*/dist/**/*`, { nodir: true }),
         // Scan files in paragon
-        glob.sync(`${path.resolve(__dirname, '../node_modules/@edx/paragon')}/**/*`, { nodir: true }),
+        glob.sync(`${path.resolve(__dirname, '../node_modules/@edx/paragon/dist')}/**/*`, { nodir: true }),
       ),
       // Protect react-css-transition class names
       whitelistPatterns: [/-enter/, /-appear/, /-exit/],
-    }),
-    // Generates an HTML file in the output directory.
-    new HtmlWebpackPlugin({
-      inject: true, // Appends script tags linking to the webpack bundles at the end of the body
-      template: path.resolve(__dirname, '../public/index.html'),
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
