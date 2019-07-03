@@ -6,6 +6,10 @@
     "type": "git",
     "url": "git+https://github.com/edx/frontend-app-payment.git"
   },
+  "browserslist": [
+    "last 2 versions",
+    "ie 11"
+  ],
   "scripts": {
     "build": "NODE_ENV=production BABEL_ENV=production webpack --config=webpack/webpack.prod.config.js",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
@@ -32,7 +36,7 @@
     "@edx/frontend-component-site-header": "^2.3.0",
     "@edx/frontend-i18n": "^2.1.0",
     "@edx/frontend-logging": "^2.0.2",
-    "@edx/paragon": "^4.2.4",
+    "@edx/paragon": "^6.0.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.14",
     "@fortawesome/free-brands-svg-icons": "^5.7.2",
     "@fortawesome/free-regular-svg-icons": "^5.7.1",
@@ -74,19 +78,20 @@
     "universal-cookie": "^3.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
     "@svgr/webpack": "^4.2.0",
     "autoprefixer": "^9.4.2",
     "axios-mock-adapter": "^1.15.0",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.2",
-    "babel-jest": "^22.4.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-react-intl": "^3.0.1",
-    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-react-intl": "^3.3.3",
     "babel-plugin-transform-imports": "^1.5.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
     "codecov": "^3.0.0",
     "copy-webpack-plugin": "^4.6.0",
@@ -103,7 +108,7 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "^4.2.0",
-    "jest": "^22.4.0",
+    "jest": "^24.8.0",
     "mini-css-extract-plugin": "^0.4.0",
     "new-relic-source-map-webpack-plugin": "1.1.0",
     "node-sass": "^4.7.2",
@@ -156,7 +161,7 @@
       "src/payment/data"
     ],
     "transformIgnorePatterns": [
-      "/node_modules/(?!(@edx/paragon)/).*/"
+      "/node_modules/(?!@edx/paragon).+\\.js$"
     ]
   }
 }
