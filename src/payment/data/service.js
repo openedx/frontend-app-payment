@@ -20,6 +20,16 @@ export function configureApiService(newConfig, newApiClient) {
   apiClient = newApiClient;
 
   configureCouponApiService(config, apiClient);
+
+  // For every ajax response, check if the API has
+  // responded with a redirect value. If so, redirect.
+  apiClient.interceptors.response.use((response) => {
+    const { status, data } = response;
+    if (status >= 200 && status < 300 && data && data.redirect) {
+      window.location.href = data.redirect;
+    }
+    return response;
+  });
 }
 
 export function transformResults(data) {
