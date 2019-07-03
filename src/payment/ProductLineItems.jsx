@@ -13,7 +13,7 @@ function ProductLineItems({ products }) {
       <h2 className="section-heading">
         <FormattedMessage
           id="payment.productlineitem.purchase.cart.heading"
-          defaultMessage="In your cart"
+          defaultMessage="In Your Cart"
           description="Heading of the cart in product details section"
         />
       </h2>
@@ -31,7 +31,7 @@ function ProductLineItems({ products }) {
 
 ProductLineItems.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
-    imageURL: PropTypes.string,
+    imageUrl: PropTypes.string,
     title: PropTypes.string,
     seatType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
   })),

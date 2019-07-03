@@ -8,7 +8,7 @@
     @extend .mb-5;
   }
   .section-heading {
-    @extend .h6;
+    @extend .h5;
   }
   label {
     font-weight: normal;
@@ -35,7 +35,7 @@
     display: inline-block;
     padding: map-get($spacers, 2);
     margin-right: map-get($spacers, 2);
-    border: solid $border-width $border-color;            
+    border: solid $border-width $border-color;
     border-radius: $border-radius;
     cursor: pointer;
     display: inline-flex;

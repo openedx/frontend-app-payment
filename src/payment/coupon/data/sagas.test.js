@@ -12,6 +12,8 @@ import {
   removeCoupon,
   removeCouponFailure,
 } from './actions';
+import { fetchBasketSuccess } from '../../data/actions';
+import { transformResults } from '../../data/service';
 import { PERCENTAGE_BENEFIT } from './constants';
 import { addMessage, INFO, DANGER } from '../../../feedback';
 
@@ -34,6 +36,7 @@ describe('saga tests', () => {
     const responses = {
       successResponse: {
         data: {
+          show_voucher_form: true,
           voucher: {
             id: 12345,
             code: 'DEMO25',
@@ -42,6 +45,31 @@ describe('saga tests', () => {
               value: 25,
             },
           },
+          total_excl_discount: 161,
+          order_total: 149,
+          calculated_discount: 12,
+          products: [
+            {
+              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              title: 'Introduction to Happiness',
+              seat_type: 'Verified',
+            },
+          ],
+        },
+      },
+      blankVoucherResponse: {
+        data: {
+          show_voucher_form: true,
+          total_excl_discount: 161,
+          order_total: 161,
+          calculated_discount: 0,
+          products: [
+            {
+              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              title: 'Introduction to Happiness',
+              seat_type: 'Verified',
+            },
+          ],
         },
       },
       errorResponse: {
@@ -75,6 +103,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         addCouponBegin(),
+        fetchBasketSuccess(transformResults(responses.successResponse.data)),
         addCouponSuccess(12345, 'DEMO25', {
           type: PERCENTAGE_BENEFIT,
           value: 25,
@@ -88,7 +117,37 @@ describe('saga tests', () => {
           INFO,
         ),
       ]);
+      expect(apiClientPost).toHaveBeenCalledWith(
+        'http://localhost/bff/payment/v0/vouchers/',
+        { code: 'DEMO25' },
+        { headers: { 'Content-Type': 'application/json' } },
+      );
+    });
 
+    it('should handle an empty vouchers', async () => {
+      const apiClientPost = jest.fn(() =>
+        new Promise((resolve) => {
+          resolve(responses.blankVoucherResponse);
+        }));
+
+      configureApiService(configuration, {
+        post: apiClientPost,
+      });
+
+      const dispatched = [];
+      await runSaga(
+        {
+          dispatch: action => dispatched.push(action),
+        },
+        handleAddCoupon,
+        addCoupon('DEMO25'),
+      ).toPromise();
+
+      expect(dispatched).toEqual([
+        addCouponBegin(),
+        fetchBasketSuccess(transformResults(responses.blankVoucherResponse.data)),
+        addCouponSuccess(null, null, null),
+      ]);
       expect(apiClientPost).toHaveBeenCalledWith(
         'http://localhost/bff/payment/v0/vouchers/',
         { code: 'DEMO25' },
@@ -172,9 +231,25 @@ describe('saga tests', () => {
     const responses = {
       successResponse: {
         data: {
+          show_voucher_form: true,
+          voucher: {
+            id: 12345,
+            code: 'DEMO25',
+            benefit: {
+              type: PERCENTAGE_BENEFIT,
+              value: 25,
+            },
+          },
+          total_excl_discount: 161,
           order_total: 149,
           calculated_discount: 12,
-          total_excl_discount: 161,
+          products: [
+            {
+              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              title: 'Introduction to Happiness',
+              seat_type: 'Verified',
+            },
+          ],
         },
       },
       errorResponse: {
@@ -211,11 +286,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         removeCouponBegin(),
-        removeCouponSuccess({
-          order_total: 149,
-          calculated_discount: 12,
-          total_excl_discount: 161,
-        }),
+        removeCouponSuccess(transformResults(responses.successResponse.data)),
         addMessage(
           'payment.coupon.removed',
           null,

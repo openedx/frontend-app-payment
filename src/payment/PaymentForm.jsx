@@ -125,6 +125,7 @@ export class PaymentFormComponent extends React.Component {
       handleSubmit,
       submitting,
     } = this.props;
+
     return (
       <form onSubmit={handleSubmit(this.onSubmit)} noValidate>
         <CardHolderInformation />

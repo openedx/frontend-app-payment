@@ -1,6 +1,7 @@
 import pick from 'lodash.pick';
 
 import { handleRequestError, applyConfiguration } from '../../../common/serviceUtils';
+import { transformResults } from '../../data/service';
 
 let config = {
   ECOMMERCE_BASE_URL: null,
@@ -15,7 +16,7 @@ export function configureApiService(newConfig, newApiClient) {
 }
 
 export async function postCoupon(code) {
-  const response = await apiClient
+  const { data } = await apiClient
     .post(
       `${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
       { code },
@@ -24,14 +25,12 @@ export async function postCoupon(code) {
       },
     )
     .catch(handleRequestError);
-
-  return response.data;
+  return transformResults(data);
 }
 
 export async function deleteCoupon(voucherId) {
-  const response = await apiClient
+  const { data } = await apiClient
     .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${voucherId}`)
     .catch(handleRequestError);
-
-  return response.data;
+  return transformResults(data);
 }

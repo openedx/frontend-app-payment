@@ -32,7 +32,8 @@ function SummaryTable({ calculatedDiscount, totalExclDiscount }) {
           </td>
         </tr>
 
-        {calculatedDiscount !== undefined ? (
+        {calculatedDiscount !== undefined && calculatedDiscount !== null &&
+        calculatedDiscount > 0 ? (
           <tr>
             <th className="font-weight-normal" scope="row">
               <FormattedMessage
