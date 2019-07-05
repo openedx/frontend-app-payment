@@ -14,7 +14,6 @@ import {
 } from './actions';
 import { fetchBasketSuccess } from '../../data/actions';
 import { transformResults } from '../../data/service';
-import { PERCENTAGE_BENEFIT } from './constants';
 import { addMessage, INFO, DANGER } from '../../../feedback';
 
 describe('saga tests', () => {
@@ -36,38 +35,41 @@ describe('saga tests', () => {
     const responses = {
       successResponse: {
         data: {
-          show_voucher_form: true,
-          voucher: {
-            id: 12345,
-            code: 'DEMO25',
-            benefit: {
-              type: PERCENTAGE_BENEFIT,
-              value: 25,
+          show_coupon_form: true,
+          coupons: [
+            {
+              id: 12345,
+              code: 'DEMO25',
+              benefit_value: '25%',
             },
-          },
-          total_excl_discount: 161,
+          ],
+          summary_price: 161,
           order_total: 149,
-          calculated_discount: 12,
+          summary_discounts: 12,
           products: [
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
-              seat_type: 'Verified',
+              certificateType: 'verified',
+              productType: 'Seat',
+              sku: '8CF08E5',
             },
           ],
         },
       },
       blankVoucherResponse: {
         data: {
-          show_voucher_form: true,
-          total_excl_discount: 161,
+          show_coupon_form: true,
+          summary_price: 161,
           order_total: 161,
-          calculated_discount: 0,
+          summary_discounts: 0,
           products: [
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
-              seat_type: 'Verified',
+              certificateType: 'verified',
+              productType: 'Seat',
+              sku: '8CF08E5',
             },
           ],
         },
@@ -104,10 +106,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
-        addCouponSuccess(12345, 'DEMO25', {
-          type: PERCENTAGE_BENEFIT,
-          value: 25,
-        }),
+        addCouponSuccess(12345, 'DEMO25', '25%'),
         addMessage(
           'payment.coupon.added',
           null,
@@ -124,7 +123,7 @@ describe('saga tests', () => {
       );
     });
 
-    it('should handle an empty vouchers', async () => {
+    it('should handle an empty coupons', async () => {
       const apiClientPost = jest.fn(() =>
         new Promise((resolve) => {
           resolve(responses.blankVoucherResponse);
@@ -231,23 +230,24 @@ describe('saga tests', () => {
     const responses = {
       successResponse: {
         data: {
-          show_voucher_form: true,
-          voucher: {
-            id: 12345,
-            code: 'DEMO25',
-            benefit: {
-              type: PERCENTAGE_BENEFIT,
-              value: 25,
+          show_coupon_form: true,
+          coupons: [
+            {
+              id: 12345,
+              code: 'DEMO25',
+              benefit_value: '25%',
             },
-          },
-          total_excl_discount: 161,
+          ],
+          summary_price: 161,
           order_total: 149,
-          calculated_discount: 12,
+          summary_discounts: 12,
           products: [
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
-              seat_type: 'Verified',
+              certificateType: 'verified',
+              productType: 'Seat',
+              sku: '8CF08E5',
             },
           ],
         },

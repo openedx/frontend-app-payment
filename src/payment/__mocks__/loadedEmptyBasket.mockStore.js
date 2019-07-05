@@ -33,7 +33,7 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
-      showVoucherForm: true,
+      showCouponForm: true,
       paymentProviders: [
         {
           type: 'cybersource',
@@ -43,21 +43,21 @@ module.exports = {
         },
       ],
       orderTotal: 0,
-      calculatedDiscount: 0,
-      totalExclDiscount: 0,
+      summaryDiscounts: 0,
+      summaryPrice: 0,
       products: [],
-      voucher: {
-        benefit: {
-          type: 'Percentage',
-          value: 20,
-        },
-        code: 'SUMMER20',
-      },
+      coupons: [
+        {
+          code: 'SUMMER20',
+          id: 12345,
+          benefitValue: '20%'
+        }
+      ],
     },
     coupon: {
-      benefit: null,
+      benefitValue: null,
       code: null,
-      voucherId: null,
+      id: null,
       error: null,
       loaded: false,
       loading: false,

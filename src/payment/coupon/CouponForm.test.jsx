@@ -20,7 +20,6 @@ const mockStore = configureMockStore();
 const storeMocks = {
   defaultState: require('./__mocks__/defaultCouponState.mockStore.js'), // eslint-disable-line global-require
   percentageCouponAdded: require('./__mocks__/percentageCouponAdded.mockStore.js'), // eslint-disable-line global-require
-  absoluteCouponAdded: require('./__mocks__/absoluteCouponAdded.mockStore.js'), // eslint-disable-line global-require
   defaultCouponAdded: require('./__mocks__/defaultCouponAdded.mockStore.js'), // eslint-disable-line global-require
   couponEntered: require('./__mocks__/couponEntered.mockStore.js'), // eslint-disable-line global-require
 };
@@ -46,22 +45,6 @@ describe('CouponForm', () => {
     const component = (
       <IntlProvider locale="en">
         <Provider store={mockStore(storeMocks.percentageCouponAdded)}>
-          <ConnectedCouponForm
-            addCoupon={jest.fn()}
-            removeCoupon={jest.fn()}
-            updateCouponDraft={jest.fn()}
-          />
-        </Provider>
-      </IntlProvider>
-    );
-    const tree = renderer.create(component).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('should render an absolute coupon', () => {
-    const component = (
-      <IntlProvider locale="en">
-        <Provider store={mockStore(storeMocks.absoluteCouponAdded)}>
           <ConnectedCouponForm
             addCoupon={jest.fn()}
             removeCoupon={jest.fn()}
@@ -143,7 +126,7 @@ describe('CouponForm', () => {
           removeCoupon={removeCoupon}
           updateCouponDraft={jest.fn()}
           code="DEMO25"
-          voucherId={12345}
+          id={12345}
         />
       </IntlProvider>
     ));
@@ -197,8 +180,8 @@ describe('CouponForm', () => {
       expect(wrapper.find('strong.invalid-feedback').text()).toMatchSnapshot();
     });
 
-    it('should display already_applied_voucher errors correctly', () => {
-      const wrapper = mount(createComponent('already_applied_voucher'));
+    it('should display already_applied_coupon errors correctly', () => {
+      const wrapper = mount(createComponent('already_applied_coupon'));
       expect(wrapper.find('strong.invalid-feedback').text()).toMatchSnapshot();
     });
 

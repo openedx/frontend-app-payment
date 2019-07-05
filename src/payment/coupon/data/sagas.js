@@ -23,12 +23,16 @@ export function* handleAddCoupon(action) {
   try {
     const result = yield call(postCoupon, action.payload.code);
     yield put(fetchBasketSuccess(result));
-    if (result.voucher === undefined) {
+    if (result.coupons === undefined) {
       yield put(addCouponSuccess(null, null, null));
     } else {
-      yield put(addCouponSuccess(result.voucher.id, result.voucher.code, result.voucher.benefit));
+      yield put(addCouponSuccess(
+        result.coupons[0].id,
+        result.coupons[0].code,
+        result.coupons[0].benefit_value,
+      ));
       yield put(addMessage('payment.coupon.added', null, {
-        code: result.voucher.code,
+        code: result.coupons[0].code,
       }, INFO));
     }
   } catch (e) {
@@ -41,7 +45,7 @@ export function* handleRemoveCoupon(action) {
   const code = yield select(state => state.payment.coupon.code);
   yield put(removeCouponBegin());
   try {
-    const result = yield call(deleteCoupon, action.payload.voucherId);
+    const result = yield call(deleteCoupon, action.payload.id);
     yield put(removeCouponSuccess(result));
     yield put(addMessage('payment.coupon.removed', null, {
       code,

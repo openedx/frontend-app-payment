@@ -7,8 +7,6 @@ import { logError } from '@edx/frontend-logging';
 
 import messages from './messages';
 import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
-import { PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT } from './data/constants';
-import Benefit from './Benefit';
 
 export class CouponForm extends Component {
   constructor(props) {
@@ -31,7 +29,7 @@ export class CouponForm extends Component {
 
   handleRemoveSubmit(event) {
     event.preventDefault();
-    this.props.removeCoupon(this.props.voucherId);
+    this.props.removeCoupon(this.props.id);
   }
 
   renderInvalidMessage() {
@@ -43,7 +41,7 @@ export class CouponForm extends Component {
     switch (errorCode) {
       // Cases that need a `code`
       case 'empty_basket':
-      case 'already_applied_voucher':
+      case 'already_applied_coupon':
       case 'code_does_not_exist':
       case 'code_expired':
       case 'code_not_active':
@@ -95,12 +93,15 @@ export class CouponForm extends Component {
   }
 
   renderRemove() {
-    const { intl } = this.props;
+    const { intl, code, benefitValue } = this.props;
     return (
       <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
-        {this.props.benefit !== null ? (
-          <Benefit code={this.props.code} {...this.props.benefit} />
-        ) : null}
+        {this.props.benefitValue !== null ?
+          <span>{intl.formatMessage(messages['payment.coupon.benefit_value'], {
+            code,
+            value: benefitValue,
+          })}
+          </span> : null}
         <Button className="btn-link display-inline p-0 pl-3 border-0" type="submit">
           {intl.formatMessage(messages['payment.coupon.remove'])}
         </Button>
@@ -109,7 +110,7 @@ export class CouponForm extends Component {
   }
 
   render() {
-    if (this.props.voucherId !== null) {
+    if (this.props.id !== null) {
       return this.renderRemove();
     }
 
@@ -120,24 +121,21 @@ export class CouponForm extends Component {
 CouponForm.propTypes = {
   loading: PropTypes.bool,
   code: PropTypes.string,
-  voucherId: PropTypes.number,
+  id: PropTypes.number,
   errorCode: PropTypes.string,
   addCoupon: PropTypes.func.isRequired,
   removeCoupon: PropTypes.func.isRequired,
   updateCouponDraft: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  benefit: PropTypes.shape({
-    type: PropTypes.oneOf([PERCENTAGE_BENEFIT, ABSOLUTE_BENEFIT]).isRequired,
-    value: PropTypes.number.isRequired,
-  }),
+  benefitValue: PropTypes.string,
 };
 
 CouponForm.defaultProps = {
   loading: false,
   code: '',
-  voucherId: null,
+  id: null,
   errorCode: null,
-  benefit: null,
+  benefitValue: null,
 };
 
 const mapStateToProps = state => state.payment.coupon;

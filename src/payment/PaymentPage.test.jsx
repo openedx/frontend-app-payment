@@ -109,7 +109,9 @@ describe('<PaymentPage />', () => {
 const product = {
   imageUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
   title: 'Introduction to Happiness',
-  seatType: 'Verified',
+  certificateType: 'verified',
+  productType: 'Seat',
+  sku: '8CF08E5',
 };
 
 describe('<ProductLineItem />', () => {
@@ -123,7 +125,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for professional certificate', () => {
-      product.seatType = 'professional';
+      product.certificateType = 'professional';
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
@@ -132,7 +134,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for no-id-professional certificate', () => {
-      product.seatType = 'no-id-professional';
+      product.certificateType = 'no-id-professional';
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
@@ -141,7 +143,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for verified certificate', () => {
-      product.seatType = 'Verified';
+      product.certificateType = 'verified';
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
@@ -150,7 +152,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for unknown seat type', () => {
-      product.seatType = null;
+      product.certificateType = null;
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
@@ -159,7 +161,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for honor certificate', () => {
-      product.seatType = 'honor';
+      product.certificateType = 'honor';
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
@@ -168,7 +170,7 @@ describe('<ProductLineItem />', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for audit certificate', () => {
-      product.seatType = 'audit';
+      product.certificateType = 'audit';
       const tree = renderer.create((
         <IntlProvider locale="en">
           <ProductLineItem {...product} />

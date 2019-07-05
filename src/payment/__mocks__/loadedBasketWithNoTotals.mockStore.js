@@ -33,7 +33,7 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
-      showVoucherForm: false,
+      showCouponForm: false,
       paymentProviders: [
         {
           type: 'cybersource',
@@ -48,21 +48,23 @@ module.exports = {
           imageUrl:
             'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
           title: 'Introduction to Happiness',
-          seatType: 'Verified',
+          certificateType: 'verified',
+          productType: 'Seat',
+          sku: '8CF08E5',
         },
       ],
-      voucher: {
-        benefit: {
-          type: 'Percentage',
-          value: 20,
-        },
-        code: 'SUMMER20',
-      },
+      coupons: [
+        {
+          code: 'SUMMER20',
+          id: 12345,
+          benefitValue: '20%'
+        }
+      ],
     },
     coupon: {
-      benefit: null,
+      benefitValue: null,
       code: null,
-      voucherId: null,
+      id: null,
       error: null,
       loaded: false,
       loading: false,

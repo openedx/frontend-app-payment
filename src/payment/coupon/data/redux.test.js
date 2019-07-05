@@ -2,7 +2,6 @@ import { createStore } from 'redux';
 
 import reducer from './reducers';
 import { addCouponBegin, addCouponSuccess, addCouponFailure, removeCouponBegin, removeCouponSuccess, removeCouponFailure, updateCouponDraft, ADD_COUPON, addCoupon, removeCoupon, REMOVE_COUPON } from './actions';
-import { PERCENTAGE_BENEFIT } from './constants';
 
 describe('redux tests', () => {
   let store;
@@ -12,9 +11,9 @@ describe('redux tests', () => {
 
   it('should return default state in reducer if no action', () => {
     expect(reducer()).toEqual({
-      benefit: null,
+      benefitValue: null,
       code: null,
-      voucherId: null,
+      id: null,
       errorCode: null,
       loaded: false,
       loading: false,
@@ -31,7 +30,7 @@ describe('redux tests', () => {
   });
 
   it('should successfully add a coupon', () => {
-    store.dispatch(addCouponSuccess(12345, 'DEMO25', { type: PERCENTAGE_BENEFIT, value: 25 }));
+    store.dispatch(addCouponSuccess(12345, 'DEMO25', '25%'));
     expect(store.getState()).toMatchSnapshot();
   });
 
@@ -41,19 +40,19 @@ describe('redux tests', () => {
   });
 
   it('should begin to remove a coupon', () => {
-    store.dispatch(addCouponSuccess(12345, 'DEMO25', { type: PERCENTAGE_BENEFIT, value: 25 }));
+    store.dispatch(addCouponSuccess(12345, 'DEMO25', '25%'));
     store.dispatch(removeCouponBegin());
     expect(store.getState()).toMatchSnapshot();
   });
 
   it('should successfully remove a coupon', () => {
-    store.dispatch(addCouponSuccess(12345, 'DEMO25', { type: PERCENTAGE_BENEFIT, value: 25 }));
+    store.dispatch(addCouponSuccess(12345, 'DEMO25', '25%'));
     store.dispatch(removeCouponSuccess());
     expect(store.getState()).toMatchSnapshot();
   });
 
   it('should fail to remove a coupon', () => {
-    store.dispatch(addCouponSuccess(12345, 'DEMO25', { type: PERCENTAGE_BENEFIT, value: 25 }));
+    store.dispatch(addCouponSuccess(12345, 'DEMO25', '25%'));
     store.dispatch(removeCouponFailure('oh noes it didnt'));
     expect(store.getState()).toMatchSnapshot();
   });
@@ -86,7 +85,7 @@ describe('redux tests', () => {
     expect(removeCoupon(12345)).toEqual({
       type: REMOVE_COUPON.BASE,
       payload: {
-        voucherId: 12345,
+        id: 12345,
       },
     });
   });
