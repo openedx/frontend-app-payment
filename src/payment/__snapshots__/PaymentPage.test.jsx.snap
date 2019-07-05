@@ -257,9 +257,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         <h2
           className="section-heading"
         >
-          <span>
-            Order Details
-          </span>
+          Order Details
         </h2>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.
@@ -2222,9 +2220,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         <h2
           className="section-heading"
         >
-          <span>
-            Order Details
-          </span>
+          Order Details
         </h2>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.

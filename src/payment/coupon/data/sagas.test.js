@@ -50,8 +50,8 @@ describe('saga tests', () => {
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
-              certificateType: 'verified',
-              productType: 'Seat',
+              certificate_type: 'verified',
+              product_type: 'Seat',
               sku: '8CF08E5',
             },
           ],
@@ -67,8 +67,8 @@ describe('saga tests', () => {
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
-              certificateType: 'verified',
-              productType: 'Seat',
+              certificate_type: 'verified',
+              product_type: 'Seat',
               sku: '8CF08E5',
             },
           ],
@@ -245,8 +245,8 @@ describe('saga tests', () => {
             {
               image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
-              certificateType: 'verified',
-              productType: 'Seat',
+              certificate_type: 'verified',
+              product_type: 'Seat',
               sku: '8CF08E5',
             },
           ],

@@ -41,7 +41,7 @@ module.exports = {
       error: null,
       loaded: false,
       loading: false,
-    }
+    },
   },
   router: {
     location: {
