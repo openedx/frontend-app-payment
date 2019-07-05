@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl } from '@edx/frontend-i18n';
 
 
 class ProductLineItem extends React.PureComponent {
-  renderSeatType(certificateType) {
+  renderCertificateType(certificateType) {
     switch (certificateType) {
       case 'professional':
       case 'no-id-professional':
@@ -13,7 +13,7 @@ class ProductLineItem extends React.PureComponent {
           defaultMessage="Professional Certificate"
           description="Course certificate type on product details section"
         />);
-      case 'Verified':
+      case 'verified':
         return (<FormattedMessage
           id="payment.productlineitem.verified.certificate"
           defaultMessage="Verified Certificate"
@@ -39,7 +39,7 @@ class ProductLineItem extends React.PureComponent {
         </div>
         <div className="col-7">
           <h6 className="m-0">{title}</h6>
-          <p className="m-0">{this.renderSeatType(certificateType)}</p>
+          <p className="m-0">{this.renderCertificateType(certificateType)}</p>
         </div>
       </div>
     );
@@ -49,7 +49,7 @@ class ProductLineItem extends React.PureComponent {
 ProductLineItem.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  certificateType: PropTypes.oneOf(['professional', 'no-id-professional', 'Verified', 'honor', 'audit']),
+  certificateType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified', 'honor', 'audit']),
 };
 
 ProductLineItem.defaultProps = {

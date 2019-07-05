@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "show_voucher_form": true,
-=======
   "show_coupon_form": true,
->>>>>>> refactor: change frontend names to reflect backend
   "order_total": 149,
   "summary_discounts": 12,
   "summary_price": 161,
@@ -12,10 +8,9 @@
     {
       "image_url": "https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg",
       "title": "Introduction to Happiness",
-<<<<<<< HEAD
-      "seat_type": "Verified"
-=======
-      "certificate_type_display_name": "Verified"
+      "certificate_type": "verified",
+      "product_type": "Seat",
+      "sku": "8CF08E5",
     }
   ],
   "coupons": [
@@ -23,7 +18,6 @@
       "code": "DEMO2",
       "id": 58,
       "benefit_value": "5%"
->>>>>>> refactor: change frontend names to reflect backend
     }
   ],
 }

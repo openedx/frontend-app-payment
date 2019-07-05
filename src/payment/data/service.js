@@ -45,11 +45,11 @@ export function transformResults(data) {
     products: data.products.map(({
       image_url: imageUrl,
       title,
-      certificate_type_display_name: certificateType,
+      certificate_type: certificateType,
       sku,
-      type,
+      product_type: productType,
     }) => ({
-      imageUrl, title, certificateType, sku, type,
+      imageUrl, title, certificateType, sku, productType,
     })),
     coupons: data.coupons,
   };
