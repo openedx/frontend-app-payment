@@ -22,7 +22,7 @@ export function* handleFetchBasket() {
   try {
     const result = yield call(PaymentApiService.getBasket);
     yield put(fetchBasketSuccess(result));
-    if (result.coupons[0] === undefined) {
+    if (result.coupons.length === 0) {
       yield put(addCouponSuccess(null, null, null));
     } else {
       yield put(addCouponSuccess(

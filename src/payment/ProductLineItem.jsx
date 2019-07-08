@@ -49,7 +49,7 @@ class ProductLineItem extends React.PureComponent {
 ProductLineItem.propTypes = {
   imageUrl: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  certificateType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified', 'honor', 'audit']),
+  certificateType: PropTypes.oneOf(['audit', 'honor', 'verified', 'no-id-professional', 'professional', 'credit']),
 };
 
 ProductLineItem.defaultProps = {

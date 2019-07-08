@@ -41,7 +41,7 @@ export class CouponForm extends Component {
     switch (errorCode) {
       // Cases that need a `code`
       case 'empty_basket':
-      case 'already_applied_coupon':
+      case 'already_applied_voucher':
       case 'code_does_not_exist':
       case 'code_expired':
       case 'code_not_active':
@@ -99,10 +99,16 @@ export class CouponForm extends Component {
         {this.props.benefitValue !== null ?
           <span className="text-muted">
             {intl.formatMessage(messages['payment.coupon.benefit_value'], {
-              code,
-              value: benefitValue,
+            code,
+            value: benefitValue,
             })}
-          </span> : null}
+          </span> :
+          <span className="text-muted">
+            {intl.formatMessage(messages['payment.coupon.benefit.default'], {
+            code,
+            })}
+          </span>
+        }
         <Button className="btn-link display-inline p-0 pl-3 border-0" type="submit">
           {intl.formatMessage(messages['payment.coupon.remove'])}
         </Button>

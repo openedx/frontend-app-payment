@@ -33,7 +33,7 @@ ProductLineItems.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
     imageUrl: PropTypes.string,
     title: PropTypes.string,
-    certificateType: PropTypes.oneOf(['professional', 'no-id-professional', 'verified', 'honor', 'audit']),
+    certificateType: PropTypes.oneOf(['audit', 'honor', 'verified', 'no-id-professional', 'professional', 'credit']),
   })),
 };
 

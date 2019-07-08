@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CouponForm error handling should display already_applied_coupon errors correctly 1`] = `"You have already added coupon code 'DEMO25' to your basket."`;
+exports[`CouponForm error handling should display already_applied_voucher errors correctly 1`] = `"You have already added coupon code 'DEMO25' to your basket."`;
 
 exports[`CouponForm error handling should display code_does_not_exist errors correctly 1`] = `"Coupon code 'DEMO25' does not exist."`;
 
@@ -81,6 +81,26 @@ exports[`CouponForm should render a percentage coupon 1`] = `
 </form>
 `;
 
+exports[`CouponForm should render an unexpected coupon 1`] = `
+<form
+  className="d-flex align-items-center mb-3"
+  onSubmit={[Function]}
+>
+  <span>
+    Coupon DEMO25 applied
+  </span>
+  <button
+    className="btn btn-link display-inline p-0 pl-3 border-0"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="submit"
+  >
+    Remove
+  </button>
+</form>
+`;
+
 exports[`CouponForm should render the add coupon form 1`] = `
 <form
   className="mb-3 d-flex align-items-end"
@@ -114,23 +134,6 @@ exports[`CouponForm should render the add coupon form 1`] = `
     type="submit"
   >
     Apply
-  </button>
-</form>
-`;
-
-exports[`CouponForm without logging errors should render an unexpected coupon 1`] = `
-<form
-  className="d-flex align-items-center mb-3"
-  onSubmit={[Function]}
->
-  <button
-    className="btn btn-link display-inline p-0 pl-3 border-0"
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    type="submit"
-  >
-    Remove
   </button>
 </form>
 `;

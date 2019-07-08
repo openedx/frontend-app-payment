@@ -17,8 +17,8 @@ module.exports = {
   userAccount: {
     loading: false,
     error: null,
-    username: null,
-    email: null,
+    username: 'staff',
+    email: 'staff@edx.org',
     bio: null,
     name: null,
     country: null,

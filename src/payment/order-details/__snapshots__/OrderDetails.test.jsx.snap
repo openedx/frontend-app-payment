@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderDetails should render course entitlement product message 1`] = `
+<div
+  className="basket-section"
+>
+  <h2
+    className="section-heading"
+  >
+    Order Details
+  </h2>
+  <p>
+    After you complete your order you will be able to select course dates from your dashboard.
+  </p>
+</div>
+`;
+
+exports[`OrderDetails should render credit seat message 1`] = `
+<div
+  className="basket-section"
+>
+  <h2
+    className="section-heading"
+  >
+    Order Details
+  </h2>
+  <p>
+    After you complete your order you will receive credit for your course.
+  </p>
+</div>
+`;
+
+exports[`OrderDetails should render enrollment code product message 1`] = `
+<div
+  className="basket-section"
+>
+  <h2
+    className="section-heading"
+  >
+    Order Details
+  </h2>
+  <p>
+    By purchasing, you and your organization agree to the following terms:
+  </p>
+  <ul>
+    <li>
+      Each code is valid for the one course covered and can be used only one time.
+    </li>
+    <li>
+      You are responsible for distributing codes to your learners in your organization.
+    </li>
+    <li>
+      Each code will expire in one year from date of purchase or, if earlier, once the course is closed.
+    </li>
+    <li>
+      If a course is not designated as self-paced, you should confirm that a course run is available before expiration.
+    </li>
+    <li>
+      You may not resell codes to third parties.
+    </li>
+    <li>
+      All edX for Business sales are final and not eligible for refunds.
+    </li>
+  </ul>
+  <p>
+    You will receive an email at staff@example.com with your enrollment code(s).
+  </p>
+</div>
+`;
+
+exports[`OrderDetails should render seat message 1`] = `
+<div
+  className="basket-section"
+>
+  <h2
+    className="section-heading"
+  >
+    Order Details
+  </h2>
+  <p>
+    After you complete your order you will be automatically enrolled in the course.
+  </p>
+</div>
+`;
+
+exports[`OrderDetails should render verified seat message 1`] = `
+<div
+  className="basket-section"
+>
+  <h2
+    className="section-heading"
+  >
+    Order Details
+  </h2>
+  <p>
+    After you complete your order you will be automatically enrolled in the verified track of the course.
+  </p>
+</div>
+`;
