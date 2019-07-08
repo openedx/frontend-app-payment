@@ -65,7 +65,7 @@ describe('CouponForm', () => {
      * button referencing nothing.  Because this is the basket page, we want to be
      * over-cautious and let the UI support it in a minimal way.
      *
-     * We want the Benefit.jsx component to continue to warn us about unexpected types in
+     * We want the CouponForm renderRemove() to continue to warn us about unexpected types in
      * development, but we want to have good fallback behavior in prod, where the console.errors
      * won't show up.  Therefore, we're hiding the errors here so that we don't have developers
      * seeing false positives on test failures (when they aren't actually failures!)
@@ -180,8 +180,8 @@ describe('CouponForm', () => {
       expect(wrapper.find('strong.invalid-feedback').text()).toMatchSnapshot();
     });
 
-    it('should display already_applied_coupon errors correctly', () => {
-      const wrapper = mount(createComponent('already_applied_coupon'));
+    it('should display already_applied_voucher errors correctly', () => {
+      const wrapper = mount(createComponent('already_applied_voucher'));
       expect(wrapper.find('strong.invalid-feedback').text()).toMatchSnapshot();
     });
 

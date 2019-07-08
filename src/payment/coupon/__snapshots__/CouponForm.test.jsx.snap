@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CouponForm error handling should display already_applied_coupon errors correctly 1`] = `"You have already added coupon code 'DEMO25' to your basket."`;
+exports[`CouponForm error handling should display already_applied_voucher errors correctly 1`] = `"You have already added coupon code 'DEMO25' to your basket."`;
 
 exports[`CouponForm error handling should display code_does_not_exist errors correctly 1`] = `"Coupon code 'DEMO25' does not exist."`;
 
