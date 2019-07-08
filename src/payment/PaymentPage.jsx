@@ -18,6 +18,7 @@ import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
 import OrderDetails from './order-details';
 import PaymentForm from './PaymentForm';
+import PlaceOrderButton from './PlaceOrderButton';
 import PaymentMethodSelect from './PaymentMethodSelect';
 import ProductLineItems from './ProductLineItems';
 import AlertList from '../feedback/AlertList';
@@ -82,6 +83,10 @@ class PaymentPage extends React.Component {
   }
 
   renderBasket() {
+    const {
+      isFreeBasket,
+    } = this.props;
+
     return (
       <div className="row">
         <div className="col-md-5 pr-md-5 col-basket-summary">
@@ -90,8 +95,12 @@ class PaymentPage extends React.Component {
           <OrderDetails />
         </div>
         <div className="col-md-7 pl-md-5">
-          <PaymentMethodSelect />
-          <PaymentForm />
+          {isFreeBasket ? <PlaceOrderButton /> : (
+            <React.Fragment>
+              <PaymentMethodSelect />
+              <PaymentForm />
+            </React.Fragment>
+        )}
         </div>
       </div>
     );
@@ -117,6 +126,7 @@ class PaymentPage extends React.Component {
 
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
+  isFreeBasket: PropTypes.bool,
   isEmpty: PropTypes.bool,
   loaded: PropTypes.bool,
   loading: PropTypes.bool,
@@ -126,6 +136,7 @@ PaymentPage.propTypes = {
 };
 
 PaymentPage.defaultProps = {
+  isFreeBasket: false,
   loaded: false,
   loading: false,
   isEmpty: false,

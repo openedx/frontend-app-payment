@@ -1,5 +1,209 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<PaymentPage /> Renders correctly in various states should render a free basket 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <div
+    className="row"
+  >
+    <div
+      className="col-md-5 pr-md-5 col-basket-summary"
+    >
+      <div
+        className="basket-section"
+      >
+        <h2
+          className="section-heading"
+        >
+          <span>
+            In Your Cart
+          </span>
+        </h2>
+        <p>
+          <span>
+            Your purchase contains the following:
+          </span>
+        </p>
+        <div
+          className="row align-items-center"
+        >
+          <div
+            className="col-5"
+          >
+            <img
+              alt="Introduction to Happiness"
+              className="img-thumbnail"
+              src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+            />
+          </div>
+          <div
+            className="col-7"
+          >
+            <h6
+              className="m-0"
+            >
+              Introduction to Happiness
+            </h6>
+            <p
+              className="m-0"
+            >
+              <span>
+                Verified Certificate
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        className="basket-section"
+        role="region"
+      >
+        <h2
+          className="section-heading"
+          id="summary-heading"
+        >
+          <span>
+            Summary
+          </span>
+        </h2>
+        <table
+          className="w-100 mb-3"
+        >
+          <tbody>
+            <tr>
+              <th
+                className="font-weight-normal"
+                scope="row"
+              >
+                <span>
+                  Price
+                </span>
+              </th>
+              <td
+                className="text-right"
+              >
+                <span>
+                  $161.00
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th
+                className="font-weight-normal"
+                scope="row"
+              >
+                <span>
+                  Discounts applied
+                </span>
+              </th>
+              <td
+                className="text-right"
+              >
+                <span>
+                  -$12.00
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <form
+          className="mb-3 d-flex align-items-end"
+          onSubmit={[Function]}
+        >
+          <div
+            className="form-group mb-0 mr-2"
+          >
+            <label
+              className="h6 d-block"
+              htmlFor="couponField"
+            >
+              Add coupon code (optional)
+            </label>
+            <input
+              aria-describedby=""
+              className="form-control"
+              id="couponField"
+              name="couponField"
+              onChange={[Function]}
+              type="text"
+              value=""
+            />
+          </div>
+          <button
+            className="btn btn-primary"
+            disabled={false}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            type="submit"
+          >
+            Apply
+          </button>
+        </form>
+        <table
+          className="w-100"
+        >
+          <tbody>
+            <tr
+              className="font-weight-bold"
+            >
+              <th
+                scope="row"
+              >
+                <span>
+                  TOTAL
+                </span>
+              </th>
+              <td
+                className="text-right"
+              >
+                <span>
+                  $149.00
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        className="basket-section"
+      >
+        <h2
+          className="section-heading"
+        >
+          <span>
+            Order Details
+          </span>
+        </h2>
+        <p>
+          After you complete your order you will be automatically enrolled in the verified track of the course.
+        </p>
+      </div>
+    </div>
+    <div
+      className="col-md-7 pl-md-5"
+    >
+      <a
+        href="undefined/checkout/free-checkout/"
+        onClick={[Function]}
+        target="_self"
+      >
+        <button
+          className="btn btn-primary btn-lg float-right"
+        >
+          <span>
+            Place Order
+          </span>
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<PaymentPage /> Renders correctly in various states should render an empty basket 1`] = `
 <div
   className="page__payment container-fluid py-5"

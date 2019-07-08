@@ -33,6 +33,7 @@ module.exports = {
     basket: {
       loaded: false,
       loading: false,
+      isFreeBasket: false,
     },
     coupon: {
       benefitValue: null,
