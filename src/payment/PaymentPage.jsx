@@ -16,7 +16,7 @@ import { paymentSelector } from './data/selectors';
 // Components
 import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
-import OrderDetails from './OrderDetails';
+import OrderDetails from './order-details';
 import PaymentForm from './PaymentForm';
 import PaymentMethodSelect from './PaymentMethodSelect';
 import ProductLineItems from './ProductLineItems';
@@ -115,7 +115,6 @@ class PaymentPage extends React.Component {
   }
 }
 
-
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   isEmpty: PropTypes.bool,
@@ -132,7 +131,9 @@ PaymentPage.defaultProps = {
   isEmpty: false,
 };
 
-
-export default connect(paymentSelector, {
-  fetchBasket,
-})(injectIntl(PaymentPage));
+export default connect(
+  paymentSelector,
+  {
+    fetchBasket,
+  },
+)(injectIntl(PaymentPage));

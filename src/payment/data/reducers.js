@@ -5,6 +5,7 @@ import { reducer as coupon } from '../coupon';
 
 export const basketInitialState = {
   loading: false,
+  products: [],
 };
 
 const basket = (state = basketInitialState, action = null) => {
