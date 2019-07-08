@@ -60,6 +60,7 @@ module.exports = {
           benefitValue: '20%'
         }
       ],
+      offers: [],
     },
     coupon: {
       benefitValue: null,

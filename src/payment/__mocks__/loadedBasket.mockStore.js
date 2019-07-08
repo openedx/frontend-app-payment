@@ -62,6 +62,12 @@ module.exports = {
           benefitValue: '20%'
         }
       ],
+      offers: [
+        {
+          benefitValue: '50%',
+          provider: 'Pied Piper',
+        },
+      ],
     },
     coupon: {
       benefitValue: null,
