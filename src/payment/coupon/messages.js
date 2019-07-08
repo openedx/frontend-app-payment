@@ -21,6 +21,11 @@ const messages = defineMessages({
     defaultMessage: 'Coupon {code} applied for {value} off',
     description: 'The description of a coupon for a percentage off the total price. Percentage symbol is included in {value}',
   },
+  'payment.coupon.benefit.default': {
+    id: 'payment.coupon.benefit.default',
+    defaultMessage: 'Coupon {code} applied',
+    description: 'The description of a coupon without any specific monetary value off.',
+  },
   'payment.coupon.added': {
     id: 'payment.coupon.added',
     defaultMessage: "Coupon code '{code}' was added to your basket.",
@@ -41,8 +46,8 @@ const messages = defineMessages({
     defaultMessage: "Coupon code '{code}' cannot be applied because your basket is empty.",
     description: 'The error message shown to the user when they try to apply a coupon code when their basket is empty.',
   },
-  'payment.coupon.error.already_applied_coupon': {
-    id: 'payment.coupon.error.already_applied_coupon',
+  'payment.coupon.error.already_applied_voucher': {
+    id: 'payment.coupon.error.already_applied_voucher',
     defaultMessage: "You have already added coupon code '{code}' to your basket.",
     description: 'The error message shown to the user when they have already applied a given coupon code to their basket.',
   },

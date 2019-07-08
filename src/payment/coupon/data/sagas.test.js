@@ -59,6 +59,7 @@ describe('saga tests', () => {
       },
       blankVoucherResponse: {
         data: {
+          coupons: [],
           show_coupon_form: true,
           summary_price: 161,
           order_total: 161,

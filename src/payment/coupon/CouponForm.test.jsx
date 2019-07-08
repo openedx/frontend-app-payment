@@ -57,45 +57,20 @@ describe('CouponForm', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  describe('without logging errors', () => {
-    /**
-     * Explanation: Why do this?  This test is in anticipation of there being coupon types we
-     * didn't expect.  We want the UI to at least display a message in these cases, even if we
-     * weren't expecting them, because the alternative is to show no text at all with a "Remove"
-     * button referencing nothing.  Because this is the basket page, we want to be
-     * over-cautious and let the UI support it in a minimal way.
-     *
-     * We want the Benefit.jsx component to continue to warn us about unexpected types in
-     * development, but we want to have good fallback behavior in prod, where the console.errors
-     * won't show up.  Therefore, we're hiding the errors here so that we don't have developers
-     * seeing false positives on test failures (when they aren't actually failures!)
-     */
-    let originalError;
-
-    beforeEach(() => {
-      originalError = console.error; // eslint-disable-line no-console
-      console.error = jest.fn(); // eslint-disable-line no-console
-    });
-
-    afterEach(() => {
-      console.error = originalError; // eslint-disable-line no-console
-    });
-
-    it('should render an unexpected coupon', () => {
-      const component = (
-        <IntlProvider locale="en">
-          <Provider store={mockStore(storeMocks.defaultCouponAdded)}>
-            <ConnectedCouponForm
-              addCoupon={jest.fn()}
-              removeCoupon={jest.fn()}
-              updateCouponDraft={jest.fn()}
-            />
-          </Provider>
-        </IntlProvider>
-      );
-      const tree = renderer.create(component).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
+  it('should render an unexpected coupon', () => {
+    const component = (
+      <IntlProvider locale="en">
+        <Provider store={mockStore(storeMocks.defaultCouponAdded)}>
+          <ConnectedCouponForm
+            addCoupon={jest.fn()}
+            removeCoupon={jest.fn()}
+            updateCouponDraft={jest.fn()}
+          />
+        </Provider>
+      </IntlProvider>
+    );
+    const tree = renderer.create(component).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   it('should call addCoupon on form submit', () => {
@@ -180,8 +155,8 @@ describe('CouponForm', () => {
       expect(wrapper.find('strong.invalid-feedback').text()).toMatchSnapshot();
     });
 
-    it('should display already_applied_coupon errors correctly', () => {
-      const wrapper = mount(createComponent('already_applied_coupon'));
+    it('should display already_applied_voucher errors correctly', () => {
+      const wrapper = mount(createComponent('already_applied_voucher'));
       expect(wrapper.find('strong.invalid-feedback').text()).toMatchSnapshot();
     });
 

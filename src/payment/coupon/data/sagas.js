@@ -23,7 +23,7 @@ export function* handleAddCoupon(action) {
   try {
     const result = yield call(postCoupon, action.payload.code);
     yield put(fetchBasketSuccess(result));
-    if (result.coupons === undefined) {
+    if (result.coupons.length === 0) {
       yield put(addCouponSuccess(null, null, null));
     } else {
       yield put(addCouponSuccess(
