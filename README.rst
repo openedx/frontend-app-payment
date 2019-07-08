@@ -25,7 +25,7 @@ Local Dev Server + Stage API
 ----------------------------
 
 If you would like to run this frontend against stage.edx.org you can run npm run start:stage and
-access your development server at https://local.stage.edx.org:1998 after initial setup
+access your development server at https://local.stage.edx.org:1998 after the initial setup
 described below:
 
 - Update the /edx/hosts file on your computer and add `127.0.0.1 local.stage.edx.org`.
