@@ -52,6 +52,11 @@ export function transformResults(data) {
       imageUrl, title, certificateType, sku, productType,
     })),
     coupons: data.coupons,
+    offers: data.offers ?
+      data.offers
+        .filter(({ provider }) => provider !== null)
+        .map(({ benefit_value: benefitValue, provider }) => ({ benefitValue, provider }))
+      : null,
   };
   return transformedResults;
 }

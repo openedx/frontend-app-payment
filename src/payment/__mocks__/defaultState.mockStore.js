@@ -42,6 +42,7 @@ module.exports = {
       loaded: false,
       loading: false,
     },
+    offers: [],
   },
   router: {
     location: {

@@ -33,7 +33,7 @@ class ProductLineItem extends React.PureComponent {
       certificateType,
     } = this.props;
     return (
-      <div className="row align-items-center">
+      <div className="row align-items-center mb-3">
         <div className="col-5">
           <img className="img-thumbnail" src={imageUrl} alt={title} />
         </div>

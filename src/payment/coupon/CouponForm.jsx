@@ -97,13 +97,13 @@ export class CouponForm extends Component {
     return (
       <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
         {this.props.benefitValue !== null ?
-          <span>
+          <span className="text-muted">
             {intl.formatMessage(messages['payment.coupon.benefit_value'], {
             code,
             value: benefitValue,
             })}
           </span> :
-          <span>
+          <span className="text-muted">
             {intl.formatMessage(messages['payment.coupon.benefit.default'], {
             code,
             })}

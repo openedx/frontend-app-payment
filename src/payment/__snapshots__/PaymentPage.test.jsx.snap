@@ -109,7 +109,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </span>
         </p>
         <div
-          className="row align-items-center"
+          className="row align-items-center mb-3"
         >
           <div
             className="col-5"
@@ -192,6 +192,15 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </tr>
           </tbody>
         </table>
+        <ul
+          className="text-muted list-unstyled"
+        >
+          <li>
+            <span>
+              50% discount provided by Pied Piper.
+            </span>
+          </li>
+        </ul>
         <form
           className="mb-3 d-flex align-items-end"
           onSubmit={[Function]}
@@ -2131,7 +2140,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </span>
         </p>
         <div
-          className="row align-items-center"
+          className="row align-items-center mb-3"
         >
           <div
             className="col-5"
@@ -4070,7 +4079,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
 
 exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"
@@ -4102,7 +4111,7 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
 
 exports[`<ProductLineItem /> Rendering should render the product details for audit certificate 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"
@@ -4130,7 +4139,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for aud
 
 exports[`<ProductLineItem /> Rendering should render the product details for honor certificate 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"
@@ -4158,7 +4167,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for hon
 
 exports[`<ProductLineItem /> Rendering should render the product details for no-id-professional certificate 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"
@@ -4190,7 +4199,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
 
 exports[`<ProductLineItem /> Rendering should render the product details for professional certificate 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"
@@ -4222,7 +4231,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
 
 exports[`<ProductLineItem /> Rendering should render the product details for unknown seat type 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"
@@ -4250,7 +4259,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for unk
 
 exports[`<ProductLineItem /> Rendering should render the product details for verified certificate 1`] = `
 <div
-  className="row align-items-center"
+  className="row align-items-center mb-3"
 >
   <div
     className="col-5"

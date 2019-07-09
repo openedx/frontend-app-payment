@@ -65,6 +65,36 @@ SummaryTable.defaultProps = {
   summaryPrice: undefined,
 };
 
+function DiscountOffers({ offers }) {
+  if (offers.length === 0) return null;
+
+  return (
+    <ul className="text-muted list-unstyled">
+      {offers.map(({ benefitValue, provider }) => (
+        <li key={`${benefitValue}-${provider}`}>
+          <FormattedMessage
+            id="payment.summary.discount.offer"
+            defaultMessage="{benefitValue} discount provided by {provider}."
+            description="A description of a discount offer applied to a basket."
+            values={{ benefitValue, provider }}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+DiscountOffers.propTypes = {
+  offers: PropTypes.arrayOf(PropTypes.shape({
+    benefitValue: PropTypes.string,
+    provider: PropTypes.string,
+  })),
+};
+
+DiscountOffers.defaultProps = {
+  offers: [],
+};
+
 
 function TotalTable({ orderTotal }) {
   return (
@@ -123,6 +153,8 @@ function BasketSummary(props) {
         summaryDiscounts={props.summaryDiscounts}
       />
 
+      <DiscountOffers offers={props.offers} />
+
       {props.showCouponForm ? <CouponForm /> : null}
 
       <TotalTable orderTotal={props.orderTotal} />
@@ -136,6 +168,10 @@ BasketSummary.propTypes = {
   orderTotal: PropTypes.number,
   summaryDiscounts: PropTypes.number,
   summaryPrice: PropTypes.number,
+  offers: PropTypes.arrayOf(PropTypes.shape({
+    benefitValue: PropTypes.string,
+    provider: PropTypes.string,
+  })),
 };
 
 BasketSummary.defaultProps = {
@@ -143,6 +179,7 @@ BasketSummary.defaultProps = {
   orderTotal: undefined,
   summaryDiscounts: undefined,
   summaryPrice: undefined,
+  offers: [],
 };
 
 export default connect(basketSelector)(BasketSummary);
