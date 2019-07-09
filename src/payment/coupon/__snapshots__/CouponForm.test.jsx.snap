@@ -86,7 +86,9 @@ exports[`CouponForm should render an unexpected coupon 1`] = `
   className="d-flex align-items-center mb-3"
   onSubmit={[Function]}
 >
-  <span>
+  <span
+    className="text-muted"
+  >
     Coupon DEMO25 applied
   </span>
   <button
