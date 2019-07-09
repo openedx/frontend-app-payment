@@ -28,7 +28,7 @@ If you would like to run this frontend against stage.edx.org you can run npm run
 access your development server at https://local.stage.edx.org:1998 after the initial setup
 described below:
 
-- Update the /edx/hosts file on your computer and add `127.0.0.1 local.stage.edx.org`.
+- Update the /etc/hosts file on your computer and add `127.0.0.1 local.stage.edx.org`.
 - Log into stage `https://courses.stage.edx.org/login`.
 - Run `npm run start:stage` in this project directory
 - Navigate to `https://local.stage.edx.org:1998`. You will see a warning that this page
