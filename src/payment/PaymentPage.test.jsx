@@ -17,6 +17,7 @@ const storeMocks = {
   defaultState: require('./__mocks__/defaultState.mockStore.js'),
   loading: require('./__mocks__/loading.mockStore.js'),
   loadedBasket: require('./__mocks__/loadedBasket.mockStore.js'),
+  loadedFreeBasket: require('./__mocks__/loadedFreeBasket.mockStore.js'),
   loadedEmptyBasket: require('./__mocks__/loadedEmptyBasket.mockStore.js'),
   loadedBasketWithNoTotals: require('./__mocks__/loadedBasketWithNoTotals.mockStore.js'),
 };
@@ -96,6 +97,20 @@ describe('<PaymentPage />', () => {
         .create((
           <IntlProvider locale="en">
             <Provider store={mockStore(storeMocks.loadedEmptyBasket)}>
+              <ConnectedPaymentPage {...requirePaymentPageProps} />
+            </Provider>
+          </IntlProvider>
+        ))
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render a free basket', () => {
+      analytics.sendTrackingLogEvent = jest.fn();
+      const tree = renderer
+        .create((
+          <IntlProvider locale="en">
+            <Provider store={mockStore(storeMocks.loadedFreeBasket)}>
               <ConnectedPaymentPage {...requirePaymentPageProps} />
             </Provider>
           </IntlProvider>

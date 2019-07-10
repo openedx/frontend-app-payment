@@ -15,6 +15,7 @@ export const paymentSelector = createSelector(
     ...basket,
     dashboardURL: configuration.LMS_BASE_URL,
     supportURL: configuration.SUPPORT_URL,
+    ecommerceURL: configuration.ECOMMERCE_BASE_URL,
     isEmpty: basket.loaded && (!basket.products || basket.products.length === 0),
   }),
 );

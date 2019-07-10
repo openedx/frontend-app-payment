@@ -17,8 +17,8 @@ module.exports = {
   userAccount: {
     loading: false,
     error: null,
-    username: 'staff',
-    email: 'staff@edx.org',
+    username: null,
+    email: null,
     bio: null,
     name: null,
     country: null,
@@ -33,8 +33,8 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
-      isFreeBasket: false,
-      showCouponForm: false,
+      isFreeBasket: true,
+      showCouponForm: true,
       paymentProviders: [
         {
           type: 'cybersource',
@@ -43,7 +43,9 @@ module.exports = {
           type: 'paypal',
         },
       ],
-      sdnCheck: true,
+      orderTotal: 149,
+      summaryDiscounts: 12,
+      summaryPrice: 161,
       products: [
         {
           imageUrl:
@@ -61,7 +63,6 @@ module.exports = {
           benefitValue: '20%'
         }
       ],
-      offers: [],
     },
     coupon: {
       benefitValue: null,

@@ -46,6 +46,7 @@ export function* handleRemoveCoupon(action) {
   yield put(removeCouponBegin());
   try {
     const result = yield call(deleteCoupon, action.payload.id);
+    yield put(fetchBasketSuccess(result));
     yield put(removeCouponSuccess(result));
     yield put(addMessage('payment.coupon.removed', null, {
       code,
