@@ -287,6 +287,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         removeCouponBegin(),
+        fetchBasketSuccess(transformResults(responses.successResponse.data)),
         removeCouponSuccess(transformResults(responses.successResponse.data)),
         addMessage(
           'payment.coupon.removed',

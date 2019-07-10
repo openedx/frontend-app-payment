@@ -35,7 +35,7 @@ class ProductLineItem extends React.PureComponent {
     return (
       <div className="row align-items-center mb-3">
         <div className="col-5">
-          <img className="img-thumbnail" src={imageUrl} alt={title} />
+          <img className="img-thumbnail" src={imageUrl} alt="" />
         </div>
         <div className="col-7">
           <h6 className="m-0">{title}</h6>

@@ -26,13 +26,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           </span>
         </p>
         <div
-          className="row align-items-center"
+          className="row align-items-center mb-3"
         >
           <div
             className="col-5"
           >
             <img
-              alt="Introduction to Happiness"
+              alt=""
               className="img-thumbnail"
               src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
             />
@@ -174,9 +174,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
         <h2
           className="section-heading"
         >
-          <span>
-            Order Details
-          </span>
+          Order Details
         </h2>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.
@@ -192,7 +190,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
         target="_self"
       >
         <button
-          className="btn btn-primary btn-lg float-right"
+          className="btn btn-primary btn-lg"
         >
           <span>
             Place Order
@@ -319,7 +317,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             className="col-5"
           >
             <img
-              alt="Introduction to Happiness"
+              alt=""
               className="img-thumbnail"
               src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
             />
@@ -2350,7 +2348,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
             className="col-5"
           >
             <img
-              alt="Introduction to Happiness"
+              alt=""
               className="img-thumbnail"
               src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
             />
@@ -4289,7 +4287,7 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
@@ -4321,7 +4319,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for aud
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
@@ -4349,7 +4347,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for hon
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
@@ -4377,7 +4375,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
@@ -4409,7 +4407,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
@@ -4441,7 +4439,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for unk
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />
@@ -4469,7 +4467,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for ver
     className="col-5"
   >
     <img
-      alt="Introduction to Happiness"
+      alt=""
       className="img-thumbnail"
       src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
     />

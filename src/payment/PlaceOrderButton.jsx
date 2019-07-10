@@ -9,7 +9,7 @@ import { paymentSelector } from './data/selectors';
 function PlaceOrderButton({ ecommerceURL }) {
   return (
     <Hyperlink destination={`${ecommerceURL}/checkout/free-checkout/`}>
-      <button className="btn btn-primary btn-lg float-right" >
+      <button className="btn btn-primary btn-lg" >
         <FormattedMessage
           id="payment.form.submit.button.text"
           defaultMessage="Place Order"
