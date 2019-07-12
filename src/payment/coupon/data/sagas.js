@@ -1,4 +1,4 @@
-import { call, put, takeEvery, select } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   ADD_COUPON,
   addCouponBegin,
@@ -12,7 +12,7 @@ import {
 import { fetchBasketSuccess } from '../../data/actions';
 import { deleteCoupon, postCoupon } from './service';
 
-import { addMessage, handleErrors, MESSAGE_TYPES, handleMessages } from '../../../feedback';
+import { handleErrors, handleMessages } from '../../../feedback';
 
 export function* handleAddCoupon(action) {
   yield put(addCouponBegin());
@@ -36,23 +36,12 @@ export function* handleAddCoupon(action) {
 }
 
 export function* handleRemoveCoupon(action) {
-  const code = yield select(state => state.payment.coupon.code);
   yield put(removeCouponBegin());
   try {
     const result = yield call(deleteCoupon, action.payload.id);
     yield put(fetchBasketSuccess(result));
     yield put(removeCouponSuccess(result));
     yield call(handleMessages, result.messages);
-    // Currently there doesn't seem to be a message coming back from the server
-    // about removing the coupon. So we'll do it client side.
-    yield put(addMessage(
-      'payment.coupon.removed',
-      null,
-      {
-        code,
-      },
-      MESSAGE_TYPES.INFO,
-    ));
   } catch (e) {
     yield put(removeCouponFailure());
     yield call(handleErrors, e);

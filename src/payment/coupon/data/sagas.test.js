@@ -292,14 +292,6 @@ describe('saga tests', () => {
         removeCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
         removeCouponSuccess(transformResults(responses.successResponse.data)),
-        addMessage(
-          'payment.coupon.removed',
-          null,
-          {
-            code: 'DEMO25',
-          },
-          MESSAGE_TYPES.INFO,
-        ),
       ]);
 
       expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
