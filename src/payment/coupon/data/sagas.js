@@ -12,28 +12,22 @@ import {
 import { fetchBasketSuccess } from '../../data/actions';
 import { deleteCoupon, postCoupon } from './service';
 
-import {
-  addMessage,
-  handleErrors,
-  INFO,
-} from '../../../feedback';
+import { addMessage, handleErrors, MESSAGE_TYPES, handleMessages } from '../../../feedback';
 
 export function* handleAddCoupon(action) {
   yield put(addCouponBegin());
   try {
     const result = yield call(postCoupon, action.payload.code);
     yield put(fetchBasketSuccess(result));
+    yield call(handleMessages, result.messages);
     if (result.coupons.length === 0) {
       yield put(addCouponSuccess(null, null, null));
     } else {
       yield put(addCouponSuccess(
         result.coupons[0].id,
         result.coupons[0].code,
-        result.coupons[0].benefit_value,
+        result.coupons[0].benefitValue,
       ));
-      yield put(addMessage('payment.coupon.added', null, {
-        code: result.coupons[0].code,
-      }, INFO));
     }
   } catch (e) {
     yield put(addCouponFailure());
@@ -48,9 +42,17 @@ export function* handleRemoveCoupon(action) {
     const result = yield call(deleteCoupon, action.payload.id);
     yield put(fetchBasketSuccess(result));
     yield put(removeCouponSuccess(result));
-    yield put(addMessage('payment.coupon.removed', null, {
-      code,
-    }, INFO));
+    yield call(handleMessages, result.messages);
+    // Currently there doesn't seem to be a message coming back from the server
+    // about removing the coupon. So we'll do it client side.
+    yield put(addMessage(
+      'payment.coupon.removed',
+      null,
+      {
+        code,
+      },
+      MESSAGE_TYPES.INFO,
+    ));
   } catch (e) {
     yield put(removeCouponFailure());
     yield call(handleErrors, e);

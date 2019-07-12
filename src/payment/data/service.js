@@ -2,6 +2,7 @@ import pick from 'lodash.pick';
 
 import { configureApiService as configureCouponApiService } from '../coupon';
 import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
+import { camelCaseObject } from '../../common/utils';
 
 
 let config = {
@@ -33,32 +34,18 @@ export function configureApiService(newConfig, newApiClient) {
 }
 
 export function transformResults(data) {
-  const transformedResults = {
-    basketId: data.basket_id,
-    currency: data.currency,
-    isFreeBasket: data.is_free_basket,
-    showCouponForm: data.show_coupon_form,
-    orderTotal: Number.parseInt(data.order_total, 10),
-    summaryDiscounts: data.summary_discounts !== null ?
-      Number.parseInt(data.summary_discounts, 10) : null,
-    summaryPrice: Number.parseInt(data.summary_price, 10),
-    products: data.products.map(({
-      image_url: imageUrl,
-      title,
-      certificate_type: certificateType,
-      sku,
-      product_type: productType,
-    }) => ({
-      imageUrl, title, certificateType, sku, productType,
-    })),
-    coupons: data.coupons,
-    offers: data.offers ?
-      data.offers
-        .filter(({ provider }) => provider !== null)
-        .map(({ benefit_value: benefitValue, provider }) => ({ benefitValue, provider }))
-      : null,
-  };
-  return transformedResults;
+  const results = camelCaseObject(data);
+
+  results.orderTotal = Number.parseInt(results.orderTotal, 10);
+  results.summaryDiscounts = results.summaryDiscounts !== null ?
+    Number.parseInt(results.summaryDiscounts, 10) : null;
+  results.summaryPrice = Number.parseInt(results.summaryPrice, 10);
+
+  if (results.offers != null) {
+    results.offers = results.offers.filter(({ provider }) => provider !== null);
+  }
+
+  return results;
 }
 
 export async function getBasket() {

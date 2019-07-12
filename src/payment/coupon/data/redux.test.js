@@ -1,7 +1,19 @@
 import { createStore } from 'redux';
 
 import reducer from './reducers';
-import { addCouponBegin, addCouponSuccess, addCouponFailure, removeCouponBegin, removeCouponSuccess, removeCouponFailure, updateCouponDraft, ADD_COUPON, addCoupon, removeCoupon, REMOVE_COUPON } from './actions';
+import {
+  addCouponBegin,
+  addCouponSuccess,
+  addCouponFailure,
+  removeCouponBegin,
+  removeCouponSuccess,
+  removeCouponFailure,
+  updateCouponDraft,
+  ADD_COUPON,
+  addCoupon,
+  removeCoupon,
+  REMOVE_COUPON,
+} from './actions';
 
 describe('redux tests', () => {
   let store;

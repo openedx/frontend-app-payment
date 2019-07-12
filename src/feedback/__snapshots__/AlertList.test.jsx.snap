@@ -104,5 +104,30 @@ Array [
       Gah!  An error!
     </div>
   </div>,
+  <div
+    className="alert fade alert-dismissible alert-warning show"
+    hidden={false}
+    role="alert"
+  >
+    <button
+      aria-label="Close"
+      className="btn close"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ×
+      </span>
+    </button>
+    <div
+      className="alert-dialog"
+    >
+      Debug debug
+    </div>
+  </div>,
 ]
 `;

@@ -1,4 +1,14 @@
-export const DANGER = 'danger';
-export const SUCCESS = 'success';
-export const INFO = 'info';
-export const WARNING = 'warning';
+export const ALERT_TYPES = {
+  DANGER: 'danger',
+  SUCCESS: 'success',
+  INFO: 'info',
+  WARNING: 'warning',
+};
+
+export const MESSAGE_TYPES = {
+  DEBUG: 'debug',
+  INFO: 'info',
+  SUCCESS: 'success',
+  WARNING: 'warning',
+  ERROR: 'error',
+};

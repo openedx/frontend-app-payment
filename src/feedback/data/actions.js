@@ -1,13 +1,13 @@
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 
-export const addMessage = (code, message, data, severity, fieldName = null) => ({
+export const addMessage = (code, userMessage, data, messageType, fieldName = null) => ({
   type: ADD_MESSAGE,
   payload: {
     code,
-    message,
+    userMessage,
     data,
-    severity,
+    messageType,
     fieldName,
   },
 });

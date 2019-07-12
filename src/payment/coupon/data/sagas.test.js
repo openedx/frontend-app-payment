@@ -14,7 +14,7 @@ import {
 } from './actions';
 import { fetchBasketSuccess } from '../../data/actions';
 import { transformResults } from '../../data/service';
-import { addMessage, INFO, DANGER } from '../../../feedback';
+import { addMessage, MESSAGE_TYPES } from '../../../feedback';
 
 describe('saga tests', () => {
   const configuration = {
@@ -48,11 +48,19 @@ describe('saga tests', () => {
           summary_discounts: 12,
           products: [
             {
-              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              image_url:
+                'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
               certificate_type: 'verified',
               product_type: 'Seat',
               sku: '8CF08E5',
+            },
+          ],
+          messages: [
+            {
+              code: null,
+              userMessage: 'Hey, your coupon was added.',
+              messageType: MESSAGE_TYPES.INFO,
             },
           ],
         },
@@ -66,7 +74,8 @@ describe('saga tests', () => {
           summary_discounts: 0,
           products: [
             {
-              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              image_url:
+                'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
               certificate_type: 'verified',
               product_type: 'Seat',
@@ -78,7 +87,7 @@ describe('saga tests', () => {
       errorResponse: {
         response: {
           data: {
-            error_code: 'uhoh',
+            errors: [{ error_code: 'uhoh', message_type: MESSAGE_TYPES.ERROR }],
           },
         },
       },
@@ -107,15 +116,13 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
-        addCouponSuccess(12345, 'DEMO25', '25%'),
         addMessage(
-          'payment.coupon.added',
           null,
-          {
-            code: 'DEMO25',
-          },
-          INFO,
+          'Hey, your coupon was added.',
+          null,
+          MESSAGE_TYPES.INFO,
         ),
+        addCouponSuccess(12345, 'DEMO25', '25%'),
       ]);
       expect(apiClientPost).toHaveBeenCalledWith(
         'http://localhost/bff/payment/v0/vouchers/',
@@ -177,12 +184,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         addCouponFailure(),
-        addMessage(
-          'uhoh',
-          null,
-          null,
-          DANGER,
-        ),
+        addMessage('uhoh', null, null, MESSAGE_TYPES.ERROR),
       ]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
@@ -244,7 +246,8 @@ describe('saga tests', () => {
           summary_discounts: 12,
           products: [
             {
-              image_url: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
+              image_url:
+                'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
               title: 'Introduction to Happiness',
               certificate_type: 'verified',
               product_type: 'Seat',
@@ -256,7 +259,7 @@ describe('saga tests', () => {
       errorResponse: {
         response: {
           data: {
-            error_code: 'uhoh',
+            errors: [{ error_code: 'uhoh', message_type: MESSAGE_TYPES.ERROR }],
           },
         },
       },
@@ -295,7 +298,7 @@ describe('saga tests', () => {
           {
             code: 'DEMO25',
           },
-          INFO,
+          MESSAGE_TYPES.INFO,
         ),
       ]);
 
@@ -327,12 +330,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         removeCouponBegin(),
         removeCouponFailure(),
-        addMessage(
-          'uhoh',
-          null,
-          null,
-          DANGER,
-        ),
+        addMessage('uhoh', null, null, MESSAGE_TYPES.ERROR),
       ]);
 
       expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');

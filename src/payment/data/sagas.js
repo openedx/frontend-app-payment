@@ -13,7 +13,7 @@ import {
 import * as PaymentApiService from './service';
 
 import { saga as couponSaga, addCouponSuccess, addCouponBegin } from '../coupon';
-import { handleErrors } from '../../feedback';
+import { handleErrors, handleMessages } from '../../feedback';
 import { configuration } from '../../environment';
 
 export function* handleFetchBasket() {
@@ -22,13 +22,14 @@ export function* handleFetchBasket() {
   try {
     const result = yield call(PaymentApiService.getBasket);
     yield put(fetchBasketSuccess(result));
+    yield call(handleMessages, result.messages);
     if (result.coupons.length === 0) {
       yield put(addCouponSuccess(null, null, null));
     } else {
       yield put(addCouponSuccess(
         result.coupons[0].id,
         result.coupons[0].code,
-        result.coupons[0].benefit_value,
+        result.coupons[0].benefitValue,
       ));
     }
   } catch (e) {

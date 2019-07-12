@@ -13,19 +13,23 @@ class AlertList extends Component {
       return null;
     }
 
-    return this.props.messageList.map(({
-      id, code, message, severity, data,
-    }) => {
+    return this.props.messageList.map((message) => {
+      const {
+        id, code, userMessage, messageType, data,
+      } = message;
       const formattedMessage =
-        message !== null
-          ? message
-          : this.props.intl.formatMessage(this.props.intlMessages[code], data);
+        userMessage !== null
+          ? userMessage
+          : this.props.intl.formatMessage(
+            this.props.intlMessages[code],
+            data,
+          );
       return (
         <AlertMessage
           key={id}
           id={id}
-          message={formattedMessage}
-          severity={severity}
+          userMessage={formattedMessage}
+          messageType={messageType}
           closeHandler={this.props.removeMessage}
         />
       );
@@ -36,9 +40,9 @@ class AlertList extends Component {
 AlertList.propTypes = {
   messageList: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    severity: PropTypes.string.isRequired,
+    messageType: PropTypes.string.isRequired,
     code: PropTypes.string,
-    message: PropTypes.string,
+    userMessage: PropTypes.string,
     fieldName: PropTypes.string,
   })),
   removeMessage: PropTypes.func.isRequired,
