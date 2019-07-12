@@ -1,6 +1,6 @@
 import { runSaga } from 'redux-saga';
-import handleErrors from './sagas';
-import { DANGER } from './constants';
+import { handleErrors } from './sagas';
+import { MESSAGE_TYPES } from './constants';
 import { addMessage } from './actions';
 
 describe('saga tests', () => {
@@ -31,11 +31,13 @@ describe('saga tests', () => {
     error.errors = [
       {
         code: 'uhoh',
-        message: 'Uhoh oh no!',
+        userMessage: 'Uhoh oh no!',
+        messageType: MESSAGE_TYPES.ERROR,
       },
       {
         code: 'oh_goodness',
-        message: 'This is really bad!',
+        userMessage: 'This is really bad!',
+        messageType: MESSAGE_TYPES.ERROR,
       },
     ];
     await runSaga(
@@ -47,8 +49,35 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, DANGER),
-      addMessage('oh_goodness', 'This is really bad!', null, DANGER),
+      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.ERROR),
+      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR),
+    ]);
+  });
+
+  it('should dispatch addMessage actions on API messages', async () => {
+    error.messages = [
+      {
+        code: 'uhoh',
+        userMessage: 'Uhoh oh no!',
+        messageType: MESSAGE_TYPES.INFO,
+      },
+      {
+        code: 'oh_goodness',
+        userMessage: 'This is really bad!',
+        messageType: MESSAGE_TYPES.ERROR,
+      },
+    ];
+    await runSaga(
+      {
+        dispatch: action => dispatched.push(action),
+      },
+      handleErrors,
+      error,
+    ).toPromise();
+
+    expect(dispatched).toEqual([
+      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.INFO),
+      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR),
     ]);
   });
 
@@ -56,12 +85,12 @@ describe('saga tests', () => {
     error.fieldErrors = [
       {
         code: 'uhoh',
-        message: 'Uhoh oh no!',
+        userMessage: 'Uhoh oh no!',
         fieldName: 'field1',
       },
       {
         code: 'oh_goodness',
-        message: 'This is really bad!',
+        userMessage: 'This is really bad!',
         fieldName: 'field2',
       },
     ];
@@ -74,8 +103,8 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, DANGER, 'field1'),
-      addMessage('oh_goodness', 'This is really bad!', null, DANGER, 'field2'),
+      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.ERROR, 'field1'),
+      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR, 'field2'),
     ]);
   });
 
@@ -83,13 +112,14 @@ describe('saga tests', () => {
     error.errors = [
       {
         code: 'uhoh',
-        message: 'Uhoh oh no!',
+        userMessage: 'Uhoh oh no!',
+        messageType: MESSAGE_TYPES.ERROR,
       },
     ];
     error.fieldErrors = [
       {
         code: 'oh_goodness',
-        message: 'This is really bad!',
+        userMessage: 'This is really bad!',
         fieldName: 'field2',
       },
     ];
@@ -102,8 +132,8 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, DANGER),
-      addMessage('oh_goodness', 'This is really bad!', null, DANGER, 'field2'),
+      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.ERROR),
+      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR, 'field2'),
     ]);
   });
 });

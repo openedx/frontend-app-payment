@@ -185,7 +185,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
       className="col-md-7 pl-md-5"
     >
       <a
-        href="undefined/checkout/free-checkout/"
+        href="http://localhost:18130/checkout/free-checkout/"
         onClick={[Function]}
         target="_self"
       >

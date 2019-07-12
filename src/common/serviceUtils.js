@@ -1,4 +1,5 @@
 import pick from 'lodash.pick';
+import { camelCaseObject } from './utils';
 
 export function applyConfiguration(expected, actual) {
   Object.keys(expected).forEach((key) => {
@@ -40,7 +41,7 @@ export function unpackFieldErrors(fieldErrors) {
 function handleFieldErrors(errors) {
   const fieldErrors = Object.entries(errors).map(([name, value]) => ({
     code: value.error_code ? value.error_code : null,
-    message: value.user_message,
+    userMessage: value.user_message,
     fieldName: name,
   }));
 
@@ -52,11 +53,18 @@ function handleFieldErrors(errors) {
 function handleApiErrors(errors) {
   const apiErrors = errors.map(err => ({
     code: err.error_code ? err.error_code : null,
-    message: err.user_message ? err.user_message : null,
+    userMessage: err.user_message ? err.user_message : null,
+    messageType: err.message_type ? err.message_type : null,
   }));
 
   const apiError = new Error();
   apiError.errors = apiErrors;
+  throw apiError;
+}
+
+function handleApiMessages(messages) {
+  const apiError = new Error();
+  apiError.messages = camelCaseObject(messages);
   throw apiError;
 }
 
@@ -83,6 +91,11 @@ export function handleRequestError(error) {
   // API errors
   if (error.response && error.response.data.errors !== undefined) {
     handleApiErrors(error.response.data.errors);
+  }
+
+  // API messages
+  if (error.response && error.response.data.messages !== undefined) {
+    handleApiMessages(error.response.data.messages);
   }
 
   // Single API error

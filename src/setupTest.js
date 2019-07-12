@@ -11,3 +11,4 @@ Enzyme.configure({ adapter: new Adapter() });
 process.env.LMS_BASE_URL = 'http://localhost:18000';
 process.env.SUPPORT_URL = 'http://localhost:18000/support';
 process.env.LANGUAGE_PREFERENCE_COOKIE_NAME = 'language-cookie';
+process.env.ECOMMERCE_BASE_URL = 'http://localhost:18130';

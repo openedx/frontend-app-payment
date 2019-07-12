@@ -9,6 +9,7 @@ module.exports = {
     LMS_BASE_URL: 'http://localhost:18000',
     SUPPORT_URL:'http://localhost:18000/support',
     LANGUAGE_PREFERENCE_COOKIE_NAME: 'yum',
+    ECOMMERCE_BASE_URL: 'http://localhost:18130',
   },
   feedback: {
     byId: {},
@@ -18,7 +19,7 @@ module.exports = {
     loading: false,
     error: null,
     username: null,
-    email: null,
+    email: 'staff@example.com',
     bio: null,
     name: null,
     country: null,

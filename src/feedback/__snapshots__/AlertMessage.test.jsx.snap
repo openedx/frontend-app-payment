@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertMessage should default its severity when necessary 1`] = `
+<div
+  className="alert fade alert-dismissible alert-warning show"
+  hidden={false}
+  role="alert"
+>
+  <button
+    aria-label="Close"
+    className="btn close"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>
+  <div
+    className="alert-dialog"
+  >
+    Wondrous message!
+  </div>
+</div>
+`;

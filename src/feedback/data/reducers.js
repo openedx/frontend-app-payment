@@ -26,7 +26,7 @@ const addMessage = (state, action) => {
       ...state.byId,
       [id]: {
         id,
-        ...action.payload, // code, message, data, severity, fieldName
+        ...action.payload, // code, userMessage, data, messageType, fieldName
       },
     },
     orderedIds: [...state.orderedIds, id],
