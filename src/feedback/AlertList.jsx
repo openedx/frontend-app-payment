@@ -8,6 +8,20 @@ import { alertListMapStateToProps } from './data/selectors';
 import { removeMessage } from './data/actions';
 
 class AlertList extends Component {
+  renderChild(message) {
+    let child = null;
+    React.Children.forEach(this.props.children, (element) => {
+      if (element.props.code === message.code) {
+        child = element;
+      }
+    });
+    return (
+      <AlertMessage key={message.id} {...message} closeHandler={this.props.removeMessage}>
+        {child.props.children}
+      </AlertMessage>
+    );
+  }
+
   render() {
     if (this.props.messageList.length < 1) {
       return null;
@@ -17,11 +31,15 @@ class AlertList extends Component {
       const {
         id, code, userMessage, messageType, data,
       } = message;
+      if (code != null) {
+        return this.renderChild(message);
+      }
+
       const formattedMessage =
         userMessage !== null
           ? userMessage
           : this.props.intl.formatMessage(
-            this.props.intlMessages[code],
+            this.props.intlMessages[`${this.props.messagePrefix}${code}`],
             data,
           );
       return (
@@ -37,7 +55,19 @@ class AlertList extends Component {
   }
 }
 
+export class AlertMessageTemplate extends Component { // eslint-disable-line
+  render() {
+    return this.props.code;
+  }
+}
+
+AlertMessageTemplate.propTypes = {
+  code: PropTypes.string.isRequired,
+};
+
 AlertList.propTypes = {
+  messagePrefix: PropTypes.string,
+  children: PropTypes.element,
   messageList: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     messageType: PropTypes.string.isRequired,
@@ -56,6 +86,8 @@ AlertList.propTypes = {
 
 AlertList.defaultProps = {
   messageList: [],
+  messagePrefix: '',
+  children: null,
 };
 
 export default connect(

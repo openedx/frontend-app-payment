@@ -21,7 +21,7 @@ import PaymentForm from './PaymentForm';
 import PlaceOrderButton from './PlaceOrderButton';
 import PaymentMethodSelect from './PaymentMethodSelect';
 import ProductLineItems from './ProductLineItems';
-import AlertList from '../feedback/AlertList';
+import AlertList, { AlertMessageTemplate } from '../feedback/AlertList';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -115,7 +115,31 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="page__payment container-fluid py-5">
-        <AlertList intlMessages={Object.assign({}, messages, couponMessages)} />
+        <AlertList messagePrefix="payment.messages." intlMessages={Object.assign({}, messages, couponMessages)}>
+          <AlertMessageTemplate code="enrollment-code-product-info">
+            <React.Fragment>
+              <FormattedMessage
+                id="payment.messages.enrollment-code-product-info.header"
+                defaultMessage="Purchasing just for yourself?"
+                description="Asks the user if they are purchasing a course for themselves."
+                tagName="strong"
+              />
+              <FormattedMessage
+                id="payment.messages.enrollment-code-product-info.body"
+                defaultMessage="If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner {link}."
+                description="Asks the user if they are purchasing a course for themselves and includes a link for them to click on if they are.  The link text is in 'payment.messages.enrollment-code-product-info.link' and should make sense, contextually, with this message."
+                tagName="p"
+                values={{
+                  link: (
+                    <Hyperlink destination={this.props.courseAboutUrl}>
+                      {this.props.intl.formatMessage(messages['payment.messages.enrollment-code-product-info.link'])}
+                    </Hyperlink>
+                  ),
+                }}
+              />
+            </React.Fragment>
+          </AlertMessageTemplate>
+        </AlertList>
         {loading ? this.renderLoading() : null}
         {isEmpty ? this.renderEmptyMessage() : null}
         {loaded && !isEmpty ? this.renderBasket() : null}
@@ -133,6 +157,7 @@ PaymentPage.propTypes = {
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
+  courseAboutUrl: PropTypes.string,
 };
 
 PaymentPage.defaultProps = {
@@ -140,6 +165,7 @@ PaymentPage.defaultProps = {
   loaded: false,
   loading: false,
   isEmpty: false,
+  courseAboutUrl: 'ugh',
 };
 
 export default connect(

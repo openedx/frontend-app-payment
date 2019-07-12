@@ -26,7 +26,11 @@ const AlertMessage = (props) => {
       ? severityMap[messageType]
       : ALERT_TYPES.WARNING;
 
-  return <StatusAlert open alertType={severity} dialog={userMessage} onClose={onClose} />;
+  let dialog = userMessage;
+  if (React.Children.count(props.children) > 0) {
+    dialog = props.children;
+  }
+  return <StatusAlert open alertType={severity} dialog={dialog} onClose={onClose} />;
 };
 
 AlertMessage.propTypes = {
@@ -34,10 +38,12 @@ AlertMessage.propTypes = {
   messageType: PropTypes.string.isRequired,
   userMessage: PropTypes.string,
   closeHandler: PropTypes.func.isRequired,
+  children: PropTypes.node,
 };
 
 AlertMessage.defaultProps = {
   userMessage: null,
+  children: null,
 };
 
 export default AlertMessage;

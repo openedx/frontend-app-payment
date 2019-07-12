@@ -16,6 +16,11 @@ const messages = defineMessages({
     defaultMessage: 'Error: {error}',
     description: 'Message when payment page failed to load',
   },
+  'payment.messages.enrollment-code-product-info.link': {
+    id: 'payment.messages.enrollment-code-product-info.link',
+    defaultMessage: 'click here to enroll directly',
+    description: 'A link that takes the user to a page where they can enroll directly.',
+  },
 });
 
 export default messages;
