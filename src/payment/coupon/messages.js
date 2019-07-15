@@ -16,11 +16,6 @@ const messages = defineMessages({
     defaultMessage: 'Remove',
     description: 'Submit button to remove a coupon',
   },
-  'payment.coupon.benefit_value': {
-    id: 'payment.coupon.benefit_value',
-    defaultMessage: 'Coupon {code} applied for {value} off',
-    description: 'The description of a coupon for a percentage off the total price. Percentage symbol is included in {value}',
-  },
   'payment.coupon.benefit.default': {
     id: 'payment.coupon.benefit.default',
     defaultMessage: 'Coupon {code} applied',

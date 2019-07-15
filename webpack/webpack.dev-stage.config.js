@@ -83,6 +83,7 @@ module.exports = Merge.smart(commonConfig, {
       USER_INFO_COOKIE_NAME: 'stage-edx-user-info',
       CSRF_COOKIE_NAME: 'csrftoken',
       LANGUAGE_PREFERENCE_COOKIE_NAME: 'openedx-language-preference',
+      CURRENCY_COOKIE_NAME: 'edx-price-l10n',
       SITE_NAME: 'edX',
       MARKETING_SITE_BASE_URL: '/proxy/lms',
       ENTERPRISE_MARKETING_URL: 'http://example.com',

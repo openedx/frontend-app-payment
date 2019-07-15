@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Input, ValidationFormGroup } from '@edx/paragon';
-import { injectIntl, intlShape } from '@edx/frontend-i18n';
+import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
 import messages from './messages';
 import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
+import LocalizedPrice from '../LocalizedPrice';
 
 export class CouponForm extends Component {
   constructor(props) {
@@ -63,25 +64,53 @@ export class CouponForm extends Component {
     );
   }
 
+  renderCouponMessage() {
+    const {
+      intl, code, benefitValue, benefitType,
+    } = this.props;
+
+    if (benefitValue === null) {
+      return (
+        <span className="text-muted">
+          {intl.formatMessage(messages['payment.coupon.benefit.default'], { code })}
+        </span>);
+    }
+
+    if (benefitType === 'Absolute') {
+      return (<FormattedMessage
+        id="payment.coupon.benefit.absolute"
+        defaultMessage="Coupon {code} applied for {amount} off"
+        description="A coupon has been applied for a fixed currency discount, like $10.  Currency symbol will already be provided."
+        values={{
+          code,
+          amount: (
+            <LocalizedPrice amount={benefitValue} />
+          ),
+        }}
+      />);
+    }
+
+    if (benefitType === 'Percentage') {
+      return (<FormattedMessage
+        id="payment.coupon.benefit.percentage"
+        defaultMessage="Coupon {code} applied for {amount}% off"
+        description="A coupon has been applied for a percentage discount, like 10%.  Please place the % symbol as appropriate."
+        values={{
+          code,
+          amount: benefitValue,
+        }}
+      />);
+    }
+
+    return null;
+  }
+
   renderRemove() {
-    const { intl, code, benefitValue } = this.props;
     return (
       <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
-        {this.props.benefitValue !== null ?
-          <span className="text-muted">
-            {intl.formatMessage(messages['payment.coupon.benefit_value'], {
-            code,
-            value: benefitValue,
-            })}
-          </span> :
-          <span className="text-muted">
-            {intl.formatMessage(messages['payment.coupon.benefit.default'], {
-            code,
-            })}
-          </span>
-        }
+        {this.renderCouponMessage()}
         <Button className="btn-link display-inline p-0 pl-3 border-0" type="submit">
-          {intl.formatMessage(messages['payment.coupon.remove'])}
+          {this.props.intl.formatMessage(messages['payment.coupon.remove'])}
         </Button>
       </form>
     );
@@ -104,7 +133,11 @@ CouponForm.propTypes = {
   removeCoupon: PropTypes.func.isRequired,
   updateCouponDraft: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  benefitValue: PropTypes.string,
+  benefitValue: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  benefitType: PropTypes.string,
 };
 
 CouponForm.defaultProps = {
@@ -112,9 +145,33 @@ CouponForm.defaultProps = {
   code: '',
   id: null,
   benefitValue: null,
+  benefitType: null,
 };
 
-const mapStateToProps = state => state.payment.coupon;
+// TODO this will all go away once the back end is updated
+const mapStateToProps = (state) => {
+  const props = Object.assign({}, state.payment.coupon);
+  const serverBenefitValue = props.benefitValue || '';
+
+  if (props.benefitType) { // backend has been updated!  \o/
+    return props;
+  }
+
+  const matchAbsolute = serverBenefitValue.match(/\$(.+)/);
+  const matchPercentage = serverBenefitValue.match(/(.+)%/);
+  if (matchAbsolute) {
+    props.benefitType = 'Absolute';
+    props.benefitValue = matchAbsolute[1]; // eslint-disable-line prefer-destructuring
+  } else if (matchPercentage) {
+    props.benefitType = 'Percentage';
+    props.benefitValue = matchPercentage[1]; // eslint-disable-line prefer-destructuring
+  } else {
+    props.benefitType = null;
+    props.benefitValue = null;
+  }
+
+  return props;
+};
 
 export default connect(
   mapStateToProps,
