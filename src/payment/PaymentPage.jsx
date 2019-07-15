@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
 
 import messages from './PaymentPage.messages';
-import { messages as couponMessages } from './coupon';
 
 // Actions
 import { fetchBasket } from './data/actions';
@@ -22,6 +21,7 @@ import PlaceOrderButton from './PlaceOrderButton';
 import PaymentMethodSelect from './PaymentMethodSelect';
 import ProductLineItems from './ProductLineItems';
 import AlertList from '../feedback/AlertList';
+import { SingleEnrollmentCodeWarning } from './AlertCodeMessages';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -115,7 +115,19 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="page__payment container-fluid py-5">
-        <AlertList intlMessages={Object.assign({}, messages, couponMessages)} />
+        <AlertList
+          /*
+            For complex messages, the server will return a message code
+            instead of a user message string. The values in the
+            messageCodes object below will handle these messages. They
+            can be a class/function, JSX element, or string. Class/functions
+            and jsx elements will receive a 'values' prop of relevant data
+            about the message. Strings will be rendered as-is.
+          */
+          messageCodes={{
+            'single-enrollment-code-warning': SingleEnrollmentCodeWarning,
+          }}
+        />
         {loading ? this.renderLoading() : null}
         {isEmpty ? this.renderEmptyMessage() : null}
         {loaded && !isEmpty ? this.renderBasket() : null}

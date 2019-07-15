@@ -27,3 +27,63 @@ exports[`AlertMessage should default its severity when necessary 1`] = `
   </div>
 </div>
 `;
+
+exports[`AlertMessage should render a userMessage element 1`] = `
+<div
+  className="alert fade alert-dismissible alert-warning show"
+  hidden={false}
+  role="alert"
+>
+  <button
+    aria-label="Close"
+    className="btn close"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>
+  <div
+    className="alert-dialog"
+  >
+    <span
+      values={Object {}}
+    >
+      Wondrous message!
+    </span>
+  </div>
+</div>
+`;
+
+exports[`AlertMessage should render a userMessage function 1`] = `
+<div
+  className="alert fade alert-dismissible alert-warning show"
+  hidden={false}
+  role="alert"
+>
+  <button
+    aria-label="Close"
+    className="btn close"
+    onBlur={[Function]}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>
+  <div
+    className="alert-dialog"
+  >
+    Wondrous message!
+  </div>
+</div>
+`;

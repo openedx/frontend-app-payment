@@ -11,13 +11,13 @@ export function* handleErrors(e) {
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      yield put(addMessage(error.code, error.userMessage, null, error.messageType));
+      yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
     }
   }
   if (e.messages !== undefined) {
     for (let i = 0; i < e.messages.length; i++) { // eslint-disable-line no-plusplus
       const message = e.messages[i];
-      yield put(addMessage(message.code, message.userMessage, null, message.messageType));
+      yield put(addMessage(message.code, message.userMessage, message.data, message.messageType));
     }
   }
   if (e.fieldErrors !== undefined) {
@@ -26,7 +26,7 @@ export function* handleErrors(e) {
       yield put(addMessage(
         fieldError.code,
         fieldError.userMessage,
-        null,
+        fieldError.data,
         MESSAGE_TYPES.ERROR,
         fieldError.fieldName,
       ));
@@ -42,7 +42,7 @@ export function* handleMessages(messages) {
 
   for (let i = 0; i < messages.length; i++) { // eslint-disable-line no-plusplus
     const message = messages[i];
-    yield put(addMessage(message.code, message.userMessage, null, message.messageType));
+    yield put(addMessage(message.code, message.userMessage, message.data, message.messageType));
   }
   return null;
 }

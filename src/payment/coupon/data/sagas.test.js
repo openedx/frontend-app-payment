@@ -119,7 +119,7 @@ describe('saga tests', () => {
         addMessage(
           null,
           'Hey, your coupon was added.',
-          null,
+          undefined,
           MESSAGE_TYPES.INFO,
         ),
         addCouponSuccess(12345, 'DEMO25', '25%'),
@@ -184,7 +184,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         addCouponFailure(),
-        addMessage('uhoh', null, null, MESSAGE_TYPES.ERROR),
+        addMessage('uhoh', null, undefined, MESSAGE_TYPES.ERROR),
       ]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
@@ -322,7 +322,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         removeCouponBegin(),
         removeCouponFailure(),
-        addMessage('uhoh', null, null, MESSAGE_TYPES.ERROR),
+        addMessage('uhoh', null, undefined, MESSAGE_TYPES.ERROR),
       ]);
 
       expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');

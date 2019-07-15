@@ -20,6 +20,7 @@ const storeMocks = {
   loadedFreeBasket: require('./__mocks__/loadedFreeBasket.mockStore.js'),
   loadedEmptyBasket: require('./__mocks__/loadedEmptyBasket.mockStore.js'),
   loadedBasketWithNoTotals: require('./__mocks__/loadedBasketWithNoTotals.mockStore.js'),
+  customAlertMessages: require('./__mocks__/customAlertMessages.mockStore.js'),
 };
 const requirePaymentPageProps = {
   fetchBasket: () => {},
@@ -111,6 +112,20 @@ describe('<PaymentPage />', () => {
         .create((
           <IntlProvider locale="en">
             <Provider store={mockStore(storeMocks.loadedFreeBasket)}>
+              <ConnectedPaymentPage {...requirePaymentPageProps} />
+            </Provider>
+          </IntlProvider>
+        ))
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('should render all custom alert messages', () => {
+      analytics.sendTrackingLogEvent = jest.fn();
+      const tree = renderer
+        .create((
+          <IntlProvider locale="en">
+            <Provider store={mockStore(storeMocks.customAlertMessages)}>
               <ConnectedPaymentPage {...requirePaymentPageProps} />
             </Provider>
           </IntlProvider>
