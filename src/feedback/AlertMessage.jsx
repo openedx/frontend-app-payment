@@ -44,7 +44,7 @@ const AlertMessage = (props) => {
 
 AlertMessage.propTypes = {
   id: PropTypes.number.isRequired,
-  messageType: PropTypes.string.isRequired,
+  messageType: PropTypes.string,
   userMessage: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   closeHandler: PropTypes.func.isRequired,
   data: PropTypes.object, // eslint-disable-line react/forbid-prop-types
@@ -52,6 +52,7 @@ AlertMessage.propTypes = {
 
 AlertMessage.defaultProps = {
   userMessage: null,
+  messageType: undefined,
   data: {},
 };
 

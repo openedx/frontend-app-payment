@@ -42,4 +42,31 @@ describe('AlertMessage', () => {
     // The alert should have an 'alert-warning' class.  That's the default in the code.
     expect(tree).toMatchSnapshot();
   });
+
+
+  it('should render a userMessage function', () => {
+    const component = (
+      <AlertMessage
+        id={123}
+        userMessage={() => 'Wondrous message!'}
+        closeHandler={jest.fn()}
+      />
+    );
+
+    const tree = renderer.create(component).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('should render a userMessage element', () => {
+    const component = (
+      <AlertMessage
+        id={123}
+        userMessage={<span>Wondrous message!</span>}
+        closeHandler={jest.fn()}
+      />
+    );
+
+    const tree = renderer.create(component).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 });
