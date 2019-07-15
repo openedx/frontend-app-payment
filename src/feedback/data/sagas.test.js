@@ -49,8 +49,8 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.ERROR),
-      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR),
+      addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR),
+      addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR),
     ]);
   });
 
@@ -76,8 +76,8 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.INFO),
-      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR),
+      addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.INFO),
+      addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR),
     ]);
   });
 
@@ -103,8 +103,8 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.ERROR, 'field1'),
-      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR, 'field2'),
+      addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR, 'field1'),
+      addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
     ]);
   });
 
@@ -132,8 +132,8 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
-      addMessage('uhoh', 'Uhoh oh no!', null, MESSAGE_TYPES.ERROR),
-      addMessage('oh_goodness', 'This is really bad!', null, MESSAGE_TYPES.ERROR, 'field2'),
+      addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR),
+      addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
     ]);
   });
 });

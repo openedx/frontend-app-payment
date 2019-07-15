@@ -26,7 +26,7 @@ describe('AlertList', () => {
     const component = (
       <IntlProvider locale="en">
         <Provider store={mockStore(storeMocks.defaultState)}>
-          <ConnectedAlertList intlMessages={{}} removeMessage={jest.fn()} />
+          <ConnectedAlertList removeMessage={jest.fn()} />
         </Provider>
       </IntlProvider>
     );
@@ -39,17 +39,9 @@ describe('AlertList', () => {
       <IntlProvider locale="en">
         <Provider store={mockStore(storeMocks.messagesOfEachType)}>
           <ConnectedAlertList
-            intlMessages={{
-              boo: {
-                id: 'boo',
-                defaultMessage: 'Boo indeed!',
-                description: 'boooo',
-              },
-              gah_error: {
-                id: 'gah_error',
-                defaultMessage: 'Gah!  An error!',
-                description: 'gaaaaah',
-              },
+            messageCodes={{
+              boo: 'Boo indeed!',
+              gah_error: 'Gah!  An error!',
             }}
             removeMessage={jest.fn()}
           />
