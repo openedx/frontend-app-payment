@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { StatusAlert } from '@edx/paragon';
 import { ALERT_TYPES, MESSAGE_TYPES } from './data/constants';
@@ -14,30 +14,45 @@ const severityMap = {
 
 const AlertMessage = (props) => {
   const {
-    id, messageType, userMessage, closeHandler,
+    id, messageType, userMessage, closeHandler, data,
   } = props;
 
-  const onClose = () => {
-    closeHandler(id);
+  const statusAlertProps = {
+    alertType: ALERT_TYPES.WARNING,
+    onClose: useCallback(() => { closeHandler(id); }),
+    open: true,
   };
 
-  const severity =
-    messageType !== null && severityMap[messageType] !== undefined
-      ? severityMap[messageType]
-      : ALERT_TYPES.WARNING;
+  if (messageType !== null && severityMap[messageType] !== undefined) {
+    statusAlertProps.alertType = severityMap[messageType];
+  }
 
-  return <StatusAlert open alertType={severity} dialog={userMessage} onClose={onClose} />;
+  // The user message can be a
+  // - React component definition (we must create it with props)
+  // - React element instance (we must clone it with props)
+  // - A string or number (we will render this as is)
+  if (typeof userMessage === 'function') {
+    statusAlertProps.dialog = React.createElement(userMessage, { values: data });
+  } else if (React.isValidElement(userMessage)) {
+    statusAlertProps.dialog = React.cloneElement(userMessage, { values: data });
+  } else {
+    statusAlertProps.dialog = userMessage;
+  }
+
+  return <StatusAlert {...statusAlertProps} />;
 };
 
 AlertMessage.propTypes = {
   id: PropTypes.number.isRequired,
   messageType: PropTypes.string.isRequired,
-  userMessage: PropTypes.string,
+  userMessage: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   closeHandler: PropTypes.func.isRequired,
+  data: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 AlertMessage.defaultProps = {
   userMessage: null,
+  data: {},
 };
 
 export default AlertMessage;

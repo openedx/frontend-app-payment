@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from '@edx/frontend-i18n';
 
 import AlertMessage from './AlertMessage';
 import { alertListMapStateToProps } from './data/selectors';
@@ -13,27 +12,17 @@ class AlertList extends Component {
       return null;
     }
 
-    return this.props.messageList.map((message) => {
-      const {
-        id, code, userMessage, messageType, data,
-      } = message;
-      const formattedMessage =
-        userMessage !== null
-          ? userMessage
-          : this.props.intl.formatMessage(
-            this.props.intlMessages[code],
-            data,
-          );
-      return (
-        <AlertMessage
-          key={id}
-          id={id}
-          userMessage={formattedMessage}
-          messageType={messageType}
-          closeHandler={this.props.removeMessage}
-        />
-      );
-    });
+    return this.props.messageList.map(({ code, userMessage, ...messageProps }) => (
+      <AlertMessage
+        {...messageProps}
+        key={messageProps.id}
+        closeHandler={this.props.removeMessage}
+        userMessage={this.props.messageCodes[code] ?
+          this.props.messageCodes[code] :
+          userMessage
+        }
+      />
+    ));
   }
 }
 
@@ -44,18 +33,18 @@ AlertList.propTypes = {
     code: PropTypes.string,
     userMessage: PropTypes.string,
     fieldName: PropTypes.string,
+    data: PropTypes.object,
   })),
   removeMessage: PropTypes.func.isRequired,
-  intlMessages: PropTypes.objectOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    defaultMessage: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-  })).isRequired,
-  intl: intlShape.isRequired,
+  messageCodes: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func,
+  ])),
 };
 
 AlertList.defaultProps = {
   messageList: [],
+  messageCodes: {},
 };
 
 export default connect(
@@ -63,4 +52,4 @@ export default connect(
   {
     removeMessage,
   },
-)(injectIntl(AlertList));
+)(AlertList);
