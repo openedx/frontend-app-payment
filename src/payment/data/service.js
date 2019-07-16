@@ -86,9 +86,10 @@ function handleBasketApiError(requestError) {
   }
 }
 
-export async function getBasket() {
+export async function getBasket(discountJwt) {
+  const discountJwtArg = typeof discountJwt !== 'undefined' ? `?discount_jwt=${discountJwt}` : '';
   const { data } = await apiClient
-    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`)
+    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
     .catch(handleBasketApiError);
 
   return transformResults(data);
@@ -119,4 +120,14 @@ export async function deleteCoupon(id) {
     .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
     .catch(handleBasketApiError);
   return transformResults(data);
+}
+
+export async function getDiscountData(courseKey) {
+  const { data } = await apiClient.get(
+    `${config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+    {
+      xhrFields: { withCredentials: true },
+    },
+  );
+  return data;
 }

@@ -38,6 +38,7 @@ describe('saga tests', () => {
   let configuration;
   let basketProcessingState;
   let basketNotProcessingState;
+  let courseKey;
 
   beforeEach(() => {
     dispatched = [];
@@ -66,10 +67,14 @@ describe('saga tests', () => {
     sagaOptions = {
       dispatch: action => dispatched.push(action),
       onError: err => caughtErrors.push(err),
+
     };
 
+    courseKey = 'test';
     basketProcessingState = { payment: { basket: { isBasketProcessing: true } } };
-    basketNotProcessingState = { payment: { basket: { isBasketProcessing: false } } };
+    basketNotProcessingState = {
+      payment: { basket: { isBasketProcessing: false, products: [{ courseKey }] } },
+    };
   });
 
   /**
@@ -123,27 +128,38 @@ describe('saga tests', () => {
       };
 
       const mockApiClient = createBasketMockApiClient(response);
+      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
+        resolve(response);
+      }));
+      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
+        resolve({ data: { discount_applicable: true } });
+      }));
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(
-          {
-            getState: () => basketNotProcessingState,
-            ...sagaOptions,
-          },
-          handleFetchBasket,
-        ).toPromise();
+        await runSaga({
+          getState: () => basketNotProcessingState,
+          ...sagaOptions,
+        }, handleFetchBasket).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
         basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
+        basketDataReceived(transformResults(response.data)),
+        clearMessages(),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(1);
+      expect(mockApiClient.get).toHaveBeenCalledTimes(3);
+      expect(mockApiClient.get).toHaveBeenCalledWith(
+        `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+        {
+          xhrFields: { withCredentials: true },
+        },
+      );
     });
 
     it('should update basket data and show an info message', async () => {
@@ -175,7 +191,7 @@ describe('saga tests', () => {
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(1);
+      expect(mockApiClient.get).toHaveBeenCalledTimes(2);
     });
 
     it('should update basket data and show an error message', async () => {
