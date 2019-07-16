@@ -174,14 +174,29 @@ describe('<PaymentForm />', () => {
       ));
       const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       const values = {
-        valid: 'Good!',
-        invalid: '',
+        firsName: 'Jane',
+        lastName: undefined,
       };
       const expectedErrors = {
-        invalid: 'This field is required',
+        lastName: 'This field is required',
       };
-
       expect(paymentForm.validateRequiredFields(values)).toEqual(expectedErrors);
+    });
+  });
+  describe('scrollToError', () => {
+    it('scrolls to the input name of the first error', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <Provider store={mockStore(storeMocks.defaultState)}>
+            <PaymentForm handleSubmit={() => {}} />
+          </Provider>
+        </IntlProvider>
+      ));
+      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+      global.HTMLElement.prototype.scrollIntoView = jest.fn();
+      const error = 'firstName';
+      paymentForm.scrollToError(error);
+      expect(global.HTMLElement.prototype.scrollIntoView).toHaveBeenCalled();
     });
   });
 });

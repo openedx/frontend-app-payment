@@ -138,15 +138,10 @@ export class PaymentFormComponent extends React.Component {
       if (!values[key]) {
         errors[key] = this.props.intl.formatMessage(messages['payment.form.errors.required.field']);
 
-        // scroll to error
-        const formElement = document.getElementsByName(`${key}`);
-        const topOfParent = formElement[0].offsetParent.offsetParent.offsetTop - 10;
-        const topOfElement = formElement[0].offsetParent.offsetTop + topOfParent;
-        window.scrollTo({
-          top: topOfElement,
-          left: 0,
-          behavior: 'smooth',
-        });
+        const form = this.formRef.current;
+        const formElement = form.querySelector(`[name=${key}]`);
+        const elementLabel = formElement.previousElementSibling;
+        elementLabel.scrollIntoView(true);
       }
     });
 
