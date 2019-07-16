@@ -165,6 +165,7 @@ describe('<PaymentForm />', () => {
   });
   describe('validateRequiredFields', () => {
     it('returns errors if values are empty', () => {
+      window.HTMLElement.prototype.scrollIntoView = function test() {};
       const wrapper = mount((
         <IntlProvider locale="en">
           <Provider store={mockStore(storeMocks.defaultState)}>
