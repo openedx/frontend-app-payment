@@ -39,6 +39,18 @@ describe('<Offers />', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('renders a dynamic discount offer', () => {
+    const tree = renderWithProviders((
+      <Offers
+        offers={[
+          { benefitValue: 50, benefitType: 'Percentage', provider: null },
+        ]}
+        discounts={10}
+      />
+    )).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('renders an absolute value offer', () => {
     const tree = renderWithProviders((
       <Offers

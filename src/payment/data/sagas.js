@@ -53,8 +53,54 @@ export function* performBasketOperation(operation, ...operationArgs) {
   }
 }
 
+/**
+ * Many of the handlers here have identical error handling, and are also all processing the same
+ * sort of response object (a basket).  This helper is just here to dedupe that code, since its
+ * all identical.
+ */
+export function* catchBasketError(handler) {
+  if (yield isBasketProcessing()) return;
+
+  try {
+    yield call(handler);
+  } catch (error) {
+    yield call(handleErrors, error, true);
+    if (error.basket) {
+      yield put(basketDataReceived(error.basket));
+    }
+  } finally {
+    yield put(basketProcessing(false));
+  }
+}
+
+export function* handleDiscountCheck() {
+  const basket = yield select(state => state.payment.basket);
+  if (basket.products.length === 1) {
+    const [product] = basket.products;
+    const { courseKey } = product;
+    const discount = yield call(
+      PaymentApiService.getDiscountData,
+      courseKey,
+    );
+    if (discount.discount_applicable) {
+      const result = yield call(
+        PaymentApiService.getBasket,
+        discount.jwt,
+      );
+      yield put(basketDataReceived(result));
+      yield call(handleMessages, result.messages, true);
+    }
+  }
+}
+
 export function* handleFetchBasket() {
-  yield call(performBasketOperation, PaymentApiService.getBasket);
+  yield call(catchBasketError, function* processFetchBasket() {
+    yield put(basketProcessing(true));
+    const result = yield call(PaymentApiService.getBasket);
+    yield put(basketDataReceived(result));
+    yield call(handleMessages, result.messages, true);
+    yield call(handleDiscountCheck);
+  });
   yield put(fetchBasket.fulfill());
 }
 
