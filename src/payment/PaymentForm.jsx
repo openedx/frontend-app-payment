@@ -134,14 +134,16 @@ export class PaymentFormComponent extends React.Component {
   validateRequiredFields(values) {
     const errors = {};
 
-    Object.keys(values).forEach((key) => {
+    Object.keys(values).forEach((key, index) => {
       if (!values[key]) {
         errors[key] = this.props.intl.formatMessage(messages['payment.form.errors.required.field']);
 
-        const form = this.formRef.current;
-        const formElement = form.querySelector(`[name=${key}]`);
-        const elementLabel = formElement.previousElementSibling;
-        elementLabel.scrollIntoView(true);
+        if (index === 0) {
+          const form = this.formRef.current;
+          const formElement = form.querySelector(`[name=${key}]`);
+          const elementLabel = formElement.previousElementSibling;
+          elementLabel.scrollIntoView(true);
+        }
       }
     });
 
