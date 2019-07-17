@@ -102,6 +102,7 @@ module.exports = Merge.smart(commonConfig, {
       APPLE_APP_STORE_URL: 'https://www.apple.com/ios/app-store/',
       GOOGLE_PLAY_URL: 'https://play.google.com/store',
       ORDER_HISTORY_URL: 'localhost:1996/orders',
+      CYBERSOURCE_URL: 'https://localhost/cybersource',
     }),
     // when the --hot option is not passed in as part of the command
     // the HotModuleReplacementPlugin has to be specified in the Webpack configuration

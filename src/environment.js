@@ -40,6 +40,7 @@ export const configuration = {
   VIEW_MY_RECORDS_URL: `${process.env.CREDENTIALS_BASE_URL}/records`,
   ECOMMERCE_API_BASE_URL: `${process.env.ECOMMERCE_BASE_URL}/api/v2`,
   ECOMMERCE_RECEIPT_BASE_URL: `${process.env.ECOMMERCE_BASE_URL}/checkout/receipt/`,
+  CYBERSOURCE_URL: `${process.env.CYBERSOURCE_URL}`,
 };
 
 export const features = {};

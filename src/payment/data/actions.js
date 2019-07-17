@@ -3,7 +3,8 @@ import { utils } from '../../common';
 const { AsyncActionType } = utils;
 
 export const FETCH_BASKET = new AsyncActionType('PAYMENT', 'FETCH_BASKET');
-export const SDN_CHECK = new AsyncActionType('PAYMENT', 'SDN_CHECK');
+export const SUBMIT_PAYMENT = new AsyncActionType('PAYMENT', 'SUBMIT_PAYMENT');
+export const CHECKOUT = new AsyncActionType('PAYMENT', 'CHECKOUT');
 
 
 export const fetchBasket = () => ({
@@ -24,12 +25,25 @@ export const fetchBasketFailure = () => ({
   type: FETCH_BASKET.FAILURE,
 });
 
-export const sdnCheck = (firstName, lastName, city, country) => ({
-  type: SDN_CHECK.BASE,
+export const submitPayment = cardHolderInfo => ({
+  type: SUBMIT_PAYMENT.BASE,
   payload: {
-    firstName,
-    lastName,
-    city,
-    country,
+    cardHolderInfo,
+  },
+});
+
+export const submitPaymentBegin = () => ({
+  type: SUBMIT_PAYMENT.BEGIN,
+});
+
+export const submitPaymentFailure = () => ({
+  type: SUBMIT_PAYMENT.FAILURE,
+});
+
+export const checkoutSuccess = (paymentProcessorUrl, paymentProcessorFormFields) => ({
+  type: CHECKOUT.SUCCESS,
+  payload: {
+    paymentProcessorUrl,
+    paymentProcessorFormFields,
   },
 });

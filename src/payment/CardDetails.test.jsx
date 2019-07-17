@@ -11,7 +11,7 @@ import {
 import { CardDetailsComponent } from './CardDetails';
 
 describe('<CardDetails />', () => {
-  describe('updateCardType', () => {
+  describe('handleCardNumberChange', () => {
     it('updates state with correct card icon given user card number input', () => {
       const cardDetails = shallow(<CardDetailsComponent />).instance();
       const eventMock = jest.fn();
@@ -24,7 +24,7 @@ describe('<CardDetails />', () => {
       ];
 
       testData.forEach(({ cardNumber, expectedIcon }) => {
-        cardDetails.updateCardType(eventMock, cardNumber);
+        cardDetails.handleCardNumberChange(eventMock, cardNumber);
         expect(cardDetails.state.cardIcon).toBe(expectedIcon);
       });
     });

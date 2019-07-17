@@ -2606,6 +2606,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         </p>
       </div>
       <form
+        action=""
+        method="POST"
         noValidate={true}
         onSubmit={[Function]}
       >
@@ -2634,6 +2636,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2656,6 +2659,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2682,6 +2686,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2704,6 +2709,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2730,6 +2736,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2752,6 +2759,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
+                disabled={false}
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4033,6 +4041,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4055,6 +4064,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4092,13 +4102,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="text"
+                value=""
+              />
+              <input
+                name="card_number"
+                type="hidden"
+                value=""
+              />
+              <input
+                name="card_type"
+                type="hidden"
                 value=""
               />
               <svg
@@ -4162,6 +4183,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </div>
               <input
                 className="form-control"
+                disabled={false}
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4169,6 +4191,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 onDrop={[Function]}
                 onFocus={[Function]}
                 type="password"
+                value=""
+              />
+              <input
+                name="card_cvn"
+                type="hidden"
                 value=""
               />
               <svg
@@ -4205,6 +4232,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
+                disabled={false}
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4292,6 +4320,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </label>
               <select
                 className="form-control"
+                disabled={false}
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4386,6 +4415,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   2034
                 </option>
               </select>
+              <input
+                name="card_expiry_date"
+                type="hidden"
+                value="-"
+              />
             </div>
           </div>
         </div>
@@ -4569,6 +4603,8 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         </p>
       </div>
       <form
+        action=""
+        method="POST"
         noValidate={true}
         onSubmit={[Function]}
       >
@@ -4597,6 +4633,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4619,6 +4656,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4645,6 +4683,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4667,6 +4706,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4693,6 +4733,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4715,6 +4756,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
+                disabled={false}
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -5996,6 +6038,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6018,6 +6061,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6055,13 +6099,24 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <input
                 className="form-control"
+                disabled={false}
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="text"
+                value=""
+              />
+              <input
+                name="card_number"
+                type="hidden"
+                value=""
+              />
+              <input
+                name="card_type"
+                type="hidden"
                 value=""
               />
               <svg
@@ -6125,6 +6180,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </div>
               <input
                 className="form-control"
+                disabled={false}
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6132,6 +6188,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 onDrop={[Function]}
                 onFocus={[Function]}
                 type="password"
+                value=""
+              />
+              <input
+                name="card_cvn"
+                type="hidden"
                 value=""
               />
               <svg
@@ -6168,6 +6229,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
+                disabled={false}
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6255,6 +6317,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </label>
               <select
                 className="form-control"
+                disabled={false}
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6349,6 +6412,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   2034
                 </option>
               </select>
+              <input
+                name="card_expiry_date"
+                type="hidden"
+                value="-"
+              />
             </div>
           </div>
         </div>
