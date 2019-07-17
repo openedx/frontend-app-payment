@@ -45,7 +45,6 @@ export class PaymentFormComponent extends React.Component {
 
     const errors = {
       ...this.validateRequiredFields(requiredFields),
-      ...this.scrollToErrors(requiredFields),
       ...this.validateCardDetails(
         cardNumber,
         securityCode,
@@ -55,6 +54,8 @@ export class PaymentFormComponent extends React.Component {
     };
 
     if (Object.keys(errors).length > 0) {
+      const firstErrorName = Object.keys(errors)[0];
+      this.scrollToError(firstErrorName);
       throw new SubmissionError(errors);
     }
 
@@ -144,11 +145,9 @@ export class PaymentFormComponent extends React.Component {
     return errors;
   }
 
-  scrollToErrors(values) {
-    const firstErrorIndex = Object.values(values).indexOf(undefined);
-    const firstErrorName = Object.keys(values)[firstErrorIndex];
+  scrollToError(error) {
     const form = this.formRef.current;
-    const formElement = form.querySelector(`[name=${firstErrorName}]`);
+    const formElement = form.querySelector(`[name=${error}]`);
     const elementLabel = formElement.previousElementSibling;
     elementLabel.scrollIntoView(true);
   }
