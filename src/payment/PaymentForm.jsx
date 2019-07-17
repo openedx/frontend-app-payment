@@ -148,8 +148,10 @@ export class PaymentFormComponent extends React.Component {
   scrollToError(error) {
     const form = this.formRef.current;
     const formElement = form.querySelector(`[name=${error}]`);
-    const elementLabel = formElement.previousElementSibling;
-    elementLabel.scrollIntoView(true);
+    if (formElement) {
+      const elementParent = formElement.parentElement;
+      elementParent.scrollIntoView(true);
+    }
   }
 
   renderPaymentProviderFormFields() {
