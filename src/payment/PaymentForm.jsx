@@ -144,15 +144,6 @@ export class PaymentFormComponent extends React.Component {
     return errors;
   }
 
-<<<<<<< HEAD
-  renderPaymentProviderFormFields() {
-    const { paymentProcessorFormFields } = this.props;
-    const formFields = [];
-    Object.keys(paymentProcessorFormFields).forEach((key) => {
-      formFields.push(<input type="hidden" key={key} name={key} value={paymentProcessorFormFields[key]} />);
-    });
-    return formFields;
-=======
   scrollToErrors(values) {
     const firstErrorIndex = Object.values(values).indexOf(undefined);
     const firstErrorName = Object.keys(values)[firstErrorIndex];
@@ -160,7 +151,15 @@ export class PaymentFormComponent extends React.Component {
     const formElement = form.querySelector(`[name=${firstErrorName}]`);
     const elementLabel = formElement.previousElementSibling;
     elementLabel.scrollIntoView(true);
->>>>>>> refactor: added scroll in separate function
+  }
+
+  renderPaymentProviderFormFields() {
+    const { paymentProcessorFormFields } = this.props;
+    const formFields = [];
+    Object.keys(paymentProcessorFormFields).forEach((key) => {
+      formFields.push(<input type="hidden" key={key} name={key} value={paymentProcessorFormFields[key]} />);
+    });
+    return formFields;
   }
 
   render() {
