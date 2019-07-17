@@ -91,6 +91,7 @@ describe('<PaymentForm />', () => {
       const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       paymentForm.validateRequiredFields = jest.fn();
       paymentForm.validateCardDetails = jest.fn();
+      paymentForm.scrollToErrors = jest.fn();
       const testFormValues = {
         firstName: '',
         lastName: '',
@@ -123,6 +124,7 @@ describe('<PaymentForm />', () => {
 
       testData.forEach((testCaseData) => {
         paymentForm.validateRequiredFields.mockReturnValueOnce(testCaseData[0]);
+        paymentForm.scrollToErrors.mockReturnValueOnce(testCaseData[0]);
         paymentForm.validateCardDetails.mockReturnValueOnce(testCaseData[1]);
         if (testCaseData[2]) {
           expect(() => paymentForm.onSubmit(testFormValues)).toThrow(testCaseData[2]);
@@ -165,7 +167,6 @@ describe('<PaymentForm />', () => {
   });
   describe('validateRequiredFields', () => {
     it('returns errors if values are empty', () => {
-      window.HTMLElement.prototype.scrollIntoView = function test() {};
       const wrapper = mount((
         <IntlProvider locale="en">
           <Provider store={mockStore(storeMocks.defaultState)}>

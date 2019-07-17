@@ -45,6 +45,7 @@ export class PaymentFormComponent extends React.Component {
 
     const errors = {
       ...this.validateRequiredFields(requiredFields),
+      ...this.scrollToErrors(requiredFields),
       ...this.validateCardDetails(
         cardNumber,
         securityCode,
@@ -134,22 +135,16 @@ export class PaymentFormComponent extends React.Component {
   validateRequiredFields(values) {
     const errors = {};
 
-    Object.keys(values).forEach((key, index) => {
+    Object.keys(values).forEach((key) => {
       if (!values[key]) {
         errors[key] = this.props.intl.formatMessage(messages['payment.form.errors.required.field']);
-
-        if (index === 0) {
-          const form = this.formRef.current;
-          const formElement = form.querySelector(`[name=${key}]`);
-          const elementLabel = formElement.previousElementSibling;
-          elementLabel.scrollIntoView(true);
-        }
       }
     });
 
     return errors;
   }
 
+<<<<<<< HEAD
   renderPaymentProviderFormFields() {
     const { paymentProcessorFormFields } = this.props;
     const formFields = [];
@@ -157,6 +152,15 @@ export class PaymentFormComponent extends React.Component {
       formFields.push(<input type="hidden" key={key} name={key} value={paymentProcessorFormFields[key]} />);
     });
     return formFields;
+=======
+  scrollToErrors(values) {
+    const firstErrorIndex = Object.values(values).indexOf(undefined);
+    const firstErrorName = Object.keys(values)[firstErrorIndex];
+    const form = this.formRef.current;
+    const formElement = form.querySelector(`[name=${firstErrorName}]`);
+    const elementLabel = formElement.previousElementSibling;
+    elementLabel.scrollIntoView(true);
+>>>>>>> refactor: added scroll in separate function
   }
 
   render() {
