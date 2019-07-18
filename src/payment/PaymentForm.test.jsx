@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import * as analytics from '@edx/frontend-analytics';
 
 import { configuration } from '../environment';
 import messages from '../i18n';
@@ -87,6 +88,7 @@ describe('<PaymentForm />', () => {
       paymentForm.validateRequiredFields = jest.fn();
       paymentForm.validateCardDetails = jest.fn();
       paymentForm.scrollToError = jest.fn();
+      analytics.sendTrackEvent = jest.fn();
       const testFormValues = {
         firstName: '',
         lastName: '',
@@ -127,6 +129,7 @@ describe('<PaymentForm />', () => {
           expect(() => paymentForm.onSubmit(testFormValues)).not.toThrow();
         }
       });
+      expect(analytics.sendTrackEvent).toHaveBeenCalled();
     });
   });
   describe('renderHiddenFields', () => {

@@ -2,6 +2,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
+import * as analytics from '@edx/frontend-analytics';
 
 import ApplePayButton from './ApplePayButton';
 
@@ -34,8 +35,9 @@ describe('<ApplePayButton />', () => {
         title="Pay with Apple Pay"
       />
     ));
-
+    analytics.sendTrackEvent = jest.fn();
     wrapper.find('button').simulate('click');
     expect(applePaySession.begin).toHaveBeenCalled();
+    expect(analytics.sendTrackEvent).toHaveBeenCalled();
   });
 });

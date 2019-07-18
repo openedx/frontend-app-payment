@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 import { performApplePayPayment } from './service';
 
 
@@ -21,6 +22,14 @@ export default class ApplePayButton extends React.Component {
       onPaymentAuthorizationFailure: this.props.onPaymentAuthorizationFailure,
       onPaymentCancel: this.props.onPaymentCancel,
     });
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Apple Pay',
+      },
+    );
   }
 
   render() {

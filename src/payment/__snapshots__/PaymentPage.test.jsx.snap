@@ -191,6 +191,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
       >
         <button
           className="btn btn-primary btn-lg"
+          onClick={[Function]}
+          type="button"
         >
           <span>
             Place Order
@@ -483,6 +485,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           </button>
           <button
             className="payment-method-button"
+            onClick={[Function]}
           >
             <img
               alt="PayPal"
@@ -2631,6 +2634,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </button>
           <button
             className="payment-method-button"
+            onClick={[Function]}
           >
             <img
               alt="PayPal"
@@ -4628,6 +4632,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </button>
           <button
             className="payment-method-button"
+            onClick={[Function]}
           >
             <img
               alt="PayPal"
