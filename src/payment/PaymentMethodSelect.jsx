@@ -4,7 +4,7 @@ import messages from './PaymentMethodSelect.messages';
 
 import PayPalLogo from './assets/paypal-logo.png';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
-import ApplePay from './ApplePay';
+import { ApplePayButtonContainer } from './apple-pay';
 
 function PaymentMethodSelect({ intl }) {
   return (
@@ -30,7 +30,7 @@ function PaymentMethodSelect({ intl }) {
             alt={intl.formatMessage(messages['payment.page.method.type.paypal'])}
           />
         </button>
-        <ApplePay />
+        <ApplePayButtonContainer />
       </p>
     </div>
   );

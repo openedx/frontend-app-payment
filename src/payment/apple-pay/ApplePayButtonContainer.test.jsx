@@ -5,13 +5,13 @@ import { Provider } from 'react-redux';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
 import configureMockStore from 'redux-mock-store';
 
-import { configuration } from '../environment';
-import messages from '../i18n';
-import { MESSAGE_TYPES } from '../feedback';
-import ApplePay from './ApplePay';
+import { configuration } from '../../environment';
+import messages from '../../i18n';
+import { MESSAGE_TYPES } from '../../feedback';
+import ApplePayButtonContainer from './ApplePayButtonContainer';
 
 const mockStore = configureMockStore();
-const store = mockStore(require('./__mocks__/defaultState.mockStore.js'));
+const store = mockStore(require('../__mocks__/defaultState.mockStore.js'));
 
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
@@ -21,11 +21,11 @@ Object.defineProperty(global.document, 'cookie', {
 
 configureI18n(configuration, messages);
 
-describe('<ApplePay />', () => {
+describe('<ApplePayButtonContainer />', () => {
   const wrapper = mount((
     <IntlProvider locale="en">
       <Provider store={store}>
-        <ApplePay
+        <ApplePayButtonContainer
           totalAmount={10}
           lang="en"
           title="Pay with Apple Pay"

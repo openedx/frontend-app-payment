@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 
-import { basketSelector } from './data/selectors';
-import { addMessage, MESSAGE_TYPES } from '../feedback';
-import { ApplePayButton, redirectToReceipt } from './apple-pay';
+import { basketSelector } from '../data/selectors';
+import { addMessage, MESSAGE_TYPES } from '../../feedback';
+import ApplePayButton from './ApplePayButton';
+import { redirectToReceipt } from './service';
+
 import messages from './ApplePay.messages';
 
-function ApplePay(props) {
+function ApplePayButtonContainer(props) {
   const handleMerchantValidationFailure = useCallback(() => {
     props.addMessage(
       'apple-pay-failure',
@@ -39,16 +41,16 @@ function ApplePay(props) {
   );
 }
 
-ApplePay.propTypes = {
+ApplePayButtonContainer.propTypes = {
   orderTotal: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   addMessage: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 
-ApplePay.defaultProps = {
+ApplePayButtonContainer.defaultProps = {
   orderTotal: undefined,
 };
 
 export default connect(basketSelector, {
   addMessage,
-})(injectIntl(ApplePay));
+})(injectIntl(ApplePayButtonContainer));

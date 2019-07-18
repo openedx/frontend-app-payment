@@ -1,4 +1,4 @@
-export { default as ApplePayButton } from './ApplePayButton';
+export { default as ApplePayButtonContainer } from './ApplePayButtonContainer';
 export {
   configureApiService,
   performApplePayPayment,
