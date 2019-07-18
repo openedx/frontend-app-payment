@@ -18,10 +18,9 @@ const storeMocks = {
 configureI18n(configuration, messages);
 
 describe('<PaymentForm />', () => {
-  let wrapper;
   let paymentForm;
   beforeEach(() => {
-    wrapper = mount((
+    const wrapper = mount((
       <IntlProvider locale="en">
         <Provider store={mockStore(storeMocks.defaultState)}>
           <PaymentForm handleSubmit={() => {}} />

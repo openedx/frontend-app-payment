@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 
 import { submitPayment } from './data/actions';
 import { paymentSelector } from './data/selectors';
@@ -70,6 +71,16 @@ export class PaymentFormComponent extends React.Component {
       state,
       postalCode,
     });
+
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Credit Card',
+        checkoutType: 'client_side',
+      },
+    );
   };
 
   getRequiredFields(fieldValues) {
