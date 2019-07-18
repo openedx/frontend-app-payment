@@ -186,16 +186,19 @@ describe('<PaymentForm />', () => {
     });
   });
   describe('scrollToError', () => {
-    it('scrolls to the input name of the first error', () => {
-      const wrapper = mount((
+    let wrapper;
+    beforeEach(() => {
+      wrapper = mount((
         <IntlProvider locale="en">
           <Provider store={mockStore(storeMocks.defaultState)}>
             <PaymentForm handleSubmit={() => {}} />
           </Provider>
         </IntlProvider>
       ));
-      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+    });
+    it('scrolls to the input name of the first error', () => {
       global.HTMLElement.prototype.scrollIntoView = jest.fn();
+      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       const error = 'firstName';
       paymentForm.scrollToError(error);
       expect(global.HTMLElement.prototype.scrollIntoView).toHaveBeenCalled();
