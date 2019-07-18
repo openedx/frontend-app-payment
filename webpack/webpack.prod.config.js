@@ -151,6 +151,14 @@ module.exports = Merge.smart(commonConfig, {
       NEW_RELIC_APP_ID: null,
       NEW_RELIC_LICENSE_KEY: null,
       CYBERSOURCE_URL: null,
+      APPLE_PAY_MERCHANT_IDENTIFIER: null,
+      APPLE_PAY_MERCHANT_NAME: null,
+      APPLE_PAY_COUNTRY_CODE: null,
+      APPLE_PAY_CURRENCY_CODE: null,
+      APPLE_PAY_START_SESSION_URL: null,
+      APPLE_PAY_AUTHORIZE_URL: null,
+      APPLE_PAY_SUPPORTED_NETWORKS: null,
+      APPLE_PAY_MERCHANT_CAPABILITIES: null,
     }),
     new HtmlWebpackNewRelicPlugin({
       // This plugin fixes an issue where the newrelic script will break if

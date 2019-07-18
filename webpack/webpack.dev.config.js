@@ -103,6 +103,14 @@ module.exports = Merge.smart(commonConfig, {
       GOOGLE_PLAY_URL: 'https://play.google.com/store',
       ORDER_HISTORY_URL: 'localhost:1996/orders',
       CYBERSOURCE_URL: 'https://localhost/cybersource',
+      APPLE_PAY_MERCHANT_IDENTIFIER: 'merchant.org.edx.stage.ecommerce',
+      APPLE_PAY_MERCHANT_NAME: 'edX E-Commerce',
+      APPLE_PAY_COUNTRY_CODE: 'US',
+      APPLE_PAY_CURRENCY_CODE: 'USD',
+      APPLE_PAY_START_SESSION_URL: 'http://localhost:18130/payment/cybersource/apple-pay/start-session/',
+      APPLE_PAY_AUTHORIZE_URL: 'http://localhost:18130/payment/cybersource/apple-pay/authorize/',
+      APPLE_PAY_SUPPORTED_NETWORKS: ['amex', 'discover', 'visa', 'masterCard'],
+      APPLE_PAY_MERCHANT_CAPABILITIES: ['supports3DS', 'supportsCredit', 'supportsDebit'],
     }),
     // when the --hot option is not passed in as part of the command
     // the HotModuleReplacementPlugin has to be specified in the Webpack configuration

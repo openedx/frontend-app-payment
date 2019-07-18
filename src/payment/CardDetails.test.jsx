@@ -29,4 +29,27 @@ describe('<CardDetails />', () => {
       });
     });
   });
+
+  describe('handleSecurityCodeChange', () => {
+    const cardDetails = shallow(<CardDetailsComponent />).instance();
+
+    it('updates the securityCode state when changing the securityCode input', () => {
+      cardDetails.handleSecurityCodeChange(null, '123');
+      expect(cardDetails.state.securityCode).toBe('123');
+    });
+  });
+
+  describe('updateCardExpiryDate', () => {
+    const cardDetails = shallow(<CardDetailsComponent />).instance();
+
+    it('updates the date when changing the year', () => {
+      cardDetails.updateCardExpiryYear(null, '2020');
+      expect(cardDetails.state.cardExpiryDate).toBe('-2020');
+    });
+
+    it('updates the date when changing the month', () => {
+      cardDetails.updateCardExpiryMonth(null, '5');
+      expect(cardDetails.state.cardExpiryDate).toBe('05-2020');
+    });
+  });
 });

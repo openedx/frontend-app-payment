@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ApplePayButton /> should render properly 1`] = `
+<button
+  className="apple-pay-button"
+  id="applePayBtn"
+  lang="en"
+  onClick={[Function]}
+  title="Pay with Apple Pay"
+/>
+`;

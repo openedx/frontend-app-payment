@@ -21,6 +21,7 @@ export class PaymentFormComponent extends React.Component {
   }
 
   componentDidUpdate() {
+    /* istanbul ignore next */
     if (this.props.paymentProcessorUrl) {
       this.formRef.current.submit();
     }
@@ -148,19 +149,17 @@ export class PaymentFormComponent extends React.Component {
   scrollToError(error) {
     const form = this.formRef.current;
     const formElement = form.querySelector(`[name=${error}]`);
+    /* istanbul ignore else */
     if (formElement) {
       const elementParent = formElement.parentElement;
       elementParent.scrollIntoView(true);
     }
   }
 
-  renderPaymentProviderFormFields() {
-    const { paymentProcessorFormFields } = this.props;
-    const formFields = [];
-    Object.keys(paymentProcessorFormFields).forEach((key) => {
-      formFields.push(<input type="hidden" key={key} name={key} value={paymentProcessorFormFields[key]} />);
-    });
-    return formFields;
+  renderHiddenFields(fields) {
+    return Object.entries(fields).map(([key, value]) => (
+      <input type="hidden" key={key} name={key} value={value} />
+    ));
   }
 
   render() {
@@ -168,6 +167,7 @@ export class PaymentFormComponent extends React.Component {
       handleSubmit,
       submitting,
       paymentProcessorUrl,
+      paymentProcessorFormFields,
     } = this.props;
 
     return (
@@ -180,7 +180,7 @@ export class PaymentFormComponent extends React.Component {
       >
         <CardHolderInformation submitting={submitting} />
         <CardDetails submitting={submitting} />
-        {this.renderPaymentProviderFormFields()}
+        {this.renderHiddenFields(paymentProcessorFormFields)}
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
             <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting}>
