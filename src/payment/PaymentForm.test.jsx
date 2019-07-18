@@ -132,6 +132,22 @@ describe('<PaymentForm />', () => {
       });
     });
   });
+  describe('renderHiddenFields', () => {
+    it('throws expected errors', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <Provider store={mockStore(storeMocks.defaultState)}>
+            <PaymentForm handleSubmit={() => {}} />
+          </Provider>
+        </IntlProvider>
+      ));
+      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+      const hiddenFields = paymentForm.renderHiddenFields({ name: 'theName' });
+      expect(hiddenFields).toEqual(expect.arrayContaining([
+        <input type="hidden" key="name" name="name" value="theName" />,
+      ]));
+    });
+  });
   describe('validateCardDetails', () => {
     it('returns expected errors', () => {
       const wrapper = mount((
