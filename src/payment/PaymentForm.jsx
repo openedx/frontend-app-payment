@@ -54,6 +54,8 @@ export class PaymentFormComponent extends React.Component {
     };
 
     if (Object.keys(errors).length > 0) {
+      const firstErrorName = Object.keys(errors)[0];
+      this.scrollToError(firstErrorName);
       throw new SubmissionError(errors);
     }
 
@@ -141,6 +143,15 @@ export class PaymentFormComponent extends React.Component {
     });
 
     return errors;
+  }
+
+  scrollToError(error) {
+    const form = this.formRef.current;
+    const formElement = form.querySelector(`[name=${error}]`);
+    if (formElement) {
+      const elementParent = formElement.parentElement;
+      elementParent.scrollIntoView(true);
+    }
   }
 
   renderPaymentProviderFormFields() {
