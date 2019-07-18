@@ -18,16 +18,20 @@ const storeMocks = {
 configureI18n(configuration, messages);
 
 describe('<PaymentForm />', () => {
+  let wrapper;
+  let paymentForm;
+  beforeEach(() => {
+    wrapper = mount((
+      <IntlProvider locale="en">
+        <Provider store={mockStore(storeMocks.defaultState)}>
+          <PaymentForm handleSubmit={() => {}} />
+        </Provider>
+      </IntlProvider>
+    ));
+    paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+  });
   describe('getRequiredFields', () => {
     it('returns expected required fields', () => {
-      const wrapper = mount((
-        <IntlProvider locale="en">
-          <Provider store={mockStore(storeMocks.defaultState)}>
-            <PaymentForm handleSubmit={() => {}} />
-          </Provider>
-        </IntlProvider>
-      ));
-      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       const testFormValues = [
         {
           firstName: '',
@@ -81,14 +85,6 @@ describe('<PaymentForm />', () => {
   });
   describe('onSubmit', () => {
     it('throws expected errors', () => {
-      const wrapper = mount((
-        <IntlProvider locale="en">
-          <Provider store={mockStore(storeMocks.defaultState)}>
-            <PaymentForm handleSubmit={() => {}} />
-          </Provider>
-        </IntlProvider>
-      ));
-      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       paymentForm.validateRequiredFields = jest.fn();
       paymentForm.validateCardDetails = jest.fn();
       paymentForm.scrollToError = jest.fn();
@@ -136,14 +132,6 @@ describe('<PaymentForm />', () => {
   });
   describe('validateCardDetails', () => {
     it('returns expected errors', () => {
-      const wrapper = mount((
-        <IntlProvider locale="en">
-          <Provider store={mockStore(storeMocks.defaultState)}>
-            <PaymentForm handleSubmit={() => {}} />
-          </Provider>
-        </IntlProvider>
-      ));
-      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       const currentMonth = new Date().getMonth() + 1;
       const currentYear = new Date().getFullYear();
       const testData = [
@@ -167,14 +155,6 @@ describe('<PaymentForm />', () => {
   });
   describe('validateRequiredFields', () => {
     it('returns errors if values are empty', () => {
-      const wrapper = mount((
-        <IntlProvider locale="en">
-          <Provider store={mockStore(storeMocks.defaultState)}>
-            <PaymentForm handleSubmit={() => {}} />
-          </Provider>
-        </IntlProvider>
-      ));
-      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       const values = {
         firsName: 'Jane',
         lastName: undefined,
@@ -186,19 +166,8 @@ describe('<PaymentForm />', () => {
     });
   });
   describe('scrollToError', () => {
-    let wrapper;
-    beforeEach(() => {
-      wrapper = mount((
-        <IntlProvider locale="en">
-          <Provider store={mockStore(storeMocks.defaultState)}>
-            <PaymentForm handleSubmit={() => {}} />
-          </Provider>
-        </IntlProvider>
-      ));
-    });
     it('scrolls to the input name of the first error', () => {
       global.HTMLElement.prototype.scrollIntoView = jest.fn();
-      const paymentForm = wrapper.find(PaymentFormComponent).first().instance();
       const error = 'firstName';
       paymentForm.scrollToError(error);
       expect(global.HTMLElement.prototype.scrollIntoView).toHaveBeenCalled();
