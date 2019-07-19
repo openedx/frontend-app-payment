@@ -2,7 +2,7 @@ import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
 
 import { configureApiService as configureCouponApiService } from '../coupon';
-import { configureApiService as configureApplePayApiService } from '../apple-pay';
+import { configureApiService as configurePayPalApiService } from '../paypal';
 import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
 import { camelCaseObject } from '../../common/utils';
 
@@ -23,7 +23,7 @@ export function configureApiService(newConfig, newApiClient) {
   apiClient = newApiClient;
 
   configureCouponApiService(config, apiClient);
-  configureApplePayApiService(newConfig, apiClient);
+  configurePayPalApiService(config, apiClient);
 
   // For every ajax response, check if the API has
   // responded with a redirect value. If so, redirect.

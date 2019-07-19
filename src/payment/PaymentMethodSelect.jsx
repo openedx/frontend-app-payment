@@ -1,10 +1,10 @@
 import React from 'react';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
-import { sendTrackEvent } from '@edx/frontend-analytics';
 import messages from './PaymentMethodSelect.messages';
 
-import PayPalLogo from './assets/paypal-logo.png';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
+import { ApplePayButtonContainer } from './apple-pay';
+import { PayPalButton } from './paypal';
 
 function PaymentMethodSelect({ intl }) {
   return (
@@ -24,24 +24,8 @@ function PaymentMethodSelect({ intl }) {
             alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
           />
         </button>
-        <button
-          className="payment-method-button"
-          onClick={() => {
-              sendTrackEvent(
-                'edx.bi.ecommerce.basket.payment_selected',
-                {
-                  type: 'click',
-                  category: 'checkout',
-                  paymentMethod: 'PayPal',
-                },
-              );
-            }}
-        >
-          <img
-            src={PayPalLogo}
-            alt={intl.formatMessage(messages['payment.page.method.type.paypal'])}
-          />
-        </button>
+        <PayPalButton />
+        <ApplePayButtonContainer />
       </p>
     </div>
   );

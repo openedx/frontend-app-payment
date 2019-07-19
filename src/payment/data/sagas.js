@@ -18,6 +18,7 @@ import * as PaymentApiService from './service';
 import { basketSelector } from './selectors';
 
 import { saga as couponSaga, addCouponSuccess, addCouponBegin } from '../coupon';
+import { saga as payPalSaga } from '../paypal';
 import { handleErrors, handleMessages } from '../../feedback';
 import { configuration } from '../../environment';
 
@@ -77,5 +78,6 @@ export default function* saga() {
   yield takeEvery(SUBMIT_PAYMENT.BASE, handleSubmitPayment);
   yield all([
     couponSaga(),
+    payPalSaga(),
   ]);
 }
