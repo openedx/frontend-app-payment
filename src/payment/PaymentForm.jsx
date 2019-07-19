@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 
 import { submitPayment } from './data/actions';
 import { paymentSelector } from './data/selectors';
@@ -104,6 +105,21 @@ export class PaymentFormComponent extends React.Component {
     return requiredFields;
   }
 
+  handleSubmitButtonClick() {
+    // TO DO: after event parity, track data should be
+    // sent only if the payment is processed, not on click
+    // Check for Paypal, ApplePay and Free Basket as well
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Credit Card',
+        checkoutType: 'client_side',
+      },
+    );
+  }
+
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
     const errors = {};
 
@@ -183,7 +199,7 @@ export class PaymentFormComponent extends React.Component {
         {this.renderHiddenFields(paymentProcessorFormFields)}
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
-            <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting}>
+            <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting} onClick={this.handleSubmitButtonClick}>
               <FormattedMessage
                 id="payment.form.submit.button.text"
                 defaultMessage="Place Order"

@@ -5,6 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import analytics from '@edx/frontend-analytics';
 
 import { configuration } from '../environment';
 import messages from '../i18n';
@@ -17,11 +18,14 @@ const storeMocks = {
 
 configureI18n(configuration, messages);
 
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
+
 describe('<PaymentForm />', () => {
-  let wrapper;
   let paymentForm;
   beforeEach(() => {
-    wrapper = mount((
+    const wrapper = mount((
       <IntlProvider locale="en">
         <Provider store={mockStore(storeMocks.defaultState)}>
           <PaymentForm handleSubmit={() => {}} />
@@ -128,6 +132,18 @@ describe('<PaymentForm />', () => {
           expect(() => paymentForm.onSubmit(testFormValues)).not.toThrow();
         }
       });
+    });
+    it('sends track data on click', () => {
+      analytics.sendTrackEvent = jest.fn();
+      const eventName = 'edx.bi.ecommerce.basket.payment_selected';
+      const eventProps = {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Credit Card',
+        checkoutType: 'client_side',
+      };
+      paymentForm.handleSubmitButtonClick(eventName, eventProps);
+      expect(analytics.sendTrackEvent).toHaveBeenCalledWith(eventName, eventProps);
     });
   });
   describe('renderHiddenFields', () => {

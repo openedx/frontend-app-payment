@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 import { performApplePayPayment } from './service';
 
 
@@ -13,6 +14,17 @@ export default class ApplePayButton extends React.Component {
   }
 
   handleClick = () => {
+    // TO DO: after event parity, track data should be
+    // sent only if the payment is processed, not on click
+    // Check for Paypal and Free Basket as well
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Apple Pay',
+      },
+    );
     performApplePayPayment({
       totalAmount: this.props.totalAmount,
       onPaymentBegin: this.props.onPaymentBegin,
