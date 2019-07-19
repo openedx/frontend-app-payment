@@ -88,7 +88,6 @@ describe('<PaymentForm />', () => {
       paymentForm.validateRequiredFields = jest.fn();
       paymentForm.validateCardDetails = jest.fn();
       paymentForm.scrollToError = jest.fn();
-      analytics.sendTrackEvent = jest.fn();
       const testFormValues = {
         firstName: '',
         lastName: '',
@@ -129,7 +128,18 @@ describe('<PaymentForm />', () => {
           expect(() => paymentForm.onSubmit(testFormValues)).not.toThrow();
         }
       });
-      expect(analytics.sendTrackEvent).toHaveBeenCalled();
+    });
+    it('sends track data on click', () => {
+      analytics.sendTrackEvent = jest.fn();
+      const eventName = 'edx.bi.ecommerce.basket.payment_selected';
+      const eventProps = {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Credit Card',
+        checkoutType: 'client_side',
+      };
+      paymentForm.handleTrackEvent(eventName, eventProps);
+      expect(analytics.sendTrackEvent).toHaveBeenCalledWith(eventName, eventProps);
     });
   });
   describe('renderHiddenFields', () => {

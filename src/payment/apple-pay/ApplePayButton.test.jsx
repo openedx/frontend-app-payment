@@ -35,9 +35,15 @@ describe('<ApplePayButton />', () => {
         title="Pay with Apple Pay"
       />
     ));
+    const eventName = 'edx.bi.ecommerce.basket.payment_selected';
+    const eventProps = {
+      type: 'click',
+      category: 'checkout',
+      paymentMethod: 'Apple Pay',
+    };
     analytics.sendTrackEvent = jest.fn();
     wrapper.find('button').simulate('click');
     expect(applePaySession.begin).toHaveBeenCalled();
-    expect(analytics.sendTrackEvent).toHaveBeenCalled();
+    expect(analytics.sendTrackEvent).toHaveBeenCalledWith(eventName, eventProps);
   });
 });

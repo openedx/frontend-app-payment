@@ -2321,6 +2321,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             <button
               className="btn btn-primary btn-lg btn-block"
               disabled={false}
+              onClick={[Function]}
               type="submit"
             >
               <span>
@@ -4470,6 +4471,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <button
               className="btn btn-primary btn-lg btn-block"
               disabled={false}
+              onClick={[Function]}
               type="submit"
             >
               <span>
@@ -6468,6 +6470,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
             <button
               className="btn btn-primary btn-lg btn-block"
               disabled={false}
+              onClick={[Function]}
               type="submit"
             >
               <span>

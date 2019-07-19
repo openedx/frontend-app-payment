@@ -14,14 +14,9 @@ export default class ApplePayButton extends React.Component {
   }
 
   handleClick = () => {
-    performApplePayPayment({
-      totalAmount: this.props.totalAmount,
-      onPaymentBegin: this.props.onPaymentBegin,
-      onPaymentComplete: this.props.onPaymentComplete,
-      onMerchantValidationFailure: this.props.onMerchantValidationFailure,
-      onPaymentAuthorizationFailure: this.props.onPaymentAuthorizationFailure,
-      onPaymentCancel: this.props.onPaymentCancel,
-    });
+    // TO DO: after event parity, track data should be
+    // sent only if the payment is processed, not on click
+    // Check for Paypal and Free Basket as well
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
       {
@@ -30,6 +25,14 @@ export default class ApplePayButton extends React.Component {
         paymentMethod: 'Apple Pay',
       },
     );
+    performApplePayPayment({
+      totalAmount: this.props.totalAmount,
+      onPaymentBegin: this.props.onPaymentBegin,
+      onPaymentComplete: this.props.onPaymentComplete,
+      onMerchantValidationFailure: this.props.onMerchantValidationFailure,
+      onPaymentAuthorizationFailure: this.props.onPaymentAuthorizationFailure,
+      onPaymentCancel: this.props.onPaymentCancel,
+    });
   }
 
   render() {
