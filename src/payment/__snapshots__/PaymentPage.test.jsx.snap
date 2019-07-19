@@ -494,8 +494,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         </p>
       </div>
       <form
-        action=""
-        method="POST"
         noValidate={true}
         onSubmit={[Function]}
       >
@@ -2000,16 +1998,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 type="text"
                 value=""
               />
-              <input
-                name="card_number"
-                type="hidden"
-                value=""
-              />
-              <input
-                name="card_type"
-                type="hidden"
-                value=""
-              />
               <svg
                 aria-hidden="true"
                 className="svg-inline--fa fa-lock fa-w-14 lock-icon"
@@ -2079,11 +2067,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 onDrop={[Function]}
                 onFocus={[Function]}
                 type="password"
-                value=""
-              />
-              <input
-                name="card_cvn"
-                type="hidden"
                 value=""
               />
               <svg
@@ -2303,11 +2286,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   2034
                 </option>
               </select>
-              <input
-                name="card_expiry_date"
-                type="hidden"
-                value="-"
-              />
             </div>
           </div>
         </div>
@@ -2644,8 +2622,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         </p>
       </div>
       <form
-        action=""
-        method="POST"
         noValidate={true}
         onSubmit={[Function]}
       >
@@ -4150,16 +4126,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 type="text"
                 value=""
               />
-              <input
-                name="card_number"
-                type="hidden"
-                value=""
-              />
-              <input
-                name="card_type"
-                type="hidden"
-                value=""
-              />
               <svg
                 aria-hidden="true"
                 className="svg-inline--fa fa-lock fa-w-14 lock-icon"
@@ -4229,11 +4195,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 onDrop={[Function]}
                 onFocus={[Function]}
                 type="password"
-                value=""
-              />
-              <input
-                name="card_cvn"
-                type="hidden"
                 value=""
               />
               <svg
@@ -4453,11 +4414,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   2034
                 </option>
               </select>
-              <input
-                name="card_expiry_date"
-                type="hidden"
-                value="-"
-              />
             </div>
           </div>
         </div>
@@ -4643,8 +4599,6 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         </p>
       </div>
       <form
-        action=""
-        method="POST"
         noValidate={true}
         onSubmit={[Function]}
       >
@@ -6149,16 +6103,6 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 type="text"
                 value=""
               />
-              <input
-                name="card_number"
-                type="hidden"
-                value=""
-              />
-              <input
-                name="card_type"
-                type="hidden"
-                value=""
-              />
               <svg
                 aria-hidden="true"
                 className="svg-inline--fa fa-lock fa-w-14 lock-icon"
@@ -6228,11 +6172,6 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 onDrop={[Function]}
                 onFocus={[Function]}
                 type="password"
-                value=""
-              />
-              <input
-                name="card_cvn"
-                type="hidden"
                 value=""
               />
               <svg
@@ -6452,11 +6391,6 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   2034
                 </option>
               </select>
-              <input
-                name="card_expiry_date"
-                type="hidden"
-                value="-"
-              />
             </div>
           </div>
         </div>

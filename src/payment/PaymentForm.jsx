@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
-import { submitPayment } from './data/actions';
+import { submitPaymentCybersource } from './cybersource';
 import { paymentSelector } from './data/selectors';
 
-import CardDetails, { SUPPORTED_CARDS } from './CardDetails';
+import { getCardTypeId, SUPPORTED_CARDS } from './utils/credit-card';
+import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './data/countryStatesMap';
 import messages from './PaymentForm.messages';
@@ -18,13 +19,6 @@ export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.formRef = React.createRef();
-  }
-
-  componentDidUpdate() {
-    /* istanbul ignore next */
-    if (this.props.paymentProcessorUrl) {
-      this.formRef.current.submit();
-    }
   }
 
   onSubmit = (values) => {
@@ -60,7 +54,7 @@ export class PaymentFormComponent extends React.Component {
       throw new SubmissionError(errors);
     }
 
-    this.props.submitPayment({
+    this.props.submitPaymentCybersource({
       firstName,
       lastName,
       address,
@@ -69,6 +63,12 @@ export class PaymentFormComponent extends React.Component {
       country,
       state,
       postalCode,
+    }, {
+      cardNumber,
+      cardTypeId: getCardTypeId(cardNumber),
+      securityCode,
+      cardExpirationMonth,
+      cardExpirationYear,
     });
   };
 
@@ -156,31 +156,20 @@ export class PaymentFormComponent extends React.Component {
     }
   }
 
-  renderHiddenFields(fields) {
-    return Object.entries(fields).map(([key, value]) => (
-      <input type="hidden" key={key} name={key} value={value} />
-    ));
-  }
-
   render() {
     const {
       handleSubmit,
       submitting,
-      paymentProcessorUrl,
-      paymentProcessorFormFields,
     } = this.props;
 
     return (
       <form
-        method="POST"
-        action={paymentProcessorUrl}
         onSubmit={handleSubmit(this.onSubmit)}
         ref={this.formRef}
         noValidate
       >
         <CardHolderInformation submitting={submitting} />
         <CardDetails submitting={submitting} />
-        {this.renderHiddenFields(paymentProcessorFormFields)}
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
             <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting}>
@@ -201,19 +190,15 @@ PaymentFormComponent.propTypes = {
   intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
-  submitPayment: PropTypes.func.isRequired,
-  paymentProcessorFormFields: PropTypes.shape({}),
-  paymentProcessorUrl: PropTypes.string,
+  submitPaymentCybersource: PropTypes.func.isRequired,
 };
 
 PaymentFormComponent.defaultProps = {
   submitting: false,
-  paymentProcessorFormFields: {},
-  paymentProcessorUrl: '',
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
 export default reduxForm({ form: 'payment' })(connect(paymentSelector, {
-  submitPayment,
+  submitPaymentCybersource,
 })(injectIntl(PaymentFormComponent)));
