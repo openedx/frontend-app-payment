@@ -60,6 +60,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true, // Appends script tags linking to the webpack bundles at the end of the body
       template: path.resolve(__dirname, '../public/index.html'),
+      optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
     }),
   ],
 };
