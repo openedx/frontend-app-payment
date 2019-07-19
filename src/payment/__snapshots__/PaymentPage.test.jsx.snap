@@ -483,6 +483,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           </button>
           <button
             className="payment-method-button"
+            disabled={false}
+            onClick={[Function]}
           >
             <img
               alt="PayPal"
@@ -2631,6 +2633,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </button>
           <button
             className="payment-method-button"
+            disabled={false}
+            onClick={[Function]}
           >
             <img
               alt="PayPal"
@@ -4628,6 +4632,8 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </button>
           <button
             className="payment-method-button"
+            disabled={false}
+            onClick={[Function]}
           >
             <img
               alt="PayPal"

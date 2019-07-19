@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import { FETCH_BASKET, SUBMIT_PAYMENT, CHECKOUT } from './actions';
 import { reducer as coupon } from '../coupon';
+import { reducer as paypal } from '../paypal';
 
 export const basketInitialState = {
   loading: false,
@@ -53,6 +54,7 @@ const basket = (state = basketInitialState, action = null) => {
 const reducer = combineReducers({
   basket,
   coupon,
+  paypal,
 });
 
 export default reducer;

@@ -111,3 +111,23 @@ export class AsyncActionType {
     return `${this.topic}__${this.name}__RESET`;
   }
 }
+
+export function generateAndSubmitForm(url, params = {}) {
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = url;
+
+  Object.keys(params).forEach((key) => {
+    if (Object.prototype.hasOwnProperty.call(params, key)) {
+      const hiddenField = document.createElement('input');
+      hiddenField.type = 'hidden';
+      hiddenField.name = key;
+      hiddenField.value = params[key];
+
+      form.appendChild(hiddenField);
+    }
+  });
+
+  document.body.appendChild(form);
+  form.submit();
+}
