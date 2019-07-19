@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
-import * as analytics from '@edx/frontend-analytics';
+import analytics from '@edx/frontend-analytics';
 
 import { configuration } from '../environment';
 import messages from '../i18n';
@@ -17,6 +17,10 @@ const storeMocks = {
 };
 
 configureI18n(configuration, messages);
+
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
 
 describe('<PaymentForm />', () => {
   let paymentForm;
@@ -138,7 +142,7 @@ describe('<PaymentForm />', () => {
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
       };
-      paymentForm.handleTrackEvent(eventName, eventProps);
+      paymentForm.handleSubmitButtonClick(eventName, eventProps);
       expect(analytics.sendTrackEvent).toHaveBeenCalledWith(eventName, eventProps);
     });
   });

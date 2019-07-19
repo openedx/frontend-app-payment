@@ -105,7 +105,7 @@ export class PaymentFormComponent extends React.Component {
     return requiredFields;
   }
 
-  handleTrackEvent() {
+  handleSubmitButtonClick() {
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
     // Check for Paypal, ApplePay and Free Basket as well
@@ -199,7 +199,7 @@ export class PaymentFormComponent extends React.Component {
         {this.renderHiddenFields(paymentProcessorFormFields)}
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
-            <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting} onClick={this.handleTrackEvent}>
+            <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting} onClick={this.handleSubmitButtonClick}>
               <FormattedMessage
                 id="payment.form.submit.button.text"
                 defaultMessage="Place Order"

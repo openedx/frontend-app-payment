@@ -2,15 +2,18 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import * as analytics from '@edx/frontend-analytics';
-
+import analytics from '@edx/frontend-analytics';
 import ApplePayButton from './ApplePayButton';
 
+// import * as analytics from '@edx/frontend-analytics';
 
 const applePaySession = { begin: jest.fn() };
 global.ApplePaySession = jest.fn().mockImplementation(() => applePaySession);
 global.ApplePaySession.canMakePayments = () => true;
 
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
 
 describe('<ApplePayButton />', () => {
   it('should render properly', () => {
@@ -35,13 +38,13 @@ describe('<ApplePayButton />', () => {
         title="Pay with Apple Pay"
       />
     ));
+    analytics.sendTrackEvent = jest.fn();
     const eventName = 'edx.bi.ecommerce.basket.payment_selected';
     const eventProps = {
       type: 'click',
       category: 'checkout',
       paymentMethod: 'Apple Pay',
     };
-    analytics.sendTrackEvent = jest.fn();
     wrapper.find('button').simulate('click');
     expect(applePaySession.begin).toHaveBeenCalled();
     expect(analytics.sendTrackEvent).toHaveBeenCalledWith(eventName, eventProps);
