@@ -16,6 +16,13 @@ import { fetchBasketSuccess } from '../../data/actions';
 import { transformResults } from '../../data/service';
 import { addMessage, MESSAGE_TYPES } from '../../../feedback';
 
+
+jest.mock('@edx/frontend-logging', () => ({
+  logAPIErrorResponse: jest.fn(),
+  logInfo: jest.fn(),
+}));
+
+
 describe('saga tests', () => {
   const configuration = {
     ECOMMERCE_BASE_URL: 'http://localhost',
@@ -219,7 +226,11 @@ describe('saga tests', () => {
         expect(e).toEqual('oh snap!');
       }
 
-      expect(caughtErrors).toEqual(['oh snap!']);
+      const lastAction = dispatched[dispatched.length - 1];
+      expect(lastAction)
+        .toEqual(addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR));
+
+      expect(caughtErrors).toEqual([]);
 
       expect(apiClientPost).toHaveBeenCalledWith(
         'http://localhost/bff/payment/v0/vouchers/',
@@ -356,7 +367,9 @@ describe('saga tests', () => {
         expect(e).toEqual('oh snap!');
       }
 
-      expect(caughtErrors).toEqual(['oh snap!']);
+      const lastAction = dispatched[dispatched.length - 1];
+      expect(lastAction)
+        .toEqual(addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR));
 
       expect(apiClientDelete).toHaveBeenCalledWith('http://localhost/bff/payment/v0/vouchers/12345');
     });

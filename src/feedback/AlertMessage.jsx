@@ -34,7 +34,10 @@ const AlertMessage = (props) => {
   if (typeof userMessage === 'function') {
     statusAlertProps.dialog = React.createElement(userMessage, { values: data });
   } else if (React.isValidElement(userMessage)) {
-    statusAlertProps.dialog = React.cloneElement(userMessage, { values: data });
+    statusAlertProps.dialog = React.cloneElement(userMessage, {
+      ...userMessage.props,
+      values: { ...data, ...userMessage.props.values },
+    });
   } else {
     statusAlertProps.dialog = userMessage;
   }

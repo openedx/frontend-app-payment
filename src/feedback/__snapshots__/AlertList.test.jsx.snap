@@ -129,5 +129,42 @@ Array [
       Debug debug
     </div>
   </div>,
+  <div
+    className="alert fade alert-dismissible alert-danger show"
+    hidden={false}
+    role="alert"
+  >
+    <button
+      aria-label="Close"
+      className="btn close"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onKeyDown={[Function]}
+      type="button"
+    >
+      <span
+        aria-hidden="true"
+      >
+        ×
+      </span>
+    </button>
+    <div
+      className="alert-dialog"
+    >
+      <span>
+        There was an unexpected problem. If the problem persists, please 
+        <a
+          href="url"
+          onClick={[Function]}
+          target="_self"
+        >
+          <span>
+            contact support
+          </span>
+        </a>
+        .
+      </span>
+    </div>
+  </div>,
 ]
 `;

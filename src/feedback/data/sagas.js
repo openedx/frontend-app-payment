@@ -4,9 +4,9 @@ import { addMessage } from './actions';
 import { MESSAGE_TYPES } from './constants';
 
 export function* handleErrors(e) {
-  // If this doesn't contain anything we understand, bail.
+  // If this doesn't contain anything we understand, add a fallback error message
   if (e.errors === undefined && e.fieldErrors === undefined && e.messages === undefined) {
-    throw e;
+    yield put(addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR));
   }
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus

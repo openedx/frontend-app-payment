@@ -29,7 +29,7 @@ const basket = (state = basketInitialState, action = null) => {
       return {
         ...state,
         loading: false,
-        loaded: true,
+        loaded: false,
       };
     case SUBMIT_PAYMENT.BEGIN:
       return {
