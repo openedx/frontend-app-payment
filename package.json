@@ -16,7 +16,7 @@
     "i18n_extract": "BABEL_ENV=i18n babel src --quiet > /dev/null",
     "is-es5": "es-check es5 ./dist/*.js",
     "lint": "eslint --ext .js --ext .jsx .",
-    "precommit": "npm run lint",
+    "precommit": "make precommit",
     "snapshot": "jest --updateSnapshot",
     "start": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev.config.js --progress",
     "start:stage": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev-stage.config.js --progress --disable-host-check",

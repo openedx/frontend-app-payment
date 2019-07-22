@@ -10,6 +10,10 @@ tx_url2 = https://www.transifex.com/api/2/project/edx-platform/resource/$(transi
 # This directory must match .babelrc .
 transifex_temp = ./temp/babel-plugin-react-intl
 
+precommit:
+	npm run lint
+	npm audit
+
 requirements:
 	npm install
 
