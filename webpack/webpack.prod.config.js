@@ -12,6 +12,7 @@ const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const PostCssRtlPlugin = require('postcss-rtl');
 const PostCssAutoprefixerPlugin = require('autoprefixer');
+const CssNano = require('cssnano');
 
 const commonConfig = require('./webpack.common.config.js');
 
@@ -56,7 +57,6 @@ module.exports = Merge.smart(commonConfig, {
             loader: 'css-loader', // translates CSS into CommonJS
             options: {
               sourceMap: true,
-              minimize: true,
             },
           },
           {
@@ -65,6 +65,7 @@ module.exports = Merge.smart(commonConfig, {
               plugins: () => [
                 PostCssRtlPlugin(),
                 PostCssAutoprefixerPlugin({ grid: true }),
+                CssNano(),
               ],
             },
           },
