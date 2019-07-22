@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
-import { FETCH_BASKET, SUBMIT_PAYMENT, CHECKOUT } from './actions';
+import { FETCH_BASKET } from './actions';
 import { reducer as coupon } from '../coupon';
+import { reducer as cybersource } from '../cybersource';
 import { reducer as paypal } from '../paypal';
 
 export const basketInitialState = {
@@ -31,21 +32,6 @@ const basket = (state = basketInitialState, action = null) => {
         loading: false,
         loaded: false,
       };
-    case SUBMIT_PAYMENT.BEGIN:
-      return {
-        ...state,
-        submitting: true,
-      };
-    case SUBMIT_PAYMENT.FAILURE:
-      return {
-        ...state,
-        submitting: false,
-      };
-    case CHECKOUT.SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-      };
     default:
       return state;
   }
@@ -54,6 +40,7 @@ const basket = (state = basketInitialState, action = null) => {
 const reducer = combineReducers({
   basket,
   coupon,
+  cybersource,
   paypal,
 });
 

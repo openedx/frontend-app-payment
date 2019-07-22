@@ -1,26 +1,20 @@
-import { all, call, put, select, takeEvery } from 'redux-saga/effects';
+import { all, call, put, takeEvery } from 'redux-saga/effects';
 
 // Actions
 import {
   FETCH_BASKET,
-  SUBMIT_PAYMENT,
   fetchBasketBegin,
   fetchBasketSuccess,
   fetchBasketFailure,
-  submitPaymentBegin,
-  submitPaymentFailure,
-  checkoutSuccess,
 } from './actions';
 
 // Services
 import * as PaymentApiService from './service';
 
-import { basketSelector } from './selectors';
-
 import { saga as couponSaga, addCouponSuccess, addCouponBegin } from '../coupon';
+import { saga as cybersourceSaga } from '../cybersource';
 import { saga as payPalSaga } from '../paypal';
 import { handleErrors, handleMessages } from '../../feedback';
-import { configuration } from '../../environment';
 
 export function* handleFetchBasket() {
   yield put(fetchBasketBegin());
@@ -44,40 +38,11 @@ export function* handleFetchBasket() {
   }
 }
 
-export function* handleSubmitPayment(action) {
-  yield put(submitPaymentBegin());
-  try {
-    const sdnCheck = yield call(
-      PaymentApiService.sdnCheck,
-      action.payload.cardHolderInfo.firstName,
-      action.payload.cardHolderInfo.lastName,
-      action.payload.cardHolderInfo.city,
-      action.payload.cardHolderInfo.country,
-    );
-
-    if (sdnCheck.hits > 0) {
-      window.location.href = `${configuration.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
-    }
-
-    const basket = yield select(basketSelector);
-    const checkout = yield call(
-      PaymentApiService.checkout,
-      basket.basketId,
-      action.payload.cardHolderInfo,
-    );
-
-    yield put(checkoutSuccess(configuration.CYBERSOURCE_URL, checkout.form_fields));
-  } catch (e) {
-    yield put(submitPaymentFailure());
-    yield call(handleErrors, e);
-  }
-}
-
 export default function* saga() {
   yield takeEvery(FETCH_BASKET.BASE, handleFetchBasket);
-  yield takeEvery(SUBMIT_PAYMENT.BASE, handleSubmitPayment);
   yield all([
     couponSaga(),
+    cybersourceSaga(),
     payPalSaga(),
   ]);
 }

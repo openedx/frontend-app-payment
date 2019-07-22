@@ -146,14 +146,6 @@ describe('<PaymentForm />', () => {
       expect(analytics.sendTrackEvent).toHaveBeenCalledWith(eventName, eventProps);
     });
   });
-  describe('renderHiddenFields', () => {
-    it('throws expected errors', () => {
-      const hiddenFields = paymentForm.renderHiddenFields({ name: 'theName' });
-      expect(hiddenFields).toEqual(expect.arrayContaining([
-        <input type="hidden" key="name" name="name" value="theName" />,
-      ]));
-    });
-  });
   describe('validateCardDetails', () => {
     it('returns expected errors', () => {
       const currentMonth = new Date().getMonth() + 1;
