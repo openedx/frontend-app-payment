@@ -19,7 +19,7 @@
     "precommit": "npm run lint",
     "snapshot": "jest --updateSnapshot",
     "start": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev.config.js --progress",
-    "start:stage": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev-stage.config.js --progress --disable-host-check --https",
+    "start:stage": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev-stage.config.js --progress --disable-host-check",
     "test": "jest --coverage --passWithNoTests",
     "travis-deploy-once": "travis-deploy-once"
   },
