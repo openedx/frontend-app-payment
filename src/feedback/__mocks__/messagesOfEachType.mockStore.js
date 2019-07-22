@@ -1,4 +1,7 @@
 module.exports = {
+  configuration: {
+    SUPPORT_URL: 'url',
+  },
   feedback: {
     byId: {
       2: {
@@ -39,7 +42,13 @@ module.exports = {
         userMessage: 'Debug debug',
         messageType: 'debug',
       },
+      7: {
+        id: 7,
+        code: 'fallback-error',
+        userMessage: null,
+        messageType: 'error',
+      },
     },
-    orderedIds: [2, 3, 4, 5, 6],
+    orderedIds: [2, 3, 4, 5, 6, 7],
   },
 };

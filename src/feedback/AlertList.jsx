@@ -5,8 +5,18 @@ import { connect } from 'react-redux';
 import AlertMessage from './AlertMessage';
 import { alertListMapStateToProps } from './data/selectors';
 import { removeMessage } from './data/actions';
+import FallbackErrorMessage from './FallbackErrorMessage';
 
 class AlertList extends Component {
+  getUserMessage(code, userMessage) {
+    if (this.props.messageCodes[code]) {
+      return this.props.messageCodes[code];
+    } else if (code === 'fallback-error') {
+      return FallbackErrorMessage;
+    }
+    return userMessage;
+  }
+
   render() {
     if (this.props.messageList.length < 1) {
       return null;
@@ -17,10 +27,7 @@ class AlertList extends Component {
         {...messageProps}
         key={messageProps.id}
         closeHandler={this.props.removeMessage}
-        userMessage={this.props.messageCodes[code] ?
-          this.props.messageCodes[code] :
-          userMessage
-        }
+        userMessage={this.getUserMessage(code, userMessage)}
       />
     ));
   }

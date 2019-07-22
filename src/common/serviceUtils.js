@@ -1,5 +1,7 @@
 import pick from 'lodash.pick';
+import { logAPIErrorResponse, logInfo } from '@edx/frontend-logging';
 import { camelCaseObject } from './utils';
+
 
 export function applyConfiguration(expected, actual) {
   Object.keys(expected).forEach((key) => {
@@ -85,21 +87,25 @@ function handleApiMessages(messages) {
 export function handleRequestError(error) {
   // Validation errors
   if (error.response && error.response.data.field_errors) {
+    logInfo('Field Errors', error.response.data.field_errors);
     handleFieldErrors(error.response.data.field_errors);
   }
 
   // API errors
   if (error.response && error.response.data.errors !== undefined) {
+    logInfo('API Errors', error.response.data.errors);
     handleApiErrors(error.response.data.errors);
   }
 
   // API messages
   if (error.response && error.response.data.messages !== undefined) {
+    logInfo('API Messages', error.response.data.messages);
     handleApiMessages(error.response.data.messages);
   }
 
   // Single API error
   if (error.response && error.response.data.error_code) {
+    logInfo('API Error', error.response.data.errors);
     handleApiErrors([
       {
         error_code: error.response.data.error_code,
@@ -109,5 +115,6 @@ export function handleRequestError(error) {
   }
 
   // Other errors
+  logAPIErrorResponse(error);
   throw error;
 }

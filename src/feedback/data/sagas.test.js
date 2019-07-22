@@ -13,7 +13,7 @@ describe('saga tests', () => {
     error = new Error();
   });
 
-  it('should throw on unexpected errors', async () => {
+  it('should add a fallback error on unexpected errors', async () => {
     try {
       await runSaga(
         {
@@ -24,7 +24,10 @@ describe('saga tests', () => {
         error,
       ).toPromise();
     } catch (e) {} // eslint-disable-line no-empty
-    expect(caughtErrors).toEqual([error]);
+
+    const lastAction = dispatched[dispatched.length - 1];
+    expect(lastAction.payload).toEqual(expect.objectContaining({ code: 'fallback-error' }));
+    expect(caughtErrors).toEqual([]);
   });
 
   it('should dispatch addMessage actions on API errors', async () => {
