@@ -113,21 +113,19 @@ export class AsyncActionType {
 }
 
 export function generateAndSubmitForm(url, params = {}) {
-  const form = document.createElement('form');
+  const form = global.document.createElement('form');
   form.method = 'POST';
   form.action = url;
 
   Object.keys(params).forEach((key) => {
-    if (Object.prototype.hasOwnProperty.call(params, key)) {
-      const hiddenField = document.createElement('input');
-      hiddenField.type = 'hidden';
-      hiddenField.name = key;
-      hiddenField.value = params[key];
+    const hiddenField = global.document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = key;
+    hiddenField.value = params[key];
 
-      form.appendChild(hiddenField);
-    }
+    form.appendChild(hiddenField);
   });
 
-  document.body.appendChild(form);
+  global.document.body.appendChild(form);
   form.submit();
 }
