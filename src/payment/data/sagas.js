@@ -49,7 +49,7 @@ export function* handleUpdateEnrollmentCodeQuantity({ payload }) {
     const result = yield call(PaymentApiService.postQuantity, newQuantity);
     yield put(updateEnrollmentCodeQuantitySuccess());
     yield put(fetchBasketSuccess(result));
-  } catch(e) {
+  } catch (e) {
     yield put(updateEnrollmentCodeQuantityFailure());
     yield call(handleErrors, e);
   }

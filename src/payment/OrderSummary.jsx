@@ -93,7 +93,7 @@ BulkOrderSummaryTable.defaultProps = {
 
 
 function DiscountOffers({ offers, discounts }) {
-  if (discounts === undefined && offers.length === 0) return null;
+  if ((discounts === undefined || discounts <= 0) && offers.length === 0) return null;
 
   return (
     <div className="summary-row">
