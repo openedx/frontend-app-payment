@@ -258,7 +258,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         Purchasing just for yourself?
       </h6>
       <span>
-        If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
+        If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner
         <a
           href="http://edx.org"
           onClick={[Function]}
@@ -276,7 +276,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
     className="row"
   >
     <h1
+<<<<<<< HEAD
       className="sr-only"
+=======
+      className="sr-only sr-only-focusable"
+>>>>>>> update snapshot
     >
       Payment Page
     </h1>
@@ -2344,7 +2348,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
         className="card-text"
       >
         <span>
-          If you attempted to make a purchase, you have not been charged. Return to your 
+          If you attempted to make a purchase, you have not been charged. Return to your
           <a
             href="http://localhost:18000"
             onClick={[Function]}
@@ -2354,7 +2358,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
               dashboard
             </span>
           </a>
-           to try again, or 
+           to try again, or
           <a
             href="http://localhost:18000/support"
             onClick={[Function]}
@@ -2414,7 +2418,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     className="row"
   >
     <h1
+<<<<<<< HEAD
       className="sr-only"
+=======
+      className="sr-only sr-only-focusable"
+>>>>>>> update snapshot
     >
       Payment Page
     </h1>
@@ -4469,7 +4477,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
     className="row"
   >
     <h1
+<<<<<<< HEAD
       className="sr-only"
+=======
+      className="sr-only sr-only-focusable"
+>>>>>>> update snapshot
     >
       Payment Page
     </h1>
