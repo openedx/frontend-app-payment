@@ -8,6 +8,8 @@ import messages from './messages';
 import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
 import LocalizedPrice from '../LocalizedPrice';
 
+const renderMuted = txt => <span className="text-muted">{txt}</span>;
+
 export class CouponForm extends Component {
   constructor(props) {
     super(props);
@@ -66,40 +68,51 @@ export class CouponForm extends Component {
 
   renderCouponMessage() {
     const {
-      intl, code, benefitValue, benefitType,
+      code, benefitValue, benefitType,
     } = this.props;
 
     if (benefitValue === null) {
       return (
-        <span className="text-muted">
-          {intl.formatMessage(messages['payment.coupon.benefit.default'], { code })}
-        </span>);
+        <FormattedMessage
+          id="payment.coupon.benefit.default"
+          defaultMessage="Coupon {code} applied"
+          description="A coupon has been applied."
+          values={{ code }}
+        >
+          {renderMuted}
+        </FormattedMessage>);
     }
 
     if (benefitType === 'Absolute') {
-      return (<FormattedMessage
-        id="payment.coupon.benefit.absolute"
-        defaultMessage="Coupon {code} applied for {amount} off"
-        description="A coupon has been applied for a fixed currency discount, like $10.  Currency symbol will already be provided."
-        values={{
-          code,
-          amount: (
-            <LocalizedPrice amount={benefitValue} />
-          ),
-        }}
-      />);
+      return (
+        <FormattedMessage
+          id="payment.coupon.benefit.absolute"
+          defaultMessage="Coupon {code} applied for {amount} off"
+          description="A coupon has been applied for a fixed currency discount, like $10.  Currency symbol will already be provided."
+          values={{
+            code,
+            amount: (
+              <LocalizedPrice amount={benefitValue} />
+            ),
+          }}
+        >
+          {renderMuted}
+        </FormattedMessage>);
     }
 
     if (benefitType === 'Percentage') {
-      return (<FormattedMessage
-        id="payment.coupon.benefit.percentage"
-        defaultMessage="Coupon {code} applied for {amount}% off"
-        description="A coupon has been applied for a percentage discount, like 10%.  Please place the % symbol as appropriate."
-        values={{
-          code,
-          amount: benefitValue,
-        }}
-      />);
+      return (
+        <FormattedMessage
+          id="payment.coupon.benefit.percentage"
+          defaultMessage="Coupon {code} applied for {amount}% off"
+          description="A coupon has been applied for a percentage discount, like 10%.  Please place the % symbol as appropriate."
+          values={{
+            code,
+            amount: benefitValue,
+          }}
+        >
+          {renderMuted}
+        </FormattedMessage>);
     }
 
     return null;
