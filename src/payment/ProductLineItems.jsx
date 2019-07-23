@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-i18n';
 
 import ProductLineItem from './ProductLineItem';
+import UpdateQuantityForm from './UpdateQuantityForm';
 import { productsSelector } from './data/selectors';
 
 function ProductLineItems({ products }) {
@@ -26,7 +27,7 @@ function ProductLineItems({ products }) {
       </p>
       {products.map(product => <ProductLineItem {...product} key={product.title} />)}
 
-      <h3>Todo: Add quantity form</h3>
+      <UpdateQuantityForm />
     </div>
   );
 }

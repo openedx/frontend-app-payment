@@ -6,6 +6,10 @@ import {
   fetchBasketBegin,
   fetchBasketSuccess,
   fetchBasketFailure,
+  UPDATE_QUANTITY,
+  updateEnrollmentCodeQuantityBegin,
+  updateEnrollmentCodeQuantitySuccess,
+  updateEnrollmentCodeQuantityFailure,
 } from './actions';
 
 // Services
@@ -38,8 +42,23 @@ export function* handleFetchBasket() {
   }
 }
 
+export function* handleUpdateEnrollmentCodeQuantity({ payload }) {
+  yield put(updateEnrollmentCodeQuantityBegin());
+  try {
+    const newQuantity = payload.quantity;
+    const result = yield call(PaymentApiService.postQuantity, newQuantity);
+    yield put(updateEnrollmentCodeQuantitySuccess());
+    yield put(fetchBasketSuccess(result));
+  } catch(e) {
+    yield put(updateEnrollmentCodeQuantityFailure());
+    yield call(handleErrors, e);
+  }
+}
+
 export default function* saga() {
   yield takeEvery(FETCH_BASKET.BASE, handleFetchBasket);
+  yield takeEvery(UPDATE_QUANTITY.BASE, handleUpdateEnrollmentCodeQuantity);
+
   yield all([
     couponSaga(),
     cybersourceSaga(),

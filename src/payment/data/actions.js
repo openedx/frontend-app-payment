@@ -21,3 +21,24 @@ export const fetchBasketSuccess = result => ({
 export const fetchBasketFailure = () => ({
   type: FETCH_BASKET.FAILURE,
 });
+
+
+export const UPDATE_QUANTITY = new AsyncActionType('PAYMENT', 'UPDATE_QUANTITY');
+
+export const updateEnrollmentCodeQuantity = quantity => ({
+  type: UPDATE_QUANTITY.BASE,
+  payload: { quantity },
+});
+
+export const updateEnrollmentCodeQuantityBegin = () => ({
+  type: UPDATE_QUANTITY.BEGIN,
+});
+
+export const updateEnrollmentCodeQuantitySuccess = result => ({
+  type: UPDATE_QUANTITY.SUCCESS,
+  payload: result,
+});
+
+export const updateEnrollmentCodeQuantityFailure = () => ({
+  type: UPDATE_QUANTITY.FAILURE,
+});

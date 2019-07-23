@@ -73,3 +73,10 @@ export async function getBasket() {
     .catch(handleRequestError);
   return transformResults(data);
 }
+
+export async function postQuantity(quantity) {
+  const { data } = await apiClient
+    .post(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
+    .catch(handleRequestError);
+  return transformResults(data);
+}
