@@ -7,6 +7,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
   <div
     className="row"
   >
+    <h1
+      className="sr-only"
+    >
+      Payment Page
+    </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
     >
@@ -40,11 +45,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           <div
             className="col-7"
           >
-            <h6
-              className="m-0"
+            <h3
+              className="course-heading m-0"
             >
               Introduction to Happiness
-            </h6>
+            </h3>
             <p
               className="m-0"
             >
@@ -276,6 +281,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
   <div
     className="row"
   >
+    <h1
+      className="sr-only"
+    >
+      Payment Page
+    </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
     >
@@ -309,11 +319,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           <div
             className="col-7"
           >
-            <h6
-              className="m-0"
+            <h3
+              className="course-heading m-0"
             >
               Introduction to Happiness
-            </h6>
+            </h3>
             <p
               className="m-0"
             >
@@ -525,6 +535,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -548,6 +559,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -575,6 +587,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -598,6 +611,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -625,6 +639,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -648,6 +663,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <select
                 className="form-control"
                 disabled={false}
+                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1921,7 +1937,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               className="col-lg-6 form-group"
             >
               <label
-                htmlFor="country"
+                htmlFor="state"
               >
                 <span>
                   State/Province
@@ -1930,6 +1946,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1953,6 +1970,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -1991,6 +2009,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="cardNumber"
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2062,6 +2081,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <input
                 className="form-control"
                 disabled={false}
+                id="securityCode"
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2106,6 +2126,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <select
                 className="form-control"
                 disabled={false}
+                id="cardExpirationMonth"
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2194,6 +2215,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <select
                 className="form-control"
                 disabled={false}
+                id="cardExpirationYear"
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2405,6 +2427,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
   <div
     className="row"
   >
+    <h1
+      className="sr-only"
+    >
+      Payment Page
+    </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
     >
@@ -2438,11 +2465,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <div
             className="col-7"
           >
-            <h6
-              className="m-0"
+            <h3
+              className="course-heading m-0"
             >
               Introduction to Happiness
-            </h6>
+            </h3>
             <p
               className="m-0"
             >
@@ -2654,6 +2681,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2677,6 +2705,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2704,6 +2733,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2727,6 +2757,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2754,6 +2785,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -2777,6 +2809,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <select
                 className="form-control"
                 disabled={false}
+                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4050,7 +4083,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <label
-                htmlFor="country"
+                htmlFor="state"
               >
                 <span>
                   State/Province
@@ -4059,6 +4092,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4082,6 +4116,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4120,6 +4155,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="cardNumber"
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4191,6 +4227,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <input
                 className="form-control"
                 disabled={false}
+                id="securityCode"
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4235,6 +4272,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <select
                 className="form-control"
                 disabled={false}
+                id="cardExpirationMonth"
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4323,6 +4361,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <select
                 className="form-control"
                 disabled={false}
+                id="cardExpirationYear"
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4451,6 +4490,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
   <div
     className="row"
   >
+    <h1
+      className="sr-only"
+    >
+      Payment Page
+    </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
     >
@@ -4484,11 +4528,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           <div
             className="col-7"
           >
-            <h6
-              className="m-0"
+            <h3
+              className="course-heading m-0"
             >
               Introduction to Happiness
-            </h6>
+            </h3>
             <p
               className="m-0"
             >
@@ -4632,6 +4676,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="firstName"
                 name="firstName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4655,6 +4700,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="lastName"
                 name="lastName"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4682,6 +4728,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="address"
                 name="address"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4705,6 +4752,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="unit"
                 name="unit"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4732,6 +4780,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="city"
                 name="city"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -4755,6 +4804,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <select
                 className="form-control"
                 disabled={false}
+                id="country"
                 name="country"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6028,7 +6078,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               className="col-lg-6 form-group"
             >
               <label
-                htmlFor="country"
+                htmlFor="state"
               >
                 <span>
                   State/Province
@@ -6037,6 +6087,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="state"
                 name="state"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6060,6 +6111,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="postalCode"
                 name="postalCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6098,6 +6150,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="cardNumber"
                 name="cardNumber"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6169,6 +6222,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <input
                 className="form-control"
                 disabled={false}
+                id="securityCode"
                 name="securityCode"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6213,6 +6267,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <select
                 className="form-control"
                 disabled={false}
+                id="cardExpirationMonth"
                 name="cardExpirationMonth"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6301,6 +6356,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               <select
                 className="form-control"
                 disabled={false}
+                id="cardExpirationYear"
                 name="cardExpirationYear"
                 onBlur={[Function]}
                 onChange={[Function]}
@@ -6438,11 +6494,11 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     >
@@ -6470,11 +6526,11 @@ exports[`<ProductLineItem /> Rendering should render the product details for aud
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     />
@@ -6498,11 +6554,11 @@ exports[`<ProductLineItem /> Rendering should render the product details for hon
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     />
@@ -6526,11 +6582,11 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     >
@@ -6558,11 +6614,11 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     >
@@ -6590,11 +6646,11 @@ exports[`<ProductLineItem /> Rendering should render the product details for unk
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     />
@@ -6618,11 +6674,11 @@ exports[`<ProductLineItem /> Rendering should render the product details for ver
   <div
     className="col-7"
   >
-    <h6
-      className="m-0"
+    <h3
+      className="course-heading m-0"
     >
       Introduction to Happiness
-    </h6>
+    </h3>
     <p
       className="m-0"
     >

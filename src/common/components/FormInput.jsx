@@ -2,15 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line object-curly-newline
-const FormInput = ({ input, type, disabled, meta: { touched, error } }) => (
+const FormInput = ({
+  input,
+  id,
+  type,
+  disabled,
+  meta: { touched, error },
+}) => (
   <React.Fragment>
-    <input {...input} type={type} className="form-control" disabled={disabled} />
+    <input
+      {...input}
+      type={type}
+      className="form-control"
+      id={id}
+      disabled={disabled}
+    />
     {touched && error && <span className="text-danger">{error}</span>}
   </React.Fragment>
 );
 
 FormInput.propTypes = {
   input: PropTypes.shape({}).isRequired,
+  id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
   meta: PropTypes.shape({

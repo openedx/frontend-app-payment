@@ -38,7 +38,7 @@ class ProductLineItem extends React.PureComponent {
           <img className="img-thumbnail" src={imageUrl} alt="" />
         </div>
         <div className="col-7">
-          <h6 className="m-0">{title}</h6>
+          <h3 className="course-heading m-0">{title}</h3>
           <p className="m-0">{this.renderCertificateType(certificateType)}</p>
         </div>
       </div>

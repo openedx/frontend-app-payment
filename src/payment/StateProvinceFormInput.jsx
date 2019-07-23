@@ -30,12 +30,12 @@ class StateProvinceFormInput extends React.Component {
     return options;
   }
 
-  renderField(options, disabled) {
+  renderField(options, disabled, id) {
     if (options.length) {
       return (
         <React.Fragment>
           <Field
-            id="state"
+            id={id}
             name="state"
             component={FormSelect}
             options={options}
@@ -56,7 +56,7 @@ class StateProvinceFormInput extends React.Component {
   renderLabel(isRequired) {
     if (isRequired) {
       return (
-        <label htmlFor="country">
+        <label htmlFor="state">
           <FormattedMessage
             id="payment.card.holder.information.state.label"
             defaultMessage="State/Province (required)"
@@ -67,7 +67,7 @@ class StateProvinceFormInput extends React.Component {
     }
 
     return (
-      <label htmlFor="country">
+      <label htmlFor="state">
         <FormattedMessage
           id="payment.card.holder.information.state.required.label"
           defaultMessage="State/Province"
@@ -78,18 +78,19 @@ class StateProvinceFormInput extends React.Component {
   }
 
   render() {
-    const { disabled } = this.props;
+    const { disabled, id } = this.props;
     const options = this.getOptions();
     return (
       <React.Fragment>
         {this.renderLabel(options.length > 0)}
-        {this.renderField(options, disabled)}
+        {this.renderField(options, disabled, id)}
       </React.Fragment>
     );
   }
 }
 
 StateProvinceFormInput.propTypes = {
+  id: PropTypes.string.isRequired,
   country: PropTypes.string,
   intl: intlShape.isRequired,
   disabled: PropTypes.bool.isRequired,

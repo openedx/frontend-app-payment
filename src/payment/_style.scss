@@ -12,6 +12,9 @@
   .section-heading {
     @extend .h5;
   }
+  .course-heading {
+    @extend .h6;
+  }
   label {
     font-weight: normal;
   }

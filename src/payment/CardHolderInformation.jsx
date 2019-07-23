@@ -161,7 +161,7 @@ export class CardHolderInformationComponent extends React.Component {
 
         <div className="row">
           <div className="col-lg-6 form-group">
-            <StateProvinceFormInput country={this.state.selectedCountry} disabled={submitting} />
+            <StateProvinceFormInput country={this.state.selectedCountry} disabled={submitting} id="state" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">

@@ -89,6 +89,7 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="row">
+        <h1 className="sr-only">Payment Page</h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
           <ProductLineItems />
           <BasketSummary />
