@@ -73,6 +73,9 @@ export class CardDetailsComponent extends React.Component {
             <Field
               id="cardNumber"
               name="cardNumber"
+              ariaLabel="card number"
+              // ariaLabelledby=cardNumberLabelID"
+              title="Card Number"
               component={FormInput}
               type="text"
               required
@@ -103,6 +106,9 @@ export class CardDetailsComponent extends React.Component {
             <Field
               id="securityCode"
               name="securityCode"
+              ariaLabel="security code"
+              // ariaLabelledby=securityCodeID"
+              title="Security Code"
               component={FormInput}
               type="password"
               required
@@ -125,6 +131,9 @@ export class CardDetailsComponent extends React.Component {
             <Field
               id="cardExpirationMonth"
               name="cardExpirationMonth"
+              ariaLabel="card expiration month"
+              // ariaLabelledby=cardExpirationMonthID"
+              title="Card Expiration Month"
               component={FormSelect}
               options={this.renderExpirationMonthOptions()}
               required
@@ -142,6 +151,9 @@ export class CardDetailsComponent extends React.Component {
             <Field
               id="cardExpirationYear"
               name="cardExpirationYear"
+              ariaLabel="card expiration year"
+              // ariaLabelledby=cardExpirationYearID"
+              title="Card Expiration Year"
               component={FormSelect}
               options={this.renderExpirationYearOptions()}
               required

@@ -1,6 +1,10 @@
 @import "./apple-pay/apple-pay";
 
 .page__payment {
+  .skip-navigation { //a11y
+    @include sr-only;
+    @include sr-only-focusable;
+  }
   .col-basket-summary {
     @include media-breakpoint-up(md) {
       border-right: solid 1px $border-color;
@@ -19,6 +23,7 @@
   .section-heading {
     @extend .h5;
   }
+<<<<<<< HEAD
   .summary-row {
     margin-bottom: map-get($spacers, 3);
   }
@@ -28,6 +33,11 @@
   .summary-row {
     margin-bottom: map-get($spacers, 3);
   }
+=======
+  .course-heading {
+    @extend .h6;
+  }
+>>>>>>> refactor: a11y changes
   label {
     font-weight: normal;
   }
