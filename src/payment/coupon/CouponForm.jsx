@@ -42,7 +42,7 @@ export class CouponForm extends Component {
     const id = 'couponField';
 
     return (
-      <form onSubmit={this.handleAddSubmit} className="mb-3 d-flex align-items-end">
+      <form onSubmit={this.handleAddSubmit} className="summary-row d-flex align-items-end">
         <ValidationFormGroup
           for={id}
           invalid={false}

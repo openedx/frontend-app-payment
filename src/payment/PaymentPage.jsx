@@ -14,7 +14,7 @@ import { paymentSelector } from './data/selectors';
 
 // Components
 import { PageLoading } from '../common';
-import BasketSummary from './BasketSummary';
+import OrderSummary from './OrderSummary';
 import OrderDetails from './order-details';
 import CurrencyDisclaimer from './CurrencyDisclaimer';
 import PaymentForm from './PaymentForm';
@@ -94,7 +94,7 @@ class PaymentPage extends React.Component {
         <h1 className="sr-only">Payment Page</h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
           <ProductLineItems />
-          <BasketSummary />
+          <OrderSummary />
           <OrderDetails />
           {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
         </div>

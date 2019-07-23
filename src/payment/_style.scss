@@ -15,6 +15,9 @@
   .course-heading {
     @extend .h6;
   }
+  .summary-row {
+    margin-bottom: map-get($spacers, 3);
+  }
   label {
     font-weight: normal;
   }

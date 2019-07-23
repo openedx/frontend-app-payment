@@ -25,6 +25,8 @@ function ProductLineItems({ products }) {
         />
       </p>
       {products.map(product => <ProductLineItem {...product} key={product.title} />)}
+
+      <h3>Todo: Add quantity form</h3>
     </div>
   );
 }
