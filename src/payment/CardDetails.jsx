@@ -74,7 +74,6 @@ export class CardDetailsComponent extends React.Component {
               id="cardNumber"
               name="cardNumber"
               ariaLabel="card number"
-              // ariaLabelledby=cardNumberLabelID"
               title="Card Number"
               component={FormInput}
               type="text"
@@ -107,7 +106,6 @@ export class CardDetailsComponent extends React.Component {
               id="securityCode"
               name="securityCode"
               ariaLabel="security code"
-              // ariaLabelledby=securityCodeID"
               title="Security Code"
               component={FormInput}
               type="password"
@@ -132,7 +130,6 @@ export class CardDetailsComponent extends React.Component {
               id="cardExpirationMonth"
               name="cardExpirationMonth"
               ariaLabel="card expiration month"
-              // ariaLabelledby=cardExpirationMonthID"
               title="Card Expiration Month"
               component={FormSelect}
               options={this.renderExpirationMonthOptions()}
@@ -152,7 +149,6 @@ export class CardDetailsComponent extends React.Component {
               id="cardExpirationYear"
               name="cardExpirationYear"
               ariaLabel="card expiration year"
-              // ariaLabelledby=cardExpirationYearID"
               title="Card Expiration Year"
               component={FormSelect}
               options={this.renderExpirationYearOptions()}
