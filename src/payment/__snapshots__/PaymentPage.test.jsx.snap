@@ -8,7 +8,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
     className="row"
   >
     <h1
-      className="sr-only sr-only-focusable"
+      className="sr-only"
     >
       Payment Page
     </h1>
@@ -282,7 +282,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
     className="row"
   >
     <h1
-      className="sr-only sr-only-focusable"
+      className="sr-only"
     >
       Payment Page
     </h1>
@@ -2428,7 +2428,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     className="row"
   >
     <h1
-      className="sr-only sr-only-focusable"
+      className="sr-only"
     >
       Payment Page
     </h1>
@@ -4491,7 +4491,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
     className="row"
   >
     <h1
-      className="sr-only sr-only-focusable"
+      className="sr-only"
     >
       Payment Page
     </h1>
