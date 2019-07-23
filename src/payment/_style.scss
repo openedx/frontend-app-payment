@@ -1,10 +1,6 @@
 @import "./apple-pay/apple-pay";
 
 .page__payment {
-  .skip-navigation { //a11y
-    @include sr-only;
-    @include sr-only-focusable;
-  }
   .col-basket-summary {
     @include media-breakpoint-up(md) {
       border-right: solid 1px $border-color;

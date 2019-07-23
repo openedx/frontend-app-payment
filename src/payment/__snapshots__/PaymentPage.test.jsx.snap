@@ -279,8 +279,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
 <<<<<<< HEAD
       className="sr-only"
 =======
-      className="sr-only sr-only-focusable"
->>>>>>> update snapshot
+      className="sr-only"
+>>>>>>> refactor: a11y
     >
       Payment Page
     </h1>
@@ -2419,10 +2419,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
   >
     <h1
 <<<<<<< HEAD
+<<<<<<< HEAD
       className="sr-only"
 =======
       className="sr-only sr-only-focusable"
 >>>>>>> update snapshot
+=======
+      className="sr-only"
+>>>>>>> refactor: a11y
     >
       Payment Page
     </h1>
@@ -4478,10 +4482,14 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
   >
     <h1
 <<<<<<< HEAD
+<<<<<<< HEAD
       className="sr-only"
 =======
       className="sr-only sr-only-focusable"
 >>>>>>> update snapshot
+=======
+      className="sr-only"
+>>>>>>> refactor: a11y
     >
       Payment Page
     </h1>
