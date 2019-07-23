@@ -46,7 +46,7 @@
     "babel-polyfill": "6.26.0",
     "card-validator": "6.2.0",
     "classnames": "2.2.6",
-    "connected-react-router": "5.0.1",
+    "connected-react-router": "6.5.2",
     "email-prop-type": "1.1.7",
     "font-awesome": "4.7.0",
     "form-urlencoded": "3.0.0",
