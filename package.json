@@ -102,7 +102,7 @@
     "enzyme-adapter-react-16": "1.14.0",
     "es-check": "5.0.0",
     "eslint-config-edx": "4.0.4",
-    "fetch-mock": "6.5.2",
+    "fetch-mock": "7.3.9",
     "file-loader": "1.1.11",
     "html-webpack-harddisk-plugin": "0.2.0",
     "html-webpack-new-relic-plugin": "1.1.0",
