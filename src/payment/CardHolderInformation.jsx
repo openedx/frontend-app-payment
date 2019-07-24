@@ -40,13 +40,13 @@ export class CardHolderInformationComponent extends React.Component {
     const { submitting, showBulkEnrollmentFields } = this.props;
     return (
       <div className="basket-section">
-        <h2 className="section-heading">
+        <h5 aria-level="2">
           <FormattedMessage
             id="payment.card.holder.information.heading"
             defaultMessage="Card Holder Information"
             description="The heading for the credit card holder information form"
           />
-        </h2>
+        </h5>
 
         <div className="row">
           <div className="col-lg-6 form-group">

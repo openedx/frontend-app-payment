@@ -53,13 +53,13 @@ export class CardDetailsComponent extends React.Component {
     const { submitting } = this.props;
     return (
       <div className="basket-section">
-        <h2 className="section-heading">
+        <h5 aria-level="2">
           <FormattedMessage
             id="payment.card.details.billing.information.heading"
             defaultMessage="Billing Information"
             description="The heading for the credit card details billing information form"
           />
-        </h2>
+        </h5>
 
         <div className="row">
           <div className="col-lg-6 form-group">

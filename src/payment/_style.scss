@@ -16,6 +16,7 @@
   .basket-section {
     @extend .mb-5;
   }
+<<<<<<< HEAD
   .section-heading {
     @extend .h5;
   }
@@ -34,6 +35,8 @@
     @extend .h6;
   }
 >>>>>>> refactor: a11y changes
+=======
+>>>>>>> style: remove a11y heading css, added aria level
   label {
     font-weight: normal;
   }

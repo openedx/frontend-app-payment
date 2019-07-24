@@ -9,13 +9,13 @@ import { PayPalButton } from './paypal';
 function PaymentMethodSelect({ intl }) {
   return (
     <div className="basket-section">
-      <h2 className="section-heading">
+      <h5 aria-level="2">
         <FormattedMessage
           id="payment.select.payment.method.heading"
           defaultMessage="Select Payment Method"
           description="The heading for the payment type selection section"
         />
-      </h2>
+      </h5>
 
       <p className="d-flex ">
         <button className="payment-method-button active">

@@ -18,13 +18,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             In Your Cart
           </span>
-        </h2>
+        </h5>
         <p>
           <span>
             Your purchase contains the following:
@@ -49,11 +49,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           <div
             className="col-7"
           >
-            <h3
-              className="course-heading m-0"
+            <h6
+              aria-level="3"
+              className="m-0"
             >
               Introduction to Happiness
-            </h3>
+            </h6>
             <p
               className="m-0"
             >
@@ -70,16 +71,22 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
+<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
+=======
+        </h5>
+        <table
+          className="w-100 mb-3"
+>>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -170,11 +177,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           Order Details
-        </h2>
+        </h5>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.
         </p>
@@ -276,11 +283,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
     className="row"
   >
     <h1
-<<<<<<< HEAD
       className="sr-only"
-=======
-      className="sr-only"
->>>>>>> refactor: a11y
     >
       Payment Page
     </h1>
@@ -290,13 +293,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             In Your Cart
           </span>
-        </h2>
+        </h5>
         <p>
           <span>
             Your purchase contains the following:
@@ -321,11 +324,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           <div
             className="col-7"
           >
-            <h3
-              className="course-heading m-0"
+            <h6
+              aria-level="3"
+              className="m-0"
             >
               Introduction to Happiness
-            </h3>
+            </h6>
             <p
               className="m-0"
             >
@@ -342,16 +346,22 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
+<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
+=======
+        </h5>
+        <table
+          className="w-100 mb-3"
+>>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -449,11 +459,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           Order Details
-        </h2>
+        </h5>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.
         </p>
@@ -465,13 +475,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             Select Payment Method
           </span>
-        </h2>
+        </h5>
         <p
           className="d-flex "
         >
@@ -502,13 +512,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         <div
           className="basket-section"
         >
-          <h2
-            className="section-heading"
+          <h5
+            aria-level="2"
           >
             <span>
               Card Holder Information
             </span>
-          </h2>
+          </h5>
           <div
             className="row"
           >
@@ -1976,13 +1986,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         <div
           className="basket-section"
         >
-          <h2
-            className="section-heading"
+          <h5
+            aria-level="2"
           >
             <span>
               Billing Information
             </span>
-          </h2>
+          </h5>
           <div
             className="row"
           >
@@ -2436,13 +2446,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             In Your Cart
           </span>
-        </h2>
+        </h5>
         <p>
           <span>
             Your purchase contains the following:
@@ -2467,11 +2477,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <div
             className="col-7"
           >
-            <h3
-              className="course-heading m-0"
+            <h6
+              aria-level="3"
+              className="m-0"
             >
               Introduction to Happiness
-            </h3>
+            </h6>
             <p
               className="m-0"
             >
@@ -2488,16 +2499,22 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
+<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
+=======
+        </h5>
+        <table
+          className="w-100 mb-3"
+>>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -2595,11 +2612,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           Order Details
-        </h2>
+        </h5>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.
         </p>
@@ -2611,13 +2628,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             Select Payment Method
           </span>
-        </h2>
+        </h5>
         <p
           className="d-flex "
         >
@@ -2648,13 +2665,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         <div
           className="basket-section"
         >
-          <h2
-            className="section-heading"
+          <h5
+            aria-level="2"
           >
             <span>
               Card Holder Information
             </span>
-          </h2>
+          </h5>
           <div
             className="row"
           >
@@ -4122,13 +4139,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         <div
           className="basket-section"
         >
-          <h2
-            className="section-heading"
+          <h5
+            aria-level="2"
           >
             <span>
               Billing Information
             </span>
-          </h2>
+          </h5>
           <div
             className="row"
           >
@@ -4499,13 +4516,13 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             In Your Cart
           </span>
-        </h2>
+        </h5>
         <p>
           <span>
             Your purchase contains the following:
@@ -4530,11 +4547,12 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           <div
             className="col-7"
           >
-            <h3
-              className="course-heading m-0"
+            <h6
+              aria-level="3"
+              className="m-0"
             >
               Introduction to Happiness
-            </h3>
+            </h6>
             <p
               className="m-0"
             >
@@ -4551,16 +4569,22 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
+<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
+=======
+        </h5>
+        <table
+          className="w-100 mb-3"
+>>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -4589,11 +4613,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           Order Details
-        </h2>
+        </h5>
         <p>
           After you complete your order you will be automatically enrolled in the verified track of the course.
         </p>
@@ -4605,13 +4629,13 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
       <div
         className="basket-section"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
         >
           <span>
             Select Payment Method
           </span>
-        </h2>
+        </h5>
         <p
           className="d-flex "
         >
@@ -4642,13 +4666,13 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         <div
           className="basket-section"
         >
-          <h2
-            className="section-heading"
+          <h5
+            aria-level="2"
           >
             <span>
               Card Holder Information
             </span>
-          </h2>
+          </h5>
           <div
             className="row"
           >
@@ -6116,13 +6140,13 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         <div
           className="basket-section"
         >
-          <h2
-            className="section-heading"
+          <h5
+            aria-level="2"
           >
             <span>
               Billing Information
             </span>
-          </h2>
+          </h5>
           <div
             className="row"
           >
@@ -6487,11 +6511,12 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     >
@@ -6523,11 +6548,12 @@ exports[`<ProductLineItem /> Rendering should render the product details for aud
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     />
@@ -6555,11 +6581,12 @@ exports[`<ProductLineItem /> Rendering should render the product details for hon
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     />
@@ -6587,11 +6614,12 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     >
@@ -6623,11 +6651,12 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     >
@@ -6659,11 +6688,12 @@ exports[`<ProductLineItem /> Rendering should render the product details for unk
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     />
@@ -6691,11 +6721,12 @@ exports[`<ProductLineItem /> Rendering should render the product details for ver
   <div
     className="col-7"
   >
-    <h3
-      className="course-heading m-0"
+    <h6
+      aria-level="3"
+      className="m-0"
     >
       Introduction to Happiness
-    </h3>
+    </h6>
     <p
       className="m-0"
     >
