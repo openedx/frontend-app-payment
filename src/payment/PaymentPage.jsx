@@ -16,6 +16,7 @@ import { paymentSelector } from './data/selectors';
 import { PageLoading } from '../common';
 import BasketSummary from './BasketSummary';
 import OrderDetails from './order-details';
+import CurrencyDisclaimer from './CurrencyDisclaimer';
 import PaymentForm from './PaymentForm';
 import PlaceOrderButton from './PlaceOrderButton';
 import PaymentMethodSelect from './PaymentMethodSelect';
@@ -84,6 +85,7 @@ class PaymentPage extends React.Component {
 
   renderBasket() {
     const {
+      isCurrencyConverted,
       isFreeBasket,
     } = this.props;
 
@@ -94,6 +96,7 @@ class PaymentPage extends React.Component {
           <ProductLineItems />
           <BasketSummary />
           <OrderDetails />
+          {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
         </div>
         <div className="col-md-7 pl-md-5">
           {isFreeBasket ? <PlaceOrderButton /> : (
@@ -141,6 +144,7 @@ PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   isFreeBasket: PropTypes.bool,
   isEmpty: PropTypes.bool,
+  isCurrencyConverted: PropTypes.bool,
   loaded: PropTypes.bool,
   loading: PropTypes.bool,
   dashboardURL: PropTypes.string.isRequired,
@@ -153,6 +157,7 @@ PaymentPage.defaultProps = {
   loaded: false,
   loading: false,
   isEmpty: false,
+  isCurrencyConverted: false,
 };
 
 export default connect(

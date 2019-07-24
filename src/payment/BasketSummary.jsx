@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedNumber, FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage } from '@edx/frontend-i18n';
 
 import { basketSelector } from './data/selectors';
 import { CouponForm } from './coupon';
-
+import LocalizedPrice from './LocalizedPrice';
 
 function SummaryTable({ summaryDiscounts, summaryPrice }) {
+  const showDiscounts = typeof summaryDiscounts === 'number' && summaryDiscounts > 0;
+
   return (
     <table className="w-100 mb-3">
       <tbody>
@@ -21,18 +23,11 @@ function SummaryTable({ summaryDiscounts, summaryPrice }) {
           </th>
 
           <td className="text-right">
-            {summaryPrice !== undefined ? (
-              <FormattedNumber
-                value={summaryPrice}
-                style="currency" // eslint-disable-line react/style-prop-object
-                currency="USD"
-              />
-            ) : null}
+            <LocalizedPrice amount={summaryPrice} />
           </td>
         </tr>
 
-        {summaryDiscounts !== undefined && summaryDiscounts !== null &&
-        summaryDiscounts > 0 ? (
+        {showDiscounts ? (
           <tr>
             <th className="font-weight-normal" scope="row">
               <FormattedMessage
@@ -43,11 +38,7 @@ function SummaryTable({ summaryDiscounts, summaryPrice }) {
             </th>
 
             <td className="text-right">
-              <FormattedNumber
-                value={summaryDiscounts * -1}
-                style="currency" // eslint-disable-line react/style-prop-object
-                currency="USD"
-              />
+              <LocalizedPrice amount={summaryDiscounts * -1} />
             </td>
           </tr>
         ) : null}
@@ -110,13 +101,7 @@ function TotalTable({ orderTotal }) {
           </th>
 
           <td className="text-right">
-            {orderTotal !== undefined ? (
-              <FormattedNumber
-                value={orderTotal}
-                style="currency" // eslint-disable-line react/style-prop-object
-                currency="USD"
-              />
-            ) : null}
+            <LocalizedPrice amount={orderTotal} />
           </td>
         </tr>
       </tbody>

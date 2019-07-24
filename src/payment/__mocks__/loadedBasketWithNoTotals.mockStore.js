@@ -72,6 +72,7 @@ module.exports = {
       loaded: false,
       loading: false,
     },
+    currency: {},
   },
   router: {
     location: {

@@ -129,6 +129,7 @@ module.exports = Merge.smart(commonConfig, {
       USER_INFO_COOKIE_NAME: null,
       CSRF_COOKIE_NAME: 'csrftoken',
       LANGUAGE_PREFERENCE_COOKIE_NAME: null,
+      CURRENCY_COOKIE_NAME: 'edx-price-l10n',
       SITE_NAME: null,
       MARKETING_SITE_BASE_URL: null,
       ENTERPRISE_MARKETING_URL: null,
