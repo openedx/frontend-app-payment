@@ -51,7 +51,7 @@ export function* handleSubmitPaymentCybersource(action) {
     generateAndSubmitForm(configuration.CYBERSOURCE_URL, cybersourcePaymentParams);
   } catch (e) {
     yield put(submitPaymentCybersourceFailure());
-    yield call(handleErrors, e);
+    yield call(handleErrors, e, true);
   }
 }
 

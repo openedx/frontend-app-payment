@@ -22,7 +22,7 @@ export function* handleSubmitPaymentPayPal() {
     generateAndSubmitForm(checkout.payment_page_url);
   } catch (e) {
     yield put(submitPaymentPayPalFailure());
-    yield call(handleErrors, e);
+    yield call(handleErrors, e, true);
   }
 }
 

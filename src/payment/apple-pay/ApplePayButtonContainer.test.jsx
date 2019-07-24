@@ -7,7 +7,8 @@ import configureMockStore from 'redux-mock-store';
 
 import { configuration } from '../../environment';
 import messages from '../../i18n';
-import { MESSAGE_TYPES } from '../../feedback';
+import appleMessages from './ApplePay.messages';
+import { addMessage, clearMessages, MESSAGE_TYPES } from '../../feedback';
 import ApplePayButtonContainer from './ApplePayButtonContainer';
 
 const mockStore = configureMockStore();
@@ -29,7 +30,6 @@ describe('<ApplePayButtonContainer />', () => {
           totalAmount={10}
           lang="en"
           title="Pay with Apple Pay"
-          addMessage="hi"
         />
       </Provider>
     </IntlProvider>
@@ -42,15 +42,19 @@ describe('<ApplePayButtonContainer />', () => {
 
   it('should add a message onMerchantValidationFailure', () => {
     applePayButton.prop('onMerchantValidationFailure')();
-    const action = store.getActions()[0];
-    expect(action.payload.code).toEqual('apple-pay-failure');
-    expect(action.payload.messageType).toEqual(MESSAGE_TYPES.WARNING);
+    const failureMessage = appleMessages['payment.apple.pay.merchant.validation.failure'].defaultMessage;
+    expect(store.getActions()).toEqual([
+      clearMessages(),
+      expect.objectContaining(addMessage('apple-pay-failure', failureMessage, null, MESSAGE_TYPES.WARNING)),
+    ]);
   });
 
   it('should add a message onPaymentAuthorizationFailure', () => {
     applePayButton.prop('onPaymentAuthorizationFailure')();
-    const action = store.getActions()[0];
-    expect(action.payload.code).toEqual('apple-pay-failure');
-    expect(action.payload.messageType).toEqual(MESSAGE_TYPES.ERROR);
+    const failureMessage = appleMessages['payment.apple.pay.authorization.failure'].defaultMessage;
+    expect(store.getActions()).toEqual([
+      clearMessages(),
+      expect.objectContaining(addMessage('apple-pay-failure', failureMessage, null, MESSAGE_TYPES.ERROR)),
+    ]);
   });
 });

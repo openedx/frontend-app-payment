@@ -37,7 +37,7 @@ export class CardHolderInformationComponent extends React.Component {
   }
 
   render() {
-    const { submitting } = this.props;
+    const { submitting, showBulkEnrollmentFields } = this.props;
     return (
       <div className="basket-section">
         <h2 className="section-heading">
@@ -84,6 +84,28 @@ export class CardHolderInformationComponent extends React.Component {
             />
           </div>
         </div>
+
+        { showBulkEnrollmentFields ? (
+          <div className="row">
+            <div className="col-lg-6 form-group">
+              <label htmlFor="organization">
+                <FormattedMessage
+                  id="payment.card.holder.information.organization.label"
+                  defaultMessage="Organization (required)"
+                  description="The label for the required organization field"
+                />
+              </label>
+              <Field
+                id="organization"
+                name="organization"
+                component={FormInput}
+                type="text"
+                required
+                disabled={submitting}
+              />
+            </div>
+          </div>
+        ) : null}
 
         <div className="row">
           <div className="col-lg-6 form-group">
@@ -193,11 +215,13 @@ CardHolderInformationComponent.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })),
   submitting: PropTypes.bool,
+  showBulkEnrollmentFields: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   countryOptions: [],
   submitting: false,
+  showBulkEnrollmentFields: false,
 };
 
 export default connect(

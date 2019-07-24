@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import Cookies from 'universal-cookie';
 
-import { FETCH_BASKET } from './actions';
+import { FETCH_BASKET, UPDATE_QUANTITY } from './actions';
 import { reducer as coupon } from '../coupon';
 import { reducer as cybersource } from '../cybersource';
 import { reducer as paypal } from '../paypal';
@@ -33,6 +33,22 @@ const basket = (state = basketInitialState, action = null) => {
         ...state,
         loading: false,
         loaded: false,
+      };
+
+    case UPDATE_QUANTITY.BEGIN:
+      return {
+        ...state,
+        updatingQuantity: true,
+      };
+    case UPDATE_QUANTITY.SUCCESS:
+      return {
+        ...state,
+        updatingQuantity: false,
+      };
+    case UPDATE_QUANTITY.FAILURE:
+      return {
+        ...state,
+        updatingQuantity: false,
       };
     default:
       return state;

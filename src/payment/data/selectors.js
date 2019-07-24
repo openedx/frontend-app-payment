@@ -17,7 +17,7 @@ export const localizedCurrencySelector = (state) => {
 
 export const basketSelector = state => ({ ...state[storeName].basket });
 
-export const productsSelector = state => ({ ...state[storeName].basket });
+export const cartSelector = state => ({ ...state[storeName].basket });
 
 export const currencyDisclaimerSelector = state => ({
   actualAmount: state[storeName].basket.orderTotal,
@@ -41,5 +41,14 @@ export const countryOptionsSelector = createSelector(
   localeSelector,
   locale => ({
     countryOptions: getCountryList(locale).map(({ code, name }) => ({ value: code, label: name })),
+  }),
+);
+
+export const cardHolderInformationSelector = createSelector(
+  basketSelector,
+  countryOptionsSelector,
+  (basket, countryOptions) => ({
+    ...countryOptions,
+    orderType: basket.orderType,
   }),
 );

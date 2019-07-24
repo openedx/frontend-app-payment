@@ -5,6 +5,7 @@ import { configureApiService as configureCybersourceApiService } from '../cybers
 import { configureApiService as configurePayPalApiService } from '../paypal';
 import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
 import { camelCaseObject } from '../../common/utils';
+import { ORDER_TYPES } from './constants';
 
 
 let config = {
@@ -37,9 +38,23 @@ export function configureApiService(newConfig, newApiClient) {
   });
 }
 
+function getOrderType(productType) {
+  switch (productType) {
+    case 'Enrollment Code':
+      return ORDER_TYPES.BULK_ENROLLMENT;
+    case 'Course Entitlement':
+      return ORDER_TYPES.ENTITLEMENT;
+    case 'Seat':
+    default:
+      return ORDER_TYPES.SEAT;
+  }
+}
+
 export function transformResults(data) {
   const results = camelCaseObject(data);
 
+  const lastProduct = results.products && results.products[results.products.length - 1];
+  results.orderType = getOrderType(lastProduct && lastProduct.productType);
   results.orderTotal = Number.parseInt(results.orderTotal, 10);
   results.summaryDiscounts = results.summaryDiscounts !== null ?
     Number.parseInt(results.summaryDiscounts, 10) : null;
@@ -55,6 +70,13 @@ export function transformResults(data) {
 export async function getBasket() {
   const { data } = await apiClient
     .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`)
+    .catch(handleRequestError);
+  return transformResults(data);
+}
+
+export async function postQuantity(quantity) {
+  const { data } = await apiClient
+    .post(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
     .catch(handleRequestError);
   return transformResults(data);
 }

@@ -46,7 +46,7 @@ exports[`CouponForm should render an unexpected coupon 1`] = `
 
 exports[`CouponForm should render the add coupon form 1`] = `
 <form
-  className="mb-3 d-flex align-items-end"
+  className="summary-row d-flex align-items-end"
   onSubmit={[Function]}
 >
   <div
