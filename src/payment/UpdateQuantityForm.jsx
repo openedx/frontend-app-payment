@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from '@edx/frontend-i18n';
 import { StatefulButton, Input } from '@edx/paragon';
 
 import { updateEnrollmentCodeQuantity } from './data/actions';
@@ -21,10 +22,15 @@ function UpdateQuantityForm(props) {
     >
       <div className="form-group mr-2">
         <label htmlFor={id}>
-          Quantity!!!
+          <FormattedMessage
+            id="payment.update.quantity.label"
+            defaultMessage="Quantity"
+            description="Label for updating a quantity of enrollment codes to purchase"
+          />
         </label>
         <div className="position-relative">
           <Input
+            className="form-control-sm"
             name={id}
             id={id}
             max="100"
@@ -41,7 +47,11 @@ function UpdateQuantityForm(props) {
               left: 0,
             }}
           >
-            Max: 100
+            <FormattedMessage
+              id="payment.update.quantity.field.help.text"
+              defaultMessage="Max: 100"
+              description="Help text for updating a quantity of enrollment codes to purchase. Maximum 100 codes."
+            />
           </small>
         </div>
       </div>
@@ -49,10 +59,15 @@ function UpdateQuantityForm(props) {
         type="submit"
         state={props.updatingQuantity ? 'pending' : 'default'}
         labels={{
-          default: 'Update!',
-          pending: 'Update!',
+          default: (
+            <FormattedMessage
+              id="payment.update.quantity.submit.button"
+              defaultMessage="Update"
+              description="Button for updating a quantity of enrollment codes to purchase."
+            />
+          ),
         }}
-        className="btn-primary"
+        className="btn-primary btn-sm"
       />
     </form>
   );

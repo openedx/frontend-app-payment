@@ -1,6 +1,6 @@
 import without from 'lodash.without';
 
-import { ADD_MESSAGE, REMOVE_MESSAGE } from './actions';
+import { ADD_MESSAGE, REMOVE_MESSAGE, CLEAR_MESSAGES } from './actions';
 
 export const storeName = 'feedback';
 
@@ -49,6 +49,8 @@ const reducer = (state = defaultState, action = null) => {
         return addMessage(state, action);
       case REMOVE_MESSAGE:
         return removeMessage(state, action);
+      case CLEAR_MESSAGES:
+        return defaultState;
       default:
     }
   }

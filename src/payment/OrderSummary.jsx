@@ -40,22 +40,22 @@ function BulkOrderSummaryTable({ price, quantity, subtotal }) {
     <div className="summary-row">
       <table className="w-100">
         <thead>
-          <tr className="font-weight-normal">
-            <th>
+          <tr>
+            <th className="font-weight-normal">
               <FormattedMessage
                 id="payment.bulk.summary.table.label.price"
                 defaultMessage="Price"
                 description="Label for price on bulk order summary table"
               />
             </th>
-            <th>
+            <th className="font-weight-normal">
               <FormattedMessage
                 id="payment.bulk.summary.table.label.quantity"
                 defaultMessage="Quantity"
                 description="Label for quantity on bulk order summary table"
               />
             </th>
-            <th className="text-right">
+            <th className="font-weight-normal text-right">
               <FormattedMessage
                 id="payment.bulk.summary.table.label.subtotal"
                 defaultMessage="Subtotal"
