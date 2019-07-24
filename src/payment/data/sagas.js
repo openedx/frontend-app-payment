@@ -20,24 +20,32 @@ import { saga as cybersourceSaga } from '../cybersource';
 import { saga as payPalSaga } from '../paypal';
 import { handleErrors, handleMessages } from '../../feedback';
 
+export function* handleBasketResult(basketResult) {
+  yield put(fetchBasketSuccess(basketResult));
+  if (!basketResult.coupons || basketResult.coupons.length === 0) {
+    yield put(addCouponSuccess(null, null, null));
+  } else {
+    yield put(addCouponSuccess(
+      basketResult.coupons[0].id,
+      basketResult.coupons[0].code,
+      basketResult.coupons[0].benefitValue,
+    ));
+  }
+}
+
 export function* handleFetchBasket() {
   yield put(fetchBasketBegin());
   yield put(addCouponBegin());
   try {
     const result = yield call(PaymentApiService.getBasket);
-    yield put(fetchBasketSuccess(result));
+    yield call(handleBasketResult, result);
     yield call(handleMessages, result.messages, true);
-    if (result.coupons.length === 0) {
-      yield put(addCouponSuccess(null, null, null));
-    } else {
-      yield put(addCouponSuccess(
-        result.coupons[0].id,
-        result.coupons[0].code,
-        result.coupons[0].benefitValue,
-      ));
-    }
   } catch (e) {
-    yield put(fetchBasketFailure());
+    if (e.basketData) {
+      yield call(handleBasketResult, e.basketData);
+    } else {
+      yield put(fetchBasketFailure());
+    }
     yield call(handleErrors, e, true);
   }
 }
@@ -48,8 +56,12 @@ export function* handleUpdateEnrollmentCodeQuantity({ payload }) {
     const newQuantity = payload.quantity;
     const result = yield call(PaymentApiService.postQuantity, newQuantity);
     yield put(updateEnrollmentCodeQuantitySuccess());
-    yield put(fetchBasketSuccess(result));
+    yield call(handleBasketResult, result);
+    yield call(handleMessages, result.messages, true);
   } catch (e) {
+    if (e.basketData) {
+      yield call(handleBasketResult, e.basketData);
+    }
     yield put(updateEnrollmentCodeQuantityFailure());
     yield call(handleErrors, e, true);
   }

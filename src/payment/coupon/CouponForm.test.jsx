@@ -101,6 +101,9 @@ describe('CouponForm', () => {
     const wrapper = mount((
       <IntlProvider locale="en">
         <IntlCouponForm
+          addCoupon={jest.fn()}
+          removeCoupon={jest.fn()}
+          updateCouponDraft={jest.fn()}
           onSubmit={() => {}}
           code="DEMO25"
         />

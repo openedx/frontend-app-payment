@@ -123,6 +123,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
+        addCouponSuccess(12345, 'DEMO25', '25%'),
         clearMessages(),
         addMessage(
           null,
@@ -130,7 +131,6 @@ describe('saga tests', () => {
           undefined,
           MESSAGE_TYPES.INFO,
         ),
-        addCouponSuccess(12345, 'DEMO25', '25%'),
       ]);
       expect(apiClientPost).toHaveBeenCalledWith(
         'http://localhost/bff/payment/v0/vouchers/',
@@ -191,6 +191,8 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         addCouponBegin(),
+        fetchBasketSuccess(transformResults(responses.errorResponse.response.data)),
+        addCouponSuccess(null, null, null),
         addCouponFailure(),
         clearMessages(),
         addMessage('uhoh', null, undefined, MESSAGE_TYPES.ERROR),
@@ -247,13 +249,7 @@ describe('saga tests', () => {
       successResponse: {
         data: {
           show_coupon_form: true,
-          coupons: [
-            {
-              id: 12345,
-              code: 'DEMO25',
-              benefit_value: '25%',
-            },
-          ],
+          coupons: [],
           summary_price: 161,
           order_total: 149,
           summary_discounts: 12,
@@ -304,6 +300,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         removeCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
+        addCouponSuccess(null, null, null),
         removeCouponSuccess(transformResults(responses.successResponse.data)),
       ]);
 
@@ -334,6 +331,8 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         removeCouponBegin(),
+        fetchBasketSuccess(transformResults(responses.errorResponse.response.data)),
+        addCouponSuccess(null, null, null),
         removeCouponFailure(),
         clearMessages(),
         addMessage('uhoh', null, undefined, MESSAGE_TYPES.ERROR),
