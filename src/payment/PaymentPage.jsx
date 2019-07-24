@@ -20,7 +20,7 @@ import CurrencyDisclaimer from './CurrencyDisclaimer';
 import PaymentForm from './PaymentForm';
 import PlaceOrderButton from './PlaceOrderButton';
 import PaymentMethodSelect from './PaymentMethodSelect';
-import ProductLineItems from './ProductLineItems';
+import CartSummary from './CartSummary';
 import AlertList from '../feedback/AlertList';
 import { SingleEnrollmentCodeWarning } from './AlertCodeMessages';
 
@@ -93,7 +93,7 @@ class PaymentPage extends React.Component {
       <div className="row">
         <h1 className="sr-only">Payment Page</h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
-          <ProductLineItems />
+          <CartSummary />
           <OrderSummary />
           <OrderDetails />
           {isCurrencyConverted ? <CurrencyDisclaimer /> : null}

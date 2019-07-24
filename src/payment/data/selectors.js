@@ -17,7 +17,7 @@ export const localizedCurrencySelector = (state) => {
 
 export const basketSelector = state => ({ ...state[storeName].basket });
 
-export const productsSelector = state => ({ ...state[storeName].basket });
+export const cartSelector = state => ({ ...state[storeName].basket });
 
 export const currencyDisclaimerSelector = state => ({
   actualAmount: state[storeName].basket.orderTotal,

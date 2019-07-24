@@ -36,11 +36,15 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           <div
             className="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail"
-              src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-            />
+            <div
+              className="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                className="img-thumbnail product-thumbnail"
+                src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+              />
+            </div>
           </div>
           <div
             className="col-7"
@@ -74,48 +78,44 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
             Summary
           </span>
         </h2>
-        <table
-          className="w-100 mb-3"
+        <div
+          className="summary-row d-flex"
         >
-          <tbody>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Price
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  $161.00
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Discounts applied
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  -$12.00
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Price
+            </span>
+          </span>
+          <span>
+            <span>
+              $161.00
+            </span>
+          </span>
+        </div>
+        <div
+          className="summary-row"
+        >
+          <p
+            className="d-flex m-0"
+          >
+            <span
+              className="flex-grow-1"
+            >
+              <span>
+                Discounts applied
+              </span>
+            </span>
+            <span>
+              <span>
+                -$12.00
+              </span>
+            </span>
+          </p>
+        </div>
         <form
-          className="mb-3 d-flex align-items-end"
+          className="summary-row d-flex align-items-end"
           onSubmit={[Function]}
         >
           <div
@@ -148,30 +148,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
             Apply
           </button>
         </form>
-        <table
-          className="w-100"
+        <div
+          className="summary-row font-weight-bold d-flex"
         >
-          <tbody>
-            <tr
-              className="font-weight-bold"
-            >
-              <th
-                scope="row"
-              >
-                <span>
-                  TOTAL
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  $149.00
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              TOTAL
+            </span>
+          </span>
+          <span
+            className="text-right"
+          >
+            <span>
+              $149.00
+            </span>
+          </span>
+        </div>
       </div>
       <div
         className="basket-section"
@@ -310,11 +304,15 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           <div
             className="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail"
-              src="https://stage-edxapp.edx-cdn.org/asset-v1:edx+H100+2018+type@asset+block@images_course_image.jpg"
-            />
+            <div
+              className="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                className="img-thumbnail product-thumbnail"
+                src="https://stage-edxapp.edx-cdn.org/asset-v1:edx+H100+2018+type@asset+block@images_course_image.jpg"
+              />
+            </div>
           </div>
           <div
             className="col-7"
@@ -348,57 +346,51 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             Summary
           </span>
         </h2>
-        <table
-          className="w-100 mb-3"
+        <div
+          className="summary-row d-flex"
         >
-          <tbody>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Price
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  $100.00
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Discounts applied
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  -$50.00
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ul
-          className="text-muted list-unstyled"
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Price
+            </span>
+          </span>
+          <span>
+            <span>
+              $100.00
+            </span>
+          </span>
+        </div>
+        <div
+          className="summary-row"
         >
-          <li>
+          <p
+            className="d-flex m-0"
+          >
+            <span
+              className="flex-grow-1"
+            >
+              <span>
+                Discounts applied
+              </span>
+            </span>
+            <span>
+              <span>
+                -$50.00
+              </span>
+            </span>
+          </p>
+          <p
+            className="m-0 text-muted"
+          >
             <span>
               50% discount provided by Pied Piper.
             </span>
-          </li>
-        </ul>
+          </p>
+        </div>
         <form
-          className="mb-3 d-flex align-items-end"
+          className="summary-row d-flex align-items-end"
           onSubmit={[Function]}
         >
           <div
@@ -431,30 +423,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             Apply
           </button>
         </form>
-        <table
-          className="w-100"
+        <div
+          className="summary-row font-weight-bold d-flex"
         >
-          <tbody>
-            <tr
-              className="font-weight-bold"
-            >
-              <th
-                scope="row"
-              >
-                <span>
-                  TOTAL
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  $50.00
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              TOTAL
+            </span>
+          </span>
+          <span
+            className="text-right"
+          >
+            <span>
+              $50.00
+            </span>
+          </span>
+        </div>
       </div>
       <div
         className="basket-section"
@@ -2456,11 +2442,15 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <div
             className="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail"
-              src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-            />
+            <div
+              className="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                className="img-thumbnail product-thumbnail"
+                src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+              />
+            </div>
           </div>
           <div
             className="col-7"
@@ -2494,57 +2484,51 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             Summary
           </span>
         </h2>
-        <table
-          className="w-100 mb-3"
+        <div
+          className="summary-row d-flex"
         >
-          <tbody>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Price
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  $161.00
-                </span>
-              </td>
-            </tr>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Discounts applied
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  -$12.00
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ul
-          className="text-muted list-unstyled"
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Price
+            </span>
+          </span>
+          <span>
+            <span>
+              $161.00
+            </span>
+          </span>
+        </div>
+        <div
+          className="summary-row"
         >
-          <li>
+          <p
+            className="d-flex m-0"
+          >
+            <span
+              className="flex-grow-1"
+            >
+              <span>
+                Discounts applied
+              </span>
+            </span>
+            <span>
+              <span>
+                -$12.00
+              </span>
+            </span>
+          </p>
+          <p
+            className="m-0 text-muted"
+          >
             <span>
               50% discount provided by Pied Piper.
             </span>
-          </li>
-        </ul>
+          </p>
+        </div>
         <form
-          className="mb-3 d-flex align-items-end"
+          className="summary-row d-flex align-items-end"
           onSubmit={[Function]}
         >
           <div
@@ -2577,30 +2561,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             Apply
           </button>
         </form>
-        <table
-          className="w-100"
+        <div
+          className="summary-row font-weight-bold d-flex"
         >
-          <tbody>
-            <tr
-              className="font-weight-bold"
-            >
-              <th
-                scope="row"
-              >
-                <span>
-                  TOTAL
-                </span>
-              </th>
-              <td
-                className="text-right"
-              >
-                <span>
-                  $149.00
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              TOTAL
+            </span>
+          </span>
+          <span
+            className="text-right"
+          >
+            <span>
+              $149.00
+            </span>
+          </span>
+        </div>
       </div>
       <div
         className="basket-section"
@@ -4519,11 +4497,15 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           <div
             className="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail"
-              src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-            />
+            <div
+              className="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                className="img-thumbnail product-thumbnail"
+                src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+              />
+            </div>
           </div>
           <div
             className="col-7"
@@ -4557,45 +4539,20 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
             Summary
           </span>
         </h2>
-        <table
-          className="w-100 mb-3"
+        <div
+          className="summary-row font-weight-bold d-flex"
         >
-          <tbody>
-            <tr>
-              <th
-                className="font-weight-normal"
-                scope="row"
-              >
-                <span>
-                  Price
-                </span>
-              </th>
-              <td
-                className="text-right"
-              />
-            </tr>
-          </tbody>
-        </table>
-        <table
-          className="w-100"
-        >
-          <tbody>
-            <tr
-              className="font-weight-bold"
-            >
-              <th
-                scope="row"
-              >
-                <span>
-                  TOTAL
-                </span>
-              </th>
-              <td
-                className="text-right"
-              />
-            </tr>
-          </tbody>
-        </table>
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              TOTAL
+            </span>
+          </span>
+          <span
+            className="text-right"
+          />
+        </div>
       </div>
       <div
         className="basket-section"
@@ -6485,11 +6442,15 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
@@ -6517,11 +6478,15 @@ exports[`<ProductLineItem /> Rendering should render the product details for aud
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
@@ -6545,11 +6510,15 @@ exports[`<ProductLineItem /> Rendering should render the product details for hon
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
@@ -6573,11 +6542,15 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
@@ -6605,11 +6578,15 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
@@ -6637,11 +6614,15 @@ exports[`<ProductLineItem /> Rendering should render the product details for unk
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
@@ -6665,11 +6646,15 @@ exports[`<ProductLineItem /> Rendering should render the product details for ver
   <div
     className="col-5"
   >
-    <img
-      alt=""
-      className="img-thumbnail"
-      src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-    />
+    <div
+      className="embed-responsive embed-responsive-16by9"
+    >
+      <img
+        alt=""
+        className="img-thumbnail product-thumbnail"
+        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+      />
+    </div>
   </div>
   <div
     className="col-7"
