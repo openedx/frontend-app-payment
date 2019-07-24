@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Input, ValidationFormGroup } from '@edx/paragon';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 
 import messages from './messages';
 import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
@@ -27,6 +28,16 @@ export class CouponForm extends Component {
   handleAddSubmit(event) {
     event.preventDefault();
     this.props.addCoupon(this.props.code);
+  }
+
+  handleSubmitButtonClick() {
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.voucher_applied',
+      {
+        type: 'click',
+        category: 'voucher-application',
+      },
+    );
   }
 
   handleRemoveSubmit(event) {
@@ -59,7 +70,7 @@ export class CouponForm extends Component {
             onChange={this.handleChange}
           />
         </ValidationFormGroup>
-        <Button disabled={loading} className="btn-primary" type="submit">
+        <Button disabled={loading} className="btn-primary" type="submit" onClick={this.handleSubmitButtonClick}>
           {intl.formatMessage(messages['payment.coupon.submit'])}
         </Button>
       </form>
