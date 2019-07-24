@@ -3,9 +3,10 @@ import { put } from 'redux-saga/effects';
 import { addMessage, clearMessages } from './actions';
 import { MESSAGE_TYPES } from './constants';
 
-export function* handleErrors(e) {
-  // Clear existing messages
-  yield put(clearMessages());
+export function* handleErrors(e, clearExistingMessages) {
+  if (clearExistingMessages) {
+    yield put(clearMessages());
+  }
 
   // If this doesn't contain anything we understand, add a fallback error message
   if (e.errors === undefined && e.fieldErrors === undefined && e.messages === undefined) {
@@ -37,10 +38,14 @@ export function* handleErrors(e) {
   }
 }
 
-export function* handleMessages(messages) {
+export function* handleMessages(messages, clearExistingMessages) {
   // If this doesn't contain anything we understand, bail.
   if (!Array.isArray(messages)) {
     return null;
+  }
+
+  if (clearExistingMessages) {
+    yield put(clearMessages());
   }
 
   for (let i = 0; i < messages.length; i++) { // eslint-disable-line no-plusplus

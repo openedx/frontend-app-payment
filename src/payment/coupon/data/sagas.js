@@ -19,7 +19,7 @@ export function* handleAddCoupon(action) {
   try {
     const result = yield call(postCoupon, action.payload.code);
     yield put(fetchBasketSuccess(result));
-    yield call(handleMessages, result.messages);
+    yield call(handleMessages, result.messages, true);
     if (result.coupons.length === 0) {
       yield put(addCouponSuccess(null, null, null));
     } else {
@@ -31,7 +31,7 @@ export function* handleAddCoupon(action) {
     }
   } catch (e) {
     yield put(addCouponFailure());
-    yield call(handleErrors, e);
+    yield call(handleErrors, e, true);
   }
 }
 
@@ -41,10 +41,10 @@ export function* handleRemoveCoupon(action) {
     const result = yield call(deleteCoupon, action.payload.id);
     yield put(fetchBasketSuccess(result));
     yield put(removeCouponSuccess(result));
-    yield call(handleMessages, result.messages);
+    yield call(handleMessages, result.messages, true);
   } catch (e) {
     yield put(removeCouponFailure());
-    yield call(handleErrors, e);
+    yield call(handleErrors, e, true);
   }
 }
 

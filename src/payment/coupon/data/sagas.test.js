@@ -123,6 +123,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         fetchBasketSuccess(transformResults(responses.successResponse.data)),
+        clearMessages(),
         addMessage(
           null,
           'Hey, your coupon was added.',
