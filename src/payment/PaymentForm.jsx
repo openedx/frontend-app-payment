@@ -13,6 +13,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './data/countryStatesMap';
 import messages from './PaymentForm.messages';
+import { ORDER_TYPES } from './data/constants';
 
 const CardValidator = require('card-validator');
 
@@ -37,6 +38,7 @@ export class PaymentFormComponent extends React.Component {
       securityCode,
       cardExpirationMonth,
       cardExpirationYear,
+      organization,
     } = values;
 
     const errors = {
@@ -64,6 +66,7 @@ export class PaymentFormComponent extends React.Component {
       country,
       state,
       postalCode,
+      organization,
     }, {
       cardNumber,
       cardTypeId: getCardTypeId(cardNumber),
@@ -85,6 +88,7 @@ export class PaymentFormComponent extends React.Component {
       securityCode,
       cardExpirationMonth,
       cardExpirationYear,
+      organization,
     } = fieldValues;
 
     const requiredFields = {
@@ -100,6 +104,10 @@ export class PaymentFormComponent extends React.Component {
     };
     if (getStates(country)) {
       requiredFields.state = state;
+    }
+
+    if (this.props.orderType === ORDER_TYPES.BULK_ENROLLMENT) {
+      requiredFields.organization = organization;
     }
 
     return requiredFields;
@@ -176,6 +184,7 @@ export class PaymentFormComponent extends React.Component {
     const {
       handleSubmit,
       submitting,
+      orderType,
     } = this.props;
 
     return (
@@ -184,7 +193,10 @@ export class PaymentFormComponent extends React.Component {
         ref={this.formRef}
         noValidate
       >
-        <CardHolderInformation submitting={submitting} />
+        <CardHolderInformation
+          submitting={submitting}
+          showBulkEnrollmentFields={orderType === ORDER_TYPES.BULK_ENROLLMENT}
+        />
         <CardDetails submitting={submitting} />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
@@ -207,10 +219,12 @@ PaymentFormComponent.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
   submitPaymentCybersource: PropTypes.func.isRequired,
+  orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
 };
 
 PaymentFormComponent.defaultProps = {
   submitting: false,
+  orderType: ORDER_TYPES.SEAT,
 };
 
 // The key `form` here needs to match the key provided to

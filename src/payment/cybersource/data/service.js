@@ -42,6 +42,7 @@ export async function checkout(basketId, cardHolderInfo) {
       country: cardHolderInfo.country,
       state: cardHolderInfo.state,
       postal_code: cardHolderInfo.postalCode,
+      organization: cardHolderInfo.organization,
     }),
     {
       headers: {

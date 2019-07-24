@@ -54,7 +54,7 @@ export function transformResults(data) {
   const results = camelCaseObject(data);
 
   const lastProduct = results.products && results.products[results.products.length - 1];
-  results.orderType = getOrderType(lastProduct.productType);
+  results.orderType = getOrderType(lastProduct && lastProduct.productType);
   results.orderTotal = Number.parseInt(results.orderTotal, 10);
   results.summaryDiscounts = results.summaryDiscounts !== null ?
     Number.parseInt(results.summaryDiscounts, 10) : null;
