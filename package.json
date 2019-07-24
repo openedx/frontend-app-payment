@@ -30,7 +30,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@cospired/i18n-iso-languages": "2.0.2",
     "@edx/edx-bootstrap": "2.2.2",
     "@edx/frontend-analytics": "2.0.0",
     "@edx/frontend-auth": "5.3.4",
@@ -52,8 +51,6 @@
     "form-urlencoded": "3.0.0",
     "glob": "7.1.4",
     "history": "4.9.0",
-    "i18n-iso-countries": "3.7.8",
-    "iso-countries-languages": "0.2.1",
     "lodash.camelcase": "4.3.0",
     "lodash.get": "4.4.2",
     "lodash.pick": "4.4.0",
