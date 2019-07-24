@@ -23,6 +23,7 @@ describe('PlaceOrderButton', () => {
           loaded: true,
           products: [],
         },
+        currency: {},
       },
     });
 
