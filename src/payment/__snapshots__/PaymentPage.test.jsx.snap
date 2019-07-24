@@ -4540,6 +4540,18 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </span>
         </h2>
         <div
+          className="summary-row d-flex"
+        >
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Price
+            </span>
+          </span>
+          <span />
+        </div>
+        <div
           className="summary-row font-weight-bold d-flex"
         >
           <span
