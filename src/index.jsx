@@ -22,8 +22,8 @@ import './index.scss';
 import App from './components/App';
 
 if (configuration.ENVIRONMENT !== 'production') {
-  const axe = require('react-axe'); // eslint-disable-line
-  axe(React, ReactDOM, 1000);
+  import(/* webpackChunkName: "react-axe" */ 'react-axe')
+    .then(({ default: axe }) => axe(React, ReactDOM, 1000));
 }
 
 const apiClient = getAuthenticatedAPIClient({
