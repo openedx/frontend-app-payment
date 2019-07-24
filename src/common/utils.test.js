@@ -1,4 +1,13 @@
-import { AsyncActionType, modifyObjectKeys, camelCaseObject, snakeCaseObject, convertKeyNames, keepKeys, getModuleState } from './utils';
+import {
+  AsyncActionType,
+  modifyObjectKeys,
+  camelCaseObject,
+  snakeCaseObject,
+  convertKeyNames,
+  keepKeys,
+  getModuleState,
+  generateAndSubmitForm,
+} from './utils';
 
 describe('modifyObjectKeys', () => {
   it('should use the provided modify function to change all keys in and object and its children', () => {
@@ -86,15 +95,22 @@ describe('convertKeyNames', () => {
 
 describe('keepKeys', () => {
   it('should keep the specified keys only', () => {
-    const result = keepKeys({
-      one: 123,
-      two: { three: 'skip me' },
-      four: 'five',
-      six: null,
-      8: 'sneaky',
-    }, [
-      'one', 'three', 'six', 'seven', '8', // yup, the 8 integer will be converted to a string.
-    ]);
+    const result = keepKeys(
+      {
+        one: 123,
+        two: { three: 'skip me' },
+        four: 'five',
+        six: null,
+        8: 'sneaky',
+      },
+      [
+        'one',
+        'three',
+        'six',
+        'seven',
+        '8', // yup, the 8 integer will be converted to a string.
+      ],
+    );
 
     expect(result).toEqual({
       one: 123,
@@ -102,7 +118,6 @@ describe('keepKeys', () => {
       8: 'sneaky',
     });
   });
-
 
   describe('AsyncActionType', () => {
     it('should return well formatted action strings', () => {
@@ -127,15 +142,12 @@ describe('keepKeys', () => {
     });
 
     it('should resolve paths correctly', () => {
-      expect(getModuleState(
-        state,
-        ['first'],
-      )).toEqual({ red: { awesome: 'sauce' }, blue: { weak: 'sauce' } });
+      expect(getModuleState(state, ['first'])).toEqual({
+        red: { awesome: 'sauce' },
+        blue: { weak: 'sauce' },
+      });
 
-      expect(getModuleState(
-        state,
-        ['first', 'red'],
-      )).toEqual({ awesome: 'sauce' });
+      expect(getModuleState(state, ['first', 'red'])).toEqual({ awesome: 'sauce' });
 
       expect(getModuleState(state, ['second'])).toEqual({ other: 'data' });
     });
@@ -149,5 +161,52 @@ describe('keepKeys', () => {
     it('should return non-objects correctly', () => {
       expect(getModuleState(state, ['first', 'red', 'awesome'])).toEqual('sauce');
     });
+  });
+});
+
+describe('generateAndSubmitForm', () => {
+  let createElementSpy = null;
+  let submitMock = null;
+
+  beforeEach(() => {
+    submitMock = jest.fn();
+    createElementSpy = jest.spyOn(global.document, 'createElement').mockImplementation(() => ({
+      appendChild: jest.fn(),
+      submit: submitMock,
+    }));
+    jest.spyOn(global.document.body, 'appendChild').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    createElementSpy.mockReset();
+  });
+
+  it('should generate a form without any params provided', () => {
+    generateAndSubmitForm('http://localhost');
+
+    expect(createElementSpy).toHaveBeenCalledWith('form');
+    expect(createElementSpy).toHaveBeenCalledTimes(1);
+    expect(submitMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should generate a form with an empty params object', () => {
+    generateAndSubmitForm('http://localhost', {});
+
+    expect(createElementSpy).toHaveBeenCalledWith('form');
+    expect(createElementSpy).toHaveBeenCalledTimes(1);
+    expect(submitMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should generate a hidden field for each param', () => {
+    generateAndSubmitForm('http://localhost', {
+      foo: 'bar',
+      baz: 'buh',
+    });
+
+    expect(createElementSpy).toHaveBeenNthCalledWith(1, 'form');
+    expect(createElementSpy).toHaveBeenNthCalledWith(2, 'input');
+    expect(createElementSpy).toHaveBeenNthCalledWith(3, 'input');
+    expect(createElementSpy).toHaveBeenCalledTimes(3);
+    expect(submitMock).toHaveBeenCalledTimes(1);
   });
 });
