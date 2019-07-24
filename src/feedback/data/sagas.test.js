@@ -1,7 +1,7 @@
 import { runSaga } from 'redux-saga';
 import { handleErrors } from './sagas';
 import { MESSAGE_TYPES } from './constants';
-import { addMessage } from './actions';
+import { addMessage, clearMessages } from './actions';
 
 describe('saga tests', () => {
   let dispatched;
@@ -52,6 +52,7 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
+      clearMessages(),
       addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR),
       addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR),
     ]);
@@ -79,6 +80,7 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
+      clearMessages(),
       addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.INFO),
       addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR),
     ]);
@@ -106,6 +108,7 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
+      clearMessages(),
       addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR, 'field1'),
       addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
     ]);
@@ -135,6 +138,7 @@ describe('saga tests', () => {
     ).toPromise();
 
     expect(dispatched).toEqual([
+      clearMessages(),
       addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR),
       addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
     ]);

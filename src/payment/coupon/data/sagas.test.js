@@ -14,7 +14,7 @@ import {
 } from './actions';
 import { fetchBasketSuccess } from '../../data/actions';
 import { transformResults } from '../../data/service';
-import { addMessage, MESSAGE_TYPES } from '../../../feedback';
+import { addMessage, clearMessages, MESSAGE_TYPES } from '../../../feedback';
 
 
 jest.mock('@edx/frontend-logging', () => ({
@@ -191,6 +191,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         addCouponBegin(),
         addCouponFailure(),
+        clearMessages(),
         addMessage('uhoh', null, undefined, MESSAGE_TYPES.ERROR),
       ]);
 
@@ -333,6 +334,7 @@ describe('saga tests', () => {
       expect(dispatched).toEqual([
         removeCouponBegin(),
         removeCouponFailure(),
+        clearMessages(),
         addMessage('uhoh', null, undefined, MESSAGE_TYPES.ERROR),
       ]);
 
