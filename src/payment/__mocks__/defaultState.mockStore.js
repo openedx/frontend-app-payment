@@ -44,6 +44,7 @@ module.exports = {
       loaded: false,
       loading: false,
     },
+    currency: {},
     offers: [],
   },
   router: {

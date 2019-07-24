@@ -75,7 +75,8 @@ module.exports = {
       errorCode: null,
       loaded: true,
       loading: false
-    }
+    },
+    currency: {},
   },
   feedback: {
     byId: {
