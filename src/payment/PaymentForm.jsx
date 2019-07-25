@@ -24,6 +24,8 @@ export class PaymentFormComponent extends React.Component {
   }
 
   onSubmit = (values) => {
+    if (this.props.loading) return;
+
     const requiredFields = this.getRequiredFields(values);
     const {
       firstName,
@@ -184,6 +186,7 @@ export class PaymentFormComponent extends React.Component {
     const {
       handleSubmit,
       submitting,
+      loading,
       orderType,
     } = this.props;
 
@@ -200,13 +203,19 @@ export class PaymentFormComponent extends React.Component {
         <CardDetails submitting={submitting} />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
-            <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting} onClick={this.handleSubmitButtonClick}>
-              <FormattedMessage
-                id="payment.form.submit.button.text"
-                defaultMessage="Place Order"
-                description="The label for the payment form submit button"
-              />
-            </button>
+            {
+              loading ? (
+                <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
+              ) : (
+                <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting || loading} onClick={this.handleSubmitButtonClick}>
+                  <FormattedMessage
+                    id="payment.form.submit.button.text"
+                    defaultMessage="Place Order"
+                    description="The label for the payment form submit button"
+                  />
+                </button>
+              )
+            }
           </div>
         </div>
       </form>
@@ -218,12 +227,14 @@ PaymentFormComponent.propTypes = {
   intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
+  loading: PropTypes.bool,
   submitPaymentCybersource: PropTypes.func.isRequired,
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
 };
 
 PaymentFormComponent.defaultProps = {
   submitting: false,
+  loading: true,
   orderType: ORDER_TYPES.SEAT,
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 import { performApplePayPayment } from './service';
 
@@ -13,7 +14,15 @@ export default class ApplePayButton extends React.Component {
     };
   }
 
+  canSubmit() {
+    return this.state.canMakePayments
+      && !this.props.disabled
+      && this.props.totalAmount !== undefined;
+  }
+
   handleClick = () => {
+    if (!this.canSubmit()) return;
+
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
     // Check for Paypal and Free Basket as well
@@ -36,7 +45,7 @@ export default class ApplePayButton extends React.Component {
   }
 
   render() {
-    if (!this.state.canMakePayments || this.props.totalAmount === undefined) return null;
+    if (!this.state.canMakePayments) return null;
 
     const other = { ...this.props };
 
@@ -52,7 +61,7 @@ export default class ApplePayButton extends React.Component {
         {...other}
         id="applePayBtn"
         onClick={this.handleClick}
-        className="apple-pay-button"
+        className={classNames('apple-pay-button', this.props.className)}
         lang={this.props.lang}
         title={this.props.title}
       />
@@ -69,6 +78,8 @@ ApplePayButton.propTypes = {
   onPaymentCancel: PropTypes.func,
   lang: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 ApplePayButton.defaultProps = {
@@ -78,4 +89,6 @@ ApplePayButton.defaultProps = {
   onMerchantValidationFailure: undefined,
   onPaymentAuthorizationFailure: undefined,
   onPaymentCancel: undefined,
+  className: undefined,
+  disabled: false,
 };

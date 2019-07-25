@@ -1,5 +1,19 @@
 @import "./apple-pay/apple-pay";
 
+
+@keyframes skeleton-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 .page__payment {
   .col-basket-summary {
     @include media-breakpoint-up(md) {
@@ -59,6 +73,10 @@
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    &[disabled] {
+      cursor: auto;
+      filter: grayscale(100%);
+    }
     &.active {
       border-bottom: solid 0.1875rem $primary;
     }
@@ -66,6 +84,15 @@
       height: 24px;
       display: block;
     }
+  }
+
+  .skeleton-pulse {
+    animation: skeleton-pulse 2s infinite both; 
+  }
+  .skeleton {
+    background-color: rgba(0,0,0, .1);
+    border-radius: $border-radius;
+    animation: skeleton-pulse 2s infinite both;
   }
 }
 

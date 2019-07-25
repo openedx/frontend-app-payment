@@ -33,6 +33,8 @@ function ApplePayButtonContainer(props) {
 
   return (
     <ApplePayButton
+      className={props.className}
+      disabled={props.disabled}
       totalAmount={props.orderTotal}
       onPaymentComplete={redirectToReceipt}
       onMerchantValidationFailure={handleMerchantValidationFailure}
@@ -48,10 +50,14 @@ ApplePayButtonContainer.propTypes = {
   addMessage: PropTypes.func.isRequired,
   clearMessages: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 ApplePayButtonContainer.defaultProps = {
   orderTotal: undefined,
+  className: undefined,
+  disabled: false,
 };
 
 export default connect(basketSelector, {

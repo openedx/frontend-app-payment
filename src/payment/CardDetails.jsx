@@ -74,7 +74,7 @@ export class CardDetailsComponent extends React.Component {
               id="cardNumber"
               name="cardNumber"
               component={FormInput}
-              type="text"
+              type="tel"
               required
               disabled={submitting}
               onChange={this.handleCardNumberChange}
@@ -90,7 +90,7 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card security code field"
               />
             </label>
-            <span data-tip data-for="securityCodeHelp">
+            <span data-tip data-for="securityCodeHelp" className="ml-1">
               <FontAwesomeIcon icon={faQuestionCircle} />
             </span>
             <ReactTooltip id="securityCodeHelp" place="bottom" effect="solid">
@@ -104,7 +104,7 @@ export class CardDetailsComponent extends React.Component {
               id="securityCode"
               name="securityCode"
               component={FormInput}
-              type="password"
+              type="tel"
               required
               disabled={submitting}
               onChange={this.handleSecurityCodeChange}
