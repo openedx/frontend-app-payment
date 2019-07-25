@@ -71,22 +71,16 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
         className="basket-section"
         role="region"
       >
-        <h5
-          aria-level="2"
+        <h2
+          className="section-heading"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
-=======
-        </h5>
-        <table
-          className="w-100 mb-3"
->>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -265,7 +259,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         Purchasing just for yourself?
       </h6>
       <span>
-        If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner
+        If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
         <a
           href="http://edx.org"
           onClick={[Function]}
@@ -346,22 +340,16 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         className="basket-section"
         role="region"
       >
-        <h5
-          aria-level="2"
+        <h2
+          className="section-heading"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
-=======
-        </h5>
-        <table
-          className="w-100 mb-3"
->>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -2358,7 +2346,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
         className="card-text"
       >
         <span>
-          If you attempted to make a purchase, you have not been charged. Return to your
+          If you attempted to make a purchase, you have not been charged. Return to your 
           <a
             href="http://localhost:18000"
             onClick={[Function]}
@@ -2368,7 +2356,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
               dashboard
             </span>
           </a>
-           to try again, or
+           to try again, or 
           <a
             href="http://localhost:18000/support"
             onClick={[Function]}
@@ -2428,15 +2416,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     className="row"
   >
     <h1
-<<<<<<< HEAD
-<<<<<<< HEAD
       className="sr-only"
-=======
-      className="sr-only sr-only-focusable"
->>>>>>> update snapshot
-=======
-      className="sr-only"
->>>>>>> refactor: a11y
     >
       Payment Page
     </h1>
@@ -2499,22 +2479,16 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         className="basket-section"
         role="region"
       >
-        <h5
-          aria-level="2"
+        <h2
+          className="section-heading"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
-=======
-        </h5>
-        <table
-          className="w-100 mb-3"
->>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
@@ -4498,15 +4472,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
     className="row"
   >
     <h1
-<<<<<<< HEAD
-<<<<<<< HEAD
       className="sr-only"
-=======
-      className="sr-only sr-only-focusable"
->>>>>>> update snapshot
-=======
-      className="sr-only"
->>>>>>> refactor: a11y
     >
       Payment Page
     </h1>
@@ -4569,22 +4535,16 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         className="basket-section"
         role="region"
       >
-        <h5
-          aria-level="2"
+        <h2
+          className="section-heading"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-<<<<<<< HEAD
         </h2>
         <div
           className="summary-row d-flex"
-=======
-        </h5>
-        <table
-          className="w-100 mb-3"
->>>>>>> style: remove a11y heading css, added aria level
         >
           <span
             className="flex-grow-1"
