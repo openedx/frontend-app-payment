@@ -14,8 +14,14 @@ export default class ApplePayButton extends React.Component {
     };
   }
 
+  canSubmit() {
+    return this.state.canMakePayments
+      && !this.props.disabled
+      && this.props.totalAmount !== undefined;
+  }
+
   handleClick = () => {
-    if (this.props.disabled || this.props.totalAmount === undefined) return;
+    if (!this.canSubmit()) return;
 
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
