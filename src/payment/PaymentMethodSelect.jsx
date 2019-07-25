@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 import messages from './PaymentMethodSelect.messages';
 
@@ -6,7 +8,7 @@ import AcceptedCardLogos from './assets/accepted-card-logos.png';
 import { ApplePayButtonContainer } from './apple-pay';
 import { PayPalButton } from './paypal';
 
-function PaymentMethodSelect({ intl }) {
+function PaymentMethodSelect({ intl, loading }) {
   return (
     <div className="basket-section">
       <h2 className="section-heading">
@@ -24,8 +26,15 @@ function PaymentMethodSelect({ intl }) {
             alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
           />
         </button>
-        <PayPalButton />
-        <ApplePayButtonContainer />
+
+        <PayPalButton
+          className={classNames({ 'skeleton-pulse': loading })}
+          disabled={loading}
+        />
+        <ApplePayButtonContainer
+          className={classNames({ 'skeleton-pulse': loading })}
+          disabled={loading}
+        />
       </p>
     </div>
   );
@@ -33,6 +42,7 @@ function PaymentMethodSelect({ intl }) {
 
 PaymentMethodSelect.propTypes = {
   intl: intlShape.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
@@ -10,6 +11,8 @@ import { submitPaymentPayPal } from './data/actions';
 
 class PayPalButton extends React.Component {
   handleClick = () => {
+    if (this.props.disabled) return;
+
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
     // Check for ApplePay and Free Basket as well
@@ -26,12 +29,15 @@ class PayPalButton extends React.Component {
 
 
   render() {
-    const { intl, submitting } = this.props;
+    const {
+      intl, submitting, className, disabled,
+    } = this.props;
+
     return (
       <button
         onClick={this.handleClick}
-        className="payment-method-button"
-        disabled={submitting}
+        className={classNames('payment-method-button', className)}
+        disabled={submitting || disabled}
       >
         <img
           src={PayPalLogo}
@@ -44,12 +50,16 @@ class PayPalButton extends React.Component {
 
 PayPalButton.propTypes = {
   intl: intlShape.isRequired,
+  className: PropTypes.string,
   submitting: PropTypes.bool,
+  disabled: PropTypes.bool,
   submitPaymentPayPal: PropTypes.func.isRequired,
 };
 
 PayPalButton.defaultProps = {
   submitting: false,
+  className: undefined,
+  disabled: false,
 };
 
 const mapStateToProps = state => state.payment.paypal;

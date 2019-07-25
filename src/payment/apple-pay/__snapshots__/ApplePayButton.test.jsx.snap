@@ -3,6 +3,7 @@
 exports[`<ApplePayButton /> should render properly 1`] = `
 <button
   className="apple-pay-button"
+  disabled={false}
   id="applePayBtn"
   lang="en"
   onClick={[Function]}

@@ -4407,8 +4407,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
             />
           </button>
           <button
-            className="payment-method-button"
-            disabled={false}
+            className="payment-method-button skeleton-pulse"
+            disabled={true}
             onClick={[Function]}
           >
             <img
@@ -6232,16 +6232,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
           <div
             className="col-lg-6 form-group"
           >
-            <button
-              className="btn btn-primary btn-lg btn-block"
-              disabled={false}
-              onClick={[Function]}
-              type="submit"
+            <div
+              className="skeleton btn btn-block btn-lg rounded-pill"
             >
-              <span>
-                Place Order
-              </span>
-            </button>
+               
+            </div>
           </div>
         </div>
       </form>

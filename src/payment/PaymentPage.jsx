@@ -109,7 +109,7 @@ class PaymentPage extends React.Component {
         <div className="col-md-7 pl-md-5">
           {isFreeBasket ? <PlaceOrderButton /> : (
             <React.Fragment>
-              <PaymentMethodSelect />
+              <PaymentMethodSelect loading={loading} />
               <PaymentForm />
             </React.Fragment>
         )}
