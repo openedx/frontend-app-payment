@@ -2006,7 +2006,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="text"
+                type="tel"
                 value=""
               />
               <svg
@@ -2038,6 +2038,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 </span>
               </label>
               <span
+                className="ml-1"
                 data-for="securityCodeHelp"
                 data-tip={true}
               >
@@ -2078,7 +2079,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="tel"
                 value=""
               />
               <svg
@@ -3998,7 +3999,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="text"
+                type="tel"
                 value=""
               />
               <svg
@@ -4030,6 +4031,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 </span>
               </label>
               <span
+                className="ml-1"
                 data-for="securityCodeHelp"
                 data-tip={true}
               >
@@ -4070,7 +4072,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="tel"
                 value=""
               />
               <svg
@@ -5929,7 +5931,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="text"
+                type="tel"
                 value=""
               />
               <svg
@@ -5961,6 +5963,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                 </span>
               </label>
               <span
+                className="ml-1"
                 data-for="securityCodeHelp"
                 data-tip={true}
               >
@@ -6001,7 +6004,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="tel"
                 value=""
               />
               <svg
@@ -7981,7 +7984,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="text"
+                type="tel"
                 value=""
               />
               <svg
@@ -8013,6 +8016,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 </span>
               </label>
               <span
+                className="ml-1"
                 data-for="securityCodeHelp"
                 data-tip={true}
               >
@@ -8053,7 +8057,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="tel"
                 value=""
               />
               <svg
@@ -9969,7 +9973,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="text"
+                type="tel"
                 value=""
               />
               <svg
@@ -10001,6 +10005,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 </span>
               </label>
               <span
+                className="ml-1"
                 data-for="securityCodeHelp"
                 data-tip={true}
               >
@@ -10041,7 +10046,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 onDragStart={[Function]}
                 onDrop={[Function]}
                 onFocus={[Function]}
-                type="password"
+                type="tel"
                 value=""
               />
               <svg
