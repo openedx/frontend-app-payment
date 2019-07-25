@@ -23,6 +23,7 @@ import PaymentMethodSelect from './PaymentMethodSelect';
 import CartSummary from './CartSummary';
 import AlertList from '../feedback/AlertList';
 import { SingleEnrollmentCodeWarning } from './AlertCodeMessages';
+import SummarySkeleton from './SummarySkeleton';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
@@ -87,16 +88,23 @@ class PaymentPage extends React.Component {
     const {
       isCurrencyConverted,
       isFreeBasket,
+      loading,
     } = this.props;
 
     return (
       <div className="row">
         <h1 className="sr-only">Payment Page</h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
-          <CartSummary />
-          <OrderSummary />
-          <OrderDetails />
-          {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
+          { loading ? (
+            <SummarySkeleton />
+          ) : (
+            <div>
+              <CartSummary />
+              <OrderSummary />
+              <OrderDetails />
+              {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
+            </div>
+          )}
         </div>
         <div className="col-md-7 pl-md-5">
           {isFreeBasket ? <PlaceOrderButton /> : (
@@ -132,9 +140,8 @@ class PaymentPage extends React.Component {
             'single-enrollment-code-warning': SingleEnrollmentCodeWarning,
           }}
         />
-        {loading ? this.renderLoading() : null}
-        {isEmpty ? this.renderEmptyMessage() : null}
-        {loaded && !isEmpty ? this.renderBasket() : null}
+        {loaded && isEmpty ? this.renderEmptyMessage() : null}
+        {loading || !isEmpty ? this.renderBasket() : null}
       </div>
     );
   }

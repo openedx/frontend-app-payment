@@ -8,7 +8,8 @@ import { reducer as paypal } from '../paypal';
 import { configuration } from '../../environment';
 
 const basketInitialState = {
-  loading: false,
+  loading: true,
+  loaded: false,
   submitting: false,
   products: [],
 };
