@@ -3,7 +3,8 @@ import pick from 'lodash.pick';
 import { configureApiService as configureCouponApiService } from '../coupon';
 import { configureApiService as configureCybersourceApiService } from '../cybersource';
 import { configureApiService as configurePayPalApiService } from '../paypal';
-import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
+import { applyConfiguration } from '../../common/serviceUtils';
+import handleBasketApiError from '../utils/handleBasketApiError';
 import { camelCaseObject } from '../../common/utils';
 import { ORDER_TYPES } from './constants';
 
@@ -17,6 +18,8 @@ let config = {
 };
 
 let apiClient = null; // eslint-disable-line no-unused-vars
+let getParameters = {};
+let firstRequestParameters = {};
 
 export function configureApiService(newConfig, newApiClient) {
   applyConfiguration(config, newConfig);
@@ -36,6 +39,26 @@ export function configureApiService(newConfig, newApiClient) {
     }
     return response;
   });
+
+  const decodeURLParams = (search) => {
+    const hashes = search
+      .slice(search.indexOf('?') + 1)
+      .split('&')
+      .filter(hash => hash !== '');
+
+    return hashes.reduce((params, hash) => {
+      const split = hash.indexOf('=');
+      const key = hash.slice(0, split);
+      const value = hash.slice(split + 1);
+      return Object.assign(params, { [key]: decodeURIComponent(value) });
+    }, {});
+  };
+
+  getParameters = decodeURLParams(window.location.search);
+
+  if (getParameters.consent_failed !== undefined) {
+    firstRequestParameters.consent_failed = getParameters.consent_failed;
+  }
 }
 
 function getOrderType(productType) {
@@ -51,7 +74,7 @@ function getOrderType(productType) {
 }
 
 export function transformResults(data) {
-  const results = camelCaseObject(data);
+  const results = camelCaseObject(data) || {};
 
   const lastProduct = results.products && results.products[results.products.length - 1];
   results.orderType = getOrderType(lastProduct && lastProduct.productType);
@@ -69,14 +92,18 @@ export function transformResults(data) {
 
 export async function getBasket() {
   const { data } = await apiClient
-    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`)
-    .catch(handleRequestError);
+    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`, { params: firstRequestParameters })
+    .catch(handleBasketApiError);
+
+  // unset first request get params
+  firstRequestParameters = {};
+
   return transformResults(data);
 }
 
 export async function postQuantity(quantity) {
   const { data } = await apiClient
     .post(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
-    .catch(handleRequestError);
+    .catch(handleBasketApiError);
   return transformResults(data);
 }

@@ -1,6 +1,7 @@
 import pick from 'lodash.pick';
 
-import { handleRequestError, applyConfiguration } from '../../../common/serviceUtils';
+import { applyConfiguration } from '../../../common/serviceUtils';
+import handleBasketApiError from '../../utils/handleBasketApiError';
 import { transformResults } from '../../data/service';
 
 let config = {
@@ -24,13 +25,13 @@ export async function postCoupon(code) {
         headers: { 'Content-Type': 'application/json' },
       },
     )
-    .catch(handleRequestError);
+    .catch(handleBasketApiError);
   return transformResults(data);
 }
 
 export async function deleteCoupon(id) {
   const { data } = await apiClient
     .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
-    .catch(handleRequestError);
+    .catch(handleBasketApiError);
   return transformResults(data);
 }
