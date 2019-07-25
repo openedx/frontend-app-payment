@@ -71,14 +71,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-        </h2>
+        </h5>
         <div
           className="summary-row d-flex"
         >
@@ -340,14 +340,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-        </h2>
+        </h5>
         <div
           className="summary-row d-flex"
         >
@@ -2479,14 +2479,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-        </h2>
+        </h5>
         <div
           className="summary-row d-flex"
         >
@@ -4535,14 +4535,14 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
         className="basket-section"
         role="region"
       >
-        <h2
-          className="section-heading"
+        <h5
+          aria-level="2"
           id="summary-heading"
         >
           <span>
             Summary
           </span>
-        </h2>
+        </h5>
         <div
           className="summary-row d-flex"
         >
