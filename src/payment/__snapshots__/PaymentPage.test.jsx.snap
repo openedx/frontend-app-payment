@@ -10,12 +10,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
     <h1
       className="sr-only"
     >
-      Payment Page
+      <span>
+        Payment
+      </span>
     </h1>
-    <div
+    <section
+      aria-label="Shopping Cart Details"
+      aria-live="polite"
+      aria-relevant="all"
       className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div>
+        <span
+          className="sr-only"
+        >
+          <span>
+            Shopping cart details are loaded.
+          </span>
+        </span>
         <div
           className="basket-section"
         >
@@ -181,8 +193,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           </p>
         </div>
       </div>
-    </div>
-    <div
+    </section>
+    <section
+      aria-label="Payment Details"
       className="col-md-7 pl-md-5"
     >
       <a
@@ -200,7 +213,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           </span>
         </button>
       </a>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -280,12 +293,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
     <h1
       className="sr-only"
     >
-      Payment Page
+      <span>
+        Payment
+      </span>
     </h1>
-    <div
+    <section
+      aria-label="Shopping Cart Details"
+      aria-live="polite"
+      aria-relevant="all"
       className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div>
+        <span
+          className="sr-only"
+        >
+          <span>
+            Shopping cart details are loaded.
+          </span>
+        </span>
         <div
           className="basket-section"
         >
@@ -458,8 +483,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           </p>
         </div>
       </div>
-    </div>
-    <div
+    </section>
+    <section
+      aria-label="Payment Details"
       className="col-md-7 pl-md-5"
     >
       <div
@@ -2323,7 +2349,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           </div>
         </div>
       </form>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -2387,12 +2413,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
     <h1
       className="sr-only"
     >
-      Payment Page
+      <span>
+        Payment
+      </span>
     </h1>
-    <div
+    <section
+      aria-label="Shopping Cart Details"
+      aria-live="polite"
+      aria-relevant="all"
       className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div>
+        <span
+          className="sr-only"
+        >
+          <span>
+            Shopping cart details are loaded.
+          </span>
+        </span>
         <div
           className="basket-section"
         >
@@ -2451,8 +2489,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           </div>
         </div>
       </div>
-    </div>
-    <div
+    </section>
+    <section
+      aria-label="Payment Details"
       className="col-md-7 pl-md-5"
     >
       <div
@@ -4316,7 +4355,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           </div>
         </div>
       </form>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -4331,12 +4370,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
     <h1
       className="sr-only"
     >
-      Payment Page
+      <span>
+        Payment
+      </span>
     </h1>
-    <div
+    <section
+      aria-label="Shopping Cart Details"
+      aria-live="polite"
+      aria-relevant="all"
       className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div>
+        <span
+          className="sr-only"
+        >
+          <span>
+            Loading, please wait...
+          </span>
+        </span>
         <div
           className="skeleton py-2 mb-3 w-50"
         />
@@ -4383,8 +4434,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
           className="skeleton py-2 mb-5 w-75"
         />
       </div>
-    </div>
-    <div
+    </section>
+    <section
+      aria-label="Payment Details"
       className="col-md-7 pl-md-5"
     >
       <div
@@ -6243,7 +6295,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
           </div>
         </div>
       </form>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -6258,12 +6310,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     <h1
       className="sr-only"
     >
-      Payment Page
+      <span>
+        Payment
+      </span>
     </h1>
-    <div
+    <section
+      aria-label="Shopping Cart Details"
+      aria-live="polite"
+      aria-relevant="all"
       className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div>
+        <span
+          className="sr-only"
+        >
+          <span>
+            Shopping cart details are loaded.
+          </span>
+        </span>
         <div
           className="basket-section"
         >
@@ -6436,8 +6500,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </p>
         </div>
       </div>
-    </div>
-    <div
+    </section>
+    <section
+      aria-label="Payment Details"
       className="col-md-7 pl-md-5"
     >
       <div
@@ -8301,7 +8366,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </div>
         </div>
       </form>
-    </div>
+    </section>
   </div>
 </div>
 `;
@@ -8316,12 +8381,24 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
     <h1
       className="sr-only"
     >
-      Payment Page
+      <span>
+        Payment
+      </span>
     </h1>
-    <div
+    <section
+      aria-label="Shopping Cart Details"
+      aria-live="polite"
+      aria-relevant="all"
       className="col-md-5 pr-md-5 col-basket-summary"
     >
       <div>
+        <span
+          className="sr-only"
+        >
+          <span>
+            Shopping cart details are loaded.
+          </span>
+        </span>
         <div
           className="basket-section"
         >
@@ -8425,8 +8502,9 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </p>
         </div>
       </div>
-    </div>
-    <div
+    </section>
+    <section
+      aria-label="Payment Details"
       className="col-md-7 pl-md-5"
     >
       <div
@@ -10290,7 +10368,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </div>
         </div>
       </form>
-    </div>
+    </section>
   </div>
 </div>
 `;
