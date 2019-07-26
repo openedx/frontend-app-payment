@@ -1,8 +1,5 @@
-@import "~@edx/edx-bootstrap/scss/edx/theme.scss";
-
-@import "~@edx/paragon/src/index.scss";
+@import "~@edx/paragon/scss/edx/theme.scss";
 @import "~@edx/frontend-component-site-header/src/index";
-
 @import "./payment/style";
 
 .word-break-all {
