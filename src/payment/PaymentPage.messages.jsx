@@ -16,6 +16,16 @@ const messages = defineMessages({
     defaultMessage: 'Error: {error}',
     description: 'Message when payment page failed to load',
   },
+  'payment.section.cart.label': {
+    id: 'payment.section.cart.label',
+    defaultMessage: 'Shopping Cart Details',
+    description: 'Screen reader label for cart detail section of page',
+  },
+  'payment.section.payment.details.label': {
+    id: 'payment.section.payment.details.label',
+    defaultMessage: 'Payment Details',
+    description: 'Screen reader label for payment detail section of page',
+  },
 });
 
 export default messages;

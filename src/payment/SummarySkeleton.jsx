@@ -1,8 +1,16 @@
 import React from 'react';
+import { FormattedMessage } from '@edx/frontend-i18n';
 
 export default function SummarySkeleton() {
   return (
     <div>
+      <span className="sr-only">
+        <FormattedMessage
+          id="payment.screen.reader.cart.details.loading"
+          defaultMessage="Loading, please wait..."
+          description="Screen reader text to be read when cart details are loading."
+        />
+      </span>
       <div className="skeleton py-2 mb-3 w-50" />
       <div className="skeleton py-2 mb-4 mr-4" />
 
