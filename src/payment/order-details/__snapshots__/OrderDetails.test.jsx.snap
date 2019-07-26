@@ -4,11 +4,11 @@ exports[`OrderDetails should render course entitlement product message 1`] = `
 <div
   className="basket-section"
 >
-  <h2
-    className="section-heading"
+  <h5
+    aria-level="2"
   >
     Order Details
-  </h2>
+  </h5>
   <p>
     After you complete your order you will be able to select course dates from your dashboard.
   </p>
@@ -19,11 +19,11 @@ exports[`OrderDetails should render credit seat message 1`] = `
 <div
   className="basket-section"
 >
-  <h2
-    className="section-heading"
+  <h5
+    aria-level="2"
   >
     Order Details
-  </h2>
+  </h5>
   <p>
     After you complete your order you will receive credit for your course.
   </p>
@@ -34,11 +34,11 @@ exports[`OrderDetails should render enrollment code product message 1`] = `
 <div
   className="basket-section"
 >
-  <h2
-    className="section-heading"
+  <h5
+    aria-level="2"
   >
     Order Details
-  </h2>
+  </h5>
   <p>
     By purchasing, you and your organization agree to the following terms:
   </p>
@@ -72,11 +72,11 @@ exports[`OrderDetails should render seat message 1`] = `
 <div
   className="basket-section"
 >
-  <h2
-    className="section-heading"
+  <h5
+    aria-level="2"
   >
     Order Details
-  </h2>
+  </h5>
   <p>
     After you complete your order you will be automatically enrolled in the course.
   </p>
@@ -87,11 +87,11 @@ exports[`OrderDetails should render verified seat message 1`] = `
 <div
   className="basket-section"
 >
-  <h2
-    className="section-heading"
+  <h5
+    aria-level="2"
   >
     Order Details
-  </h2>
+  </h5>
   <p>
     After you complete your order you will be automatically enrolled in the verified track of the course.
   </p>

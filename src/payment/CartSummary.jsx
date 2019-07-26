@@ -11,13 +11,13 @@ import { ORDER_TYPES } from './data/constants';
 function CartSummary({ products, orderType }) {
   return (
     <div className="basket-section">
-      <h2 className="section-heading">
+      <h5 aria-level="2">
         <FormattedMessage
           id="payment.productlineitem.purchase.cart.heading"
           defaultMessage="In Your Cart"
           description="Heading of the cart in product details section"
         />
-      </h2>
+      </h5>
       <p>
         <FormattedMessage
           id="payment.productlineitem.purchase.cart.subheading"
