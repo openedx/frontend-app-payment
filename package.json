@@ -67,7 +67,7 @@
     "react-transition-group": "2.9.0",
     "redux": "4.0.1",
     "redux-devtools-extension": "2.13.8",
-    "redux-form": "8.2.3",
+    "redux-form": "8.2.5",
     "redux-logger": "3.0.6",
     "redux-saga": "1.0.5",
     "redux-thunk": "2.3.0",
