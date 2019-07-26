@@ -175,7 +175,7 @@ CouponForm.defaultProps = {
 // TODO this will all go away once the back end is updated
 const mapStateToProps = (state) => {
   const props = Object.assign({}, state.payment.coupon);
-  const serverBenefitValue = props.benefitValue || '';
+  const serverBenefitValue = String(props.benefitValue || '');
 
   if (props.benefitType) { // backend has been updated!  \o/
     return props;
