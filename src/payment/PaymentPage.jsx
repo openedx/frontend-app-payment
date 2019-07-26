@@ -93,27 +93,48 @@ class PaymentPage extends React.Component {
 
     return (
       <div className="row">
-        <h1 className="sr-only">Payment Page</h1>
-        <div className="col-md-5 pr-md-5 col-basket-summary">
+        <h1 className="sr-only">
+          <FormattedMessage
+            id="payment.page.heading"
+            defaultMessage="Payment"
+            description="The screenreader-only page heading"
+          />
+        </h1>
+        <section
+          className="col-md-5 pr-md-5 col-basket-summary"
+          aria-live="polite"
+          aria-relevant="all"
+          aria-label={this.props.intl.formatMessage(messages['payment.section.cart.label'])}
+        >
           { loading ? (
             <SummarySkeleton />
           ) : (
             <div>
+              <span className="sr-only">
+                <FormattedMessage
+                  id="payment.screen.reader.cart.details.loaded"
+                  defaultMessage="Shopping cart details are loaded."
+                  description="Screen reader text to be read when cart details load."
+                />
+              </span>
               <CartSummary />
               <OrderSummary />
               <OrderDetails />
               {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
             </div>
           )}
-        </div>
-        <div className="col-md-7 pl-md-5">
+        </section>
+        <section
+          aria-label={this.props.intl.formatMessage(messages['payment.section.payment.details.label'])}
+          className="col-md-7 pl-md-5"
+        >
           {isFreeBasket ? <PlaceOrderButton /> : (
             <React.Fragment>
               <PaymentMethodSelect loading={loading} />
               <PaymentForm />
             </React.Fragment>
         )}
-        </div>
+        </section>
       </div>
     );
   }
