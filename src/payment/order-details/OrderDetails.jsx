@@ -93,7 +93,7 @@ class OrderDetails extends Component {
           defaultMessage="Order Details"
           description="The heading for details about an order"
         >
-          {text => <h2 className="section-heading">{text}</h2>}
+          {text => <h5 aria-level="2">{text}</h5>}
         </FormattedMessage>
         {this.renderMessage()}
       </div>

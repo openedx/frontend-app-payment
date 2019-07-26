@@ -179,13 +179,13 @@ function OrderSummary({
       aria-live="polite"
       className="basket-section"
     >
-      <h2 id="summary-heading" className="section-heading">
+      <h5 id="summary-heading" aria-level="2">
         <FormattedMessage
           id="payment.order.details.heading"
           defaultMessage="Summary"
           description="The heading for the order summary table and coupon section of the basket"
         />
-      </h2>
+      </h5>
 
       {
         orderType === ORDER_TYPES.BULK_ENROLLMENT ? (

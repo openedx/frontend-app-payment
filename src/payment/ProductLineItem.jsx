@@ -40,7 +40,7 @@ class ProductLineItem extends React.PureComponent {
           </div>
         </div>
         <div className="col-7">
-          <h3 className="course-heading m-0">{title}</h3>
+          <h6 className="m-0" aria-level="3">{title}</h6>
           <p className="m-0">{this.renderCertificateType(certificateType)}</p>
         </div>
       </div>

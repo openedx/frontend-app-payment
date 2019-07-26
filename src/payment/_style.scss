@@ -30,14 +30,8 @@
   .basket-section {
     @extend .mb-5;
   }
-  .section-heading {
-    @extend .h5;
-  }
   .summary-row {
     margin-bottom: map-get($spacers, 3);
-  }
-  .course-heading {
-    @extend .h6;
   }
   .summary-row {
     margin-bottom: map-get($spacers, 3);
@@ -87,7 +81,7 @@
   }
 
   .skeleton-pulse {
-    animation: skeleton-pulse 2s infinite both; 
+    animation: skeleton-pulse 2s infinite both;
   }
   .skeleton {
     background-color: rgba(0,0,0, .1);
