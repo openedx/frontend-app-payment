@@ -4,6 +4,9 @@
     <% if (htmlWebpackPlugin.options.optimizelyId) { %>
     <script src="https://cdn.optimizely.com/js/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
     <% } %>
+    <% _.forEach(htmlWebpackPlugin.options.preconnect, function(preconnectURL) { %>
+    <link rel="preconnect" href="<%= preconnectURL %>" />
+    <% }); %>
     <title>Payment | edX</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
