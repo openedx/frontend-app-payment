@@ -3,6 +3,7 @@ import pick from 'lodash.pick';
 import { configureApiService as configureCouponApiService } from '../coupon';
 import { configureApiService as configureCybersourceApiService } from '../cybersource';
 import { configureApiService as configurePayPalApiService } from '../paypal';
+import { configureApiService as configureApplePayApiService } from '../apple-pay';
 import { applyConfiguration } from '../../common/serviceUtils';
 import handleBasketApiError from '../utils/handleBasketApiError';
 import { camelCaseObject } from '../../common/utils';
@@ -29,6 +30,7 @@ export function configureApiService(newConfig, newApiClient) {
   configureCouponApiService(config, apiClient);
   configureCybersourceApiService(config, apiClient);
   configurePayPalApiService(config, apiClient);
+  configureApplePayApiService(newConfig, apiClient);
 
   // For every ajax response, check if the API has
   // responded with a redirect value. If so, redirect.
