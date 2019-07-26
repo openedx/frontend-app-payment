@@ -96,19 +96,19 @@ export class CouponForm extends Component {
 
     if (benefitType === 'Absolute') {
       return (
-        <FormattedMessage
-          id="payment.coupon.benefit.absolute"
-          defaultMessage="Coupon {code} applied for {amount} off"
-          description="A coupon has been applied for a fixed currency discount, like $10.  Currency symbol will already be provided."
-          values={{
-            code,
-            amount: (
-              <LocalizedPrice amount={benefitValue} />
-            ),
-          }}
-        >
-          {renderMuted}
-        </FormattedMessage>);
+        <span className="text-muted">
+          <FormattedMessage
+            id="payment.coupon.benefit.absolute"
+            defaultMessage="Coupon {code} applied for {amount} off"
+            description="A coupon has been applied for a fixed currency discount, like $10.  Currency symbol will already be provided."
+            values={{
+              code,
+              amount: (
+                <LocalizedPrice amount={benefitValue} />
+              ),
+            }}
+          />
+        </span>);
     }
 
     if (benefitType === 'Percentage') {
