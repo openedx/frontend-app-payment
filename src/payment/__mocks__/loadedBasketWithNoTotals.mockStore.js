@@ -34,6 +34,7 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
+      couponLoading: false,
       isFreeBasket: false,
       showCouponForm: false,
       paymentProviders: [
@@ -63,14 +64,6 @@ module.exports = {
         }
       ],
       offers: [],
-    },
-    coupon: {
-      benefitValue: null,
-      code: null,
-      id: null,
-      error: null,
-      loaded: false,
-      loading: false,
     },
     currency: {},
   },

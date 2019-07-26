@@ -2,32 +2,25 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Input, ValidationFormGroup } from '@edx/paragon';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 
-import messages from './messages';
-import { addCoupon, removeCoupon, updateCouponDraft } from './data/actions';
-import LocalizedPrice from '../LocalizedPrice';
+import { addCoupon, removeCoupon } from './data/actions';
+import LocalizedPrice from './LocalizedPrice';
 
 const renderMuted = txt => <span className="text-muted">{txt}</span>;
 
-export class CouponForm extends Component {
+class CouponForm extends Component {
   constructor(props) {
     super(props);
 
-    this.handleChange = this.handleChange.bind(this);
     this.handleAddSubmit = this.handleAddSubmit.bind(this);
     this.handleRemoveSubmit = this.handleRemoveSubmit.bind(this);
   }
 
-  handleChange(event) {
-    const { value } = event.target;
-    this.props.updateCouponDraft(value);
-  }
-
   handleAddSubmit(event) {
     event.preventDefault();
-    this.props.addCoupon(this.props.code);
+    this.props.addCoupon({ code: event.target.elements.couponField.value });
   }
 
   handleSubmitButtonClick() {
@@ -42,12 +35,12 @@ export class CouponForm extends Component {
 
   handleRemoveSubmit(event) {
     event.preventDefault();
-    this.props.removeCoupon(this.props.id);
+    this.props.removeCoupon({ code: this.props.id });
   }
 
   renderAdd() {
     const {
-      code, intl, loading,
+      code, loading,
     } = this.props;
 
     const id = 'couponField';
@@ -60,18 +53,25 @@ export class CouponForm extends Component {
           className="mb-0 mr-2"
         >
           <label className="h6 d-block" htmlFor={id}>
-            {intl.formatMessage(messages['payment.coupon.label'])}
+            <FormattedMessage
+              id="payment.coupon.label"
+              defaultMessage="Add coupon code (optional)"
+              description="Label for the add coupon form"
+            />
           </label>
           <Input
             name={id}
             id={id}
             type="text"
-            value={code || ''}
-            onChange={this.handleChange}
+            defaultValue={code}
           />
         </ValidationFormGroup>
         <Button disabled={loading} className="btn-primary" type="submit" onClick={this.handleSubmitButtonClick}>
-          {intl.formatMessage(messages['payment.coupon.submit'])}
+          <FormattedMessage
+            id="payment.coupon.submit"
+            defaultMessage="Apply"
+            description="Submit button for the add coupon form"
+          />
         </Button>
       </form>
     );
@@ -134,7 +134,11 @@ export class CouponForm extends Component {
       <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
         {this.renderCouponMessage()}
         <Button className="btn-link display-inline p-0 pl-3 border-0" type="submit">
-          {this.props.intl.formatMessage(messages['payment.coupon.remove'])}
+          <FormattedMessage
+            id="payment.coupon.remove"
+            defaultMessage="Remove"
+            description="Submit button to remove a coupon"
+          />
         </Button>
       </form>
     );
@@ -155,8 +159,6 @@ CouponForm.propTypes = {
   id: PropTypes.number,
   addCoupon: PropTypes.func.isRequired,
   removeCoupon: PropTypes.func.isRequired,
-  updateCouponDraft: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
   benefitValue: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
@@ -172,36 +174,21 @@ CouponForm.defaultProps = {
   benefitType: null,
 };
 
-// TODO this will all go away once the back end is updated
+
 const mapStateToProps = (state) => {
-  const props = Object.assign({}, state.payment.coupon);
-  const serverBenefitValue = String(props.benefitValue || '');
+  const { basket } = state.payment;
+  const coupon = (basket.coupons && basket.coupons.length) ? basket.coupons[0] : {};
 
-  if (props.benefitType) { // backend has been updated!  \o/
-    return props;
-  }
-
-  const matchAbsolute = serverBenefitValue.match(/\$(.+)/);
-  const matchPercentage = serverBenefitValue.match(/(.+)%/);
-  if (matchAbsolute) {
-    props.benefitType = 'Absolute';
-    props.benefitValue = matchAbsolute[1]; // eslint-disable-line prefer-destructuring
-  } else if (matchPercentage) {
-    props.benefitType = 'Percentage';
-    props.benefitValue = matchPercentage[1]; // eslint-disable-line prefer-destructuring
-  } else {
-    props.benefitType = null;
-    props.benefitValue = null;
-  }
-
-  return props;
+  return {
+    ...coupon,
+    loading: basket.couponLoading,
+  };
 };
 
 export default connect(
   mapStateToProps,
   {
-    updateCouponDraft,
     addCoupon,
     removeCoupon,
   },
-)(injectIntl(CouponForm));
+)(CouponForm);

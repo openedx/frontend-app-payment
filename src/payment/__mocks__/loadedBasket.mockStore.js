@@ -34,6 +34,7 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
+      couponLoading: false,
       isFreeBasket: false,
       showCouponForm: true,
       paymentProviders: [
@@ -57,27 +58,13 @@ module.exports = {
           sku: '8CF08E5',
         },
       ],
-      coupons: [
-        {
-          code: 'SUMMER20',
-          id: 12345,
-          benefitValue: '20%'
-        }
-      ],
+      coupons: [],
       offers: [
         {
           benefitValue: '50%',
           provider: 'Pied Piper',
         },
       ],
-    },
-    coupon: {
-      benefitValue: null,
-      code: null,
-      id: null,
-      error: null,
-      loaded: false,
-      loading: false,
     },
     currency: {},
   },

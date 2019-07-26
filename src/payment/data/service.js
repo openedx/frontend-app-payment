@@ -1,6 +1,5 @@
 import pick from 'lodash.pick';
 
-import { configureApiService as configureCouponApiService } from '../coupon';
 import { configureApiService as configureCybersourceApiService } from '../cybersource';
 import { configureApiService as configurePayPalApiService } from '../paypal';
 import { configureApiService as configureApplePayApiService } from '../apple-pay';
@@ -27,7 +26,6 @@ export function configureApiService(newConfig, newApiClient) {
   config = pick(newConfig, Object.keys(config));
   apiClient = newApiClient;
 
-  configureCouponApiService(config, apiClient);
   configureCybersourceApiService(config, apiClient);
   configurePayPalApiService(config, apiClient);
   configureApplePayApiService(newConfig, apiClient);
@@ -109,3 +107,24 @@ export async function postQuantity(quantity) {
     .catch(handleBasketApiError);
   return transformResults(data);
 }
+
+export async function postCoupon(code) {
+  const { data } = await apiClient
+    .post(
+      `${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
+      { code },
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
+    .catch(handleBasketApiError);
+  return transformResults(data);
+}
+
+export async function deleteCoupon(id) {
+  const { data } = await apiClient
+    .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
+    .catch(handleBasketApiError);
+  return transformResults(data);
+}
+

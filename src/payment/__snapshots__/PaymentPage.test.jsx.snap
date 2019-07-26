@@ -139,16 +139,17 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                 className="h6 d-block"
                 htmlFor="couponField"
               >
-                Add coupon code (optional)
+                <span>
+                  Add coupon code (optional)
+                </span>
               </label>
               <input
                 aria-describedby=""
                 className="form-control"
+                defaultValue=""
                 id="couponField"
                 name="couponField"
-                onChange={[Function]}
                 type="text"
-                value=""
               />
             </div>
             <button
@@ -159,7 +160,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               onKeyDown={[Function]}
               type="submit"
             >
-              Apply
+              <span>
+                Apply
+              </span>
             </button>
           </form>
           <div
@@ -430,16 +433,17 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 className="h6 d-block"
                 htmlFor="couponField"
               >
-                Add coupon code (optional)
+                <span>
+                  Add coupon code (optional)
+                </span>
               </label>
               <input
                 aria-describedby=""
                 className="form-control"
+                defaultValue=""
                 id="couponField"
                 name="couponField"
-                onChange={[Function]}
                 type="text"
-                value=""
               />
             </div>
             <button
@@ -450,7 +454,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               onKeyDown={[Function]}
               type="submit"
             >
-              Apply
+              <span>
+                Apply
+              </span>
             </button>
           </form>
           <div
@@ -6448,16 +6454,17 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 className="h6 d-block"
                 htmlFor="couponField"
               >
-                Add coupon code (optional)
+                <span>
+                  Add coupon code (optional)
+                </span>
               </label>
               <input
                 aria-describedby=""
                 className="form-control"
+                defaultValue=""
                 id="couponField"
                 name="couponField"
-                onChange={[Function]}
                 type="text"
-                value=""
               />
             </div>
             <button
@@ -6468,7 +6475,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               onKeyDown={[Function]}
               type="submit"
             >
-              Apply
+              <span>
+                Apply
+              </span>
             </button>
           </form>
           <div
