@@ -16,6 +16,9 @@ webpack(config, (err, stats) => { // Stats Object
   let fileContents;
 
   if (process.env.APPLE_DEVELOPER_MERCHANT_ID_DOMAIN_ASSOCIATION) {
+    // Replace spaces with newlines for apple verification file because
+    // build config values can't have newlines in them. We use spaces
+    // to represent newlines instead.
     fileContents = process.env.APPLE_DEVELOPER_MERCHANT_ID_DOMAIN_ASSOCIATION.replace(/ /g, '\n');
   } else {
     fileContents = `
