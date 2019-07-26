@@ -4,6 +4,7 @@
 const Merge = require('webpack-merge');
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const PostCssRtlPlugin = require('postcss-rtl');
 
 const commonConfig = require('./webpack.common.config.js');
@@ -112,6 +113,12 @@ module.exports = Merge.smart(commonConfig, {
       APPLE_PAY_AUTHORIZE_URL: 'http://localhost:18130/payment/cybersource/apple-pay/authorize/',
       APPLE_PAY_SUPPORTED_NETWORKS: 'amex,discover,visa,masterCard',
       APPLE_PAY_MERCHANT_CAPABILITIES: 'supports3DS,supportsCredit,supportsDebit',
+    }),
+    // Generates an HTML file in the output directory.
+    new HtmlWebpackPlugin({
+      inject: true, // Appends script tags linking to the webpack bundles at the end of the body
+      template: path.resolve(__dirname, '../public/index.html'),
+      optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
     }),
     // when the --hot option is not passed in as part of the command
     // the HotModuleReplacementPlugin has to be specified in the Webpack configuration

@@ -1,7 +1,6 @@
 // This is the common Webpack config. The dev and prod Webpack configs both
 // inherit config defined here.
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -55,12 +54,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    // Generates an HTML file in the output directory.
-    new HtmlWebpackPlugin({
-      inject: true, // Appends script tags linking to the webpack bundles at the end of the body
-      template: path.resolve(__dirname, '../public/index.html'),
-      optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
-    }),
-  ],
+  plugins: [],
 };

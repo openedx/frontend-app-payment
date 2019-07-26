@@ -5,6 +5,7 @@ const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackNewRelicPlugin = require('html-webpack-new-relic-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
@@ -161,6 +162,29 @@ module.exports = Merge.smart(commonConfig, {
       APPLE_PAY_AUTHORIZE_URL: null,
       APPLE_PAY_SUPPORTED_NETWORKS: null,
       APPLE_PAY_MERCHANT_CAPABILITIES: null,
+    }),
+    // Generates an HTML file in the output directory.
+    new HtmlWebpackPlugin({
+      inject: true, // Appends script tags linking to the webpack bundles at the end of the body
+      template: path.resolve(__dirname, '../public/index.html'),
+      optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
+      preconnect: (() => {
+        const preconnectDomains = [
+          'https://api.segment.io',
+          'https://cdn.segment.com',
+          'https://www.google-analytics.com',
+        ];
+
+        if (process.env.LMS_BASE_URL) {
+          preconnectDomains.push(process.env.LMS_BASE_URL);
+        }
+
+        if (process.env.OPTIMIZELY_PROJECT_ID) {
+          preconnectDomains.push('https://logx.optimizely.com');
+        }
+
+        return preconnectDomains;
+      })(),
     }),
     new HtmlWebpackNewRelicPlugin({
       // This plugin fixes an issue where the newrelic script will break if
