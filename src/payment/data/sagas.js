@@ -70,7 +70,7 @@ export function* handleRemoveCoupon({ payload }) {
   }
 }
 
-export function* handleUpdateEnrollmentCodeQuantity({ payload }) {
+export function* handleUpdateQuantity({ payload }) {
   try {
     yield put(updateQuantity.request());
     const result = yield call(PaymentApiService.postQuantity, payload.quantity);
@@ -92,7 +92,7 @@ export default function* saga() {
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
-  yield takeEvery(updateQuantity.TRIGGER, handleUpdateEnrollmentCodeQuantity);
+  yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);
 
   yield all([
     cybersourceSaga(),
