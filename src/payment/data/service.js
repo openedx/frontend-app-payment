@@ -80,10 +80,10 @@ export function transformResults(data) {
 
   const lastProduct = results.products && results.products[results.products.length - 1];
   results.orderType = getOrderType(lastProduct && lastProduct.productType);
-  results.orderTotal = Number.parseInt(results.orderTotal, 10);
+  results.orderTotal = Number(results.orderTotal);
   results.summaryDiscounts = results.summaryDiscounts !== null ?
-    Number.parseInt(results.summaryDiscounts, 10) : null;
-  results.summaryPrice = Number.parseInt(results.summaryPrice, 10);
+    Number(results.summaryDiscounts) : null;
+  results.summaryPrice = Number(results.summaryPrice);
 
   if (results.offers != null) {
     results.offers = results.offers.filter(({ provider }) => provider !== null);
