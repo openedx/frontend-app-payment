@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
+import { StatefulButton } from '@edx/paragon';
 
 import { submitPaymentCybersource } from './cybersource';
 import { paymentSelector } from './data/selectors';
@@ -190,6 +191,10 @@ export class PaymentFormComponent extends React.Component {
       orderType,
     } = this.props;
 
+    let submitButtonState = 'default';
+    if (submitting) submitButtonState = 'submitting';
+    if (loading) submitButtonState = 'loading';
+
     return (
       <form
         onSubmit={handleSubmit(this.onSubmit)}
@@ -207,13 +212,27 @@ export class PaymentFormComponent extends React.Component {
               loading ? (
                 <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
               ) : (
-                <button type="submit" className="btn btn-primary btn-lg btn-block" disabled={submitting || loading} onClick={this.handleSubmitButtonClick}>
-                  <FormattedMessage
-                    id="payment.form.submit.button.text"
-                    defaultMessage="Place Order"
-                    description="The label for the payment form submit button"
-                  />
-                </button>
+                <StatefulButton
+                  type="submit"
+                  className="btn btn-primary btn-lg btn-block"
+                  state={submitButtonState}
+                  onClick={this.handleSubmitButtonClick}
+                  labels={{
+                    default: (
+                      <FormattedMessage
+                        id="payment.form.submit.button.text"
+                        defaultMessage="Place Order"
+                        description="The label for the payment form submit button"
+                      />
+                    ),
+                  }}
+                  icons={{
+                    submitting: (
+                      <span className="button-spinner-icon" />
+                    ),
+                  }}
+                  disabledStates={['submitting', 'loading']}
+                />
               )
             }
           </div>
