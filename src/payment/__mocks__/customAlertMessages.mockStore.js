@@ -60,7 +60,8 @@ module.exports = {
       currency: 'USD',
       offers: [
         {
-          benefitValue: '50%',
+          benefitValue: 50,
+          benefitType: 'Percentage',
           provider: 'Pied Piper'
         }
       ],

@@ -61,7 +61,8 @@ module.exports = {
       coupons: [],
       offers: [
         {
-          benefitValue: '50%',
+          benefitValue: 50,
+          benefitType: 'Percentage',
           provider: 'Pied Piper',
         },
       ],
