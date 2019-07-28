@@ -134,7 +134,8 @@ function DiscountOffers({ offers, discounts, currency }) {
 
 DiscountOffers.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
-    benefitValue: PropTypes.string,
+    benefitValue: PropTypes.number,
+    benefitType: PropTypes.oneOf(['Percentage', 'Absolute']),
     provider: PropTypes.string,
   })),
   discounts: PropTypes.number,
