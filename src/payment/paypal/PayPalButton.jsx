@@ -39,6 +39,7 @@ class PayPalButton extends React.Component {
         className={classNames('payment-method-button', className)}
         disabled={submitting || disabled}
       >
+        { submitting ? <span className="button-spinner-icon text-primary mr-2" /> : null }
         <img
           src={PayPalLogo}
           alt={intl.formatMessage(messages['payment.type.paypal'])}
