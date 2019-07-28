@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage, FormattedNumber } from '@edx/frontend-i18n';
 
 import { basketSelector } from './data/selectors';
 import CouponForm from './CouponForm';
@@ -92,7 +92,7 @@ BulkOrderSummaryTable.defaultProps = {
 };
 
 
-function DiscountOffers({ offers, discounts }) {
+function DiscountOffers({ offers, discounts, currency }) {
   if ((discounts === undefined || discounts <= 0) && offers.length === 0) return null;
 
   return (
@@ -109,13 +109,22 @@ function DiscountOffers({ offers, discounts }) {
           <LocalizedPrice amount={discounts * -1} />
         </span>
       </p>
-      {offers.map(({ benefitValue, provider }) => (
+      {offers.map(({ benefitType, benefitValue, provider }) => (
         <p className="m-0 text-muted" key={`${benefitValue}-${provider}`}>
           <FormattedMessage
             id="payment.summary.discount.offer"
-            defaultMessage="{benefitValue} discount provided by {provider}."
+            defaultMessage="{benefit} discount provided by {provider}."
             description="A description of a discount offer applied to a basket."
-            values={{ benefitValue, provider }}
+            values={{
+              benefit: (
+                <FormattedNumber
+                  value={benefitValue / 100}
+                  style={benefitType === 'Percentage' ? 'percent' : 'currency'} // eslint-disable-line react/style-prop-object
+                  currency={currency}
+                />
+              ),
+              provider,
+            }}
           />
         </p>
       ))}
@@ -129,11 +138,13 @@ DiscountOffers.propTypes = {
     provider: PropTypes.string,
   })),
   discounts: PropTypes.number,
+  currency: PropTypes.string,
 };
 
 DiscountOffers.defaultProps = {
   offers: [],
   discounts: undefined,
+  currency: undefined,
 };
 
 
@@ -171,6 +182,7 @@ function OrderSummary({
   offers,
   orderTotal,
   showCouponForm,
+  currency,
 }) {
   return (
     <div
@@ -199,7 +211,11 @@ function OrderSummary({
         )
       }
 
-      <DiscountOffers discounts={summaryDiscounts} offers={offers} />
+      <DiscountOffers
+        discounts={summaryDiscounts}
+        offers={offers}
+        currency={currency}
+      />
 
       {showCouponForm ? <CouponForm /> : null}
 
@@ -221,6 +237,7 @@ OrderSummary.propTypes = {
     benefitValue: PropTypes.string,
     provider: PropTypes.string,
   })),
+  currency: PropTypes.string,
 };
 
 OrderSummary.defaultProps = {
@@ -232,6 +249,7 @@ OrderSummary.defaultProps = {
   summaryDiscounts: undefined,
   summaryPrice: undefined,
   offers: [],
+  currency: undefined,
 };
 
 export default connect(basketSelector)(OrderSummary);
