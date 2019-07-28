@@ -34,18 +34,12 @@ module.exports = {
     basket: {
       loaded: false,
       loading: false,
+      couponLoading: false,
       isFreeBasket: false,
-    },
-    coupon: {
-      benefitValue: null,
-      code: null,
-      id: null,
-      error: null,
-      loaded: false,
-      loading: false,
     },
     currency: {},
     offers: [],
+    coupons: [],
   },
   router: {
     location: {

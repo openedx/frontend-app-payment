@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
 import Cookies from 'universal-cookie';
 
-import { FETCH_BASKET, UPDATE_QUANTITY } from './actions';
-import { reducer as coupon } from '../coupon';
+import {
+  BASKET_DATA_RECEIVED,
+  fetchBasket,
+  addCoupon,
+  removeCoupon,
+  updateQuantity,
+} from './actions';
+
 import { reducer as cybersource } from '../cybersource';
 import { reducer as paypal } from '../paypal';
 import { configuration } from '../../environment';
@@ -16,41 +22,28 @@ const basketInitialState = {
 
 const basket = (state = basketInitialState, action = null) => {
   switch (action.type) {
-    case FETCH_BASKET.BEGIN:
-      return {
-        ...state,
-        loading: true,
-        loaded: false,
-      };
-    case FETCH_BASKET.SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        loading: false,
-        loaded: true,
-      };
-    case FETCH_BASKET.FAILURE:
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-      };
+    case BASKET_DATA_RECEIVED: return { ...state, ...action.payload };
 
-    case UPDATE_QUANTITY.BEGIN:
-      return {
-        ...state,
-        updatingQuantity: true,
-      };
-    case UPDATE_QUANTITY.SUCCESS:
-      return {
-        ...state,
-        updatingQuantity: false,
-      };
-    case UPDATE_QUANTITY.FAILURE:
-      return {
-        ...state,
-        updatingQuantity: false,
-      };
+    case fetchBasket.TRIGGER: return { ...state, loading: true };
+    case fetchBasket.SUCCESS: return { ...state, data: action.payload };
+    case fetchBasket.FAILURE: return { ...state, error: action.payload };
+    case fetchBasket.FULFILL: return { ...state, loading: false, loaded: true };
+
+    case addCoupon.TRIGGER: return { ...state, couponLoading: true };
+    case addCoupon.SUCCESS: return { ...state, couponData: action.payload };
+    case addCoupon.FAILURE: return { ...state, couponError: action.payload };
+    case addCoupon.FULFILL: return { ...state, couponLoading: false };
+
+    case removeCoupon.TRIGGER: return { ...state, couponLoading: true };
+    case removeCoupon.SUCCESS: return { ...state, couponData: action.payload };
+    case removeCoupon.FAILURE: return { ...state, couponError: action.payload };
+    case removeCoupon.FULFILL: return { ...state, couponLoading: false };
+
+    case updateQuantity.TRIGGER: return { ...state, quantityLoading: true };
+    case updateQuantity.SUCCESS: return { ...state, quantityData: action.payload };
+    case updateQuantity.FAILURE: return { ...state, quantityError: action.payload };
+    case updateQuantity.FULFILL: return { ...state, quantityLoading: false };
+
     default:
       return state;
   }
@@ -74,7 +67,6 @@ const currency = (state = currencyInitialState) => ({ ...state });
 
 const reducer = combineReducers({
   basket,
-  coupon,
   currency,
   cybersource,
   paypal,

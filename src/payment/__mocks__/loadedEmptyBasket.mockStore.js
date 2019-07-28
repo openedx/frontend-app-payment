@@ -34,6 +34,7 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
+      couponLoading: false,
       isFreeBasket: false,
       showCouponForm: true,
       paymentProviders: [
@@ -48,22 +49,8 @@ module.exports = {
       summaryDiscounts: 0,
       summaryPrice: 0,
       products: [],
-      coupons: [
-        {
-          code: 'SUMMER20',
-          id: 12345,
-          benefitValue: '20%'
-        }
-      ],
+      coupons: [],
       offers: [],
-    },
-    coupon: {
-      benefitValue: null,
-      code: null,
-      id: null,
-      error: null,
-      loaded: false,
-      loading: false,
     },
     currency: {},
   },

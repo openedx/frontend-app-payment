@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-i18n';
 
 import { basketSelector } from './data/selectors';
-import { CouponForm } from './coupon';
+import CouponForm from './CouponForm';
 import LocalizedPrice from './LocalizedPrice';
 
 import { ORDER_TYPES } from './data/constants';

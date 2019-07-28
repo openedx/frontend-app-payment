@@ -1,44 +1,28 @@
-import { utils } from '../../common';
-
-const { AsyncActionType } = utils;
-
-export const FETCH_BASKET = new AsyncActionType('PAYMENT', 'FETCH_BASKET');
-
-export const fetchBasket = () => ({
-  type: FETCH_BASKET.BASE,
-  payload: {},
-});
-
-export const fetchBasketBegin = () => ({
-  type: FETCH_BASKET.BEGIN,
-});
-
-export const fetchBasketSuccess = result => ({
-  type: FETCH_BASKET.SUCCESS,
-  payload: result,
-});
-
-export const fetchBasketFailure = () => ({
-  type: FETCH_BASKET.FAILURE,
-});
+import { createRoutine } from 'redux-saga-routines';
 
 
-export const UPDATE_QUANTITY = new AsyncActionType('PAYMENT', 'UPDATE_QUANTITY');
+// Routines are action + action creator pairs in a series.
+// Actions adhere to the flux standard action format.
+// Routines by default are in the form of:
+//
+// Action                |   Action Creator
+// -----------------------------------------------
+// fetchBasket.TRIGGER   |   fetchBasket()
+// fetchBasket.SUCCESS   |   fetchBasket.success()
+// fetchBasket.FAILURE   |   fetchBasket.failure()
+// fetchBasket.FULFILL   |   fetchBasket.fulfill()
+//
+// Created with redux-saga-routines
+export const fetchBasket = createRoutine('FETCH_BASKET');
+export const addCoupon = createRoutine('ADD_COUPON');
+export const removeCoupon = createRoutine('REMOVE_COUPON');
+export const updateQuantity = createRoutine('UPDATE_QUANTITY');
 
-export const updateEnrollmentCodeQuantity = quantity => ({
-  type: UPDATE_QUANTITY.BASE,
-  payload: { quantity },
-});
 
-export const updateEnrollmentCodeQuantityBegin = () => ({
-  type: UPDATE_QUANTITY.BEGIN,
-});
+// Actions and their action creators
+export const BASKET_DATA_RECEIVED = 'BASKET_DATA_RECEIVED';
 
-export const updateEnrollmentCodeQuantitySuccess = result => ({
-  type: UPDATE_QUANTITY.SUCCESS,
-  payload: result,
-});
-
-export const updateEnrollmentCodeQuantityFailure = () => ({
-  type: UPDATE_QUANTITY.FAILURE,
+export const basketDataReceived = basket => ({
+  type: BASKET_DATA_RECEIVED,
+  payload: basket,
 });

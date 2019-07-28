@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { StatefulButton, Input } from '@edx/paragon';
 
-import { updateEnrollmentCodeQuantity } from './data/actions';
+import { updateQuantity } from './data/actions';
 import { basketSelector } from './data/selectors';
 
 function UpdateQuantityForm(props) {
@@ -12,7 +12,7 @@ function UpdateQuantityForm(props) {
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    props.updateEnrollmentCodeQuantity(e.target.elements[id].value);
+    props.updateQuantity(e.target.elements[id].value);
   });
 
   return (
@@ -74,7 +74,7 @@ function UpdateQuantityForm(props) {
 }
 
 UpdateQuantityForm.propTypes = {
-  updateEnrollmentCodeQuantity: PropTypes.func.isRequired,
+  updateQuantity: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   updatingQuantity: PropTypes.bool,
 };
@@ -87,6 +87,6 @@ UpdateQuantityForm.defaultProps = {
 export default connect(
   basketSelector,
   {
-    updateEnrollmentCodeQuantity,
+    updateQuantity,
   },
 )(UpdateQuantityForm);

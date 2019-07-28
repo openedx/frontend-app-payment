@@ -29,6 +29,7 @@ module.exports = {
   payment: {
     basket: {
       loading: false,
+      couponLoading: false,
       products: [
         {
           sku: 'EA280E8',
@@ -67,14 +68,6 @@ module.exports = {
       summaryDiscounts: 50,
       coupons: [],
       basketId: 103676
-    },
-    coupon: {
-      benefitValue: null,
-      code: null,
-      id: null,
-      errorCode: null,
-      loaded: true,
-      loading: false
     },
     currency: {},
   },
