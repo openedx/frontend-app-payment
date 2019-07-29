@@ -5,7 +5,7 @@ import { Button, Input, ValidationFormGroup } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 
-import { addCoupon, removeCoupon } from './data/actions';
+import { addCoupon, removeCoupon } from '../data/actions';
 import LocalizedPrice from './LocalizedPrice';
 
 const renderMuted = txt => <span className="text-muted">{txt}</span>;

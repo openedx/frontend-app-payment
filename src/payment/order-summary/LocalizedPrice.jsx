@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedNumber } from '@edx/frontend-i18n';
 
-import { localizedCurrencySelector } from './data/selectors';
+import { localizedCurrencySelector } from '../data/selectors';
 
 /**
  * Displays a positive or negative price, according to the currency and the conversion rate set
