@@ -79,7 +79,10 @@ export const performApplePayPayment = ({
   applePaySession.onvalidatemerchant = (event) => {
     console.log('Validating merchant...');
 
-    const postData = { url: event.validationURL };
+    const postData = {
+      url: event.validationURL,
+      is_payment_microfrontend: true,
+    };
 
     return apiClient.post(config.APPLE_PAY_START_SESSION_URL, postData)
       .then((response) => {
