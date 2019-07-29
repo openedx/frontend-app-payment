@@ -23,17 +23,24 @@ export const currencyDisclaimerSelector = state => ({
   actualAmount: state[storeName].basket.orderTotal,
 });
 
+export const orderSummarySelector = createSelector(
+  basketSelector,
+  localizedCurrencySelector,
+  (basket, currency) => ({
+    ...basket,
+    isCurrencyConverted: currency.showAsLocalizedCurrency,
+  }),
+);
+
 export const paymentSelector = createSelector(
   basketSelector,
   configurationSelector,
-  localizedCurrencySelector,
-  (basket, configuration, currency) => ({
+  (basket, configuration) => ({
     ...basket,
     dashboardURL: configuration.LMS_BASE_URL,
     supportURL: configuration.SUPPORT_URL,
     ecommerceURL: configuration.ECOMMERCE_BASE_URL,
     isEmpty: basket.loaded && (!basket.products || basket.products.length === 0),
-    isCurrencyConverted: currency.showAsLocalizedCurrency,
   }),
 );
 
