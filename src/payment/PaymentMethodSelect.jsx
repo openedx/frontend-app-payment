@@ -19,7 +19,7 @@ function PaymentMethodSelect({ intl, loading }) {
         />
       </h5>
 
-      <p className="d-flex ">
+      <p className="d-flex flex-wrap">
         <button className="payment-method-button active">
           <img
             src={AcceptedCardLogos}

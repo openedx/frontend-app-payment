@@ -507,7 +507,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           </span>
         </h5>
         <p
-          className="d-flex "
+          className="d-flex flex-wrap"
         >
           <button
             className="payment-method-button active"
@@ -2345,13 +2345,20 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             className="col-lg-6 form-group"
           >
             <button
-              className="btn btn-primary btn-lg btn-block"
-              disabled={false}
+              aria-disabled={false}
+              aria-live="assertive"
+              className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+              onBlur={[Function]}
               onClick={[Function]}
+              onKeyDown={[Function]}
               type="submit"
             >
-              <span>
-                Place Order
+              <span
+                className="d-flex align-items-center justify-content-center"
+              >
+                <span>
+                  Place Order
+                </span>
               </span>
             </button>
           </div>
@@ -2513,7 +2520,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           </span>
         </h5>
         <p
-          className="d-flex "
+          className="d-flex flex-wrap"
         >
           <button
             className="payment-method-button active"
@@ -4351,13 +4358,20 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
             className="col-lg-6 form-group"
           >
             <button
-              className="btn btn-primary btn-lg btn-block"
-              disabled={false}
+              aria-disabled={false}
+              aria-live="assertive"
+              className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+              onBlur={[Function]}
               onClick={[Function]}
+              onKeyDown={[Function]}
               type="submit"
             >
-              <span>
-                Place Order
+              <span
+                className="d-flex align-items-center justify-content-center"
+              >
+                <span>
+                  Place Order
+                </span>
               </span>
             </button>
           </div>
@@ -4458,7 +4472,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
           </span>
         </h5>
         <p
-          className="d-flex "
+          className="d-flex flex-wrap"
         >
           <button
             className="payment-method-button active"
@@ -6528,7 +6542,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           </span>
         </h5>
         <p
-          className="d-flex "
+          className="d-flex flex-wrap"
         >
           <button
             className="payment-method-button active"
@@ -8366,13 +8380,20 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             className="col-lg-6 form-group"
           >
             <button
-              className="btn btn-primary btn-lg btn-block"
-              disabled={false}
+              aria-disabled={false}
+              aria-live="assertive"
+              className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+              onBlur={[Function]}
               onClick={[Function]}
+              onKeyDown={[Function]}
               type="submit"
             >
-              <span>
-                Place Order
+              <span
+                className="d-flex align-items-center justify-content-center"
+              >
+                <span>
+                  Place Order
+                </span>
               </span>
             </button>
           </div>
@@ -8531,7 +8552,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
           </span>
         </h5>
         <p
-          className="d-flex "
+          className="d-flex flex-wrap"
         >
           <button
             className="payment-method-button active"
@@ -10369,13 +10390,20 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
             className="col-lg-6 form-group"
           >
             <button
-              className="btn btn-primary btn-lg btn-block"
-              disabled={false}
+              aria-disabled={false}
+              aria-live="assertive"
+              className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+              onBlur={[Function]}
               onClick={[Function]}
+              onKeyDown={[Function]}
               type="submit"
             >
-              <span>
-                Place Order
+              <span
+                className="d-flex align-items-center justify-content-center"
+              >
+                <span>
+                  Place Order
+                </span>
               </span>
             </button>
           </div>
