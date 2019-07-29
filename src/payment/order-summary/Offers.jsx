@@ -4,19 +4,19 @@ import { FormattedMessage, FormattedNumber } from '@edx/frontend-i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 
-function DiscountBenefit({ benefitType, benefitValue }) {
+function Benefit({ benefitType, benefitValue }) {
   if (benefitType === 'Percentage') {
     return <FormattedNumber value={benefitValue / 100} style="percent" />; // eslint-disable-line react/style-prop-object
   }
   return <LocalizedPrice amount={benefitValue} />;
 }
 
-DiscountBenefit.propTypes = {
+Benefit.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
 };
 
-function DiscountOffer({
+function Offer({
   benefitType, benefitValue, provider,
 }) {
   return (
@@ -27,7 +27,7 @@ function DiscountOffer({
         description="A description of a discount offer applied to a basket."
         values={{
           benefit: (
-            <DiscountBenefit
+            <Benefit
               benefitType={benefitType}
               benefitValue={benefitValue}
             />
@@ -39,13 +39,13 @@ function DiscountOffer({
   );
 }
 
-DiscountOffer.propTypes = {
+Offer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
   provider: PropTypes.string.isRequired,
 };
 
-export default function DiscountOffers({ offers, discounts }) {
+export default function Offers({ offers, discounts }) {
   if ((discounts === undefined || discounts <= 0) && offers.length === 0) return null;
 
   return (
@@ -63,13 +63,13 @@ export default function DiscountOffers({ offers, discounts }) {
         </span>
       </p>
       {offers.map(offer => (
-        <DiscountOffer key={`${offer.benefitValue}-${offer.benefitType}-${offer.provider}`} {...offer} />
+        <Offer key={`${offer.benefitValue}-${offer.benefitType}-${offer.provider}`} {...offer} />
       ))}
     </div>
   );
 }
 
-DiscountOffers.propTypes = {
+Offers.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
     benefitValue: PropTypes.number.isRequired,
@@ -78,7 +78,7 @@ DiscountOffers.propTypes = {
   discounts: PropTypes.number,
 };
 
-DiscountOffers.defaultProps = {
+Offers.defaultProps = {
   offers: [],
   discounts: undefined,
 };

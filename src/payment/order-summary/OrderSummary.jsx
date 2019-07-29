@@ -9,7 +9,7 @@ import BulkOrderSummaryTable from './BulkOrderSummaryTable';
 import SummaryTable from './SummaryTable';
 import TotalTable from './TotalTable';
 import CouponForm from './CouponForm';
-import DiscountOffers from './DiscountOffers';
+import Offers from './Offers';
 
 import { ORDER_TYPES } from '../data/constants';
 
@@ -49,7 +49,7 @@ function OrderSummary({
         <SummaryTable price={summaryPrice} />
       )}
 
-      <DiscountOffers discounts={summaryDiscounts} offers={offers} />
+      <Offers discounts={summaryDiscounts} offers={offers} />
 
       {showCouponForm ? <CouponForm /> : null}
 
