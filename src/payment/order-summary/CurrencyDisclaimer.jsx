@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, FormattedNumber, injectIntl } from '@edx/frontend-i18n';
 
-import { currencyDisclaimerSelector } from './data/selectors';
+import { currencyDisclaimerSelector } from '../data/selectors';
 
 function CurrencyDisclaimer(props) {
   return (
-    <div className="text-muted">
+    <div className="text-muted font-italic">
       <FormattedMessage
         id="payment.currency.disclaimer"
         defaultMessage="* This total contains an approximate conversion. You will be charged {actualAmount} {actualCurrencyCode}."

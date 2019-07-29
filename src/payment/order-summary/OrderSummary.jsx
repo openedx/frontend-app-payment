@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-i18n';
 
-import { basketSelector } from '../data/selectors';
+import { orderSummarySelector } from '../data/selectors';
 import BulkOrderSummaryTable from './BulkOrderSummaryTable';
 import SummaryTable from './SummaryTable';
 import TotalTable from './TotalTable';
 import CouponForm from './CouponForm';
 import Offers from './Offers';
+import CurrencyDisclaimer from './CurrencyDisclaimer';
 
 import { ORDER_TYPES } from '../data/constants';
 
@@ -23,6 +24,7 @@ function OrderSummary({
   offers,
   orderTotal,
   showCouponForm,
+  isCurrencyConverted,
 }) {
   return (
     <div
@@ -54,11 +56,14 @@ function OrderSummary({
       {showCouponForm ? <CouponForm /> : null}
 
       <TotalTable total={orderTotal} />
+
+      {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
     </div>
   );
 }
 
 OrderSummary.propTypes = {
+  isCurrencyConverted: PropTypes.bool,
   showCouponForm: PropTypes.bool,
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   orderTotal: PropTypes.number,
@@ -74,6 +79,7 @@ OrderSummary.propTypes = {
 };
 
 OrderSummary.defaultProps = {
+  isCurrencyConverted: false,
   showCouponForm: false,
   orderType: ORDER_TYPES.SEAT,
   orderTotal: undefined,
@@ -84,4 +90,4 @@ OrderSummary.defaultProps = {
   offers: [],
 };
 
-export default connect(basketSelector)(OrderSummary);
+export default connect(orderSummarySelector)(OrderSummary);
