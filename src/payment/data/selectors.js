@@ -43,12 +43,3 @@ export const countryOptionsSelector = createSelector(
     countryOptions: getCountryList(locale).map(({ code, name }) => ({ value: code, label: name })),
   }),
 );
-
-export const cardHolderInformationSelector = createSelector(
-  basketSelector,
-  countryOptionsSelector,
-  (basket, countryOptions) => ({
-    ...countryOptions,
-    orderType: basket.orderType,
-  }),
-);
