@@ -90,7 +90,7 @@ describe('Perform Apple Pay Payment', () => {
 
     expect(apiClient.post).toHaveBeenCalledWith(
       config.APPLE_PAY_START_SESSION_URL,
-      { url: validateEvent.validationURL },
+      { url: validateEvent.validationURL, is_payment_microfrontend: true },
     );
 
     return requestPromise.finally(() => {
