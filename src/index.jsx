@@ -20,6 +20,7 @@ import { configureApiService as configurePaymentApiService } from './payment';
 
 import './index.scss';
 import App from './components/App';
+import ErrorPage from './common/components/ErrorPage';
 
 if (configuration.ENVIRONMENT !== 'production') {
   import(/* webpackChunkName: "react-axe" */ 'react-axe')
@@ -73,13 +74,17 @@ apiClient.ensurePublicOrAuthenticationAndCookies(
   (accessToken) => {
     const { store, history } = configure();
 
-    ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
-
     if (accessToken) {
+      ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
       identifyAuthenticatedUser(accessToken.userId);
+      sendPageEvent();
     } else {
+      // This should never happen, but it does sometimes.
+      // Add logging to learn more.
+      ReactDOM.render(<ErrorPage />, document.getElementById('root'));
+      NewRelicLoggingService.logError('Empty accessToken returned from ' +
+        'ensurePublicOrAuthenticationAndCookies callback.');
       identifyAnonymousUser();
     }
-    sendPageEvent();
   },
 );
