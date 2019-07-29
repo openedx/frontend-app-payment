@@ -41,14 +41,6 @@ module.exports = {
     offers: [],
     coupons: [],
   },
-  router: {
-    location: {
-      pathname: '/',
-      search: '',
-      hash: '',
-    },
-    action: 'POP',
-  },
   i18n: {
     locale: 'en',
   },

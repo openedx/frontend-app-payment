@@ -69,14 +69,6 @@ module.exports = {
     },
     currency: {},
   },
-  router: {
-    location: {
-      pathname: '/',
-      search: '',
-      hash: '',
-    },
-    action: 'POP',
-  },
   i18n: {
     locale: 'en',
   },
