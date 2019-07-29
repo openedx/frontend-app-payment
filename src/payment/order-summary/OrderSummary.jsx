@@ -23,7 +23,6 @@ function OrderSummary({
   offers,
   orderTotal,
   showCouponForm,
-  currency,
 }) {
   return (
     <div
@@ -50,7 +49,7 @@ function OrderSummary({
         <SummaryTable price={summaryPrice} />
       )}
 
-      <DiscountOffers discounts={summaryDiscounts} offers={offers} currency={currency} />
+      <DiscountOffers discounts={summaryDiscounts} offers={offers} />
 
       {showCouponForm ? <CouponForm /> : null}
 
@@ -72,7 +71,6 @@ OrderSummary.propTypes = {
     benefitValue: PropTypes.number.isRequired,
     provider: PropTypes.string.isRequired,
   })),
-  currency: PropTypes.string,
 };
 
 OrderSummary.defaultProps = {
@@ -84,7 +82,6 @@ OrderSummary.defaultProps = {
   summaryDiscounts: undefined,
   summaryPrice: undefined,
   offers: [],
-  currency: undefined,
 };
 
 export default connect(basketSelector)(OrderSummary);

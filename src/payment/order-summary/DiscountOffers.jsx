@@ -4,9 +4,9 @@ import { FormattedMessage, FormattedNumber } from '@edx/frontend-i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 
-function DiscountBenefit({ benefitType, benefitValue, currency }) {
+function DiscountBenefit({ benefitType, benefitValue }) {
   if (benefitType === 'Percentage') {
-    return <FormattedNumber value={benefitValue / 100} style="percent" currency={currency} />; // eslint-disable-line react/style-prop-object
+    return <FormattedNumber value={benefitValue / 100} style="percent" />; // eslint-disable-line react/style-prop-object
   }
   return <LocalizedPrice amount={benefitValue} />;
 }
@@ -14,15 +14,10 @@ function DiscountBenefit({ benefitType, benefitValue, currency }) {
 DiscountBenefit.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
-  currency: PropTypes.string,
-};
-
-DiscountBenefit.defaultProps = {
-  currency: undefined,
 };
 
 function DiscountOffer({
-  currency, benefitType, benefitValue, provider,
+  benefitType, benefitValue, provider,
 }) {
   return (
     <p className="m-0 text-muted" key={`${benefitValue}-${provider}`}>
@@ -35,7 +30,6 @@ function DiscountOffer({
             <DiscountBenefit
               benefitType={benefitType}
               benefitValue={benefitValue}
-              currency={currency}
             />
           ),
           provider,
@@ -48,15 +42,10 @@ function DiscountOffer({
 DiscountOffer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
-  currency: PropTypes.string,
   provider: PropTypes.string.isRequired,
 };
 
-DiscountOffer.defaultProps = {
-  currency: undefined,
-};
-
-export default function DiscountOffers({ offers, discounts, currency }) {
+export default function DiscountOffers({ offers, discounts }) {
   if ((discounts === undefined || discounts <= 0) && offers.length === 0) return null;
 
   return (
@@ -74,7 +63,7 @@ export default function DiscountOffers({ offers, discounts, currency }) {
         </span>
       </p>
       {offers.map(offer => (
-        <DiscountOffer key={`${offer.benefitValue}-${offer.benefitType}-${offer.provider}`} currency={currency} {...offer} />
+        <DiscountOffer key={`${offer.benefitValue}-${offer.benefitType}-${offer.provider}`} {...offer} />
       ))}
     </div>
   );
@@ -87,11 +76,9 @@ DiscountOffers.propTypes = {
     provider: PropTypes.string.isRequired,
   })),
   discounts: PropTypes.number,
-  currency: PropTypes.string,
 };
 
 DiscountOffers.defaultProps = {
   offers: [],
   discounts: undefined,
-  currency: undefined,
 };
