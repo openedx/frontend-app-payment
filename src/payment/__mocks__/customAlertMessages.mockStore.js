@@ -57,10 +57,10 @@ module.exports = {
       ],
       showCouponForm: true,
       isFreeBasket: false,
-      currency: 'USD',
       offers: [
         {
-          benefitValue: '50%',
+          benefitValue: 50,
+          benefitType: 'Percentage',
           provider: 'Pied Piper'
         }
       ],

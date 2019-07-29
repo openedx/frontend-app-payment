@@ -14,7 +14,7 @@ import { paymentSelector } from './data/selectors';
 
 // Components
 import { PageLoading } from '../common';
-import OrderSummary from './OrderSummary';
+import OrderSummary from './order-summary';
 import OrderDetails from './order-details';
 import CurrencyDisclaimer from './CurrencyDisclaimer';
 import PaymentForm from './PaymentForm';

@@ -5,7 +5,7 @@ import { Button, Input, ValidationFormGroup } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 
-import { addCoupon, removeCoupon } from './data/actions';
+import { addCoupon, removeCoupon } from '../data/actions';
 import LocalizedPrice from './LocalizedPrice';
 
 const renderMuted = txt => <span className="text-muted">{txt}</span>;
@@ -39,19 +39,13 @@ class CouponForm extends Component {
   }
 
   renderAdd() {
-    const {
-      code, loading,
-    } = this.props;
+    const { code, loading } = this.props;
 
     const id = 'couponField';
 
     return (
       <form onSubmit={this.handleAddSubmit} className="summary-row d-flex align-items-end">
-        <ValidationFormGroup
-          for={id}
-          invalid={false}
-          className="mb-0 mr-2"
-        >
+        <ValidationFormGroup for={id} invalid={false} className="mb-0 mr-2">
           <label className="h6 d-block" htmlFor={id}>
             <FormattedMessage
               id="payment.coupon.label"
@@ -59,14 +53,14 @@ class CouponForm extends Component {
               description="Label for the add coupon form"
             />
           </label>
-          <Input
-            name={id}
-            id={id}
-            type="text"
-            defaultValue={code}
-          />
+          <Input name={id} id={id} type="text" defaultValue={code} />
         </ValidationFormGroup>
-        <Button disabled={loading} className="btn-primary" type="submit" onClick={this.handleSubmitButtonClick}>
+        <Button
+          disabled={loading}
+          className="btn-primary"
+          type="submit"
+          onClick={this.handleSubmitButtonClick}
+        >
           <FormattedMessage
             id="payment.coupon.submit"
             defaultMessage="Apply"
@@ -78,21 +72,7 @@ class CouponForm extends Component {
   }
 
   renderCouponMessage() {
-    const {
-      code, benefitValue, benefitType,
-    } = this.props;
-
-    if (benefitValue === null) {
-      return (
-        <FormattedMessage
-          id="payment.coupon.benefit.default"
-          defaultMessage="Coupon {code} applied"
-          description="A coupon has been applied."
-          values={{ code }}
-        >
-          {renderMuted}
-        </FormattedMessage>);
-    }
+    const { code, benefitValue, benefitType } = this.props;
 
     if (benefitType === 'Absolute') {
       return (
@@ -103,12 +83,11 @@ class CouponForm extends Component {
             description="A coupon has been applied for a fixed currency discount, like $10.  Currency symbol will already be provided."
             values={{
               code,
-              amount: (
-                <LocalizedPrice amount={benefitValue} />
-              ),
+              amount: <LocalizedPrice amount={benefitValue} />,
             }}
           />
-        </span>);
+        </span>
+      );
     }
 
     if (benefitType === 'Percentage') {
@@ -123,10 +102,20 @@ class CouponForm extends Component {
           }}
         >
           {renderMuted}
-        </FormattedMessage>);
+        </FormattedMessage>
+      );
     }
 
-    return null;
+    return (
+      <FormattedMessage
+        id="payment.coupon.benefit.default"
+        defaultMessage="Coupon {code} applied"
+        description="A coupon has been applied."
+        values={{ code }}
+      >
+        {renderMuted}
+      </FormattedMessage>
+    );
   }
 
   renderRemove() {
@@ -159,10 +148,7 @@ CouponForm.propTypes = {
   id: PropTypes.number,
   addCoupon: PropTypes.func.isRequired,
   removeCoupon: PropTypes.func.isRequired,
-  benefitValue: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  benefitValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   benefitType: PropTypes.string,
 };
 
@@ -174,10 +160,9 @@ CouponForm.defaultProps = {
   benefitType: null,
 };
 
-
 const mapStateToProps = (state) => {
   const { basket } = state.payment;
-  const coupon = (basket.coupons && basket.coupons.length) ? basket.coupons[0] : {};
+  const coupon = basket.coupons && basket.coupons.length ? basket.coupons[0] : {};
 
   return {
     ...coupon,

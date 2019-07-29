@@ -418,7 +418,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               className="m-0 text-muted"
             >
               <span>
-                50% discount provided by Pied Piper.
+                <span>
+                  50%
+                </span>
+                 discount provided by Pied Piper.
               </span>
             </p>
           </div>
@@ -6453,7 +6456,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="m-0 text-muted"
             >
               <span>
-                50% discount provided by Pied Piper.
+                <span>
+                  50%
+                </span>
+                 discount provided by Pied Piper.
               </span>
             </p>
           </div>

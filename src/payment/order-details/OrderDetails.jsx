@@ -110,11 +110,12 @@ OrderDetails.propTypes = {
     'seat.credit',
     'seat',
   ]),
-  userEmail: PropTypes.string.isRequired,
+  userEmail: PropTypes.string,
 };
 
 OrderDetails.defaultProps = {
   messageType: null,
+  userEmail: '', // Not ideal - the alternative is to not display the component until the user account is loaded.
 };
 
 export default connect(
