@@ -57,7 +57,6 @@ module.exports = {
       ],
       showCouponForm: true,
       isFreeBasket: false,
-      currency: 'USD',
       offers: [
         {
           benefitValue: 50,

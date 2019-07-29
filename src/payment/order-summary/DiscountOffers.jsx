@@ -14,7 +14,11 @@ function DiscountBenefit({ benefitType, benefitValue, currency }) {
 DiscountBenefit.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
+  currency: PropTypes.string,
+};
+
+DiscountBenefit.defaultProps = {
+  currency: undefined,
 };
 
 function DiscountOffer({
@@ -44,8 +48,12 @@ function DiscountOffer({
 DiscountOffer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
-  currency: PropTypes.string.isRequired,
+  currency: PropTypes.string,
   provider: PropTypes.string.isRequired,
+};
+
+DiscountOffer.defaultProps = {
+  currency: undefined,
 };
 
 export default function DiscountOffers({ offers, discounts, currency }) {
