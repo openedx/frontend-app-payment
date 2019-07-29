@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Route, Switch } from 'react-router-dom';
-import { ConnectedRouter } from 'connected-react-router';
+import { Route, Switch, Router } from 'react-router-dom';
 import SiteHeader from '@edx/frontend-component-site-header';
 import { IntlProvider, injectIntl, intlShape, getLocale, getMessages } from '@edx/frontend-i18n';
 
@@ -107,13 +106,13 @@ class App extends Component {
       <ErrorBoundary>
         <IntlProvider locale={getLocale()} messages={getMessages()}>
           <Provider store={this.props.store}>
-            <ConnectedRouter history={this.props.history}>
+            <Router history={this.props.history}>
               <IntlPageContent
                 configuration={this.props.configuration}
                 username={this.props.username}
                 avatar={this.props.avatar}
               />
-            </ConnectedRouter>
+            </Router>
           </Provider>
         </IntlProvider>
       </ErrorBoundary>

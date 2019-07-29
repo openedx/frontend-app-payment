@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { userAccount } from '@edx/frontend-auth';
-import { connectRouter } from 'connected-react-router';
 import { reducer as formReducer } from 'redux-form';
 import { reducer as i18nReducer } from '@edx/frontend-i18n';
 
@@ -18,7 +17,7 @@ const identityReducer = (state) => {
   return newState;
 };
 
-const createRootReducer = history =>
+const createRootReducer = () =>
   combineReducers({
     // The authentication state is added as initialState when
     // creating the store in data/store.js.
@@ -27,7 +26,6 @@ const createRootReducer = history =>
     userAccount,
     [paymentStoreName]: paymentReducer,
     [feedbackStoreName]: feedbackReducer,
-    router: connectRouter(history),
     form: formReducer,
     i18n: i18nReducer,
   });

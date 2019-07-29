@@ -94,14 +94,6 @@ module.exports = {
       1
     ]
   },
-  router: {
-    location: {
-      pathname: '/',
-      search: '',
-      hash: ''
-    },
-    action: 'POP'
-  },
   i18n: {
     locale: 'en'
   }
