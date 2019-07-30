@@ -49,8 +49,11 @@ function UpdateQuantityForm(props) {
           >
             <FormattedMessage
               id="payment.update.quantity.field.help.text"
-              defaultMessage="Max: 100"
+              defaultMessage="Max: {number}"
               description="Help text for updating a quantity of enrollment codes to purchase. Maximum 100 codes."
+              values={{
+                number: 100,
+              }}
             />
           </small>
         </div>
