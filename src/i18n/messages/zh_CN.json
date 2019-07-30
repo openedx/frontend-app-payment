@@ -1,5 +1,5 @@
 {
-  "unexpected.error.message.text": "An unexpected error occurred. Please click the button below to return to refresh the page.",
+  "unexpected.error.message.text": "An unexpected error occurred. Please click the button below to refresh the page.",
   "unexpected.error.button.text": "Try Again",
   "siteheader.links.courses": "Courses",
   "siteheader.links.programs": "Programs & Degrees",
@@ -93,6 +93,6 @@
   "payment.card.holder.information.state.options.empty": "<Choose state/province>",
   "payment.screen.reader.cart.details.loading": "Loading, please wait...",
   "payment.update.quantity.label": "Quantity",
-  "payment.update.quantity.field.help.text": "Max: 100",
+  "payment.update.quantity.field.help.text": "Max: {number}",
   "payment.update.quantity.submit.button": "Update"
 }
