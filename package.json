@@ -46,7 +46,7 @@
     "babel-polyfill": "6.26.0",
     "card-validator": "6.2.0",
     "classnames": "2.2.6",
-    "email-prop-type": "1.1.7",
+    "email-prop-type": "3.0.0",
     "form-urlencoded": "3.0.2",
     "glob": "7.1.4",
     "history": "4.9.0",
