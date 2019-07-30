@@ -103,7 +103,7 @@ export const performApplePayPayment = ({
     const postData = event.payment;
 
     return apiClient.post(config.APPLE_PAY_AUTHORIZE_URL, postData)
-      .then((data) => {
+      .then(({ data }) => {
         const orderNumber = data.number;
         console.log('CyberSource successfully authorized Apple Pay payment.', data);
         applePaySession.completePayment(global.ApplePaySession.STATUS_SUCCESS);

@@ -119,7 +119,7 @@ describe('Perform Apple Pay Payment', () => {
 
 
   it('should submit the payment for authorization', () => {
-    const successResponse = { number: 'the order number' };
+    const successResponse = { data: { number: 'the order number' } };
     const authorizeEvent = { payment: 'payment data' };
 
     apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
@@ -136,7 +136,7 @@ describe('Perform Apple Pay Payment', () => {
     return requestPromise.finally(() => {
       expect(applePaySession.completePayment)
         .toHaveBeenCalledWith(global.ApplePaySession.STATUS_SUCCESS);
-      expect(eventHandlers.onPaymentComplete).toHaveBeenCalledWith(successResponse.number);
+      expect(eventHandlers.onPaymentComplete).toHaveBeenCalledWith(successResponse.data.number);
     });
   });
 
