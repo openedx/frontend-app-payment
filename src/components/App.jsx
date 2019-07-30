@@ -4,13 +4,11 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Router } from 'react-router-dom';
 import SiteHeader from '@edx/frontend-component-site-header';
 import { IntlProvider, injectIntl, intlShape, getLocale, getMessages } from '@edx/frontend-i18n';
+import { logInfo } from '@edx/frontend-logging';
 
 import { ErrorBoundary, fetchUserAccount } from '../common';
 import { ConnectedPaymentPage } from '../payment';
-
 import HeaderLogo from '../assets/logo.svg';
-import NotFoundPage from './NotFoundPage';
-
 import messages from './App.messages';
 
 
@@ -58,9 +56,19 @@ function PageContent({
       />
       <main>
         <Switch>
-          <Route path="/" component={ConnectedPaymentPage} />
-          <Route path="/notfound" component={NotFoundPage} />
-          <Route path="*" component={NotFoundPage} />
+          <Route exact path="/" component={ConnectedPaymentPage} />
+          <Route
+            path="*"
+            render={() => {
+              logInfo(`Redirecting to ecommerce for path: ${global.location.pathname}`);
+              // We want to redirect to ecommerce for all pages we don't know how to handle here.
+              // This is intended as a stopgap until more permanent server-side logic can be put
+              // in place.
+              // More info here on why: https://openedx.atlassian.net/browse/ARCH-1074
+              global.location.href = `${configuration.ECOMMERCE_BASE_URL}${global.location.pathname}${global.location.search}${global.location.hash}`;
+              return null;
+            }}
+          />
         </Switch>
       </main>
     </div>
@@ -72,6 +80,7 @@ PageContent.propTypes = {
   avatar: PropTypes.string,
   configuration: PropTypes.shape({
     SITE_NAME: PropTypes.string.isRequired,
+    ECOMMERCE_BASE_URL: PropTypes.string.isRequired,
     MARKETING_SITE_BASE_URL: PropTypes.string.isRequired,
     SUPPORT_URL: PropTypes.string.isRequired,
     CONTACT_URL: PropTypes.string.isRequired,
