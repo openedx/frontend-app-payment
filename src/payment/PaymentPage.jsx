@@ -21,7 +21,7 @@ import PlaceOrderButton from './PlaceOrderButton';
 import PaymentMethodSelect from './PaymentMethodSelect';
 import CartSummary from './CartSummary';
 import AlertList from '../feedback/AlertList';
-import { SingleEnrollmentCodeWarning } from './AlertCodeMessages';
+import { SingleEnrollmentCodeWarning, EnrollmentCodeQuantityUpdated } from './AlertCodeMessages';
 import SummarySkeleton from './SummarySkeleton';
 
 class PaymentPage extends React.Component {
@@ -142,6 +142,8 @@ class PaymentPage extends React.Component {
       loading,
       loaded,
       isEmpty,
+      summaryQuantity,
+      summarySubtotal,
     } = this.props;
 
     return (
@@ -157,6 +159,14 @@ class PaymentPage extends React.Component {
           */
           messageCodes={{
             'single-enrollment-code-warning': SingleEnrollmentCodeWarning,
+            'quantity-update-success-message': (
+              <EnrollmentCodeQuantityUpdated
+                values={{
+                  quantity: summaryQuantity,
+                  price: summarySubtotal,
+                }}
+              />
+            ),
           }}
         />
         {loaded && isEmpty ? this.renderEmptyMessage() : null}
@@ -176,6 +186,8 @@ PaymentPage.propTypes = {
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
+  summaryQuantity: PropTypes.number,
+  summarySubtotal: PropTypes.number,
 };
 
 PaymentPage.defaultProps = {
@@ -184,6 +196,8 @@ PaymentPage.defaultProps = {
   loading: false,
   isBasketProcessing: false,
   isEmpty: false,
+  summaryQuantity: undefined,
+  summarySubtotal: undefined,
 };
 
 export default connect(

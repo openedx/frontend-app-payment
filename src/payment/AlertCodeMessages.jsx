@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
+import LocalizedPrice from './order-summary/LocalizedPrice';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SingleEnrollmentCodeWarning = ({ values }) => (
@@ -34,5 +35,32 @@ export const SingleEnrollmentCodeWarning = ({ values }) => (
 SingleEnrollmentCodeWarning.propTypes = {
   values: PropTypes.shape({
     courseAboutUrl: PropTypes.string,
+  }).isRequired,
+};
+
+export const EnrollmentCodeQuantityUpdated = ({ values }) => (
+  <React.Fragment>
+    <FormattedMessage
+      id="payment.messages.enrollment-code-product-info.quantity.updated.header"
+      defaultMessage="We've updated your quantity."
+      description="Notifies the user that they have updated the quantity of enrollment codes"
+      tagName="h6"
+    />
+    <FormattedMessage
+      id="payment.messages.enrollment-code-product-info.quantity.updated..body"
+      defaultMessage="Your cart includes {quantity} enrollment codes at a total cost of {price}, that you will receive via email."
+      description="Notifies the user the quantity and price of codes they have in their cart."
+      values={{
+        quantity: values.quantity,
+        price: <LocalizedPrice amount={values.price} />,
+      }}
+    />
+  </React.Fragment>
+);
+
+EnrollmentCodeQuantityUpdated.propTypes = {
+  values: PropTypes.shape({
+    quantity: PropTypes.number,
+    price: PropTypes.number,
   }).isRequired,
 };
