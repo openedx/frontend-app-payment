@@ -39,7 +39,7 @@ class CouponForm extends Component {
   }
 
   renderAdd() {
-    const { code, loading } = this.props;
+    const { code, isBasketProcessing } = this.props;
 
     const id = 'couponField';
 
@@ -56,7 +56,7 @@ class CouponForm extends Component {
           <Input name={id} id={id} type="text" defaultValue={code} />
         </ValidationFormGroup>
         <Button
-          disabled={loading}
+          disabled={isBasketProcessing}
           className="btn-primary"
           type="submit"
           onClick={this.handleSubmitButtonClick}
@@ -122,7 +122,11 @@ class CouponForm extends Component {
     return (
       <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
         {this.renderCouponMessage()}
-        <Button className="btn-link display-inline p-0 pl-3 border-0" type="submit">
+        <Button
+          className="btn-link display-inline p-0 pl-3 border-0"
+          type="submit"
+          disabled={this.props.isBasketProcessing}
+        >
           <FormattedMessage
             id="payment.coupon.remove"
             defaultMessage="Remove"
@@ -143,7 +147,7 @@ class CouponForm extends Component {
 }
 
 CouponForm.propTypes = {
-  loading: PropTypes.bool,
+  isBasketProcessing: PropTypes.bool,
   code: PropTypes.string,
   id: PropTypes.number,
   addCoupon: PropTypes.func.isRequired,
@@ -153,7 +157,7 @@ CouponForm.propTypes = {
 };
 
 CouponForm.defaultProps = {
-  loading: false,
+  isBasketProcessing: false,
   code: '',
   id: null,
   benefitValue: null,
@@ -166,7 +170,7 @@ const mapStateToProps = (state) => {
 
   return {
     ...coupon,
-    loading: basket.couponLoading,
+    isBasketProcessing: basket.isBasketProcessing,
   };
 };
 

@@ -89,6 +89,7 @@ class PaymentPage extends React.Component {
       isCurrencyConverted,
       isFreeBasket,
       loading,
+      isBasketProcessing,
     } = this.props;
 
     return (
@@ -130,7 +131,7 @@ class PaymentPage extends React.Component {
         >
           {isFreeBasket ? <PlaceOrderButton /> : (
             <React.Fragment>
-              <PaymentMethodSelect loading={loading} />
+              <PaymentMethodSelect loading={loading} isBasketProcessing={isBasketProcessing} />
               <PaymentForm />
             </React.Fragment>
         )}
@@ -175,6 +176,7 @@ PaymentPage.propTypes = {
   isCurrencyConverted: PropTypes.bool,
   loaded: PropTypes.bool,
   loading: PropTypes.bool,
+  isBasketProcessing: PropTypes.bool,
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
@@ -184,6 +186,7 @@ PaymentPage.defaultProps = {
   isFreeBasket: false,
   loaded: false,
   loading: false,
+  isBasketProcessing: false,
   isEmpty: false,
   isCurrencyConverted: false,
 };

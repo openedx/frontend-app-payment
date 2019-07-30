@@ -34,7 +34,8 @@ module.exports = {
     basket: {
       loaded: true,
       loading: false,
-      couponLoading: false,
+      isCouponProcessing: false,
+      isQuantityProcessing: false,
       isFreeBasket: true,
       showCouponForm: true,
       paymentProviders: [

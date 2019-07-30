@@ -29,7 +29,8 @@ module.exports = {
   payment: {
     basket: {
       loading: false,
-      couponLoading: false,
+      isCouponProcessing: false,
+      isQuantityProcessing: false,
       products: [
         {
           sku: 'EA280E8',

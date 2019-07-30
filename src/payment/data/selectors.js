@@ -15,7 +15,12 @@ export const localizedCurrencySelector = (state) => {
   };
 };
 
-export const basketSelector = state => ({ ...state[storeName].basket });
+export const basketSelector = state => ({
+  ...state[storeName].basket,
+  isBasketProcessing: state[storeName].basket.isCouponProcessing
+    || state[storeName].basket.isQuantityProcessing
+    || state[storeName].basket.submitting,
+});
 
 export const cartSelector = state => ({ ...state[storeName].basket });
 
