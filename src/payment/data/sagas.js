@@ -73,7 +73,7 @@ export function* handleRemoveCoupon({ payload }) {
 export function* handleUpdateQuantity({ payload }) {
   try {
     yield put(updateQuantity.request());
-    const result = yield call(PaymentApiService.postQuantity, payload.quantity);
+    const result = yield call(PaymentApiService.postQuantity, payload);
     yield put(updateQuantity.success(result));
     yield put(basketDataReceived(result));
     yield call(handleMessages, result.messages, true);
