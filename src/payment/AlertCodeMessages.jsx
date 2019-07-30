@@ -41,13 +41,13 @@ SingleEnrollmentCodeWarning.propTypes = {
 export const EnrollmentCodeQuantityUpdated = ({ values }) => (
   <React.Fragment>
     <FormattedMessage
-      id="payment.messages.enrollment-code-product-info.quantity.updated.header"
+      id="payment.messages.enrollment.code.product.info.quantity.updated.header"
       defaultMessage="We've updated your quantity."
       description="Notifies the user that they have updated the quantity of enrollment codes"
       tagName="h6"
     />
     <FormattedMessage
-      id="payment.messages.enrollment-code-product-info.quantity.updated..body"
+      id="payment.messages.enrollment.code.product.info.quantity.updated.body"
       defaultMessage="Your cart includes {quantity} enrollment codes at a total cost of {price}, that you will receive via email."
       description="Notifies the user the quantity and price of codes they have in their cart."
       values={{
