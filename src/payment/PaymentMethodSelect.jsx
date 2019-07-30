@@ -8,7 +8,9 @@ import AcceptedCardLogos from './assets/accepted-card-logos.png';
 import { ApplePayButtonContainer } from './apple-pay';
 import { PayPalButton } from './paypal';
 
-function PaymentMethodSelect({ intl, loading }) {
+function PaymentMethodSelect({ intl, loading, isBasketProcessing }) {
+  const submissionDisabled = loading || isBasketProcessing;
+
   return (
     <div className="basket-section">
       <h5 aria-level="2">
@@ -29,11 +31,11 @@ function PaymentMethodSelect({ intl, loading }) {
 
         <PayPalButton
           className={classNames({ 'skeleton-pulse': loading })}
-          disabled={loading}
+          disabled={submissionDisabled}
         />
         <ApplePayButtonContainer
           className={classNames({ 'skeleton-pulse': loading })}
-          disabled={loading}
+          disabled={submissionDisabled}
         />
       </p>
     </div>
@@ -43,6 +45,11 @@ function PaymentMethodSelect({ intl, loading }) {
 PaymentMethodSelect.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool.isRequired,
+  isBasketProcessing: PropTypes.bool,
+};
+
+PaymentMethodSelect.defaultProps = {
+  isBasketProcessing: false,
 };
 
 

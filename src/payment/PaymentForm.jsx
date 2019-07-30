@@ -188,12 +188,13 @@ export class PaymentFormComponent extends React.Component {
       handleSubmit,
       submitting,
       loading,
+      isBasketProcessing,
       orderType,
     } = this.props;
 
     let submitButtonState = 'default';
+    if (loading || isBasketProcessing) submitButtonState = 'loading';
     if (submitting) submitButtonState = 'submitting';
-    if (loading) submitButtonState = 'loading';
 
     return (
       <form
@@ -246,6 +247,7 @@ PaymentFormComponent.propTypes = {
   intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool,
+  isBasketProcessing: PropTypes.bool,
   loading: PropTypes.bool,
   submitPaymentCybersource: PropTypes.func.isRequired,
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
@@ -254,6 +256,7 @@ PaymentFormComponent.propTypes = {
 PaymentFormComponent.defaultProps = {
   submitting: false,
   loading: true,
+  isBasketProcessing: false,
   orderType: ORDER_TYPES.SEAT,
 };
 

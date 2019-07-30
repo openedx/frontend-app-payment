@@ -29,20 +29,20 @@ const basket = (state = basketInitialState, action = null) => {
     case fetchBasket.FAILURE: return { ...state, error: action.payload };
     case fetchBasket.FULFILL: return { ...state, loading: false, loaded: true };
 
-    case addCoupon.TRIGGER: return { ...state, couponLoading: true };
+    case addCoupon.TRIGGER: return { ...state, isCouponProcessing: true };
     case addCoupon.SUCCESS: return { ...state, couponData: action.payload };
     case addCoupon.FAILURE: return { ...state, couponError: action.payload };
-    case addCoupon.FULFILL: return { ...state, couponLoading: false };
+    case addCoupon.FULFILL: return { ...state, isCouponProcessing: false };
 
-    case removeCoupon.TRIGGER: return { ...state, couponLoading: true };
+    case removeCoupon.TRIGGER: return { ...state, isCouponProcessing: true };
     case removeCoupon.SUCCESS: return { ...state, couponData: action.payload };
     case removeCoupon.FAILURE: return { ...state, couponError: action.payload };
-    case removeCoupon.FULFILL: return { ...state, couponLoading: false };
+    case removeCoupon.FULFILL: return { ...state, isCouponProcessing: false };
 
-    case updateQuantity.TRIGGER: return { ...state, quantityLoading: true };
+    case updateQuantity.TRIGGER: return { ...state, isQuantityProcessing: true };
     case updateQuantity.SUCCESS: return { ...state, quantityData: action.payload };
     case updateQuantity.FAILURE: return { ...state, quantityError: action.payload };
-    case updateQuantity.FULFILL: return { ...state, quantityLoading: false };
+    case updateQuantity.FULFILL: return { ...state, isQuantityProcessing: false };
 
     default:
       return state;
