@@ -33,7 +33,7 @@ function ApplePayButtonContainer(props) {
 
   return (
     <ApplePayButton
-      className={props.className}
+      className={`payment-method-button ${props.className}`}
       disabled={props.disabled}
       totalAmount={props.orderTotal}
       onPaymentComplete={redirectToReceipt}
