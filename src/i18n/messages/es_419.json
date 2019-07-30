@@ -1,5 +1,5 @@
 {
-  "unexpected.error.message.text": "An unexpected error occurred. Please click the button below to refresh the page.",
+  "unexpected.error.message.text": "Un error inesperado a ocurrido. Por favor haga clic en el botón debajo para refrescar la página.",
   "unexpected.error.button.text": "Intente de nuevo",
   "siteheader.links.courses": "Cursos",
   "siteheader.links.programs": "Programas y Títulos",
@@ -93,6 +93,6 @@
   "payment.card.holder.information.state.options.empty": "<Choose state/province>",
   "payment.screen.reader.cart.details.loading": "Cargando, por favor espere...",
   "payment.update.quantity.label": "Cantidad",
-  "payment.update.quantity.field.help.text": "Max: {number}",
+  "payment.update.quantity.field.help.text": "Máximo: {number}",
   "payment.update.quantity.submit.button": "Actualizar"
 }
