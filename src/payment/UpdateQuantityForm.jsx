@@ -57,7 +57,7 @@ function UpdateQuantityForm(props) {
       </div>
       <StatefulButton
         type="submit"
-        state={props.updatingQuantity ? 'pending' : 'default'}
+        state={props.isBasketProcessing ? 'pending' : 'default'}
         labels={{
           default: (
             <FormattedMessage
@@ -76,12 +76,12 @@ function UpdateQuantityForm(props) {
 UpdateQuantityForm.propTypes = {
   updateQuantity: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  updatingQuantity: PropTypes.bool,
+  isBasketProcessing: PropTypes.bool,
 };
 
 UpdateQuantityForm.defaultProps = {
   summaryQuantity: undefined,
-  updatingQuantity: false,
+  isBasketProcessing: false,
 };
 
 export default connect(
