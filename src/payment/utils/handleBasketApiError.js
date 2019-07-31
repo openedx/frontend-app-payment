@@ -12,7 +12,7 @@ export default function (requestError) {
     processedError.fieldErrors = errorWithMessages.fieldErrors;
 
     if (requestError.response.data) {
-      processedError.basketData = transformResults(requestError.response.data);
+      processedError.basket = transformResults(requestError.response.data);
     }
 
     throw processedError;
