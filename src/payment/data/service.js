@@ -35,12 +35,12 @@ export function configureApiService(newConfig, newApiClient) {
     if (status >= 200 && status < 300 && data && data.redirect) {
       // Redirecting this SPA to itself is likely to cause
       // a redirect loop.
-      if (window.location.href === data.redirect) {
+      if (global.location.href === data.redirect) {
         logError('The api response is directing the basket page to redirect to itself', {
-          url: window.location.href,
+          url: global.location.href,
         });
       }
-      window.location.href = data.redirect;
+      global.location.href = data.redirect;
     }
     return response;
   });
