@@ -3,7 +3,7 @@ import { put } from 'redux-saga/effects';
 import { addMessage, clearMessages } from './actions';
 import { MESSAGE_TYPES } from './constants';
 
-export function* handleErrors(e, clearExistingMessages) {
+export function* handleErrorFeedback(e, clearExistingMessages) {
   if (clearExistingMessages) {
     yield put(clearMessages());
   }
@@ -38,7 +38,7 @@ export function* handleErrors(e, clearExistingMessages) {
   }
 }
 
-export function* handleMessages(messages, clearExistingMessages) {
+export function* handleMessageFeedback(messages, clearExistingMessages) {
   // If this doesn't contain anything we understand, bail.
   if (!Array.isArray(messages)) {
     return null;

@@ -1,5 +1,5 @@
 import { runSaga } from 'redux-saga';
-import { handleErrors } from './sagas';
+import { handleErrorFeedback } from './sagas';
 import { MESSAGE_TYPES } from './constants';
 import { addMessage } from './actions';
 
@@ -20,7 +20,7 @@ describe('saga tests', () => {
           dispatch: action => dispatched.push(action),
           onError: err => caughtErrors.push(err),
         },
-        handleErrors,
+        handleErrorFeedback,
         error,
       ).toPromise();
     } catch (e) {} // eslint-disable-line no-empty
@@ -47,7 +47,7 @@ describe('saga tests', () => {
       {
         dispatch: action => dispatched.push(action),
       },
-      handleErrors,
+      handleErrorFeedback,
       error,
     ).toPromise();
 
@@ -74,7 +74,7 @@ describe('saga tests', () => {
       {
         dispatch: action => dispatched.push(action),
       },
-      handleErrors,
+      handleErrorFeedback,
       error,
     ).toPromise();
 
@@ -101,7 +101,7 @@ describe('saga tests', () => {
       {
         dispatch: action => dispatched.push(action),
       },
-      handleErrors,
+      handleErrorFeedback,
       error,
     ).toPromise();
 
@@ -130,7 +130,7 @@ describe('saga tests', () => {
       {
         dispatch: action => dispatched.push(action),
       },
-      handleErrors,
+      handleErrorFeedback,
       error,
     ).toPromise();
 

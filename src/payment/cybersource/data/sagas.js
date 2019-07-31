@@ -1,4 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { logError } from '@edx/frontend-logging';
+
 import {
   SUBMIT_PAYMENT_CYBERSOURCE,
   submitPaymentCybersourceBegin,
@@ -8,8 +10,9 @@ import {
 import * as CybersourceApiService from './service';
 
 import { generateAndSubmitForm } from '../../../common/utils';
-import { handleErrors } from '../../../feedback';
+import { handleErrorFeedback } from '../../../feedback';
 import { configuration } from '../../../environment';
+import { isUnknownError } from '../../../common/serviceUtils';
 
 export function* handleSubmitPaymentCybersource(action) {
   const { cardHolderInfo, cardDetails } = action.payload;
@@ -49,9 +52,12 @@ export function* handleSubmitPaymentCybersource(action) {
       card_expiry_date: [cardExpirationMonth.padStart(2, '0'), cardExpirationYear].join('-'),
     };
     generateAndSubmitForm(configuration.CYBERSOURCE_URL, cybersourcePaymentParams);
-  } catch (e) {
+  } catch (error) {
     yield put(submitPaymentCybersourceFailure());
-    yield call(handleErrors, e, true);
+    yield call(handleErrorFeedback, error, true);
+    if (isUnknownError(error)) {
+      logError(error);
+    }
   }
 }
 

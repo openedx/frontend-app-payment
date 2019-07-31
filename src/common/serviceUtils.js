@@ -2,7 +2,6 @@ import pick from 'lodash.pick';
 import { logAPIErrorResponse, logInfo } from '@edx/frontend-logging';
 import { camelCaseObject } from './utils';
 
-
 export function applyConfiguration(expected, actual) {
   Object.keys(expected).forEach((key) => {
     if (actual[key] === undefined) {
@@ -87,25 +86,32 @@ function handleApiMessages(messages) {
 export function handleRequestError(error) {
   // Validation errors
   if (error.response && error.response.data.field_errors) {
-    logInfo('Field Errors', error.response.data.field_errors);
+    logInfo('API field errors returned to client in field_errors field', { fieldErrors: error.response.data.field_errors });
     handleFieldErrors(error.response.data.field_errors);
   }
 
   // API errors
   if (error.response && error.response.data.errors !== undefined) {
-    logInfo('API Errors', error.response.data.errors);
+    logInfo('API errors returned to client in errors field', { errors: error.response.data.errors });
     handleApiErrors(error.response.data.errors);
   }
 
   // API messages
   if (error.response && error.response.data.messages !== undefined) {
-    logInfo('API Messages', error.response.data.messages);
+    logInfo('API errors returned to client in messages field', { messages: error.response.data.messages });
     handleApiMessages(error.response.data.messages);
   }
 
   // Single API error
   if (error.response && error.response.data.error_code) {
-    logInfo('API Error', error.response.data.errors);
+    logInfo('API error returned to client as response', {
+      errors: [
+        {
+          error_code: error.response.data.error_code,
+          user_message: error.response.data.user_message,
+        },
+      ],
+    });
     handleApiErrors([
       {
         error_code: error.response.data.error_code,
@@ -117,4 +123,22 @@ export function handleRequestError(error) {
   // Other errors
   logAPIErrorResponse(error);
   throw error;
+}
+
+export function isUnknownError(error) {
+  if (error.response) {
+    if (error.response.data.field_errors !== undefined) {
+      return false;
+    }
+    if (error.response.data.errors !== undefined) {
+      return false;
+    }
+    if (error.response.data.messages !== undefined) {
+      return false;
+    }
+    if (error.response.data.error_code !== undefined) {
+      return false;
+    }
+  }
+  return true;
 }

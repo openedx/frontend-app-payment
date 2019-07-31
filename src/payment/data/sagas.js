@@ -1,4 +1,5 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
+import { logError } from '@edx/frontend-logging';
 
 // Actions
 import {
@@ -14,7 +15,8 @@ import * as PaymentApiService from './service';
 
 import { saga as cybersourceSaga } from '../cybersource';
 import { saga as payPalSaga } from '../paypal';
-import { handleErrors, handleMessages } from '../../feedback';
+import { handleErrorFeedback, handleMessageFeedback } from '../../feedback';
+import { isUnknownError } from '../../common/serviceUtils';
 
 export function* handleFetchBasket() {
   try {
@@ -22,10 +24,13 @@ export function* handleFetchBasket() {
     const result = yield call(PaymentApiService.getBasket);
     yield put(fetchBasket.success(result));
     yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessageFeedback, result.messages, true);
   } catch (error) {
     yield put(fetchBasket.failure(error.message));
-    yield call(handleErrors, error, true);
+    yield call(handleErrorFeedback, error, true);
+    if (isUnknownError(error)) {
+      logError(error);
+    }
     if (error.basket) {
       yield put(basketDataReceived(error.basket));
     }
@@ -40,10 +45,13 @@ export function* handleAddCoupon({ payload }) {
     const result = yield call(PaymentApiService.postCoupon, payload.code);
     yield put(addCoupon.success(result));
     yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessageFeedback, result.messages, true);
   } catch (error) {
     yield put(addCoupon.failure(error.message));
-    yield call(handleErrors, error, true);
+    yield call(handleErrorFeedback, error, true);
+    if (isUnknownError(error)) {
+      logError(error);
+    }
     if (error.basket) {
       yield put(basketDataReceived(error.basket));
     }
@@ -58,10 +66,13 @@ export function* handleRemoveCoupon({ payload }) {
     const result = yield call(PaymentApiService.deleteCoupon, payload.code);
     yield put(removeCoupon.success(result));
     yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessageFeedback, result.messages, true);
   } catch (error) {
     yield put(removeCoupon.failure(error.message));
-    yield call(handleErrors, error, true);
+    yield call(handleErrorFeedback, error, true);
+    if (isUnknownError(error)) {
+      logError(error);
+    }
     if (error.basket) {
       yield put(basketDataReceived(error.basket));
     }
@@ -76,10 +87,13 @@ export function* handleUpdateQuantity({ payload }) {
     const result = yield call(PaymentApiService.postQuantity, payload);
     yield put(updateQuantity.success(result));
     yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessageFeedback, result.messages, true);
   } catch (error) {
     yield put(updateQuantity.failure(error.message));
-    yield call(handleErrors, error, true);
+    yield call(handleErrorFeedback, error, true);
+    if (isUnknownError(error)) {
+      logError(error);
+    }
     if (error.basket) {
       yield put(basketDataReceived(error.basket));
     }

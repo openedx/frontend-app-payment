@@ -1,4 +1,6 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
+import { logError } from '@edx/frontend-logging';
+
 import {
   SUBMIT_PAYMENT_PAYPAL,
   submitPaymentPayPalBegin,
@@ -8,7 +10,8 @@ import {
 import * as PayPalApiService from './service';
 
 import { generateAndSubmitForm } from '../../../common/utils';
-import { handleErrors } from '../../../feedback';
+import { handleErrorFeedback } from '../../../feedback';
+import { isUnknownError } from '../../../common/serviceUtils';
 
 export function* handleSubmitPaymentPayPal() {
   yield put(submitPaymentPayPalBegin());
@@ -20,9 +23,12 @@ export function* handleSubmitPaymentPayPal() {
     );
 
     generateAndSubmitForm(checkout.payment_page_url);
-  } catch (e) {
+  } catch (error) {
     yield put(submitPaymentPayPalFailure());
-    yield call(handleErrors, e, true);
+    yield call(handleErrorFeedback, error, true);
+    if (isUnknownError(error)) {
+      logError(error);
+    }
   }
 }
 
