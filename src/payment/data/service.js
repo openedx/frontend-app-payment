@@ -36,7 +36,7 @@ export function configureApiService(newConfig, newApiClient) {
       // Redirecting this SPA to itself is likely to cause
       // a redirect loop.
       if (global.location.href === data.redirect) {
-        logError('The api response is redirecting to the same payment page url', {
+        logError('Potential redirect loop. The api response is redirecting to the same payment page url', {
           url: global.location.href,
         });
       }
