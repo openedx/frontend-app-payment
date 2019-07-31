@@ -1,4 +1,5 @@
 import pick from 'lodash.pick';
+import { logError } from '@edx/frontend-logging';
 
 import { configureApiService as configureCybersourceApiService } from '../cybersource';
 import { configureApiService as configurePayPalApiService } from '../paypal';
@@ -32,6 +33,13 @@ export function configureApiService(newConfig, newApiClient) {
   apiClient.interceptors.response.use((response) => {
     const { status, data } = response;
     if (status >= 200 && status < 300 && data && data.redirect) {
+      // Redirecting this SPA to itself is likely to cause
+      // a redirect loop.
+      if (window.location.href === data.redirect) {
+        logError('The api response is directing the basket page to redirect to itself', {
+          url: window.location.href,
+        });
+      }
       window.location.href = data.redirect;
     }
     return response;
