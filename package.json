@@ -139,20 +139,16 @@
       "src/**/*.{js,jsx}"
     ],
     "coveragePathIgnorePatterns": [
-      "/node_modules/",
       "src/setupTest.js",
-      "src/index.js",
-      "/tests/",
+      "src/index.jsx",
       "src/common/components",
       "src/common/actions.js",
       "src/common/serviceUtils.js",
-      "src/common/index.js",
       "src/components",
       "src/i18n",
       "src/store",
       "environment.js",
-      "src/data",
-      "src/payment/data"
+      "src/data"
     ],
     "transformIgnorePatterns": [
       "/node_modules/(?!@edx/paragon).+\\.js$"
