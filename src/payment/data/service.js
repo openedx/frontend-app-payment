@@ -17,8 +17,6 @@ let config = {
 };
 
 let apiClient = null; // eslint-disable-line no-unused-vars
-let getParameters = {};
-let firstRequestParameters = {};
 
 export function configureApiService(newConfig, newApiClient) {
   applyConfiguration(config, newConfig);
@@ -38,26 +36,6 @@ export function configureApiService(newConfig, newApiClient) {
     }
     return response;
   });
-
-  const decodeURLParams = (search) => {
-    const hashes = search
-      .slice(search.indexOf('?') + 1)
-      .split('&')
-      .filter(hash => hash !== '');
-
-    return hashes.reduce((params, hash) => {
-      const split = hash.indexOf('=');
-      const key = hash.slice(0, split);
-      const value = hash.slice(split + 1);
-      return Object.assign(params, { [key]: decodeURIComponent(value) });
-    }, {});
-  };
-
-  getParameters = decodeURLParams(window.location.search);
-
-  if (getParameters.consent_failed !== undefined) {
-    firstRequestParameters.consent_failed = getParameters.consent_failed;
-  }
 }
 
 function getOrderType(productType) {
@@ -96,11 +74,8 @@ export function transformResults(data) {
 
 export async function getBasket() {
   const { data } = await apiClient
-    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`, { params: firstRequestParameters })
+    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`)
     .catch(handleBasketApiError);
-
-  // unset first request get params
-  firstRequestParameters = {};
 
   return transformResults(data);
 }
