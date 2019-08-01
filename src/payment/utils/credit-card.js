@@ -17,7 +17,7 @@ export const SUPPORTED_CARDS = {
 export function getCardIcon(cardNumber) {
   let cardIcon = null;
   const { card } = CardValidator.number(cardNumber);
-  if (card) {
+  if (card && SUPPORTED_CARDS[card.type] !== undefined) {
     ({ cardIcon } = SUPPORTED_CARDS[card.type]);
   }
   return cardIcon;
@@ -26,7 +26,7 @@ export function getCardIcon(cardNumber) {
 export function getCardTypeId(cardNumber) {
   let cardTypeId = null;
   const { card } = CardValidator.number(cardNumber);
-  if (card) {
+  if (card && SUPPORTED_CARDS[card.type] !== undefined) {
     ({ cardTypeId } = SUPPORTED_CARDS[card.type]);
   }
   return cardTypeId;
