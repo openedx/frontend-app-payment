@@ -5,7 +5,9 @@ import { Field } from 'redux-form';
 import ReactTooltip from 'react-tooltip';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { injectIntl, FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
+
+import messages from './CardDetails.messages';
 
 import FormInput from '../common/components/FormInput';
 import FormSelect from '../common/components/FormSelect';
@@ -35,16 +37,20 @@ export class CardDetailsComponent extends React.Component {
   };
 
   renderExpirationMonthOptions() {
+    const monthText = this.props.intl.formatMessage(messages['payment.page.card.details.month']);
+
     return [
-      <option key="Month" value="">Month</option>,
+      <option key="Month" value="">{monthText}</option>,
       ...this.getNumericOptions(1, 12),
     ];
   }
 
   renderExpirationYearOptions() {
+    const yearText = this.props.intl.formatMessage(messages['payment.page.card.details.year']);
     const currentYear = new Date().getFullYear();
+
     return [
-      <option key="Year" value="">Year</option>,
+      <option key="Year" value="">{yearText}</option>,
       ...this.getNumericOptions(currentYear, currentYear + 15),
     ];
   }
@@ -155,6 +161,7 @@ export class CardDetailsComponent extends React.Component {
 }
 
 CardDetailsComponent.propTypes = {
+  intl: intlShape.isRequired,
   submitting: PropTypes.bool,
 };
 
