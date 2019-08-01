@@ -10,10 +10,14 @@ import {
 
 import { CardDetailsComponent } from './CardDetails';
 
+const mockIntl = {
+  formatMessage: () => 'I18N_TEXT',
+};
+
 describe('<CardDetails />', () => {
   describe('handleCardNumberChange', () => {
     it('updates state with correct card icon given user card number input', () => {
-      const cardDetails = shallow(<CardDetailsComponent />).instance();
+      const cardDetails = shallow(<CardDetailsComponent intl={mockIntl} />).instance();
       const eventMock = jest.fn();
       const testData = [
         { cardNumber: '347', expectedIcon: faCcAmex },
