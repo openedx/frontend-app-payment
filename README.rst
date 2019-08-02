@@ -50,6 +50,39 @@ Assuming you have a fairly standard devstack setup, if you click the "Upgrade to
 
 *To be added.*
 
+Project Structure
+-----------------
+
+The source for this project is organized into nested submodules according to the ADR `Feature-based Application Organization <https://github.com/edx/frontend-cookiecutter-application/blob/master/docs/decisions/0002-feature-based-application-organization.rst>`_.
+
+Breakdown of the ``src`` directory:
+
+**assets**
+  Image assets used by the top-level code.
+
+**common**
+  Boilerplate code that is common to many of our frontend applications.  Currently copied from place to place, it is intended to eventually live in `edx/frontend-common <https://github.com/edx/frontend-common>`_.
+
+**components**
+  Top-level App.jsx component, which is 95% shared across frontends and will eventually get similar treatment to the ``common`` directory.
+
+**data**
+  Top-level redux/redux-saga reducers and sagas.
+
+**feedback**
+  A reusable component which displays user feedback messages as alerts at the top of the page.  While it is currently only in use by this application, it's intended to be generic and shared across applications, so should remain free of payment-specific code.  It will eventually live in either `edx/paragon <https://github.com/edx/paragon>`_ or its own repo.
+
+**i18n**
+  The language configuration for the app.
+
+**payment**
+  The guts of this app.  This includes all payment forms, payment methods, order details, data models, and associated API calls.
+
+  Please see src/payment/README.rst for more detail.
+
+**store**
+  The redux store configuration for dev and production.
+
 Build Process Notes
 -------------------
 
@@ -67,19 +100,23 @@ If you add and use a component in this repo that relies on HTML classes or ids f
 must add it to the Purgecss configuration or it will be unstyled in the production build.
 
 
-Appendix A: Local Dev Server + Stage API
-----------------------------------------
+Appendix A: Using Local Dev Server with stage.edx.org APIs
+----------------------------------------------------------
 
-If you would like to run this frontend against stage.edx.org you can run npm run start:stage and
-access your development server at https://local.stage.edx.org:1998 after the initial setup
+If you would like to run this frontend against stage.edx.org you can run ``npm run start:stage`` and
+access your development server at `https://local.stage.edx.org:1998 <https://local.stage.edx.org:1998>`_ after the initial setup
 described below:
 
-- Update the /etc/hosts file on your computer and add `127.0.0.1 local.stage.edx.org`.
-- Log into stage `https://courses.stage.edx.org/login`.
-- Run `npm run start:stage` in this project directory
-- Navigate to `https://local.stage.edx.org:1998`. You will see a warning that this page
-  is unsecured because there is no valid SSL certificate. Proceed past this screen by
-  clicking the "Advanced" button on the bottom left and then click the revealed link:
+- Update the ``/etc/hosts`` file on your computer and add:
+
+  ``127.0.0.1 local.stage.edx.org``.
+
+- Log into stage: `https://courses.stage.edx.org/login <https://courses.stage.edx.org/login>`_.
+- Start the frontend's dev server in staging mode:
+
+  ``npm run start:stage``
+
+- Navigate to `https://local.stage.edx.org:1998 <https://local.stage.edx.org:1998>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link:
   "Proceed to local.stage.edx.org (unsafe)".
 
 .. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-ecommerce.svg?branch=master
