@@ -61,7 +61,7 @@ Breakdown of the ``src`` directory:
   Image assets used by the top-level code.
 
 **common**
-  Boilerplate code that is common to many of our frontend applications.  Currently copied from place to place, it is intended to live in `edx/frontend-common <https://github.com/edx/frontend-common>`_.
+  Boilerplate code that is common to many of our frontend applications.  Currently copied from place to place, it is intended to eventually live in `edx/frontend-common <https://github.com/edx/frontend-common>`_.
 
 **components**
   Top-level App.jsx component, which is 95% shared across frontends and will eventually get similar treatment to the ``common`` directory.
