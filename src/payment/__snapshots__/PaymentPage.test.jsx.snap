@@ -222,6 +222,34 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
 </div>
 `;
 
+exports[`<PaymentPage /> Renders correctly in various states should render a redirect spinner 1`] = `
+<div
+  className="page__payment container-fluid py-5"
+>
+  <div>
+    <div
+      className="d-flex justify-content-center align-items-center flex-column"
+      style={
+        Object {
+          "height": "50vh",
+        }
+      }
+    >
+      <div
+        className="spinner-border text-primary"
+        role="status"
+      >
+        <span
+          className="sr-only"
+        >
+          Loading basket...
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`<PaymentPage /> Renders correctly in various states should render all custom alert messages 1`] = `
 <div
   className="page__payment container-fluid py-5"

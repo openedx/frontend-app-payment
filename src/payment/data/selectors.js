@@ -17,9 +17,10 @@ export const localizedCurrencySelector = (state) => {
 
 export const basketSelector = state => ({
   ...state[storeName].basket,
-  isBasketProcessing: state[storeName].basket.isCouponProcessing
-    || state[storeName].basket.isQuantityProcessing
-    || state[storeName].basket.submitting,
+  isBasketProcessing:
+    state[storeName].basket.isCouponProcessing ||
+    state[storeName].basket.isQuantityProcessing ||
+    state[storeName].basket.submitting,
 });
 
 export const cartSelector = state => ({ ...state[storeName].basket });
@@ -45,7 +46,9 @@ export const paymentSelector = createSelector(
     dashboardURL: configuration.LMS_BASE_URL,
     supportURL: configuration.SUPPORT_URL,
     ecommerceURL: configuration.ECOMMERCE_BASE_URL,
-    isEmpty: basket.loaded && (!basket.products || basket.products.length === 0),
+    isEmpty:
+      basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
+    isRedirect: basket.loaded && !!basket.redirect,
   }),
 );
 
