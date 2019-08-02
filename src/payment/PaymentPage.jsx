@@ -30,10 +30,7 @@ class PaymentPage extends React.Component {
   }
 
   renderEmptyMessage() {
-    const {
-      dashboardURL,
-      supportURL,
-    } = this.props;
+    const { dashboardURL, supportURL } = this.props;
 
     return (
       <div className="card">
@@ -51,25 +48,25 @@ class PaymentPage extends React.Component {
               defaultMessage="If you attempted to make a purchase, you have not been charged. Return to your {actionLinkOne} to try again, or {actionLinkTwo}."
               description="The message displayed when there is no basket. Action links will redirect to dashboard or support page"
               values={{
-              actionLinkOne: (
-                <Hyperlink destination={dashboardURL}>
-                  <FormattedMessage
-                    id="payment.empty.basket.dashboardURL"
-                    defaultMessage="dashboard"
-                    description="The message displayed on the redirect to dashboard link"
-                  />
-                </Hyperlink>
-              ),
-              actionLinkTwo: (
-                <Hyperlink destination={supportURL}>
-                  <FormattedMessage
-                    id="payment.empty.basket.supportURL"
-                    defaultMessage="contact edX E-commerce Support"
-                    description="The message displayed on the redirect to support page link"
-                  />
-                </Hyperlink>
-              ),
-            }}
+                actionLinkOne: (
+                  <Hyperlink destination={dashboardURL}>
+                    <FormattedMessage
+                      id="payment.empty.basket.dashboardURL"
+                      defaultMessage="dashboard"
+                      description="The message displayed on the redirect to dashboard link"
+                    />
+                  </Hyperlink>
+                ),
+                actionLinkTwo: (
+                  <Hyperlink destination={supportURL}>
+                    <FormattedMessage
+                      id="payment.empty.basket.supportURL"
+                      defaultMessage="contact edX E-commerce Support"
+                      description="The message displayed on the redirect to support page link"
+                    />
+                  </Hyperlink>
+                ),
+              }}
             />
           </p>
         </div>
@@ -77,18 +74,24 @@ class PaymentPage extends React.Component {
     );
   }
 
-  renderLoading() {
+  /**
+   * If we're going to be redirecting to another page instead of showing the user the interface,
+   * show a minimal spinner while the redirect is happening.  In other cases we want to show the
+   * page skeleton, but in this case that would be misleading.
+   */
+  renderRedirectSpinner() {
     return (
       <PageLoading srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])} />
     );
   }
 
+  /**
+   * We show the basket view for all cases except: 1) an empty basket, and 2) when we're going to
+   * perform a redirect.  That means that sometimes it's used during loading, in which case it shows
+   * a "skeleton" view of the left-hand side of the interface until the actual content arrives.
+   */
   renderBasket() {
-    const {
-      isFreeBasket,
-      loading,
-      isBasketProcessing,
-    } = this.props;
+    const { isFreeBasket, loading, isBasketProcessing } = this.props;
 
     return (
       <div className="row">
@@ -105,7 +108,7 @@ class PaymentPage extends React.Component {
           aria-relevant="all"
           aria-label={this.props.intl.formatMessage(messages['payment.section.cart.label'])}
         >
-          { loading ? (
+          {loading ? (
             <SummarySkeleton />
           ) : (
             <div>
@@ -126,36 +129,47 @@ class PaymentPage extends React.Component {
           aria-label={this.props.intl.formatMessage(messages['payment.section.payment.details.label'])}
           className="col-md-7 pl-md-5"
         >
-          {isFreeBasket ? <PlaceOrderButton /> : (
+          {isFreeBasket ? (
+            <PlaceOrderButton />
+          ) : (
             <React.Fragment>
               <PaymentMethodSelect loading={loading} isBasketProcessing={isBasketProcessing} />
               <PaymentForm />
             </React.Fragment>
-        )}
+          )}
         </section>
       </div>
     );
   }
 
+  renderContent() {
+    const { isEmpty, isRedirect } = this.props;
+
+    if (isRedirect) {
+      return this.renderRedirectSpinner();
+    }
+
+    if (isEmpty) {
+      return this.renderEmptyMessage();
+    }
+
+    // In all other cases, we want to render the basket content.  This is used before we've loaded
+    // anything, during loading, and after we've loaded a basket with a product in it.
+    return this.renderBasket();
+  }
+
   render() {
-    const {
-      loading,
-      loaded,
-      isEmpty,
-      summaryQuantity,
-      summarySubtotal,
-    } = this.props;
+    const { summaryQuantity, summarySubtotal } = this.props;
 
     return (
       <div className="page__payment container-fluid py-5">
         <AlertList
           /*
-            For complex messages, the server will return a message code
-            instead of a user message string. The values in the
-            messageCodes object below will handle these messages. They
-            can be a class/function, JSX element, or string. Class/functions
-            and jsx elements will receive a 'values' prop of relevant data
-            about the message. Strings will be rendered as-is.
+            For complex messages, the server will return a message code instead of a user message
+            string. The values in the messageCodes object below will handle these messages. They can
+            be a class/function, JSX element, or string. Class/functions and jsx elements will
+            receive a 'values' prop of relevant data about the message. Strings will be rendered
+            as-is.
           */
           messageCodes={{
             'single-enrollment-code-warning': SingleEnrollmentCodeWarning,
@@ -169,8 +183,7 @@ class PaymentPage extends React.Component {
             ),
           }}
         />
-        {loaded && isEmpty ? this.renderEmptyMessage() : null}
-        {loading || !isEmpty ? this.renderBasket() : null}
+        {this.renderContent()}
       </div>
     );
   }
@@ -180,7 +193,7 @@ PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   isFreeBasket: PropTypes.bool,
   isEmpty: PropTypes.bool,
-  loaded: PropTypes.bool,
+  isRedirect: PropTypes.bool,
   loading: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
   dashboardURL: PropTypes.string.isRequired,
@@ -192,10 +205,10 @@ PaymentPage.propTypes = {
 
 PaymentPage.defaultProps = {
   isFreeBasket: false,
-  loaded: false,
   loading: false,
   isBasketProcessing: false,
   isEmpty: false,
+  isRedirect: false,
   summaryQuantity: undefined,
   summarySubtotal: undefined,
 };

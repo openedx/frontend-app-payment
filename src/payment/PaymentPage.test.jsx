@@ -106,6 +106,22 @@ describe('<PaymentPage />', () => {
       expect(tree).toMatchSnapshot();
     });
 
+    it('should render a redirect spinner', () => {
+      analytics.sendTrackingLogEvent = jest.fn();
+      const state = storeMocks.loadedEmptyBasket;
+      state.payment.basket.redirect = 'http://localhost/boo';
+      const tree = renderer
+        .create((
+          <IntlProvider locale="en">
+            <Provider store={mockStore(state)}>
+              <ConnectedPaymentPage {...requirePaymentPageProps} />
+            </Provider>
+          </IntlProvider>
+        ))
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+
     it('should render a free basket', () => {
       analytics.sendTrackingLogEvent = jest.fn();
       const tree = renderer
