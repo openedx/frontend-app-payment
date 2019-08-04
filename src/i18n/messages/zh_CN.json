@@ -28,6 +28,8 @@
   "payment.card.details.security.code.help.text": "The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.",
   "payment.card.details.expiration.month.label": "Expiration Month (required)",
   "payment.card.details.expiration.year.label": "Expiration Year (required)",
+  "payment.page.card.details.month": "Month",
+  "payment.page.card.details.year": "Year",
   "payment.card.holder.information.heading": "Card Holder Information",
   "payment.card.holder.information.first.name.label": "First Name (required)",
   "payment.card.holder.information.last.name.label": "Last Name (required)",
