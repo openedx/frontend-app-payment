@@ -81,6 +81,8 @@ A reusable component responsible for displaying alert messages at the top of the
 
 A code that provides a discount. It can apply to courses and programs. It can be created by edX or partners.  A coupon is based on a code.
 
+More on Enterprise coupons: `Ecommerce (Enterprise) coupons explained <https://openedx.atlassian.net/wiki/spaces/SOL/pages/858620328/Ecommerce+Enterprise+Coupons+Explained>`_.
+
 **Offer**
 
 A discount offered to a user automatically. It can be applied to a subset of users or everyone. It can be created by edX or partners. An offer is based on a user group.
