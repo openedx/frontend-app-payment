@@ -71,7 +71,7 @@ A descriptive paragraph of text which provides additional context on the purchas
 
   Apple Pay
 
-  Paypal
+  PayPal
 
 **Feedback**
 
@@ -80,6 +80,8 @@ A reusable component responsible for displaying alert messages at the top of the
 **Coupon**
 
 A code that provides a discount. It can apply to courses and programs. It can be created by edX or partners.  A coupon is based on a code.
+
+More on Enterprise coupons: `Ecommerce (Enterprise) coupons explained <https://openedx.atlassian.net/wiki/spaces/SOL/pages/858620328/Ecommerce+Enterprise+Coupons+Explained>`_.
 
 **Offer**
 
@@ -133,6 +135,11 @@ plugin is configured to scan directories to determine what css selectors should 
 the src/ directory is scanned along with all @edx/frontend-component* node modules and paragon.
 If you add and use a component in this repo that relies on HTML classes or ids for styling you
 must add it to the Purgecss configuration or it will be unstyled in the production build.
+
+Internationalization
+--------------------
+
+Please see `edx/frontend-i18n <https://github.com/edx/frontend-i18n>`_ for documentation on internationalization.  The repository README.rst explains how to use it, and the `How To <https://github.com/edx/frontend-i18n/blob/master/docs/how_tos/i18n.rst>`_ has more detail.
 
 
 Appendix A: Using Local Dev Server with stage.edx.org APIs
