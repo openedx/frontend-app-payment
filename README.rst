@@ -50,6 +50,41 @@ Assuming you have a fairly standard devstack setup, if you click the "Upgrade to
 
 *To be added.*
 
+Glossary
+--------
+
+**Cart Summary**
+
+A list of the product(s) being purchased. Also contains the update quantity form.
+
+**Order Summary**
+
+A breakdown of the price of the product(s) being purchased.  Also home to the coupon form and offers display.
+
+**Order Details**
+
+A descriptive paragraph of text which provides additional context on the purchase.  Varies by product type.
+
+**Payment Methods**
+
+  Cybersource
+
+  Apple Pay
+
+  Paypal
+
+**Feedback**
+
+A reusable component responsible for displaying alert messages at the top of the page.  Can display success, warning, error, and info messages.  Provides utilities to add messages and clear them.  Is application agnostic (i.e., isn't specific to this micro-frontend)
+
+**Coupon**
+
+A code that provides a discount. It can apply to courses and programs. It can be created by edX or partners.  A coupon is based on a code.
+
+**Offer**
+
+A discount offered to a user automatically. It can be applied to a subset of users or everyone. It can be created by edX or partners. An offer is based on a user group.
+
 Project Structure
 -----------------
 
