@@ -28,6 +28,8 @@
   "payment.card.details.security.code.help.text": "Los tres últimos dígitos en el área de firma en la parte posterior de su tarjeta. Para American Express, son los cuatro dígitos en la parte frontal de la tarjeta.",
   "payment.card.details.expiration.month.label": "Mes de expiración",
   "payment.card.details.expiration.year.label": "Año de expiración",
+  "payment.page.card.details.month": "Mes",
+  "payment.page.card.details.year": "Año",
   "payment.card.holder.information.heading": "Información del titular de la tarjeta",
   "payment.card.holder.information.first.name.label": "Nombre (requerido)",
   "payment.card.holder.information.last.name.label": "Apellido (requerido)",
