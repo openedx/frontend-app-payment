@@ -136,6 +136,11 @@ the src/ directory is scanned along with all @edx/frontend-component* node modul
 If you add and use a component in this repo that relies on HTML classes or ids for styling you
 must add it to the Purgecss configuration or it will be unstyled in the production build.
 
+Internationalization
+--------------------
+
+Please see `edx/frontend-i18n <https://github.com/edx/frontend-i18n>`_ for documentation on internationalization.  The repository README.rst explains how to use it, and the `How To <https://github.com/edx/frontend-i18n/blob/master/docs/how_tos/i18n.rst>`_ has more detail.
+
 
 Appendix A: Using Local Dev Server with stage.edx.org APIs
 ----------------------------------------------------------
