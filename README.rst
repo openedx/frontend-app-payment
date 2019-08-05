@@ -71,7 +71,7 @@ A descriptive paragraph of text which provides additional context on the purchas
 
   Apple Pay
 
-  Paypal
+  PayPal
 
 **Feedback**
 

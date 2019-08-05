@@ -119,7 +119,7 @@ export class PaymentFormComponent extends React.Component {
   handleSubmitButtonClick() {
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
-    // Check for Paypal, ApplePay and Free Basket as well
+    // Check for PayPal, ApplePay and Free Basket as well
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
       {

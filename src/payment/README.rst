@@ -23,7 +23,7 @@ Code Structure
   Components that display price, currency, and coupon information in the left-hand column.
 
 **paypal**
-  Components and API calls associated with using Paypal as a payment method.
+  Components and API calls associated with using PayPal as a payment method.
 
 **utils**
   Payment helper utilities.
