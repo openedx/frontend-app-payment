@@ -2,15 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { sendTrackEvent } from '@edx/frontend-analytics';
+import { logError } from '@edx/frontend-logging';
 import { performApplePayPayment } from './service';
 
 
 export default class ApplePayButton extends React.Component {
   constructor(props) {
     super(props);
+    let canMakePayments = false;
+
+    try {
+      canMakePayments = global.ApplePaySession && global.ApplePaySession.canMakePayments();
+    } catch (error) {
+      // We are likely on localhost without ssl
+      logError(error);
+    }
 
     this.state = {
-      canMakePayments: global.ApplePaySession && global.ApplePaySession.canMakePayments(),
+      canMakePayments,
     };
   }
 
