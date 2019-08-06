@@ -161,13 +161,9 @@ described below:
 - Navigate to `https://local.stage.edx.org:1998 <https://local.stage.edx.org:1998>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link:
   "Proceed to local.stage.edx.org (unsafe)".
 
-.. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-ecommerce.svg?branch=master
-   :target: https://travis-ci.org/edx/frontend-app-ecommerce
-.. |Coveralls| image:: https://img.shields.io/coveralls/edx/frontend-app-ecommerce.svg?branch=master
-   :target: https://coveralls.io/github/edx/frontend-app-ecommerce
-.. |npm_version| image:: https://img.shields.io/npm/v/@edx/frontend-app-ecommerce.svg
-   :target: @edx/frontend-app-ecommerce
-.. |npm_downloads| image:: https://img.shields.io/npm/dt/@edx/frontend-app-ecommerce.svg
-   :target: @edx/frontend-app-ecommerce
-.. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-ecommerce.svg
-   :target: @edx/frontend-app-ecommerce
+.. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-payment.svg?branch=master
+   :target: https://travis-ci.org/edx/frontend-app-payment
+.. |Codecov| image:: https://codecov.io/gh/edx/frontend-app-payment/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/edx/frontend-app-payment
+.. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-payment.svg
+   :target: @edx/frontend-app-payment
