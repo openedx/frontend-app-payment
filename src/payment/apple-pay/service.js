@@ -108,7 +108,7 @@ export const performApplePayPayment = ({
         console.log('CyberSource successfully authorized Apple Pay payment.', data);
         applePaySession.completePayment(global.ApplePaySession.STATUS_SUCCESS);
         /* istanbul ignore else */
-        if (onPaymentComplete) onPaymentComplete(orderNumber);
+        if (onPaymentComplete) onPaymentComplete(orderNumber, true);
       })
       .catch((error) => {
         tempLogAxiosError(error);
@@ -131,7 +131,17 @@ export const performApplePayPayment = ({
   if (onPaymentBegin) onPaymentBegin();
 };
 
+/**
+ * Given an order number, and an optional arg of whether to disable the back button, redirects the
+ * user to the receipt page with the correct query parameters.
+ *
+ * @param orderNumber The number of the order
+ * @param disableBackButton Whether to disable the back button on the payment page. We default to
+ * false since the receipt page is referenced in emails/etc. We only disable the back button when
+ * the flow goes through the payment page.
+ */
 /* istanbul ignore next - you can't mock window.location.href in jsdom */
-export const redirectToReceipt = (orderNumber) => {
-  global.location.href = `${config.ECOMMERCE_RECEIPT_BASE_URL}?order_number=${orderNumber}`;
+export const redirectToReceipt = (orderNumber, disableBackButton = false) => {
+  const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(disableBackButton)}`;
+  global.location.href = `${config.ECOMMERCE_RECEIPT_BASE_URL}?${queryParams}`;
 };

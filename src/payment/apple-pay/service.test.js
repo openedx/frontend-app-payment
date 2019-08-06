@@ -136,7 +136,8 @@ describe('Perform Apple Pay Payment', () => {
     return requestPromise.finally(() => {
       expect(applePaySession.completePayment)
         .toHaveBeenCalledWith(global.ApplePaySession.STATUS_SUCCESS);
-      expect(eventHandlers.onPaymentComplete).toHaveBeenCalledWith(successResponse.data.number);
+      expect(eventHandlers.onPaymentComplete)
+        .toHaveBeenCalledWith(successResponse.data.number, true);
     });
   });
 
