@@ -136,7 +136,7 @@ export const performApplePayPayment = ({
  * user to the receipt page with the correct query parameters.
  *
  * @param orderNumber The number of the order
- * @param disableBackButton Whether to disable the back button on the payment page. We default to
+ * @param disableBackButton Whether to disable the back button on the receipt page. We default to
  * false since the receipt page is referenced in emails/etc. We only disable the back button when
  * the flow goes through the payment page.
  */
