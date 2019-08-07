@@ -1,9 +1,6 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <% if (htmlWebpackPlugin.options.optimizelyId) { %>
-    <script src="https://cdn.optimizely.com/js/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
-    <% } %>
     <% _.forEach(htmlWebpackPlugin.options.preconnect, function(preconnectURL) { %>
     <link rel="preconnect" href="<%= preconnectURL %>" />
     <% }); %>
@@ -17,5 +14,8 @@
         <div class="spinner-border" role="status" />
       </div>
     </div>
+    <% if (htmlWebpackPlugin.options.optimizelyId) { %>
+    <script src="https://cdn.optimizely.com/js/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
+    <% } %>
   </body>
 </html>
