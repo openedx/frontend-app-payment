@@ -17,6 +17,8 @@ export const localizedCurrencySelector = (state) => {
 
 export const basketSelector = state => ({
   ...state[storeName].basket,
+  isCouponRedeemRedirect: state.queryParameters &&
+    state.queryParameters.coupon_redeem_redirect == 1, // eslint-disable-line eqeqeq
   isBasketProcessing:
     state[storeName].basket.isCouponProcessing ||
     state[storeName].basket.isQuantityProcessing ||
@@ -48,7 +50,8 @@ export const paymentSelector = createSelector(
     ecommerceURL: configuration.ECOMMERCE_BASE_URL,
     isEmpty:
       basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
-    isRedirect: basket.loaded && !!basket.redirect,
+    isRedirect: (basket.loaded && !!basket.redirect)
+      || (!basket.loaded && basket.isCouponRedeemRedirect),
   }),
 );
 
