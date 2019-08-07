@@ -6,7 +6,6 @@ const glob = require('glob');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackNewRelicPlugin = require('html-webpack-new-relic-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
@@ -165,9 +164,11 @@ module.exports = Merge.smart(commonConfig, {
     }),
     // Generates an HTML file in the output directory.
     new HtmlWebpackPlugin({
-      inject: true, // Appends script tags linking to the webpack bundles at the end of the body
+      inject: false, // Manually inject head and body tags in the template itself.
       template: path.resolve(__dirname, '../public/index.html'),
       optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
+      newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
+      newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
       preconnect: (() => {
         const preconnectDomains = [
           'https://api.segment.io',
@@ -185,13 +186,6 @@ module.exports = Merge.smart(commonConfig, {
 
         return preconnectDomains;
       })(),
-    }),
-    new HtmlWebpackNewRelicPlugin({
-      // This plugin fixes an issue where the newrelic script will break if
-      //  not added directly to the HTML.
-      // We use non empty strings as defaults here to prevent errors for empty configs
-      license: process.env.NEW_RELIC_LICENSE_KEY || 'fake_app',
-      applicationID: process.env.NEW_RELIC_APP_ID || 'fake_license',
     }),
     new NewRelicSourceMapPlugin({
       applicationId: process.env.NEW_RELIC_APP_ID,
