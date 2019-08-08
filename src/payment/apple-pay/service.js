@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import pick from 'lodash.pick';
+import { logError } from '@edx/frontend-logging';
 import { applyConfiguration } from '../../common/serviceUtils';
 
 let apiClient = null;
@@ -22,28 +22,6 @@ export function configureApiService(_config, _apiClient) {
   config = pick(_config, Object.keys(config));
   apiClient = _apiClient;
 }
-
-/* istanbul ignore next */
-const tempLogAxiosError = (error) => {
-  if (error.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
-    console.log(error.response.data);
-    console.log(error.response.data.statusMessage);
-    console.log(error.response.status);
-    console.log(error.response.headers);
-  } else if (error.request) {
-    // The request was made but no response was received
-    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    // http.ClientRequest in node.js
-    console.log(error.request);
-  } else {
-    // Something happened in setting up the request that triggered an Error
-    console.log('Error', error.message);
-  }
-  console.log(error.config);
-};
-
 
 export const performApplePayPayment = ({
   totalAmount,
@@ -72,13 +50,10 @@ export const performApplePayPayment = ({
 
   const applePaySession = new global.ApplePaySession(version, paymentRequest);
 
-
   // Set Up Event Handlers on Payment Session
   // ------------------------
 
   applePaySession.onvalidatemerchant = (event) => {
-    console.log('Validating merchant...');
-
     const postData = {
       url: event.validationURL,
       is_payment_microfrontend: true,
@@ -86,11 +61,10 @@ export const performApplePayPayment = ({
 
     return apiClient.post(config.APPLE_PAY_START_SESSION_URL, postData)
       .then((response) => {
-        console.log('Merchant validation succeeded.', response.data);
         applePaySession.completeMerchantValidation(response.data);
       })
       .catch((error) => {
-        tempLogAxiosError(error);
+        logError(error);
         applePaySession.abort();
         /* istanbul ignore else */
         if (onMerchantValidationFailure) onMerchantValidationFailure(error);
@@ -98,20 +72,17 @@ export const performApplePayPayment = ({
   };
 
   applePaySession.onpaymentauthorized = (event) => {
-    console.log('Submitting Apple Pay payment to CyberSource...');
-
     const postData = event.payment;
 
     return apiClient.post(config.APPLE_PAY_AUTHORIZE_URL, postData)
       .then(({ data }) => {
         const orderNumber = data.number;
-        console.log('CyberSource successfully authorized Apple Pay payment.', data);
         applePaySession.completePayment(global.ApplePaySession.STATUS_SUCCESS);
         /* istanbul ignore else */
         if (onPaymentComplete) onPaymentComplete(orderNumber);
       })
       .catch((error) => {
-        tempLogAxiosError(error);
+        logError(error);
         applePaySession.completePayment(global.ApplePaySession.STATUS_FAILURE);
         /* istanbul ignore else */
         if (onPaymentAuthorizationFailure) onPaymentAuthorizationFailure(error);
@@ -119,11 +90,9 @@ export const performApplePayPayment = ({
   };
 
   applePaySession.oncancel = (event) => {
-    console.log('Cancel', event);
     /* istanbul ignore else */
     if (onPaymentCancel) onPaymentCancel(event);
   };
-
 
   // Begin transaction
   // ------------------------
