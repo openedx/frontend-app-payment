@@ -3,6 +3,9 @@ import {
   performApplePayPayment,
 } from './service';
 
+jest.mock('@edx/frontend-logging', () => ({
+  logError: jest.fn(),
+}));
 
 describe('Perform Apple Pay Payment', () => {
   const config = {
