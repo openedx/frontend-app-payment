@@ -1,4 +1,4 @@
-export default function getQueryParameters(search = window.location.search) {
+export default function getQueryParameters(search = global.location.search) {
   const keyValueFragments = search
     .slice(search.indexOf('?') + 1)
     .split('&')
