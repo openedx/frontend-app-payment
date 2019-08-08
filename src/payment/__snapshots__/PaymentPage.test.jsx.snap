@@ -730,7 +730,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <option
                   value=""
                 >
-                  &lt;Choose country&gt;
+                  Choose country
                 </option>
                 <option
                   value="AF"
@@ -2743,7 +2743,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <option
                   value=""
                 >
-                  &lt;Choose country&gt;
+                  Choose country
                 </option>
                 <option
                   value="AF"
@@ -4695,7 +4695,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                 <option
                   value=""
                 >
-                  &lt;Choose country&gt;
+                  Choose country
                 </option>
                 <option
                   value="AF"
@@ -6768,7 +6768,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <option
                   value=""
                 >
-                  &lt;Choose country&gt;
+                  Choose country
                 </option>
                 <option
                   value="AF"
@@ -8778,7 +8778,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 <option
                   value=""
                 >
-                  &lt;Choose country&gt;
+                  Choose country
                 </option>
                 <option
                   value="AF"
