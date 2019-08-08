@@ -36,6 +36,20 @@ describe('<ApplePayButtonContainer />', () => {
   let failureHandler;
   let cancelHandler;
 
+  const wrapper = mount((
+    <IntlProvider locale="en">
+      <Provider store={store}>
+        <ApplePayButtonContainer
+          totalAmount={10}
+          lang="en"
+          title="Pay with Apple Pay"
+          statePath={['payment', 'basket']}
+        />
+      </Provider>
+    </IntlProvider>
+  ));
+  const applePayButton = wrapper.find('ApplePayButton').first();
+
   beforeEach(() => {
     beginHandler = jest.fn();
     successHandler = jest.fn();
