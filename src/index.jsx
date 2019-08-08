@@ -15,7 +15,7 @@ import { configuration } from './environment';
 import messages from './i18n';
 import configureStore from './store';
 import { configureUserAccountApiService } from './common';
-import getQueryParameters from './common/getQueryParameters';
+import getQueryParameters from './data/getQueryParameters';
 import { configureApiService as configurePaymentApiService } from './payment';
 
 import './index.scss';
