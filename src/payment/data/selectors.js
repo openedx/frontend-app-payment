@@ -15,15 +15,12 @@ export const localizedCurrencySelector = (state) => {
   };
 };
 
-export const basketSelector = state => ({
-  ...state[storeName].basket,
-  isCouponRedeemRedirect: state.queryParameters &&
-    state.queryParameters.coupon_redeem_redirect == 1, // eslint-disable-line eqeqeq
-  isBasketProcessing:
-    state[storeName].basket.isCouponProcessing ||
-    state[storeName].basket.isQuantityProcessing ||
-    state[storeName].basket.submitting,
-});
+export const basketSelector = state => state[storeName].basket;
+
+export const isBasketProcessingSelector = createSelector(
+  basketSelector,
+  basket => basket.isCouponProcessing || basket.isQuantityProcessing || basket.submitting,
+);
 
 export const cartSelector = state => ({ ...state[storeName].basket });
 
@@ -33,26 +30,48 @@ export const currencyDisclaimerSelector = state => ({
 
 export const orderSummarySelector = createSelector(
   basketSelector,
+  isBasketProcessingSelector,
   localizedCurrencySelector,
-  (basket, currency) => ({
+  (basket, isBasketProcessing, currency) => ({
     ...basket,
+    isBasketProcessing,
     isCurrencyConverted: currency.showAsLocalizedCurrency,
   }),
 );
 
+export const updateQuantityFormSelector = createSelector(
+  basketSelector,
+  isBasketProcessingSelector,
+  (basket, isBasketProcessing) => ({
+    updateQuantity: basket.updateQuantity,
+    summaryQuantity: basket.summaryQuantity,
+    isBasketProcessing,
+  }),
+);
+
+export const queryParametersSelector = state => state.queryParameters;
+
 export const paymentSelector = createSelector(
   basketSelector,
+  isBasketProcessingSelector,
   configurationSelector,
-  (basket, configuration) => ({
-    ...basket,
-    dashboardURL: configuration.LMS_BASE_URL,
-    supportURL: configuration.SUPPORT_URL,
-    ecommerceURL: configuration.ECOMMERCE_BASE_URL,
-    isEmpty:
-      basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
-    isRedirect: (basket.loaded && !!basket.redirect)
-      || (!basket.loaded && basket.isCouponRedeemRedirect),
-  }),
+  queryParametersSelector,
+  (basket, isBasketProcessing, configuration, queryParameters) => {
+    const isCouponRedeemRedirect =
+      queryParameters && queryParameters.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
+    return {
+      ...basket,
+      isCouponRedeemRedirect,
+      isBasketProcessing,
+      dashboardURL: configuration.LMS_BASE_URL,
+      supportURL: configuration.SUPPORT_URL,
+      ecommerceURL: configuration.ECOMMERCE_BASE_URL,
+      isEmpty:
+        basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
+      isRedirect:
+        (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
+    };
+  },
 );
 
 export const countryOptionsSelector = createSelector(

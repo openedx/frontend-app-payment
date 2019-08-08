@@ -19,6 +19,7 @@ const storeMocks = {
   loadedBasket: require('./__mocks__/loadedBasket.mockStore.js'),
   loadedFreeBasket: require('./__mocks__/loadedFreeBasket.mockStore.js'),
   loadedEmptyBasket: require('./__mocks__/loadedEmptyBasket.mockStore.js'),
+  loadedRedirect: require('./__mocks__/loadedRedirect.mockStore.js'),
   loadedBasketWithNoTotals: require('./__mocks__/loadedBasketWithNoTotals.mockStore.js'),
   customAlertMessages: require('./__mocks__/customAlertMessages.mockStore.js'),
 };
@@ -108,12 +109,10 @@ describe('<PaymentPage />', () => {
 
     it('should render a redirect spinner', () => {
       analytics.sendTrackingLogEvent = jest.fn();
-      const state = storeMocks.loadedEmptyBasket;
-      state.payment.basket.redirect = 'http://localhost/boo';
       const tree = renderer
         .create((
           <IntlProvider locale="en">
-            <Provider store={mockStore(state)}>
+            <Provider store={mockStore(storeMocks.loadedRedirect)}>
               <ConnectedPaymentPage {...requirePaymentPageProps} />
             </Provider>
           </IntlProvider>

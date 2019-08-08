@@ -7,7 +7,7 @@ import { Hyperlink } from '@edx/paragon';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from './data/actions';
+import { fetchBasket, submitPayment } from './data/actions';
 
 // Selectors
 import { paymentSelector } from './data/selectors';
@@ -91,7 +91,11 @@ class PaymentPage extends React.Component {
    * a "skeleton" view of the left-hand side of the interface until the actual content arrives.
    */
   renderBasket() {
-    const { isFreeBasket, loading, isBasketProcessing } = this.props;
+    const {
+      isFreeBasket,
+      loading,
+      isBasketProcessing,
+    } = this.props;
 
     return (
       <div className="row">
@@ -133,7 +137,13 @@ class PaymentPage extends React.Component {
             <PlaceOrderButton />
           ) : (
             <React.Fragment>
-              <PaymentMethodSelect loading={loading} isBasketProcessing={isBasketProcessing} />
+              <PaymentMethodSelect
+                submitPayment={this.props.submitPayment}
+                submitPaymentSuccess={this.props.submitPaymentSuccess}
+                submitPaymentFulfill={this.props.submitPaymentFulfill}
+                loading={loading}
+                isBasketProcessing={isBasketProcessing}
+              />
               <PaymentForm />
             </React.Fragment>
           )}
@@ -199,6 +209,9 @@ PaymentPage.propTypes = {
   dashboardURL: PropTypes.string.isRequired,
   supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
+  submitPayment: PropTypes.func.isRequired,
+  submitPaymentSuccess: PropTypes.func.isRequired,
+  submitPaymentFulfill: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -217,5 +230,8 @@ export default connect(
   paymentSelector,
   {
     fetchBasket,
+    submitPayment,
+    submitPaymentSuccess: submitPayment.success,
+    submitPaymentFulfill: submitPayment.fulfill,
   },
 )(injectIntl(PaymentPage));

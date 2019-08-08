@@ -30,6 +30,7 @@ describe('<ApplePayButtonContainer />', () => {
           totalAmount={10}
           lang="en"
           title="Pay with Apple Pay"
+          statePath={['payment', 'basket']}
         />
       </Provider>
     </IntlProvider>

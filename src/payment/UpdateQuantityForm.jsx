@@ -5,7 +5,7 @@ import { FormattedMessage } from '@edx/frontend-i18n';
 import { StatefulButton, Input } from '@edx/paragon';
 
 import { updateQuantity } from './data/actions';
-import { basketSelector } from './data/selectors';
+import { updateQuantityFormSelector } from './data/selectors';
 
 function UpdateQuantityForm(props) {
   const id = 'code-quantity';
@@ -88,7 +88,7 @@ UpdateQuantityForm.defaultProps = {
 };
 
 export default connect(
-  basketSelector,
+  updateQuantityFormSelector,
   {
     updateQuantity,
   },
