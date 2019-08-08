@@ -15,6 +15,7 @@ import { configuration } from './environment';
 import messages from './i18n';
 import configureStore from './store';
 import { configureUserAccountApiService } from './common';
+import getQueryParameters from './data/getQueryParameters';
 import { configureApiService as configurePaymentApiService } from './payment';
 
 import './index.scss';
@@ -32,7 +33,8 @@ function createInitialState() {
   if (Object.keys(authenticationState).length === 0) {
     throw new Error('Empty authentication state returned from gettAuthenticationState()');
   }
-  return Object.assign({}, { configuration }, authenticationState);
+  const queryParameters = getQueryParameters();
+  return Object.assign({}, { configuration, queryParameters }, authenticationState);
 }
 
 function configure() {

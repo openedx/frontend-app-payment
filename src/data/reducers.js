@@ -23,6 +23,7 @@ const createRootReducer = () =>
     // creating the store in data/store.js.
     authentication: identityReducer,
     configuration: identityReducer,
+    queryParameters: identityReducer,
     userAccount,
     [paymentStoreName]: paymentReducer,
     [feedbackStoreName]: feedbackReducer,
