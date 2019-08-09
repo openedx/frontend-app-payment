@@ -24,8 +24,8 @@ export function configureApiService(newConfig, newApiClient) {
   config = pick(newConfig, Object.keys(config));
   apiClient = newApiClient;
 
-  configureCybersourceApiService(config, apiClient);
-  configurePayPalApiService(config, apiClient);
+  configureCybersourceApiService(newConfig, apiClient);
+  configurePayPalApiService(newConfig, apiClient);
   configureApplePayApiService(newConfig, apiClient);
 
   // For every ajax response, check if the API has

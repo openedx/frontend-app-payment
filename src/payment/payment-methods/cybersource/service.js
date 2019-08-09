@@ -7,6 +7,7 @@ import { generateAndSubmitForm } from '../../../common/utils';
 
 let config = {
   ECOMMERCE_BASE_URL: null,
+  CYBERSOURCE_URL: null,
 };
 
 let apiClient = null; // eslint-disable-line no-unused-vars
@@ -30,7 +31,7 @@ export async function sdnCheck(firstName, lastName, city, country) {
   return data;
 }
 
-export async function checkout(basket, cardHolderInfo, cardDetails) {
+export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   const sdnCheckResponse = await sdnCheck(
     cardHolderInfo.firstName,
     cardHolderInfo.lastName,
