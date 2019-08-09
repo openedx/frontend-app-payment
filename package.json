@@ -90,7 +90,7 @@
     "babel-plugin-transform-imports": "2.0.0",
     "clean-webpack-plugin": "0.1.19",
     "codecov": "3.5.0",
-    "copy-webpack-plugin": "4.6.0",
+    "copy-webpack-plugin": "5.0.4",
     "css-loader": "3.2.0",
     "cssnano": "4.1.10",
     "enzyme": "3.10.0",
