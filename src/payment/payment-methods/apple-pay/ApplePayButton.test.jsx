@@ -2,16 +2,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import analytics from '@edx/frontend-analytics';
+import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import ApplePayButton from './ApplePayButton';
+import { configuration } from '../../../environment';
+import messages from '../../../i18n';
 
-// import * as analytics from '@edx/frontend-analytics';
+// Mock language cookie
+Object.defineProperty(global.document, 'cookie', {
+  writable: true,
+  value: `${configuration.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
+});
 
-jest.mock('./service', () => ({
-  performApplePayPayment: jest.fn(),
-}));
+configureI18n(configuration, messages);
 
-import { performApplePayPayment } from './service'; // eslint-disable-line import/first
-import ApplePayButton from './ApplePayButton'; // eslint-disable-line import/first
 
 const applePaySession = { begin: jest.fn() };
 global.ApplePaySession = jest.fn().mockImplementation(() => applePaySession);
@@ -25,8 +28,25 @@ jest.mock('@edx/frontend-logging', () => ({
   logError: jest.fn(),
 }));
 
-import { logError } from '@edx/frontend-logging'; // eslint-disable-line import/first
+// import { logError } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
+
+// describe('<ApplePayButton />', () => {
+//   it('should render properly', () => {
+//     const tree = renderer
+//       .create((
+//         <IntlProvider locale="en">
+//           <ApplePayButton
+//             lang="en"
+//             title="Pay with Apple Pay"
+//           />
+//         </IntlProvider>
+//       ))
+//       .toJSON();
+
+//     expect(tree).toMatchSnapshot();
+//   });
+// });
 describe('<ApplePayButton />', () => {
   it('should render properly', () => {
     const tree = renderer

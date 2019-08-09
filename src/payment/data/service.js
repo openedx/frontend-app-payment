@@ -1,9 +1,9 @@
 import pick from 'lodash.pick';
 import { logError } from '@edx/frontend-logging';
 
-import { configureApiService as configureCybersourceApiService } from '../cybersource';
-import { configureApiService as configurePayPalApiService } from '../paypal';
-import { configureApiService as configureApplePayApiService } from '../apple-pay';
+import { configureApiService as configureCybersourceApiService } from '../payment-methods/cybersource';
+import { configureApiService as configurePayPalApiService } from '../payment-methods/paypal';
+import { configureApiService as configureApplePayApiService } from '../payment-methods/apple-pay';
 import { applyConfiguration } from '../../common/serviceUtils';
 import handleBasketApiError from '../utils/handleBasketApiError';
 import { camelCaseObject } from '../../common/utils';

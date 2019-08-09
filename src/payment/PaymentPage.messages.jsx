@@ -26,6 +26,16 @@ const messages = defineMessages({
     defaultMessage: 'Payment Details',
     description: 'Screen reader label for payment detail section of page',
   },
+  'payment.apple.pay.merchant.validation.failure': {
+    id: 'payment.apple.pay.merchant.validation.failure',
+    defaultMessage: 'Apple Pay is not available at this time. Please try another payment method.',
+    description: 'The message displayed to the user when an Apple Pay session fails to begin',
+  },
+  'payment.apple.pay.authorization.failure': {
+    id: 'payment.apple.pay.authorization.failure',
+    defaultMessage: 'An error occurred while processing your payment. You have not been charged. Please try again, or select another payment method.',
+    description: 'The message displayed to the user when an Apple Pay payment fails',
+  },
 });
 
 export default messages;

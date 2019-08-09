@@ -5,8 +5,8 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 import messages from './PaymentMethodSelect.messages';
 
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
-import { ApplePayButtonContainer } from './apple-pay';
-import { PayPalButton } from './paypal';
+import ApplePayButtonContainer from './ApplePayButtonContainer';
+import PayPalButtonContainer from './PayPalButtonContainer';
 import { storeName } from './data/selectors';
 
 function PaymentMethodSelect({
@@ -37,7 +37,7 @@ function PaymentMethodSelect({
           />
         </button>
 
-        <PayPalButton
+        <PayPalButtonContainer
           className={classNames({ 'skeleton-pulse': loading })}
           disabled={submissionDisabled}
         />

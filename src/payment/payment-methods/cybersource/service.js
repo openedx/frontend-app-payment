@@ -2,6 +2,7 @@ import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
 
 import { applyConfiguration } from '../../../common/serviceUtils';
+import { generateAndSubmitForm } from '../../../common/utils';
 
 
 let config = {
@@ -29,7 +30,21 @@ export async function sdnCheck(firstName, lastName, city, country) {
   return data;
 }
 
-export async function checkout(basketId, cardHolderInfo) {
+export async function checkout(basket, cardHolderInfo, cardDetails) {
+  const sdnCheckResponse = await sdnCheck(
+    cardHolderInfo.firstName,
+    cardHolderInfo.lastName,
+    cardHolderInfo.city,
+    cardHolderInfo.country,
+  );
+
+  if (sdnCheckResponse.hits > 0) {
+    global.location.href = `${config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+    throw new Error('SDN Failure');
+  }
+
+  const { basketId } = basket;
+
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
     formurlencoded({
@@ -51,5 +66,21 @@ export async function checkout(basketId, cardHolderInfo) {
     },
   );
 
-  return data;
+  const {
+    cardNumber,
+    cardTypeId,
+    securityCode,
+    cardExpirationMonth,
+    cardExpirationYear,
+  } = cardDetails;
+
+  const cybersourcePaymentParams = {
+    ...data.form_fields,
+    card_number: cardNumber,
+    card_type: cardTypeId,
+    card_cvn: securityCode,
+    card_expiry_date: [cardExpirationMonth.padStart(2, '0'), cardExpirationYear].join('-'),
+  };
+
+  generateAndSubmitForm(config.CYBERSOURCE_URL, cybersourcePaymentParams);
 }
