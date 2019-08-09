@@ -13,11 +13,11 @@ import { createRoutine } from 'redux-saga-routines';
 // fetchBasket.FULFILL   |   fetchBasket.fulfill()
 //
 // Created with redux-saga-routines
+export const submitPayment = createRoutine('SUBMIT_PAYMENT');
 export const fetchBasket = createRoutine('FETCH_BASKET');
 export const addCoupon = createRoutine('ADD_COUPON');
 export const removeCoupon = createRoutine('REMOVE_COUPON');
 export const updateQuantity = createRoutine('UPDATE_QUANTITY');
-
 
 // Actions and their action creators
 export const BASKET_DATA_RECEIVED = 'BASKET_DATA_RECEIVED';
