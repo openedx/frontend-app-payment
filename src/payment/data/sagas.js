@@ -112,7 +112,7 @@ export function* handleSubmitPayment({ payload }) {
       if (error.code) {
         // Client side generated errors are simple error objects and
         // here we wrap them into the same format as the api returns them in
-        yield call(handleErrors, { errors: [error] }, true);
+        yield call(handleErrors, { messages: [error] }, true);
       } else {
         yield call(handleErrors, error, true);
       }
