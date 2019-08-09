@@ -169,7 +169,7 @@ class PaymentPage extends React.Component {
   }
 
   render() {
-    const { summaryQuantity, summarySubtotal } = this.props;
+    const { summaryQuantity, summarySubtotal, intl } = this.props;
 
     return (
       <div className="page__payment container-fluid py-5">
@@ -191,6 +191,8 @@ class PaymentPage extends React.Component {
                 }}
               />
             ),
+            'apple-pay-merchant-validation-failure': intl.formatMessage(messages['payment.apple.pay.merchant.validation.failure']),
+            'apple-pay-authorization-failure': intl.formatMessage(messages['payment.apple.pay.authorization.failure']),
           }}
         />
         {this.renderContent()}

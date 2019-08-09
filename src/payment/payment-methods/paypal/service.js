@@ -1,6 +1,7 @@
 import pick from 'lodash.pick';
 
 import { applyConfiguration } from '../../../common/serviceUtils';
+import { generateAndSubmitForm } from '../../../common/utils';
 
 
 let config = {
@@ -15,7 +16,9 @@ export function configureApiService(newConfig, newApiClient) {
   apiClient = newApiClient;
 }
 
-export async function checkout(basketId) {
+export async function checkout(basket) {
+  const { basketId } = basket;
+
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/api/v2/checkout/`,
     {
@@ -24,5 +27,5 @@ export async function checkout(basketId) {
     },
   );
 
-  return data;
+  generateAndSubmitForm(data.payment_page_url);
 }

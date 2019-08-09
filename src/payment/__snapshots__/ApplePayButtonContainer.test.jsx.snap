@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ApplePayButton /> should render properly 1`] = `
+exports[`<ApplePayButtonContainer /> should render properly 1`] = `
 <button
-  className="apple-pay-button"
+  className="apple-pay-button payment-method-button undefined"
   disabled={false}
   id="applePayBtn"
   lang="en"

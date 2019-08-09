@@ -6,7 +6,7 @@ import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 import { StatefulButton } from '@edx/paragon';
 
-import { submitPaymentCybersource } from './cybersource';
+import { submitPayment } from './data/actions';
 import { paymentSelector } from './data/selectors';
 
 import { getCardTypeId, SUPPORTED_CARDS } from './utils/credit-card';
@@ -60,22 +60,26 @@ export class PaymentFormComponent extends React.Component {
       throw new SubmissionError(errors);
     }
 
-    this.props.submitPaymentCybersource({
-      firstName,
-      lastName,
-      address,
-      unit,
-      city,
-      country,
-      state,
-      postalCode,
-      organization,
-    }, {
-      cardNumber,
-      cardTypeId: getCardTypeId(cardNumber),
-      securityCode,
-      cardExpirationMonth,
-      cardExpirationYear,
+    this.props.submitPayment({
+      method: 'cybersource',
+      cardHolderInfo: {
+        firstName,
+        lastName,
+        address,
+        unit,
+        city,
+        country,
+        state,
+        postalCode,
+        organization,
+      },
+      cardDetails: {
+        cardNumber,
+        cardTypeId: getCardTypeId(cardNumber),
+        securityCode,
+        cardExpirationMonth,
+        cardExpirationYear,
+      },
     });
   };
 
@@ -190,11 +194,12 @@ export class PaymentFormComponent extends React.Component {
       loading,
       isBasketProcessing,
       orderType,
+      paymentMethod,
     } = this.props;
 
     let submitButtonState = 'default';
     if (loading || isBasketProcessing) submitButtonState = 'loading';
-    if (submitting) submitButtonState = 'submitting';
+    if (submitting && paymentMethod === 'cybersource') submitButtonState = 'submitting';
 
     return (
       <form
@@ -249,8 +254,9 @@ PaymentFormComponent.propTypes = {
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
   loading: PropTypes.bool,
-  submitPaymentCybersource: PropTypes.func.isRequired,
+  submitPayment: PropTypes.func.isRequired,
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
+  paymentMethod: PropTypes.string,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -258,10 +264,11 @@ PaymentFormComponent.defaultProps = {
   loading: true,
   isBasketProcessing: false,
   orderType: ORDER_TYPES.SEAT,
+  paymentMethod: undefined,
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
 export default reduxForm({ form: 'payment' })(connect(paymentSelector, {
-  submitPaymentCybersource,
+  submitPayment,
 })(injectIntl(PaymentFormComponent)));

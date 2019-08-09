@@ -10,8 +10,6 @@ import {
   submitPayment,
 } from './actions';
 
-import { reducer as cybersource } from '../cybersource';
-import { reducer as paypal } from '../paypal';
 import { configuration } from '../../environment';
 
 const basketInitialState = {
@@ -26,10 +24,12 @@ const basket = (state = basketInitialState, action = null) => {
     case BASKET_DATA_RECEIVED: return { ...state, ...action.payload };
 
     // For submission, we only really need to know whether it's actively submitting or not.
-    case submitPayment.TRIGGER: return { ...state, submitting: true };
-    case submitPayment.SUCCESS: return { ...state, submitting: false };
-    case submitPayment.FAILURE: return { ...state, submitting: false };
-    case submitPayment.FULFILL: return { ...state, submitting: false };
+    case submitPayment.TRIGGER: return {
+      ...state,
+      submitting: true,
+      paymentMethod: action.payload.method,
+    };
+    case submitPayment.FULFILL: return { ...state, submitting: false, paymentMethod: undefined };
 
     case fetchBasket.TRIGGER: return { ...state, loading: true };
     case fetchBasket.SUCCESS: return { ...state, data: action.payload };
@@ -75,8 +75,6 @@ const currency = (state = currencyInitialState) => ({ ...state });
 const reducer = combineReducers({
   basket,
   currency,
-  cybersource,
-  paypal,
 });
 
 export default reducer;

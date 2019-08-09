@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 
-import PayPalLogo from './assets/paypal-logo.png';
-import messages from './PayPalButton.messages';
-import { submitPaymentPayPal } from './data/actions';
+import { PayPalButton } from './payment-methods/paypal';
+import { submitPayment } from './data/actions';
 
-class PayPalButton extends React.Component {
+class PayPalButtonContainer extends React.Component {
   handleClick = () => {
     if (this.props.disabled) return;
 
@@ -24,45 +22,42 @@ class PayPalButton extends React.Component {
         paymentMethod: 'PayPal',
       },
     );
-    this.props.submitPaymentPayPal();
-  }
 
+    this.props.submitPayment({ method: 'paypal' });
+  }
 
   render() {
     const {
-      intl, submitting, className, disabled,
+      submitting, className, disabled,
     } = this.props;
 
     return (
-      <button
+      <PayPalButton
         onClick={this.handleClick}
         className={classNames('payment-method-button', className)}
         disabled={submitting || disabled}
-      >
-        { submitting ? <span className="button-spinner-icon text-primary mr-2" /> : null }
-        <img
-          src={PayPalLogo}
-          alt={intl.formatMessage(messages['payment.type.paypal'])}
-        />
-      </button>
+        working={submitting}
+      />
     );
   }
 }
 
-PayPalButton.propTypes = {
-  intl: intlShape.isRequired,
+PayPalButtonContainer.propTypes = {
   className: PropTypes.string,
   submitting: PropTypes.bool,
   disabled: PropTypes.bool,
-  submitPaymentPayPal: PropTypes.func.isRequired,
+  submitPayment: PropTypes.func.isRequired,
 };
 
-PayPalButton.defaultProps = {
+PayPalButtonContainer.defaultProps = {
   submitting: false,
   className: undefined,
   disabled: false,
 };
 
-const mapStateToProps = state => state.payment.paypal;
+const mapStateToProps = state => ({
+  submitting: state.payment.basket.paymentMethod === 'paypal' && state.payment.basket.submitting,
+  disabled: state.payment.basket.submitting || state.payment.basket.loading,
+});
 
-export default connect(mapStateToProps, { submitPaymentPayPal })(injectIntl(PayPalButton));
+export default connect(mapStateToProps, { submitPayment })(PayPalButtonContainer);
