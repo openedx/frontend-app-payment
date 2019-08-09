@@ -6,7 +6,6 @@ exports[`<ApplePayButton /> should render properly 1`] = `
   disabled={false}
   id="applePayBtn"
   lang="en"
-  onClick={[Function]}
   title="Pay with Apple Pay"
 />
 `;

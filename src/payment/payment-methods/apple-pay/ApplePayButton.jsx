@@ -22,16 +22,6 @@ class ApplePayButton extends React.Component {
     };
   }
 
-  canSubmit() {
-    return this.state.canMakePayments
-      && !this.props.disabled;
-  }
-
-  handleClick = () => {
-    if (!this.canSubmit()) return;
-    if (this.props.onClick) this.props.onClick();
-  }
-
   render() {
     if (!this.state.canMakePayments) return null;
     const { intl, ...props } = this.props;
@@ -40,7 +30,6 @@ class ApplePayButton extends React.Component {
       <button
         {...props}
         id="applePayBtn"
-        onClick={this.handleClick}
         className={classNames('apple-pay-button', props.className)}
         title={intl.formatMessage(messages['payment.apple.pay.pay.with.apple.pay'])}
         lang={intl.locale}
