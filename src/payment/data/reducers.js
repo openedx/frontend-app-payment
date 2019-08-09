@@ -29,7 +29,11 @@ const basket = (state = basketInitialState, action = null) => {
       submitting: true,
       paymentMethod: action.payload.method,
     };
-    case submitPayment.FULFILL: return { ...state, submitting: false, paymentMethod: undefined };
+    case submitPayment.FAILURE: return {
+      ...state,
+      submitting: false,
+      paymentMethod: undefined,
+    };
 
     case fetchBasket.TRIGGER: return { ...state, loading: true };
     case fetchBasket.SUCCESS: return { ...state, data: action.payload };
