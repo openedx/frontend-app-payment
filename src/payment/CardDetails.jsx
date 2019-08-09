@@ -84,6 +84,7 @@ export class CardDetailsComponent extends React.Component {
               required
               disabled={submitting}
               onChange={this.handleCardNumberChange}
+              autocomplete="cc-number"
             />
             <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
@@ -114,6 +115,7 @@ export class CardDetailsComponent extends React.Component {
               required
               disabled={submitting}
               onChange={this.handleSecurityCodeChange}
+              autocomplete="cc-csc"
             />
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
@@ -135,6 +137,7 @@ export class CardDetailsComponent extends React.Component {
               options={this.renderExpirationMonthOptions()}
               required
               disabled={submitting}
+              autocomplete="cc-exp-month"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -152,6 +155,7 @@ export class CardDetailsComponent extends React.Component {
               options={this.renderExpirationYearOptions()}
               required
               disabled={submitting}
+              autocomplete="cc-exp-year"
             />
           </div>
         </div>
