@@ -32,18 +32,19 @@ describe('Perform Apple Pay Payment', () => {
   global.ApplePaySession.STATUS_SUCCESS = 'STATUS_SUCCESS';
   global.ApplePaySession.STATUS_FAILURE = 'STATUS_FAILURE';
 
-  const eventHandlers = {
-    onPaymentBegin: jest.fn(),
-    onPaymentComplete: jest.fn(),
-    onMerchantValidationFailure: jest.fn(),
-    onPaymentAuthorizationFailure: jest.fn(),
-    onPaymentCancel: jest.fn(),
-  };
-
   configureApiService(config, apiClient);
 
+  let eventHandlers;
 
   beforeEach(() => {
+    eventHandlers = {
+      onPaymentBegin: jest.fn(),
+      onPaymentComplete: jest.fn(),
+      onMerchantValidationFailure: jest.fn(),
+      onPaymentAuthorizationFailure: jest.fn(),
+      onPaymentCancel: jest.fn(),
+    };
+
     // Clear all instances and calls to constructor and all methods:
     global.ApplePaySession.mockClear();
     applePaySession.begin.mockClear();
@@ -51,12 +52,12 @@ describe('Perform Apple Pay Payment', () => {
     applePaySession.completeMerchantValidation.mockClear();
     applePaySession.completePayment.mockClear();
     Object.values(eventHandlers).map(handler => handler.mockClear);
-
-    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
   });
 
 
   it('should create a new apple pay session', () => {
+    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
+
     expect(global.ApplePaySession).toHaveBeenCalledWith(
       applePayVersion,
       expect.objectContaining({
@@ -81,7 +82,37 @@ describe('Perform Apple Pay Payment', () => {
   });
 
 
+  it('should not call onPaymentBegin if it is not set', () => {
+    const { onPaymentBegin, ...beginlessHandlers } = eventHandlers;
+    performApplePayPayment({ totalAmount: 50, ...beginlessHandlers });
+
+    expect(global.ApplePaySession).toHaveBeenCalledWith(
+      applePayVersion,
+      expect.objectContaining({
+        countryCode: config.APPLE_PAY_COUNTRY_CODE,
+        currencyCode: config.APPLE_PAY_CURRENCY_CODE,
+        supportedNetworks: config.APPLE_PAY_SUPPORTED_NETWORKS,
+        merchantCapabilities: config.APPLE_PAY_MERCHANT_CAPABILITIES,
+        total: {
+          label: config.APPLE_PAY_MERCHANT_NAME,
+          type: 'final',
+          amount: 50,
+        },
+        requiredBillingContactFields: ['postalAddress'],
+      }),
+    );
+
+    expect(typeof applePaySession.onvalidatemerchant).toBe('function');
+    expect(typeof applePaySession.onpaymentauthorized).toBe('function');
+
+    expect(applePaySession.begin).toHaveBeenCalled();
+    expect(eventHandlers.onPaymentBegin).not.toHaveBeenCalled();
+  });
+
+
   it('should validate the merchant', () => {
+    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
+
     const validateEvent = { validationURL: '/validate-merchant' };
     const successResponse = { data: 1234 };
 
@@ -103,6 +134,8 @@ describe('Perform Apple Pay Payment', () => {
 
 
   it('should abort if merchant validation fails', () => {
+    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
+
     const errorResponse = 'error';
 
     apiClient.post = jest.fn().mockReturnValue(new Promise((resolve, reject) => {
@@ -122,6 +155,8 @@ describe('Perform Apple Pay Payment', () => {
 
 
   it('should submit the payment for authorization', () => {
+    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
+
     const successResponse = { data: { number: 'the order number' } };
     const authorizeEvent = { payment: 'payment data' };
 
@@ -144,7 +179,10 @@ describe('Perform Apple Pay Payment', () => {
     });
   });
 
+
   it('should complete the session with a failed status if authorization fails', () => {
+    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
+
     const errorResponse = 'error';
     const authorizeEvent = { payment: 'payment data' };
 
@@ -166,7 +204,10 @@ describe('Perform Apple Pay Payment', () => {
     });
   });
 
+
   it('should fire the cancel handler on cancel', () => {
+    performApplePayPayment({ totalAmount: 50, ...eventHandlers });
+
     applePaySession.oncancel('cancel event');
     expect(eventHandlers.onPaymentCancel).toHaveBeenCalledWith('cancel event');
   });
