@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
-import FormInput from '../common/components/FormInput';
-import FormSelect from '../common/components/FormSelect';
-import getStates from './data/countryStatesMap';
+import FormInput from '../../../common/components/FormInput';
+import FormSelect from '../../../common/components/FormSelect';
+import getStates from './utils/countryStatesMap';
 import messages from './StateProvinceFormInput.messages';
 
 class StateProvinceFormInput extends React.Component {

@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { StatefulButton, Input } from '@edx/paragon';
 
-import { updateQuantity } from './data/actions';
-import { updateQuantityFormSelector } from './data/selectors';
+import { updateQuantity } from '../data/actions';
+import { updateQuantityFormSelector } from '../data/selectors';
 
 function UpdateQuantityForm(props) {
   const id = 'code-quantity';

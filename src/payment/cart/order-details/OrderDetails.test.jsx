@@ -4,8 +4,8 @@ import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
 
-import { configuration } from '../../environment';
-import messages from '../../i18n';
+import { configuration } from '../../../environment';
+import messages from '../../../i18n';
 
 import ConnectedOrderDetails from './OrderDetails';
 import { SEAT_PRODUCT_TYPE, COURSE_ENTITLEMENT_PRODUCT_TYPE, ENROLLMENT_CODE_PRODUCT_TYPE, VERIFIED_CERTIFICATE_TYPE, CREDIT_CERTIFICATE_TYPE } from './data/constants';

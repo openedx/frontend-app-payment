@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { clearFields, Field } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 
-import FormInput from '../common/components/FormInput';
-import FormSelect from '../common/components/FormSelect';
+import FormInput from '../../../common/components/FormInput';
+import FormSelect from '../../../common/components/FormSelect';
 
-import { countryOptionsSelector } from './data/selectors';
+import { countryOptionsSelector } from '../../data/selectors';
 import messages from './CardHolderInformation.messages';
 import StateProvinceFormInput from './StateProvinceFormInput';
 
@@ -37,7 +37,7 @@ export class CardHolderInformationComponent extends React.Component {
   }
 
   render() {
-    const { submitting, showBulkEnrollmentFields } = this.props;
+    const { disabled, showBulkEnrollmentFields } = this.props;
     return (
       <div className="basket-section">
         <h5 aria-level="2">
@@ -62,7 +62,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               required
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="given-name"
             />
           </div>
@@ -80,7 +80,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               required
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="family-name"
             />
           </div>
@@ -102,7 +102,7 @@ export class CardHolderInformationComponent extends React.Component {
                 component={FormInput}
                 type="text"
                 required
-                disabled={submitting}
+                disabled={disabled}
                 autocomplete="organization"
               />
             </div>
@@ -124,7 +124,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               required
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="street-address"
             />
           </div>
@@ -141,7 +141,7 @@ export class CardHolderInformationComponent extends React.Component {
               name="unit"
               component={FormInput}
               type="text"
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="address-line1"
             />
           </div>
@@ -162,7 +162,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               required
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="address-level2"
             />
           </div>
@@ -181,7 +181,7 @@ export class CardHolderInformationComponent extends React.Component {
               options={this.renderCountryOptions()}
               required
               onChange={this.handleSelectCountry}
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="country-name"
             />
           </div>
@@ -189,7 +189,7 @@ export class CardHolderInformationComponent extends React.Component {
 
         <div className="row">
           <div className="col-lg-6 form-group">
-            <StateProvinceFormInput country={this.state.selectedCountry} disabled={submitting} id="state" autocomplete="address-level1" />
+            <StateProvinceFormInput country={this.state.selectedCountry} disabled={disabled} id="state" autocomplete="address-level1" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -204,7 +204,7 @@ export class CardHolderInformationComponent extends React.Component {
               name="postalCode"
               component={FormInput}
               type="text"
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="postal-code"
             />
           </div>
@@ -221,13 +221,13 @@ CardHolderInformationComponent.propTypes = {
     label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })),
-  submitting: PropTypes.bool,
+  disabled: PropTypes.bool,
   showBulkEnrollmentFields: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   countryOptions: [],
-  submitting: false,
+  disabled: false,
   showBulkEnrollmentFields: false,
 };
 

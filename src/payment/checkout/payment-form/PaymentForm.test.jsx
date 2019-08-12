@@ -7,13 +7,13 @@ import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
 import analytics from '@edx/frontend-analytics';
 
-import { configuration } from '../environment';
-import messages from '../i18n';
+import { configuration } from '../../../environment';
+import messages from '../../../i18n';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
 
 const mockStore = configureMockStore();
 const storeMocks = {
-  defaultState: require('./__mocks__/defaultState.mockStore.js'), // eslint-disable-line global-require
+  defaultState: require('../../__mocks__/defaultState.mockStore.js'), // eslint-disable-line global-require
 };
 
 configureI18n(configuration, messages);

@@ -4,13 +4,13 @@ import { Provider } from 'react-redux';
 import { IntlProvider } from '@edx/frontend-i18n';
 import configureMockStore from 'redux-mock-store';
 
-import PlaceOrderButton from './PlaceOrderButton';
+import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 
 jest.mock('@edx/frontend-analytics');
 
 import { sendTrackEvent } from '@edx/frontend-analytics'; // eslint-disable-line
 
-describe('PlaceOrderButton', () => {
+describe('FreeCheckoutOrderButton', () => {
   it('should call sendTrackEvent when clicked', () => {
     const mockStore = configureMockStore();
 
@@ -30,7 +30,7 @@ describe('PlaceOrderButton', () => {
     const component = (
       <IntlProvider locale="en">
         <Provider store={store}>
-          <PlaceOrderButton />
+          <FreeCheckoutOrderButton />
         </Provider>
       </IntlProvider>
     );

@@ -10,7 +10,7 @@ import { ConnectedPaymentPage } from './';
 import { configuration } from '../environment';
 import messages from '../i18n';
 
-import ProductLineItem from './ProductLineItem';
+import ProductLineItem from './cart/ProductLineItem';
 
 const mockStore = configureMockStore();
 const storeMocks = {
