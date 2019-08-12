@@ -63,6 +63,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={submitting}
+              autocomplete="given-name"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -80,6 +81,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={submitting}
+              autocomplete="family-name"
             />
           </div>
         </div>
@@ -101,6 +103,7 @@ export class CardHolderInformationComponent extends React.Component {
                 type="text"
                 required
                 disabled={submitting}
+                autocomplete="organization"
               />
             </div>
           </div>
@@ -122,6 +125,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={submitting}
+              autocomplete="street-address"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -138,6 +142,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               disabled={submitting}
+              autocomplete="address-line1"
             />
           </div>
         </div>
@@ -158,6 +163,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={submitting}
+              autocomplete="address-level2"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -176,13 +182,14 @@ export class CardHolderInformationComponent extends React.Component {
               required
               onChange={this.handleSelectCountry}
               disabled={submitting}
+              autocomplete="country-name"
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-lg-6 form-group">
-            <StateProvinceFormInput country={this.state.selectedCountry} disabled={submitting} id="state" />
+            <StateProvinceFormInput country={this.state.selectedCountry} disabled={submitting} id="state" autocomplete="address-level1" />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -198,6 +205,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               disabled={submitting}
+              autocomplete="postal-code"
             />
           </div>
         </div>
