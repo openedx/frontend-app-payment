@@ -37,17 +37,6 @@ export const currencyDisclaimerSelector = state => ({
   actualAmount: state[storeName].basket.orderTotal,
 });
 
-export const orderSummarySelector = createSelector(
-  basketSelector,
-  isBasketProcessingSelector,
-  localizedCurrencySelector,
-  (basket, isBasketProcessing, currency) => ({
-    ...basket,
-    isBasketProcessing,
-    isCurrencyConverted: currency.showAsLocalizedCurrency,
-  }),
-);
-
 export const updateQuantityFormSelector = createSelector(
   basketSelector,
   isBasketProcessingSelector,
