@@ -91,4 +91,27 @@ describe('Cybersource Service', () => {
         }));
     });
   });
+
+  it('should throw an error if there are SDN hits', () => {
+    const successResponse = {
+      data: {
+        form_fields: {
+          allThe: 'all the form fields form cybersource',
+        },
+      },
+    };
+    const sdnResponse = { data: { hits: 1 } };
+
+    apiClient.post = (url, postData) => new Promise((resolve) => {
+      expectNoCardDataToBePresent(postData);
+      if (url === CYBERSOURCE_API) {
+        resolve(successResponse);
+      }
+      if (url === SDN_URL) {
+        resolve(sdnResponse);
+      }
+    });
+
+    return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('SDN Failure'));
+  });
 });
