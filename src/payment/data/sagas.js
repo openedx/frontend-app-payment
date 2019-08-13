@@ -120,7 +120,11 @@ export function* handleSubmitPayment({ payload }) {
         yield put(basketDataReceived(error.basket));
       }
     }
-  } finally {
+
+    // Usually, fulfill this would be in a finally{ } block
+    // but on payment submission we are redirecting to the receipt
+    // page and want to keep the basket in the submitting state
+    // during that time.
     yield put(submitPayment.fulfill());
   }
 }
