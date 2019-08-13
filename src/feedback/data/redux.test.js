@@ -1,7 +1,7 @@
 import { createStore, combineReducers } from 'redux';
 
 import reducer, { resetIds } from './reducers';
-import { addMessage, removeMessage } from './actions';
+import { addMessage, removeMessage, clearMessages } from './actions';
 import { MESSAGE_TYPES } from './constants';
 import { messageListSelector, alertListMapStateToProps, fieldMessagesSelector } from './selectors';
 
@@ -233,6 +233,21 @@ describe('redux tests', () => {
           },
         },
         orderedIds: [0, 1],
+      });
+    });
+  });
+
+  describe('clearMessages action', () => {
+    beforeEach(() => {
+      store.dispatch(addMessage('boo0', null, null, MESSAGE_TYPES.INFO));
+      store.dispatch(addMessage('boo1', null, null, MESSAGE_TYPES.ERROR));
+    });
+
+    it('should clear all messages', () => {
+      store.dispatch(clearMessages());
+      expect(store.getState().feedback).toEqual({
+        byId: {},
+        orderedIds: [],
       });
     });
   });
