@@ -121,7 +121,7 @@ export function* handleSubmitPayment({ payload }) {
       }
     }
 
-    // Usually, fulfill this would be in a finally{ } block
+    // Usually, submitPayment.fulfill() would be in a finally{ } block
     // but on payment submission we are redirecting to the receipt
     // page and want to keep the basket in the submitting state
     // during that time.
