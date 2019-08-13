@@ -106,7 +106,7 @@ export function* handleSubmitPayment({ payload }) {
     yield put(submitPayment.success(result));
   } catch (error) {
     // Do not handle errors on user aborted actions
-    if (error.aborted !== true) {
+    if (!error.aborted) {
       yield put(submitPayment.failure(error));
       if (error.code) {
         // Client side generated errors are simple error objects and
