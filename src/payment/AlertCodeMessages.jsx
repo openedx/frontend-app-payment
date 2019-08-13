@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
-import LocalizedPrice from './order-summary/LocalizedPrice';
+import LocalizedPrice from './cart/LocalizedPrice';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SingleEnrollmentCodeWarning = ({ values }) => (

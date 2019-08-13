@@ -22,13 +22,7 @@ export const isBasketProcessingSelector = createSelector(
   basket => basket.isCouponProcessing || basket.isQuantityProcessing || basket.submitting,
 );
 
-export const cartSelector = state => ({ ...state[storeName].basket });
-
-export const currencyDisclaimerSelector = state => ({
-  actualAmount: state[storeName].basket.orderTotal,
-});
-
-export const orderSummarySelector = createSelector(
+export const cartSelector = createSelector(
   basketSelector,
   isBasketProcessingSelector,
   localizedCurrencySelector,
@@ -38,6 +32,10 @@ export const orderSummarySelector = createSelector(
     isCurrencyConverted: currency.showAsLocalizedCurrency,
   }),
 );
+
+export const currencyDisclaimerSelector = state => ({
+  actualAmount: state[storeName].basket.orderTotal,
+});
 
 export const updateQuantityFormSelector = createSelector(
   basketSelector,

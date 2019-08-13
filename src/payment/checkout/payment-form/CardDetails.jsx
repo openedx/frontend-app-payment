@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import ReactTooltip from 'react-tooltip';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -9,8 +8,8 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 
 import messages from './CardDetails.messages';
 
-import FormInput from '../common/components/FormInput';
-import FormSelect from '../common/components/FormSelect';
+import FormInput from '../../../common/components/FormInput';
+import FormSelect from '../../../common/components/FormSelect';
 
 import { getCardIcon } from './utils/credit-card';
 
@@ -56,7 +55,7 @@ export class CardDetailsComponent extends React.Component {
   }
 
   render() {
-    const { submitting } = this.props;
+    const { disabled } = this.props;
     return (
       <div className="basket-section">
         <h5 aria-level="2">
@@ -82,7 +81,7 @@ export class CardDetailsComponent extends React.Component {
               component={FormInput}
               type="tel"
               required
-              disabled={submitting}
+              disabled={disabled}
               onChange={this.handleCardNumberChange}
               autocomplete="cc-number"
             />
@@ -113,7 +112,7 @@ export class CardDetailsComponent extends React.Component {
               component={FormInput}
               type="tel"
               required
-              disabled={submitting}
+              disabled={disabled}
               onChange={this.handleSecurityCodeChange}
               autocomplete="cc-csc"
             />
@@ -136,7 +135,7 @@ export class CardDetailsComponent extends React.Component {
               component={FormSelect}
               options={this.renderExpirationMonthOptions()}
               required
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="cc-exp-month"
             />
           </div>
@@ -154,7 +153,7 @@ export class CardDetailsComponent extends React.Component {
               component={FormSelect}
               options={this.renderExpirationYearOptions()}
               required
-              disabled={submitting}
+              disabled={disabled}
               autocomplete="cc-exp-year"
             />
           </div>
@@ -166,11 +165,11 @@ export class CardDetailsComponent extends React.Component {
 
 CardDetailsComponent.propTypes = {
   intl: intlShape.isRequired,
-  submitting: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 CardDetailsComponent.defaultProps = {
-  submitting: false,
+  disabled: false,
 };
 
-export default connect()(injectIntl(CardDetailsComponent));
+export default injectIntl(CardDetailsComponent);

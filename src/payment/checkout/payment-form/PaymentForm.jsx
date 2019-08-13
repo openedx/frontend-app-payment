@@ -1,20 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
-import { sendTrackEvent } from '@edx/frontend-analytics';
 import { StatefulButton } from '@edx/paragon';
-
-import { submitPayment } from './data/actions';
-import { paymentSelector } from './data/selectors';
 
 import { getCardTypeId, SUPPORTED_CARDS } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
-import getStates from './data/countryStatesMap';
+import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
-import { ORDER_TYPES } from './data/constants';
 
 const CardValidator = require('card-validator');
 
@@ -25,7 +19,7 @@ export class PaymentFormComponent extends React.Component {
   }
 
   onSubmit = (values) => {
-    if (this.props.loading) return;
+    if (this.props.disabled) return;
 
     const requiredFields = this.getRequiredFields(values);
     const {
@@ -60,8 +54,7 @@ export class PaymentFormComponent extends React.Component {
       throw new SubmissionError(errors);
     }
 
-    this.props.submitPayment({
-      method: 'cybersource',
+    this.props.onSubmitPayment({
       cardHolderInfo: {
         firstName,
         lastName,
@@ -113,26 +106,11 @@ export class PaymentFormComponent extends React.Component {
       requiredFields.state = state;
     }
 
-    if (this.props.orderType === ORDER_TYPES.BULK_ENROLLMENT) {
+    if (this.props.isBulkOrder) {
       requiredFields.organization = organization;
     }
 
     return requiredFields;
-  }
-
-  handleSubmitButtonClick() {
-    // TO DO: after event parity, track data should be
-    // sent only if the payment is processed, not on click
-    // Check for PayPal, ApplePay and Free Basket as well
-    sendTrackEvent(
-      'edx.bi.ecommerce.basket.payment_selected',
-      {
-        type: 'click',
-        category: 'checkout',
-        paymentMethod: 'Credit Card',
-        checkoutType: 'client_side',
-      },
-    );
   }
 
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
@@ -190,16 +168,15 @@ export class PaymentFormComponent extends React.Component {
   render() {
     const {
       handleSubmit,
-      submitting,
       loading,
-      isBasketProcessing,
-      orderType,
-      paymentMethod,
+      disabled,
+      isProcessing,
+      isBulkOrder,
     } = this.props;
 
     let submitButtonState = 'default';
-    if (loading || isBasketProcessing) submitButtonState = 'loading';
-    if (submitting && paymentMethod === 'cybersource') submitButtonState = 'submitting';
+    if (disabled) submitButtonState = 'disabled';
+    if (isProcessing) submitButtonState = 'processing';
 
     return (
       <form
@@ -208,10 +185,10 @@ export class PaymentFormComponent extends React.Component {
         noValidate
       >
         <CardHolderInformation
-          submitting={submitting}
-          showBulkEnrollmentFields={orderType === ORDER_TYPES.BULK_ENROLLMENT}
+          showBulkEnrollmentFields={isBulkOrder}
+          disabled={disabled}
         />
-        <CardDetails submitting={submitting} />
+        <CardDetails disabled={disabled} />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
             {
@@ -222,7 +199,7 @@ export class PaymentFormComponent extends React.Component {
                   type="submit"
                   className="btn btn-primary btn-lg btn-block"
                   state={submitButtonState}
-                  onClick={this.handleSubmitButtonClick}
+                  onClick={this.props.onSubmitButtonClick}
                   labels={{
                     default: (
                       <FormattedMessage
@@ -233,11 +210,11 @@ export class PaymentFormComponent extends React.Component {
                     ),
                   }}
                   icons={{
-                    submitting: (
+                    processing: (
                       <span className="button-spinner-icon" />
                     ),
                   }}
-                  disabledStates={['submitting', 'loading']}
+                  disabledStates={['processing', 'disabled']}
                 />
               )
             }
@@ -251,24 +228,21 @@ export class PaymentFormComponent extends React.Component {
 PaymentFormComponent.propTypes = {
   intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool,
-  isBasketProcessing: PropTypes.bool,
+  disabled: PropTypes.bool,
+  isProcessing: PropTypes.bool,
+  isBulkOrder: PropTypes.bool,
   loading: PropTypes.bool,
-  submitPayment: PropTypes.func.isRequired,
-  orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
-  paymentMethod: PropTypes.string,
+  onSubmitPayment: PropTypes.func.isRequired,
+  onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
 PaymentFormComponent.defaultProps = {
-  submitting: false,
+  disabled: false,
   loading: true,
-  isBasketProcessing: false,
-  orderType: ORDER_TYPES.SEAT,
-  paymentMethod: undefined,
+  isBulkOrder: false,
+  isProcessing: false,
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(connect(paymentSelector, {
-  submitPayment,
-})(injectIntl(PaymentFormComponent)));
+export default reduxForm({ form: 'payment' })(injectIntl(PaymentFormComponent));

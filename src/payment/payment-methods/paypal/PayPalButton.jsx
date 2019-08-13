@@ -5,9 +5,9 @@ import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import PayPalLogo from './assets/paypal-logo.png';
 import messages from './PayPalButton.messages';
 
-const PayPalButton = ({ intl, working, ...props }) => (
+const PayPalButton = ({ intl, isProcessing, ...props }) => (
   <button {...props}>
-    { working ? <span className="button-spinner-icon text-primary mr-2" /> : null }
+    { isProcessing ? <span className="button-spinner-icon text-primary mr-2" /> : null }
     <img
       src={PayPalLogo}
       alt={intl.formatMessage(messages['payment.type.paypal'])}
@@ -17,11 +17,11 @@ const PayPalButton = ({ intl, working, ...props }) => (
 
 PayPalButton.propTypes = {
   intl: intlShape.isRequired,
-  working: PropTypes.bool,
+  isProcessing: PropTypes.bool,
 };
 
 PayPalButton.defaultProps = {
-  working: false,
+  isProcessing: false,
 };
 
 export default injectIntl(PayPalButton);

@@ -26,10 +26,6 @@ const applePaySession = { begin: jest.fn() };
 global.ApplePaySession = jest.fn().mockImplementation(() => applePaySession);
 global.ApplePaySession.canMakePayments = () => true;
 
-jest.mock('@edx/frontend-analytics', () => ({
-  sendTrackEvent: jest.fn(),
-}));
-
 describe('<ApplePayButton />', () => {
   it('should render properly', () => {
     const tree = renderer

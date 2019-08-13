@@ -4,8 +4,7 @@ import { logError } from '@edx/frontend-logging';
 import { configureApiService as configureCybersourceApiService } from '../payment-methods/cybersource';
 import { configureApiService as configurePayPalApiService } from '../payment-methods/paypal';
 import { configureApiService as configureApplePayApiService } from '../payment-methods/apple-pay';
-import { applyConfiguration } from '../../common/serviceUtils';
-import handleBasketApiError from '../utils/handleBasketApiError';
+import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
 import { camelCaseObject } from '../../common/utils';
 import { ORDER_TYPES } from './constants';
 
@@ -78,6 +77,24 @@ export function transformResults(data) {
   }
 
   return results;
+}
+
+function handleBasketApiError(requestError) {
+  try {
+    // Always throws an error:
+    handleRequestError(requestError);
+  } catch (errorWithMessages) {
+    const processedError = new Error();
+    processedError.messages = errorWithMessages.messages;
+    processedError.errors = errorWithMessages.errors;
+    processedError.fieldErrors = errorWithMessages.fieldErrors;
+
+    if (requestError.response.data) {
+      processedError.basket = transformResults(requestError.response.data);
+    }
+
+    throw processedError;
+  }
 }
 
 export async function getBasket() {

@@ -5,14 +5,14 @@ import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
 
-import { configuration } from '../environment';
-import messages from '../i18n';
+import { configuration } from '../../../environment';
+import messages from '../../../i18n';
 import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
 import PaymentForm from './PaymentForm';
 
 const mockStore = configureMockStore();
 const storeMocks = {
-  defaultState: require('./__mocks__/defaultState.mockStore.js'), // eslint-disable-line global-require
+  defaultState: require('../../__mocks__/defaultState.mockStore.js'), // eslint-disable-line global-require
 };
 
 configureI18n(configuration, messages);
