@@ -105,9 +105,8 @@ export function* handleSubmitPayment({ payload }) {
     const result = yield call(paymentMethodCheckout, basket, paymentArgs);
     yield put(submitPayment.success(result));
   } catch (error) {
-    if (error.aborted === true) {
-      // This an a user aborted action, do nothing
-    } else {
+    // Do not handle errors on user aborted actions
+    if (error.aborted !== true) {
       yield put(submitPayment.failure(error));
       if (error.code) {
         // Client side generated errors are simple error objects and
@@ -120,11 +119,7 @@ export function* handleSubmitPayment({ payload }) {
         yield put(basketDataReceived(error.basket));
       }
     }
-
-    // Usually, submitPayment.fulfill() would be in a finally{ } block
-    // but on payment submission we are redirecting to the receipt
-    // page and want to keep the basket in the submitting state
-    // during that time.
+  } finally {
     yield put(submitPayment.fulfill());
   }
 }

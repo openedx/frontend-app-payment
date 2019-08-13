@@ -16,6 +16,7 @@ const basketInitialState = {
   loading: true,
   loaded: false,
   submitting: false,
+  redirect: false,
   products: [],
 };
 
@@ -23,11 +24,14 @@ const basket = (state = basketInitialState, action = null) => {
   switch (action.type) {
     case BASKET_DATA_RECEIVED: return { ...state, ...action.payload };
 
-    // For submission, we only really need to know whether it's actively submitting or not.
     case submitPayment.TRIGGER: return {
       ...state,
       submitting: true,
       paymentMethod: action.payload.method,
+    };
+    case submitPayment.SUCCESS: return {
+      ...state,
+      redirect: true,
     };
     case submitPayment.FULFILL: return {
       ...state,
