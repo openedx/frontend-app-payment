@@ -13,6 +13,7 @@ let config = {
   ECOMMERCE_BASE_URL: null,
   ECOMMERCE_API_BASE_URL: null,
   ECOMMERCE_RECEIPT_BASE_URL: null,
+  ENVIRONMENT: null,
   LMS_BASE_URL: null,
 };
 

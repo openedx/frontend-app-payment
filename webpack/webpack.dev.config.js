@@ -116,9 +116,11 @@ module.exports = Merge.smart(commonConfig, {
     }),
     // Generates an HTML file in the output directory.
     new HtmlWebpackPlugin({
-      inject: true, // Appends script tags linking to the webpack bundles at the end of the body
+      inject: false, // Appends script tags linking to the webpack bundles at the end of the body
       template: path.resolve(__dirname, '../public/index.html'),
       optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
+      newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
+      newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
     }),
     // when the --hot option is not passed in as part of the command
     // the HotModuleReplacementPlugin has to be specified in the Webpack configuration

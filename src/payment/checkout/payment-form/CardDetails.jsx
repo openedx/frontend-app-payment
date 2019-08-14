@@ -85,7 +85,7 @@ export class CardDetailsComponent extends React.Component {
               onChange={this.handleCardNumberChange}
               autocomplete="cc-number"
             />
-            <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
+            {this.state.cardIcon !== null && <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />}
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
           <div className="col-lg-6 form-group">

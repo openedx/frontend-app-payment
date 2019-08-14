@@ -12,6 +12,7 @@ import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable
 const config = {
   ECOMMERCE_BASE_URL: 'ecommerce.org',
   CYBERSOURCE_URL: 'cybersource.org',
+  ENVIRONMENT: 'test',
 };
 
 const SDN_URL = `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`;

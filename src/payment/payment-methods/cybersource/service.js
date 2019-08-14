@@ -6,8 +6,9 @@ import { generateAndSubmitForm } from '../../../common/utils';
 
 
 let config = {
-  ECOMMERCE_BASE_URL: null,
   CYBERSOURCE_URL: null,
+  ECOMMERCE_BASE_URL: null,
+  ENVIRONMENT: null,
 };
 
 let apiClient = null; // eslint-disable-line no-unused-vars
@@ -40,7 +41,10 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   );
 
   if (sdnCheckResponse.hits > 0) {
-    global.location.href = `${config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+    if (config.ENVIRONMENT !== 'test') {
+      /* istanbul ignore next */
+      global.location.href = `${config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+    }
     throw new Error('SDN Failure');
   }
 

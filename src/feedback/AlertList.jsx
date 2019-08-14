@@ -12,7 +12,8 @@ class AlertList extends Component {
     if (this.props.messageCodes[code]) {
       return this.props.messageCodes[code];
     } else if (code === 'fallback-error') {
-      return FallbackErrorMessage;
+      // This will be cloned and provided with the necessary props.
+      return <FallbackErrorMessage />;
     }
     return userMessage;
   }

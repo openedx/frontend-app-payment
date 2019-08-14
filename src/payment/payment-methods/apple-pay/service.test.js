@@ -9,8 +9,6 @@ jest.mock('@edx/frontend-logging', () => ({
 
 describe('Perform Apple Pay Payment', () => {
   const config = {
-    ECOMMERCE_BASE_URL: 'ecommerce.org',
-    ECOMMERCE_RECEIPT_BASE_URL: 'ecommerce.org/receipt',
     APPLE_PAY_MERCHANT_IDENTIFIER: 'ecommerce.edx.org',
     APPLE_PAY_MERCHANT_NAME: 'edX e-commerce',
     APPLE_PAY_COUNTRY_CODE: 'USA',
@@ -19,6 +17,9 @@ describe('Perform Apple Pay Payment', () => {
     APPLE_PAY_AUTHORIZE_URL: '/authorize',
     APPLE_PAY_SUPPORTED_NETWORKS: ['amex', 'discover', 'visa', 'masterCard'],
     APPLE_PAY_MERCHANT_CAPABILITIES: ['supports3DS', 'supportsCredit', 'supportsDebit'],
+    ECOMMERCE_BASE_URL: 'ecommerce.org',
+    ECOMMERCE_RECEIPT_BASE_URL: 'ecommerce.org/receipt',
+    ENVIRONMENT: 'test',
   };
   const basket = { orderTotal: 50 };
   const apiClient = {};
