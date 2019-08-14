@@ -1,0 +1,1044 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Cart /> renders a bulk enrollment cart 1`] = `
+<section
+  aria-label="Shopping Cart Details"
+  aria-live="polite"
+  aria-relevant="all"
+>
+  <div>
+    <span
+      className="sr-only"
+    >
+      <span>
+        Shopping cart details are loaded.
+      </span>
+    </span>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        <span>
+          In Your Cart
+        </span>
+      </h5>
+      <p>
+        <span>
+          Your purchase contains the following:
+        </span>
+      </p>
+      <div
+        className="row align-items-center mb-3"
+      >
+        <div
+          className="col-5"
+        >
+          <div
+            className="embed-responsive embed-responsive-16by9"
+          >
+            <img
+              alt=""
+              className="img-thumbnail product-thumbnail"
+              src=""
+            />
+          </div>
+        </div>
+        <div
+          className="col-7"
+        >
+          <h6
+            aria-level="3"
+            className="m-0"
+          >
+            Introduction to Happiness
+          </h6>
+          <p
+            className="m-0"
+          >
+            <span>
+              Verified Certificate
+            </span>
+          </p>
+        </div>
+      </div>
+      <form
+        className="summary-row form-inline"
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group mr-2"
+        >
+          <label
+            htmlFor="code-quantity"
+          >
+            <span>
+              Quantity
+            </span>
+          </label>
+          <div
+            className="position-relative"
+          >
+            <input
+              className="form-control form-control-sm"
+              id="code-quantity"
+              max="100"
+              min="1"
+              name="code-quantity"
+              style={
+                Object {
+                  "width": "5rem",
+                }
+              }
+              type="number"
+            />
+            <small
+              className="text-muted small"
+              style={
+                Object {
+                  "left": 0,
+                  "position": "absolute",
+                  "top": "100%",
+                }
+              }
+            >
+              <span>
+                Max: 100
+              </span>
+            </small>
+          </div>
+        </div>
+        <button
+          aria-disabled={false}
+          aria-live="assertive"
+          className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn-primary btn-sm"
+          onBlur={[Function]}
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          type="submit"
+        >
+          <span
+            className="d-flex align-items-center justify-content-center"
+          >
+            <span>
+              Update
+            </span>
+          </span>
+        </button>
+      </form>
+    </div>
+    <div
+      aria-labelledby="summary-heading"
+      aria-live="polite"
+      className="basket-section"
+      role="region"
+    >
+      <h5
+        aria-level="2"
+        id="summary-heading"
+      >
+        <span>
+          Summary
+        </span>
+      </h5>
+      <div
+        className="summary-row"
+      >
+        <table
+          className="w-100"
+        >
+          <thead>
+            <tr>
+              <th
+                className="font-weight-normal"
+              >
+                <span>
+                  Price
+                </span>
+              </th>
+              <th
+                className="font-weight-normal"
+              >
+                <span>
+                  Quantity
+                </span>
+              </th>
+              <th
+                className="font-weight-normal text-right"
+              >
+                <span>
+                  Subtotal
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <span>
+                  $161.00
+                </span>
+              </td>
+              <td />
+              <td
+                className="text-right"
+              />
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div
+        className="summary-row"
+      >
+        <p
+          className="d-flex m-0"
+        >
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Discounts applied
+            </span>
+          </span>
+          <span>
+            <span>
+              -$12.00
+            </span>
+          </span>
+        </p>
+      </div>
+      <div
+        className="summary-row font-weight-bold d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            TOTAL
+          </span>
+        </span>
+        <span
+          className="text-right"
+        >
+          <span>
+            $149.00
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        Order Details
+      </h5>
+      <p>
+        After you complete your order you will be automatically enrolled in the verified track of the course.
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`<Cart /> renders a cart in non USD currency 1`] = `
+<section
+  aria-label="Shopping Cart Details"
+  aria-live="polite"
+  aria-relevant="all"
+>
+  <div>
+    <span
+      className="sr-only"
+    >
+      <span>
+        Shopping cart details are loaded.
+      </span>
+    </span>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        <span>
+          In Your Cart
+        </span>
+      </h5>
+      <p>
+        <span>
+          Your purchase contains the following:
+        </span>
+      </p>
+      <div
+        className="row align-items-center mb-3"
+      >
+        <div
+          className="col-5"
+        >
+          <div
+            className="embed-responsive embed-responsive-16by9"
+          >
+            <img
+              alt=""
+              className="img-thumbnail product-thumbnail"
+              src=""
+            />
+          </div>
+        </div>
+        <div
+          className="col-7"
+        >
+          <h6
+            aria-level="3"
+            className="m-0"
+          >
+            Introduction to Happiness
+          </h6>
+          <p
+            className="m-0"
+          >
+            <span>
+              Verified Certificate
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="summary-heading"
+      aria-live="polite"
+      className="basket-section"
+      role="region"
+    >
+      <h5
+        aria-level="2"
+        id="summary-heading"
+      >
+        <span>
+          Summary
+        </span>
+      </h5>
+      <div
+        className="summary-row d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            Price
+          </span>
+        </span>
+        <span>
+          <span>
+            <span>
+              MX$3,074
+            </span>
+             *
+          </span>
+        </span>
+      </div>
+      <div
+        className="summary-row"
+      >
+        <p
+          className="d-flex m-0"
+        >
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Discounts applied
+            </span>
+          </span>
+          <span>
+            <span>
+              <span>
+                -MX$229
+              </span>
+               *
+            </span>
+          </span>
+        </p>
+      </div>
+      <form
+        className="summary-row d-flex align-items-end"
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group mb-0 mr-2"
+        >
+          <label
+            className="h6 d-block"
+            htmlFor="couponField"
+          >
+            <span>
+              Add coupon code (optional)
+            </span>
+          </label>
+          <input
+            aria-describedby=""
+            className="form-control"
+            defaultValue=""
+            id="couponField"
+            name="couponField"
+            type="text"
+          />
+        </div>
+        <button
+          className="btn btn-primary"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          type="submit"
+        >
+          <span>
+            Apply
+          </span>
+        </button>
+      </form>
+      <div
+        className="summary-row font-weight-bold d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            TOTAL
+          </span>
+        </span>
+        <span
+          className="text-right"
+        >
+          <span>
+            <span>
+              MX$2,845
+            </span>
+             *
+          </span>
+        </span>
+      </div>
+      <div
+        className="text-muted font-italic"
+      >
+        <span>
+          * This total contains an approximate conversion. You will be charged 
+          <span>
+            $149.00
+          </span>
+           USD.
+        </span>
+      </div>
+    </div>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        Order Details
+      </h5>
+      <p>
+        After you complete your order you will be automatically enrolled in the verified track of the course.
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`<Cart /> renders a cart with an offer 1`] = `
+<section
+  aria-label="Shopping Cart Details"
+  aria-live="polite"
+  aria-relevant="all"
+>
+  <div>
+    <span
+      className="sr-only"
+    >
+      <span>
+        Shopping cart details are loaded.
+      </span>
+    </span>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        <span>
+          In Your Cart
+        </span>
+      </h5>
+      <p>
+        <span>
+          Your purchase contains the following:
+        </span>
+      </p>
+      <div
+        className="row align-items-center mb-3"
+      >
+        <div
+          className="col-5"
+        >
+          <div
+            className="embed-responsive embed-responsive-16by9"
+          >
+            <img
+              alt=""
+              className="img-thumbnail product-thumbnail"
+              src=""
+            />
+          </div>
+        </div>
+        <div
+          className="col-7"
+        >
+          <h6
+            aria-level="3"
+            className="m-0"
+          >
+            Introduction to Happiness
+          </h6>
+          <p
+            className="m-0"
+          >
+            <span>
+              Verified Certificate
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="summary-heading"
+      aria-live="polite"
+      className="basket-section"
+      role="region"
+    >
+      <h5
+        aria-level="2"
+        id="summary-heading"
+      >
+        <span>
+          Summary
+        </span>
+      </h5>
+      <div
+        className="summary-row d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            Price
+          </span>
+        </span>
+        <span>
+          <span>
+            $161.00
+          </span>
+        </span>
+      </div>
+      <div
+        className="summary-row"
+      >
+        <p
+          className="d-flex m-0"
+        >
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Discounts applied
+            </span>
+          </span>
+          <span>
+            <span>
+              -$12.00
+            </span>
+          </span>
+        </p>
+        <p
+          className="m-0 text-muted"
+        >
+          <span>
+            <span>
+              50%
+            </span>
+             discount provided by Pied Piper.
+          </span>
+        </p>
+      </div>
+      <form
+        className="summary-row d-flex align-items-end"
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group mb-0 mr-2"
+        >
+          <label
+            className="h6 d-block"
+            htmlFor="couponField"
+          >
+            <span>
+              Add coupon code (optional)
+            </span>
+          </label>
+          <input
+            aria-describedby=""
+            className="form-control"
+            defaultValue=""
+            id="couponField"
+            name="couponField"
+            type="text"
+          />
+        </div>
+        <button
+          className="btn btn-primary"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          type="submit"
+        >
+          <span>
+            Apply
+          </span>
+        </button>
+      </form>
+      <div
+        className="summary-row font-weight-bold d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            TOTAL
+          </span>
+        </span>
+        <span
+          className="text-right"
+        >
+          <span>
+            $149.00
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        Order Details
+      </h5>
+      <p>
+        After you complete your order you will be automatically enrolled in the verified track of the course.
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`<Cart /> renders a cart without a coupon form 1`] = `
+<section
+  aria-label="Shopping Cart Details"
+  aria-live="polite"
+  aria-relevant="all"
+>
+  <div>
+    <span
+      className="sr-only"
+    >
+      <span>
+        Shopping cart details are loaded.
+      </span>
+    </span>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        <span>
+          In Your Cart
+        </span>
+      </h5>
+      <p>
+        <span>
+          Your purchase contains the following:
+        </span>
+      </p>
+      <div
+        className="row align-items-center mb-3"
+      >
+        <div
+          className="col-5"
+        >
+          <div
+            className="embed-responsive embed-responsive-16by9"
+          >
+            <img
+              alt=""
+              className="img-thumbnail product-thumbnail"
+              src=""
+            />
+          </div>
+        </div>
+        <div
+          className="col-7"
+        >
+          <h6
+            aria-level="3"
+            className="m-0"
+          >
+            Introduction to Happiness
+          </h6>
+          <p
+            className="m-0"
+          >
+            <span>
+              Verified Certificate
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="summary-heading"
+      aria-live="polite"
+      className="basket-section"
+      role="region"
+    >
+      <h5
+        aria-level="2"
+        id="summary-heading"
+      >
+        <span>
+          Summary
+        </span>
+      </h5>
+      <div
+        className="summary-row d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            Price
+          </span>
+        </span>
+        <span>
+          <span>
+            $161.00
+          </span>
+        </span>
+      </div>
+      <div
+        className="summary-row"
+      >
+        <p
+          className="d-flex m-0"
+        >
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Discounts applied
+            </span>
+          </span>
+          <span>
+            <span>
+              -$12.00
+            </span>
+          </span>
+        </p>
+      </div>
+      <div
+        className="summary-row font-weight-bold d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            TOTAL
+          </span>
+        </span>
+        <span
+          className="text-right"
+        >
+          <span>
+            $149.00
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        Order Details
+      </h5>
+      <p>
+        After you complete your order you will be automatically enrolled in the verified track of the course.
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`<Cart /> renders a default cart 1`] = `
+<section
+  aria-label="Shopping Cart Details"
+  aria-live="polite"
+  aria-relevant="all"
+>
+  <div>
+    <span
+      className="sr-only"
+    >
+      <span>
+        Shopping cart details are loaded.
+      </span>
+    </span>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        <span>
+          In Your Cart
+        </span>
+      </h5>
+      <p>
+        <span>
+          Your purchase contains the following:
+        </span>
+      </p>
+      <div
+        className="row align-items-center mb-3"
+      >
+        <div
+          className="col-5"
+        >
+          <div
+            className="embed-responsive embed-responsive-16by9"
+          >
+            <img
+              alt=""
+              className="img-thumbnail product-thumbnail"
+              src=""
+            />
+          </div>
+        </div>
+        <div
+          className="col-7"
+        >
+          <h6
+            aria-level="3"
+            className="m-0"
+          >
+            Introduction to Happiness
+          </h6>
+          <p
+            className="m-0"
+          >
+            <span>
+              Verified Certificate
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      aria-labelledby="summary-heading"
+      aria-live="polite"
+      className="basket-section"
+      role="region"
+    >
+      <h5
+        aria-level="2"
+        id="summary-heading"
+      >
+        <span>
+          Summary
+        </span>
+      </h5>
+      <div
+        className="summary-row d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            Price
+          </span>
+        </span>
+        <span>
+          <span>
+            $161.00
+          </span>
+        </span>
+      </div>
+      <div
+        className="summary-row"
+      >
+        <p
+          className="d-flex m-0"
+        >
+          <span
+            className="flex-grow-1"
+          >
+            <span>
+              Discounts applied
+            </span>
+          </span>
+          <span>
+            <span>
+              -$12.00
+            </span>
+          </span>
+        </p>
+      </div>
+      <form
+        className="summary-row d-flex align-items-end"
+        onSubmit={[Function]}
+      >
+        <div
+          className="form-group mb-0 mr-2"
+        >
+          <label
+            className="h6 d-block"
+            htmlFor="couponField"
+          >
+            <span>
+              Add coupon code (optional)
+            </span>
+          </label>
+          <input
+            aria-describedby=""
+            className="form-control"
+            defaultValue=""
+            id="couponField"
+            name="couponField"
+            type="text"
+          />
+        </div>
+        <button
+          className="btn btn-primary"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          type="submit"
+        >
+          <span>
+            Apply
+          </span>
+        </button>
+      </form>
+      <div
+        className="summary-row font-weight-bold d-flex"
+      >
+        <span
+          className="flex-grow-1"
+        >
+          <span>
+            TOTAL
+          </span>
+        </span>
+        <span
+          className="text-right"
+        >
+          <span>
+            $149.00
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="basket-section"
+    >
+      <h5
+        aria-level="2"
+      >
+        Order Details
+      </h5>
+      <p>
+        After you complete your order you will be automatically enrolled in the verified track of the course.
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`<Cart /> renders a loading cart skeleton 1`] = `
+<section
+  aria-label="Shopping Cart Details"
+  aria-live="polite"
+  aria-relevant="all"
+>
+  <div>
+    <span
+      className="sr-only"
+    >
+      <span>
+        Loading, please wait...
+      </span>
+    </span>
+    <div
+      className="skeleton py-2 mb-3 w-50"
+    />
+    <div
+      className="skeleton py-2 mb-4 mr-4"
+    />
+    <div
+      className="row align-items-center mb-5"
+    >
+      <div
+        className="col-5"
+      >
+        <div
+          className="skeleton embed-responsive embed-responsive-16by9"
+        />
+      </div>
+      <div
+        className="col-7"
+      >
+        <div
+          className="skeleton py-2 mb-3 w-50"
+        />
+        <div
+          className="skeleton py-2 mr-4"
+        />
+      </div>
+    </div>
+    <div
+      className="skeleton py-2 mb-3 w-50"
+    />
+    <div
+      className="skeleton py-2 mb-2"
+    />
+    <div
+      className="skeleton py-2 mb-5"
+    />
+    <div
+      className="skeleton py-2 mb-3 w-50"
+    />
+    <div
+      className="skeleton py-2 mb-2 mr-4"
+    />
+    <div
+      className="skeleton py-2 mb-5 w-75"
+    />
+  </div>
+</section>
+`;
