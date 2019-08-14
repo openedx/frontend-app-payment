@@ -19,6 +19,7 @@ export class PaymentFormComponent extends React.Component {
   }
 
   onSubmit = (values) => {
+    // istanbul ignore if
     if (this.props.disabled) return;
 
     const requiredFields = this.getRequiredFields(values);
@@ -175,7 +176,9 @@ export class PaymentFormComponent extends React.Component {
     } = this.props;
 
     let submitButtonState = 'default';
+    // istanbul ignore if
     if (disabled) submitButtonState = 'disabled';
+    // istanbul ignore if
     if (isProcessing) submitButtonState = 'processing';
 
     return (

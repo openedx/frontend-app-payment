@@ -85,6 +85,39 @@ describe('<PaymentForm />', () => {
         }
       });
     });
+
+    it('returns organization fields for a bulk order', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <Provider store={mockStore(storeMocks.defaultState)}>
+            <PaymentForm
+              isBulkOrder
+              handleSubmit={() => {}}
+              onSubmitPayment={() => {}}
+              onSubmitButtonClick={() => {}}
+            />
+          </Provider>
+        </IntlProvider>
+      ));
+      paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+
+      const formValues = {
+        firstName: '',
+        lastName: '',
+        address: '',
+        city: '',
+        country: 'UK',
+        cardNumber: '',
+        securityCode: '',
+        cardExpirationMonth: '',
+        cardExpirationYear: '',
+        optionalField: '',
+        organization: 'edx',
+      };
+
+      const requiredFields = paymentForm.getRequiredFields(formValues);
+      expect(formValues.organization).toEqual(requiredFields.organization);
+    });
   });
   describe('onSubmit', () => {
     it('throws expected errors', () => {

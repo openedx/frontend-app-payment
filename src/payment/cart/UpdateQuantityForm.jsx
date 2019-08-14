@@ -10,10 +10,14 @@ import { updateQuantityFormSelector } from '../data/selectors';
 function UpdateQuantityForm(props) {
   const id = 'code-quantity';
 
+  /* istanbul ignore next */
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     props.updateQuantity(e.target.elements[id].value);
   });
+
+  /* istanbul ignore next */
+  const submitState = props.isBasketProcessing ? 'pending' : 'default';
 
   return (
     <form
@@ -60,7 +64,7 @@ function UpdateQuantityForm(props) {
       </div>
       <StatefulButton
         type="submit"
-        state={props.isBasketProcessing ? 'pending' : 'default'}
+        state={submitState}
         labels={{
           default: (
             <FormattedMessage

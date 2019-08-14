@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnrollmentCodeQuantityUpdated should render with values 1`] = `
+Array [
+  <h6>
+    We've updated your quantity.
+  </h6>,
+  <span>
+    Your cart includes 2 enrollment codes at a total cost of 
+    <span>
+      $100.00
+    </span>
+    , that you will receive via email.
+  </span>,
+]
+`;
+
+exports[`SingleEnrollmentCodeWarning should render with values 1`] = `
+Array [
+  <h6>
+    Purchasing just for yourself?
+  </h6>,
+  <span>
+    If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
+    <a
+      href="http://edx.org"
+      onClick={[Function]}
+      target="_self"
+    >
+      <span>
+        click here to enroll directly
+      </span>
+    </a>
+    .
+  </span>,
+]
+`;
