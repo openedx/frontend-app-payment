@@ -7,6 +7,7 @@ let apiClient = null;
 let config = {
   ECOMMERCE_BASE_URL: null,
   ECOMMERCE_RECEIPT_BASE_URL: null,
+  ENVIRONMENT: null,
   APPLE_PAY_MERCHANT_IDENTIFIER: null,
   APPLE_PAY_MERCHANT_NAME: null,
   APPLE_PAY_COUNTRY_CODE: null,
@@ -35,7 +36,10 @@ export function configureApiService(_config, _apiClient) {
 /* istanbul ignore next - you can't mock window.location.href in jsdom */
 export const redirectToReceipt = (orderNumber, disableBackButton = false) => {
   const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(disableBackButton)}`;
-  global.location.href = `${config.ECOMMERCE_RECEIPT_BASE_URL}?${queryParams}`;
+  if (config.ENVIRONMENT !== 'test') {
+    /* istanbul ignore next */
+    global.location.href = `${config.ECOMMERCE_RECEIPT_BASE_URL}?${queryParams}`;
+  }
 };
 
 export function checkout(basket) {

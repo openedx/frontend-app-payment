@@ -23,7 +23,10 @@ describe('<CardHolderInformation />', () => {
       const wrapper = mount((
         <IntlProvider locale="en">
           <Provider store={mockStore(storeMocks.defaultState)}>
-            <PaymentForm>
+            <PaymentForm
+              onSubmitPayment={() => {}}
+              onSubmitButtonClick={() => {}}
+            >
               <CardHolderInformation />
             </PaymentForm>
           </Provider>

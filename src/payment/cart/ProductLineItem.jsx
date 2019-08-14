@@ -49,13 +49,15 @@ class ProductLineItem extends React.PureComponent {
 }
 
 ProductLineItem.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  title: PropTypes.string,
   certificateType: PropTypes.oneOf(['audit', 'honor', 'verified', 'no-id-professional', 'professional', 'credit']),
 };
 
 ProductLineItem.defaultProps = {
   certificateType: undefined,
+  title: null,
+  imageUrl: null,
 };
 
 export default injectIntl(ProductLineItem);
