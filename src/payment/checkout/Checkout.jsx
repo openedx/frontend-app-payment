@@ -85,6 +85,11 @@ class Checkout extends React.Component {
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
 
+    // istanbul ignore next
+    const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
+    // istanbul ignore next
+    const cybersourceIsSubmitting = submitting && paymentMethod === 'cybersource';
+
     if (isFreeBasket) {
       return (
         <FreeCheckoutOrderButton
@@ -117,7 +122,7 @@ class Checkout extends React.Component {
               onClick={this.handleSubmitPayPal}
               className={classNames('payment-method-button', { 'skeleton-pulse': loading })}
               disabled={submissionDisabled}
-              isProcessing={submitting && paymentMethod === 'paypal'}
+              isProcessing={payPalIsSubmitting}
             />
 
             <ApplePayButton
@@ -133,7 +138,7 @@ class Checkout extends React.Component {
           onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
           disabled={submissionDisabled}
           loading={loading}
-          isProcessing={submitting && paymentMethod === 'cybersource'}
+          isProcessing={cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
         />
       </React.Fragment>

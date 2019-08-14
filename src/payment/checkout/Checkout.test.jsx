@@ -80,10 +80,13 @@ describe('<Checkout />', () => {
         checkoutType: 'client_side',
       },
     );
+  });
 
-    // TODO: Add a full submission, right now we haven't filled out the form so we fail
-    // client validation
-    // expect(store.getActions().pop()).toEqual(submitPayment({ method: 'cybersource' }));
+  it('fires an action when handling a cybersource submission', () => {
+    const formData = { name: 'test' };
+    checkoutComponent.handleSubmitCybersource(formData);
+
+    expect(store.getActions().pop()).toEqual(submitPayment({ method: 'cybersource', ...formData }));
   });
 
   it('renders and tracks free checkout', () => {
