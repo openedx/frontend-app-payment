@@ -17,18 +17,11 @@ export const localizedCurrencySelector = (state) => {
 
 export const basketSelector = state => state[storeName].basket;
 
-export const isBasketProcessingSelector = createSelector(
-  basketSelector,
-  basket => basket.isCouponProcessing || basket.isQuantityProcessing || basket.submitting,
-);
-
 export const cartSelector = createSelector(
   basketSelector,
-  isBasketProcessingSelector,
   localizedCurrencySelector,
-  (basket, isBasketProcessing, currency) => ({
+  (basket, currency) => ({
     ...basket,
-    isBasketProcessing,
     isCurrencyConverted: currency.showAsLocalizedCurrency,
   }),
 );
@@ -39,11 +32,10 @@ export const currencyDisclaimerSelector = state => ({
 
 export const updateQuantityFormSelector = createSelector(
   basketSelector,
-  isBasketProcessingSelector,
-  (basket, isBasketProcessing) => ({
+  basket => ({
     updateQuantity: basket.updateQuantity,
     summaryQuantity: basket.summaryQuantity,
-    isBasketProcessing,
+    isBasketProcessing: basket.isBasketProcessing,
   }),
 );
 
@@ -51,16 +43,14 @@ export const queryParametersSelector = state => state.queryParameters;
 
 export const paymentSelector = createSelector(
   basketSelector,
-  isBasketProcessingSelector,
   configurationSelector,
   queryParametersSelector,
-  (basket, isBasketProcessing, configuration, queryParameters) => {
+  (basket, configuration, queryParameters) => {
     const isCouponRedeemRedirect =
       queryParameters && queryParameters.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
     return {
       ...basket,
       isCouponRedeemRedirect,
-      isBasketProcessing,
       dashboardURL: configuration.LMS_BASE_URL,
       supportURL: configuration.SUPPORT_URL,
       ecommerceURL: configuration.ECOMMERCE_BASE_URL,
