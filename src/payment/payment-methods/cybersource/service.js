@@ -1,5 +1,6 @@
 import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
+import { logAPIErrorResponse } from '@edx/frontend-logging';
 
 import { applyConfiguration } from '../../../common/serviceUtils';
 import { generateAndSubmitForm } from '../../../common/utils';
@@ -19,7 +20,7 @@ export function configureApiService(newConfig, newApiClient) {
   apiClient = newApiClient;
 }
 
-export async function sdnCheck(firstName, lastName, city, country) {
+export async function sdnCheck(basketId, firstName, lastName, city, country) {
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
     {
@@ -27,13 +28,25 @@ export async function sdnCheck(firstName, lastName, city, country) {
       city,
       country,
     },
-  );
+  ).catch((error) => {
+    logAPIErrorResponse(error, {
+      messagePrefix: 'SDN Check Error',
+      paymentMethod: 'Cybersource',
+      paymentErrorType: 'SDN Check',
+      basketId,
+    });
+
+    throw error;
+  });
 
   return data;
 }
 
 export async function checkout(basket, { cardHolderInfo, cardDetails }) {
+  const { basketId } = basket;
+
   const sdnCheckResponse = await sdnCheck(
+    basketId,
     cardHolderInfo.firstName,
     cardHolderInfo.lastName,
     cardHolderInfo.city,
@@ -45,10 +58,9 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
       /* istanbul ignore next */
       global.location.href = `${config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
     }
-    throw new Error('SDN Failure');
+    throw new Error('This card holder did not pass the SDN check.');
   }
 
-  const { basketId } = basket;
 
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
@@ -69,7 +81,16 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     },
-  );
+  ).catch((error) => {
+    logAPIErrorResponse(error, {
+      messagePrefix: 'Cybersource Submit Error',
+      paymentMethod: 'Cybersource',
+      paymentErrorType: 'Submit Error',
+      basketId,
+    });
+
+    throw error;
+  });
 
   const {
     cardNumber,
