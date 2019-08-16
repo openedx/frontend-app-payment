@@ -54,8 +54,8 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   );
 
   if (sdnCheckResponse.hits > 0) {
+    /* istanbul ignore next */
     if (config.ENVIRONMENT !== 'test') {
-      /* istanbul ignore next */
       global.location.href = `${config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
     }
     throw new Error('This card holder did not pass the SDN check.');

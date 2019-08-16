@@ -7,7 +7,12 @@ jest.mock('../../../common/utils', () => ({
   generateAndSubmitForm: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-logging', () => ({
+  logAPIErrorResponse: jest.fn(),
+}));
+
 import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
+import { logAPIErrorResponse } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 describe('Paypal Service', () => {
   const config = {
@@ -32,6 +37,24 @@ describe('Paypal Service', () => {
     return checkout(basket).then(() => {
       expect(generateAndSubmitForm)
         .toHaveBeenCalledWith(successResponse.data.payment_page_url);
+    });
+  });
+
+  it('should throw and log on error', () => {
+    const errorResponse = {};
+
+    apiClient.post = jest.fn().mockReturnValue(new Promise((resolve, reject) => {
+      reject(errorResponse);
+    }));
+
+    return checkout(basket).catch(() => {
+      expect(logAPIErrorResponse)
+        .toHaveBeenCalledWith(errorResponse, {
+          messagePrefix: 'PayPal Checkout Error',
+          paymentMethod: 'PayPal',
+          paymentErrorType: 'Checkout',
+          basketId: basket.basketId,
+        });
     });
   });
 });
