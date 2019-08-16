@@ -35,7 +35,7 @@ class CouponForm extends Component {
 
   handleRemoveSubmit(event) {
     event.preventDefault();
-    this.props.removeCoupon({ code: this.props.id });
+    this.props.removeCoupon({ id: this.props.id });
   }
 
   renderAdd() {

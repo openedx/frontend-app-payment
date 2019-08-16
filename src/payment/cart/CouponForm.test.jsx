@@ -129,7 +129,7 @@ describe('CouponForm', () => {
       wrapper.find('form').hostNodes().simulate('submit');
 
       expect(store.getActions()).toEqual([
-        removeCoupon({ code: 1234 }),
+        removeCoupon({ id: 1234 }),
       ]);
     });
   });

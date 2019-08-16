@@ -12,34 +12,6 @@ export function applyConfiguration(expected, actual) {
   return pick(actual, Object.keys(expected));
 }
 
-/**
- * Turns field errors of the form:
- *
- * {
- *   "name":{
- *     "developer_message": "Nerdy message here",
- *     "user_message": "This value is invalid."
- *   },
- *   "other_field": {
- *     "developer_message": "Other Nerdy message here",
- *     "user_message": "This other value is invalid."
- *   }
- * }
- *
- * Into:
- *
- * {
- *   "name": "This value is invalid.",
- *   "other_field": "This other value is invalid"
- * }
- */
-export function unpackFieldErrors(fieldErrors) {
-  return Object.entries(fieldErrors).reduce((acc, [k, v]) => {
-    acc[k] = v.user_message;
-    return acc;
-  }, {});
-}
-
 function handleFieldErrors(errors) {
   const fieldErrors = Object.entries(errors).map(([name, value]) => ({
     code: value.error_code ? value.error_code : null,
@@ -77,8 +49,6 @@ function handleApiMessages(messages) {
  * If the response contains a single API error, will similarly format that for the client.
  *
  * Field errors will be packaged with a fieldErrors field usable by the client.
- * Takes an optional unpack function which is used to process the field errors,
- * otherwise uses the default unpackFieldErrors function.
  *
  * @param error The original error object.
  * @param unpackFunction (Optional) A function to use to unpack the field errors as a replacement

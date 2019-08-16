@@ -30,6 +30,7 @@ export function configureApiService(newConfig, newApiClient) {
 
   // For every ajax response, check if the API has
   // responded with a redirect value. If so, redirect.
+  /* istanbul ignore next */
   apiClient.interceptors.response.use((response) => {
     const { status, data } = response;
     if (status >= 200 && status < 300 && data && data.redirect) {
@@ -59,23 +60,10 @@ function getOrderType(productType) {
 }
 
 export function transformResults(data) {
-  const results = camelCaseObject(data) || {};
+  const results = camelCaseObject(data);
 
   const lastProduct = results.products && results.products[results.products.length - 1];
   results.orderType = getOrderType(lastProduct && lastProduct.productType);
-  results.orderTotal = Number(results.orderTotal);
-  results.summaryDiscounts =
-    results.summaryDiscounts !== null ? Number(results.summaryDiscounts) : null;
-  results.summaryPrice = Number(results.summaryPrice);
-
-  if (results.offers != null) {
-    results.offers = results.offers
-      .filter(({ provider }) => provider !== null)
-      .map(offer => ({
-        ...offer,
-        benefitValue: Number(offer.benefitValue),
-      }));
-  }
 
   return results;
 }
