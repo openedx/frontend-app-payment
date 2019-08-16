@@ -24,6 +24,11 @@ export const paymentMethods = {
   'apple-pay': checkoutApplePay,
 };
 
+
+function* isBasketProcessing() {
+  return yield select(state => state.payment.basket.isBasketProcessing);
+}
+
 export function* handleFetchBasket() {
   try {
     yield put(fetchBasket.request());
@@ -43,6 +48,8 @@ export function* handleFetchBasket() {
 }
 
 export function* handleAddCoupon({ payload }) {
+  if (yield isBasketProcessing()) return;
+
   try {
     yield put(addCoupon.request());
     const result = yield call(PaymentApiService.postCoupon, payload.code);
@@ -61,6 +68,8 @@ export function* handleAddCoupon({ payload }) {
 }
 
 export function* handleRemoveCoupon({ payload }) {
+  if (yield isBasketProcessing()) return;
+
   try {
     yield put(removeCoupon.request());
     const result = yield call(PaymentApiService.deleteCoupon, payload.code);
@@ -79,6 +88,8 @@ export function* handleRemoveCoupon({ payload }) {
 }
 
 export function* handleUpdateQuantity({ payload }) {
+  if (yield isBasketProcessing()) return;
+
   try {
     yield put(updateQuantity.request());
     const result = yield call(PaymentApiService.postQuantity, payload);
@@ -97,6 +108,8 @@ export function* handleUpdateQuantity({ payload }) {
 }
 
 export function* handleSubmitPayment({ payload }) {
+  if (yield isBasketProcessing()) return;
+
   const { method, ...paymentArgs } = payload;
   try {
     const paymentMethodCheckout = paymentMethods[method];

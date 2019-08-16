@@ -26,8 +26,12 @@ const basket = (state = basketInitialState, action = null) => {
 
     case submitPayment.TRIGGER: return {
       ...state,
-      submitting: true,
       paymentMethod: action.payload.method,
+    };
+    case submitPayment.REQUEST: return {
+      ...state,
+      submitting: true,
+      isBasketProcessing: true,
     };
     case submitPayment.SUCCESS: return {
       ...state,
@@ -36,6 +40,7 @@ const basket = (state = basketInitialState, action = null) => {
     case submitPayment.FULFILL: return {
       ...state,
       submitting: false,
+      isBasketProcessing: false,
       paymentMethod: undefined,
     };
 
@@ -44,20 +49,20 @@ const basket = (state = basketInitialState, action = null) => {
     case fetchBasket.FAILURE: return { ...state, error: action.payload };
     case fetchBasket.FULFILL: return { ...state, loading: false, loaded: true };
 
-    case addCoupon.TRIGGER: return { ...state, isCouponProcessing: true };
+    case addCoupon.REQUEST: return { ...state, isBasketProcessing: true };
     case addCoupon.SUCCESS: return { ...state, couponData: action.payload };
     case addCoupon.FAILURE: return { ...state, couponError: action.payload };
-    case addCoupon.FULFILL: return { ...state, isCouponProcessing: false };
+    case addCoupon.FULFILL: return { ...state, isBasketProcessing: false };
 
-    case removeCoupon.TRIGGER: return { ...state, isCouponProcessing: true };
+    case removeCoupon.REQUEST: return { ...state, isBasketProcessing: true };
     case removeCoupon.SUCCESS: return { ...state, couponData: action.payload };
     case removeCoupon.FAILURE: return { ...state, couponError: action.payload };
-    case removeCoupon.FULFILL: return { ...state, isCouponProcessing: false };
+    case removeCoupon.FULFILL: return { ...state, isBasketProcessing: false };
 
-    case updateQuantity.TRIGGER: return { ...state, isQuantityProcessing: true };
+    case updateQuantity.REQUEST: return { ...state, isBasketProcessing: true };
     case updateQuantity.SUCCESS: return { ...state, quantityData: action.payload };
     case updateQuantity.FAILURE: return { ...state, quantityError: action.payload };
-    case updateQuantity.FULFILL: return { ...state, isQuantityProcessing: false };
+    case updateQuantity.FULFILL: return { ...state, isBasketProcessing: false };
 
     default:
       return state;
