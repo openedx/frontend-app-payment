@@ -7,7 +7,12 @@ jest.mock('../../../common/utils', () => ({
   generateAndSubmitForm: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-logging', () => ({
+  logAPIErrorResponse: jest.fn(),
+}));
+
 import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
+import { logAPIErrorResponse } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 const config = {
   ECOMMERCE_BASE_URL: 'ecommerce.org',
@@ -113,6 +118,51 @@ describe('Cybersource Service', () => {
       }
     });
 
-    return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('SDN Failure'));
+    return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
+  });
+
+  it('should throw an error if the SDN check errors', () => {
+    const sdnErrorResponse = {};
+
+    apiClient.post = () => new Promise((resolve, reject) => {
+      reject(sdnErrorResponse);
+    });
+
+    return checkout(basket, formDetails)
+      .catch(() => {
+        expect(logAPIErrorResponse)
+          .toHaveBeenCalledWith(sdnErrorResponse, {
+            messagePrefix: 'SDN Check Error',
+            paymentMethod: 'Cybersource',
+            paymentErrorType: 'SDN Check',
+            basketId: basket.basketId,
+          });
+      });
+  });
+
+  it('should throw an error if the cybersource checkout request errors', () => {
+    const errorResponse = {};
+
+    const sdnResponse = { data: { hits: 0 } };
+
+    apiClient.post = url => new Promise((resolve, reject) => {
+      if (url === SDN_URL) {
+        resolve(sdnResponse);
+      }
+      if (url === CYBERSOURCE_API) {
+        reject(errorResponse);
+      }
+    });
+
+    return checkout(basket, formDetails)
+      .catch(() => {
+        expect(logAPIErrorResponse)
+          .toHaveBeenCalledWith(errorResponse, {
+            messagePrefix: 'Cybersource Submit Error',
+            paymentMethod: 'Cybersource',
+            paymentErrorType: 'Submit Error',
+            basketId: basket.basketId,
+          });
+      });
   });
 });

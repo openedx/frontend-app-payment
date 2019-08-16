@@ -1,5 +1,5 @@
 import pick from 'lodash.pick';
-import { logError } from '@edx/frontend-logging';
+import { logAPIErrorResponse } from '@edx/frontend-logging';
 import { applyConfiguration } from '../../../common/serviceUtils';
 
 let apiClient = null;
@@ -80,7 +80,12 @@ export function checkout(basket) {
         .catch((error) => {
           // eslint-disable-next-line no-param-reassign
           error.code = 'apple-pay-merchant-validation-failure';
-          logError(error);
+          logAPIErrorResponse(error, {
+            messagePrefix: 'Apple Pay Merchant Validation Failure',
+            paymentMethod: 'Apple Pay',
+            paymentErrorType: 'Merchant Validation',
+            basketId: basket.basketId,
+          });
           applePaySession.abort();
           reject(error);
         });
@@ -99,7 +104,12 @@ export function checkout(basket) {
         .catch((error) => {
           // eslint-disable-next-line no-param-reassign
           error.code = 'apple-pay-authorization-failure';
-          logError(error);
+          logAPIErrorResponse(error, {
+            messagePrefix: 'Apple Pay Authorization Failure',
+            paymentMethod: 'Apple Pay',
+            paymentErrorType: 'Authorization',
+            basketId: basket.basketId,
+          });
           applePaySession.completePayment(global.ApplePaySession.STATUS_FAILURE);
           reject(error);
         });
