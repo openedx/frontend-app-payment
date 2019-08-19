@@ -200,6 +200,7 @@ export class PaymentFormComponent extends React.Component {
               ) : (
                 <StatefulButton
                   type="submit"
+                  id="placeOrderButton"
                   className="btn btn-primary btn-lg btn-block"
                   state={submitButtonState}
                   onClick={this.props.onSubmitButtonClick}
