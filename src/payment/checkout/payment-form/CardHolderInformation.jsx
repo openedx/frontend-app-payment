@@ -126,6 +126,7 @@ export class CardHolderInformationComponent extends React.Component {
               required
               disabled={disabled}
               autocomplete="street-address"
+              maxlength="60"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -143,6 +144,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               disabled={disabled}
               autocomplete="address-line1"
+              maxlength="29"
             />
           </div>
         </div>
@@ -164,6 +166,7 @@ export class CardHolderInformationComponent extends React.Component {
               required
               disabled={disabled}
               autocomplete="address-level2"
+              maxlength="32"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -182,14 +185,20 @@ export class CardHolderInformationComponent extends React.Component {
               required
               onChange={this.handleSelectCountry}
               disabled={disabled}
-              autocomplete="country-name"
+              autocomplete="country"
             />
           </div>
         </div>
 
         <div className="row">
           <div className="col-lg-6 form-group">
-            <StateProvinceFormInput country={this.state.selectedCountry} disabled={disabled} id="state" autocomplete="address-level1" />
+            <StateProvinceFormInput
+              country={this.state.selectedCountry}
+              disabled={disabled}
+              id="state"
+              autocomplete="address-level1"
+              maxlength="60"
+            />
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
@@ -206,6 +215,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               disabled={disabled}
               autocomplete="postal-code"
+              maxlength="10"
             />
           </div>
         </div>
