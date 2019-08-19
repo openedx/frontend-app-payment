@@ -215,7 +215,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               disabled={disabled}
               autocomplete="postal-code"
-              maxlength="10"
+              maxlength="9"
             />
           </div>
         </div>
