@@ -2385,6 +2385,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 aria-disabled={false}
                 aria-live="assertive"
                 className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+                id="placeOrderButton"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -4404,6 +4405,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 aria-disabled={false}
                 aria-live="assertive"
                 className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+                id="placeOrderButton"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -8441,6 +8443,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 aria-disabled={false}
                 aria-live="assertive"
                 className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+                id="placeOrderButton"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -10637,6 +10640,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 aria-disabled={false}
                 aria-live="assertive"
                 className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+                id="placeOrderButton"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onKeyDown={[Function]}
@@ -12653,6 +12657,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                 aria-disabled={false}
                 aria-live="assertive"
                 className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+                id="placeOrderButton"
                 onBlur={[Function]}
                 onClick={[Function]}
                 onKeyDown={[Function]}
