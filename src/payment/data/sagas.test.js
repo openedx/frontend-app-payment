@@ -246,6 +246,7 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        addCoupon.request(),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         fetchBasket.fulfill(),
@@ -297,6 +298,7 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        removeCoupon.request(),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         fetchBasket.fulfill(),
@@ -342,6 +344,7 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        updateQuantity.request(),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         fetchBasket.fulfill(),
@@ -391,7 +394,11 @@ describe('saga tests', () => {
         ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
-      expect(dispatched).toEqual([submitPayment.success(), submitPayment.fulfill()]);
+      expect(dispatched).toEqual([
+        submitPayment.request(),
+        submitPayment.success(),
+        submitPayment.fulfill(),
+      ]);
       expect(caughtErrors).toEqual([]);
       expect(cybersourceService.checkout).toHaveBeenCalledTimes(1);
       expect(cybersourceService.checkout).toHaveBeenCalledWith(
@@ -428,7 +435,10 @@ describe('saga tests', () => {
         ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
-      expect(dispatched).toEqual([submitPayment.fulfill()]);
+      expect(dispatched).toEqual([
+        submitPayment.request(),
+        submitPayment.fulfill(),
+      ]);
     });
 
     it('should perform single-error error handling if error was not aborted', async () => {
@@ -459,6 +469,7 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        submitPayment.request(),
         clearMessages(),
         addMessage('uhoh', null, null, 'error'),
         submitPayment.fulfill(),
@@ -501,6 +512,7 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        submitPayment.request(),
         clearMessages(),
         addMessage('ohboy', null, null, 'error'),
         basketDataReceived({
