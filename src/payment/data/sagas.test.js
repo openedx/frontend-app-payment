@@ -126,7 +126,13 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
@@ -149,7 +155,13 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       const message = response.data.messages[0];
@@ -181,7 +193,13 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       const message = response.data.messages[0];
@@ -205,7 +223,13 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
@@ -259,7 +283,6 @@ describe('saga tests', () => {
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         basketProcessing(false),
-        fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
@@ -312,7 +335,6 @@ describe('saga tests', () => {
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         basketProcessing(false),
-        fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.delete).toHaveBeenCalledTimes(1);
@@ -359,7 +381,6 @@ describe('saga tests', () => {
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         basketProcessing(false),
-        fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
