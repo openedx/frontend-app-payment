@@ -3,10 +3,8 @@ import Cookies from 'universal-cookie';
 
 import {
   BASKET_DATA_RECEIVED,
+  BASKET_PROCESSING,
   fetchBasket,
-  addCoupon,
-  removeCoupon,
-  updateQuantity,
   submitPayment,
 } from './actions';
 
@@ -24,7 +22,19 @@ const basketInitialState = {
 const basket = (state = basketInitialState, action = null) => {
   if (action !== null) {
     switch (action.type) {
+      case fetchBasket.TRIGGER: return { ...state, loading: true };
+      case fetchBasket.FULFILL: return {
+        ...state,
+        loading: false,
+        loaded: true,
+      };
+
       case BASKET_DATA_RECEIVED: return { ...state, ...action.payload };
+
+      case BASKET_PROCESSING: return {
+        ...state,
+        isBasketProcessing: action.payload,
+      };
 
       case submitPayment.TRIGGER: return {
         ...state,
@@ -33,7 +43,6 @@ const basket = (state = basketInitialState, action = null) => {
       case submitPayment.REQUEST: return {
         ...state,
         submitting: true,
-        isBasketProcessing: true,
       };
       case submitPayment.SUCCESS: return {
         ...state,
@@ -42,22 +51,8 @@ const basket = (state = basketInitialState, action = null) => {
       case submitPayment.FULFILL: return {
         ...state,
         submitting: false,
-        isBasketProcessing: false,
         paymentMethod: undefined,
       };
-
-      case fetchBasket.TRIGGER: return { ...state, loading: true };
-      case fetchBasket.FULFILL: return { ...state, loading: false, loaded: true };
-
-      case addCoupon.REQUEST:
-      case removeCoupon.REQUEST:
-      case updateQuantity.REQUEST:
-        return { ...state, isBasketProcessing: true };
-
-      case addCoupon.FULFILL:
-      case removeCoupon.FULFILL:
-      case updateQuantity.FULFILL:
-        return { ...state, isBasketProcessing: false };
 
       default:
     }

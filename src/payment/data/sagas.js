@@ -3,6 +3,7 @@ import { call, put, takeEvery, select } from 'redux-saga/effects';
 // Actions
 import {
   basketDataReceived,
+  basketProcessing,
   fetchBasket,
   addCoupon,
   removeCoupon,
@@ -32,6 +33,7 @@ export const paymentMethods = {
  */
 export function* catchBasketError(handler) {
   try {
+    yield put(basketProcessing(true));
     yield call(handler);
   } catch (error) {
     yield call(handleErrors, error, true);
@@ -39,6 +41,7 @@ export function* catchBasketError(handler) {
       yield put(basketDataReceived(error.basket));
     }
   } finally {
+    yield put(basketProcessing(false));
     yield put(fetchBasket.fulfill());
   }
 }
@@ -59,7 +62,6 @@ export function* handleAddCoupon({ payload }) {
   if (yield isBasketProcessing()) return;
 
   yield call(catchBasketError, function* processFetchBasket() {
-    yield put(addCoupon.request());
     const result = yield call(PaymentApiService.postCoupon, payload.code);
     yield put(basketDataReceived(result));
     yield call(handleMessages, result.messages, true);
@@ -70,7 +72,6 @@ export function* handleRemoveCoupon({ payload }) {
   if (yield isBasketProcessing()) return;
 
   yield call(catchBasketError, function* processFetchBasket() {
-    yield put(removeCoupon.request());
     const result = yield call(PaymentApiService.deleteCoupon, payload.id);
     yield put(basketDataReceived(result));
     yield call(handleMessages, result.messages, true);
@@ -81,7 +82,6 @@ export function* handleUpdateQuantity({ payload }) {
   if (yield isBasketProcessing()) return;
 
   yield call(catchBasketError, function* processFetchBasket() {
-    yield put(updateQuantity.request());
     const result = yield call(PaymentApiService.postQuantity, payload);
     yield put(basketDataReceived(result));
     yield call(handleMessages, result.messages, true);
@@ -93,6 +93,7 @@ export function* handleSubmitPayment({ payload }) {
 
   const { method, ...paymentArgs } = payload;
   try {
+    yield put(basketProcessing(true));
     yield put(submitPayment.request());
     const paymentMethodCheckout = paymentMethods[method];
     const basket = yield select(state => ({ ...state.payment.basket }));
@@ -113,6 +114,7 @@ export function* handleSubmitPayment({ payload }) {
       }
     }
   } finally {
+    yield put(basketProcessing(false));
     yield put(submitPayment.fulfill());
   }
 }

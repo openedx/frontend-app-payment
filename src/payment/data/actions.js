@@ -26,3 +26,10 @@ export const basketDataReceived = basket => ({
   type: BASKET_DATA_RECEIVED,
   payload: basket,
 });
+
+export const BASKET_PROCESSING = 'BASKET_PROCESSING';
+
+export const basketProcessing = isProcessing => ({
+  type: BASKET_PROCESSING,
+  payload: isProcessing,
+});

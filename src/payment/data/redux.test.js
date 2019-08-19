@@ -3,11 +3,9 @@ import { createStore, combineReducers } from 'redux';
 import reducer from './reducers';
 import {
   basketDataReceived,
+  basketProcessing,
   submitPayment,
   fetchBasket,
-  addCoupon,
-  removeCoupon,
-  updateQuantity,
 } from './actions';
 import { localizedCurrencySelector, currencyDisclaimerSelector, paymentSelector } from './selectors';
 
@@ -166,6 +164,18 @@ describe('redux tests', () => {
       expect(store.getState().payment.basket.foo).toBe('bar');
     });
 
+    describe('BASKET_PROCESSING action', () => {
+      it('BASKET_PROCESSING true action', () => {
+        store.dispatch(basketProcessing(true));
+        expect(store.getState().payment.basket.isBasketProcessing).toBe(true);
+      });
+
+      it('BASKET_PROCESSING false action', () => {
+        store.dispatch(basketProcessing(false));
+        expect(store.getState().payment.basket.isBasketProcessing).toBe(false);
+      });
+    });
+
     describe('submitPayment actions', () => {
       it('submitPayment.TRIGGER action', () => {
         store.dispatch(submitPayment({ method: 'cybersource' }));
@@ -175,7 +185,6 @@ describe('redux tests', () => {
       it('submitPayment.REQUEST action', () => {
         store.dispatch(submitPayment.request());
         expect(store.getState().payment.basket.submitting).toBe(true);
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(true);
       });
 
       it('submitPayment.SUCCESS action', () => {
@@ -186,7 +195,6 @@ describe('redux tests', () => {
       it('submitPayment.FULFILL action', () => {
         store.dispatch(submitPayment.fulfill());
         expect(store.getState().payment.basket.submitting).toBe(false);
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(false);
         expect(store.getState().payment.basket.paymentMethod).toBeUndefined();
       });
     });
@@ -201,42 +209,6 @@ describe('redux tests', () => {
         store.dispatch(fetchBasket.fulfill());
         expect(store.getState().payment.basket.loading).toBe(false);
         expect(store.getState().payment.basket.loaded).toBe(true);
-      });
-    });
-
-    describe('addCoupon actions', () => {
-      it('addCoupon.REQUEST action', () => {
-        store.dispatch(addCoupon.request());
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(true);
-      });
-
-      it('addCoupon.FULFILL action', () => {
-        store.dispatch(addCoupon.fulfill());
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(false);
-      });
-    });
-
-    describe('removeCoupon actions', () => {
-      it('removeCoupon.REQUEST action', () => {
-        store.dispatch(removeCoupon.request());
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(true);
-      });
-
-      it('removeCoupon.FULFILL action', () => {
-        store.dispatch(removeCoupon.fulfill());
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(false);
-      });
-    });
-
-    describe('updateQuantity actions', () => {
-      it('updateQuantity.REQUEST action', () => {
-        store.dispatch(updateQuantity.request());
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(true);
-      });
-
-      it('updateQuantity.FULFILL action', () => {
-        store.dispatch(updateQuantity.fulfill());
-        expect(store.getState().payment.basket.isBasketProcessing).toBe(false);
       });
     });
   });
