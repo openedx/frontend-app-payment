@@ -11,6 +11,7 @@ import paymentSaga, {
 import { configureApiService, transformResults } from './service';
 import {
   basketDataReceived,
+  basketProcessing,
   fetchBasket,
   addCoupon,
   removeCoupon,
@@ -125,12 +126,20 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
+        basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
@@ -146,15 +155,23 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       const message = response.data.messages[0];
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         addMessage(message.code, null, message.data, MESSAGE_TYPES.INFO),
+        basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
@@ -176,15 +193,23 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       const message = response.data.messages[0];
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         clearMessages(),
         addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
         basketDataReceived(transformResults(response.data)),
+        basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
@@ -198,12 +223,20 @@ describe('saga tests', () => {
       configureApiService(configuration, mockApiClient);
 
       try {
-        await runSaga(sagaOptions, handleFetchBasket).toPromise();
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         clearMessages(),
         addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR),
+        basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
@@ -246,10 +279,10 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
-        addCoupon.request(),
+        basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
-        fetchBasket.fulfill(),
+        basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
@@ -298,10 +331,10 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
-        removeCoupon.request(),
+        basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
-        fetchBasket.fulfill(),
+        basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.delete).toHaveBeenCalledTimes(1);
@@ -344,10 +377,10 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
-        updateQuantity.request(),
+        basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
-        fetchBasket.fulfill(),
+        basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
@@ -395,8 +428,10 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         submitPayment.request(),
         submitPayment.success(),
+        basketProcessing(false),
         submitPayment.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
@@ -436,7 +471,9 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         submitPayment.request(),
+        basketProcessing(false),
         submitPayment.fulfill(),
       ]);
     });
@@ -469,9 +506,11 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         submitPayment.request(),
         clearMessages(),
         addMessage('uhoh', null, null, 'error'),
+        basketProcessing(false),
         submitPayment.fulfill(),
       ]);
     });
@@ -512,6 +551,7 @@ describe('saga tests', () => {
       } catch (e) {} // eslint-disable-line no-empty
 
       expect(dispatched).toEqual([
+        basketProcessing(true),
         submitPayment.request(),
         clearMessages(),
         addMessage('ohboy', null, null, 'error'),
@@ -519,6 +559,7 @@ describe('saga tests', () => {
           i: 'am',
           a: 'basket',
         }),
+        basketProcessing(false),
         submitPayment.fulfill(),
       ]);
     });

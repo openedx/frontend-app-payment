@@ -3,6 +3,7 @@ import { call, put, takeEvery, select } from 'redux-saga/effects';
 // Actions
 import {
   basketDataReceived,
+  basketProcessing,
   fetchBasket,
   addCoupon,
   removeCoupon,
@@ -25,67 +26,48 @@ export const paymentMethods = {
   'apple-pay': checkoutApplePay,
 };
 
+function* isBasketProcessing() {
+  return yield select(state => state.payment.basket.isBasketProcessing);
+}
+
 /**
  * Many of the handlers here have identical error handling, and are also all processing the same
  * sort of response object (a basket).  This helper is just here to dedupe that code, since its
  * all identical.
  */
-export function* catchBasketError(handler) {
+export function* performBasketOperation(operation, ...operationArgs) {
+  if (yield isBasketProcessing()) return;
+
   try {
-    yield call(handler);
+    yield put(basketProcessing(true));
+    const result = yield call(operation, ...operationArgs);
+    yield put(basketDataReceived(result));
+    yield call(handleMessages, result.messages, true);
   } catch (error) {
     yield call(handleErrors, error, true);
     if (error.basket) {
       yield put(basketDataReceived(error.basket));
     }
   } finally {
-    yield put(fetchBasket.fulfill());
+    yield put(basketProcessing(false));
   }
 }
 
-function* isBasketProcessing() {
-  return yield select(state => state.payment.basket.isBasketProcessing);
-}
-
 export function* handleFetchBasket() {
-  yield call(catchBasketError, function* processFetchBasket() {
-    const result = yield call(PaymentApiService.getBasket);
-    yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
-  });
+  yield call(performBasketOperation, PaymentApiService.getBasket);
+  yield put(fetchBasket.fulfill());
 }
 
 export function* handleAddCoupon({ payload }) {
-  if (yield isBasketProcessing()) return;
-
-  yield call(catchBasketError, function* processFetchBasket() {
-    yield put(addCoupon.request());
-    const result = yield call(PaymentApiService.postCoupon, payload.code);
-    yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
-  });
+  yield call(performBasketOperation, PaymentApiService.postCoupon, payload.code);
 }
 
 export function* handleRemoveCoupon({ payload }) {
-  if (yield isBasketProcessing()) return;
-
-  yield call(catchBasketError, function* processFetchBasket() {
-    yield put(removeCoupon.request());
-    const result = yield call(PaymentApiService.deleteCoupon, payload.id);
-    yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
-  });
+  yield call(performBasketOperation, PaymentApiService.deleteCoupon, payload.id);
 }
 
 export function* handleUpdateQuantity({ payload }) {
-  if (yield isBasketProcessing()) return;
-
-  yield call(catchBasketError, function* processFetchBasket() {
-    yield put(updateQuantity.request());
-    const result = yield call(PaymentApiService.postQuantity, payload);
-    yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
-  });
+  yield call(performBasketOperation, PaymentApiService.postQuantity, payload);
 }
 
 export function* handleSubmitPayment({ payload }) {
@@ -93,6 +75,7 @@ export function* handleSubmitPayment({ payload }) {
 
   const { method, ...paymentArgs } = payload;
   try {
+    yield put(basketProcessing(true));
     yield put(submitPayment.request());
     const paymentMethodCheckout = paymentMethods[method];
     const basket = yield select(state => ({ ...state.payment.basket }));
@@ -113,6 +96,7 @@ export function* handleSubmitPayment({ payload }) {
       }
     }
   } finally {
+    yield put(basketProcessing(false));
     yield put(submitPayment.fulfill());
   }
 }
