@@ -35,12 +35,12 @@ function* isBasketProcessing() {
  * sort of response object (a basket).  This helper is just here to dedupe that code, since its
  * all identical.
  */
-export function* performBasketOperation(operation, operationArgs) {
+export function* performBasketOperation(operation, ...operationArgs) {
   if (yield isBasketProcessing()) return;
 
   try {
     yield put(basketProcessing(true));
-    const result = yield call(operation, operationArgs);
+    const result = yield call(operation, ...operationArgs);
     yield put(basketDataReceived(result));
     yield call(handleMessages, result.messages, true);
   } catch (error) {
