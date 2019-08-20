@@ -677,7 +677,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
-                  autocomplete="address-line1"
+                  autocomplete="address-line2"
                   className="form-control"
                   disabled={false}
                   id="unit"
@@ -2721,7 +2721,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
-                  autocomplete="address-line1"
+                  autocomplete="address-line2"
                   className="form-control"
                   disabled={false}
                   id="unit"
@@ -4704,7 +4704,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
-                  autocomplete="address-line1"
+                  autocomplete="address-line2"
                   className="form-control"
                   disabled={true}
                   id="unit"
@@ -6807,7 +6807,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
-                  autocomplete="address-line1"
+                  autocomplete="address-line2"
                   className="form-control"
                   disabled={false}
                   id="unit"
@@ -9030,7 +9030,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
-                  autocomplete="address-line1"
+                  autocomplete="address-line2"
                   className="form-control"
                   disabled={false}
                   id="unit"
@@ -11071,7 +11071,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
-                  autocomplete="address-line1"
+                  autocomplete="address-line2"
                   className="form-control"
                   disabled={false}
                   id="unit"
