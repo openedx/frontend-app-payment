@@ -143,7 +143,7 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               disabled={disabled}
-              autocomplete="address-line1"
+              autocomplete="address-line2"
               maxlength="29"
             />
           </div>
