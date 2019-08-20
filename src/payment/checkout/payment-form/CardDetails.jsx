@@ -83,7 +83,8 @@ export class CardDetailsComponent extends React.Component {
               required
               disabled={disabled}
               onChange={this.handleCardNumberChange}
-              autocomplete="cc-number"
+              autoComplete="cc-number"
+              maxLength="20"
             />
             {this.state.cardIcon !== null && <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />}
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
@@ -114,7 +115,8 @@ export class CardDetailsComponent extends React.Component {
               required
               disabled={disabled}
               onChange={this.handleSecurityCodeChange}
-              autocomplete="cc-csc"
+              autoComplete="cc-csc"
+              maxLength="4"
             />
             <FontAwesomeIcon icon={faLock} className="lock-icon" />
           </div>
@@ -136,7 +138,7 @@ export class CardDetailsComponent extends React.Component {
               options={this.renderExpirationMonthOptions()}
               required
               disabled={disabled}
-              autocomplete="cc-exp-month"
+              autoComplete="cc-exp-month"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -154,7 +156,7 @@ export class CardDetailsComponent extends React.Component {
               options={this.renderExpirationYearOptions()}
               required
               disabled={disabled}
-              autocomplete="cc-exp-year"
+              autoComplete="cc-exp-year"
             />
           </div>
         </div>

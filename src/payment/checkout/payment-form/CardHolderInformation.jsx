@@ -63,7 +63,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={disabled}
-              autocomplete="given-name"
+              autoComplete="given-name"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -81,7 +81,7 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={disabled}
-              autocomplete="family-name"
+              autoComplete="family-name"
             />
           </div>
         </div>
@@ -103,7 +103,7 @@ export class CardHolderInformationComponent extends React.Component {
                 type="text"
                 required
                 disabled={disabled}
-                autocomplete="organization"
+                autoComplete="organization"
               />
             </div>
           </div>
@@ -125,8 +125,8 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={disabled}
-              autocomplete="street-address"
-              maxlength="60"
+              autoComplete="street-address"
+              maxLength="60"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -143,8 +143,8 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               disabled={disabled}
-              autocomplete="address-line2"
-              maxlength="29"
+              autoComplete="address-line2"
+              maxLength="29"
             />
           </div>
         </div>
@@ -165,8 +165,8 @@ export class CardHolderInformationComponent extends React.Component {
               type="text"
               required
               disabled={disabled}
-              autocomplete="address-level2"
-              maxlength="32"
+              autoComplete="address-level2"
+              maxLength="32"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -185,7 +185,7 @@ export class CardHolderInformationComponent extends React.Component {
               required
               onChange={this.handleSelectCountry}
               disabled={disabled}
-              autocomplete="country"
+              autoComplete="country"
             />
           </div>
         </div>
@@ -196,8 +196,8 @@ export class CardHolderInformationComponent extends React.Component {
               country={this.state.selectedCountry}
               disabled={disabled}
               id="state"
-              autocomplete="address-level1"
-              maxlength="60"
+              autoComplete="address-level1"
+              maxLength="60"
             />
           </div>
           <div className="col-lg-6 form-group">
@@ -214,8 +214,8 @@ export class CardHolderInformationComponent extends React.Component {
               component={FormInput}
               type="text"
               disabled={disabled}
-              autocomplete="postal-code"
-              maxlength="9"
+              autoComplete="postal-code"
+              maxLength="9"
             />
           </div>
         </div>
