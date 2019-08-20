@@ -594,6 +594,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="given-name"
                   className="form-control"
                   disabled={false}
                   id="firstName"
@@ -603,6 +604,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -618,6 +620,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="family-name"
                   className="form-control"
                   disabled={false}
                   id="lastName"
@@ -627,6 +630,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -646,15 +650,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="street-address"
                   className="form-control"
                   disabled={false}
                   id="address"
+                  maxlength="60"
                   name="address"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -670,9 +677,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="address-line1"
                   className="form-control"
                   disabled={false}
                   id="unit"
+                  maxlength="29"
                   name="unit"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -698,15 +707,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="address-level2"
                   className="form-control"
                   disabled={false}
                   id="city"
+                  maxlength="32"
                   name="city"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -722,6 +734,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <select
+                  autocomplete="country"
                   className="form-control"
                   disabled={false}
                   id="country"
@@ -731,6 +744,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -2029,9 +2043,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="postal-code"
                   className="form-control"
                   disabled={false}
                   id="postalCode"
+                  maxlength="9"
                   name="postalCode"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -2068,6 +2084,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autocomplete="cc-number"
                   className="form-control"
                   disabled={false}
                   id="cardNumber"
@@ -2077,6 +2094,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -2141,6 +2159,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </div>
                 <input
+                  autocomplete="cc-csc"
                   className="form-control"
                   disabled={false}
                   id="securityCode"
@@ -2150,6 +2169,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -2186,6 +2206,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-month"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationMonth"
@@ -2195,6 +2216,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -2275,6 +2297,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-year"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationYear"
@@ -2284,6 +2307,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -2614,6 +2638,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="given-name"
                   className="form-control"
                   disabled={false}
                   id="firstName"
@@ -2623,6 +2648,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -2638,6 +2664,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="family-name"
                   className="form-control"
                   disabled={false}
                   id="lastName"
@@ -2647,6 +2674,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -2666,15 +2694,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="street-address"
                   className="form-control"
                   disabled={false}
                   id="address"
+                  maxlength="60"
                   name="address"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -2690,9 +2721,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="address-line1"
                   className="form-control"
                   disabled={false}
                   id="unit"
+                  maxlength="29"
                   name="unit"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -2718,15 +2751,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="address-level2"
                   className="form-control"
                   disabled={false}
                   id="city"
+                  maxlength="32"
                   name="city"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -2742,6 +2778,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <select
+                  autocomplete="country"
                   className="form-control"
                   disabled={false}
                   id="country"
@@ -2751,6 +2788,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -4049,9 +4087,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="postal-code"
                   className="form-control"
                   disabled={false}
                   id="postalCode"
+                  maxlength="9"
                   name="postalCode"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -4088,6 +4128,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autocomplete="cc-number"
                   className="form-control"
                   disabled={false}
                   id="cardNumber"
@@ -4097,6 +4138,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -4161,6 +4203,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </div>
                 <input
+                  autocomplete="cc-csc"
                   className="form-control"
                   disabled={false}
                   id="securityCode"
@@ -4170,6 +4213,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -4206,6 +4250,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-month"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationMonth"
@@ -4215,6 +4260,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -4295,6 +4341,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-year"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationYear"
@@ -4304,6 +4351,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -4573,6 +4621,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="given-name"
                   className="form-control"
                   disabled={true}
                   id="firstName"
@@ -4582,6 +4631,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -4597,6 +4647,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="family-name"
                   className="form-control"
                   disabled={true}
                   id="lastName"
@@ -4606,6 +4657,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -4625,15 +4677,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="street-address"
                   className="form-control"
                   disabled={true}
                   id="address"
+                  maxlength="60"
                   name="address"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -4649,9 +4704,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="address-line1"
                   className="form-control"
                   disabled={true}
                   id="unit"
+                  maxlength="29"
                   name="unit"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -4677,15 +4734,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="address-level2"
                   className="form-control"
                   disabled={true}
                   id="city"
+                  maxlength="32"
                   name="city"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -4701,6 +4761,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <select
+                  autocomplete="country"
                   className="form-control"
                   disabled={true}
                   id="country"
@@ -4710,6 +4771,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -6008,9 +6070,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="postal-code"
                   className="form-control"
                   disabled={true}
                   id="postalCode"
+                  maxlength="9"
                   name="postalCode"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -6047,6 +6111,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <input
+                  autocomplete="cc-number"
                   className="form-control"
                   disabled={true}
                   id="cardNumber"
@@ -6056,6 +6121,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -6120,6 +6186,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </div>
                 <input
+                  autocomplete="cc-csc"
                   className="form-control"
                   disabled={true}
                   id="securityCode"
@@ -6129,6 +6196,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -6165,6 +6233,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-month"
                   className="form-control"
                   disabled={true}
                   id="cardExpirationMonth"
@@ -6174,6 +6243,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -6254,6 +6324,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-year"
                   className="form-control"
                   disabled={true}
                   id="cardExpirationYear"
@@ -6263,6 +6334,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its l
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -6652,6 +6724,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="given-name"
                   className="form-control"
                   disabled={false}
                   id="firstName"
@@ -6661,6 +6734,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -6676,6 +6750,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="family-name"
                   className="form-control"
                   disabled={false}
                   id="lastName"
@@ -6685,6 +6760,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -6704,15 +6780,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="street-address"
                   className="form-control"
                   disabled={false}
                   id="address"
+                  maxlength="60"
                   name="address"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -6728,9 +6807,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="address-line1"
                   className="form-control"
                   disabled={false}
                   id="unit"
+                  maxlength="29"
                   name="unit"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -6756,15 +6837,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="address-level2"
                   className="form-control"
                   disabled={false}
                   id="city"
+                  maxlength="32"
                   name="city"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -6780,6 +6864,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <select
+                  autocomplete="country"
                   className="form-control"
                   disabled={false}
                   id="country"
@@ -6789,6 +6874,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -8087,9 +8173,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="postal-code"
                   className="form-control"
                   disabled={false}
                   id="postalCode"
+                  maxlength="9"
                   name="postalCode"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -8126,6 +8214,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="cc-number"
                   className="form-control"
                   disabled={false}
                   id="cardNumber"
@@ -8135,6 +8224,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -8199,6 +8289,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </div>
                 <input
+                  autocomplete="cc-csc"
                   className="form-control"
                   disabled={false}
                   id="securityCode"
@@ -8208,6 +8299,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -8244,6 +8336,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-month"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationMonth"
@@ -8253,6 +8346,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -8333,6 +8427,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-year"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationYear"
@@ -8342,6 +8437,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -8821,6 +8917,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="given-name"
                   className="form-control"
                   disabled={false}
                   id="firstName"
@@ -8830,6 +8927,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -8845,6 +8943,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="family-name"
                   className="form-control"
                   disabled={false}
                   id="lastName"
@@ -8854,6 +8953,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -8873,6 +8973,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="organization"
                   className="form-control"
                   disabled={false}
                   id="organization"
@@ -8882,6 +8983,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -8901,15 +9003,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="street-address"
                   className="form-control"
                   disabled={false}
                   id="address"
+                  maxlength="60"
                   name="address"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -8925,9 +9030,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="address-line1"
                   className="form-control"
                   disabled={false}
                   id="unit"
+                  maxlength="29"
                   name="unit"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -8953,15 +9060,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="address-level2"
                   className="form-control"
                   disabled={false}
                   id="city"
+                  maxlength="32"
                   name="city"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -8977,6 +9087,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <select
+                  autocomplete="country"
                   className="form-control"
                   disabled={false}
                   id="country"
@@ -8986,6 +9097,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -10284,9 +10396,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="postal-code"
                   className="form-control"
                   disabled={false}
                   id="postalCode"
+                  maxlength="9"
                   name="postalCode"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -10323,6 +10437,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autocomplete="cc-number"
                   className="form-control"
                   disabled={false}
                   id="cardNumber"
@@ -10332,6 +10447,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -10396,6 +10512,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </div>
                 <input
+                  autocomplete="cc-csc"
                   className="form-control"
                   disabled={false}
                   id="securityCode"
@@ -10405,6 +10522,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -10441,6 +10559,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-month"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationMonth"
@@ -10450,6 +10569,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -10530,6 +10650,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-year"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationYear"
@@ -10539,6 +10660,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -10866,6 +10988,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="given-name"
                   className="form-control"
                   disabled={false}
                   id="firstName"
@@ -10875,6 +10998,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -10890,6 +11014,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="family-name"
                   className="form-control"
                   disabled={false}
                   id="lastName"
@@ -10899,6 +11024,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -10918,15 +11044,18 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="street-address"
                   className="form-control"
                   disabled={false}
                   id="address"
+                  maxlength="60"
                   name="address"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -10942,9 +11071,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="address-line1"
                   className="form-control"
                   disabled={false}
                   id="unit"
+                  maxlength="29"
                   name="unit"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -10970,15 +11101,18 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="address-level2"
                   className="form-control"
                   disabled={false}
                   id="city"
+                  maxlength="32"
                   name="city"
                   onBlur={[Function]}
                   onChange={[Function]}
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="text"
                   value=""
                 />
@@ -10994,6 +11128,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <select
+                  autocomplete="country"
                   className="form-control"
                   disabled={false}
                   id="country"
@@ -11003,6 +11138,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -12301,9 +12437,11 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="postal-code"
                   className="form-control"
                   disabled={false}
                   id="postalCode"
+                  maxlength="9"
                   name="postalCode"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -12340,6 +12478,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <input
+                  autocomplete="cc-number"
                   className="form-control"
                   disabled={false}
                   id="cardNumber"
@@ -12349,6 +12488,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -12413,6 +12553,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </div>
                 <input
+                  autocomplete="cc-csc"
                   className="form-control"
                   disabled={false}
                   id="securityCode"
@@ -12422,6 +12563,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   type="tel"
                   value=""
                 />
@@ -12458,6 +12600,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-month"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationMonth"
@@ -12467,6 +12610,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
@@ -12547,6 +12691,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   </span>
                 </label>
                 <select
+                  autocomplete="cc-exp-year"
                   className="form-control"
                   disabled={false}
                   id="cardExpirationYear"
@@ -12556,6 +12701,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={true}
                   value=""
                 >
                   <option
