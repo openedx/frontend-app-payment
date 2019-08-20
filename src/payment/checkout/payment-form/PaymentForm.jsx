@@ -10,7 +10,7 @@ import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
 
-const CardValidator = require('card-validator');
+const CardValidator = require('../../../common/card-validator');
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
