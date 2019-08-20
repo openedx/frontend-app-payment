@@ -2,9 +2,8 @@ import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
 import { logApiClientError } from '@edx/frontend-logging';
 
-import { applyConfiguration } from '../../../common/serviceUtils';
+import { applyConfiguration, handleRequestError } from '../../../common/serviceUtils';
 import { generateAndSubmitForm } from '../../../common/utils';
-
 
 let config = {
   CYBERSOURCE_URL: null,
@@ -49,6 +48,51 @@ export async function sdnCheck(basketId, firstName, lastName, city, country) {
 }
 
 /**
+ * Converts a field_errors object of this form:
+ *
+ * { "field_name": "Error message.", "other_field_name": "Other error message." }
+ *
+ * To:
+ *
+ * {
+ *   "field_name": { user_message: "Error message.", error_code: null },
+ *   "other_field_name": { user_message: "Other error message.", error_code: null }
+ * }
+ */
+export function normalizeFieldErrors(fieldErrors) {
+  if (fieldErrors && !Array.isArray(fieldErrors) && typeof fieldErrors === 'object') {
+    const normalizedErrors = {};
+    const fieldKeys = Object.keys(fieldErrors);
+    for (let i = 0; i < fieldKeys.length; i++) { // eslint-disable-line no-plusplus
+      const fieldKey = fieldKeys[i];
+      const userMessage = fieldErrors[fieldKey];
+      normalizedErrors[fieldKey] = {
+        user_message: userMessage,
+        error_code: null,
+      };
+    }
+    return normalizedErrors;
+  }
+  // Return it unchanged if it isn't an object.
+  return fieldErrors;
+}
+
+// Processes API errors and converts them to error objects the sagas can use.
+function handleApiError(requestError) {
+  try {
+    // Always throws an error:
+    handleRequestError(requestError);
+  } catch (errorWithMessages) {
+    const processedError = new Error();
+    processedError.messages = errorWithMessages.messages;
+    processedError.errors = errorWithMessages.errors;
+    processedError.fieldErrors = errorWithMessages.fieldErrors;
+
+    throw processedError;
+  }
+}
+
+/**
  * Checkout with Cybersource.
  *
  * 1. Use card holder info to ensure we can make a transaction with this user
@@ -76,7 +120,6 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
     throw new Error('This card holder did not pass the SDN check.');
   }
 
-
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
     formurlencoded({
@@ -103,6 +146,15 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
       paymentErrorType: 'Submit Error',
       basketId,
     });
+
+    if (error.response && error.response.data) {
+      // This endpoint does not return field error data in a format we expect.  Fix it.
+      error.response.data = { // eslint-disable-line no-param-reassign
+        field_errors: normalizeFieldErrors(error.response.data.field_errors),
+      };
+
+      handleApiError(error);
+    }
 
     throw error;
   });
