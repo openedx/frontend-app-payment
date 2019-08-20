@@ -8,9 +8,11 @@ const FormSelect = ({
   options,
   disabled,
   meta: { touched, error },
+  ...other
 }) => (
   <React.Fragment>
     <select
+      {...other}
       {...input}
       className="form-control"
       id={id}

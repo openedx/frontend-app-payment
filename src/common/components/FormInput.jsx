@@ -8,9 +8,11 @@ const FormInput = ({
   type,
   disabled,
   meta: { touched, error },
+  ...other
 }) => (
   <React.Fragment>
     <input
+      {...other}
       {...input}
       type={type}
       className="form-control"
