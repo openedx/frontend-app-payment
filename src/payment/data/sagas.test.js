@@ -310,6 +310,33 @@ describe('saga tests', () => {
         },
       );
     });
+
+    it('should show a fallback error message', async () => {
+      response = { basket: Factory.build('basket', {}, { numProducts: 1 }) };
+
+      const mockApiClient = createBasketMockApiClient(response, { throws: true });
+      configureApiService(configuration, mockApiClient);
+
+      try {
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleAddCoupon,
+          { payload: { code: 'DEMO25' } },
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([
+        basketProcessing(true),
+        clearMessages(),
+        addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR),
+        basketProcessing(false),
+      ]);
+      expect(caughtErrors).toEqual([]);
+      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('handleRemoveCoupon', () => {
