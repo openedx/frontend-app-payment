@@ -88,7 +88,7 @@ export function* handleDiscountCheck() {
         discount.jwt,
       );
       yield put(basketDataReceived(result));
-      yield call(handleMessages, result.messages, true);
+      yield call(handleMessages, result.messages, false);
     }
   }
 }

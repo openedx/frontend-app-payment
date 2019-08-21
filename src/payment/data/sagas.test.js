@@ -67,7 +67,6 @@ describe('saga tests', () => {
     sagaOptions = {
       dispatch: action => dispatched.push(action),
       onError: err => caughtErrors.push(err),
-
     };
 
     courseKey = 'test';
@@ -103,6 +102,23 @@ describe('saga tests', () => {
   }
 
   describe('handleFetchBasket', () => {
+    it('should bail if the basket is processing', async () => {
+      try {
+        await runSaga(
+          {
+            getState: () => basketProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([
+        fetchBasket.fulfill(),
+      ]);
+      expect(caughtErrors).toEqual([]);
+    });
+
     it('should update basket data', async () => {
       response = {
         data: Factory.build(
@@ -148,18 +164,112 @@ describe('saga tests', () => {
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
         basketDataReceived(transformResults(response.data)),
-        clearMessages(),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.get).toHaveBeenCalledTimes(3);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
       expect(mockApiClient.get).toHaveBeenCalledWith(
         `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
         {
           xhrFields: { withCredentials: true },
         },
       );
+    });
+
+    it('should update basket data with jwt on second call', async () => {
+      response = {
+        data: Factory.build(
+          'basket',
+          {
+            // We include offers here solely to exercise some logic in transformResults.  It's
+            // otherwise unrelated to this particular test.
+            offers: [
+              {
+                provider: 'me',
+                benefitValue: '12',
+              },
+              {
+                provider: null,
+                benefitValue: '15',
+              },
+            ],
+          },
+          // We use a different product type here SOLELY to exercise a different clause in
+          // getOrderType in the service.  It's otherwise unrelated to this test.
+          { numProducts: 1, productType: 'Seat' },
+        ),
+      };
+
+      const mockApiClient = createBasketMockApiClient(response);
+      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
+        resolve(response);
+      }));
+      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
+        resolve({ data: { discount_applicable: true, jwt: 'i_am_a_jwt' } });
+      }));
+      configureApiService(configuration, mockApiClient);
+
+      try {
+        await runSaga({
+          getState: () => basketNotProcessingState,
+          ...sagaOptions,
+        }, handleFetchBasket).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([
+        basketProcessing(true),
+        basketDataReceived(transformResults(response.data)),
+        clearMessages(),
+        basketDataReceived(transformResults(response.data)),
+        basketProcessing(false),
+        fetchBasket.fulfill(),
+      ]);
+      expect(caughtErrors).toEqual([]);
+
+      expect(mockApiClient.get).toHaveBeenCalledTimes(3);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/?discount_jwt=i_am_a_jwt`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(
+        `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+        {
+          xhrFields: { withCredentials: true },
+        },
+      );
+    });
+
+    it('should update basket data without calling discount check API', async () => {
+      response = {
+        data: Factory.build('basket'), // No products!
+      };
+
+      const mockApiClient = createBasketMockApiClient(response);
+      configureApiService(configuration, mockApiClient);
+
+      try {
+        await runSaga(
+          {
+            getState: () => ({
+              // No products in store either
+              payment: { basket: { isBasketProcessing: false, products: [] } },
+            }),
+            ...sagaOptions,
+          },
+          handleFetchBasket,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([
+        basketProcessing(true),
+        basketDataReceived(transformResults(response.data)),
+        clearMessages(),
+        basketProcessing(false),
+        fetchBasket.fulfill(),
+      ]);
+      expect(caughtErrors).toEqual([]);
+      expect(mockApiClient.get).toHaveBeenCalledTimes(1);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
     });
 
     it('should update basket data and show an info message', async () => {
@@ -309,6 +419,63 @@ describe('saga tests', () => {
           headers: { 'Content-Type': 'application/json' },
         },
       );
+    });
+
+    it('should update basket data and show an error message', async () => {
+      response = { data: Factory.build('basket', {}, { numProducts: 1, numErrorMessages: 1 }) };
+
+      const mockApiClient = createBasketMockApiClient(response, { throws: true });
+      configureApiService(configuration, mockApiClient);
+
+      try {
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleAddCoupon,
+          { payload: { code: 'DEMO25' } },
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      const message = response.data.messages[0];
+
+      expect(dispatched).toEqual([
+        basketProcessing(true),
+        clearMessages(),
+        addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
+        basketDataReceived(transformResults(response.data)),
+        basketProcessing(false),
+      ]);
+      expect(caughtErrors).toEqual([]);
+      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
+    });
+
+    it('should show a fallback error message', async () => {
+      // response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
+
+      const mockApiClient = createBasketMockApiClient({}, { throws: true });
+      configureApiService(configuration, mockApiClient);
+
+      try {
+        await runSaga(
+          {
+            getState: () => basketNotProcessingState,
+            ...sagaOptions,
+          },
+          handleAddCoupon,
+          { payload: { code: 'DEMO25' } },
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([
+        basketProcessing(true),
+        clearMessages(),
+        addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR),
+        basketProcessing(false),
+      ]);
+      expect(caughtErrors).toEqual([]);
+      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
     });
   });
 
