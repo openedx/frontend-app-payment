@@ -20,6 +20,12 @@ export function configureApiService(newConfig, newApiClient) {
   apiClient = newApiClient;
 }
 
+/**
+ * SDN: Specially Designated Nationals And Blocked Persons List.
+ * This check ensures that by making a transaction with this user
+ * we do not violate US sanctions. If this request returns with
+ * 'hits' then we must not perform the transaction.
+ */
 export async function sdnCheck(basketId, firstName, lastName, city, country) {
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
@@ -42,6 +48,15 @@ export async function sdnCheck(basketId, firstName, lastName, city, country) {
   return data;
 }
 
+/**
+ * Checkout with Cybersource.
+ *
+ * 1. Use card holder info to ensure we can make a transaction with this user
+ * 2. Submit card holder data to our ecommerce /cybersource/api-submit/ endpoint.
+ *    we must not send any payment information in this request.
+ * 3. Generate a form and submit all data to CYBERSOURCE_URL. The user will
+ *    then be redirected appropriately.
+ */
 export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   const { basketId } = basket;
 
