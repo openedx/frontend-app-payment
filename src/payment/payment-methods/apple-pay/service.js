@@ -42,6 +42,20 @@ export const redirectToReceipt = (orderNumber, disableBackButton = false) => {
   }
 };
 
+/**
+ * Checkout with Apple Pay overview:
+ *
+ * 1. Create an ApplePaySession with a payment request object
+ * 2. Add event handlers to the created applePaySession
+ * 3. Begin the session.
+ * 4. Safari will call onvalidatemerchant with a validationURL
+ * 5. We send the validationURL to APPLE_PAY_START_SESSION_URL.
+ * 6. On success we complete the merchant validation with Safari
+ * 7. Safari will call onpaymentauthorized with a payment object
+ * 8. We send the payment object to APPLE_PAY_AUTHORIZE_URL
+ * 9. On success we redirect to the order receipt using the
+ *    returned order number.
+ */
 export function checkout(basket) {
   return new Promise((resolve, reject) => {
     // Session Set Up

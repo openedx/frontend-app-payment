@@ -8,7 +8,7 @@ Please tag **@edx/arch-team** on any PRs or issues.  Thanks.
 Introduction
 ------------
 
-Micro-frontend for the single-page payment/checkout process.
+Micro-frontend for the single-page payment/checkout process. This application supports Apple Pay, PayPal, and Cybersource credit card payment types.
 
 Getting Started
 ---------------
@@ -35,6 +35,24 @@ The dev server is running at `http://localhost:1998 <http://localhost:1998>`_.
 
 By default it will show an empty basket view.
 
+API Documentation
+-----------------
+
+To view the api documentation, navigate to `http://localhost:18130/api-docs`_ 
+and log in with a staff account. Related endpoints:
+
+  - GET /bff/payment/v0/payment/
+  - POST /bff/payment/v0/quantity/
+  - POST /bff/payment/v0/vouchers/
+  - DELETE /bff/payment/v0/vouchers/{voucherid}
+  - POST /api/v2/sdn/search/
+  - POST /payment/cybersource/api-submit/
+  - POST /payment/cybersource/apple-pay/authorize/
+  - POST /payment/cybersource/apple-pay/start-session/
+
+Note: bff means "Backend for frontend". BFF endpoints are designed specifically
+for this application.
+
 Cart States
 -----------
 
@@ -48,7 +66,7 @@ Assuming you have a fairly standard devstack setup, if you click the "Upgrade to
 
 **Other Types**
 
-*To be added.*
+*To be added. (Program Purchase, Bulk Enrollment Code Purchase)*
 
 Glossary
 --------
@@ -119,6 +137,23 @@ Breakdown of the ``src`` directory:
 
 **store**
   The redux store configuration for dev and production.
+
+Configuration
+-------------
+
+All api keys, endpoints, etc are provided through the webpack EnvironmentPlugin at
+build time as configured in `webpack/`
+
+Notable Libraries Leveraged
+-------------
+
+This application uses:
+
+  - redux
+  - redux-saga
+  - redux-saga-routines
+  - redux-form
+
 
 Build Process Notes
 -------------------
