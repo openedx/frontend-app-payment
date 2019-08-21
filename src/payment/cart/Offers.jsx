@@ -19,22 +19,40 @@ Benefit.propTypes = {
 function Offer({
   benefitType, benefitValue, provider,
 }) {
+  let message = null;
+  if (provider) {
+    message = (<FormattedMessage
+      id="payment.summary.discount.offer"
+      defaultMessage="{benefit} discount provided by {provider}."
+      description="A description of a discount offer applied to a basket."
+      values={{
+        benefit: (
+          <Benefit
+            benefitType={benefitType}
+            benefitValue={benefitValue}
+          />
+        ),
+        provider,
+      }}
+    />);
+  } else {
+    message = (<FormattedMessage
+      id="payment.summary.discount.dynamic_offer"
+      defaultMessage="{benefit} discount for your first upgrade applied."
+      description="A description of a discount offer applied to a basket."
+      values={{
+        benefit: (
+          <Benefit
+            benefitType={benefitType}
+            benefitValue={benefitValue}
+          />
+        ),
+      }}
+    />);
+  }
   return (
     <p className="m-0 text-muted" key={`${benefitValue}-${provider}`}>
-      <FormattedMessage
-        id="payment.summary.discount.offer"
-        defaultMessage="{benefit} discount provided by {provider}."
-        description="A description of a discount offer applied to a basket."
-        values={{
-          benefit: (
-            <Benefit
-              benefitType={benefitType}
-              benefitValue={benefitValue}
-            />
-          ),
-          provider,
-        }}
-      />
+      {message}
     </p>
   );
 }
@@ -42,7 +60,11 @@ function Offer({
 Offer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
-  provider: PropTypes.string.isRequired,
+  provider: PropTypes.string,
+};
+
+Offer.defaultProps = {
+  provider: null,
 };
 
 export default function Offers({ offers, discounts }) {
@@ -73,7 +95,7 @@ Offers.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
     benefitValue: PropTypes.number.isRequired,
-    provider: PropTypes.string.isRequired,
+    provider: PropTypes.string,
   })),
   discounts: PropTypes.number,
 };

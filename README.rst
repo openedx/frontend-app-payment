@@ -189,6 +189,7 @@ described below:
   ``127.0.0.1 local.stage.edx.org``.
 
 - Log into stage: `https://courses.stage.edx.org/login <https://courses.stage.edx.org/login>`_.
+- Run `npm install` in this project directory
 - Start the frontend's dev server in staging mode:
 
   ``npm run start:stage``
