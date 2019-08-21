@@ -60,7 +60,11 @@ function Offer({
 Offer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
-  provider: PropTypes.string.isRequired,
+  provider: PropTypes.string,
+};
+
+Offer.defaultProps = {
+  provider: null,
 };
 
 export default function Offers({ offers, discounts }) {
@@ -91,7 +95,7 @@ Offers.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
     benefitValue: PropTypes.number.isRequired,
-    provider: PropTypes.string.isRequired,
+    provider: PropTypes.string,
   })),
   discounts: PropTypes.number,
 };
