@@ -114,9 +114,7 @@ describe('saga tests', () => {
         ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
-      expect(dispatched).toEqual([
-        fetchBasket.fulfill(),
-      ]);
+      expect(dispatched).toEqual([]);
       expect(caughtErrors).toEqual([]);
     });
 
