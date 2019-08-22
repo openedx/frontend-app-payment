@@ -1,5 +1,5 @@
 import pick from 'lodash.pick';
-import { logAPIErrorResponse, logInfo } from '@edx/frontend-logging';
+import { logApiClientError, logInfo } from '@edx/frontend-logging';
 import { camelCaseObject } from './utils';
 
 
@@ -85,6 +85,6 @@ export function handleRequestError(error) {
   }
 
   // Other errors
-  logAPIErrorResponse(error);
+  logApiClientError(error);
   throw error;
 }

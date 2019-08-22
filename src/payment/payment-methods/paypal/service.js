@@ -1,5 +1,5 @@
 import pick from 'lodash.pick';
-import { logAPIErrorResponse } from '@edx/frontend-logging';
+import { logApiClientError } from '@edx/frontend-logging';
 
 import { applyConfiguration } from '../../../common/serviceUtils';
 import { generateAndSubmitForm } from '../../../common/utils';
@@ -34,7 +34,7 @@ export async function checkout(basket) {
       payment_processor: 'paypal',
     },
   ).catch((error) => {
-    logAPIErrorResponse(error, {
+    logApiClientError(error, {
       messagePrefix: 'PayPal Checkout Error',
       paymentMethod: 'PayPal',
       paymentErrorType: 'Checkout',

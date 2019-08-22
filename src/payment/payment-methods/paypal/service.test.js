@@ -8,11 +8,11 @@ jest.mock('../../../common/utils', () => ({
 }));
 
 jest.mock('@edx/frontend-logging', () => ({
-  logAPIErrorResponse: jest.fn(),
+  logApiClientError: jest.fn(),
 }));
 
 import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
-import { logAPIErrorResponse } from '@edx/frontend-logging'; // eslint-disable-line import/first
+import { logApiClientError } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 describe('Paypal Service', () => {
   const config = {
@@ -48,7 +48,7 @@ describe('Paypal Service', () => {
     }));
 
     return checkout(basket).catch(() => {
-      expect(logAPIErrorResponse)
+      expect(logApiClientError)
         .toHaveBeenCalledWith(errorResponse, {
           messagePrefix: 'PayPal Checkout Error',
           paymentMethod: 'PayPal',
