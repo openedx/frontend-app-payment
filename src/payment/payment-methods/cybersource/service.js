@@ -1,6 +1,6 @@
 import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
-import { logAPIErrorResponse } from '@edx/frontend-logging';
+import { logApiClientError } from '@edx/frontend-logging';
 
 import { applyConfiguration } from '../../../common/serviceUtils';
 import { generateAndSubmitForm } from '../../../common/utils';
@@ -35,7 +35,7 @@ export async function sdnCheck(basketId, firstName, lastName, city, country) {
       country,
     },
   ).catch((error) => {
-    logAPIErrorResponse(error, {
+    logApiClientError(error, {
       messagePrefix: 'SDN Check Error',
       paymentMethod: 'Cybersource',
       paymentErrorType: 'SDN Check',
@@ -97,7 +97,7 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
       },
     },
   ).catch((error) => {
-    logAPIErrorResponse(error, {
+    logApiClientError(error, {
       messagePrefix: 'Cybersource Submit Error',
       paymentMethod: 'Cybersource',
       paymentErrorType: 'Submit Error',

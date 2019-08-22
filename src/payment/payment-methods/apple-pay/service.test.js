@@ -4,7 +4,7 @@ import {
 } from './service';
 
 jest.mock('@edx/frontend-logging', () => ({
-  logAPIErrorResponse: jest.fn(),
+  logApiClientError: jest.fn(),
 }));
 
 describe('Perform Apple Pay Payment', () => {

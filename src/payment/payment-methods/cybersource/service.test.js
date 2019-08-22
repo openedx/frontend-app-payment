@@ -8,11 +8,11 @@ jest.mock('../../../common/utils', () => ({
 }));
 
 jest.mock('@edx/frontend-logging', () => ({
-  logAPIErrorResponse: jest.fn(),
+  logApiClientError: jest.fn(),
 }));
 
 import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
-import { logAPIErrorResponse } from '@edx/frontend-logging'; // eslint-disable-line import/first
+import { logApiClientError } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 const config = {
   ECOMMERCE_BASE_URL: 'ecommerce.org',
@@ -130,7 +130,7 @@ describe('Cybersource Service', () => {
 
     return checkout(basket, formDetails)
       .catch(() => {
-        expect(logAPIErrorResponse)
+        expect(logApiClientError)
           .toHaveBeenCalledWith(sdnErrorResponse, {
             messagePrefix: 'SDN Check Error',
             paymentMethod: 'Cybersource',
@@ -156,7 +156,7 @@ describe('Cybersource Service', () => {
 
     return checkout(basket, formDetails)
       .catch(() => {
-        expect(logAPIErrorResponse)
+        expect(logApiClientError)
           .toHaveBeenCalledWith(errorResponse, {
             messagePrefix: 'Cybersource Submit Error',
             paymentMethod: 'Cybersource',
