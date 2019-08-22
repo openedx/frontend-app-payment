@@ -70,7 +70,7 @@
     "redux-saga-routines": "3.2.0",
     "redux-thunk": "2.3.0",
     "reselect": "4.0.0",
-    "universal-cookie": "3.1.0"
+    "universal-cookie": "4.0.2"
   },
   "devDependencies": {
     "@babel/cli": "7.5.5",
