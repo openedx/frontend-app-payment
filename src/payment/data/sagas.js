@@ -1,4 +1,6 @@
 import { call, put, takeEvery, select } from 'redux-saga/effects';
+import { stopSubmit } from 'redux-form';
+import { utils } from '../../common';
 
 // Actions
 import {
@@ -19,6 +21,8 @@ import * as PaymentApiService from './service';
 import { checkout as checkoutCybersource } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
+
+const { camelCaseObject, convertKeyNames } = utils;
 
 export const paymentMethods = {
   cybersource: checkoutCybersource,
@@ -50,6 +54,28 @@ export function* performBasketOperation(operation, ...operationArgs) {
     }
   } finally {
     yield put(basketProcessing(false));
+  }
+}
+
+export function* handleReduxFormValidationErrors(error) {
+  // error.fieldErrors is an array, and the fieldName key in it is snake case.
+  // We need to convert this into an object with snakeCase keys and values that are the
+  // userMessages.
+
+  if (error.fieldErrors) {
+    let fieldErrors = {};
+    // Turn the error objects into key-value pairs on our new fieldErrors object.
+    error.fieldErrors.forEach((fieldError) => {
+      fieldErrors[fieldError.fieldName] = fieldError.userMessage;
+    });
+
+    // Modify the key names to be what the UI needs and then camelCase the whole thing.
+    fieldErrors = camelCaseObject(convertKeyNames(fieldErrors, {
+      address_line1: 'address',
+      address_line2: 'unit',
+    }));
+
+    yield put(stopSubmit('payment', fieldErrors));
   }
 }
 
@@ -136,6 +162,7 @@ export function* handleSubmitPayment({ payload }) {
         yield call(handleErrors, { messages: [error] }, true);
       } else {
         yield call(handleErrors, error, true);
+        yield call(handleReduxFormValidationErrors, error);
       }
       if (error.basket) {
         yield put(basketDataReceived(error.basket));

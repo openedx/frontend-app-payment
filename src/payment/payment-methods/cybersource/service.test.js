@@ -1,7 +1,4 @@
-import {
-  configureApiService,
-  checkout,
-} from './service';
+import { configureApiService, checkout, normalizeFieldErrors } from './service';
 
 jest.mock('../../../common/utils', () => ({
   generateAndSubmitForm: jest.fn(),
@@ -22,7 +19,6 @@ const config = {
 
 const SDN_URL = `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`;
 const CYBERSOURCE_API = `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`;
-
 
 describe('Cybersource Service', () => {
   const basket = { basketId: 1 };
@@ -50,119 +46,187 @@ describe('Cybersource Service', () => {
   const apiClient = {};
   configureApiService(config, apiClient);
 
-  beforeEach(() => {
-    // Clear all instances and calls to constructor and all methods:
-    Object.values(generateAndSubmitForm).map(handler => handler.mockClear);
+  describe('normalizeCheckoutErrors', () => {
+    it('should return fieldErrors if fieldErrors is not an object', () => {
+      let result = normalizeFieldErrors(undefined);
+      expect(result).toBeUndefined();
+
+      result = normalizeFieldErrors(null);
+      expect(result).toBeNull();
+
+      result = normalizeFieldErrors('boo');
+      expect(result).toEqual('boo');
+
+      result = normalizeFieldErrors([]);
+      expect(result).toEqual([]);
+
+      result = normalizeFieldErrors(123);
+      expect(result).toEqual(123);
+    });
+
+    it('should return an empty object if given an empty object', () => {
+      const result = normalizeFieldErrors({});
+      expect(result).toEqual({});
+    });
+
+    it('should return a normalized field_errors object', () => {
+      const result = normalizeFieldErrors({
+        field_name: 'Error message.',
+        other_field_name: 'Other error message.',
+      });
+      expect(result).toEqual({
+        field_name: { user_message: 'Error message.', error_code: null },
+        other_field_name: { user_message: 'Other error message.', error_code: null },
+      });
+    });
   });
 
-
-  const expectNoCardDataToBePresent = (postData) => {
-    Object.values(postData).forEach((value) => {
-      if (typeof value === 'object') {
-        expectNoCardDataToBePresent(postData);
-      } else {
-        expect(cardValues.includes(value)).toBe(false);
-      }
+  describe('checkout', () => {
+    beforeEach(() => {
+      // Clear all instances and calls to constructor and all methods:
+      Object.values(generateAndSubmitForm).map(handler => handler.mockClear);
     });
-  };
 
-  it('should generate and submit a form on success', () => {
-    const successResponse = {
-      data: {
-        form_fields: {
-          allThe: 'all the form fields form cybersource',
-        },
-      },
+    const expectNoCardDataToBePresent = (postData) => {
+      Object.values(postData).forEach((value) => {
+        if (typeof value === 'object') {
+          expectNoCardDataToBePresent(postData);
+        } else {
+          expect(cardValues.includes(value)).toBe(false);
+        }
+      });
     };
-    const sdnResponse = { data: { hits: 0 } };
 
-    apiClient.post = (url, postData) => new Promise((resolve) => {
-      expectNoCardDataToBePresent(postData);
-      if (url === CYBERSOURCE_API) {
-        resolve(successResponse);
-      }
-      if (url === SDN_URL) {
-        resolve(sdnResponse);
-      }
-    });
+    it('should generate and submit a form on success', async () => {
+      const successResponse = {
+        data: {
+          form_fields: {
+            allThe: 'all the form fields form cybersource',
+          },
+        },
+      };
+      const sdnResponse = { data: { hits: 0 } };
 
-    return checkout(basket, formDetails).then(() => {
-      expect(generateAndSubmitForm)
-        .toHaveBeenCalledWith(config.CYBERSOURCE_URL, expect.objectContaining({
+      apiClient.post = (url, postData) =>
+        new Promise((resolve) => {
+          expectNoCardDataToBePresent(postData);
+          if (url === CYBERSOURCE_API) {
+            resolve(successResponse);
+          }
+          if (url === SDN_URL) {
+            resolve(sdnResponse);
+          }
+        });
+
+      await expect(checkout(basket, formDetails)).resolves.toEqual(undefined);
+      expect(generateAndSubmitForm).toHaveBeenCalledWith(
+        config.CYBERSOURCE_URL,
+        expect.objectContaining({
           ...successResponse.data.form_fields,
           card_number: '4111111111111111',
           card_type: 'VISA??',
           card_cvn: '123',
           card_expiry_date: '10-2022',
-        }));
+        }),
+      );
     });
-  });
 
-  it('should throw an error if there are SDN hits', () => {
-    const successResponse = {
-      data: {
-        form_fields: {
-          allThe: 'all the form fields form cybersource',
+    it('should throw an error if there are SDN hits', () => {
+      const successResponse = {
+        data: {
+          form_fields: {
+            allThe: 'all the form fields form cybersource',
+          },
         },
-      },
-    };
-    const sdnResponse = { data: { hits: 1 } };
+      };
+      const sdnResponse = { data: { hits: 1 } };
 
-    apiClient.post = (url, postData) => new Promise((resolve) => {
-      expectNoCardDataToBePresent(postData);
-      if (url === CYBERSOURCE_API) {
-        resolve(successResponse);
-      }
-      if (url === SDN_URL) {
-        resolve(sdnResponse);
-      }
+      apiClient.post = (url, postData) =>
+        new Promise((resolve) => {
+          expectNoCardDataToBePresent(postData);
+          if (url === CYBERSOURCE_API) {
+            resolve(successResponse);
+          }
+          if (url === SDN_URL) {
+            resolve(sdnResponse);
+          }
+        });
+
+      return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
     });
 
-    return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
-  });
+    it('should throw an error if the SDN check errors', async () => {
+      const sdnErrorResponse = { boo: 'yah' };
 
-  it('should throw an error if the SDN check errors', () => {
-    const sdnErrorResponse = {};
+      apiClient.post = () =>
+        new Promise((resolve, reject) => {
+          reject(sdnErrorResponse);
+        });
 
-    apiClient.post = () => new Promise((resolve, reject) => {
-      reject(sdnErrorResponse);
-    });
-
-    return checkout(basket, formDetails)
-      .catch(() => {
-        expect(logApiClientError)
-          .toHaveBeenCalledWith(sdnErrorResponse, {
-            messagePrefix: 'SDN Check Error',
-            paymentMethod: 'Cybersource',
-            paymentErrorType: 'SDN Check',
-            basketId: basket.basketId,
-          });
+      await expect(checkout(basket, formDetails)).rejects.toEqual(sdnErrorResponse);
+      expect(logApiClientError).toHaveBeenCalledWith(sdnErrorResponse, {
+        messagePrefix: 'SDN Check Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'SDN Check',
+        basketId: basket.basketId,
       });
-  });
-
-  it('should throw an error if the cybersource checkout request errors', () => {
-    const errorResponse = {};
-
-    const sdnResponse = { data: { hits: 0 } };
-
-    apiClient.post = url => new Promise((resolve, reject) => {
-      if (url === SDN_URL) {
-        resolve(sdnResponse);
-      }
-      if (url === CYBERSOURCE_API) {
-        reject(errorResponse);
-      }
     });
 
-    return checkout(basket, formDetails)
-      .catch(() => {
-        expect(logApiClientError)
-          .toHaveBeenCalledWith(errorResponse, {
-            messagePrefix: 'Cybersource Submit Error',
-            paymentMethod: 'Cybersource',
-            paymentErrorType: 'Submit Error',
-            basketId: basket.basketId,
-          });
+    it('should throw an error if the cybersource checkout request errors', async () => {
+      const errorResponse = {
+        data: {
+          field_errors: {
+            booyah: 'Booyah is bad.',
+          },
+        },
+      };
+      const error = new Error();
+      error.response = errorResponse;
+      const sdnResponse = { data: { hits: 0 } };
+
+      apiClient.post = url =>
+        new Promise((resolve, reject) => {
+          if (url === SDN_URL) {
+            resolve(sdnResponse);
+          }
+          if (url === CYBERSOURCE_API) {
+            reject(error);
+          }
+        });
+
+      await expect(checkout(basket, formDetails)).rejects.toEqual(error);
+      expect(logApiClientError).toHaveBeenCalledWith(error, {
+        messagePrefix: 'Cybersource Submit Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'Submit Error',
+        basketId: basket.basketId,
       });
+    });
+
+    it('should throw an unknown error if the cybersource checkout request without a response body', async () => {
+      const errorResponse = {};
+      const error = new Error();
+      error.response = errorResponse;
+      const sdnResponse = { data: { hits: 0 } };
+
+      apiClient.post = url =>
+        new Promise((resolve, reject) => {
+          if (url === SDN_URL) {
+            resolve(sdnResponse);
+          }
+          if (url === CYBERSOURCE_API) {
+            reject(error);
+          }
+        });
+
+      await expect(checkout(basket, formDetails)).rejects.toEqual(error);
+
+      expect(logApiClientError).toHaveBeenCalledWith(error, {
+        messagePrefix: 'Cybersource Submit Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'Submit Error',
+        basketId: basket.basketId,
+      });
+    });
   });
 });

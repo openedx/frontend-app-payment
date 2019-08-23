@@ -1,5 +1,6 @@
 import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
+import { stopSubmit } from 'redux-form';
 import { Factory } from 'rosie';
 import paymentSaga, {
   handleFetchBasket,
@@ -698,7 +699,7 @@ describe('saga tests', () => {
       ]);
     });
 
-    it('should perform single-error error handling and updating basket data if error was not aborted', async () => {
+    it('should perform error handling and updating basket data if error was not aborted', async () => {
       const error = new Error();
       error.aborted = false;
       error.messages = [
@@ -746,6 +747,58 @@ describe('saga tests', () => {
         submitPayment.fulfill(),
       ]);
     });
+  });
+
+  it('should perform error handling for field errors', async () => {
+    const error = new Error();
+    error.aborted = false;
+    error.fieldErrors = [
+      {
+        code: null,
+        data: null,
+        userMessage: 'This is a field error!',
+        fieldName: 'field1',
+      },
+    ];
+    error.basket = {
+      i: 'am',
+      a: 'basket',
+    };
+    cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+
+    try {
+      await runSaga(
+        {
+          getState: () => ({
+            payment: {
+              basket: {
+                foo: 'bar',
+                isBasketProcessing: false,
+              },
+            },
+          }),
+          ...sagaOptions,
+        },
+        handleSubmitPayment,
+        { payload: { method: 'cybersource', meh: 'wut' } },
+      ).toPromise();
+    } catch (e) {} // eslint-disable-line no-empty
+
+    expect(dispatched).toEqual([
+      basketProcessing(true),
+      submitPayment.request(),
+      clearMessages(),
+      addMessage(null, 'This is a field error!', null, 'error', 'field1'),
+      stopSubmit('payment', {
+        field1: 'This is a field error!',
+      }),
+      basketDataReceived({
+        i: 'am',
+        a: 'basket',
+      }),
+      basketProcessing(false),
+      submitPayment.fulfill(),
+    ]);
   });
 
   it('should pass actions to the correct sagas', () => {
