@@ -38,7 +38,7 @@ By default it will show an empty basket view.
 API Documentation
 -----------------
 
-To view the api documentation, navigate to `http://localhost:18130/api-docs`_ 
+To view the API documentation, navigate to `http://localhost:18130/api-docs`_
 and log in with a staff account. Related endpoints:
 
   - GET /bff/payment/v0/payment/
@@ -141,11 +141,11 @@ Breakdown of the ``src`` directory:
 Configuration
 -------------
 
-All api keys, endpoints, etc are provided through the webpack EnvironmentPlugin at
+All API keys, endpoints, etc are provided through the webpack EnvironmentPlugin at
 build time as configured in `webpack/`
 
 Notable Libraries Leveraged
--------------
+---------------------------
 
 This application uses:
 
@@ -153,7 +153,6 @@ This application uses:
   - redux-saga
   - redux-saga-routines
   - redux-form
-
 
 Build Process Notes
 -------------------
@@ -176,6 +175,23 @@ Internationalization
 
 Please see `edx/frontend-i18n <https://github.com/edx/frontend-i18n>`_ for documentation on internationalization.  The repository README.rst explains how to use it, and the `How To <https://github.com/edx/frontend-i18n/blob/master/docs/how_tos/i18n.rst>`_ has more detail.
 
+Localized Pricing
+-----------------
+
+The LocalizedPrice.jsx component makes use of a currency cookie to determine the user's preferred
+currency.  The code for localized pricing can be found in:
+
+**src/payment/cart/LocalizedPrice.jsx**
+
+This is the localized pricing react component.  If a currency cookie is found, it displays the price in that currency using the specified conversion rate.
+
+**src/payment/data/reducers.js**
+
+The "currency" reducer reads the cookie as part of its initial state.
+
+**src/payment/data/selectors.js**
+
+The "localizedCurrencySelector" reads the currency information defined in redux and is used to provide it to the LocalizedCurrency.jsx component.
 
 Appendix A: Using Local Dev Server with stage.edx.org APIs
 ----------------------------------------------------------
