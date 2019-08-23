@@ -34,29 +34,6 @@ function* isBasketProcessing() {
   return yield select(state => state.payment.basket.isBasketProcessing);
 }
 
-/**
- * Many of the handlers here have identical error handling, and are also all processing the same
- * sort of response object (a basket).  This helper is just here to dedupe that code, since its
- * all identical.
- */
-export function* performBasketOperation(operation, ...operationArgs) {
-  if (yield isBasketProcessing()) return;
-
-  try {
-    yield put(basketProcessing(true));
-    const result = yield call(operation, ...operationArgs);
-    yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
-  } catch (error) {
-    yield call(handleErrors, error, true);
-    if (error.basket) {
-      yield put(basketDataReceived(error.basket));
-    }
-  } finally {
-    yield put(basketProcessing(false));
-  }
-}
-
 export function* handleReduxFormValidationErrors(error) {
   // error.fieldErrors is an array, and the fieldName key in it is snake case.
   // We need to convert this into an object with snakeCase keys and values that are the
@@ -78,27 +55,6 @@ export function* handleReduxFormValidationErrors(error) {
     yield put(stopSubmit('payment', fieldErrors));
   }
 }
-
-/**
- * Many of the handlers here have identical error handling, and are also all processing the same
- * sort of response object (a basket).  This helper is just here to dedupe that code, since its
- * all identical.
- */
-export function* catchBasketError(handler) {
-  if (yield isBasketProcessing()) return;
-
-  try {
-    yield call(handler);
-  } catch (error) {
-    yield call(handleErrors, error, true);
-    if (error.basket) {
-      yield put(basketDataReceived(error.basket));
-    }
-  } finally {
-    yield put(basketProcessing(false));
-  }
-}
-
 export function* handleDiscountCheck() {
   const basket = yield select(state => state.payment.basket);
   if (basket.products.length === 1) {
@@ -120,14 +76,50 @@ export function* handleDiscountCheck() {
 }
 
 export function* handleFetchBasket() {
-  yield call(catchBasketError, function* processFetchBasket() {
+  if (yield isBasketProcessing()) {
+    return;
+  }
+
+  try {
     yield put(basketProcessing(true));
     const result = yield call(PaymentApiService.getBasket);
     yield put(basketDataReceived(result));
     yield call(handleMessages, result.messages, true);
     yield call(handleDiscountCheck);
-  });
-  yield put(fetchBasket.fulfill());
+  } catch (error) {
+    yield call(handleErrors, error, true);
+    if (error.basket) {
+      yield put(basketDataReceived(error.basket));
+    }
+  } finally {
+    yield put(basketProcessing(false));
+    yield put(fetchBasket.fulfill());
+  }
+}
+
+/**
+ * Many of the handlers here have identical error handling, and are also all processing the same
+ * sort of response object (a basket).  This helper is just here to dedupe that code, since its
+ * all identical.
+ */
+export function* performBasketOperation(operation, ...operationArgs) {
+  if (yield isBasketProcessing()) {
+    return;
+  }
+
+  try {
+    yield put(basketProcessing(true));
+    const result = yield call(operation, ...operationArgs);
+    yield put(basketDataReceived(result));
+    yield call(handleMessages, result.messages, true);
+  } catch (error) {
+    yield call(handleErrors, error, true);
+    if (error.basket) {
+      yield put(basketDataReceived(error.basket));
+    }
+  } finally {
+    yield put(basketProcessing(false));
+  }
 }
 
 export function* handleAddCoupon({ payload }) {
@@ -143,7 +135,9 @@ export function* handleUpdateQuantity({ payload }) {
 }
 
 export function* handleSubmitPayment({ payload }) {
-  if (yield isBasketProcessing()) return;
+  if (yield isBasketProcessing()) {
+    return;
+  }
 
   const { method, ...paymentArgs } = payload;
   try {
@@ -156,14 +150,15 @@ export function* handleSubmitPayment({ payload }) {
   } catch (error) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {
+      // Client side generated errors are simple error objects.  If we have one, wrap it in the
+      // same format the API uses.
       if (error.code) {
-        // Client side generated errors are simple error objects and
-        // here we wrap them into the same format as the api returns them in
         yield call(handleErrors, { messages: [error] }, true);
       } else {
         yield call(handleErrors, error, true);
         yield call(handleReduxFormValidationErrors, error);
       }
+
       if (error.basket) {
         yield put(basketDataReceived(error.basket));
       }
