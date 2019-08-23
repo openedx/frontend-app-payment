@@ -21,7 +21,7 @@ import {
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
-import './__factories__/basket.factory';
+import '../__factories__/basket.factory';
 
 import * as cybersourceService from '../payment-methods/cybersource';
 

@@ -1,7 +1,5 @@
 import { Factory } from 'rosie'; // eslint-disable-line import/no-extraneous-dependencies
 
-import './product.factory';
-
 Factory.define('info-message')
   .attrs({
     code: 'great-info-message',

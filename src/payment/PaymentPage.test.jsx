@@ -1,29 +1,25 @@
 /* eslint-disable global-require */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { Factory } from 'rosie';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
-import configureMockStore from 'redux-mock-store';
-
 import * as analytics from '@edx/frontend-analytics';
+import { fetchUserAccountSuccess } from '@edx/frontend-auth';
+
+import './__factories__/basket.factory';
+import '../__factories__/configuration.factory';
+import '../__factories__/userAccount.factory';
 import { ConnectedPaymentPage } from './';
 import { configuration } from '../environment';
 import messages from '../i18n';
+import createRootReducer from '../data/reducers';
+import { fetchBasket, basketDataReceived } from './data/actions';
+import { transformResults } from './data/service';
+import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
+import { MESSAGE_TYPES, addMessage } from '../feedback';
 
-import ProductLineItem from './cart/ProductLineItem';
-
-const mockStore = configureMockStore();
-const storeMocks = {
-  defaultState: require('./__mocks__/defaultState.mockStore.js'),
-  loading: require('./__mocks__/loading.mockStore.js'),
-  loadedBasket: require('./__mocks__/loadedBasket.mockStore.js'),
-  loadedBasketForBulkOrder: require('./__mocks__/loadedBasketForBulkOrder.mockStore.js'),
-  loadedFreeBasket: require('./__mocks__/loadedFreeBasket.mockStore.js'),
-  loadedEmptyBasket: require('./__mocks__/loadedEmptyBasket.mockStore.js'),
-  loadedRedirect: require('./__mocks__/loadedRedirect.mockStore.js'),
-  loadedBasketWithNoTotals: require('./__mocks__/loadedBasketWithNoTotals.mockStore.js'),
-  customAlertMessages: require('./__mocks__/customAlertMessages.mockStore.js'),
-};
 const requirePaymentPageProps = {
   fetchBasket: () => {},
 };
@@ -37,206 +33,217 @@ Object.defineProperty(global.document, 'cookie', {
 configureI18n(configuration, messages);
 
 describe('<PaymentPage />', () => {
+  let initialState;
+  let store;
+
+  beforeEach(() => {
+    const userAccount = Factory.build('userAccount');
+    initialState = {
+      configuration: Factory.build('configuration'),
+      authentication: {
+        userId: 9,
+        username: userAccount.username,
+      },
+    };
+
+    store = createStore(createRootReducer(), initialState);
+    store.dispatch(fetchUserAccountSuccess(userAccount));
+  });
+
   describe('Renders correctly in various states', () => {
-    it('should render its default state', () => {
+    beforeEach(() => {
       analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.defaultState)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
     });
 
-    it('should render its loading state', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loading)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+    it('should render its default (loading) state', () => {
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+
+      const tree = renderer.create(component);
+      expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('should render the basket', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadedBasket)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 1 }))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
+    });
+
+    it('should render the basket in a different currency', () => {
+      store = createStore(
+        createRootReducer(),
+        Object.assign({}, initialState, {
+          payment: {
+            currency: {
+              currencyCode: 'MXN',
+              conversionRate: 19.092733,
+            },
+          },
+        }),
+      );
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 1 }))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
+    });
+
+    it('should render the basket with an enterprise offer', () => {
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build(
+          'basket',
+          {
+            offers: [
+              {
+                benefitValue: 50,
+                benefitType: 'Percentage',
+                provider: 'Pied Piper',
+              },
+            ],
+          },
+          { numProducts: 1 },
+        ))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+
+      expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('should render the basket for a bulk order', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadedBasketForBulkOrder)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
-    });
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
 
-    it('should successfully render a basket with no order totals', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadedBasketWithNoTotals)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build(
+          'basket',
+          {},
+          { numProducts: 1, productType: ENROLLMENT_CODE_PRODUCT_TYPE },
+        ))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('should render an empty basket', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadedEmptyBasket)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 0 }))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('should render a redirect spinner', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadedRedirect)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build(
+          'basket',
+          {
+            redirect: 'http://localhost/boo',
+          },
+          { numProducts: 1 },
+        ))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('should render a free basket', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.loadedFreeBasket)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+      const component = (
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
+        </IntlProvider>
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build(
+          'basket',
+          {
+            is_free_basket: true,
+          },
+          { numProducts: 1 },
+        ))));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('should render all custom alert messages', () => {
-      analytics.sendTrackingLogEvent = jest.fn();
-      const tree = renderer
-        .create((
-          <IntlProvider locale="en">
-            <Provider store={mockStore(storeMocks.customAlertMessages)}>
-              <ConnectedPaymentPage {...requirePaymentPageProps} />
-            </Provider>
-          </IntlProvider>
-        ))
-        .toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-  });
-});
-
-const product = {
-  imageUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',
-  title: 'Introduction to Happiness',
-  certificateType: 'verified',
-  productType: 'Seat',
-  sku: '8CF08E5',
-};
-
-describe('<ProductLineItem />', () => {
-  describe('Rendering', () => {
-    it('should render the product details', () => {
-      const tree = renderer.create((
+      const component = (
         <IntlProvider locale="en">
-          <ProductLineItem {...product} />
+          <Provider store={store}>
+            <ConnectedPaymentPage {...requirePaymentPageProps} />
+          </Provider>
         </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-    it('should render the product details for professional certificate', () => {
-      product.certificateType = 'professional';
-      const tree = renderer.create((
-        <IntlProvider locale="en">
-          <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-    it('should render the product details for no-id-professional certificate', () => {
-      product.certificateType = 'no-id-professional';
-      const tree = renderer.create((
-        <IntlProvider locale="en">
-          <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-    it('should render the product details for verified certificate', () => {
-      product.certificateType = 'verified';
-      const tree = renderer.create((
-        <IntlProvider locale="en">
-          <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-    it('should render the product details for unknown seat type', () => {
-      product.certificateType = null;
-      const tree = renderer.create((
-        <IntlProvider locale="en">
-          <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-    it('should render the product details for honor certificate', () => {
-      product.certificateType = 'honor';
-      const tree = renderer.create((
-        <IntlProvider locale="en">
-          <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
-    });
-    it('should render the product details for audit certificate', () => {
-      product.certificateType = 'audit';
-      const tree = renderer.create((
-        <IntlProvider locale="en">
-          <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
-      expect(tree).toMatchSnapshot();
+      );
+      const tree = renderer.create(component);
+      act(() => {
+        store.dispatch(basketDataReceived(transformResults(Factory.build(
+          'basket',
+          {
+          },
+          { numProducts: 1 },
+        ))));
+        store.dispatch(addMessage(null, "Coupon code 'HAPPY' added to basket.", null, MESSAGE_TYPES.INFO));
+        store.dispatch(addMessage('single-enrollment-code-warning', null, {
+          courseAboutUrl: 'http://edx.org/about_ze_course',
+        }, MESSAGE_TYPES.INFO));
+        store.dispatch(fetchBasket.fulfill());
+      });
+      expect(tree.toJSON()).toMatchSnapshot();
     });
   });
 });

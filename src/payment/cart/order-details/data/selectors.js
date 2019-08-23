@@ -22,7 +22,7 @@ const paymentSelector = (state, props) =>
 
 const lastProductSelector = createSelector(
   paymentSelector,
-  ({ products }) => (products ? products[products.length - 1] : undefined),
+  ({ products }) => products[products.length - 1],
 );
 
 const messageTypeSelector = createSelector(
