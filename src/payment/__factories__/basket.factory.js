@@ -4,7 +4,7 @@ import Chance from 'chance'; // eslint-disable-line import/no-extraneous-depende
 import './product.factory';
 import './message.factory';
 
-const chance = new Chance();
+const chance = new Chance(12345);
 
 Factory.define('basket')
   .sequence('basket_id')
@@ -17,11 +17,10 @@ Factory.define('basket')
     order_total: 0.0,
     summary_subtotal: 0.0,
     summary_discounts: 0.0,
-    summary_quantity: 0,
     show_coupon_form: false,
     is_free_basket: false,
     currency: 'USD',
-    offers: null,
+    offers: [],
     coupons: [],
   })
   .attr('products', ['numProducts', 'productType'], (numProducts, productType) => {
@@ -31,6 +30,7 @@ Factory.define('basket')
     }
     return products;
   })
+  .attr('summary_quantity', ['numProducts'], numProducts => numProducts)
   .attr('messages', ['numErrorMessages', 'numInfoMessages'], (numErrorMessages, numInfoMessages) => {
     const messages = [];
     for (let i = 0; i < numErrorMessages; i++) { // eslint-disable-line no-plusplus

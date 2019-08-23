@@ -57,7 +57,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+                    src="https://edx.org/cente.png"
                   />
                 </div>
               </div>
@@ -68,7 +68,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Happiness
+                  Introduction to Bantengs
                 </h6>
                 <p
                   className="m-0"
@@ -106,67 +106,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               </span>
               <span>
                 <span>
-                  $161.00
+                  $103.07
                 </span>
               </span>
             </div>
-            <div
-              className="summary-row"
-            >
-              <p
-                className="d-flex m-0"
-              >
-                <span
-                  className="flex-grow-1"
-                >
-                  <span>
-                    Discounts applied
-                  </span>
-                </span>
-                <span>
-                  <span>
-                    -$12.00
-                  </span>
-                </span>
-              </p>
-            </div>
-            <form
-              className="summary-row d-flex align-items-end"
-              onSubmit={[Function]}
-            >
-              <div
-                className="form-group mb-0 mr-2"
-              >
-                <label
-                  className="h6 d-block"
-                  htmlFor="couponField"
-                >
-                  <span>
-                    Add coupon code (optional)
-                  </span>
-                </label>
-                <input
-                  aria-describedby=""
-                  className="form-control"
-                  defaultValue=""
-                  id="couponField"
-                  name="couponField"
-                  type="text"
-                />
-              </div>
-              <button
-                className="btn btn-primary"
-                disabled={false}
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
-              >
-                <span>
-                  Apply
-                </span>
-              </button>
-            </form>
             <div
               className="summary-row font-weight-bold d-flex"
             >
@@ -181,7 +124,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                 className="text-right"
               >
                 <span>
-                  $149.00
+                  $103.07
                 </span>
               </span>
             </div>
@@ -195,7 +138,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               Order Details
             </h5>
             <p>
-              After you complete your order you will be automatically enrolled in the verified track of the course.
+              After you complete your order you will be able to select course dates from your dashboard.
             </p>
           </div>
         </div>
@@ -308,7 +251,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
       <span>
         If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
         <a
-          href="http://edx.org"
+          href="http://edx.org/about_ze_course"
           onClick={[Function]}
           target="_self"
         >
@@ -373,7 +316,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://stage-edxapp.edx-cdn.org/asset-v1:edx+H100+2018+type@asset+block@images_course_image.jpg"
+                    src="https://edx.org/fagavjen.gif"
                   />
                 </div>
               </div>
@@ -384,7 +327,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Happiness
+                  Introduction to Gayals
                 </h6>
                 <p
                   className="m-0"
@@ -422,77 +365,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               </span>
               <span>
                 <span>
-                  $100.00
+                  $413.39
                 </span>
               </span>
             </div>
-            <div
-              className="summary-row"
-            >
-              <p
-                className="d-flex m-0"
-              >
-                <span
-                  className="flex-grow-1"
-                >
-                  <span>
-                    Discounts applied
-                  </span>
-                </span>
-                <span>
-                  <span>
-                    -$50.00
-                  </span>
-                </span>
-              </p>
-              <p
-                className="m-0 text-muted"
-              >
-                <span>
-                  <span>
-                    50%
-                  </span>
-                   discount provided by Pied Piper.
-                </span>
-              </p>
-            </div>
-            <form
-              className="summary-row d-flex align-items-end"
-              onSubmit={[Function]}
-            >
-              <div
-                className="form-group mb-0 mr-2"
-              >
-                <label
-                  className="h6 d-block"
-                  htmlFor="couponField"
-                >
-                  <span>
-                    Add coupon code (optional)
-                  </span>
-                </label>
-                <input
-                  aria-describedby=""
-                  className="form-control"
-                  defaultValue=""
-                  id="couponField"
-                  name="couponField"
-                  type="text"
-                />
-              </div>
-              <button
-                className="btn btn-primary"
-                disabled={false}
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
-              >
-                <span>
-                  Apply
-                </span>
-              </button>
-            </form>
             <div
               className="summary-row font-weight-bold d-flex"
             >
@@ -507,7 +383,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 className="text-right"
               >
                 <span>
-                  $50.00
+                  $413.39
                 </span>
               </span>
             </div>
@@ -521,7 +397,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               Order Details
             </h5>
             <p>
-              After you complete your order you will be automatically enrolled in the verified track of the course.
+              After you complete your order you will be able to select course dates from your dashboard.
             </p>
           </div>
         </div>
@@ -2483,2004 +2359,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
 </div>
 `;
 
-exports[`<PaymentPage /> Renders correctly in various states should render its default state 1`] = `
-<div
-  className="page__payment container-fluid py-5"
->
-  <div
-    className="row"
-  >
-    <h1
-      className="sr-only"
-    >
-      <span>
-        Payment
-      </span>
-    </h1>
-    <div
-      className="col-md-5 pr-md-5 col-basket-summary"
-    >
-      <section
-        aria-label="Shopping Cart Details"
-        aria-live="polite"
-        aria-relevant="all"
-      >
-        <div>
-          <span
-            className="sr-only"
-          >
-            <span>
-              Shopping cart details are loaded.
-            </span>
-          </span>
-          <div
-            className="basket-section"
-          >
-            <h5
-              aria-level="2"
-            >
-              <span>
-                In Your Cart
-              </span>
-            </h5>
-            <p>
-              <span>
-                Your purchase contains the following:
-              </span>
-            </p>
-          </div>
-          <div
-            aria-labelledby="summary-heading"
-            aria-live="polite"
-            className="basket-section"
-            role="region"
-          >
-            <h5
-              aria-level="2"
-              id="summary-heading"
-            >
-              <span>
-                Summary
-              </span>
-            </h5>
-            <div
-              className="summary-row d-flex"
-            >
-              <span
-                className="flex-grow-1"
-              >
-                <span>
-                  Price
-                </span>
-              </span>
-              <span />
-            </div>
-            <div
-              className="summary-row font-weight-bold d-flex"
-            >
-              <span
-                className="flex-grow-1"
-              >
-                <span>
-                  TOTAL
-                </span>
-              </span>
-              <span
-                className="text-right"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-    <div
-      className="col-md-7 pl-md-5"
-    >
-      <section
-        aria-label="Payment Details"
-      >
-        <div
-          className="basket-section"
-        >
-          <h5
-            aria-level="2"
-          >
-            <span>
-              Select Payment Method
-            </span>
-          </h5>
-          <p
-            className="d-flex flex-wrap"
-          >
-            <button
-              className="payment-method-button active"
-            >
-              <img
-                alt="Credit Card"
-                src="test-file-stub"
-              />
-            </button>
-            <button
-              className="payment-method-button"
-              disabled={false}
-              onClick={[Function]}
-            >
-              <img
-                alt="PayPal"
-                src="test-file-stub"
-              />
-            </button>
-          </p>
-        </div>
-        <form
-          noValidate={true}
-          onSubmit={[Function]}
-        >
-          <div
-            className="basket-section"
-          >
-            <h5
-              aria-level="2"
-            >
-              <span>
-                Card Holder Information
-              </span>
-            </h5>
-            <div
-              className="row"
-            >
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="firstName"
-                >
-                  <span>
-                    First Name (required)
-                  </span>
-                </label>
-                <input
-                  autoComplete="given-name"
-                  className="form-control"
-                  disabled={false}
-                  id="firstName"
-                  name="firstName"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="lastName"
-                >
-                  <span>
-                    Last Name (required)
-                  </span>
-                </label>
-                <input
-                  autoComplete="family-name"
-                  className="form-control"
-                  disabled={false}
-                  id="lastName"
-                  name="lastName"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-            <div
-              className="row"
-            >
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="address"
-                >
-                  <span>
-                    Address (required)
-                  </span>
-                </label>
-                <input
-                  autoComplete="street-address"
-                  className="form-control"
-                  disabled={false}
-                  id="address"
-                  maxLength="60"
-                  name="address"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="unit"
-                >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-line2"
-                  className="form-control"
-                  disabled={false}
-                  id="unit"
-                  maxLength="29"
-                  name="unit"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-            <div
-              className="row"
-            >
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="city"
-                >
-                  <span>
-                    City (required)
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level2"
-                  className="form-control"
-                  disabled={false}
-                  id="city"
-                  maxLength="32"
-                  name="city"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="country"
-                >
-                  <span>
-                    Country (required)
-                  </span>
-                </label>
-                <select
-                  autoComplete="country"
-                  className="form-control"
-                  disabled={false}
-                  id="country"
-                  name="country"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  value=""
-                >
-                  <option
-                    value=""
-                  >
-                    Choose country
-                  </option>
-                  <option
-                    value="AF"
-                  >
-                    Afghanistan
-                  </option>
-                  <option
-                    value="AL"
-                  >
-                    Albania
-                  </option>
-                  <option
-                    value="DZ"
-                  >
-                    Algeria
-                  </option>
-                  <option
-                    value="AS"
-                  >
-                    American Samoa
-                  </option>
-                  <option
-                    value="AD"
-                  >
-                    Andorra
-                  </option>
-                  <option
-                    value="AO"
-                  >
-                    Angola
-                  </option>
-                  <option
-                    value="AI"
-                  >
-                    Anguilla
-                  </option>
-                  <option
-                    value="AQ"
-                  >
-                    Antarctica
-                  </option>
-                  <option
-                    value="AG"
-                  >
-                    Antigua and Barbuda
-                  </option>
-                  <option
-                    value="AR"
-                  >
-                    Argentina
-                  </option>
-                  <option
-                    value="AM"
-                  >
-                    Armenia
-                  </option>
-                  <option
-                    value="AW"
-                  >
-                    Aruba
-                  </option>
-                  <option
-                    value="AU"
-                  >
-                    Australia
-                  </option>
-                  <option
-                    value="AT"
-                  >
-                    Austria
-                  </option>
-                  <option
-                    value="AZ"
-                  >
-                    Azerbaijan
-                  </option>
-                  <option
-                    value="BS"
-                  >
-                    Bahamas
-                  </option>
-                  <option
-                    value="BH"
-                  >
-                    Bahrain
-                  </option>
-                  <option
-                    value="BD"
-                  >
-                    Bangladesh
-                  </option>
-                  <option
-                    value="BB"
-                  >
-                    Barbados
-                  </option>
-                  <option
-                    value="BY"
-                  >
-                    Belarus
-                  </option>
-                  <option
-                    value="BE"
-                  >
-                    Belgium
-                  </option>
-                  <option
-                    value="BZ"
-                  >
-                    Belize
-                  </option>
-                  <option
-                    value="BJ"
-                  >
-                    Benin
-                  </option>
-                  <option
-                    value="BM"
-                  >
-                    Bermuda
-                  </option>
-                  <option
-                    value="BT"
-                  >
-                    Bhutan
-                  </option>
-                  <option
-                    value="BO"
-                  >
-                    Bolivia
-                  </option>
-                  <option
-                    value="BA"
-                  >
-                    Bosnia and Herzegovina
-                  </option>
-                  <option
-                    value="BW"
-                  >
-                    Botswana
-                  </option>
-                  <option
-                    value="BV"
-                  >
-                    Bouvet Island
-                  </option>
-                  <option
-                    value="BR"
-                  >
-                    Brazil
-                  </option>
-                  <option
-                    value="IO"
-                  >
-                    British Indian Ocean Territory
-                  </option>
-                  <option
-                    value="BN"
-                  >
-                    Brunei Darussalam
-                  </option>
-                  <option
-                    value="BG"
-                  >
-                    Bulgaria
-                  </option>
-                  <option
-                    value="BF"
-                  >
-                    Burkina Faso
-                  </option>
-                  <option
-                    value="BI"
-                  >
-                    Burundi
-                  </option>
-                  <option
-                    value="KH"
-                  >
-                    Cambodia
-                  </option>
-                  <option
-                    value="CM"
-                  >
-                    Cameroon
-                  </option>
-                  <option
-                    value="CA"
-                  >
-                    Canada
-                  </option>
-                  <option
-                    value="CV"
-                  >
-                    Cape Verde
-                  </option>
-                  <option
-                    value="KY"
-                  >
-                    Cayman Islands
-                  </option>
-                  <option
-                    value="CF"
-                  >
-                    Central African Republic
-                  </option>
-                  <option
-                    value="TD"
-                  >
-                    Chad
-                  </option>
-                  <option
-                    value="CL"
-                  >
-                    Chile
-                  </option>
-                  <option
-                    value="CN"
-                  >
-                    China
-                  </option>
-                  <option
-                    value="CX"
-                  >
-                    Christmas Island
-                  </option>
-                  <option
-                    value="CC"
-                  >
-                    Cocos (Keeling) Islands
-                  </option>
-                  <option
-                    value="CO"
-                  >
-                    Colombia
-                  </option>
-                  <option
-                    value="KM"
-                  >
-                    Comoros
-                  </option>
-                  <option
-                    value="CG"
-                  >
-                    Congo
-                  </option>
-                  <option
-                    value="CD"
-                  >
-                    Congo, the Democratic Republic of the
-                  </option>
-                  <option
-                    value="CK"
-                  >
-                    Cook Islands
-                  </option>
-                  <option
-                    value="CR"
-                  >
-                    Costa Rica
-                  </option>
-                  <option
-                    value="CI"
-                  >
-                    Cote D'Ivoire
-                  </option>
-                  <option
-                    value="HR"
-                  >
-                    Croatia
-                  </option>
-                  <option
-                    value="CU"
-                  >
-                    Cuba
-                  </option>
-                  <option
-                    value="CY"
-                  >
-                    Cyprus
-                  </option>
-                  <option
-                    value="CZ"
-                  >
-                    Czech Republic
-                  </option>
-                  <option
-                    value="DK"
-                  >
-                    Denmark
-                  </option>
-                  <option
-                    value="DJ"
-                  >
-                    Djibouti
-                  </option>
-                  <option
-                    value="DM"
-                  >
-                    Dominica
-                  </option>
-                  <option
-                    value="DO"
-                  >
-                    Dominican Republic
-                  </option>
-                  <option
-                    value="EC"
-                  >
-                    Ecuador
-                  </option>
-                  <option
-                    value="EG"
-                  >
-                    Egypt
-                  </option>
-                  <option
-                    value="SV"
-                  >
-                    El Salvador
-                  </option>
-                  <option
-                    value="GQ"
-                  >
-                    Equatorial Guinea
-                  </option>
-                  <option
-                    value="ER"
-                  >
-                    Eritrea
-                  </option>
-                  <option
-                    value="EE"
-                  >
-                    Estonia
-                  </option>
-                  <option
-                    value="ET"
-                  >
-                    Ethiopia
-                  </option>
-                  <option
-                    value="FK"
-                  >
-                    Falkland Islands (Malvinas)
-                  </option>
-                  <option
-                    value="FO"
-                  >
-                    Faroe Islands
-                  </option>
-                  <option
-                    value="FJ"
-                  >
-                    Fiji
-                  </option>
-                  <option
-                    value="FI"
-                  >
-                    Finland
-                  </option>
-                  <option
-                    value="FR"
-                  >
-                    France
-                  </option>
-                  <option
-                    value="GF"
-                  >
-                    French Guiana
-                  </option>
-                  <option
-                    value="PF"
-                  >
-                    French Polynesia
-                  </option>
-                  <option
-                    value="TF"
-                  >
-                    French Southern Territories
-                  </option>
-                  <option
-                    value="GA"
-                  >
-                    Gabon
-                  </option>
-                  <option
-                    value="GM"
-                  >
-                    Gambia
-                  </option>
-                  <option
-                    value="GE"
-                  >
-                    Georgia
-                  </option>
-                  <option
-                    value="DE"
-                  >
-                    Germany
-                  </option>
-                  <option
-                    value="GH"
-                  >
-                    Ghana
-                  </option>
-                  <option
-                    value="GI"
-                  >
-                    Gibraltar
-                  </option>
-                  <option
-                    value="GR"
-                  >
-                    Greece
-                  </option>
-                  <option
-                    value="GL"
-                  >
-                    Greenland
-                  </option>
-                  <option
-                    value="GD"
-                  >
-                    Grenada
-                  </option>
-                  <option
-                    value="GP"
-                  >
-                    Guadeloupe
-                  </option>
-                  <option
-                    value="GU"
-                  >
-                    Guam
-                  </option>
-                  <option
-                    value="GT"
-                  >
-                    Guatemala
-                  </option>
-                  <option
-                    value="GN"
-                  >
-                    Guinea
-                  </option>
-                  <option
-                    value="GW"
-                  >
-                    Guinea-Bissau
-                  </option>
-                  <option
-                    value="GY"
-                  >
-                    Guyana
-                  </option>
-                  <option
-                    value="HT"
-                  >
-                    Haiti
-                  </option>
-                  <option
-                    value="HM"
-                  >
-                    Heard Island and Mcdonald Islands
-                  </option>
-                  <option
-                    value="VA"
-                  >
-                    Holy See (Vatican City State)
-                  </option>
-                  <option
-                    value="HN"
-                  >
-                    Honduras
-                  </option>
-                  <option
-                    value="HK"
-                  >
-                    Hong Kong
-                  </option>
-                  <option
-                    value="HU"
-                  >
-                    Hungary
-                  </option>
-                  <option
-                    value="IS"
-                  >
-                    Iceland
-                  </option>
-                  <option
-                    value="IN"
-                  >
-                    India
-                  </option>
-                  <option
-                    value="ID"
-                  >
-                    Indonesia
-                  </option>
-                  <option
-                    value="IR"
-                  >
-                    Iran, Islamic Republic of
-                  </option>
-                  <option
-                    value="IQ"
-                  >
-                    Iraq
-                  </option>
-                  <option
-                    value="IE"
-                  >
-                    Ireland
-                  </option>
-                  <option
-                    value="IL"
-                  >
-                    Israel
-                  </option>
-                  <option
-                    value="IT"
-                  >
-                    Italy
-                  </option>
-                  <option
-                    value="JM"
-                  >
-                    Jamaica
-                  </option>
-                  <option
-                    value="JP"
-                  >
-                    Japan
-                  </option>
-                  <option
-                    value="JO"
-                  >
-                    Jordan
-                  </option>
-                  <option
-                    value="KZ"
-                  >
-                    Kazakhstan
-                  </option>
-                  <option
-                    value="KE"
-                  >
-                    Kenya
-                  </option>
-                  <option
-                    value="KI"
-                  >
-                    Kiribati
-                  </option>
-                  <option
-                    value="KP"
-                  >
-                    North Korea
-                  </option>
-                  <option
-                    value="KR"
-                  >
-                    South Korea
-                  </option>
-                  <option
-                    value="KW"
-                  >
-                    Kuwait
-                  </option>
-                  <option
-                    value="KG"
-                  >
-                    Kyrgyzstan
-                  </option>
-                  <option
-                    value="LA"
-                  >
-                    Lao People's Democratic Republic
-                  </option>
-                  <option
-                    value="LV"
-                  >
-                    Latvia
-                  </option>
-                  <option
-                    value="LB"
-                  >
-                    Lebanon
-                  </option>
-                  <option
-                    value="LS"
-                  >
-                    Lesotho
-                  </option>
-                  <option
-                    value="LR"
-                  >
-                    Liberia
-                  </option>
-                  <option
-                    value="LY"
-                  >
-                    Libya
-                  </option>
-                  <option
-                    value="LI"
-                  >
-                    Liechtenstein
-                  </option>
-                  <option
-                    value="LT"
-                  >
-                    Lithuania
-                  </option>
-                  <option
-                    value="LU"
-                  >
-                    Luxembourg
-                  </option>
-                  <option
-                    value="MO"
-                  >
-                    Macao
-                  </option>
-                  <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
-                    value="MG"
-                  >
-                    Madagascar
-                  </option>
-                  <option
-                    value="MW"
-                  >
-                    Malawi
-                  </option>
-                  <option
-                    value="MY"
-                  >
-                    Malaysia
-                  </option>
-                  <option
-                    value="MV"
-                  >
-                    Maldives
-                  </option>
-                  <option
-                    value="ML"
-                  >
-                    Mali
-                  </option>
-                  <option
-                    value="MT"
-                  >
-                    Malta
-                  </option>
-                  <option
-                    value="MH"
-                  >
-                    Marshall Islands
-                  </option>
-                  <option
-                    value="MQ"
-                  >
-                    Martinique
-                  </option>
-                  <option
-                    value="MR"
-                  >
-                    Mauritania
-                  </option>
-                  <option
-                    value="MU"
-                  >
-                    Mauritius
-                  </option>
-                  <option
-                    value="YT"
-                  >
-                    Mayotte
-                  </option>
-                  <option
-                    value="MX"
-                  >
-                    Mexico
-                  </option>
-                  <option
-                    value="FM"
-                  >
-                    Micronesia, Federated States of
-                  </option>
-                  <option
-                    value="MD"
-                  >
-                    Moldova, Republic of
-                  </option>
-                  <option
-                    value="MC"
-                  >
-                    Monaco
-                  </option>
-                  <option
-                    value="MN"
-                  >
-                    Mongolia
-                  </option>
-                  <option
-                    value="MS"
-                  >
-                    Montserrat
-                  </option>
-                  <option
-                    value="MA"
-                  >
-                    Morocco
-                  </option>
-                  <option
-                    value="MZ"
-                  >
-                    Mozambique
-                  </option>
-                  <option
-                    value="MM"
-                  >
-                    Myanmar
-                  </option>
-                  <option
-                    value="NA"
-                  >
-                    Namibia
-                  </option>
-                  <option
-                    value="NR"
-                  >
-                    Nauru
-                  </option>
-                  <option
-                    value="NP"
-                  >
-                    Nepal
-                  </option>
-                  <option
-                    value="NL"
-                  >
-                    Netherlands
-                  </option>
-                  <option
-                    value="NC"
-                  >
-                    New Caledonia
-                  </option>
-                  <option
-                    value="NZ"
-                  >
-                    New Zealand
-                  </option>
-                  <option
-                    value="NI"
-                  >
-                    Nicaragua
-                  </option>
-                  <option
-                    value="NE"
-                  >
-                    Niger
-                  </option>
-                  <option
-                    value="NG"
-                  >
-                    Nigeria
-                  </option>
-                  <option
-                    value="NU"
-                  >
-                    Niue
-                  </option>
-                  <option
-                    value="NF"
-                  >
-                    Norfolk Island
-                  </option>
-                  <option
-                    value="MP"
-                  >
-                    Northern Mariana Islands
-                  </option>
-                  <option
-                    value="NO"
-                  >
-                    Norway
-                  </option>
-                  <option
-                    value="OM"
-                  >
-                    Oman
-                  </option>
-                  <option
-                    value="PK"
-                  >
-                    Pakistan
-                  </option>
-                  <option
-                    value="PW"
-                  >
-                    Palau
-                  </option>
-                  <option
-                    value="PS"
-                  >
-                    Palestinian Territory, Occupied
-                  </option>
-                  <option
-                    value="PA"
-                  >
-                    Panama
-                  </option>
-                  <option
-                    value="PG"
-                  >
-                    Papua New Guinea
-                  </option>
-                  <option
-                    value="PY"
-                  >
-                    Paraguay
-                  </option>
-                  <option
-                    value="PE"
-                  >
-                    Peru
-                  </option>
-                  <option
-                    value="PH"
-                  >
-                    Philippines
-                  </option>
-                  <option
-                    value="PN"
-                  >
-                    Pitcairn
-                  </option>
-                  <option
-                    value="PL"
-                  >
-                    Poland
-                  </option>
-                  <option
-                    value="PT"
-                  >
-                    Portugal
-                  </option>
-                  <option
-                    value="PR"
-                  >
-                    Puerto Rico
-                  </option>
-                  <option
-                    value="QA"
-                  >
-                    Qatar
-                  </option>
-                  <option
-                    value="RE"
-                  >
-                    Reunion
-                  </option>
-                  <option
-                    value="RO"
-                  >
-                    Romania
-                  </option>
-                  <option
-                    value="RU"
-                  >
-                    Russian Federation
-                  </option>
-                  <option
-                    value="RW"
-                  >
-                    Rwanda
-                  </option>
-                  <option
-                    value="SH"
-                  >
-                    Saint Helena
-                  </option>
-                  <option
-                    value="KN"
-                  >
-                    Saint Kitts and Nevis
-                  </option>
-                  <option
-                    value="LC"
-                  >
-                    Saint Lucia
-                  </option>
-                  <option
-                    value="PM"
-                  >
-                    Saint Pierre and Miquelon
-                  </option>
-                  <option
-                    value="VC"
-                  >
-                    Saint Vincent and the Grenadines
-                  </option>
-                  <option
-                    value="WS"
-                  >
-                    Samoa
-                  </option>
-                  <option
-                    value="SM"
-                  >
-                    San Marino
-                  </option>
-                  <option
-                    value="ST"
-                  >
-                    Sao Tome and Principe
-                  </option>
-                  <option
-                    value="SA"
-                  >
-                    Saudi Arabia
-                  </option>
-                  <option
-                    value="SN"
-                  >
-                    Senegal
-                  </option>
-                  <option
-                    value="SC"
-                  >
-                    Seychelles
-                  </option>
-                  <option
-                    value="SL"
-                  >
-                    Sierra Leone
-                  </option>
-                  <option
-                    value="SG"
-                  >
-                    Singapore
-                  </option>
-                  <option
-                    value="SK"
-                  >
-                    Slovakia
-                  </option>
-                  <option
-                    value="SI"
-                  >
-                    Slovenia
-                  </option>
-                  <option
-                    value="SB"
-                  >
-                    Solomon Islands
-                  </option>
-                  <option
-                    value="SO"
-                  >
-                    Somalia
-                  </option>
-                  <option
-                    value="ZA"
-                  >
-                    South Africa
-                  </option>
-                  <option
-                    value="GS"
-                  >
-                    South Georgia and the South Sandwich Islands
-                  </option>
-                  <option
-                    value="ES"
-                  >
-                    Spain
-                  </option>
-                  <option
-                    value="LK"
-                  >
-                    Sri Lanka
-                  </option>
-                  <option
-                    value="SD"
-                  >
-                    Sudan
-                  </option>
-                  <option
-                    value="SR"
-                  >
-                    Suriname
-                  </option>
-                  <option
-                    value="SJ"
-                  >
-                    Svalbard and Jan Mayen
-                  </option>
-                  <option
-                    value="SZ"
-                  >
-                    Swaziland
-                  </option>
-                  <option
-                    value="SE"
-                  >
-                    Sweden
-                  </option>
-                  <option
-                    value="CH"
-                  >
-                    Switzerland
-                  </option>
-                  <option
-                    value="SY"
-                  >
-                    Syrian Arab Republic
-                  </option>
-                  <option
-                    value="TW"
-                  >
-                    Taiwan
-                  </option>
-                  <option
-                    value="TJ"
-                  >
-                    Tajikistan
-                  </option>
-                  <option
-                    value="TZ"
-                  >
-                    Tanzania, United Republic of
-                  </option>
-                  <option
-                    value="TH"
-                  >
-                    Thailand
-                  </option>
-                  <option
-                    value="TL"
-                  >
-                    Timor-Leste
-                  </option>
-                  <option
-                    value="TG"
-                  >
-                    Togo
-                  </option>
-                  <option
-                    value="TK"
-                  >
-                    Tokelau
-                  </option>
-                  <option
-                    value="TO"
-                  >
-                    Tonga
-                  </option>
-                  <option
-                    value="TT"
-                  >
-                    Trinidad and Tobago
-                  </option>
-                  <option
-                    value="TN"
-                  >
-                    Tunisia
-                  </option>
-                  <option
-                    value="TR"
-                  >
-                    Turkey
-                  </option>
-                  <option
-                    value="TM"
-                  >
-                    Turkmenistan
-                  </option>
-                  <option
-                    value="TC"
-                  >
-                    Turks and Caicos Islands
-                  </option>
-                  <option
-                    value="TV"
-                  >
-                    Tuvalu
-                  </option>
-                  <option
-                    value="UG"
-                  >
-                    Uganda
-                  </option>
-                  <option
-                    value="UA"
-                  >
-                    Ukraine
-                  </option>
-                  <option
-                    value="AE"
-                  >
-                    United Arab Emirates
-                  </option>
-                  <option
-                    value="GB"
-                  >
-                    United Kingdom
-                  </option>
-                  <option
-                    value="US"
-                  >
-                    United States of America
-                  </option>
-                  <option
-                    value="UM"
-                  >
-                    United States Minor Outlying Islands
-                  </option>
-                  <option
-                    value="UY"
-                  >
-                    Uruguay
-                  </option>
-                  <option
-                    value="UZ"
-                  >
-                    Uzbekistan
-                  </option>
-                  <option
-                    value="VU"
-                  >
-                    Vanuatu
-                  </option>
-                  <option
-                    value="VE"
-                  >
-                    Venezuela
-                  </option>
-                  <option
-                    value="VN"
-                  >
-                    Viet Nam
-                  </option>
-                  <option
-                    value="VG"
-                  >
-                    Virgin Islands, British
-                  </option>
-                  <option
-                    value="VI"
-                  >
-                    Virgin Islands, U.S.
-                  </option>
-                  <option
-                    value="WF"
-                  >
-                    Wallis and Futuna
-                  </option>
-                  <option
-                    value="EH"
-                  >
-                    Western Sahara
-                  </option>
-                  <option
-                    value="YE"
-                  >
-                    Yemen
-                  </option>
-                  <option
-                    value="ZM"
-                  >
-                    Zambia
-                  </option>
-                  <option
-                    value="ZW"
-                  >
-                    Zimbabwe
-                  </option>
-                  <option
-                    value="AX"
-                  >
-                    Åland Islands
-                  </option>
-                  <option
-                    value="BQ"
-                  >
-                    Bonaire, Sint Eustatius and Saba
-                  </option>
-                  <option
-                    value="CW"
-                  >
-                    Curaçao
-                  </option>
-                  <option
-                    value="GG"
-                  >
-                    Guernsey
-                  </option>
-                  <option
-                    value="IM"
-                  >
-                    Isle of Man
-                  </option>
-                  <option
-                    value="JE"
-                  >
-                    Jersey
-                  </option>
-                  <option
-                    value="ME"
-                  >
-                    Montenegro
-                  </option>
-                  <option
-                    value="BL"
-                  >
-                    Saint Barthélemy
-                  </option>
-                  <option
-                    value="MF"
-                  >
-                    Saint Martin (French part)
-                  </option>
-                  <option
-                    value="RS"
-                  >
-                    Serbia
-                  </option>
-                  <option
-                    value="SX"
-                  >
-                    Sint Maarten (Dutch part)
-                  </option>
-                  <option
-                    value="SS"
-                  >
-                    South Sudan
-                  </option>
-                  <option
-                    value="XK"
-                  >
-                    Kosovo
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div
-              className="row"
-            >
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
-              </div>
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="postalCode"
-                >
-                  <span>
-                    Zip/Postal Code
-                  </span>
-                </label>
-                <input
-                  autoComplete="postal-code"
-                  className="form-control"
-                  disabled={false}
-                  id="postalCode"
-                  maxLength="9"
-                  name="postalCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
-              </div>
-            </div>
-          </div>
-          <div
-            className="basket-section"
-          >
-            <h5
-              aria-level="2"
-            >
-              <span>
-                Billing Information
-              </span>
-            </h5>
-            <div
-              className="row"
-            >
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
-                  </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                  </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
-                  />
-                </svg>
-              </div>
-            </div>
-            <div
-              className="row"
-            >
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="cardExpirationMonth"
-                >
-                  <span>
-                    Expiration Month (required)
-                  </span>
-                </label>
-                <select
-                  autoComplete="cc-exp-month"
-                  className="form-control"
-                  disabled={false}
-                  id="cardExpirationMonth"
-                  name="cardExpirationMonth"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  value=""
-                >
-                  <option
-                    value=""
-                  >
-                    Month
-                  </option>
-                  <option
-                    value={1}
-                  >
-                    1
-                  </option>
-                  <option
-                    value={2}
-                  >
-                    2
-                  </option>
-                  <option
-                    value={3}
-                  >
-                    3
-                  </option>
-                  <option
-                    value={4}
-                  >
-                    4
-                  </option>
-                  <option
-                    value={5}
-                  >
-                    5
-                  </option>
-                  <option
-                    value={6}
-                  >
-                    6
-                  </option>
-                  <option
-                    value={7}
-                  >
-                    7
-                  </option>
-                  <option
-                    value={8}
-                  >
-                    8
-                  </option>
-                  <option
-                    value={9}
-                  >
-                    9
-                  </option>
-                  <option
-                    value={10}
-                  >
-                    10
-                  </option>
-                  <option
-                    value={11}
-                  >
-                    11
-                  </option>
-                  <option
-                    value={12}
-                  >
-                    12
-                  </option>
-                </select>
-              </div>
-              <div
-                className="col-lg-6 form-group"
-              >
-                <label
-                  htmlFor="cardExpirationYear"
-                >
-                  <span>
-                    Expiration Year (required)
-                  </span>
-                </label>
-                <select
-                  autoComplete="cc-exp-year"
-                  className="form-control"
-                  disabled={false}
-                  id="cardExpirationYear"
-                  name="cardExpirationYear"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  value=""
-                >
-                  <option
-                    value=""
-                  >
-                    Year
-                  </option>
-                  <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
-                    value={2020}
-                  >
-                    2020
-                  </option>
-                  <option
-                    value={2021}
-                  >
-                    2021
-                  </option>
-                  <option
-                    value={2022}
-                  >
-                    2022
-                  </option>
-                  <option
-                    value={2023}
-                  >
-                    2023
-                  </option>
-                  <option
-                    value={2024}
-                  >
-                    2024
-                  </option>
-                  <option
-                    value={2025}
-                  >
-                    2025
-                  </option>
-                  <option
-                    value={2026}
-                  >
-                    2026
-                  </option>
-                  <option
-                    value={2027}
-                  >
-                    2027
-                  </option>
-                  <option
-                    value={2028}
-                  >
-                    2028
-                  </option>
-                  <option
-                    value={2029}
-                  >
-                    2029
-                  </option>
-                  <option
-                    value={2030}
-                  >
-                    2030
-                  </option>
-                  <option
-                    value={2031}
-                  >
-                    2031
-                  </option>
-                  <option
-                    value={2032}
-                  >
-                    2032
-                  </option>
-                  <option
-                    value={2033}
-                  >
-                    2033
-                  </option>
-                  <option
-                    value={2034}
-                  >
-                    2034
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div
-            className="row justify-content-end"
-          >
-            <div
-              className="col-lg-6 form-group"
-            >
-              <button
-                aria-disabled={false}
-                aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
-                id="placeOrderButton"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
-              >
-                <span
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span>
-                    Place Order
-                  </span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </form>
-      </section>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`<PaymentPage /> Renders correctly in various states should render its loading state 1`] = `
+exports[`<PaymentPage /> Renders correctly in various states should render its default (loading) state 1`] = `
 <div
   className="page__payment container-fluid py-5"
 >
@@ -6509,7 +4388,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+                    src="https://edx.org/awuuvo.gif"
                   />
                 </div>
               </div>
@@ -6520,7 +4399,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Happiness
+                  Introduction to Lions
                 </h6>
                 <p
                   className="m-0"
@@ -6558,77 +4437,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </span>
               <span>
                 <span>
-                  $161.00
+                  $464.88
                 </span>
               </span>
             </div>
-            <div
-              className="summary-row"
-            >
-              <p
-                className="d-flex m-0"
-              >
-                <span
-                  className="flex-grow-1"
-                >
-                  <span>
-                    Discounts applied
-                  </span>
-                </span>
-                <span>
-                  <span>
-                    -$12.00
-                  </span>
-                </span>
-              </p>
-              <p
-                className="m-0 text-muted"
-              >
-                <span>
-                  <span>
-                    50%
-                  </span>
-                   discount provided by Pied Piper.
-                </span>
-              </p>
-            </div>
-            <form
-              className="summary-row d-flex align-items-end"
-              onSubmit={[Function]}
-            >
-              <div
-                className="form-group mb-0 mr-2"
-              >
-                <label
-                  className="h6 d-block"
-                  htmlFor="couponField"
-                >
-                  <span>
-                    Add coupon code (optional)
-                  </span>
-                </label>
-                <input
-                  aria-describedby=""
-                  className="form-control"
-                  defaultValue=""
-                  id="couponField"
-                  name="couponField"
-                  type="text"
-                />
-              </div>
-              <button
-                className="btn btn-primary"
-                disabled={false}
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
-              >
-                <span>
-                  Apply
-                </span>
-              </button>
-            </form>
             <div
               className="summary-row font-weight-bold d-flex"
             >
@@ -6643,7 +4455,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 className="text-right"
               >
                 <span>
-                  $149.00
+                  $464.88
                 </span>
               </span>
             </div>
@@ -6657,7 +4469,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               Order Details
             </h5>
             <p>
-              After you complete your order you will be automatically enrolled in the verified track of the course.
+              After you complete your order you will be able to select course dates from your dashboard.
             </p>
           </div>
         </div>
@@ -8627,7 +6439,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://stage-edxapp.edx-cdn.org/asset-v1:ACCA+Test101+2017+type@asset+block@images_course_image.jpg"
+                    src="https://edx.org/piwopihe.png"
                   />
                 </div>
               </div>
@@ -8638,7 +6450,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   aria-level="3"
                   className="m-0"
                 >
-                  Accessibility
+                  Introduction to Turkeyss
                 </h6>
                 <p
                   className="m-0"
@@ -8764,10 +6576,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <tr>
                     <td>
                       <span>
-                        <span>
-                          MX$1,909
-                        </span>
-                         *
+                        $66.22
                       </span>
                     </td>
                     <td>
@@ -8777,10 +6586,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       className="text-right"
                     >
                       <span>
-                        <span>
-                          MX$1,909
-                        </span>
-                         *
+                        $66.22
                       </span>
                     </td>
                   </tr>
@@ -8801,22 +6607,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 className="text-right"
               >
                 <span>
-                  <span>
-                    MX$1,909
-                  </span>
-                   *
+                  $66.22
                 </span>
-              </span>
-            </div>
-            <div
-              className="text-muted font-italic"
-            >
-              <span>
-                * This total contains an approximate conversion. You will be charged 
-                <span>
-                  $100.00
-                </span>
-                 USD.
               </span>
             </div>
           </div>
@@ -8852,7 +6644,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </li>
             </ul>
             <p>
-              You will receive an email at staff@example.com with your enrollment code(s).
+              You will receive an email at person@edx.org with your enrollment code(s).
             </p>
           </div>
         </div>
@@ -10795,7 +8587,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
 </div>
 `;
 
-exports[`<PaymentPage /> Renders correctly in various states should successfully render a basket with no order totals 1`] = `
+exports[`<PaymentPage /> Renders correctly in various states should render the basket in a different currency 1`] = `
 <div
   className="page__payment container-fluid py-5"
 >
@@ -10852,7 +8644,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
+                    src="https://edx.org/pewalme.jpg"
                   />
                 </div>
               </div>
@@ -10863,7 +8655,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Happiness
+                  Introduction to Asian Elephants
                 </h6>
                 <p
                   className="m-0"
@@ -10899,7 +8691,14 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
                   Price
                 </span>
               </span>
-              <span />
+              <span>
+                <span>
+                  <span>
+                    MX$8,500
+                  </span>
+                   *
+                </span>
+              </span>
             </div>
             <div
               className="summary-row font-weight-bold d-flex"
@@ -10913,7 +8712,25 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               </span>
               <span
                 className="text-right"
-              />
+              >
+                <span>
+                  <span>
+                    MX$8,500
+                  </span>
+                   *
+                </span>
+              </span>
+            </div>
+            <div
+              className="text-muted font-italic"
+            >
+              <span>
+                * This total contains an approximate conversion. You will be charged 
+                <span>
+                  $445.19
+                </span>
+                 USD.
+              </span>
             </div>
           </div>
           <div
@@ -10925,7 +8742,7 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
               Order Details
             </h5>
             <p>
-              After you complete your order you will be automatically enrolled in the verified track of the course.
+              After you complete your order you will be able to select course dates from your dashboard.
             </p>
           </div>
         </div>
@@ -12838,249 +10655,2083 @@ exports[`<PaymentPage /> Renders correctly in various states should successfully
 </div>
 `;
 
-exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
+exports[`<PaymentPage /> Renders correctly in various states should render the basket with an enterprise offer 1`] = `
 <div
-  className="row align-items-center mb-3"
+  className="page__payment container-fluid py-5"
 >
   <div
-    className="col-5"
+    className="row"
   >
-    <div
-      className="embed-responsive embed-responsive-16by9"
-    >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
+    <h1
+      className="sr-only"
     >
       <span>
-        Verified Certificate
+        Payment
       </span>
-    </p>
-  </div>
-</div>
-`;
-
-exports[`<ProductLineItem /> Rendering should render the product details for audit certificate 1`] = `
-<div
-  className="row align-items-center mb-3"
->
-  <div
-    className="col-5"
-  >
+    </h1>
     <div
-      className="embed-responsive embed-responsive-16by9"
+      className="col-md-5 pr-md-5 col-basket-summary"
     >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
+      <section
+        aria-label="Shopping Cart Details"
+        aria-live="polite"
+        aria-relevant="all"
+      >
+        <div>
+          <span
+            className="sr-only"
+          >
+            <span>
+              Shopping cart details are loaded.
+            </span>
+          </span>
+          <div
+            className="basket-section"
+          >
+            <h5
+              aria-level="2"
+            >
+              <span>
+                In Your Cart
+              </span>
+            </h5>
+            <p>
+              <span>
+                Your purchase contains the following:
+              </span>
+            </p>
+            <div
+              className="row align-items-center mb-3"
+            >
+              <div
+                className="col-5"
+              >
+                <div
+                  className="embed-responsive embed-responsive-16by9"
+                >
+                  <img
+                    alt=""
+                    className="img-thumbnail product-thumbnail"
+                    src="https://edx.org/pubhe.jpg"
+                  />
+                </div>
+              </div>
+              <div
+                className="col-7"
+              >
+                <h6
+                  aria-level="3"
+                  className="m-0"
+                >
+                  Introduction to African Wild Dogs
+                </h6>
+                <p
+                  className="m-0"
+                >
+                  <span>
+                    Verified Certificate
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            aria-labelledby="summary-heading"
+            aria-live="polite"
+            className="basket-section"
+            role="region"
+          >
+            <h5
+              aria-level="2"
+              id="summary-heading"
+            >
+              <span>
+                Summary
+              </span>
+            </h5>
+            <div
+              className="summary-row d-flex"
+            >
+              <span
+                className="flex-grow-1"
+              >
+                <span>
+                  Price
+                </span>
+              </span>
+              <span>
+                <span>
+                  $158.87
+                </span>
+              </span>
+            </div>
+            <div
+              className="summary-row"
+            >
+              <p
+                className="d-flex m-0"
+              >
+                <span
+                  className="flex-grow-1"
+                >
+                  <span>
+                    Discounts applied
+                  </span>
+                </span>
+                <span>
+                  <span>
+                    $0.00
+                  </span>
+                </span>
+              </p>
+              <p
+                className="m-0 text-muted"
+              >
+                <span>
+                  <span>
+                    50%
+                  </span>
+                   discount provided by Pied Piper.
+                </span>
+              </p>
+            </div>
+            <div
+              className="summary-row font-weight-bold d-flex"
+            >
+              <span
+                className="flex-grow-1"
+              >
+                <span>
+                  TOTAL
+                </span>
+              </span>
+              <span
+                className="text-right"
+              >
+                <span>
+                  $158.87
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            className="basket-section"
+          >
+            <h5
+              aria-level="2"
+            >
+              Order Details
+            </h5>
+            <p>
+              After you complete your order you will be able to select course dates from your dashboard.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
-    />
-  </div>
-</div>
-`;
-
-exports[`<ProductLineItem /> Rendering should render the product details for honor certificate 1`] = `
-<div
-  className="row align-items-center mb-3"
->
-  <div
-    className="col-5"
-  >
     <div
-      className="embed-responsive embed-responsive-16by9"
+      className="col-md-7 pl-md-5"
     >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
+      <section
+        aria-label="Payment Details"
+      >
+        <div
+          className="basket-section"
+        >
+          <h5
+            aria-level="2"
+          >
+            <span>
+              Select Payment Method
+            </span>
+          </h5>
+          <p
+            className="d-flex flex-wrap"
+          >
+            <button
+              className="payment-method-button active"
+            >
+              <img
+                alt="Credit Card"
+                src="test-file-stub"
+              />
+            </button>
+            <button
+              className="payment-method-button"
+              disabled={false}
+              onClick={[Function]}
+            >
+              <img
+                alt="PayPal"
+                src="test-file-stub"
+              />
+            </button>
+          </p>
+        </div>
+        <form
+          noValidate={true}
+          onSubmit={[Function]}
+        >
+          <div
+            className="basket-section"
+          >
+            <h5
+              aria-level="2"
+            >
+              <span>
+                Card Holder Information
+              </span>
+            </h5>
+            <div
+              className="row"
+            >
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="firstName"
+                >
+                  <span>
+                    First Name (required)
+                  </span>
+                </label>
+                <input
+                  autoComplete="given-name"
+                  className="form-control"
+                  disabled={false}
+                  id="firstName"
+                  name="firstName"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="lastName"
+                >
+                  <span>
+                    Last Name (required)
+                  </span>
+                </label>
+                <input
+                  autoComplete="family-name"
+                  className="form-control"
+                  disabled={false}
+                  id="lastName"
+                  name="lastName"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              className="row"
+            >
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="address"
+                >
+                  <span>
+                    Address (required)
+                  </span>
+                </label>
+                <input
+                  autoComplete="street-address"
+                  className="form-control"
+                  disabled={false}
+                  id="address"
+                  maxLength="60"
+                  name="address"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="unit"
+                >
+                  <span>
+                    Suite/Apartment Number
+                  </span>
+                </label>
+                <input
+                  autoComplete="address-line2"
+                  className="form-control"
+                  disabled={false}
+                  id="unit"
+                  maxLength="29"
+                  name="unit"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              className="row"
+            >
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="city"
+                >
+                  <span>
+                    City (required)
+                  </span>
+                </label>
+                <input
+                  autoComplete="address-level2"
+                  className="form-control"
+                  disabled={false}
+                  id="city"
+                  maxLength="32"
+                  name="city"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="country"
+                >
+                  <span>
+                    Country (required)
+                  </span>
+                </label>
+                <select
+                  autoComplete="country"
+                  className="form-control"
+                  disabled={false}
+                  id="country"
+                  name="country"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  value=""
+                >
+                  <option
+                    value=""
+                  >
+                    Choose country
+                  </option>
+                  <option
+                    value="AF"
+                  >
+                    Afghanistan
+                  </option>
+                  <option
+                    value="AL"
+                  >
+                    Albania
+                  </option>
+                  <option
+                    value="DZ"
+                  >
+                    Algeria
+                  </option>
+                  <option
+                    value="AS"
+                  >
+                    American Samoa
+                  </option>
+                  <option
+                    value="AD"
+                  >
+                    Andorra
+                  </option>
+                  <option
+                    value="AO"
+                  >
+                    Angola
+                  </option>
+                  <option
+                    value="AI"
+                  >
+                    Anguilla
+                  </option>
+                  <option
+                    value="AQ"
+                  >
+                    Antarctica
+                  </option>
+                  <option
+                    value="AG"
+                  >
+                    Antigua and Barbuda
+                  </option>
+                  <option
+                    value="AR"
+                  >
+                    Argentina
+                  </option>
+                  <option
+                    value="AM"
+                  >
+                    Armenia
+                  </option>
+                  <option
+                    value="AW"
+                  >
+                    Aruba
+                  </option>
+                  <option
+                    value="AU"
+                  >
+                    Australia
+                  </option>
+                  <option
+                    value="AT"
+                  >
+                    Austria
+                  </option>
+                  <option
+                    value="AZ"
+                  >
+                    Azerbaijan
+                  </option>
+                  <option
+                    value="BS"
+                  >
+                    Bahamas
+                  </option>
+                  <option
+                    value="BH"
+                  >
+                    Bahrain
+                  </option>
+                  <option
+                    value="BD"
+                  >
+                    Bangladesh
+                  </option>
+                  <option
+                    value="BB"
+                  >
+                    Barbados
+                  </option>
+                  <option
+                    value="BY"
+                  >
+                    Belarus
+                  </option>
+                  <option
+                    value="BE"
+                  >
+                    Belgium
+                  </option>
+                  <option
+                    value="BZ"
+                  >
+                    Belize
+                  </option>
+                  <option
+                    value="BJ"
+                  >
+                    Benin
+                  </option>
+                  <option
+                    value="BM"
+                  >
+                    Bermuda
+                  </option>
+                  <option
+                    value="BT"
+                  >
+                    Bhutan
+                  </option>
+                  <option
+                    value="BO"
+                  >
+                    Bolivia
+                  </option>
+                  <option
+                    value="BA"
+                  >
+                    Bosnia and Herzegovina
+                  </option>
+                  <option
+                    value="BW"
+                  >
+                    Botswana
+                  </option>
+                  <option
+                    value="BV"
+                  >
+                    Bouvet Island
+                  </option>
+                  <option
+                    value="BR"
+                  >
+                    Brazil
+                  </option>
+                  <option
+                    value="IO"
+                  >
+                    British Indian Ocean Territory
+                  </option>
+                  <option
+                    value="BN"
+                  >
+                    Brunei Darussalam
+                  </option>
+                  <option
+                    value="BG"
+                  >
+                    Bulgaria
+                  </option>
+                  <option
+                    value="BF"
+                  >
+                    Burkina Faso
+                  </option>
+                  <option
+                    value="BI"
+                  >
+                    Burundi
+                  </option>
+                  <option
+                    value="KH"
+                  >
+                    Cambodia
+                  </option>
+                  <option
+                    value="CM"
+                  >
+                    Cameroon
+                  </option>
+                  <option
+                    value="CA"
+                  >
+                    Canada
+                  </option>
+                  <option
+                    value="CV"
+                  >
+                    Cape Verde
+                  </option>
+                  <option
+                    value="KY"
+                  >
+                    Cayman Islands
+                  </option>
+                  <option
+                    value="CF"
+                  >
+                    Central African Republic
+                  </option>
+                  <option
+                    value="TD"
+                  >
+                    Chad
+                  </option>
+                  <option
+                    value="CL"
+                  >
+                    Chile
+                  </option>
+                  <option
+                    value="CN"
+                  >
+                    China
+                  </option>
+                  <option
+                    value="CX"
+                  >
+                    Christmas Island
+                  </option>
+                  <option
+                    value="CC"
+                  >
+                    Cocos (Keeling) Islands
+                  </option>
+                  <option
+                    value="CO"
+                  >
+                    Colombia
+                  </option>
+                  <option
+                    value="KM"
+                  >
+                    Comoros
+                  </option>
+                  <option
+                    value="CG"
+                  >
+                    Congo
+                  </option>
+                  <option
+                    value="CD"
+                  >
+                    Congo, the Democratic Republic of the
+                  </option>
+                  <option
+                    value="CK"
+                  >
+                    Cook Islands
+                  </option>
+                  <option
+                    value="CR"
+                  >
+                    Costa Rica
+                  </option>
+                  <option
+                    value="CI"
+                  >
+                    Cote D'Ivoire
+                  </option>
+                  <option
+                    value="HR"
+                  >
+                    Croatia
+                  </option>
+                  <option
+                    value="CU"
+                  >
+                    Cuba
+                  </option>
+                  <option
+                    value="CY"
+                  >
+                    Cyprus
+                  </option>
+                  <option
+                    value="CZ"
+                  >
+                    Czech Republic
+                  </option>
+                  <option
+                    value="DK"
+                  >
+                    Denmark
+                  </option>
+                  <option
+                    value="DJ"
+                  >
+                    Djibouti
+                  </option>
+                  <option
+                    value="DM"
+                  >
+                    Dominica
+                  </option>
+                  <option
+                    value="DO"
+                  >
+                    Dominican Republic
+                  </option>
+                  <option
+                    value="EC"
+                  >
+                    Ecuador
+                  </option>
+                  <option
+                    value="EG"
+                  >
+                    Egypt
+                  </option>
+                  <option
+                    value="SV"
+                  >
+                    El Salvador
+                  </option>
+                  <option
+                    value="GQ"
+                  >
+                    Equatorial Guinea
+                  </option>
+                  <option
+                    value="ER"
+                  >
+                    Eritrea
+                  </option>
+                  <option
+                    value="EE"
+                  >
+                    Estonia
+                  </option>
+                  <option
+                    value="ET"
+                  >
+                    Ethiopia
+                  </option>
+                  <option
+                    value="FK"
+                  >
+                    Falkland Islands (Malvinas)
+                  </option>
+                  <option
+                    value="FO"
+                  >
+                    Faroe Islands
+                  </option>
+                  <option
+                    value="FJ"
+                  >
+                    Fiji
+                  </option>
+                  <option
+                    value="FI"
+                  >
+                    Finland
+                  </option>
+                  <option
+                    value="FR"
+                  >
+                    France
+                  </option>
+                  <option
+                    value="GF"
+                  >
+                    French Guiana
+                  </option>
+                  <option
+                    value="PF"
+                  >
+                    French Polynesia
+                  </option>
+                  <option
+                    value="TF"
+                  >
+                    French Southern Territories
+                  </option>
+                  <option
+                    value="GA"
+                  >
+                    Gabon
+                  </option>
+                  <option
+                    value="GM"
+                  >
+                    Gambia
+                  </option>
+                  <option
+                    value="GE"
+                  >
+                    Georgia
+                  </option>
+                  <option
+                    value="DE"
+                  >
+                    Germany
+                  </option>
+                  <option
+                    value="GH"
+                  >
+                    Ghana
+                  </option>
+                  <option
+                    value="GI"
+                  >
+                    Gibraltar
+                  </option>
+                  <option
+                    value="GR"
+                  >
+                    Greece
+                  </option>
+                  <option
+                    value="GL"
+                  >
+                    Greenland
+                  </option>
+                  <option
+                    value="GD"
+                  >
+                    Grenada
+                  </option>
+                  <option
+                    value="GP"
+                  >
+                    Guadeloupe
+                  </option>
+                  <option
+                    value="GU"
+                  >
+                    Guam
+                  </option>
+                  <option
+                    value="GT"
+                  >
+                    Guatemala
+                  </option>
+                  <option
+                    value="GN"
+                  >
+                    Guinea
+                  </option>
+                  <option
+                    value="GW"
+                  >
+                    Guinea-Bissau
+                  </option>
+                  <option
+                    value="GY"
+                  >
+                    Guyana
+                  </option>
+                  <option
+                    value="HT"
+                  >
+                    Haiti
+                  </option>
+                  <option
+                    value="HM"
+                  >
+                    Heard Island and Mcdonald Islands
+                  </option>
+                  <option
+                    value="VA"
+                  >
+                    Holy See (Vatican City State)
+                  </option>
+                  <option
+                    value="HN"
+                  >
+                    Honduras
+                  </option>
+                  <option
+                    value="HK"
+                  >
+                    Hong Kong
+                  </option>
+                  <option
+                    value="HU"
+                  >
+                    Hungary
+                  </option>
+                  <option
+                    value="IS"
+                  >
+                    Iceland
+                  </option>
+                  <option
+                    value="IN"
+                  >
+                    India
+                  </option>
+                  <option
+                    value="ID"
+                  >
+                    Indonesia
+                  </option>
+                  <option
+                    value="IR"
+                  >
+                    Iran, Islamic Republic of
+                  </option>
+                  <option
+                    value="IQ"
+                  >
+                    Iraq
+                  </option>
+                  <option
+                    value="IE"
+                  >
+                    Ireland
+                  </option>
+                  <option
+                    value="IL"
+                  >
+                    Israel
+                  </option>
+                  <option
+                    value="IT"
+                  >
+                    Italy
+                  </option>
+                  <option
+                    value="JM"
+                  >
+                    Jamaica
+                  </option>
+                  <option
+                    value="JP"
+                  >
+                    Japan
+                  </option>
+                  <option
+                    value="JO"
+                  >
+                    Jordan
+                  </option>
+                  <option
+                    value="KZ"
+                  >
+                    Kazakhstan
+                  </option>
+                  <option
+                    value="KE"
+                  >
+                    Kenya
+                  </option>
+                  <option
+                    value="KI"
+                  >
+                    Kiribati
+                  </option>
+                  <option
+                    value="KP"
+                  >
+                    North Korea
+                  </option>
+                  <option
+                    value="KR"
+                  >
+                    South Korea
+                  </option>
+                  <option
+                    value="KW"
+                  >
+                    Kuwait
+                  </option>
+                  <option
+                    value="KG"
+                  >
+                    Kyrgyzstan
+                  </option>
+                  <option
+                    value="LA"
+                  >
+                    Lao People's Democratic Republic
+                  </option>
+                  <option
+                    value="LV"
+                  >
+                    Latvia
+                  </option>
+                  <option
+                    value="LB"
+                  >
+                    Lebanon
+                  </option>
+                  <option
+                    value="LS"
+                  >
+                    Lesotho
+                  </option>
+                  <option
+                    value="LR"
+                  >
+                    Liberia
+                  </option>
+                  <option
+                    value="LY"
+                  >
+                    Libya
+                  </option>
+                  <option
+                    value="LI"
+                  >
+                    Liechtenstein
+                  </option>
+                  <option
+                    value="LT"
+                  >
+                    Lithuania
+                  </option>
+                  <option
+                    value="LU"
+                  >
+                    Luxembourg
+                  </option>
+                  <option
+                    value="MO"
+                  >
+                    Macao
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    Macedonia, the Former Yugoslav Republic of
+                  </option>
+                  <option
+                    value="MG"
+                  >
+                    Madagascar
+                  </option>
+                  <option
+                    value="MW"
+                  >
+                    Malawi
+                  </option>
+                  <option
+                    value="MY"
+                  >
+                    Malaysia
+                  </option>
+                  <option
+                    value="MV"
+                  >
+                    Maldives
+                  </option>
+                  <option
+                    value="ML"
+                  >
+                    Mali
+                  </option>
+                  <option
+                    value="MT"
+                  >
+                    Malta
+                  </option>
+                  <option
+                    value="MH"
+                  >
+                    Marshall Islands
+                  </option>
+                  <option
+                    value="MQ"
+                  >
+                    Martinique
+                  </option>
+                  <option
+                    value="MR"
+                  >
+                    Mauritania
+                  </option>
+                  <option
+                    value="MU"
+                  >
+                    Mauritius
+                  </option>
+                  <option
+                    value="YT"
+                  >
+                    Mayotte
+                  </option>
+                  <option
+                    value="MX"
+                  >
+                    Mexico
+                  </option>
+                  <option
+                    value="FM"
+                  >
+                    Micronesia, Federated States of
+                  </option>
+                  <option
+                    value="MD"
+                  >
+                    Moldova, Republic of
+                  </option>
+                  <option
+                    value="MC"
+                  >
+                    Monaco
+                  </option>
+                  <option
+                    value="MN"
+                  >
+                    Mongolia
+                  </option>
+                  <option
+                    value="MS"
+                  >
+                    Montserrat
+                  </option>
+                  <option
+                    value="MA"
+                  >
+                    Morocco
+                  </option>
+                  <option
+                    value="MZ"
+                  >
+                    Mozambique
+                  </option>
+                  <option
+                    value="MM"
+                  >
+                    Myanmar
+                  </option>
+                  <option
+                    value="NA"
+                  >
+                    Namibia
+                  </option>
+                  <option
+                    value="NR"
+                  >
+                    Nauru
+                  </option>
+                  <option
+                    value="NP"
+                  >
+                    Nepal
+                  </option>
+                  <option
+                    value="NL"
+                  >
+                    Netherlands
+                  </option>
+                  <option
+                    value="NC"
+                  >
+                    New Caledonia
+                  </option>
+                  <option
+                    value="NZ"
+                  >
+                    New Zealand
+                  </option>
+                  <option
+                    value="NI"
+                  >
+                    Nicaragua
+                  </option>
+                  <option
+                    value="NE"
+                  >
+                    Niger
+                  </option>
+                  <option
+                    value="NG"
+                  >
+                    Nigeria
+                  </option>
+                  <option
+                    value="NU"
+                  >
+                    Niue
+                  </option>
+                  <option
+                    value="NF"
+                  >
+                    Norfolk Island
+                  </option>
+                  <option
+                    value="MP"
+                  >
+                    Northern Mariana Islands
+                  </option>
+                  <option
+                    value="NO"
+                  >
+                    Norway
+                  </option>
+                  <option
+                    value="OM"
+                  >
+                    Oman
+                  </option>
+                  <option
+                    value="PK"
+                  >
+                    Pakistan
+                  </option>
+                  <option
+                    value="PW"
+                  >
+                    Palau
+                  </option>
+                  <option
+                    value="PS"
+                  >
+                    Palestinian Territory, Occupied
+                  </option>
+                  <option
+                    value="PA"
+                  >
+                    Panama
+                  </option>
+                  <option
+                    value="PG"
+                  >
+                    Papua New Guinea
+                  </option>
+                  <option
+                    value="PY"
+                  >
+                    Paraguay
+                  </option>
+                  <option
+                    value="PE"
+                  >
+                    Peru
+                  </option>
+                  <option
+                    value="PH"
+                  >
+                    Philippines
+                  </option>
+                  <option
+                    value="PN"
+                  >
+                    Pitcairn
+                  </option>
+                  <option
+                    value="PL"
+                  >
+                    Poland
+                  </option>
+                  <option
+                    value="PT"
+                  >
+                    Portugal
+                  </option>
+                  <option
+                    value="PR"
+                  >
+                    Puerto Rico
+                  </option>
+                  <option
+                    value="QA"
+                  >
+                    Qatar
+                  </option>
+                  <option
+                    value="RE"
+                  >
+                    Reunion
+                  </option>
+                  <option
+                    value="RO"
+                  >
+                    Romania
+                  </option>
+                  <option
+                    value="RU"
+                  >
+                    Russian Federation
+                  </option>
+                  <option
+                    value="RW"
+                  >
+                    Rwanda
+                  </option>
+                  <option
+                    value="SH"
+                  >
+                    Saint Helena
+                  </option>
+                  <option
+                    value="KN"
+                  >
+                    Saint Kitts and Nevis
+                  </option>
+                  <option
+                    value="LC"
+                  >
+                    Saint Lucia
+                  </option>
+                  <option
+                    value="PM"
+                  >
+                    Saint Pierre and Miquelon
+                  </option>
+                  <option
+                    value="VC"
+                  >
+                    Saint Vincent and the Grenadines
+                  </option>
+                  <option
+                    value="WS"
+                  >
+                    Samoa
+                  </option>
+                  <option
+                    value="SM"
+                  >
+                    San Marino
+                  </option>
+                  <option
+                    value="ST"
+                  >
+                    Sao Tome and Principe
+                  </option>
+                  <option
+                    value="SA"
+                  >
+                    Saudi Arabia
+                  </option>
+                  <option
+                    value="SN"
+                  >
+                    Senegal
+                  </option>
+                  <option
+                    value="SC"
+                  >
+                    Seychelles
+                  </option>
+                  <option
+                    value="SL"
+                  >
+                    Sierra Leone
+                  </option>
+                  <option
+                    value="SG"
+                  >
+                    Singapore
+                  </option>
+                  <option
+                    value="SK"
+                  >
+                    Slovakia
+                  </option>
+                  <option
+                    value="SI"
+                  >
+                    Slovenia
+                  </option>
+                  <option
+                    value="SB"
+                  >
+                    Solomon Islands
+                  </option>
+                  <option
+                    value="SO"
+                  >
+                    Somalia
+                  </option>
+                  <option
+                    value="ZA"
+                  >
+                    South Africa
+                  </option>
+                  <option
+                    value="GS"
+                  >
+                    South Georgia and the South Sandwich Islands
+                  </option>
+                  <option
+                    value="ES"
+                  >
+                    Spain
+                  </option>
+                  <option
+                    value="LK"
+                  >
+                    Sri Lanka
+                  </option>
+                  <option
+                    value="SD"
+                  >
+                    Sudan
+                  </option>
+                  <option
+                    value="SR"
+                  >
+                    Suriname
+                  </option>
+                  <option
+                    value="SJ"
+                  >
+                    Svalbard and Jan Mayen
+                  </option>
+                  <option
+                    value="SZ"
+                  >
+                    Swaziland
+                  </option>
+                  <option
+                    value="SE"
+                  >
+                    Sweden
+                  </option>
+                  <option
+                    value="CH"
+                  >
+                    Switzerland
+                  </option>
+                  <option
+                    value="SY"
+                  >
+                    Syrian Arab Republic
+                  </option>
+                  <option
+                    value="TW"
+                  >
+                    Taiwan
+                  </option>
+                  <option
+                    value="TJ"
+                  >
+                    Tajikistan
+                  </option>
+                  <option
+                    value="TZ"
+                  >
+                    Tanzania, United Republic of
+                  </option>
+                  <option
+                    value="TH"
+                  >
+                    Thailand
+                  </option>
+                  <option
+                    value="TL"
+                  >
+                    Timor-Leste
+                  </option>
+                  <option
+                    value="TG"
+                  >
+                    Togo
+                  </option>
+                  <option
+                    value="TK"
+                  >
+                    Tokelau
+                  </option>
+                  <option
+                    value="TO"
+                  >
+                    Tonga
+                  </option>
+                  <option
+                    value="TT"
+                  >
+                    Trinidad and Tobago
+                  </option>
+                  <option
+                    value="TN"
+                  >
+                    Tunisia
+                  </option>
+                  <option
+                    value="TR"
+                  >
+                    Turkey
+                  </option>
+                  <option
+                    value="TM"
+                  >
+                    Turkmenistan
+                  </option>
+                  <option
+                    value="TC"
+                  >
+                    Turks and Caicos Islands
+                  </option>
+                  <option
+                    value="TV"
+                  >
+                    Tuvalu
+                  </option>
+                  <option
+                    value="UG"
+                  >
+                    Uganda
+                  </option>
+                  <option
+                    value="UA"
+                  >
+                    Ukraine
+                  </option>
+                  <option
+                    value="AE"
+                  >
+                    United Arab Emirates
+                  </option>
+                  <option
+                    value="GB"
+                  >
+                    United Kingdom
+                  </option>
+                  <option
+                    value="US"
+                  >
+                    United States of America
+                  </option>
+                  <option
+                    value="UM"
+                  >
+                    United States Minor Outlying Islands
+                  </option>
+                  <option
+                    value="UY"
+                  >
+                    Uruguay
+                  </option>
+                  <option
+                    value="UZ"
+                  >
+                    Uzbekistan
+                  </option>
+                  <option
+                    value="VU"
+                  >
+                    Vanuatu
+                  </option>
+                  <option
+                    value="VE"
+                  >
+                    Venezuela
+                  </option>
+                  <option
+                    value="VN"
+                  >
+                    Viet Nam
+                  </option>
+                  <option
+                    value="VG"
+                  >
+                    Virgin Islands, British
+                  </option>
+                  <option
+                    value="VI"
+                  >
+                    Virgin Islands, U.S.
+                  </option>
+                  <option
+                    value="WF"
+                  >
+                    Wallis and Futuna
+                  </option>
+                  <option
+                    value="EH"
+                  >
+                    Western Sahara
+                  </option>
+                  <option
+                    value="YE"
+                  >
+                    Yemen
+                  </option>
+                  <option
+                    value="ZM"
+                  >
+                    Zambia
+                  </option>
+                  <option
+                    value="ZW"
+                  >
+                    Zimbabwe
+                  </option>
+                  <option
+                    value="AX"
+                  >
+                    Åland Islands
+                  </option>
+                  <option
+                    value="BQ"
+                  >
+                    Bonaire, Sint Eustatius and Saba
+                  </option>
+                  <option
+                    value="CW"
+                  >
+                    Curaçao
+                  </option>
+                  <option
+                    value="GG"
+                  >
+                    Guernsey
+                  </option>
+                  <option
+                    value="IM"
+                  >
+                    Isle of Man
+                  </option>
+                  <option
+                    value="JE"
+                  >
+                    Jersey
+                  </option>
+                  <option
+                    value="ME"
+                  >
+                    Montenegro
+                  </option>
+                  <option
+                    value="BL"
+                  >
+                    Saint Barthélemy
+                  </option>
+                  <option
+                    value="MF"
+                  >
+                    Saint Martin (French part)
+                  </option>
+                  <option
+                    value="RS"
+                  >
+                    Serbia
+                  </option>
+                  <option
+                    value="SX"
+                  >
+                    Sint Maarten (Dutch part)
+                  </option>
+                  <option
+                    value="SS"
+                  >
+                    South Sudan
+                  </option>
+                  <option
+                    value="XK"
+                  >
+                    Kosovo
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              className="row"
+            >
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="state"
+                >
+                  <span>
+                    State/Province
+                  </span>
+                </label>
+                <input
+                  className="form-control"
+                  disabled={false}
+                  id="state"
+                  name="state"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="postalCode"
+                >
+                  <span>
+                    Zip/Postal Code
+                  </span>
+                </label>
+                <input
+                  autoComplete="postal-code"
+                  className="form-control"
+                  disabled={false}
+                  id="postalCode"
+                  maxLength="9"
+                  name="postalCode"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="basket-section"
+          >
+            <h5
+              aria-level="2"
+            >
+              <span>
+                Billing Information
+              </span>
+            </h5>
+            <div
+              className="row"
+            >
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="cardNumber"
+                >
+                  <span>
+                    Card Number (required)
+                  </span>
+                </label>
+                <input
+                  autoComplete="cc-number"
+                  className="form-control"
+                  disabled={false}
+                  id="cardNumber"
+                  maxLength="20"
+                  name="cardNumber"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="tel"
+                  value=""
+                />
+                <svg
+                  aria-hidden="true"
+                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  data-icon="lock"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  style={Object {}}
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
+                    fill="currentColor"
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="securityCode"
+                >
+                  <span>
+                    Security Code (required)
+                  </span>
+                </label>
+                <span
+                  className="ml-1"
+                  data-for="securityCodeHelp"
+                  data-tip={true}
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    data-icon="question-circle"
+                    data-prefix="fas"
+                    focusable="false"
+                    role="img"
+                    style={Object {}}
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                      fill="currentColor"
+                      style={Object {}}
+                    />
+                  </svg>
+                </span>
+                <div
+                  className="__react_component_tooltip place-bottom type-dark "
+                  data-id="tooltip"
+                  id="securityCodeHelp"
+                >
+                  <span>
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                  </span>
+                </div>
+                <input
+                  autoComplete="cc-csc"
+                  className="form-control"
+                  disabled={false}
+                  id="securityCode"
+                  maxLength="4"
+                  name="securityCode"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  type="tel"
+                  value=""
+                />
+                <svg
+                  aria-hidden="true"
+                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  data-icon="lock"
+                  data-prefix="fas"
+                  focusable="false"
+                  role="img"
+                  style={Object {}}
+                  viewBox="0 0 448 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
+                    fill="currentColor"
+                    style={Object {}}
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              className="row"
+            >
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="cardExpirationMonth"
+                >
+                  <span>
+                    Expiration Month (required)
+                  </span>
+                </label>
+                <select
+                  autoComplete="cc-exp-month"
+                  className="form-control"
+                  disabled={false}
+                  id="cardExpirationMonth"
+                  name="cardExpirationMonth"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  value=""
+                >
+                  <option
+                    value=""
+                  >
+                    Month
+                  </option>
+                  <option
+                    value={1}
+                  >
+                    1
+                  </option>
+                  <option
+                    value={2}
+                  >
+                    2
+                  </option>
+                  <option
+                    value={3}
+                  >
+                    3
+                  </option>
+                  <option
+                    value={4}
+                  >
+                    4
+                  </option>
+                  <option
+                    value={5}
+                  >
+                    5
+                  </option>
+                  <option
+                    value={6}
+                  >
+                    6
+                  </option>
+                  <option
+                    value={7}
+                  >
+                    7
+                  </option>
+                  <option
+                    value={8}
+                  >
+                    8
+                  </option>
+                  <option
+                    value={9}
+                  >
+                    9
+                  </option>
+                  <option
+                    value={10}
+                  >
+                    10
+                  </option>
+                  <option
+                    value={11}
+                  >
+                    11
+                  </option>
+                  <option
+                    value={12}
+                  >
+                    12
+                  </option>
+                </select>
+              </div>
+              <div
+                className="col-lg-6 form-group"
+              >
+                <label
+                  htmlFor="cardExpirationYear"
+                >
+                  <span>
+                    Expiration Year (required)
+                  </span>
+                </label>
+                <select
+                  autoComplete="cc-exp-year"
+                  className="form-control"
+                  disabled={false}
+                  id="cardExpirationYear"
+                  name="cardExpirationYear"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  required={true}
+                  value=""
+                >
+                  <option
+                    value=""
+                  >
+                    Year
+                  </option>
+                  <option
+                    value={2019}
+                  >
+                    2019
+                  </option>
+                  <option
+                    value={2020}
+                  >
+                    2020
+                  </option>
+                  <option
+                    value={2021}
+                  >
+                    2021
+                  </option>
+                  <option
+                    value={2022}
+                  >
+                    2022
+                  </option>
+                  <option
+                    value={2023}
+                  >
+                    2023
+                  </option>
+                  <option
+                    value={2024}
+                  >
+                    2024
+                  </option>
+                  <option
+                    value={2025}
+                  >
+                    2025
+                  </option>
+                  <option
+                    value={2026}
+                  >
+                    2026
+                  </option>
+                  <option
+                    value={2027}
+                  >
+                    2027
+                  </option>
+                  <option
+                    value={2028}
+                  >
+                    2028
+                  </option>
+                  <option
+                    value={2029}
+                  >
+                    2029
+                  </option>
+                  <option
+                    value={2030}
+                  >
+                    2030
+                  </option>
+                  <option
+                    value={2031}
+                  >
+                    2031
+                  </option>
+                  <option
+                    value={2032}
+                  >
+                    2032
+                  </option>
+                  <option
+                    value={2033}
+                  >
+                    2033
+                  </option>
+                  <option
+                    value={2034}
+                  >
+                    2034
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            className="row justify-content-end"
+          >
+            <div
+              className="col-lg-6 form-group"
+            >
+              <button
+                aria-disabled={false}
+                aria-live="assertive"
+                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
+                id="placeOrderButton"
+                onBlur={[Function]}
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                type="submit"
+              >
+                <span
+                  className="d-flex align-items-center justify-content-center"
+                >
+                  <span>
+                    Place Order
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
     </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
-    />
-  </div>
-</div>
-`;
-
-exports[`<ProductLineItem /> Rendering should render the product details for no-id-professional certificate 1`] = `
-<div
-  className="row align-items-center mb-3"
->
-  <div
-    className="col-5"
-  >
-    <div
-      className="embed-responsive embed-responsive-16by9"
-    >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
-    >
-      <span>
-        Professional Certificate
-      </span>
-    </p>
-  </div>
-</div>
-`;
-
-exports[`<ProductLineItem /> Rendering should render the product details for professional certificate 1`] = `
-<div
-  className="row align-items-center mb-3"
->
-  <div
-    className="col-5"
-  >
-    <div
-      className="embed-responsive embed-responsive-16by9"
-    >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
-    >
-      <span>
-        Professional Certificate
-      </span>
-    </p>
-  </div>
-</div>
-`;
-
-exports[`<ProductLineItem /> Rendering should render the product details for unknown seat type 1`] = `
-<div
-  className="row align-items-center mb-3"
->
-  <div
-    className="col-5"
-  >
-    <div
-      className="embed-responsive embed-responsive-16by9"
-    >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
-    />
-  </div>
-</div>
-`;
-
-exports[`<ProductLineItem /> Rendering should render the product details for verified certificate 1`] = `
-<div
-  className="row align-items-center mb-3"
->
-  <div
-    className="col-5"
-  >
-    <div
-      className="embed-responsive embed-responsive-16by9"
-    >
-      <img
-        alt=""
-        className="img-thumbnail product-thumbnail"
-        src="https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg"
-      />
-    </div>
-  </div>
-  <div
-    className="col-7"
-  >
-    <h6
-      aria-level="3"
-      className="m-0"
-    >
-      Introduction to Happiness
-    </h6>
-    <p
-      className="m-0"
-    >
-      <span>
-        Verified Certificate
-      </span>
-    </p>
   </div>
 </div>
 `;

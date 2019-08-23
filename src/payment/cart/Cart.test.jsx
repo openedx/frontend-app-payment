@@ -1,152 +1,141 @@
 /* eslint-disable global-require */
 import React from 'react';
-import renderer from 'react-test-renderer';
+import renderer, { act } from 'react-test-renderer';
 import { Provider } from 'react-redux';
-import configureMockStore from 'redux-mock-store';
-import defaultsDeep from 'lodash.defaultsdeep';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { fetchUserAccountSuccess } from '@edx/frontend-auth';
+import { Factory } from 'rosie';
+import { createStore } from 'redux';
 
+import '../__factories__/basket.factory';
+import '../../__factories__/configuration.factory';
+import '../../__factories__/userAccount.factory';
 import { configuration } from '../../environment';
 import messages from '../../i18n';
 import Cart from './Cart';
+import createRootReducer from '../../data/reducers';
+import { fetchBasket, basketDataReceived } from '../data/actions';
+import { transformResults } from '../data/service';
 
-const mockStore = configureMockStore();
 configureI18n(configuration, messages);
 
-const loadedBasketState = {
-  userAccount: {
-    loading: false,
-    error: null,
-    username: 'staff',
-    email: 'staff@example.com',
-    bio: null,
-    name: null,
-    country: null,
-    socialLinks: null,
-    profileImage: {
-      imageUrlMedium: null,
-      imageUrlLarge: null,
-    },
-    levelOfEducation: null,
-  },
-  payment: {
-    basket: {
-      loaded: true,
-      loading: false,
-      isCouponProcessing: false,
-      isQuantityProcessing: false,
-      isFreeBasket: false,
-      showCouponForm: true,
-      paymentProviders: [
-        {
-          type: 'cybersource',
-        },
-        {
-          type: 'paypal',
-        },
-      ],
-      orderTotal: 149,
-      summaryDiscounts: 12,
-      summaryPrice: 161,
-      products: [
-        {
-          imageUrl: '',
-          title: 'Introduction to Happiness',
-          certificateType: 'verified',
-          productType: 'Seat',
-          sku: '8CF08E5',
-        },
-      ],
-      coupons: [],
-      offers: [],
-    },
-    currency: {},
-  },
-};
-
-const renderCartWithStore = state => renderer.create((
-  <IntlProvider locale="en">
-    <Provider store={mockStore(state)}>
-      <Cart />
-    </Provider>
-  </IntlProvider>
-));
-
 describe('<Cart />', () => {
-  it('renders a default cart', () => {
-    const tree = renderCartWithStore(loadedBasketState).toJSON();
-    expect(tree).toMatchSnapshot();
+  let store;
+  let initialState;
+  let tree;
+  let userAccount;
+
+  beforeEach(() => {
+    userAccount = Factory.build('userAccount');
+    initialState = {
+      configuration: Factory.build('configuration'),
+      authentication: {
+        userId: 9,
+        username: userAccount.username,
+      },
+    };
+
+    store = createStore(createRootReducer(), initialState);
+    store.dispatch(fetchUserAccountSuccess(userAccount));
+
+    const component = (
+      <IntlProvider locale="en">
+        <Provider store={store}>
+          <Cart />
+        </Provider>
+      </IntlProvider>
+    );
+    tree = renderer.create(component);
+  });
+
+  it('renders the loading skeleton', () => {
+    expect(tree.toJSON()).toMatchSnapshot();
+  });
+
+  it('renders a basic, one product cart', () => {
+    act(() => {
+      store.dispatch(basketDataReceived(transformResults(Factory.build(
+        'basket',
+        {},
+        { numProducts: 1 },
+      ))));
+      store.dispatch(fetchBasket.fulfill());
+    });
+    expect(tree.toJSON()).toMatchSnapshot();
+  });
+
+  it('renders a basic, one product cart with coupon form', () => {
+    act(() => {
+      store.dispatch(basketDataReceived(transformResults(Factory.build(
+        'basket',
+        { show_coupon_form: true },
+        { numProducts: 1 },
+      ))));
+      store.dispatch(fetchBasket.fulfill());
+    });
+    expect(tree.toJSON()).toMatchSnapshot();
   });
 
   it('renders a cart with an offer', () => {
-    const state = defaultsDeep({
-      payment: {
-        basket: {
-          offers: [
-            { benefitValue: 50, benefitType: 'Percentage', provider: 'Pied Piper' },
-          ],
+    act(() => {
+      store.dispatch(basketDataReceived(transformResults(Factory.build(
+        'basket',
+        {
+          offers: [{ benefitValue: 50, benefitType: 'Percentage', provider: 'Pied Piper' }],
         },
-      },
-    }, loadedBasketState);
-
-    const tree = renderCartWithStore(state).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('renders a cart without a coupon form', () => {
-    const state = defaultsDeep({
-      payment: {
-        basket: {
-          showCouponForm: false,
-        },
-      },
-    }, loadedBasketState);
-
-    const tree = renderCartWithStore(state).toJSON();
-    expect(tree).toMatchSnapshot();
+        { numProducts: 1 },
+      ))));
+      store.dispatch(fetchBasket.fulfill());
+    });
+    expect(tree.toJSON()).toMatchSnapshot();
   });
 
   it('renders a cart in non USD currency', () => {
-    const state = defaultsDeep({
-      payment: {
-        basket: {
-          currency: 'USD',
+    // This test uses its own setup since we don't have actions to update currency.
+    store = createStore(
+      createRootReducer(),
+      Object.assign({}, initialState, {
+        payment: {
+          currency: {
+            currencyCode: 'MXN',
+            conversionRate: 19.092733,
+          },
         },
-        currency: {
-          currencyCode: 'MXN',
-          conversionRate: 19.092733,
-        },
-      },
-    }, loadedBasketState);
+      }),
+    );
+    const component = (
+      <IntlProvider locale="en">
+        <Provider store={store}>
+          <Cart />
+        </Provider>
+      </IntlProvider>
+    );
+    tree = renderer.create(component);
 
-    const tree = renderCartWithStore(state).toJSON();
-    expect(tree).toMatchSnapshot();
+    act(() => {
+      store.dispatch(fetchUserAccountSuccess(userAccount));
+      store.dispatch(basketDataReceived(transformResults(Factory.build(
+        'basket',
+        {},
+        { numProducts: 1 },
+      ))));
+      store.dispatch(fetchBasket.fulfill());
+    });
+
+    expect(tree.toJSON()).toMatchSnapshot();
   });
 
   it('renders a bulk enrollment cart', () => {
-    const state = defaultsDeep({
-      payment: {
-        basket: {
-          orderType: 'Enrollment Code',
-          showCouponForm: false,
-        },
-      },
-    }, loadedBasketState);
+    act(() => {
+      store.dispatch(fetchUserAccountSuccess(userAccount));
+      store.dispatch(basketDataReceived(transformResults(Factory.build(
+        'basket',
+        {},
+        { numProducts: 1, productType: 'Enrollment Code' },
+      ))));
+      store.dispatch(fetchBasket.fulfill());
+    });
 
-    const tree = renderCartWithStore(state).toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('renders a loading cart skeleton', () => {
-    const state = defaultsDeep({
-      payment: {
-        basket: {
-          loading: true,
-        },
-      },
-    }, loadedBasketState);
-
-    const tree = renderCartWithStore(state).toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
