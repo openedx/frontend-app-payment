@@ -35,6 +35,7 @@
   "payment.coupon.remove": "Remove",
   "payment.currency.disclaimer": "* This total contains an approximate conversion. You will be charged {actualAmount} {actualCurrencyCode}.",
   "payment.summary.discount.offer": "{benefit} discount provided by {provider}.",
+  "payment.summary.discount.dynamic_offer": "{benefit} discount for your first upgrade applied.",
   "payment.summary.table.label.discount.total": "Discounts applied",
   "payment.order.details.course.entitlement": "After you complete your order you will be able to select course dates from your dashboard.",
   "payment.order.details.course.seat.verified": "After you complete your order you will be automatically enrolled in the verified track of the course.",
