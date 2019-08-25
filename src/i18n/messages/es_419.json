@@ -35,6 +35,7 @@
   "payment.coupon.remove": "Eliminar",
   "payment.currency.disclaimer": "* Este total contiene una conversión aproximada. Usted será cargado {actualAmount} {actualCurrencyCode}.",
   "payment.summary.discount.offer": "{benefit} descuento otorgado por {provider}.",
+  "payment.summary.discount.dynamic_offer": "{benefit} discount for your first upgrade applied.",
   "payment.summary.table.label.discount.total": "Descuentos aplicados",
   "payment.order.details.course.entitlement": "Después de completar su orden, podrá seleccionar las fechas del curso desde su panel de control.",
   "payment.order.details.course.seat.verified": "Después de completar su orden será automáticamente inscrito en el modo verificado del curso.",
