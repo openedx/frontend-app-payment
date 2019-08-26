@@ -69,6 +69,7 @@ export function* handleDiscountCheck() {
         PaymentApiService.getBasket,
         discount.jwt,
       );
+      result.discountJwt = discount.jwt;
       yield put(basketDataReceived(result));
       yield call(handleMessages, result.messages, false);
     }

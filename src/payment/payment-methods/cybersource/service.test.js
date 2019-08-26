@@ -21,7 +21,7 @@ const SDN_URL = `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`;
 const CYBERSOURCE_API = `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`;
 
 describe('Cybersource Service', () => {
-  const basket = { basketId: 1 };
+  const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
   const formDetails = {
     cardHolderInfo: {
       firstName: 'Yo',
