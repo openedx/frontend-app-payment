@@ -109,7 +109,7 @@ Cart.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
     benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
     benefitValue: PropTypes.number.isRequired,
-    provider: PropTypes.string.isRequired,
+    provider: PropTypes.string,
   })),
   summarySubtotal: PropTypes.number,
   summaryQuantity: PropTypes.number,

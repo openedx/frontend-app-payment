@@ -200,6 +200,8 @@ describe('saga tests', () => {
           { numProducts: 1, productType: 'Seat' },
         ),
       };
+      const response2 = response;
+      response2.data.discountJwt = 'i_am_a_jwt';
 
       const mockApiClient = createBasketMockApiClient(response);
       mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
@@ -221,7 +223,7 @@ describe('saga tests', () => {
         basketProcessing(true),
         basketDataReceived(transformResults(response.data)),
         clearMessages(),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(response2.data)),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
