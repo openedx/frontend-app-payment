@@ -18,7 +18,7 @@ describe('Paypal Service', () => {
   const config = {
     ECOMMERCE_BASE_URL: 'ecommerce.org',
   };
-  const basket = { basketId: 1 };
+  const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
   const apiClient = {};
   configureApiService(config, apiClient);
 
