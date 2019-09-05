@@ -191,7 +191,7 @@ describe('<PaymentForm />', () => {
         ['', '', `${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'Card expired' }],
         ['41111', '', '', '', { cardNumber: 'Invalid card number' }],
         ['30569309025904', '', '', '', { cardNumber: 'Unsupported card type' }],
-        ['4111111111111111', '12345', '', '', { securityCode: 'Invalid security code' }],
+        ['4111-1111-1111-1111', '12345', '', '', { securityCode: 'Invalid security code' }],
       ];
 
       testData.forEach((testCaseData) => {
