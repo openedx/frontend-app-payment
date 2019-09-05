@@ -34,7 +34,7 @@ describe('Cybersource Service', () => {
       organization: 'skunkworks',
     },
     cardDetails: {
-      cardNumber: '4111111111111111',
+      cardNumber: '4111-1111-1111-1111 ',
       cardTypeId: 'VISA??',
       securityCode: '123',
       cardExpirationMonth: '10',

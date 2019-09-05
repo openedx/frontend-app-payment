@@ -92,6 +92,13 @@ function handleApiError(requestError) {
   }
 }
 
+// Strips spaces, hyphens, and any non-digit from a cardNumber
+function getCardNumberDigits(cardNumber) {
+  const numberPattern = /\d+/g;
+  const cardNumberDigitArray = cardNumber.match(numberPattern) || [];
+  return cardNumberDigitArray.join('');
+}
+
 /**
  * Checkout with Cybersource.
  *
@@ -173,7 +180,7 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
 
   const cybersourcePaymentParams = {
     ...data.form_fields,
-    card_number: cardNumber,
+    card_number: getCardNumberDigits(cardNumber),
     card_type: cardTypeId,
     card_cvn: securityCode,
     card_expiry_date: [cardExpirationMonth.padStart(2, '0'), cardExpirationYear].join('-'),
