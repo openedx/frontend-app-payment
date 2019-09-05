@@ -27,12 +27,17 @@ export function configureApiService(newConfig, newApiClient) {
 export async function checkout(basket) {
   const { basketId } = basket;
 
+  const formData = {
+    basket_id: basketId,
+    payment_processor: 'paypal',
+  };
+  if (basket.discountJwt) {
+    formData.discount_jwt = basket.discountJwt;
+  }
+
   const { data } = await apiClient.post(
     `${config.ECOMMERCE_BASE_URL}/api/v2/checkout/`,
-    {
-      basket_id: basketId,
-      payment_processor: 'paypal',
-    },
+    formData,
   ).catch((error) => {
     logApiClientError(error, {
       messagePrefix: 'PayPal Checkout Error',
