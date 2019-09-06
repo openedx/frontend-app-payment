@@ -82,20 +82,7 @@ describe('<Checkout />', () => {
       expect(store.getActions().pop()).toEqual(submitPayment({ method: 'paypal' }));
     });
 
-    it('submits and tracks apple pay', () => {
-      const applePayButton = wrapper
-        .find('ApplePayButton')
-        .find('button')
-        .hostNodes();
-      applePayButton.simulate('click');
-
-      expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.payment_selected', {
-        type: 'click',
-        category: 'checkout',
-        paymentMethod: 'Apple Pay',
-      });
-      expect(store.getActions().pop()).toEqual(submitPayment({ method: 'apple-pay' }));
-    });
+    // Apple Pay temporarily disabled per REV-927 - https://github.com/edx/frontend-app-payment/pull/256
 
     it('submits and tracks the payment form', () => {
       const formSubmitButton = wrapper.find('form button[type="submit"]').hostNodes();

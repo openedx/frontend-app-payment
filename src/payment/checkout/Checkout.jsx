@@ -13,7 +13,6 @@ import AcceptedCardLogos from './assets/accepted-card-logos.png';
 import PaymentForm from './payment-form/PaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
-import { ApplePayButton } from '../payment-methods/apple-pay';
 import { ORDER_TYPES } from '../data/constants';
 
 class Checkout extends React.Component {
@@ -125,11 +124,7 @@ class Checkout extends React.Component {
               isProcessing={payPalIsSubmitting}
             />
 
-            <ApplePayButton
-              onClick={this.handleSubmitApplePay}
-              className={classNames('payment-method-button', { 'skeleton-pulse': loading })}
-              disabled={submissionDisabled}
-            />
+            {/* Apple Pay temporarily disabled per REV-927  - https://github.com/edx/frontend-app-payment/pull/256 */}
           </p>
         </div>
 
