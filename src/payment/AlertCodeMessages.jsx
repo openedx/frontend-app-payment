@@ -64,3 +64,30 @@ EnrollmentCodeQuantityUpdated.propTypes = {
     price: PropTypes.number,
   }).isRequired,
 };
+
+export const TransactionDeclined = ({ values }) => (
+  <React.Fragment>
+    <FormattedMessage
+      id="payment.messages.transaction.declined.body"
+      defaultMessage="Please double-check the information you provided and try again. For help, {link}."
+      description="Asks the user to check their information and includes a link to contact support for help."
+      values={{
+        link: (
+          <Hyperlink destination={values.supportUrl}>
+            <FormattedMessage
+              id="payment.error.fetch.basket.support.fragment"
+              defaultMessage="contact support"
+              description="The support link as in 'please {contact support}'"
+            />
+          </Hyperlink>
+        ),
+      }}
+    />
+  </React.Fragment>
+);
+
+TransactionDeclined.propTypes = {
+  values: PropTypes.shape({
+    supportUrl: PropTypes.string,
+  }).isRequired,
+};

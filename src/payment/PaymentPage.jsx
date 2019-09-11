@@ -14,7 +14,7 @@ import { paymentSelector } from './data/selectors';
 // Components
 import { PageLoading } from '../common';
 import AlertList from '../feedback/AlertList';
-import { SingleEnrollmentCodeWarning, EnrollmentCodeQuantityUpdated } from './AlertCodeMessages';
+import { SingleEnrollmentCodeWarning, EnrollmentCodeQuantityUpdated, TransactionDeclined } from './AlertCodeMessages';
 import EmptyCartMessage from './EmptyCartMessage';
 import Cart from './cart/Cart';
 import Checkout from './checkout/Checkout';
@@ -75,7 +75,9 @@ class PaymentPage extends React.Component {
   }
 
   render() {
-    const { summaryQuantity, summarySubtotal, intl } = this.props;
+    const {
+      summaryQuantity, summarySubtotal, intl, supportURL,
+    } = this.props;
 
     return (
       <div className="page__payment container-fluid py-5">
@@ -97,6 +99,12 @@ class PaymentPage extends React.Component {
                 }}
               />
             ),
+            'transaction-declined-message': (
+              <TransactionDeclined
+                values={{
+                  supportUrl: supportURL,
+                }}
+              />),
             'apple-pay-merchant-validation-failure': intl.formatMessage(messages['payment.apple.pay.merchant.validation.failure']),
             'apple-pay-authorization-failure': intl.formatMessage(messages['payment.apple.pay.authorization.failure']),
           }}
