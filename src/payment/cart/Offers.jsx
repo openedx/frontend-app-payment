@@ -81,7 +81,7 @@ export default function Offers({ offers, discounts }) {
           />
         </span>
         <span>
-          <LocalizedPrice amount={discounts * -1} />
+          <LocalizedPrice amount={discounts ? discounts * -1 : 0} />
         </span>
       </p>
       {offers.map(offer => (
