@@ -61,15 +61,9 @@ function configure() {
 function initialize(accessToken) {
   const { store, history } = configure();
 
-  if (accessToken) {
-    ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
-    identifyAuthenticatedUser(accessToken.userId);
-    sendPageEvent();
-  } else {
-    // This should never happen, but it does sometimes.
-    // Add logging to learn more.
-    throw new Error('Empty accessToken returned from ensurePublicOrAuthenticationAndCookies callback.');
-  }
+  ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
+  identifyAuthenticatedUser(accessToken.userId);
+  sendPageEvent();
 }
 
 try {
