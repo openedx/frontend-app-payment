@@ -104,7 +104,7 @@ module.exports = Merge.smart(commonConfig, {
       APPLE_APP_STORE_URL: 'https://www.apple.com/ios/app-store/',
       GOOGLE_PLAY_URL: 'https://play.google.com/store',
       ORDER_HISTORY_URL: 'localhost:1996/orders',
-      CYBERSOURCE_URL: 'https://localhost/cybersource',
+      CYBERSOURCE_URL: 'https://testsecureacceptance.cybersource.com/silent/pay',
       APPLE_PAY_MERCHANT_IDENTIFIER: 'merchant.org.edx.stage.ecommerce',
       APPLE_PAY_MERCHANT_NAME: 'edX E-Commerce',
       APPLE_PAY_COUNTRY_CODE: 'US',
