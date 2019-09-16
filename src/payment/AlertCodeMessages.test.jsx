@@ -9,6 +9,7 @@ import messages from '../i18n';
 import {
   SingleEnrollmentCodeWarning,
   EnrollmentCodeQuantityUpdated,
+  TransactionDeclined,
 } from './AlertCodeMessages';
 
 configureI18n(configuration, messages);
@@ -36,6 +37,16 @@ describe('EnrollmentCodeQuantityUpdated', () => {
           <EnrollmentCodeQuantityUpdated values={{ quantity: 2, price: 100 }} />
         </Provider>
       </IntlProvider>
+    );
+    const tree = renderer.create(component).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('TransactionDeclined', () => {
+  it('should render with values', () => {
+    const component = (
+      <TransactionDeclined values={{ supportUrl: 'http://edx.org/support' }} />
     );
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();
