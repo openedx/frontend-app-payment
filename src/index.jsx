@@ -28,19 +28,16 @@ let apiClient = null;
  * We need to merge the application configuration with the authentication state
  * so that we can hand it all to the redux store's initializer.
  */
-function createInitialState() {
-  const authenticationState = apiClient.getAuthenticationState();
-  if (Object.keys(authenticationState).length === 0) {
-    throw new Error('Empty authentication state returned from gettAuthenticationState()');
-  }
+function createInitialState(authenticatedUser) {
   const queryParameters = getQueryParameters();
-  return Object.assign({}, { configuration, queryParameters }, authenticationState);
+  const authenicationState = { authentication: authenticatedUser };
+  return Object.assign({}, { configuration, queryParameters }, authenicationState);
 }
 
-function configure() {
+function configure(authenticatedUser) {
   configureI18n(configuration, messages);
 
-  const { store, history } = configureStore(createInitialState(), configuration.ENVIRONMENT);
+  const { store, history } = configureStore(createInitialState(authenticatedUser), configuration.ENVIRONMENT);
 
   configureLoggingService(NewRelicLoggingService);
   configurePaymentApiService(configuration, apiClient);
@@ -58,11 +55,11 @@ function configure() {
   };
 }
 
-function initialize(accessToken) {
-  const { store, history } = configure();
+function initialize(authenticatedUser) {
+  const { store, history } = configure(authenticatedUser);
 
   ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
-  identifyAuthenticatedUser(accessToken.userId);
+  identifyAuthenticatedUser(authenticatedUser.userId);
   sendPageEvent();
 }
 
@@ -85,7 +82,10 @@ try {
     loggingService: NewRelicLoggingService,
   });
 
-  apiClient.ensurePublicOrAuthenticationAndCookies(window.location.pathname, initialize);
+  apiClient.ensureAuthenticatedUser(window.location.pathname)
+    .then(({ authenticatedUser }) => {
+      initialize(authenticatedUser);
+    });
 } catch (e) {
   ReactDOM.render(<ErrorPage />, document.getElementById('root'));
   NewRelicLoggingService.logError(e.message);
