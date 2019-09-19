@@ -85,8 +85,11 @@ try {
   apiClient.ensureAuthenticatedUser(window.location.pathname)
     .then(({ authenticatedUser }) => {
       initialize(authenticatedUser);
+    })
+    .catch((e) => {
+      throw e;
     });
 } catch (e) {
   ReactDOM.render(<ErrorPage />, document.getElementById('root'));
-  NewRelicLoggingService.logError(e.message);
+  NewRelicLoggingService.logError(e);
 }
