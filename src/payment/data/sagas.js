@@ -60,18 +60,20 @@ export function* handleDiscountCheck() {
   if (basket.products.length === 1) {
     const [product] = basket.products;
     const { courseKey } = product;
-    const discount = yield call(
-      PaymentApiService.getDiscountData,
-      courseKey,
-    );
-    if (discount.discount_applicable) {
-      const result = yield call(
-        PaymentApiService.getBasket,
-        discount.jwt,
+    if (product.productType === 'Seat') {
+      const discount = yield call(
+        PaymentApiService.getDiscountData,
+        courseKey,
       );
-      result.discountJwt = discount.jwt;
-      yield put(basketDataReceived(result));
-      yield call(handleMessages, result.messages, false);
+      if (discount.discount_applicable) {
+        const result = yield call(
+          PaymentApiService.getBasket,
+          discount.jwt,
+        );
+        result.discountJwt = discount.jwt;
+        yield put(basketDataReceived(result));
+        yield call(handleMessages, result.messages, false);
+      }
     }
   }
 }

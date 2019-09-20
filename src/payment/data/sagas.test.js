@@ -73,7 +73,7 @@ describe('saga tests', () => {
     courseKey = 'test';
     basketProcessingState = { payment: { basket: { isBasketProcessing: true } } };
     basketNotProcessingState = {
-      payment: { basket: { isBasketProcessing: false, products: [{ courseKey }] } },
+      payment: { basket: { isBasketProcessing: false, products: [{ courseKey, productType: 'Seat' }] } },
     };
   });
 
