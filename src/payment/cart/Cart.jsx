@@ -64,7 +64,7 @@ class Cart extends React.Component {
             <SummaryTable price={summaryPrice} />
           )}
 
-          <Offers discounts={summaryDiscounts} offers={offers} />
+          <Offers discounts={summaryDiscounts} offers={offers} isBundle={products.length > 1} />
           {showCouponForm ? <CouponForm /> : null}
           <TotalTable total={orderTotal} />
           {isCurrencyConverted ? <CurrencyDisclaimer /> : null}

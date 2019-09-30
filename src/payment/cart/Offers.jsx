@@ -17,7 +17,7 @@ Benefit.propTypes = {
 };
 
 function Offer({
-  benefitType, benefitValue, provider,
+  benefitType, benefitValue, provider, isBundle,
 }) {
   let message = null;
   if (provider) {
@@ -35,7 +35,7 @@ function Offer({
         provider,
       }}
     />);
-  } else {
+  } else if (!isBundle) {
     message = (<FormattedMessage
       id="payment.summary.discount.dynamic_offer"
       defaultMessage="{benefit} discount for your first upgrade applied."
@@ -61,13 +61,15 @@ Offer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
   provider: PropTypes.string,
+  isBundle: PropTypes.bool,
 };
 
 Offer.defaultProps = {
   provider: null,
+  isBundle: false,
 };
 
-export default function Offers({ offers, discounts }) {
+export default function Offers({ offers, discounts, isBundle }) {
   if ((discounts === undefined || discounts <= 0) && offers.length === 0) return null;
 
   return (
@@ -85,7 +87,7 @@ export default function Offers({ offers, discounts }) {
         </span>
       </p>
       {offers.map(offer => (
-        <Offer key={`${offer.benefitValue}-${offer.benefitType}-${offer.provider}`} {...offer} />
+        <Offer isBundle={isBundle} key={`${offer.benefitValue}-${offer.benefitType}-${offer.provider}`} {...offer} />
       ))}
     </div>
   );
@@ -98,9 +100,11 @@ Offers.propTypes = {
     provider: PropTypes.string,
   })),
   discounts: PropTypes.number,
+  isBundle: PropTypes.bool,
 };
 
 Offers.defaultProps = {
   offers: [],
   discounts: undefined,
+  isBundle: false,
 };
