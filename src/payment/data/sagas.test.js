@@ -739,10 +739,6 @@ describe('saga tests', () => {
         submitPayment.request(),
         clearMessages(),
         addMessage('ohboy', null, null, 'error'),
-        basketDataReceived({
-          i: 'am',
-          a: 'basket',
-        }),
         basketProcessing(false),
         submitPayment.fulfill(),
       ]);
@@ -791,10 +787,6 @@ describe('saga tests', () => {
       addMessage(null, 'This is a field error!', null, 'error', 'field1'),
       stopSubmit('payment', {
         field1: 'This is a field error!',
-      }),
-      basketDataReceived({
-        i: 'am',
-        a: 'basket',
       }),
       basketProcessing(false),
       submitPayment.fulfill(),
