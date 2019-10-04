@@ -317,6 +317,15 @@ describe('saga tests', () => {
       };
 
       const mockApiClient = createBasketMockApiClient(response, { throws: true });
+      mockApiClient.get.mockReturnValueOnce(new Promise((reject) => {
+        reject(response);
+      }));
+      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
+        resolve({ data: { discount_applicable: true } });
+      }));
+      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
+        resolve(response);
+      }));
       configureApiService(configuration, mockApiClient);
 
       try {
@@ -333,14 +342,16 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        basketDataReceived(transformResults(response.data)),
         clearMessages(),
         addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
         basketDataReceived(transformResults(response.data)),
+        addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(1);
+      expect(mockApiClient.get).toHaveBeenCalledTimes(3);
     });
 
     it('should show a fallback error message', async () => {

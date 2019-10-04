@@ -93,6 +93,7 @@ export function* handleFetchBasket() {
     yield call(handleErrors, error, true);
     if (error.basket) {
       yield put(basketDataReceived(error.basket));
+      yield call(handleDiscountCheck);
     }
   } finally {
     yield put(basketProcessing(false));
