@@ -163,8 +163,8 @@ export function* handleSubmitPayment({ payload }) {
       }
 
       if (error.basket) {
-        yield call(handleDiscountCheck);
         yield put(basketDataReceived(error.basket));
+        yield call(handleDiscountCheck);
       }
     }
   } finally {
