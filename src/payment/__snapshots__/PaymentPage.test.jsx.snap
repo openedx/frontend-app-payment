@@ -8239,7 +8239,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   className="mb-0"
                   htmlFor="purchasedForOrganization"
                 >
-                  I am purchasing on behalf of my employer or other professional organization
+                  <span>
+                    I am purchasing on behalf of my employer or other professional organization
+                  </span>
                 </label>
               </div>
             </div>

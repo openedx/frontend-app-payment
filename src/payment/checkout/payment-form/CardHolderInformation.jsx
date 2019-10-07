@@ -234,7 +234,11 @@ export class CardHolderInformationComponent extends React.Component {
                 htmlFor="purchasedForOrganization"
                 className="mb-0"
               >
-                I am purchasing on behalf of my employer or other professional organization
+                <FormattedMessage
+                  id="payment.card.holder.information.purchased.for.organization"
+                  defaultMessage="I am purchasing on behalf of my employer or other professional organization"
+                  decription="checkbox for if the purchaser is buying this course on behalf of an organization"
+                />
               </label>
             </div>
           </div>
