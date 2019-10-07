@@ -126,7 +126,6 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
     }
     throw new Error('This card holder did not pass the SDN check.');
   }
-
   const formData = {
     basket: basketId,
     first_name: cardHolderInfo.firstName,
@@ -138,6 +137,7 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
     state: cardHolderInfo.state,
     postal_code: cardHolderInfo.postalCode,
     organization: cardHolderInfo.organization,
+    purchased_for_organization: cardHolderInfo.purchasedForOrganization,
   };
   if (basket.discountJwt) {
     formData.discount_jwt = basket.discountJwt;

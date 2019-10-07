@@ -86,7 +86,7 @@ export class CardHolderInformationComponent extends React.Component {
           </div>
         </div>
 
-        { showBulkEnrollmentFields ? (
+        {showBulkEnrollmentFields ? (
           <div className="row">
             <div className="col-lg-6 form-group">
               <label htmlFor="organization">
@@ -219,6 +219,26 @@ export class CardHolderInformationComponent extends React.Component {
             />
           </div>
         </div>
+        {showBulkEnrollmentFields ? (
+          <div className="row form-group justify-content-start align-items-center">
+            <div className="col-1 pr-0 pl-2">
+              <Field
+                id="purchasedForOrganization"
+                name="purchasedForOrganization"
+                component={FormInput}
+                type="checkbox"
+              />
+            </div>
+            <div className="col">
+              <label
+                htmlFor="purchasedForOrganization"
+                className="mb-0"
+              >
+                I am purchasing on behalf of my employer or other professional organization
+              </label>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }
