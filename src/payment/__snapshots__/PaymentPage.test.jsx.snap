@@ -8212,6 +8212,39 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
               </div>
             </div>
+            <div
+              className="row form-group justify-content-start align-items-center"
+            >
+              <div
+                className="col-1 pr-0 pl-2"
+              >
+                <input
+                  checked={false}
+                  className="form-control"
+                  id="purchasedForOrganization"
+                  name="purchasedForOrganization"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onDragStart={[Function]}
+                  onDrop={[Function]}
+                  onFocus={[Function]}
+                  type="checkbox"
+                  value=""
+                />
+              </div>
+              <div
+                className="col"
+              >
+                <label
+                  className="mb-0"
+                  htmlFor="purchasedForOrganization"
+                >
+                  <span>
+                    I am purchasing on behalf of my employer or other professional organization
+                  </span>
+                </label>
+              </div>
+            </div>
           </div>
           <div
             className="basket-section"

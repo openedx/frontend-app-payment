@@ -56,4 +56,35 @@ describe('<CardHolderInformation />', () => {
       expect(cardHolderInformation.state).toEqual({ selectedCountry: 'US' });
     });
   });
+  describe('purchasedForOrganization field', () => {
+    it('renders for bulk purchase', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <PaymentForm
+              isBulkOrder
+              handleSubmit={() => {}}
+              onSubmitPayment={() => {}}
+              onSubmitButtonClick={() => {}}
+            />
+          </Provider>
+        </IntlProvider>
+      ));
+      expect(wrapper.exists('#purchasedForOrganization')).toEqual(true);
+    });
+    it('does not render if not bulk purchase', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <Provider store={store}>
+            <PaymentForm
+              handleSubmit={() => {}}
+              onSubmitPayment={() => {}}
+              onSubmitButtonClick={() => {}}
+            />
+          </Provider>
+        </IntlProvider>
+      ));
+      expect(wrapper.exists('#purchasedForOrganization')).toEqual(false);
+    });
+  });
 });

@@ -37,6 +37,7 @@ export class PaymentFormComponent extends React.Component {
       cardExpirationMonth,
       cardExpirationYear,
       organization,
+      purchasedForOrganization,
     } = values;
 
     const errors = {
@@ -66,6 +67,7 @@ export class PaymentFormComponent extends React.Component {
         state,
         postalCode,
         organization,
+        purchasedForOrganization,
       },
       cardDetails: {
         cardNumber,
