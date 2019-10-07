@@ -80,24 +80,25 @@ export function* handleDiscountCheck() {
 
 export function* handleFetchBasket() {
   if (yield isBasketProcessing()) {
+    // Do nothing if there is a request currently in flight to get or modify the basket
     return;
   }
 
   try {
-    yield put(basketProcessing(true));
+    yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
     const result = yield call(PaymentApiService.getBasket);
-    yield put(basketDataReceived(result));
+    yield put(basketDataReceived(result)); // update redux store with basket data
     yield call(handleMessages, result.messages, true);
-    yield call(handleDiscountCheck);
+    yield call(handleDiscountCheck); // check if a discount should be added to the basket
   } catch (error) {
     yield call(handleErrors, error, true);
     if (error.basket) {
-      yield put(basketDataReceived(error.basket));
-      yield call(handleDiscountCheck);
+      yield put(basketDataReceived(error.basket)); // update redux store with basket data
+      yield call(handleDiscountCheck); // check if a discount should be added to the basket
     }
   } finally {
-    yield put(basketProcessing(false));
-    yield put(fetchBasket.fulfill());
+    yield put(basketProcessing(false)); // we are done modifying the basket
+    yield put(fetchBasket.fulfill()); // mark the basket as finished loading
   }
 }
 
