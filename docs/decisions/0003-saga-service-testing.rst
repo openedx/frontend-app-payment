@@ -51,11 +51,8 @@ To mock the API client's methods, configure the service with a mock apiClient ob
       resolve(responseData); // resolving here results in a successful server response.
     }));
 
-  // If you aren't using our standard service configuration methods, then this code may vary for you.  The crux is that you want to give a mock apiClient to the service.
-  configureApiService(
-    { ECOMMERCE_BASE_URL: 'http://localhost' }, // Any necessary "configuration" the service needs.
-    { post: apiClientPost }, // Mocked apiClient methods
-  );
+  App.config = { ECOMMERCE_BASE_URL: 'http://localhost' }, // Any necessary config the service needs.
+  App.apiClient = { post: apiClientPost }, // Mocked apiClient methods
 
 Next, the saga under test may be run using runSaga:
 
@@ -108,10 +105,8 @@ Complete example to test an error case:
         reject(errorResponse); // Note that we call reject here.  This causes the service/apiClient to throw an exception.
       }));
 
-    configureApiService(
-      { ECOMMERCE_BASE_URL: 'http://localhost' },
-      { post: apiClientPost }, // Same as the non-error case
-    );
+    App.config = { ECOMMERCE_BASE_URL: 'http://localhost' }, // Any necessary config the service needs.
+    App.apiClient = { post: apiClientPost }, // Mocked apiClient methods
 
     const dispatched = [];
     await runSaga(
