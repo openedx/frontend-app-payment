@@ -1,23 +1,15 @@
+import { App } from '@edx/frontend-base';
 import formurlencoded from 'form-urlencoded';
-import pick from 'lodash.pick';
 import { logApiClientError } from '@edx/frontend-logging';
 
 import handleRequestError from '../../data/handleRequestError';
 import { generateAndSubmitForm } from '../../data/utils';
 
-let config = {
-  CYBERSOURCE_URL: null,
-  ECOMMERCE_BASE_URL: null,
-  ENVIRONMENT: null,
-};
-
-let apiClient = null; // eslint-disable-line no-unused-vars
-
-export function configureApiService(newConfig, newApiClient) {
-  applyConfiguration(config, newConfig);
-  config = pick(newConfig, Object.keys(config));
-  apiClient = newApiClient;
-}
+App.ensureConfig([
+  'CYBERSOURCE_URL',
+  'ECOMMERCE_BASE_URL',
+  'ENVIRONMENT',
+], 'CyberSource API service');
 
 /**
  * SDN: Specially Designated Nationals And Blocked Persons List.
@@ -26,7 +18,7 @@ export function configureApiService(newConfig, newApiClient) {
  * 'hits' then we must not perform the transaction.
  */
 export async function sdnCheck(basketId, firstName, lastName, city, country) {
-  const { data } = await apiClient.post(
+  const { data } = await App.apiClient.post(
     `${App.config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
     {
       name: `${firstName} ${lastName}`,
@@ -142,7 +134,7 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   if (basket.discountJwt) {
     formData.discount_jwt = basket.discountJwt;
   }
-  const { data } = await apiClient.post(
+  const { data } = await App.apiClient.post(
     `${App.config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
     formurlencoded(formData),
     {

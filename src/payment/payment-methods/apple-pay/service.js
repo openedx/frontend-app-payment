@@ -1,29 +1,17 @@
-import pick from 'lodash.pick';
 import { App } from '@edx/frontend-base';
 import { logApiClientError } from '@edx/frontend-logging';
-import { applyConfiguration } from '../../../common/serviceUtils';
 
-let apiClient = null;
-
-let config = {
-  ECOMMERCE_BASE_URL: null,
-  ECOMMERCE_RECEIPT_BASE_URL: null,
-  ENVIRONMENT: null,
-  APPLE_PAY_MERCHANT_IDENTIFIER: null,
-  APPLE_PAY_MERCHANT_NAME: null,
-  APPLE_PAY_COUNTRY_CODE: null,
-  APPLE_PAY_CURRENCY_CODE: null,
-  APPLE_PAY_START_SESSION_URL: null,
-  APPLE_PAY_AUTHORIZE_URL: null,
-  APPLE_PAY_SUPPORTED_NETWORKS: null,
-  APPLE_PAY_MERCHANT_CAPABILITIES: null,
-};
-
-export function configureApiService(_config, _apiClient) {
-  applyConfiguration(config, _config);
-  config = pick(_config, Object.keys(config));
-  apiClient = _apiClient;
-}
+App.ensureConfig([
+  'ECOMMERCE_BASE_URL',
+  'ENVIRONMENT',
+  'APPLE_PAY_MERCHANT_NAME',
+  'APPLE_PAY_COUNTRY_CODE',
+  'APPLE_PAY_CURRENCY_CODE',
+  'APPLE_PAY_START_SESSION_URL',
+  'APPLE_PAY_AUTHORIZE_URL',
+  'APPLE_PAY_SUPPORTED_NETWORKS',
+  'APPLE_PAY_MERCHANT_CAPABILITIES',
+], 'ApplePay API service');
 
 /**
  * Given an order number, and an optional arg of whether to disable the back button, redirects the

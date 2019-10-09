@@ -22,7 +22,6 @@ const createRootReducer = () =>
     // The authentication state is added as initialState when
     // creating the store in data/store.js.
     authentication: identityReducer,
-    queryParameters: identityReducer,
     userAccount,
     [paymentStoreName]: paymentReducer,
     [feedbackStoreName]: feedbackReducer,

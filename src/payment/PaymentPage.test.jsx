@@ -10,9 +10,7 @@ import * as analytics from '@edx/frontend-analytics';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 
 import './__factories__/basket.factory';
-import '../__factories__/configuration.factory';
 import { ConnectedPaymentPage } from './';
-import { configuration } from '../environment';
 import './__factories__/userAccount.factory';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
@@ -29,8 +27,7 @@ Object.defineProperty(global.document, 'cookie', {
   writable: true,
   value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
 });
-
-configureI18n(configuration, messages);
+App.apiClient = jest.fn();
 
 describe('<PaymentPage />', () => {
   let initialState;

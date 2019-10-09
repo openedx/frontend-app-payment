@@ -10,11 +10,17 @@ import messages from './i18n';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-// These configuration values are usually set in webpack's EnvironmentPlugin however
-// Jest does not use webpack so we need to set these so for testing
-process.env.LMS_BASE_URL = 'http://localhost:18000';
-process.env.SUPPORT_URL = 'http://localhost:18000/support';
-process.env.LANGUAGE_PREFERENCE_COOKIE_NAME = 'language-cookie';
-process.env.ECOMMERCE_BASE_URL = 'http://localhost:18130';
+App.config = Object.assign({}, App.config, {
+  CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
+  SUPPORT_URL: process.env.SUPPORT_URL,
+  CYBERSOURCE_URL: process.env.CYBERSOURCE_URL,
+  APPLE_PAY_MERCHANT_NAME: process.env.APPLE_PAY_MERCHANT_NAME,
+  APPLE_PAY_COUNTRY_CODE: process.env.APPLE_PAY_COUNTRY_CODE,
+  APPLE_PAY_CURRENCY_CODE: process.env.APPLE_PAY_CURRENCY_CODE,
+  APPLE_PAY_START_SESSION_URL: process.env.APPLE_PAY_START_SESSION_URL,
+  APPLE_PAY_AUTHORIZE_URL: process.env.APPLE_PAY_AUTHORIZE_URL,
+  APPLE_PAY_SUPPORTED_NETWORKS: process.env.APPLE_PAY_SUPPORTED_NETWORKS && process.env.APPLE_PAY_SUPPORTED_NETWORKS.split(','),
+  APPLE_PAY_MERCHANT_CAPABILITIES: process.env.APPLE_PAY_MERCHANT_CAPABILITIES && process.env.APPLE_PAY_MERCHANT_CAPABILITIES.split(','),
+});
 
 configureI18n(App.config, messages);
