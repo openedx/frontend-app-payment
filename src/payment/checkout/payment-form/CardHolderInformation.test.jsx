@@ -1,14 +1,12 @@
-/* eslint-disable global-require */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import { Factory } from 'rosie';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { createStore } from 'redux';
 
 import { configuration } from '../../../environment';
-import messages from '../../../i18n';
 import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
 import PaymentForm from './PaymentForm';
 import '../../../__factories__/configuration.factory';
@@ -16,7 +14,6 @@ import createRootReducer from '../../../data/reducers';
 
 import '../../../__factories__/userAccount.factory';
 
-configureI18n(configuration, messages);
 
 describe('<CardHolderInformation />', () => {
   let initialState;

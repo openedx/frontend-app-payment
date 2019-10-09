@@ -4,7 +4,7 @@ import renderer, { act } from 'react-test-renderer';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import * as analytics from '@edx/frontend-analytics';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 
@@ -13,7 +13,6 @@ import '../__factories__/configuration.factory';
 import '../__factories__/userAccount.factory';
 import { ConnectedPaymentPage } from './';
 import { configuration } from '../environment';
-import messages from '../i18n';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';

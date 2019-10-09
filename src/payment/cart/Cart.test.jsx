@@ -1,8 +1,7 @@
-/* eslint-disable global-require */
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import { Provider } from 'react-redux';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { Factory } from 'rosie';
 import { createStore } from 'redux';
@@ -10,14 +9,10 @@ import { createStore } from 'redux';
 import '../__factories__/basket.factory';
 import '../../__factories__/configuration.factory';
 import '../../__factories__/userAccount.factory';
-import { configuration } from '../../environment';
-import messages from '../../i18n';
 import Cart from './Cart';
 import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/service';
-
-configureI18n(configuration, messages);
 
 describe('<Cart />', () => {
   let store;
