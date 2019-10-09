@@ -12,16 +12,8 @@ import {
   storeName as feedbackStoreName,
 } from '../feedback';
 
-const identityReducer = (state) => {
-  const newState = { ...state };
-  return newState;
-};
-
 const createRootReducer = () =>
   combineReducers({
-    // The authentication state is added as initialState when
-    // creating the store in data/store.js.
-    authentication: identityReducer,
     userAccount,
     [paymentStoreName]: paymentReducer,
     [feedbackStoreName]: feedbackReducer,

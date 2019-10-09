@@ -1,6 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { emailSelector } from '../../../../common/selectors';
 import { getModuleState } from '../../../data/utils';
 import {
   SEAT_MESSAGE_KEY,
@@ -16,6 +15,13 @@ import {
 } from './constants';
 
 export const storePath = ['payment', 'basket'];
+
+export const userAccountSelector = state => state.userAccount;
+
+export const emailSelector = createSelector(
+  userAccountSelector,
+  userAccount => userAccount.email,
+);
 
 const paymentSelector = (state, props) =>
   getModuleState(state, props.storePath ? props.storePath : storePath);

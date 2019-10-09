@@ -13,20 +13,13 @@ import createRootReducer from '../../../data/reducers';
 import '../../__factories__/userAccount.factory';
 
 describe('<CardHolderInformation />', () => {
-  let initialState;
   let store;
 
   describe('handleSelectCountry', () => {
     it('updates state with selected country', () => {
       const userAccount = Factory.build('userAccount');
-      initialState = {
-        authentication: {
-          userId: 9,
-          username: userAccount.username,
-        },
-      };
 
-      store = createStore(createRootReducer(), initialState);
+      store = createStore(createRootReducer(), {});
       store.dispatch(fetchUserAccountSuccess(userAccount));
       const component = (
         <IntlProvider locale="en">

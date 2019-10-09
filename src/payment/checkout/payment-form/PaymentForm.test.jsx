@@ -13,19 +13,12 @@ import '../../__factories__/userAccount.factory';
 
 describe('<PaymentForm />', () => {
   let paymentForm;
-  let initialState;
   let store;
 
   beforeEach(() => {
     const userAccount = Factory.build('userAccount');
-    initialState = {
-      authentication: {
-        userId: 9,
-        username: userAccount.username,
-      },
-    };
 
-    store = createStore(createRootReducer(), initialState);
+    store = createStore(createRootReducer(), {});
     store.dispatch(fetchUserAccountSuccess(userAccount));
 
     const wrapper = mount((

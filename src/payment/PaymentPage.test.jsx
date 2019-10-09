@@ -2,7 +2,8 @@
 import { App } from '@edx/frontend-base';
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
 import { IntlProvider } from '@edx/frontend-i18n';
@@ -30,19 +31,12 @@ Object.defineProperty(global.document, 'cookie', {
 App.apiClient = jest.fn();
 
 describe('<PaymentPage />', () => {
-  let initialState;
   let store;
 
   beforeEach(() => {
     const userAccount = Factory.build('userAccount');
-    initialState = {
-      authentication: {
-        userId: 9,
-        username: userAccount.username,
-      },
-    };
 
-    store = createStore(createRootReducer(), initialState);
+    store = createStore(createRootReducer(), {}, applyMiddleware(thunkMiddleware));
     store.dispatch(fetchUserAccountSuccess(userAccount));
   });
 
@@ -83,7 +77,7 @@ describe('<PaymentPage />', () => {
     it('should render the basket in a different currency', () => {
       store = createStore(
         createRootReducer(),
-        Object.assign({}, initialState, {
+        Object.assign({}, {
           payment: {
             currency: {
               currencyCode: 'MXN',
@@ -91,6 +85,7 @@ describe('<PaymentPage />', () => {
             },
           },
         }),
+        applyMiddleware(thunkMiddleware),
       );
       const component = (
         <IntlProvider locale="en">

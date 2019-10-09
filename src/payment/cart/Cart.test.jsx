@@ -15,20 +15,13 @@ import { transformResults } from '../data/service';
 
 describe('<Cart />', () => {
   let store;
-  let initialState;
   let tree;
   let userAccount;
 
   beforeEach(() => {
     userAccount = Factory.build('userAccount');
-    initialState = {
-      authentication: {
-        userId: 9,
-        username: userAccount.username,
-      },
-    };
 
-    store = createStore(createRootReducer(), initialState);
+    store = createStore(createRootReducer(), {});
     store.dispatch(fetchUserAccountSuccess(userAccount));
 
     const component = (
@@ -87,7 +80,7 @@ describe('<Cart />', () => {
     // This test uses its own setup since we don't have actions to update currency.
     store = createStore(
       createRootReducer(),
-      Object.assign({}, initialState, {
+      Object.assign({}, {}, {
         payment: {
           currency: {
             currencyCode: 'MXN',
