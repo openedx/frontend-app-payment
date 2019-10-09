@@ -11,17 +11,13 @@ import * as analytics from '@edx/frontend-analytics';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 
 import './__factories__/basket.factory';
-import { ConnectedPaymentPage } from './';
 import './__factories__/userAccount.factory';
+import { PaymentPage } from './';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
-
-const requirePaymentPageProps = {
-  fetchBasket: () => {},
-};
 
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
@@ -49,7 +45,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -62,7 +58,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -90,7 +86,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -106,7 +102,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -135,7 +131,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -156,7 +152,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -172,7 +168,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -194,7 +190,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -216,7 +212,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
