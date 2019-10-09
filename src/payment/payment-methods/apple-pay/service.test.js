@@ -8,7 +8,6 @@ jest.mock('@edx/frontend-logging', () => ({
 
 describe('Perform Apple Pay Payment', () => {
   const config = {
-    APPLE_PAY_MERCHANT_IDENTIFIER: 'ecommerce.edx.org',
     APPLE_PAY_MERCHANT_NAME: 'edX e-commerce',
     APPLE_PAY_COUNTRY_CODE: 'USA',
     APPLE_PAY_CURRENCY_CODE: 'USD',
