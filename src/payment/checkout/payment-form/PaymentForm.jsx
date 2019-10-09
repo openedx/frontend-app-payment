@@ -11,7 +11,7 @@ import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
 import { utils } from '../../../common';
 
-const CardValidator = require('../../../common/card-validator');
+const CardValidator = require('../card-validator');
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {

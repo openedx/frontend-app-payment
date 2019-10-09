@@ -5,7 +5,7 @@ import {
   faCcVisa,
 } from '@fortawesome/free-brands-svg-icons';
 
-const CardValidator = require('../../../../common/card-validator');
+const CardValidator = require('../../card-validator');
 
 export const SUPPORTED_CARDS = {
   'american-express': { cardTypeId: '003', cardIcon: faCcAmex },
