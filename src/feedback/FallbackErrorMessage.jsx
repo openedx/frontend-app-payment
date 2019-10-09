@@ -1,17 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { App } from '@edx/frontend-base';
 import { FormattedMessage } from '@edx/frontend-i18n';
-import { connect } from 'react-redux';
 import { Hyperlink } from '@edx/paragon';
 
-const FallbackErrorMessage = ({ supportURL }) => (
+const FallbackErrorMessage = () => (
   <FormattedMessage
     id="payment.error.fetch.basket"
     defaultMessage="There was an unexpected problem. If the problem persists, please {supportLink}."
     description="The error message when a basket fails to load"
     values={{
       supportLink: (
-        <Hyperlink destination={supportURL}>
+        <Hyperlink destination={App.config.SUPPORT_URL}>
           <FormattedMessage
             id="payment.error.fetch.basket.support.fragment"
             defaultMessage="contact support"
@@ -23,12 +22,5 @@ const FallbackErrorMessage = ({ supportURL }) => (
   />
 );
 
-FallbackErrorMessage.propTypes = {
-  supportURL: PropTypes.string.isRequired,
-};
 
-const mapStateToProps = state => ({
-  supportURL: state.configuration.SUPPORT_URL,
-});
-
-export default connect(mapStateToProps)(FallbackErrorMessage);
+export default FallbackErrorMessage;

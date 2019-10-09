@@ -1,3 +1,4 @@
+import { App } from '@edx/frontend-base';
 import { combineReducers } from 'redux';
 import Cookies from 'universal-cookie';
 
@@ -7,8 +8,6 @@ import {
   fetchBasket,
   submitPayment,
 } from './actions';
-
-import { configuration } from '../../environment';
 
 const basketInitialState = {
   loading: true,
@@ -62,7 +61,7 @@ const basket = (state = basketInitialState, action = null) => {
 
 /* istanbul ignore next */
 function getCurrencyInitialState() {
-  const cookie = new Cookies().get(configuration.CURRENCY_COOKIE_NAME);
+  const cookie = new Cookies().get(App.config.CURRENCY_COOKIE_NAME);
 
   if (cookie && typeof cookie.code === 'string' && typeof cookie.rate === 'number') {
     return {

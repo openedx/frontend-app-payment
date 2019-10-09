@@ -7,10 +7,8 @@ import { IntlProvider } from '@edx/frontend-i18n';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { Factory } from 'rosie';
 
-import { configuration } from '../../../environment';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
-import '../../../__factories__/configuration.factory';
 import '../../__factories__/userAccount.factory';
 
 describe('<PaymentForm />', () => {
@@ -21,7 +19,6 @@ describe('<PaymentForm />', () => {
   beforeEach(() => {
     const userAccount = Factory.build('userAccount');
     initialState = {
-      configuration: Factory.build('configuration'),
       authentication: {
         userId: 9,
         username: userAccount.username,

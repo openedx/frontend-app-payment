@@ -1,7 +1,6 @@
+import { App } from '@edx/frontend-base';
 import { createSelector } from 'reselect';
 import { localeSelector, getCountryList } from '@edx/frontend-i18n';
-
-import { configurationSelector } from '../../common/selectors';
 
 export const storeName = 'payment';
 
@@ -39,22 +38,18 @@ export const updateQuantityFormSelector = createSelector(
   }),
 );
 
-export const queryParametersSelector = state => state.queryParameters;
+export const queryParamsSelector = () => App.getQueryParams(global.location.search);
 
 export const paymentSelector = createSelector(
   basketSelector,
-  configurationSelector,
-  queryParametersSelector,
-  (basket, configuration, queryParameters) => {
+  queryParamsSelector,
+  (basket, queryParams) => {
     const isCouponRedeemRedirect =
-      !!queryParameters &&
-      queryParameters.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
+      !!queryParams &&
+      queryParams.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
     return {
       ...basket,
       isCouponRedeemRedirect,
-      dashboardURL: configuration.LMS_BASE_URL,
-      supportURL: configuration.SUPPORT_URL,
-      ecommerceURL: configuration.ECOMMERCE_BASE_URL,
       isEmpty:
         basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:

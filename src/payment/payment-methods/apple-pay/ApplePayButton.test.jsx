@@ -6,12 +6,11 @@ import { IntlProvider } from '@edx/frontend-i18n';
 import { logError } from '@edx/frontend-logging';
 
 import ApplePayButton from './ApplePayButton';
-import { configuration } from '../../../environment';
 
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
   writable: true,
-  value: `${configuration.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
+  value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
 });
 
 jest.mock('@edx/frontend-logging', () => ({

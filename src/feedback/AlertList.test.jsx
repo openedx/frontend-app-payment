@@ -2,11 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import renderer, { act } from 'react-test-renderer';
-import { Factory } from 'rosie';
-import { configuration } from '../environment';
 import { IntlProvider } from '@edx/frontend-i18n';
 
-import '../__factories__/configuration.factory';
 import ConnectedAlertList from './AlertList';
 import createRootReducer from '../data/reducers';
 import { addMessage } from './data/actions';
@@ -20,9 +17,7 @@ describe('AlertList', () => {
   let store;
 
   beforeEach(() => {
-    store = createStore(createRootReducer(), {
-      configuration: Factory.build('configuration'),
-    });
+    store = createStore(createRootReducer());
   });
 
   it('should be null by default', () => {

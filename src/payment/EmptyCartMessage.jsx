@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { App } from '@edx/frontend-base';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
 
-const EmptyCartMessage = ({ dashboardURL, supportURL }) => (
+const EmptyCartMessage = () => (
   <div className="card">
     <div className="card-body">
       <h5 className="card-title">
@@ -20,7 +20,7 @@ const EmptyCartMessage = ({ dashboardURL, supportURL }) => (
           description="The message displayed when there is no basket. Action links will redirect to dashboard or support page"
           values={{
             actionLinkOne: (
-              <Hyperlink destination={dashboardURL}>
+              <Hyperlink destination={App.config.LMS_BASE_URL}>
                 <FormattedMessage
                   id="payment.empty.basket.dashboardURL"
                   defaultMessage="dashboard"
@@ -29,7 +29,7 @@ const EmptyCartMessage = ({ dashboardURL, supportURL }) => (
               </Hyperlink>
             ),
             actionLinkTwo: (
-              <Hyperlink destination={supportURL}>
+              <Hyperlink destination={App.config.SUPPORT_URL}>
                 <FormattedMessage
                   id="payment.empty.basket.supportURL"
                   defaultMessage="contact edX E-commerce Support"
@@ -43,10 +43,5 @@ const EmptyCartMessage = ({ dashboardURL, supportURL }) => (
     </div>
   </div>
 );
-
-EmptyCartMessage.propTypes = {
-  dashboardURL: PropTypes.string.isRequired,
-  supportURL: PropTypes.string.isRequired,
-};
 
 export default EmptyCartMessage;

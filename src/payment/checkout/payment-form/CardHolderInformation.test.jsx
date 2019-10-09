@@ -6,10 +6,8 @@ import { Factory } from 'rosie';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { createStore } from 'redux';
 
-import { configuration } from '../../../environment';
 import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
 import PaymentForm from './PaymentForm';
-import '../../../__factories__/configuration.factory';
 import createRootReducer from '../../../data/reducers';
 
 import '../../__factories__/userAccount.factory';
@@ -22,7 +20,6 @@ describe('<CardHolderInformation />', () => {
     it('updates state with selected country', () => {
       const userAccount = Factory.build('userAccount');
       initialState = {
-        configuration: Factory.build('configuration'),
         authentication: {
           userId: 9,
           username: userAccount.username,

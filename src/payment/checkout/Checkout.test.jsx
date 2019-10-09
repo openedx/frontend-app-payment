@@ -5,11 +5,9 @@ import { mount } from 'enzyme';
 import { IntlProvider } from '@edx/frontend-i18n';
 import { Factory } from 'rosie';
 
-import { configuration } from '../../environment';
 import Checkout from './Checkout';
 import { submitPayment } from '../data/actions';
 import '../__factories__/basket.factory';
-import '../../__factories__/configuration.factory';
 import '../__factories__/userAccount.factory';
 import { transformResults } from '../data/service';
 
@@ -35,7 +33,6 @@ describe('<Checkout />', () => {
     beforeEach(() => {
       const userAccount = Factory.build('userAccount');
       state = {
-        configuration: Factory.build('configuration'),
         authentication: {
           userId: 9,
           username: userAccount.username,
@@ -105,7 +102,6 @@ describe('<Checkout />', () => {
     beforeEach(() => {
       const userAccount = Factory.build('userAccount');
       state = {
-        configuration: Factory.build('configuration'),
         authentication: {
           userId: 9,
           username: userAccount.username,

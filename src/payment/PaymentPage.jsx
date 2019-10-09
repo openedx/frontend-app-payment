@@ -40,10 +40,7 @@ class PaymentPage extends React.Component {
 
     if (isEmpty) {
       return (
-        <EmptyCartMessage
-          dashboardURL={this.props.dashboardURL}
-          supportURL={this.props.supportURL}
-        />
+        <EmptyCartMessage />
       );
     }
 
@@ -76,7 +73,7 @@ class PaymentPage extends React.Component {
 
   render() {
     const {
-      summaryQuantity, summarySubtotal, intl, supportURL,
+      summaryQuantity, summarySubtotal, intl,
     } = this.props;
 
     return (
@@ -100,11 +97,8 @@ class PaymentPage extends React.Component {
               />
             ),
             'transaction-declined-message': (
-              <TransactionDeclined
-                values={{
-                  supportUrl: supportURL,
-                }}
-              />),
+              <TransactionDeclined />
+            ),
             'apple-pay-merchant-validation-failure': intl.formatMessage(messages['payment.apple.pay.merchant.validation.failure']),
             'apple-pay-authorization-failure': intl.formatMessage(messages['payment.apple.pay.authorization.failure']),
           }}
@@ -119,8 +113,6 @@ PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
-  dashboardURL: PropTypes.string.isRequired,
-  supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,

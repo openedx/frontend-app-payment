@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+import { App } from '@edx/frontend-base';
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import { createStore } from 'redux';
@@ -26,7 +27,7 @@ const requirePaymentPageProps = {
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
   writable: true,
-  value: `${configuration.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
+  value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
 });
 
 configureI18n(configuration, messages);
@@ -38,7 +39,6 @@ describe('<PaymentPage />', () => {
   beforeEach(() => {
     const userAccount = Factory.build('userAccount');
     initialState = {
-      configuration: Factory.build('configuration'),
       authentication: {
         userId: 9,
         username: userAccount.username,

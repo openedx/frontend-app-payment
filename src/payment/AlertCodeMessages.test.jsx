@@ -43,7 +43,7 @@ describe('EnrollmentCodeQuantityUpdated', () => {
 describe('TransactionDeclined', () => {
   it('should render with values', () => {
     const component = (
-      <TransactionDeclined values={{ supportUrl: 'http://edx.org/support' }} />
+      <TransactionDeclined />
     );
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();

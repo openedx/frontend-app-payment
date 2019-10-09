@@ -7,7 +7,6 @@ import { Factory } from 'rosie';
 import { createStore } from 'redux';
 
 import '../__factories__/basket.factory';
-import '../../__factories__/configuration.factory';
 import '../__factories__/userAccount.factory';
 import Cart from './Cart';
 import createRootReducer from '../../data/reducers';
@@ -23,7 +22,6 @@ describe('<Cart />', () => {
   beforeEach(() => {
     userAccount = Factory.build('userAccount');
     initialState = {
-      configuration: Factory.build('configuration'),
       authentication: {
         userId: 9,
         username: userAccount.username,

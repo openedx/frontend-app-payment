@@ -168,9 +168,9 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.get).toHaveBeenCalledTimes(3);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
       expect(mockApiClient.get).toHaveBeenCalledWith(
-        `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+        `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
         {
           xhrFields: { withCredentials: true },
         },
@@ -230,10 +230,10 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
 
       expect(mockApiClient.get).toHaveBeenCalledTimes(3);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/?discount_jwt=i_am_a_jwt`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/?discount_jwt=i_am_a_jwt`);
       expect(mockApiClient.get).toHaveBeenCalledWith(
-        `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+        `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
         {
           xhrFields: { withCredentials: true },
         },
@@ -270,7 +270,7 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.get).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
     });
 
     it('should update basket data and show an info message', async () => {
@@ -425,7 +425,7 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
       expect(mockApiClient.post).toHaveBeenCalledWith(
-        `${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
+        `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
         { code: 'DEMO25' },
         {
           headers: { 'Content-Type': 'application/json' },
@@ -533,7 +533,7 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.delete).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.delete).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/my_personal_coupon_id`);
+      expect(mockApiClient.delete).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/my_personal_coupon_id`);
     });
   });
 
@@ -580,7 +580,7 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
       expect(mockApiClient.post).toHaveBeenCalledWith(
-        `${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`,
+        `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`,
         { quantity: 10 },
       );
     });

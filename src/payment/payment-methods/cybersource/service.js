@@ -27,7 +27,7 @@ export function configureApiService(newConfig, newApiClient) {
  */
 export async function sdnCheck(basketId, firstName, lastName, city, country) {
   const { data } = await apiClient.post(
-    `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
+    `${App.config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
     {
       name: `${firstName} ${lastName}`,
       city,
@@ -121,8 +121,8 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
 
   if (sdnCheckResponse.hits > 0) {
     /* istanbul ignore next */
-    if (config.ENVIRONMENT !== 'test') {
-      global.location.href = `${config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+    if (App.config.ENVIRONMENT !== 'test') {
+      global.location.href = `${App.config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
     }
     throw new Error('This card holder did not pass the SDN check.');
   }
@@ -143,7 +143,7 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
     formData.discount_jwt = basket.discountJwt;
   }
   const { data } = await apiClient.post(
-    `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
+    `${App.config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
     formurlencoded(formData),
     {
       headers: {
@@ -189,5 +189,5 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
     cybersourcePaymentParams.discount_jwt = basket.discountJwt;
   }
 
-  generateAndSubmitForm(config.CYBERSOURCE_URL, cybersourcePaymentParams);
+  generateAndSubmitForm(App.config.CYBERSOURCE_URL, cybersourcePaymentParams);
 }

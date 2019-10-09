@@ -15,11 +15,6 @@ describe('redux tests', () => {
   beforeEach(() => {
     store = createStore(combineReducers({
       payment: reducer,
-      configuration: () => ({
-        LMS_BASE_URL: 'lms_base_url',
-        SUPPORT_URL: 'support_url',
-        ECOMMERCE_BASE_URL: 'ecommerce_base_url',
-      }),
     }));
   });
 
@@ -106,25 +101,15 @@ describe('redux tests', () => {
           products: [],
           isCouponRedeemRedirect: false,
           isBasketProcessing: false,
-          dashboardURL: 'lms_base_url',
-          supportURL: 'support_url',
-          ecommerceURL: 'ecommerce_base_url',
           isEmpty: false,
           isRedirect: false,
         });
       });
 
       it('is a coupon redeem redirect', () => {
+        global.history.pushState({}, '', '?coupon_redeem_redirect=1');
         store = createStore(combineReducers({
           payment: reducer,
-          configuration: () => ({
-            LMS_BASE_URL: 'lms_base_url',
-            SUPPORT_URL: 'support_url',
-            ECOMMERCE_BASE_URL: 'ecommerce_base_url',
-          }),
-          queryParameters: () => ({
-            coupon_redeem_redirect: 1,
-          }),
         }));
 
         const result = paymentSelector(store.getState());
@@ -136,9 +121,6 @@ describe('redux tests', () => {
           products: [],
           isCouponRedeemRedirect: true, // this is now true
           isBasketProcessing: false,
-          dashboardURL: 'lms_base_url',
-          supportURL: 'support_url',
-          ecommerceURL: 'ecommerce_base_url',
           isEmpty: false,
           isRedirect: true, // this is also now true.
         });
