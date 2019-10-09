@@ -10,9 +10,9 @@ import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 
 import './__factories__/basket.factory';
 import '../__factories__/configuration.factory';
-import '../__factories__/userAccount.factory';
 import { ConnectedPaymentPage } from './';
 import { configuration } from '../environment';
+import './__factories__/userAccount.factory';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';

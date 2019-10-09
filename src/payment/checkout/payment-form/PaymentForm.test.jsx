@@ -11,8 +11,7 @@ import { configuration } from '../../../environment';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
 import '../../../__factories__/configuration.factory';
-import '../../../__factories__/userAccount.factory';
-
+import '../../__factories__/userAccount.factory';
 
 describe('<PaymentForm />', () => {
   let paymentForm;

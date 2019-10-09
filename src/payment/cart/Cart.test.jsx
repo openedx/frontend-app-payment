@@ -8,7 +8,7 @@ import { createStore } from 'redux';
 
 import '../__factories__/basket.factory';
 import '../../__factories__/configuration.factory';
-import '../../__factories__/userAccount.factory';
+import '../__factories__/userAccount.factory';
 import Cart from './Cart';
 import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';

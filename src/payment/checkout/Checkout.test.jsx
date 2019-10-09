@@ -10,7 +10,7 @@ import Checkout from './Checkout';
 import { submitPayment } from '../data/actions';
 import '../__factories__/basket.factory';
 import '../../__factories__/configuration.factory';
-import '../../__factories__/userAccount.factory';
+import '../__factories__/userAccount.factory';
 import { transformResults } from '../data/service';
 
 jest.mock('@edx/frontend-analytics', () => ({

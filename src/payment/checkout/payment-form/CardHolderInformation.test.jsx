@@ -12,8 +12,7 @@ import PaymentForm from './PaymentForm';
 import '../../../__factories__/configuration.factory';
 import createRootReducer from '../../../data/reducers';
 
-import '../../../__factories__/userAccount.factory';
-
+import '../../__factories__/userAccount.factory';
 
 describe('<CardHolderInformation />', () => {
   let initialState;
