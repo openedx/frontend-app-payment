@@ -8,8 +8,8 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 
 import messages from './CardDetails.messages';
 
-import FormInput from '../../../common/components/FormInput';
-import FormSelect from '../../../common/components/FormSelect';
+import FormInput from './FormInput';
+import FormSelect from './FormSelect';
 
 import { getCardIcon } from './utils/credit-card';
 

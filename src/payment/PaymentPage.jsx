@@ -12,7 +12,7 @@ import { fetchBasket } from './data/actions';
 import { paymentSelector } from './data/selectors';
 
 // Components
-import { PageLoading } from '../common';
+import PageLoading from './PageLoading';
 import AlertList from '../feedback/AlertList';
 import { SingleEnrollmentCodeWarning, EnrollmentCodeQuantityUpdated, TransactionDeclined } from './AlertCodeMessages';
 import EmptyCartMessage from './EmptyCartMessage';
