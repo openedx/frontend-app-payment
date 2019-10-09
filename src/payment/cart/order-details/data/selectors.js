@@ -1,7 +1,7 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { getModuleState } from '../../../../common/utils';
 import { emailSelector } from '../../../../common/selectors';
+import { getModuleState } from '../../../data/utils';
 import {
   SEAT_MESSAGE_KEY,
   CREDIT_SEAT_MESSAGE_KEY,

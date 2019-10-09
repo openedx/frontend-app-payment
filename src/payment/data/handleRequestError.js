@@ -1,16 +1,5 @@
-import pick from 'lodash.pick';
 import { logApiClientError, logInfo } from '@edx/frontend-logging';
 import { camelCaseObject } from './utils';
-
-
-export function applyConfiguration(expected, actual) {
-  Object.keys(expected).forEach((key) => {
-    if (actual[key] === undefined) {
-      throw new Error(`Service configuration error: ${key} is required.`);
-    }
-  });
-  return pick(actual, Object.keys(expected));
-}
 
 function handleFieldErrors(errors) {
   const fieldErrors = Object.entries(errors).map(([name, value]) => ({
@@ -54,7 +43,7 @@ function handleApiMessages(messages) {
  * @param unpackFunction (Optional) A function to use to unpack the field errors as a replacement
  * for the default.
  */
-export function handleRequestError(error) {
+export default function handleRequestError(error) {
   // Validation errors
   if (error.response && error.response.data.field_errors) {
     logInfo('Field Errors', error.response.data.field_errors);

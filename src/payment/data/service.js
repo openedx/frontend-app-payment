@@ -4,8 +4,8 @@ import { logError } from '@edx/frontend-logging';
 import { configureApiService as configureCybersourceApiService } from '../payment-methods/cybersource';
 import { configureApiService as configurePayPalApiService } from '../payment-methods/paypal';
 import { configureApiService as configureApplePayApiService } from '../payment-methods/apple-pay';
-import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
-import { camelCaseObject } from '../../common/utils';
+import handleRequestError from './handleRequestError';
+import { camelCaseObject } from './utils';
 import { ORDER_TYPES } from './constants';
 
 let config = {

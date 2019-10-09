@@ -1,15 +1,15 @@
-import { configureApiService, checkout, normalizeFieldErrors } from './service';
+import { logApiClientError } from '@edx/frontend-logging';
 
-jest.mock('../../../common/utils', () => ({
+import { checkout, normalizeFieldErrors } from './service';
+import { generateAndSubmitForm } from '../../data/utils';
+
+jest.mock('../../data/utils', () => ({
   generateAndSubmitForm: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-logging', () => ({
   logApiClientError: jest.fn(),
 }));
-
-import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
-import { logApiClientError } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 const config = {
   ECOMMERCE_BASE_URL: 'ecommerce.org',

@@ -2,8 +2,8 @@ import formurlencoded from 'form-urlencoded';
 import pick from 'lodash.pick';
 import { logApiClientError } from '@edx/frontend-logging';
 
-import { applyConfiguration, handleRequestError } from '../../../common/serviceUtils';
-import { generateAndSubmitForm } from '../../../common/utils';
+import handleRequestError from '../../data/handleRequestError';
+import { generateAndSubmitForm } from '../../data/utils';
 
 let config = {
   CYBERSOURCE_URL: null,
