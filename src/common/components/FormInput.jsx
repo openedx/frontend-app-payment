@@ -27,11 +27,15 @@ FormInput.propTypes = {
   input: PropTypes.shape({}).isRequired,
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool,
   meta: PropTypes.shape({
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
   }).isRequired,
+};
+
+FormInput.defaultProps = {
+  disabled: false,
 };
 
 export default FormInput;
