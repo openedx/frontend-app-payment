@@ -32,9 +32,9 @@
   "dependencies": {
     "@edx/frontend-analytics": "3.0.0",
     "@edx/frontend-auth": "7.0.1",
-    "@edx/frontend-base": "3.0.0",
-    "@edx/frontend-component-footer": "8.0.0",
-    "@edx/frontend-component-header": "1.1.2",
+    "@edx/frontend-base": "^4.0.1",
+    "@edx/frontend-component-footer": "^9.0.0",
+    "@edx/frontend-component-header": "1.1.4",
     "@edx/frontend-i18n": "3.0.3",
     "@edx/frontend-logging": "3.0.1",
     "@edx/paragon": "7.1.4",
