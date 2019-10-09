@@ -8221,6 +8221,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <input
                   checked={false}
                   className="form-control"
+                  disabled={false}
                   id="purchasedForOrganization"
                   name="purchasedForOrganization"
                   onBlur={[Function]}
