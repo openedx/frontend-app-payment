@@ -35,6 +35,14 @@ The dev server is running at `http://localhost:1998 <http://localhost:1998>`_.
 
 By default it will show an empty basket view.
 
+**Enable in devstack**
+
+To have your devstack ecommerce use this dev server:
+
+1. Go to `ecommerce Django admin <http://localhost:18130/admin/>`_, and sign in with the `edx user <https://github.com/edx/devstack#usernames-and-passwords>`_ if needed.
+
+2. In `Core > Site configurations > localhost:18130 <http://localhost:18130/admin/core/siteconfiguration/1/change/>`_, set "Enable Microfrontend for Basket Page" and set the accompanying url to ``http://localhost:1998``
+
 API Documentation
 -----------------
 
