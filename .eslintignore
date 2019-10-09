@@ -3,3 +3,4 @@ dist/
 node_modules/
 __mocks__/
 src/payment/checkout/card-validator/
+jest.config.js
