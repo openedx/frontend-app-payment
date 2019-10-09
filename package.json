@@ -14,10 +14,10 @@
     "build": "NODE_ENV=production BABEL_ENV=production node build.prod.js",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "is-es5": "es-check es5 ./dist/*.js",
-    "start": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev.config.js --progress",
     "start:stage": "NODE_ENV=development BABEL_ENV=development webpack-dev-server --config=webpack/webpack.dev-stage.config.js --progress --disable-host-check",
     "lint": "fedx-scripts eslint",
     "snapshot": "fedx-scripts jest --updateSnapshot",
+    "start": "fedx-scripts webpack-dev-server --progress",
     "test": "fedx-scripts jest --coverage --passWithNoTests"
   },
   "husky": {
