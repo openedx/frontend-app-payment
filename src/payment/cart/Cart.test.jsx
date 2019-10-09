@@ -80,14 +80,14 @@ describe('<Cart />', () => {
     // This test uses its own setup since we don't have actions to update currency.
     store = createStore(
       createRootReducer(),
-      Object.assign({}, {}, {
+      {
         payment: {
           currency: {
             currencyCode: 'MXN',
             conversionRate: 19.092733,
           },
         },
-      }),
+      },
     );
     const component = (
       <IntlProvider locale="en">
