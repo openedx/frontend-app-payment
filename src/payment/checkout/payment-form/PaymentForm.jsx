@@ -9,6 +9,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
+import { utils } from '../../../common';
 
 const CardValidator = require('../../../common/card-validator');
 
@@ -16,6 +17,16 @@ export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.formRef = React.createRef();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.loading !== prevProps.loading
+      && !this.props.loading
+    ) {
+      // Send a SpeedCurve event when we stop loading for the first time
+      utils.markPerformanceIfAble('Payment form finished loading');
+    }
   }
 
   onSubmit = (values) => {
