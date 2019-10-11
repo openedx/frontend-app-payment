@@ -11,9 +11,11 @@ import Footer, { messages as footerMessages } from '@edx/frontend-component-foot
 import appMessages from './i18n';
 import { PaymentPage, EcommerceRedirect, responseInterceptor } from './payment';
 import configureStore from './store';
+import markPerformanceIfAble from './speedcurve';
 import './index.scss';
 
 App.subscribe(APP_READY, () => {
+  markPerformanceIfAble('Payment app began painting');
   ReactDOM.render(
     <AppProvider store={configureStore()}>
       <Header />
