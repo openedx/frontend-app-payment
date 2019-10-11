@@ -6,7 +6,7 @@ import SiteHeader from '@edx/frontend-component-site-header';
 import { IntlProvider, injectIntl, intlShape, getLocale, getMessages } from '@edx/frontend-i18n';
 import { logInfo } from '@edx/frontend-logging';
 
-import { ErrorBoundary, fetchUserAccount } from '../common';
+import { ErrorBoundary, fetchUserAccount, utils } from '../common';
 import { ConnectedPaymentPage } from '../payment';
 import HeaderLogo from '../assets/logo.svg';
 import messages from './App.messages';
@@ -105,12 +105,29 @@ PageContent.defaultProps = {
 const IntlPageContent = injectIntl(PageContent);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hasPreviouslyRendered: false,
+    };
+  }
+
   componentDidMount() {
     const { username } = this.props;
     this.props.fetchUserAccount(username);
   }
 
   render() {
+    // Send performance event on initial render
+    if (!this.state.hasPreviouslyRendered) {
+      utils.markPerformanceIfAble('Payment app began painting');
+
+      this.setState({
+        hasPreviouslyRendered: true,
+      });
+    }
+
     return (
       <ErrorBoundary>
         <IntlProvider locale={getLocale()} messages={getMessages()}>

@@ -129,3 +129,10 @@ export function generateAndSubmitForm(url, params = {}) {
   global.document.body.appendChild(form);
   form.submit();
 }
+
+// Used for SpeedCurve performance tracking
+export function markPerformanceIfAble(markName) {
+  if (performance.mark) {
+    performance.mark(markName);
+  }
+}
