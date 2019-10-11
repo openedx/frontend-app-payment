@@ -9,9 +9,8 @@ import Header, { messages as headerMessages } from '@edx/frontend-component-head
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
 
 import appMessages from './i18n';
-import { PaymentPage, EcommerceRedirect, responseInterceptor } from './payment';
+import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble } from './payment';
 import configureStore from './store';
-import markPerformanceIfAble from './speedcurve';
 import './index.scss';
 
 App.subscribe(APP_READY, () => {

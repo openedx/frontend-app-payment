@@ -9,7 +9,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
-import markPerformanceIfAble from '../../../speedcurve';
+import markPerformanceIfAble from '../../speedcurve';
 
 const CardValidator = require('../card-validator');
 
