@@ -80,6 +80,7 @@
   "payment.card.holder.information.city.label": "Ville (requis)",
   "payment.card.holder.information.country.label": "Pays (requis)",
   "payment.card.holder.information.postal.code.label": "Code Postal",
+  "payment.card.holder.information.purchased.for.organization": "I am purchasing on behalf of my employer or other professional organization",
   "payment.card.holder.information.country.options.empty": "Choose country",
   "payment.form.errors.invalid.card.number": "Invalid card number",
   "payment.form.errors.unsupported.card": "Unsupported card type",
