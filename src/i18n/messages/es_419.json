@@ -80,6 +80,7 @@
   "payment.card.holder.information.city.label": "Ciudad (requerida)",
   "payment.card.holder.information.country.label": "País (requerido)",
   "payment.card.holder.information.postal.code.label": "Código Postal",
+  "payment.card.holder.information.purchased.for.organization": "I am purchasing on behalf of my employer or other professional organization",
   "payment.card.holder.information.country.options.empty": "Choose country",
   "payment.form.errors.invalid.card.number": "Número de tarjeta invalido",
   "payment.form.errors.unsupported.card": "Tipo de tarjeta no soportado",
