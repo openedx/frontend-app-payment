@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@cospired/i18n-iso-languages": "2.0.2",
+    "@cospired/i18n-iso-languages": "2.1.0",
     "@edx/edx-bootstrap": "2.2.2",
     "@edx/frontend-analytics": "2.0.0",
     "@edx/frontend-auth": "7.0.0",
