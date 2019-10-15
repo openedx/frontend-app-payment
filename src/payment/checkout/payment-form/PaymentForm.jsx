@@ -19,6 +19,10 @@ export class PaymentFormComponent extends React.Component {
     this.formRef = React.createRef();
   }
 
+  componentDidMount() {
+    utils.markPerformanceIfAble('Payment Form component rendered');
+  }
+
   componentDidUpdate(prevProps) {
     if (
       this.props.loading !== prevProps.loading
