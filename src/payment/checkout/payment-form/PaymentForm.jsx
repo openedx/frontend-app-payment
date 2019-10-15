@@ -20,7 +20,7 @@ export class PaymentFormComponent extends React.Component {
   }
 
   componentDidMount() {
-    utils.markPerformanceIfAble('Payment Form component rendered');
+    markPerformanceIfAble('Payment Form component rendered');
   }
 
   componentDidUpdate(prevProps) {
