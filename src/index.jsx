@@ -11,7 +11,9 @@ import Footer, { messages as footerMessages } from '@edx/frontend-component-foot
 import appMessages from './i18n';
 import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble } from './payment';
 import configureStore from './store';
+
 import './index.scss';
+import './assets/favicon.ico';
 
 App.subscribe(APP_READY, () => {
   markPerformanceIfAble('Payment app began painting');
