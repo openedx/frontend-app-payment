@@ -5,11 +5,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 
+import { sendTrackEvent } from '@edx/frontend-analytics';
 import Header, { messages as headerMessages } from '@edx/frontend-component-header';
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
 
 import appMessages from './i18n';
-import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble } from './payment';
+import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties } from './payment';
 import configureStore from './store';
 
 import './index.scss';
@@ -17,6 +18,10 @@ import './assets/favicon.ico';
 
 App.subscribe(APP_READY, () => {
   markPerformanceIfAble('Payment app began painting');
+  sendTrackEvent(
+    'edx.bi.ecommerce.payment_mfe.started_painting',
+    getPerformanceProperties(),
+  );
   ReactDOM.render(
     <AppProvider store={configureStore()}>
       <Header />

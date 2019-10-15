@@ -9,7 +9,7 @@ module.exports = createConfig('jest', {
     'src/index.jsx',
     'src/payment/checkout/card-validator',
     'src/payment/data/handleRequestError.js',
-    'src/payment/speedcurve.js',
+    'src/payment/performanceEventing.js',
     'src/i18n',
     'src/store',
     'src/data',

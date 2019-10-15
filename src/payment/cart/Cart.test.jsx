@@ -13,6 +13,10 @@ import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/service';
 
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
+
 describe('<Cart />', () => {
   let store;
   let tree;

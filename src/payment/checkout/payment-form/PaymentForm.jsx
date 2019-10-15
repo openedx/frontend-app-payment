@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
 import { StatefulButton } from '@edx/paragon';
 
@@ -9,7 +10,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
-import markPerformanceIfAble from '../../speedcurve';
+import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 
 const CardValidator = require('../card-validator');
 
@@ -21,16 +22,10 @@ export class PaymentFormComponent extends React.Component {
 
   componentDidMount() {
     markPerformanceIfAble('Payment Form component rendered');
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.loading !== prevProps.loading
-      && !this.props.loading
-    ) {
-      // Send a SpeedCurve event when we stop loading for the first time
-      markPerformanceIfAble('Payment form finished loading');
-    }
+    sendTrackEvent(
+      'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
+      getPerformanceProperties(),
+    );
   }
 
   onSubmit = (values) => {

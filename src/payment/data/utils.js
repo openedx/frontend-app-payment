@@ -129,4 +129,3 @@ export function generateAndSubmitForm(url, params = {}) {
   global.document.body.appendChild(form);
   form.submit();
 }
-
