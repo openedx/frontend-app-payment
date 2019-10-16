@@ -22,7 +22,6 @@ const baseState = {
       coupons: [],
       isBasketProcessing: false,
     },
-    currency: {},
   },
 };
 

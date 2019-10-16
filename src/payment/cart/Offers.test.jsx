@@ -8,7 +8,7 @@ import Offers from './Offers';
 
 const mockStore = configureMockStore();
 
-const baseState = { payment: { basket: {}, currency: {} } };
+const baseState = { payment: { basket: {} } };
 
 const renderWithProviders = children => renderer.create((
   <IntlProvider locale="en">

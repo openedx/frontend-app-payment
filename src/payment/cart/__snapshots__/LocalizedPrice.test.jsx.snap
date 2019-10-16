@@ -11,6 +11,6 @@ exports[`LocalizedPrice should render localized currency 1`] = `
 
 exports[`LocalizedPrice should render unlocalized currency 1`] = `
 <span>
-  10
+  $10.00
 </span>
 `;

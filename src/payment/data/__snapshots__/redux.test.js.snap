@@ -10,7 +10,6 @@ Object {
     "redirect": false,
     "submitting": false,
   },
-  "currency": Object {},
 }
 `;
 
@@ -24,7 +23,6 @@ Object {
     "redirect": false,
     "submitting": false,
   },
-  "currency": Object {},
 }
 `;
 
@@ -38,6 +36,5 @@ Object {
     "redirect": false,
     "submitting": false,
   },
-  "currency": Object {},
 }
 `;
