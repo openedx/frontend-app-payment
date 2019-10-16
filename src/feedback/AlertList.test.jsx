@@ -2,12 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import renderer, { act } from 'react-test-renderer';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
-import { Factory } from 'rosie';
-import { configuration } from '../environment';
-import messages from '../i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 
-import '../__factories__/configuration.factory';
 import ConnectedAlertList from './AlertList';
 import createRootReducer from '../data/reducers';
 import { addMessage } from './data/actions';
@@ -17,15 +13,11 @@ jest.mock('@edx/frontend-logging', () => ({
   logError: jest.fn(),
 }));
 
-configureI18n(configuration, messages);
-
 describe('AlertList', () => {
   let store;
 
   beforeEach(() => {
-    store = createStore(createRootReducer(), {
-      configuration: Factory.build('configuration'),
-    });
+    store = createStore(createRootReducer());
   });
 
   it('should be null by default', () => {

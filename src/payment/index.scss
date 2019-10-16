@@ -1,5 +1,31 @@
-@import "./payment-methods/apple-pay/apple-pay";
+@import './payment-methods/apple-pay/apple-pay';
 
+.word-break-all {
+  word-break: break-all !important;
+}
+
+// TODO: Update edx-bootstrap theme to incorporate these edits.
+.btn, a.btn {
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.btn-link {
+  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  & > main {
+    flex-grow: 1;
+  }
+}
 
 @keyframes skeleton-pulse {
   0% {
@@ -12,7 +38,6 @@
     opacity: 1;
   }
 }
-
 
 .page__payment {
   .col-basket-summary {

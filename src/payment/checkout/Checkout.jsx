@@ -73,7 +73,6 @@ class Checkout extends React.Component {
     const {
       intl,
       isFreeBasket,
-      ecommerceURL,
       loading,
       isBasketProcessing,
       paymentMethod,
@@ -92,7 +91,6 @@ class Checkout extends React.Component {
     if (isFreeBasket) {
       return (
         <FreeCheckoutOrderButton
-          ecommerceURL={ecommerceURL}
           onClick={this.handleSubmitFreeCheckout}
         />
       );
@@ -155,7 +153,6 @@ class Checkout extends React.Component {
 Checkout.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
-  ecommerceURL: PropTypes.string.isRequired,
   submitPayment: PropTypes.func.isRequired,
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,

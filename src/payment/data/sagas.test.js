@@ -1,3 +1,4 @@
+import { App } from '@edx/frontend-base';
 import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
@@ -9,7 +10,7 @@ import paymentSaga, {
   handleRemoveCoupon,
   handleAddCoupon,
 } from './sagas';
-import { configureApiService, transformResults } from './service';
+import { transformResults } from './service';
 import {
   basketDataReceived,
   basketProcessing,
@@ -28,7 +29,6 @@ import * as cybersourceService from '../payment-methods/cybersource';
 jest.mock('@edx/frontend-logging');
 jest.mock('../payment-methods/cybersource', () => ({
   checkout: jest.fn(),
-  configureApiService: jest.fn(),
 }));
 
 describe('saga tests', () => {
@@ -36,7 +36,6 @@ describe('saga tests', () => {
   let caughtErrors;
   let sagaOptions;
   let response;
-  let configuration;
   let basketProcessingState;
   let basketNotProcessingState;
   let courseKey;
@@ -44,25 +43,6 @@ describe('saga tests', () => {
   beforeEach(() => {
     dispatched = [];
     caughtErrors = [];
-
-    configuration = {
-      // Any necessary "configuration" the service needs.
-      ACCOUNTS_API_BASE_URL: 'http://localhost/accounts',
-      APPLE_PAY_MERCHANT_IDENTIFIER: null,
-      APPLE_PAY_MERCHANT_NAME: null,
-      APPLE_PAY_COUNTRY_CODE: null,
-      APPLE_PAY_CURRENCY_CODE: null,
-      APPLE_PAY_START_SESSION_URL: null,
-      APPLE_PAY_AUTHORIZE_URL: null,
-      APPLE_PAY_SUPPORTED_NETWORKS: null,
-      APPLE_PAY_MERCHANT_CAPABILITIES: null,
-      ECOMMERCE_BASE_URL: 'http://localhost/ecommerce/base',
-      ECOMMERCE_API_BASE_URL: 'http://localhost/ecommerce/api',
-      ECOMMERCE_RECEIPT_BASE_URL: 'http://localhost/ecommerce/receipts',
-      CYBERSOURCE_URL: 'http://localhost/cybersource',
-      ENVIRONMENT: 'test',
-      LMS_BASE_URL: 'http://localhost/lms',
-    };
 
     // Used to reset the dispatch and onError handlers for runSaga.
     sagaOptions = {
@@ -149,7 +129,7 @@ describe('saga tests', () => {
       mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
         resolve({ data: { discount_applicable: true } });
       }));
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga({
@@ -168,9 +148,9 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.get).toHaveBeenCalledTimes(3);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
       expect(mockApiClient.get).toHaveBeenCalledWith(
-        `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+        `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
         {
           xhrFields: { withCredentials: true },
         },
@@ -210,7 +190,7 @@ describe('saga tests', () => {
       mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
         resolve({ data: { discount_applicable: true, jwt: 'i_am_a_jwt' } });
       }));
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga({
@@ -230,10 +210,10 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
 
       expect(mockApiClient.get).toHaveBeenCalledTimes(3);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/?discount_jwt=i_am_a_jwt`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/?discount_jwt=i_am_a_jwt`);
       expect(mockApiClient.get).toHaveBeenCalledWith(
-        `${configuration.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+        `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
         {
           xhrFields: { withCredentials: true },
         },
@@ -246,7 +226,7 @@ describe('saga tests', () => {
       };
 
       const mockApiClient = createBasketMockApiClient(response);
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -270,7 +250,7 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.get).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
     });
 
     it('should update basket data and show an info message', async () => {
@@ -279,7 +259,7 @@ describe('saga tests', () => {
       };
 
       const mockApiClient = createBasketMockApiClient(response);
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -326,7 +306,7 @@ describe('saga tests', () => {
       mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
         resolve(response);
       }));
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -358,7 +338,7 @@ describe('saga tests', () => {
       response = {}; // no meaningful data
 
       const mockApiClient = createBasketMockApiClient(response, { throws: true });
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -403,7 +383,7 @@ describe('saga tests', () => {
       response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
 
       const mockApiClient = createBasketMockApiClient(response);
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -425,7 +405,7 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
       expect(mockApiClient.post).toHaveBeenCalledWith(
-        `${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
+        `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
         { code: 'DEMO25' },
         {
           headers: { 'Content-Type': 'application/json' },
@@ -437,7 +417,7 @@ describe('saga tests', () => {
       response = { data: Factory.build('basket', {}, { numProducts: 1, numErrorMessages: 1 }) };
 
       const mockApiClient = createBasketMockApiClient(response, { throws: true });
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -467,7 +447,7 @@ describe('saga tests', () => {
       // response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
 
       const mockApiClient = createBasketMockApiClient({}, { throws: true });
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -512,7 +492,7 @@ describe('saga tests', () => {
       response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
 
       const mockApiClient = createBasketMockApiClient(response);
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -533,7 +513,7 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.delete).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.delete).toHaveBeenCalledWith(`${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/my_personal_coupon_id`);
+      expect(mockApiClient.delete).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/my_personal_coupon_id`);
     });
   });
 
@@ -558,7 +538,7 @@ describe('saga tests', () => {
       response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
 
       const mockApiClient = createBasketMockApiClient(response);
-      configureApiService(configuration, mockApiClient);
+      App.apiClient = mockApiClient;
 
       try {
         await runSaga(
@@ -580,7 +560,7 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
       expect(mockApiClient.post).toHaveBeenCalledTimes(1);
       expect(mockApiClient.post).toHaveBeenCalledWith(
-        `${configuration.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`,
+        `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`,
         { quantity: 10 },
       );
     });

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
 import LocalizedPrice from './cart/LocalizedPrice';
+import { App } from '@edx/frontend-base';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SingleEnrollmentCodeWarning = ({ values }) => (
@@ -65,7 +66,7 @@ EnrollmentCodeQuantityUpdated.propTypes = {
   }).isRequired,
 };
 
-export const TransactionDeclined = ({ values }) => (
+export const TransactionDeclined = () => (
   <React.Fragment>
     <FormattedMessage
       id="payment.messages.transaction.declined.body"
@@ -73,7 +74,7 @@ export const TransactionDeclined = ({ values }) => (
       description="Asks the user to check their information and includes a link to contact support for help."
       values={{
         link: (
-          <Hyperlink destination={values.supportUrl}>
+          <Hyperlink destination={App.config.SUPPORT_URL}>
             <FormattedMessage
               id="payment.error.fetch.basket.support.fragment"
               defaultMessage="contact support"
@@ -85,9 +86,3 @@ export const TransactionDeclined = ({ values }) => (
     />
   </React.Fragment>
 );
-
-TransactionDeclined.propTypes = {
-  values: PropTypes.shape({
-    supportUrl: PropTypes.string,
-  }).isRequired,
-};

@@ -1,26 +1,21 @@
-/* eslint-disable global-require */
+import { App } from '@edx/frontend-base';
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
+import { logError } from '@edx/frontend-logging';
+
 import ApplePayButton from './ApplePayButton';
-import { configuration } from '../../../environment';
-import messages from '../../../i18n';
 
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
   writable: true,
-  value: `${configuration.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
+  value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
 });
-
-configureI18n(configuration, messages);
-
 
 jest.mock('@edx/frontend-logging', () => ({
   logError: jest.fn(),
 }));
-
-import { logError } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 const applePaySession = { begin: jest.fn() };
 global.ApplePaySession = jest.fn().mockImplementation(() => applePaySession);

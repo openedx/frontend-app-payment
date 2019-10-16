@@ -130,9 +130,3 @@ export function generateAndSubmitForm(url, params = {}) {
   form.submit();
 }
 
-// Used for SpeedCurve performance tracking
-export function markPerformanceIfAble(markName) {
-  if (performance.mark) {
-    performance.mark(markName);
-  }
-}

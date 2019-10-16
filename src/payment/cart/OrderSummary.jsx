@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-i18n';
 
-import { utils } from '../../common';
+import markPerformanceIfAble from '../speedcurve';
 
 class OrderSummary extends React.Component {
   componentDidMount() {
-    utils.markPerformanceIfAble('Order Summary component rendered');
+    markPerformanceIfAble('Order Summary component rendered');
   }
 
   render() {

@@ -1977,7 +1977,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -2010,7 +2010,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
                     data-icon="question-circle"
                     data-prefix="fas"
                     focusable="false"
@@ -2053,7 +2053,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -4011,7 +4011,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -4044,7 +4044,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
                     data-icon="question-circle"
                     data-prefix="fas"
                     focusable="false"
@@ -4087,7 +4087,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -6049,7 +6049,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -6082,7 +6082,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
                     data-icon="question-circle"
                     data-prefix="fas"
                     focusable="false"
@@ -6125,7 +6125,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -8288,7 +8288,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -8321,7 +8321,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
                     data-icon="question-circle"
                     data-prefix="fas"
                     focusable="false"
@@ -8364,7 +8364,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -10356,7 +10356,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -10389,7 +10389,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
                     data-icon="question-circle"
                     data-prefix="fas"
                     focusable="false"
@@ -10432,7 +10432,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -12437,7 +12437,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"
@@ -12470,7 +12470,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 >
                   <svg
                     aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 "
+                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
                     data-icon="question-circle"
                     data-prefix="fas"
                     focusable="false"
@@ -12513,7 +12513,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 />
                 <svg
                   aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 lock-icon"
+                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
                   data-icon="lock"
                   data-prefix="fas"
                   focusable="false"

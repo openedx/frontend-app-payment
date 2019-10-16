@@ -1,21 +1,9 @@
-import pick from 'lodash.pick';
+import { App } from '@edx/frontend-base';
 import { logApiClientError } from '@edx/frontend-logging';
 
-import { applyConfiguration } from '../../../common/serviceUtils';
-import { generateAndSubmitForm } from '../../../common/utils';
+import { generateAndSubmitForm } from '../../data/utils';
 
-
-let config = {
-  ECOMMERCE_BASE_URL: null,
-};
-
-let apiClient = null; // eslint-disable-line no-unused-vars
-
-export function configureApiService(newConfig, newApiClient) {
-  applyConfiguration(config, newConfig);
-  config = pick(newConfig, Object.keys(config));
-  apiClient = newApiClient;
-}
+App.ensureConfig(['ECOMMERCE_BASE_URL'], 'PayPal API service');
 
 /**
  * Checkout with PayPal
@@ -24,7 +12,7 @@ export function configureApiService(newConfig, newApiClient) {
  * 2. Receive a paypal url
  * 3. Generate an submit an empty form to the paypal url
  */
-export async function checkout(basket) {
+export default async function checkout(basket) {
   const { basketId } = basket;
 
   const formData = {
@@ -35,19 +23,18 @@ export async function checkout(basket) {
     formData.discount_jwt = basket.discountJwt;
   }
 
-  const { data } = await apiClient.post(
-    `${config.ECOMMERCE_BASE_URL}/api/v2/checkout/`,
-    formData,
-  ).catch((error) => {
-    logApiClientError(error, {
-      messagePrefix: 'PayPal Checkout Error',
-      paymentMethod: 'PayPal',
-      paymentErrorType: 'Checkout',
-      basketId,
-    });
+  const { data } = await App.apiClient
+    .post(`${App.config.ECOMMERCE_BASE_URL}/api/v2/checkout/`, formData)
+    .catch((error) => {
+      logApiClientError(error, {
+        messagePrefix: 'PayPal Checkout Error',
+        paymentMethod: 'PayPal',
+        paymentErrorType: 'Checkout',
+        basketId,
+      });
 
-    throw error;
-  });
+      throw error;
+    });
 
   generateAndSubmitForm(data.payment_page_url);
 }

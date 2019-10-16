@@ -1,11 +1,8 @@
 import React from 'react';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import renderer from 'react-test-renderer';
-import ProductLineItem from './ProductLineItem';
-import { configuration } from '../../environment';
-import messages from '../../i18n';
 
-configureI18n(configuration, messages);
+import ProductLineItem from './ProductLineItem';
 
 const product = {
   imageUrl: 'https://prod-discovery.edx-cdn.org/media/course/image/21be6203-b140-422c-9233-a1dc278d7266-941abf27df4d.small.jpg',

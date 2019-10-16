@@ -1,6 +1,6 @@
 import { call, put, takeEvery, select } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
-import { utils } from '../../common';
+import { camelCaseObject, convertKeyNames } from './utils';
 
 // Actions
 import {
@@ -21,8 +21,6 @@ import * as PaymentApiService from './service';
 import { checkout as checkoutCybersource } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
-
-const { camelCaseObject, convertKeyNames } = utils;
 
 export const paymentMethods = {
   cybersource: checkoutCybersource,

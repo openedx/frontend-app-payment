@@ -1,18 +1,14 @@
-/* eslint-disable global-require */
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import { Factory } from 'rosie';
 
-import { configuration } from '../../environment';
-import messages from '../../i18n';
 import Checkout from './Checkout';
 import { submitPayment } from '../data/actions';
 import '../__factories__/basket.factory';
-import '../../__factories__/configuration.factory';
-import '../../__factories__/userAccount.factory';
+import '../__factories__/userAccount.factory';
 import { transformResults } from '../data/service';
 
 jest.mock('@edx/frontend-analytics', () => ({
@@ -22,7 +18,6 @@ jest.mock('@edx/frontend-analytics', () => ({
 import { sendTrackEvent } from '@edx/frontend-analytics'; // eslint-disable-line import/first
 
 const mockStore = configureMockStore();
-configureI18n(configuration, messages);
 
 const applePaySession = { begin: jest.fn() };
 global.ApplePaySession = jest.fn().mockImplementation(() => applePaySession);
@@ -38,7 +33,6 @@ describe('<Checkout />', () => {
     beforeEach(() => {
       const userAccount = Factory.build('userAccount');
       state = {
-        configuration: Factory.build('configuration'),
         authentication: {
           userId: 9,
           username: userAccount.username,
@@ -108,7 +102,6 @@ describe('<Checkout />', () => {
     beforeEach(() => {
       const userAccount = Factory.build('userAccount');
       state = {
-        configuration: Factory.build('configuration'),
         authentication: {
           userId: 9,
           username: userAccount.username,

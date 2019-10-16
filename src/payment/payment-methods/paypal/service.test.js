@@ -1,9 +1,10 @@
-import {
-  configureApiService,
-  checkout,
-} from './service';
+import { App } from '@edx/frontend-base';
+import { logApiClientError } from '@edx/frontend-logging';
 
-jest.mock('../../../common/utils', () => ({
+import checkout from './service';
+import { generateAndSubmitForm } from '../../data/utils';
+
+jest.mock('../../data/utils', () => ({
   generateAndSubmitForm: jest.fn(),
 }));
 
@@ -11,16 +12,13 @@ jest.mock('@edx/frontend-logging', () => ({
   logApiClientError: jest.fn(),
 }));
 
-import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
-import { logApiClientError } from '@edx/frontend-logging'; // eslint-disable-line import/first
-
 describe('Paypal Service', () => {
   const config = {
     ECOMMERCE_BASE_URL: 'ecommerce.org',
   };
   const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
-  const apiClient = {};
-  configureApiService(config, apiClient);
+  App.config = config;
+  App.apiClient = {};
 
   beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
@@ -30,7 +28,7 @@ describe('Paypal Service', () => {
   it('should generate and submit a form on success', () => {
     const successResponse = { data: { payment_page_url: 'theurl' } };
 
-    apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
+    App.apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
       resolve(successResponse);
     }));
 
@@ -43,7 +41,7 @@ describe('Paypal Service', () => {
   it('should throw and log on error', () => {
     const errorResponse = {};
 
-    apiClient.post = jest.fn().mockReturnValue(new Promise((resolve, reject) => {
+    App.apiClient.post = jest.fn().mockReturnValue(new Promise((resolve, reject) => {
       reject(errorResponse);
     }));
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
+import { AppContext, fetchUserAccount } from '@edx/frontend-base';
 
 import messages from './PaymentPage.messages';
 
@@ -12,7 +13,7 @@ import { fetchBasket } from './data/actions';
 import { paymentSelector } from './data/selectors';
 
 // Components
-import { PageLoading } from '../common';
+import PageLoading from './PageLoading';
 import AlertList from '../feedback/AlertList';
 import { SingleEnrollmentCodeWarning, EnrollmentCodeQuantityUpdated, TransactionDeclined } from './AlertCodeMessages';
 import EmptyCartMessage from './EmptyCartMessage';
@@ -21,6 +22,7 @@ import Checkout from './checkout/Checkout';
 
 class PaymentPage extends React.Component {
   componentDidMount() {
+    this.props.fetchUserAccount(this.context.authenticatedUser.username);
     this.props.fetchBasket();
   }
 
@@ -40,10 +42,7 @@ class PaymentPage extends React.Component {
 
     if (isEmpty) {
       return (
-        <EmptyCartMessage
-          dashboardURL={this.props.dashboardURL}
-          supportURL={this.props.supportURL}
-        />
+        <EmptyCartMessage />
       );
     }
 
@@ -76,7 +75,7 @@ class PaymentPage extends React.Component {
 
   render() {
     const {
-      summaryQuantity, summarySubtotal, intl, supportURL,
+      summaryQuantity, summarySubtotal, intl,
     } = this.props;
 
     return (
@@ -100,11 +99,8 @@ class PaymentPage extends React.Component {
               />
             ),
             'transaction-declined-message': (
-              <TransactionDeclined
-                values={{
-                  supportUrl: supportURL,
-                }}
-              />),
+              <TransactionDeclined />
+            ),
             'apple-pay-merchant-validation-failure': intl.formatMessage(messages['payment.apple.pay.merchant.validation.failure']),
             'apple-pay-authorization-failure': intl.formatMessage(messages['payment.apple.pay.authorization.failure']),
           }}
@@ -115,13 +111,14 @@ class PaymentPage extends React.Component {
   }
 }
 
+PaymentPage.contextType = AppContext;
+
 PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
-  dashboardURL: PropTypes.string.isRequired,
-  supportURL: PropTypes.string.isRequired,
   fetchBasket: PropTypes.func.isRequired,
+  fetchUserAccount: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -137,5 +134,6 @@ export default connect(
   paymentSelector,
   {
     fetchBasket,
+    fetchUserAccount,
   },
 )(injectIntl(PaymentPage));

@@ -1,95 +1,65 @@
 import 'babel-polyfill';
+
+import { App, AppProvider, APP_ERROR, APP_READY, ErrorPage, APP_AUTHENTICATED } from '@edx/frontend-base';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-  identifyAuthenticatedUser,
-  sendPageEvent,
-  configureAnalytics,
-  initializeSegment,
-} from '@edx/frontend-analytics';
-import { configureLoggingService, NewRelicLoggingService } from '@edx/frontend-logging';
-import { getAuthenticatedAPIClient } from '@edx/frontend-auth';
-import { configure as configureI18n } from '@edx/frontend-i18n';
+import { Route, Switch } from 'react-router-dom';
 
-import { configuration } from './environment';
-import messages from './i18n';
+import Header, { messages as headerMessages } from '@edx/frontend-component-header';
+import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
+
+import appMessages from './i18n';
+import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble } from './payment';
 import configureStore from './store';
-import { configureUserAccountApiService } from './common';
-import getQueryParameters from './data/getQueryParameters';
-import { configureApiService as configurePaymentApiService } from './payment';
 
 import './index.scss';
-import App from './components/App';
-import ErrorPage from './common/components/ErrorPage';
+import './assets/favicon.ico';
 
-let apiClient = null;
+App.subscribe(APP_READY, () => {
+  markPerformanceIfAble('Payment app began painting');
+  ReactDOM.render(
+    <AppProvider store={configureStore()}>
+      <Header />
+      <main>
+        <Switch>
+          <Route exact path="/" component={PaymentPage} />
+          <Route path="*" component={EcommerceRedirect} />
+        </Switch>
+      </main>
+      <Footer />
+    </AppProvider>,
+    document.getElementById('root'),
+  );
+});
 
-/**
- * We need to merge the application configuration with the authentication state
- * so that we can hand it all to the redux store's initializer.
- */
-function createInitialState(authenticatedUser) {
-  const queryParameters = getQueryParameters();
-  const authenicationState = { authentication: authenticatedUser };
-  return Object.assign({}, { configuration, queryParameters }, authenicationState);
-}
+App.subscribe(APP_ERROR, (error) => {
+  ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('root'));
+});
 
-function configure(authenticatedUser) {
-  configureI18n(configuration, messages);
+App.subscribe(APP_AUTHENTICATED, () => {
+  App.apiClient.interceptors.response.use(responseInterceptor);
+});
 
-  const { store, history } = configureStore(createInitialState(authenticatedUser), configuration.ENVIRONMENT);
-
-  configureLoggingService(NewRelicLoggingService);
-  configurePaymentApiService(configuration, apiClient);
-  configureUserAccountApiService(configuration, apiClient);
-  initializeSegment(configuration.SEGMENT_KEY);
-  configureAnalytics({
-    loggingService: NewRelicLoggingService,
-    authApiClient: apiClient,
-    analyticsApiBaseUrl: configuration.LMS_BASE_URL,
-  });
-
-  return {
-    store,
-    history,
-  };
-}
-
-function initialize(authenticatedUser) {
-  const { store, history } = configure(authenticatedUser);
-
-  ReactDOM.render(<App store={store} history={history} />, document.getElementById('root'));
-  identifyAuthenticatedUser(authenticatedUser.userId);
-  sendPageEvent();
-}
-
-try {
-  if (configuration.ENVIRONMENT !== 'production') {
-    import(/* webpackChunkName: "react-axe" */ 'react-axe').then(({ default: axe }) =>
-      axe(React, ReactDOM, 1000));
+App.initialize({
+  messages: [
+    appMessages,
+    headerMessages,
+    footerMessages,
+  ],
+  overrideHandlers: {
+    loadConfig: (app) => {
+      App.mergeConfig({
+        CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
+        SUPPORT_URL: process.env.SUPPORT_URL,
+        CYBERSOURCE_URL: process.env.CYBERSOURCE_URL,
+        APPLE_PAY_MERCHANT_NAME: process.env.APPLE_PAY_MERCHANT_NAME,
+        APPLE_PAY_COUNTRY_CODE: process.env.APPLE_PAY_COUNTRY_CODE,
+        APPLE_PAY_CURRENCY_CODE: process.env.APPLE_PAY_CURRENCY_CODE,
+        APPLE_PAY_START_SESSION_URL: process.env.APPLE_PAY_START_SESSION_URL,
+        APPLE_PAY_AUTHORIZE_URL: process.env.APPLE_PAY_AUTHORIZE_URL,
+        APPLE_PAY_SUPPORTED_NETWORKS: process.env.APPLE_PAY_SUPPORTED_NETWORKS && process.env.APPLE_PAY_SUPPORTED_NETWORKS.split(','),
+        APPLE_PAY_MERCHANT_CAPABILITIES: process.env.APPLE_PAY_MERCHANT_CAPABILITIES && process.env.APPLE_PAY_MERCHANT_CAPABILITIES.split(','),
+      }, 'App loadConfig override handler')
+    }
   }
-
-  apiClient = getAuthenticatedAPIClient({
-    appBaseUrl: configuration.BASE_URL,
-    authBaseUrl: configuration.LMS_BASE_URL,
-    loginUrl: configuration.LOGIN_URL,
-    logoutUrl: configuration.LOGOUT_URL,
-    csrfTokenApiPath: configuration.CSRF_TOKEN_API_PATH,
-    refreshAccessTokenEndpoint: configuration.REFRESH_ACCESS_TOKEN_ENDPOINT,
-    accessTokenCookieName: configuration.ACCESS_TOKEN_COOKIE_NAME,
-    userInfoCookieName: configuration.USER_INFO_COOKIE_NAME,
-    csrfCookieName: configuration.CSRF_COOKIE_NAME,
-    loggingService: NewRelicLoggingService,
-  });
-
-  apiClient.ensureAuthenticatedUser(window.location.pathname)
-    .then(({ authenticatedUser }) => {
-      initialize(authenticatedUser);
-    })
-    .catch((e) => {
-      throw e;
-    });
-} catch (e) {
-  ReactDOM.render(<ErrorPage />, document.getElementById('root'));
-  NewRelicLoggingService.logError(e);
-}
+});

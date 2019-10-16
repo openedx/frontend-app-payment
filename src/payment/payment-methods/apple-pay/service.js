@@ -1,28 +1,17 @@
-import pick from 'lodash.pick';
+import { App } from '@edx/frontend-base';
 import { logApiClientError } from '@edx/frontend-logging';
-import { applyConfiguration } from '../../../common/serviceUtils';
 
-let apiClient = null;
-
-let config = {
-  ECOMMERCE_BASE_URL: null,
-  ECOMMERCE_RECEIPT_BASE_URL: null,
-  ENVIRONMENT: null,
-  APPLE_PAY_MERCHANT_IDENTIFIER: null,
-  APPLE_PAY_MERCHANT_NAME: null,
-  APPLE_PAY_COUNTRY_CODE: null,
-  APPLE_PAY_CURRENCY_CODE: null,
-  APPLE_PAY_START_SESSION_URL: null,
-  APPLE_PAY_AUTHORIZE_URL: null,
-  APPLE_PAY_SUPPORTED_NETWORKS: null,
-  APPLE_PAY_MERCHANT_CAPABILITIES: null,
-};
-
-export function configureApiService(_config, _apiClient) {
-  applyConfiguration(config, _config);
-  config = pick(_config, Object.keys(config));
-  apiClient = _apiClient;
-}
+App.ensureConfig([
+  'ECOMMERCE_BASE_URL',
+  'ENVIRONMENT',
+  'APPLE_PAY_MERCHANT_NAME',
+  'APPLE_PAY_COUNTRY_CODE',
+  'APPLE_PAY_CURRENCY_CODE',
+  'APPLE_PAY_START_SESSION_URL',
+  'APPLE_PAY_AUTHORIZE_URL',
+  'APPLE_PAY_SUPPORTED_NETWORKS',
+  'APPLE_PAY_MERCHANT_CAPABILITIES',
+], 'ApplePay API service');
 
 /**
  * Given an order number, and an optional arg of whether to disable the back button, redirects the
@@ -36,9 +25,9 @@ export function configureApiService(_config, _apiClient) {
 /* istanbul ignore next - you can't mock window.location.href in jsdom */
 export const redirectToReceipt = (orderNumber, disableBackButton = false) => {
   const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(disableBackButton)}`;
-  if (config.ENVIRONMENT !== 'test') {
+  if (App.config.ENVIRONMENT !== 'test') {
     /* istanbul ignore next */
-    global.location.href = `${config.ECOMMERCE_RECEIPT_BASE_URL}?${queryParams}`;
+    global.location.href = `${App.config.ECOMMERCE_BASE_URL}/checkout/receipt/?${queryParams}`;
   }
 };
 
@@ -64,12 +53,12 @@ export function checkout(basket) {
     const version = 2;
     const totalAmount = basket.orderTotal;
     const paymentRequest = {
-      countryCode: config.APPLE_PAY_COUNTRY_CODE,
-      currencyCode: config.APPLE_PAY_CURRENCY_CODE,
-      supportedNetworks: config.APPLE_PAY_SUPPORTED_NETWORKS,
-      merchantCapabilities: config.APPLE_PAY_MERCHANT_CAPABILITIES,
+      countryCode: App.config.APPLE_PAY_COUNTRY_CODE,
+      currencyCode: App.config.APPLE_PAY_CURRENCY_CODE,
+      supportedNetworks: App.config.APPLE_PAY_SUPPORTED_NETWORKS,
+      merchantCapabilities: App.config.APPLE_PAY_MERCHANT_CAPABILITIES,
       total: {
-        label: config.APPLE_PAY_MERCHANT_NAME,
+        label: App.config.APPLE_PAY_MERCHANT_NAME,
         type: 'final',
         amount: totalAmount,
       },
@@ -87,7 +76,7 @@ export function checkout(basket) {
         is_payment_microfrontend: true,
       };
 
-      return apiClient.post(config.APPLE_PAY_START_SESSION_URL, postData)
+      return App.apiClient.post(App.config.APPLE_PAY_START_SESSION_URL, postData)
         .then((response) => {
           applePaySession.completeMerchantValidation(response.data);
         })
@@ -108,7 +97,7 @@ export function checkout(basket) {
     applePaySession.onpaymentauthorized = (event) => {
       const postData = event.payment;
 
-      return apiClient.post(config.APPLE_PAY_AUTHORIZE_URL, postData)
+      return App.apiClient.post(App.config.APPLE_PAY_AUTHORIZE_URL, postData)
         .then(({ data }) => {
           const orderNumber = data.number;
           applePaySession.completePayment(global.ApplePaySession.STATUS_SUCCESS);

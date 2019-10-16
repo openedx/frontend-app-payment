@@ -1,16 +1,13 @@
-/* eslint-disable global-require */
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 
-import { configuration } from '../../environment';
-import messages from '../../i18n';
 import Offers from './Offers';
 
 const mockStore = configureMockStore();
-configureI18n(configuration, messages);
+
 const baseState = { payment: { basket: {}, currency: {} } };
 
 const renderWithProviders = children => renderer.create((

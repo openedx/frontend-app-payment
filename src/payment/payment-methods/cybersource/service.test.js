@@ -1,15 +1,16 @@
-import { configureApiService, checkout, normalizeFieldErrors } from './service';
+import { App } from '@edx/frontend-base';
+import { logApiClientError } from '@edx/frontend-logging';
 
-jest.mock('../../../common/utils', () => ({
+import { checkout, normalizeFieldErrors } from './service';
+import { generateAndSubmitForm } from '../../data/utils';
+
+jest.mock('../../data/utils', () => ({
   generateAndSubmitForm: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-logging', () => ({
   logApiClientError: jest.fn(),
 }));
-
-import { generateAndSubmitForm } from '../../../common/utils'; // eslint-disable-line import/first
-import { logApiClientError } from '@edx/frontend-logging'; // eslint-disable-line import/first
 
 const config = {
   ECOMMERCE_BASE_URL: 'ecommerce.org',
@@ -43,8 +44,8 @@ describe('Cybersource Service', () => {
   };
   const cardValues = Object.values(formDetails.cardDetails);
 
-  const apiClient = {};
-  configureApiService(config, apiClient);
+  App.config = config;
+  App.apiClient = {};
 
   describe('normalizeCheckoutErrors', () => {
     it('should return fieldErrors if fieldErrors is not an object', () => {
@@ -107,7 +108,7 @@ describe('Cybersource Service', () => {
       };
       const sdnResponse = { data: { hits: 0 } };
 
-      apiClient.post = (url, postData) =>
+      App.apiClient.post = (url, postData) =>
         new Promise((resolve) => {
           expectNoCardDataToBePresent(postData);
           if (url === CYBERSOURCE_API) {
@@ -141,7 +142,7 @@ describe('Cybersource Service', () => {
       };
       const sdnResponse = { data: { hits: 1 } };
 
-      apiClient.post = (url, postData) =>
+      App.apiClient.post = (url, postData) =>
         new Promise((resolve) => {
           expectNoCardDataToBePresent(postData);
           if (url === CYBERSOURCE_API) {
@@ -158,7 +159,7 @@ describe('Cybersource Service', () => {
     it('should throw an error if the SDN check errors', async () => {
       const sdnErrorResponse = { boo: 'yah' };
 
-      apiClient.post = () =>
+      App.apiClient.post = () =>
         new Promise((resolve, reject) => {
           reject(sdnErrorResponse);
         });
@@ -184,7 +185,7 @@ describe('Cybersource Service', () => {
       error.response = errorResponse;
       const sdnResponse = { data: { hits: 0 } };
 
-      apiClient.post = url =>
+      App.apiClient.post = url =>
         new Promise((resolve, reject) => {
           if (url === SDN_URL) {
             resolve(sdnResponse);
@@ -209,7 +210,7 @@ describe('Cybersource Service', () => {
       error.response = errorResponse;
       const sdnResponse = { data: { hits: 0 } };
 
-      apiClient.post = url =>
+      App.apiClient.post = url =>
         new Promise((resolve, reject) => {
           if (url === SDN_URL) {
             resolve(sdnResponse);

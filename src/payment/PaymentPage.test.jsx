@@ -1,52 +1,38 @@
 /* eslint-disable global-require */
+import { App } from '@edx/frontend-base';
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import * as analytics from '@edx/frontend-analytics';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 
 import './__factories__/basket.factory';
-import '../__factories__/configuration.factory';
-import '../__factories__/userAccount.factory';
-import { ConnectedPaymentPage } from './';
-import { configuration } from '../environment';
-import messages from '../i18n';
+import './__factories__/userAccount.factory';
+import { PaymentPage } from './';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
 
-const requirePaymentPageProps = {
-  fetchBasket: () => {},
-};
-
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
   writable: true,
-  value: `${configuration.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
+  value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
 });
-
-configureI18n(configuration, messages);
+App.apiClient = jest.fn();
 
 describe('<PaymentPage />', () => {
-  let initialState;
   let store;
 
   beforeEach(() => {
     const userAccount = Factory.build('userAccount');
-    initialState = {
-      configuration: Factory.build('configuration'),
-      authentication: {
-        userId: 9,
-        username: userAccount.username,
-      },
-    };
 
-    store = createStore(createRootReducer(), initialState);
+    store = createStore(createRootReducer(), {}, applyMiddleware(thunkMiddleware));
     store.dispatch(fetchUserAccountSuccess(userAccount));
   });
 
@@ -59,7 +45,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -72,7 +58,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -87,7 +73,7 @@ describe('<PaymentPage />', () => {
     it('should render the basket in a different currency', () => {
       store = createStore(
         createRootReducer(),
-        Object.assign({}, initialState, {
+        Object.assign({}, {
           payment: {
             currency: {
               currencyCode: 'MXN',
@@ -95,11 +81,12 @@ describe('<PaymentPage />', () => {
             },
           },
         }),
+        applyMiddleware(thunkMiddleware),
       );
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -115,7 +102,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -144,7 +131,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -165,7 +152,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -181,7 +168,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -203,7 +190,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );
@@ -225,7 +212,7 @@ describe('<PaymentPage />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <ConnectedPaymentPage {...requirePaymentPageProps} />
+            <PaymentPage />
           </Provider>
         </IntlProvider>
       );

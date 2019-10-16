@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-i18n';
 import { Hyperlink } from '@edx/paragon';
+import { App } from '@edx/frontend-base';
 
-function FreeCheckoutOrderButton({ ecommerceURL, onClick }) {
+function FreeCheckoutOrderButton({ onClick }) {
   return (
     <Hyperlink
-      destination={`${ecommerceURL}/checkout/free-checkout/`}
+      destination={`${App.config.ECOMMERCE_BASE_URL}/checkout/free-checkout/`}
       className="btn btn-primary btn-lg"
       onClick={onClick}
     >
@@ -20,7 +21,6 @@ function FreeCheckoutOrderButton({ ecommerceURL, onClick }) {
 }
 
 FreeCheckoutOrderButton.propTypes = {
-  ecommerceURL: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 

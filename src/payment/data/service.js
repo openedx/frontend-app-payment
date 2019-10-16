@@ -1,51 +1,13 @@
-import pick from 'lodash.pick';
-import { logError } from '@edx/frontend-logging';
+import { App } from '@edx/frontend-base';
 
-import { configureApiService as configureCybersourceApiService } from '../payment-methods/cybersource';
-import { configureApiService as configurePayPalApiService } from '../payment-methods/paypal';
-import { configureApiService as configureApplePayApiService } from '../payment-methods/apple-pay';
-import { applyConfiguration, handleRequestError } from '../../common/serviceUtils';
-import { camelCaseObject } from '../../common/utils';
+import handleRequestError from './handleRequestError';
+import { camelCaseObject } from './utils';
 import { ORDER_TYPES } from './constants';
 
-let config = {
-  ACCOUNTS_API_BASE_URL: null,
-  ECOMMERCE_BASE_URL: null,
-  ECOMMERCE_API_BASE_URL: null,
-  ECOMMERCE_RECEIPT_BASE_URL: null,
-  ENVIRONMENT: null,
-  LMS_BASE_URL: null,
-};
-
-let apiClient = null; // eslint-disable-line no-unused-vars
-
-export function configureApiService(newConfig, newApiClient) {
-  applyConfiguration(config, newConfig);
-  config = pick(newConfig, Object.keys(config));
-  apiClient = newApiClient;
-
-  configureCybersourceApiService(newConfig, apiClient);
-  configurePayPalApiService(newConfig, apiClient);
-  configureApplePayApiService(newConfig, apiClient);
-
-  // For every ajax response, check if the API has
-  // responded with a redirect value. If so, redirect.
-  /* istanbul ignore next */
-  apiClient.interceptors.response.use((response) => {
-    const { status, data } = response;
-    if (status >= 200 && status < 300 && data && data.redirect) {
-      // Redirecting this SPA to itself is likely to cause
-      // a redirect loop.
-      if (global.location.href === data.redirect) {
-        logError('Potential redirect loop. The api response is redirecting to the same payment page url', {
-          url: global.location.href,
-        });
-      }
-      global.location.href = data.redirect;
-    }
-    return response;
-  });
-}
+App.ensureConfig([
+  'ECOMMERCE_BASE_URL',
+  'LMS_BASE_URL',
+], 'payment API service');
 
 function getOrderType(productType) {
   switch (productType) {
@@ -88,24 +50,24 @@ function handleBasketApiError(requestError) {
 
 export async function getBasket(discountJwt) {
   const discountJwtArg = typeof discountJwt !== 'undefined' ? `?discount_jwt=${discountJwt}` : '';
-  const { data } = await apiClient
-    .get(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
+  const { data } = await App.apiClient
+    .get(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
     .catch(handleBasketApiError);
 
   return transformResults(data);
 }
 
 export async function postQuantity(quantity) {
-  const { data } = await apiClient
-    .post(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
+  const { data } = await App.apiClient
+    .post(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
 export async function postCoupon(code) {
-  const { data } = await apiClient
+  const { data } = await App.apiClient
     .post(
-      `${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
+      `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
       { code },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -116,15 +78,15 @@ export async function postCoupon(code) {
 }
 
 export async function deleteCoupon(id) {
-  const { data } = await apiClient
-    .delete(`${config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
+  const { data } = await App.apiClient
+    .delete(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
 export async function getDiscountData(courseKey) {
-  const { data } = await apiClient.get(
-    `${config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+  const { data } = await App.apiClient.get(
+    `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
     {
       xhrFields: { withCredentials: true },
     },

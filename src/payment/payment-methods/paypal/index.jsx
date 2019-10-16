@@ -1,2 +1,2 @@
 export { default as PayPalButton } from './PayPalButton';
-export { configureApiService, checkout } from './service';
+export { default as checkout } from './service';

@@ -1,38 +1,24 @@
-/* eslint-disable global-require */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-i18n';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { Factory } from 'rosie';
 
-import { configuration } from '../../../environment';
-import messages from '../../../i18n';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
-import '../../../__factories__/configuration.factory';
-import '../../../__factories__/userAccount.factory';
-
-configureI18n(configuration, messages);
+import '../../__factories__/userAccount.factory';
 
 describe('<PaymentForm />', () => {
   let paymentForm;
-  let initialState;
   let store;
 
   beforeEach(() => {
     const userAccount = Factory.build('userAccount');
-    initialState = {
-      configuration: Factory.build('configuration'),
-      authentication: {
-        userId: 9,
-        username: userAccount.username,
-      },
-    };
 
-    store = createStore(createRootReducer(), initialState);
+    store = createStore(createRootReducer(), {});
     store.dispatch(fetchUserAccountSuccess(userAccount));
 
     const wrapper = mount((

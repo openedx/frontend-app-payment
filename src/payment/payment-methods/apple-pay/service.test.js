@@ -1,7 +1,6 @@
-import {
-  configureApiService,
-  checkout,
-} from './service';
+import { App } from '@edx/frontend-base';
+
+import { checkout } from './service';
 
 jest.mock('@edx/frontend-logging', () => ({
   logApiClientError: jest.fn(),
@@ -9,7 +8,6 @@ jest.mock('@edx/frontend-logging', () => ({
 
 describe('Perform Apple Pay Payment', () => {
   const config = {
-    APPLE_PAY_MERCHANT_IDENTIFIER: 'ecommerce.edx.org',
     APPLE_PAY_MERCHANT_NAME: 'edX e-commerce',
     APPLE_PAY_COUNTRY_CODE: 'USA',
     APPLE_PAY_CURRENCY_CODE: 'USD',
@@ -50,7 +48,8 @@ describe('Perform Apple Pay Payment', () => {
     onPaymentCancel: jest.fn(),
   };
 
-  configureApiService(config, apiClient);
+  App.config = config;
+  App.apiClient = apiClient;
 
   beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
@@ -65,7 +64,7 @@ describe('Perform Apple Pay Payment', () => {
   it('should create a new apple pay session', () => {
     const successResponse = { data: 1234 };
 
-    apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
+    App.apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
       resolve(successResponse);
     }));
 
@@ -95,7 +94,7 @@ describe('Perform Apple Pay Payment', () => {
     const validateSuccessResponse = { data: 1234 };
     const authSuccessResponse = { data: { number: 'the order number' } };
 
-    apiClient.post = jest.fn(url => new Promise((resolve) => {
+    App.apiClient.post = jest.fn(url => new Promise((resolve) => {
       if (url === config.APPLE_PAY_START_SESSION_URL) {
         resolve(validateSuccessResponse);
       } else if (url === config.APPLE_PAY_AUTHORIZE_URL) {
@@ -115,7 +114,7 @@ describe('Perform Apple Pay Payment', () => {
 
 
   it('should abort if merchant validation fails', () => {
-    apiClient.post = jest.fn(url => new Promise((resolve, reject) => {
+    App.apiClient.post = jest.fn(url => new Promise((resolve, reject) => {
       if (url === config.APPLE_PAY_START_SESSION_URL) {
         reject(new Error('error'));
       }
@@ -129,7 +128,7 @@ describe('Perform Apple Pay Payment', () => {
   });
 
   it('should complete the session with a failed status if authorization fails', () => {
-    apiClient.post = jest.fn(url => new Promise((resolve, reject) => {
+    App.apiClient.post = jest.fn(url => new Promise((resolve, reject) => {
       if (url === config.APPLE_PAY_AUTHORIZE_URL) {
         reject(new Error('error'));
       }
@@ -145,7 +144,7 @@ describe('Perform Apple Pay Payment', () => {
   });
 
   it('should fire the cancel handler on cancel', () => {
-    apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
+    App.apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
       setTimeout(resolve, 250); // wait long enough to cancel the session
     }));
 
