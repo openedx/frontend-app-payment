@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { connect, Provider } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch, Router } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import SiteHeader from '@edx/frontend-component-site-header';
 import { IntlProvider, injectIntl, intlShape, getLocale, getMessages } from '@edx/frontend-i18n';
 import { logInfo } from '@edx/frontend-logging';
 
 import { ErrorBoundary, fetchUserAccount } from '../common';
 import { ConnectedPaymentPage } from '../payment';
+import { ConnectedReceiptPage } from '../receipt';
 import HeaderLogo from '../assets/logo.svg';
 import messages from './App.messages';
 
@@ -45,6 +47,7 @@ function PageContent({
 
   return (
     <div id="app">
+      <Helmet titleTemplate="%s | edX" />
       <SiteHeader
         logo={HeaderLogo}
         loggedIn
@@ -57,6 +60,7 @@ function PageContent({
       <main>
         <Switch>
           <Route exact path="/" component={ConnectedPaymentPage} />
+          <Route exact path="/receipt" component={ConnectedReceiptPage} />
           <Route
             path="*"
             render={() => {

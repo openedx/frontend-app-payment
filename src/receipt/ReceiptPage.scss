@@ -1,0 +1,34 @@
+.confirmation-message {
+  font-size: 1.125rem;
+}
+
+.order-detail-heading {
+  font-size: 1.375rem;
+}
+
+.order-detail-info {
+  font-size: 1.125rem;
+}
+
+.table {
+  border-bottom: 2px solid;
+  thead {
+    th:first-child,
+    th:last-child {
+      width: 10%;
+    }
+  }
+}
+
+.totals {
+  .subtotal,
+  .total {
+    span {
+      padding: 0 12px;
+    }
+    span:first-child,
+    span:last-child {
+      width: 10%;
+    }
+  }
+}

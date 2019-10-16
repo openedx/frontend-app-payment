@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
 
 import messages from './PaymentPage.messages';
@@ -57,6 +58,7 @@ class PaymentPage extends React.Component {
     // view of the left-hand side of the interface until the actual content arrives.
     return (
       <div className="row">
+        <Helmet title="Payment" />
         <h1 className="sr-only">
           <FormattedMessage
             id="payment.page.heading"
