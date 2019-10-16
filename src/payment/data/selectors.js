@@ -1,16 +1,26 @@
 import { App } from '@edx/frontend-base';
 import { createSelector } from 'reselect';
 import { localeSelector, getCountryList } from '@edx/frontend-i18n';
+import Cookies from 'universal-cookie';
 
 export const storeName = 'payment';
 
-export const localizedCurrencySelector = (state) => {
-  const { currencyCode, conversionRate } = state[storeName].currency;
+export const localizedCurrencySelector = () => {
+  const cookie = new Cookies().get(App.config.CURRENCY_COOKIE_NAME);
+  let currencyCode;
+  let conversionRate;
+
+  if (cookie && typeof cookie.code === 'string' && typeof cookie.rate === 'number') {
+    currencyCode = cookie.code;
+    conversionRate = cookie.rate;
+  }
+
+  const showAsLocalizedCurrency = typeof currencyCode === 'string' ? currencyCode !== 'USD' : false;
 
   return {
     currencyCode,
     conversionRate,
-    showAsLocalizedCurrency: typeof currencyCode === 'string' ? currencyCode !== 'USD' : false,
+    showAsLocalizedCurrency,
   };
 };
 

@@ -9,6 +9,7 @@ import { Factory } from 'rosie';
 import { IntlProvider } from '@edx/frontend-i18n';
 import * as analytics from '@edx/frontend-analytics';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
+import Cookies from 'universal-cookie';
 
 import './__factories__/basket.factory';
 import './__factories__/userAccount.factory';
@@ -18,6 +19,18 @@ import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
+
+jest.mock('universal-cookie', () => {
+  class MockCookies {
+    static result = {};
+
+    get() {
+      return MockCookies.result;
+    }
+  }
+  return MockCookies;
+});
+
 
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
@@ -39,6 +52,7 @@ describe('<PaymentPage />', () => {
   describe('Renders correctly in various states', () => {
     beforeEach(() => {
       analytics.sendTrackingLogEvent = jest.fn();
+      Cookies.result = undefined;
     });
 
     it('should render its default (loading) state', () => {
@@ -71,16 +85,14 @@ describe('<PaymentPage />', () => {
     });
 
     it('should render the basket in a different currency', () => {
+      Cookies.result = {
+        code: 'MXN',
+        rate: 19.092733,
+      };
+
       store = createStore(
         createRootReducer(),
-        Object.assign({}, {
-          payment: {
-            currency: {
-              currencyCode: 'MXN',
-              conversionRate: 19.092733,
-            },
-          },
-        }),
+        {},
         applyMiddleware(thunkMiddleware),
       );
       const component = (

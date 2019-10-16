@@ -8,6 +8,18 @@ import {
   fetchBasket,
 } from './actions';
 import { localizedCurrencySelector, currencyDisclaimerSelector, paymentSelector } from './selectors';
+import Cookies from 'universal-cookie';
+
+jest.mock('universal-cookie', () => {
+  class MockCookies {
+    static result = {};
+
+    get() {
+      return MockCookies.result;
+    }
+  }
+  return MockCookies;
+});
 
 describe('redux tests', () => {
   let store;
@@ -30,16 +42,12 @@ describe('redux tests', () => {
       });
 
       it('should work for USD', () => {
-        store = createStore(combineReducers({ payment: reducer }), {
-          payment: {
-            currency: {
-              currencyCode: 'USD',
-              conversionRate: 1,
-            },
-          },
-        });
+        Cookies.result = {
+          code: 'USD',
+          rate: 1,
+        };
 
-        const result = localizedCurrencySelector(store.getState());
+        const result = localizedCurrencySelector();
         expect(result).toEqual({
           currencyCode: 'USD',
           conversionRate: 1,
@@ -48,16 +56,12 @@ describe('redux tests', () => {
       });
 
       it('should work for EUR', () => {
-        store = createStore(combineReducers({ payment: reducer }), {
-          payment: {
-            currency: {
-              currencyCode: 'EUR',
-              conversionRate: 1.5,
-            },
-          },
-        });
+        Cookies.result = {
+          code: 'EUR',
+          rate: 1.5,
+        };
 
-        const result = localizedCurrencySelector(store.getState());
+        const result = localizedCurrencySelector();
         expect(result).toEqual({
           currencyCode: 'EUR',
           conversionRate: 1.5,
@@ -192,12 +196,6 @@ describe('redux tests', () => {
         expect(store.getState().payment.basket.loading).toBe(false);
         expect(store.getState().payment.basket.loaded).toBe(true);
       });
-    });
-  });
-
-  describe('currency reducer', () => {
-    it('should return its default state', () => {
-      expect(store.getState().payment.currency).toEqual({});
     });
   });
 });
