@@ -23,16 +23,6 @@ export class PaymentFormComponent extends React.Component {
     markPerformanceIfAble('Payment Form component rendered');
   }
 
-  componentDidUpdate(prevProps) {
-    if (
-      this.props.loading !== prevProps.loading
-      && !this.props.loading
-    ) {
-      // Send a SpeedCurve event when we stop loading for the first time
-      markPerformanceIfAble('Payment form finished loading');
-    }
-  }
-
   onSubmit = (values) => {
     // istanbul ignore if
     if (this.props.disabled) return;
