@@ -1,3 +1,4 @@
+import Cookies from 'universal-cookie';
 import { createStore, combineReducers } from 'redux';
 
 import reducer from './reducers';
@@ -8,7 +9,6 @@ import {
   fetchBasket,
 } from './actions';
 import { localizedCurrencySelector, currencyDisclaimerSelector, paymentSelector } from './selectors';
-import Cookies from 'universal-cookie';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {

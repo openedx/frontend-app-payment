@@ -118,7 +118,7 @@ Cart.propTypes = {
 };
 
 Cart.defaultProps = {
-  loading: false,
+  loading: true,
   products: [],
   orderType: ORDER_TYPES.SEAT,
   showCouponForm: false,
