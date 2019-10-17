@@ -27,9 +27,7 @@ describe('EnrollmentCodeQuantityUpdated', () => {
     const component = (
       <IntlProvider locale="en">
         <Provider
-          store={mockStore({
-            payment: { currency: 'USD' },
-          })}
+          store={mockStore()}
         >
           <EnrollmentCodeQuantityUpdated values={{ quantity: 2, price: 100 }} />
         </Provider>

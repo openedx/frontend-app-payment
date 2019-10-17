@@ -1,6 +1,4 @@
-import { App } from '@edx/frontend-base';
 import { combineReducers } from 'redux';
-import Cookies from 'universal-cookie';
 
 import {
   BASKET_DATA_RECEIVED,
@@ -59,26 +57,8 @@ const basket = (state = basketInitialState, action = null) => {
   return state;
 };
 
-/* istanbul ignore next */
-function getCurrencyInitialState() {
-  const cookie = new Cookies().get(App.config.CURRENCY_COOKIE_NAME);
-
-  if (cookie && typeof cookie.code === 'string' && typeof cookie.rate === 'number') {
-    return {
-      currencyCode: cookie.code,
-      conversionRate: cookie.rate,
-    };
-  }
-  return {};
-}
-
-const currencyInitialState = getCurrencyInitialState();
-
-const currency = (state = currencyInitialState) => ({ ...state });
-
 const reducer = combineReducers({
   basket,
-  currency,
 });
 
 export default reducer;

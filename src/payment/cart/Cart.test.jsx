@@ -5,6 +5,7 @@ import { IntlProvider } from '@edx/frontend-i18n';
 import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { Factory } from 'rosie';
 import { createStore } from 'redux';
+import Cookies from 'universal-cookie';
 
 import '../__factories__/basket.factory';
 import '../__factories__/userAccount.factory';
@@ -13,9 +14,21 @@ import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/service';
 
+
 jest.mock('@edx/frontend-analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+jest.mock('universal-cookie', () => {
+  class MockCookies {
+    static result = {};
+
+    get() {
+      return MockCookies.result;
+    }
+  }
+  return MockCookies;
+});
+
 
 describe('<Cart />', () => {
   let store;
@@ -24,7 +37,7 @@ describe('<Cart />', () => {
 
   beforeEach(() => {
     userAccount = Factory.build('userAccount');
-
+    Cookies.result = undefined;
     store = createStore(createRootReducer(), {});
     store.dispatch(fetchUserAccountSuccess(userAccount));
 
@@ -81,16 +94,15 @@ describe('<Cart />', () => {
   });
 
   it('renders a cart in non USD currency', () => {
+    Cookies.result = {
+      code: 'MXN',
+      rate: 19.092733,
+    };
     // This test uses its own setup since we don't have actions to update currency.
     store = createStore(
       createRootReducer(),
       {
-        payment: {
-          currency: {
-            currencyCode: 'MXN',
-            conversionRate: 19.092733,
-          },
-        },
+        payment: {},
       },
     );
     const component = (

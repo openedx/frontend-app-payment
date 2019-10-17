@@ -3,8 +3,20 @@ import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import { IntlProvider } from '@edx/frontend-i18n';
+import Cookies from 'universal-cookie';
 
 import LocalizedPrice from './LocalizedPrice';
+
+jest.mock('universal-cookie', () => {
+  class MockCookies {
+    static result = {};
+
+    get() {
+      return MockCookies.result;
+    }
+  }
+  return MockCookies;
+});
 
 jest.mock('@edx/frontend-logging', () => ({
   logError: jest.fn(),
@@ -24,15 +36,12 @@ describe('LocalizedPrice', () => {
           loading: false,
           products: [],
         },
-        currency: {
-          currencyCode: null,
-          conversionRate: 1,
-        },
       },
       i18n: {
         locale: 'en',
       },
     };
+    Cookies.result = undefined;
   });
 
   it('should render nothing by default', () => {
@@ -64,17 +73,14 @@ describe('LocalizedPrice', () => {
   });
 
   it('should render localized currency', () => {
+    Cookies.result = {
+      code: 'MXN',
+      rate: 19,
+    };
     const component = (
       <IntlProvider locale="en">
         <Provider
-          store={mockStore(Object.assign({}, state, {
-            payment: {
-              currency: {
-                currencyCode: 'MXN',
-                conversionRate: 19,
-              },
-            },
-          }))}
+          store={mockStore(Object.assign({}, state))}
         >
           <LocalizedPrice amount={10} />
         </Provider>
