@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { sendTrackEvent } from '@edx/frontend-analytics';
 import { FormattedMessage } from '@edx/frontend-i18n';
 
-import markPerformanceIfAble from '../speedcurve';
+import { markPerformanceIfAble, getPerformanceProperties } from '../performanceEventing';
 
 class OrderSummary extends React.Component {
   componentDidMount() {
     markPerformanceIfAble('Order Summary component rendered');
+    sendTrackEvent(
+      'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
+      getPerformanceProperties(),
+    );
   }
 
   render() {

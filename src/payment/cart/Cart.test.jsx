@@ -14,6 +14,10 @@ import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/service';
 
+
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
 jest.mock('universal-cookie', () => {
   class MockCookies {
     static result = {};
@@ -24,6 +28,7 @@ jest.mock('universal-cookie', () => {
   }
   return MockCookies;
 });
+
 
 describe('<Cart />', () => {
   let store;

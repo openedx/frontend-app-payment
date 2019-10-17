@@ -39,6 +39,10 @@ Object.defineProperty(global.document, 'cookie', {
 });
 App.apiClient = jest.fn();
 
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
+
 describe('<PaymentPage />', () => {
   let store;
 

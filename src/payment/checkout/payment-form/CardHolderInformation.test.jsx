@@ -12,6 +12,10 @@ import createRootReducer from '../../../data/reducers';
 
 import '../../__factories__/userAccount.factory';
 
+jest.mock('@edx/frontend-analytics', () => ({
+  sendTrackEvent: jest.fn(),
+}));
+
 describe('<CardHolderInformation />', () => {
   let store;
 
