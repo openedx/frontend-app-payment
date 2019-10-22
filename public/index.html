@@ -13,6 +13,10 @@
             htmlWebpackPlugin.tags.headTags instead of our manual looping. */ %>
     <link href="<%= file %>" rel="stylesheet">
     <% }); %>
+
+    <% if (htmlWebpackPlugin.options.optimizelyId) { %>
+    <script src="https://cdn.optimizely.com/js/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
+    <% } %>
   </head>
   <body>
     <div id="root">
@@ -31,9 +35,5 @@
             htmlWebpackPlugin.tags.bodyTags instead of our manual looping. */ %>
     <script type="text/javascript" src="<%= file %>"></script>
     <% }); %>
-
-    <% if (htmlWebpackPlugin.options.optimizelyId) { %>
-    <script src="https://cdn.optimizely.com/js/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
-    <% } %>
   </body>
 </html>
