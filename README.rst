@@ -223,7 +223,5 @@ described below:
 
 .. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-payment.svg?branch=master
    :target: https://travis-ci.org/edx/frontend-app-payment
-.. |Codecov| image:: https://codecov.io/gh/edx/frontend-app-payment/branch/master/graph/badge.svg
-   :target: https://codecov.io/gh/edx/frontend-app-payment
 .. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-payment.svg
    :target: @edx/frontend-app-payment

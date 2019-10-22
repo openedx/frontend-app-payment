@@ -12,5 +12,3 @@ script:
 - npm run test
 - npm run build
 - npm run is-es5
-after_success:
-- codecov
