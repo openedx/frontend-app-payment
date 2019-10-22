@@ -11,7 +11,7 @@ import Footer, { messages as footerMessages } from '@edx/frontend-component-foot
 
 import appMessages from './i18n';
 import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties } from './payment';
-import configureStore from './store';
+import configureStore from './data/configureStore';
 
 import './index.scss';
 import './assets/favicon.ico';
