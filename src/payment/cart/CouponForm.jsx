@@ -14,8 +14,13 @@ class CouponForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      showCouponForm: false,
+    };
+
     this.handleAddSubmit = this.handleAddSubmit.bind(this);
     this.handleRemoveSubmit = this.handleRemoveSubmit.bind(this);
+    this.handleShowButtonClick = this.handleShowButtonClick.bind(this);
   }
 
   handleAddSubmit(event) {
@@ -38,10 +43,62 @@ class CouponForm extends Component {
     this.props.removeCoupon({ id: this.props.id });
   }
 
+  handleShowButtonClick() {
+    this.setState({
+      showCouponForm: true,
+    });
+  }
+
   renderAdd() {
-    const { code, isBasketProcessing } = this.props;
+    const { code, isBasketProcessing, isPaymentVisualExperiment } = this.props;
+    const { showCouponForm } = this.state;
 
     const id = 'couponField';
+
+    if (isPaymentVisualExperiment) {
+      if (showCouponForm) {
+        return (
+          <form onSubmit={this.handleAddSubmit} className="summary-row d-flex align-items-end">
+            <ValidationFormGroup for={id} invalid={false} className="mb-0 mr-2">
+              <label className="h6 d-block" htmlFor={id}>
+                <FormattedMessage
+                  id="payment.coupon.label"
+                  defaultMessage="Add coupon code (optional)"
+                  description="Label for the add coupon form"
+                />
+              </label>
+              <Input name={id} id={id} type="text" defaultValue={code} />
+            </ValidationFormGroup>
+            <Button
+              disabled={isBasketProcessing}
+              className="btn-primary"
+              type="submit"
+              onClick={this.handleSubmitButtonClick}
+            >
+              <FormattedMessage
+                id="payment.coupon.submit"
+                defaultMessage="Apply"
+                description="Submit button for the add coupon form"
+              />
+            </Button>
+          </form>
+        );
+      }
+
+      return (
+        <Button
+          className="btn-link display-inline p-0 border-0"
+          type="button"
+          onClick={this.handleShowButtonClick}
+        >
+          <FormattedMessage
+            id="payment.coupon.show"
+            defaultMessage="+ Add coupon code (optional)"
+            description="Button to show the add coupon form"
+          />
+        </Button>
+      );
+    }
 
     return (
       <form onSubmit={this.handleAddSubmit} className="summary-row d-flex align-items-end">
@@ -148,6 +205,7 @@ class CouponForm extends Component {
 
 CouponForm.propTypes = {
   isBasketProcessing: PropTypes.bool,
+  isPaymentVisualExperiment: PropTypes.bool,
   code: PropTypes.string,
   id: PropTypes.number,
   addCoupon: PropTypes.func.isRequired,
@@ -158,6 +216,7 @@ CouponForm.propTypes = {
 
 CouponForm.defaultProps = {
   isBasketProcessing: false,
+  isPaymentVisualExperiment: false,
   code: '',
   id: null,
   benefitValue: null,

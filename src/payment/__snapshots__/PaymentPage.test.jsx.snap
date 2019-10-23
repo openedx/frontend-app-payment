@@ -1891,7 +1891,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   htmlFor="state"
                 >
                   <span>
-                    State/Province
+                    State/Province 
                   </span>
                 </label>
                 <input
@@ -3925,7 +3925,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   htmlFor="state"
                 >
                   <span>
-                    State/Province
+                    State/Province 
                   </span>
                 </label>
                 <input
@@ -5963,7 +5963,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   htmlFor="state"
                 >
                   <span>
-                    State/Province
+                    State/Province 
                   </span>
                 </label>
                 <input
@@ -8168,7 +8168,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   htmlFor="state"
                 >
                   <span>
-                    State/Province
+                    State/Province 
                   </span>
                 </label>
                 <input
@@ -10270,7 +10270,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   htmlFor="state"
                 >
                   <span>
-                    State/Province
+                    State/Province 
                   </span>
                 </label>
                 <input
@@ -12351,7 +12351,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   htmlFor="state"
                 >
                   <span>
-                    State/Province
+                    State/Province 
                   </span>
                 </label>
                 <input
