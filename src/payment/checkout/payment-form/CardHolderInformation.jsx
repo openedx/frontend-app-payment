@@ -112,7 +112,7 @@ export class CardHolderInformationComponent extends React.Component {
           ) : null}
 
           <div className="row">
-            <div className="col-lg-4 form-group">
+            <div className="col-lg-6 form-group">
               <label htmlFor="city">
                 <FormattedMessage
                   id="payment.card.holder.information.city.experiment.label"
@@ -131,37 +131,6 @@ export class CardHolderInformationComponent extends React.Component {
                 maxLength="32"
               />
             </div>
-            <div className="col-lg-4 form-group">
-              <StateProvinceFormInput
-                country={this.state.selectedCountry}
-                disabled={disabled}
-                id="state"
-                autoComplete="address-level1"
-                maxLength="60"
-                isPaymentVisualExperiment={isPaymentVisualExperiment}
-              />
-            </div>
-            <div className="col-lg-4 form-group">
-              <label htmlFor="postalCode">
-                <FormattedMessage
-                  id="payment.card.holder.information.postal.code.experiment.label"
-                  defaultMessage="Zip/Postal Code (optional)"
-                  description="The label for the card holder zip/postal code field"
-                />
-              </label>
-              <Field
-                id="postalCode"
-                name="postalCode"
-                component={FormInput}
-                type="text"
-                disabled={disabled}
-                autoComplete="postal-code"
-                maxLength="9"
-              />
-            </div>
-          </div>
-
-          <div className="row">
             <div className="col-lg-6 form-group">
               <label htmlFor="country">
                 <FormattedMessage

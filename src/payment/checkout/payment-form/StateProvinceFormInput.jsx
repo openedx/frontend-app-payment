@@ -54,31 +54,23 @@ class StateProvinceFormInput extends React.Component {
   }
 
   renderLabel(isRequired) {
-    const { isPaymentVisualExperiment } = this.props;
-
     if (isRequired) {
-      const requiredLabel = isPaymentVisualExperiment ? '' : '(required)';
-
       return (
         <label htmlFor="state">
           <FormattedMessage
             id="payment.card.holder.information.state.label"
-            defaultMessage="State/Province {requiredLabel}"
-            values={{ requiredLabel }}
+            defaultMessage="State/Province (required)"
             description="The label for the required card holder state/province field"
           />
         </label>
       );
     }
 
-    const optionalLabel = isPaymentVisualExperiment ? '(optional)' : '';
-
     return (
       <label htmlFor="state">
         <FormattedMessage
           id="payment.card.holder.information.state.required.label"
-          defaultMessage="State/Province {optionalLabel}"
-          values={{ optionalLabel }}
+          defaultMessage="State/Province"
           description="The label for the card holder state/province field"
         />
       </label>
@@ -102,12 +94,10 @@ StateProvinceFormInput.propTypes = {
   country: PropTypes.string,
   intl: intlShape.isRequired,
   disabled: PropTypes.bool.isRequired,
-  isPaymentVisualExperiment: PropTypes.bool,
 };
 
 StateProvinceFormInput.defaultProps = {
   country: null,
-  isPaymentVisualExperiment: false,
 };
 
 export default connect()(injectIntl(StateProvinceFormInput));
