@@ -128,7 +128,7 @@ export class PaymentFormComponent extends React.Component {
       };
     }
 
-    if (getStates(country)) {
+    if (getStates(country) && !this.props.isPaymentVisualExperiment) {
       requiredFields.state = state;
     }
 
