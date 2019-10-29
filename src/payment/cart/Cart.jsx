@@ -26,6 +26,7 @@ class Cart extends React.Component {
       products,
       orderType,
       isCurrencyConverted,
+      isPaymentVisualExperiment,
       orderTotal,
       showCouponForm,
       summaryPrice,
@@ -65,7 +66,8 @@ class Cart extends React.Component {
           )}
 
           <Offers discounts={summaryDiscounts} offers={offers} isBundle={products.length > 1} />
-          {showCouponForm ? <CouponForm /> : null}
+          {showCouponForm ?
+            <CouponForm isPaymentVisualExperiment={isPaymentVisualExperiment} /> : null}
           <TotalTable total={orderTotal} />
           {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
         </OrderSummary>
@@ -96,6 +98,7 @@ class Cart extends React.Component {
 
 Cart.propTypes = {
   intl: intlShape.isRequired,
+  isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
   products: PropTypes.arrayOf(PropTypes.shape({
     imageUrl: PropTypes.string,
@@ -118,6 +121,7 @@ Cart.propTypes = {
 };
 
 Cart.defaultProps = {
+  isPaymentVisualExperiment: false,
   loading: true,
   products: [],
   orderType: ORDER_TYPES.SEAT,

@@ -75,6 +75,7 @@ class Checkout extends React.Component {
       isFreeBasket,
       loading,
       isBasketProcessing,
+      isPaymentVisualExperiment,
       paymentMethod,
       submitting,
       orderType,
@@ -133,6 +134,7 @@ class Checkout extends React.Component {
           loading={loading}
           isProcessing={cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
+          isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
       </React.Fragment>
     );
@@ -157,6 +159,7 @@ Checkout.propTypes = {
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
+  isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
 };
@@ -168,6 +171,7 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
+  isPaymentVisualExperiment: false,
 };
 
 export default connect(paymentSelector, { submitPayment })(injectIntl(Checkout));

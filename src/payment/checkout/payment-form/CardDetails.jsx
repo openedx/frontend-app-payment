@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field } from 'redux-form';
 import ReactTooltip from 'react-tooltip';
+import { Field } from 'redux-form';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
@@ -54,8 +54,157 @@ export class CardDetailsComponent extends React.Component {
     ];
   }
 
+  renderExperimentExpirationMonthOptions() {
+    const getMonthOptions = () => {
+      const pad = month => `0${month}`.slice(-2);
+
+      const items = [];
+      for (let i = 1; i <= 12; i += 1) {
+      // Display months in the MM format
+        items.push(<option key={i} value={i}>{pad(i)}</option>);
+      }
+      return items;
+    };
+
+    const monthText = this.props.intl.formatMessage(messages['payment.page.card.details.month']);
+
+    return [
+      <option key="Month" value="">{monthText}</option>,
+      ...getMonthOptions(),
+    ];
+  }
+
+  renderExperimentExpirationYearOptions() {
+    const getYearOptions = (startYear, endYear) => {
+      const items = [];
+      for (let i = startYear; i <= endYear; i += 1) {
+        // Display years in the YY format
+        items.push(<option key={i} value={i}>{i.toString().slice(-2)}</option>);
+      }
+      return items;
+    };
+
+    const yearText = this.props.intl.formatMessage(messages['payment.page.card.details.year']);
+    const currentYear = new Date().getFullYear();
+
+    return [
+      <option key="Year" value="">{yearText}</option>,
+      ...getYearOptions(currentYear, currentYear + 15),
+    ];
+  }
+
   render() {
-    const { disabled } = this.props;
+    const { disabled, isPaymentVisualExperiment } = this.props;
+
+    if (isPaymentVisualExperiment) {
+      return (
+        <div className="basket-section">
+          <h5 aria-level="2">
+            <FormattedMessage
+              id="payment.card.details.billing.information.experiment.heading"
+              defaultMessage="Secure Billing Information"
+              description="The experiment heading for the credit card details billing information form"
+            />
+          </h5>
+
+          <div className="row">
+            <div className="col-lg-8 form-group">
+              <label htmlFor="cardNumber">
+                <FormattedMessage
+                  id="payment.card.details.number.experiment.label"
+                  defaultMessage="Card Number"
+                  description="The experiment label for the required credit card number field"
+                />
+              </label>
+              <Field
+                id="cardNumber"
+                name="cardNumber"
+                component={FormInput}
+                type="tel"
+                required
+                disabled={disabled}
+                onChange={this.handleCardNumberChange}
+                autoComplete="cc-number"
+                maxLength="20"
+              />
+              {this.state.cardIcon !== null && <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />}
+              <FontAwesomeIcon icon={faLock} className="lock-icon" />
+            </div>
+            <div className="col-lg-4 form-group">
+              <label htmlFor="securityCode">
+                <FormattedMessage
+                  id="payment.card.details.security.code.experiment.label"
+                  defaultMessage="Security Code"
+                  description="The experiment label for the required credit card security code field"
+                />
+              </label>
+              <span data-tip data-for="securityCodeHelp" className="ml-1">
+                <FontAwesomeIcon icon={faQuestionCircle} />
+              </span>
+              <ReactTooltip id="securityCodeHelp" place="bottom" effect="solid">
+                <FormattedMessage
+                  id="payment.card.details.security.code.help.experiment.text"
+                  defaultMessage="The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card."
+                  description="The experiment help text for the required credit card security code field"
+                />
+              </ReactTooltip>
+              <Field
+                id="securityCode"
+                name="securityCode"
+                component={FormInput}
+                type="tel"
+                required
+                disabled={disabled}
+                onChange={this.handleSecurityCodeChange}
+                autoComplete="cc-csc"
+                maxLength="4"
+              />
+              <FontAwesomeIcon icon={faLock} className="lock-icon" />
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-6 form-group">
+              <label htmlFor="cardExpirationMonth">
+                <FormattedMessage
+                  id="payment.card.details.expiration.month.experiment.label"
+                  defaultMessage="Expiration Month"
+                  description="The label for the required credit card expiration month field"
+                />
+              </label>
+              <Field
+                id="cardExpirationMonth"
+                name="cardExpirationMonth"
+                component={FormSelect}
+                options={this.renderExperimentExpirationMonthOptions()}
+                required
+                disabled={disabled}
+                autoComplete="cc-exp-month"
+              />
+            </div>
+            <div className="col-lg-6 form-group">
+              <label htmlFor="cardExpirationYear">
+                <FormattedMessage
+                  id="payment.card.details.expiration.year.experiment.label"
+                  defaultMessage="Expiration Year"
+                  description="The label for the required credit card expiration year field"
+                />
+              </label>
+              <Field
+                id="cardExpirationYear"
+                name="cardExpirationYear"
+                component={FormSelect}
+                options={this.renderExperimentExpirationYearOptions()}
+                required
+                disabled={disabled}
+                autoComplete="cc-exp-year"
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="basket-section">
         <h5 aria-level="2">
@@ -168,10 +317,12 @@ export class CardDetailsComponent extends React.Component {
 CardDetailsComponent.propTypes = {
   intl: intlShape.isRequired,
   disabled: PropTypes.bool,
+  isPaymentVisualExperiment: PropTypes.bool,
 };
 
 CardDetailsComponent.defaultProps = {
   disabled: false,
+  isPaymentVisualExperiment: false,
 };
 
 export default injectIntl(CardDetailsComponent);

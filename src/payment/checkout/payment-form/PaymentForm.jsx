@@ -31,7 +31,6 @@ export class PaymentFormComponent extends React.Component {
   onSubmit = (values) => {
     // istanbul ignore if
     if (this.props.disabled) return;
-
     const requiredFields = this.getRequiredFields(values);
     const {
       firstName,
@@ -104,7 +103,7 @@ export class PaymentFormComponent extends React.Component {
       organization,
     } = fieldValues;
 
-    const requiredFields = {
+    let requiredFields = {
       firstName,
       lastName,
       address,
@@ -115,6 +114,20 @@ export class PaymentFormComponent extends React.Component {
       cardExpirationMonth,
       cardExpirationYear,
     };
+
+    if (this.props.isPaymentVisualExperiment) {
+      requiredFields = {
+        firstName,
+        lastName,
+        city,
+        country,
+        cardNumber,
+        securityCode,
+        cardExpirationMonth,
+        cardExpirationYear,
+      };
+    }
+
     if (getStates(country)) {
       requiredFields.state = state;
     }
@@ -185,6 +198,7 @@ export class PaymentFormComponent extends React.Component {
       disabled,
       isProcessing,
       isBulkOrder,
+      isPaymentVisualExperiment,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -202,8 +216,9 @@ export class PaymentFormComponent extends React.Component {
         <CardHolderInformation
           showBulkEnrollmentFields={isBulkOrder}
           disabled={disabled}
+          isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
-        <CardDetails disabled={disabled} />
+        <CardDetails disabled={disabled} isPaymentVisualExperiment={isPaymentVisualExperiment} />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
             {
@@ -247,6 +262,7 @@ PaymentFormComponent.propTypes = {
   disabled: PropTypes.bool,
   isProcessing: PropTypes.bool,
   isBulkOrder: PropTypes.bool,
+  isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
@@ -257,6 +273,7 @@ PaymentFormComponent.defaultProps = {
   loading: true,
   isBulkOrder: false,
   isProcessing: false,
+  isPaymentVisualExperiment: false,
 };
 
 // The key `form` here needs to match the key provided to

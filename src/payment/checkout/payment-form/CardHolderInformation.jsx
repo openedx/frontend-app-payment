@@ -37,7 +37,149 @@ export class CardHolderInformationComponent extends React.Component {
   }
 
   render() {
-    const { disabled, showBulkEnrollmentFields } = this.props;
+    const { disabled, showBulkEnrollmentFields, isPaymentVisualExperiment } = this.props;
+
+    if (isPaymentVisualExperiment) {
+      return (
+        <div className="basket-section">
+          <h5 aria-level="2">
+            <FormattedMessage
+              id="payment.card.holder.information.heading"
+              defaultMessage="Card Holder Information"
+              description="The heading for the credit card holder information form"
+            />
+          </h5>
+          <div className="row">
+            <div className="col-lg-6 form-group">
+              <label htmlFor="firstName">
+                <FormattedMessage
+                  id="payment.card.holder.information.first.name.experiment.label"
+                  defaultMessage="First Name"
+                  description="The label for the required card holder first name field"
+                />
+              </label>
+              <Field
+                id="firstName"
+                name="firstName"
+                component={FormInput}
+                type="text"
+                required
+                disabled={disabled}
+                autoComplete="given-name"
+              />
+            </div>
+            <div className="col-lg-6 form-group">
+              <label htmlFor="lastName">
+                <FormattedMessage
+                  id="payment.card.holder.information.last.name.experiment.label"
+                  defaultMessage="Last Name"
+                  description="The label for the required card holder last name field"
+                />
+              </label>
+              <Field
+                id="lastName"
+                name="lastName"
+                component={FormInput}
+                type="text"
+                required
+                disabled={disabled}
+                autoComplete="family-name"
+              />
+            </div>
+          </div>
+
+          {showBulkEnrollmentFields ? (
+            <div className="row">
+              <div className="col-lg-6 form-group">
+                <label htmlFor="organization">
+                  <FormattedMessage
+                    id="payment.card.holder.information.organization.experiment.label"
+                    defaultMessage="Organization"
+                    description="The label for the required organization field"
+                  />
+                </label>
+                <Field
+                  id="organization"
+                  name="organization"
+                  component={FormInput}
+                  type="text"
+                  required
+                  disabled={disabled}
+                  autoComplete="organization"
+                />
+              </div>
+            </div>
+          ) : null}
+
+          <div className="row">
+            <div className="col-lg-6 form-group">
+              <label htmlFor="city">
+                <FormattedMessage
+                  id="payment.card.holder.information.city.experiment.label"
+                  defaultMessage="City"
+                  description="The label for the required card holder city field"
+                />
+              </label>
+              <Field
+                id="city"
+                name="city"
+                component={FormInput}
+                type="text"
+                required
+                disabled={disabled}
+                autoComplete="address-level2"
+                maxLength="32"
+              />
+            </div>
+            <div className="col-lg-6 form-group">
+              <label htmlFor="country">
+                <FormattedMessage
+                  id="payment.card.holder.information.country.experiment.label"
+                  defaultMessage="Country"
+                  description="The label for the required card holder country field"
+                />
+              </label>
+              <Field
+                id="country"
+                name="country"
+                component={FormSelect}
+                options={this.renderCountryOptions()}
+                required
+                onChange={this.handleSelectCountry}
+                disabled={disabled}
+                autoComplete="country"
+              />
+            </div>
+          </div>
+
+          {showBulkEnrollmentFields ? (
+            <div className="row form-group justify-content-start align-items-center">
+              <div className="col-1 pr-0 pl-2">
+                <Field
+                  id="purchasedForOrganization"
+                  name="purchasedForOrganization"
+                  component={FormInput}
+                  type="checkbox"
+                />
+              </div>
+              <div className="col">
+                <label
+                  htmlFor="purchasedForOrganization"
+                  className="mb-0"
+                >
+                  <FormattedMessage
+                    id="payment.card.holder.information.purchased.for.organization.experiment"
+                    defaultMessage="I am purchasing on behalf of my employer or other professional organization"
+                    decription="checkbox for if the purchaser is buying this course on behalf of an organization"
+                  />
+                </label>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      );
+    }
+
     return (
       <div className="basket-section">
         <h5 aria-level="2">
@@ -257,12 +399,14 @@ CardHolderInformationComponent.propTypes = {
   })),
   disabled: PropTypes.bool,
   showBulkEnrollmentFields: PropTypes.bool,
+  isPaymentVisualExperiment: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   countryOptions: [],
   disabled: false,
   showBulkEnrollmentFields: false,
+  isPaymentVisualExperiment: false,
 };
 
 export default connect(
