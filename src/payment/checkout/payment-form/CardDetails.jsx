@@ -98,14 +98,7 @@ export class CardDetailsComponent extends React.Component {
 
     if (isPaymentVisualExperiment) {
       return (
-        <div className="basket-section">
-          <h5 aria-level="2">
-            <FormattedMessage
-              id="payment.card.details.billing.information.experiment.heading"
-              defaultMessage="Secure Billing Information"
-              description="The experiment heading for the credit card details billing information form"
-            />
-          </h5>
+        <div className="basket-section-experiment mb-0">
 
           <div className="row">
             <div className="col-lg-8 form-group">
@@ -201,6 +194,7 @@ export class CardDetailsComponent extends React.Component {
               />
             </div>
           </div>
+
         </div>
       );
     }

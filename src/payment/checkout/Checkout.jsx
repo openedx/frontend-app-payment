@@ -97,9 +97,10 @@ class Checkout extends React.Component {
       );
     }
 
+    const basketClassName = isPaymentVisualExperiment ? 'basket-section-experiment mb-0' : 'basket-section';
     return (
       <React.Fragment>
-        <div className="basket-section">
+        <div className={basketClassName}>
           <h5 aria-level="2">
             <FormattedMessage
               id="payment.select.payment.method.heading"
