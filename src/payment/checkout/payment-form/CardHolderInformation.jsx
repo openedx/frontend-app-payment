@@ -41,14 +41,7 @@ export class CardHolderInformationComponent extends React.Component {
 
     if (isPaymentVisualExperiment) {
       return (
-        <div className="basket-section">
-          <h5 aria-level="2">
-            <FormattedMessage
-              id="payment.card.holder.information.heading"
-              defaultMessage="Card Holder Information"
-              description="The heading for the credit card holder information form"
-            />
-          </h5>
+        <div className="basket-section-experiment mb-0">
           <div className="row">
             <div className="col-lg-6 form-group">
               <label htmlFor="firstName">
