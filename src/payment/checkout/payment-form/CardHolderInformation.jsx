@@ -145,7 +145,6 @@ export class CardHolderInformationComponent extends React.Component {
                 component={FormSelect}
                 options={this.renderCountryOptions()}
                 required
-                onChange={this.handleSelectCountry}
                 disabled={disabled}
                 autoComplete="country"
               />

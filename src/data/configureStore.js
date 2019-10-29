@@ -11,7 +11,7 @@ import rootSaga from './sagas';
 const sagaMiddleware = createSagaMiddleware();
 
 function composeMiddleware() {
-  if (App.config.ENVIRONMENT === 'development') {
+  if (App.config.ENVIRONMENT !== 'production') {
     const loggerMiddleware = createLogger({
       collapsed: true,
     });
