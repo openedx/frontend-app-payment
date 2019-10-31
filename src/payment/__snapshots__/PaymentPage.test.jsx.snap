@@ -8216,7 +8216,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="row form-group justify-content-start align-items-center"
             >
               <div
-                className="col-1 pr-0 pl-2"
+                className="col-0 pr-0 pl-3"
               >
                 <input
                   checked={false}

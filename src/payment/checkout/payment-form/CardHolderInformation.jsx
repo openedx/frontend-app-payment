@@ -154,7 +154,7 @@ export class CardHolderInformationComponent extends React.Component {
 
           {showBulkEnrollmentFields ? (
             <div className="row form-group justify-content-start align-items-center">
-              <div className="col-1 pr-0 pl-2">
+              <div className="col-0 pr-0 pl-3">
                 <Field
                   id="purchasedForOrganization"
                   name="purchasedForOrganization"
@@ -363,7 +363,7 @@ export class CardHolderInformationComponent extends React.Component {
         </div>
         {showBulkEnrollmentFields ? (
           <div className="row form-group justify-content-start align-items-center">
-            <div className="col-1 pr-0 pl-2">
+            <div className="col-0 pr-0 pl-3">
               <Field
                 id="purchasedForOrganization"
                 name="purchasedForOrganization"
