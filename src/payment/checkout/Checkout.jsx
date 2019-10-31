@@ -73,8 +73,9 @@ class Checkout extends React.Component {
     const {
       intl,
       isFreeBasket,
-      loading,
       isBasketProcessing,
+      loading,
+      loaded,
       isPaymentVisualExperiment,
       paymentMethod,
       submitting,
@@ -83,6 +84,7 @@ class Checkout extends React.Component {
 
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
+    const isQuantityUpdating = isBasketProcessing && loaded;
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
@@ -131,10 +133,11 @@ class Checkout extends React.Component {
         <PaymentForm
           onSubmitPayment={this.handleSubmitCybersource}
           onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
-          disabled={submissionDisabled}
+          disabled={submitting}
           loading={loading}
           isProcessing={cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
+          isQuantityUpdating={isQuantityUpdating}
           isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
       </React.Fragment>
@@ -156,6 +159,7 @@ class Checkout extends React.Component {
 Checkout.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
+  loaded: PropTypes.bool,
   submitPayment: PropTypes.func.isRequired,
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
@@ -167,6 +171,7 @@ Checkout.propTypes = {
 
 Checkout.defaultProps = {
   loading: false,
+  loaded: false,
   submitting: false,
   isBasketProcessing: false,
   isFreeBasket: false,

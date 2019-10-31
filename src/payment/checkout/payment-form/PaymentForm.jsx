@@ -198,6 +198,7 @@ export class PaymentFormComponent extends React.Component {
       disabled,
       isProcessing,
       isBulkOrder,
+      isQuantityUpdating,
       isPaymentVisualExperiment,
     } = this.props;
 
@@ -222,7 +223,7 @@ export class PaymentFormComponent extends React.Component {
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
             {
-              loading ? (
+              loading || isQuantityUpdating ? (
                 <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
               ) : (
                 <StatefulButton
@@ -262,6 +263,7 @@ PaymentFormComponent.propTypes = {
   disabled: PropTypes.bool,
   isProcessing: PropTypes.bool,
   isBulkOrder: PropTypes.bool,
+  isQuantityUpdating: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
@@ -272,6 +274,7 @@ PaymentFormComponent.defaultProps = {
   disabled: false,
   loading: true,
   isBulkOrder: false,
+  isQuantityUpdating: false,
   isProcessing: false,
   isPaymentVisualExperiment: false,
 };

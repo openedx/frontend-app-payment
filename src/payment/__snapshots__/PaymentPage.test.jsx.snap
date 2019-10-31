@@ -2506,7 +2506,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="given-name"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="firstName"
                   name="firstName"
                   onBlur={[Function]}
@@ -2532,7 +2532,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="family-name"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="lastName"
                   name="lastName"
                   onBlur={[Function]}
@@ -2562,7 +2562,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="street-address"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="address"
                   maxLength="60"
                   name="address"
@@ -2589,7 +2589,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="address-line2"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="unit"
                   maxLength="29"
                   name="unit"
@@ -2619,7 +2619,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="address-level2"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="city"
                   maxLength="32"
                   name="city"
@@ -2646,7 +2646,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <select
                   autoComplete="country"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="country"
                   name="country"
                   onBlur={[Function]}
@@ -3930,7 +3930,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 </label>
                 <input
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="state"
                   name="state"
                   onBlur={[Function]}
@@ -3955,7 +3955,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="postal-code"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="postalCode"
                   maxLength="9"
                   name="postalCode"
@@ -3996,7 +3996,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="cc-number"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="cardNumber"
                   maxLength="20"
                   name="cardNumber"
@@ -4072,7 +4072,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <input
                   autoComplete="cc-csc"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="securityCode"
                   maxLength="4"
                   name="securityCode"
@@ -4120,7 +4120,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <select
                   autoComplete="cc-exp-month"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="cardExpirationMonth"
                   name="cardExpirationMonth"
                   onBlur={[Function]}
@@ -4211,7 +4211,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <select
                   autoComplete="cc-exp-year"
                   className="form-control"
-                  disabled={true}
+                  disabled={false}
                   id="cardExpirationYear"
                   name="cardExpirationYear"
                   onBlur={[Function]}
@@ -8216,7 +8216,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="row form-group justify-content-start align-items-center"
             >
               <div
-                className="col-1 pr-0 pl-2"
+                className="col-0 pr-0 pl-3"
               >
                 <input
                   checked={false}
