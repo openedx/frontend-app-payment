@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
+import Inputmask from 'inputmask';
 import { Field } from 'redux-form';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +21,25 @@ export class CardDetailsComponent extends React.Component {
     this.state = {
       cardIcon: null,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.isPaymentVisualExperiment) {
+      // For `inputmask`, 9 allows any number and {n} allows n repeats of the previous symbol
+      const cardFormats = [
+        '4999 9{4} 9{4} 9{4}', // Visa
+        '5999 9{4} 9{4} 9{4}', // Mastercard
+        '6999 9{4} 9{4} 9{4}', // Discover
+        '3999 9{6} 9{5}', // American Express
+      ];
+      const cardNumberMask = new Inputmask({
+        mask: cardFormats,
+        // Makes the mask dynamic so that entering 3 at the beginning will switch to the AMEX format
+        keepStatic: false,
+      });
+      const cardNumberInput = document.getElementById('cardNumber');
+      cardNumberMask.mask(cardNumberInput);
+    }
   }
 
   getNumericOptions(start, end) {
