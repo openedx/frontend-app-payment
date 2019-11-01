@@ -15,7 +15,7 @@
     <% }); %>
 
     <% if (htmlWebpackPlugin.options.optimizelyId) { %>
-    <script rel="preload" src="/optimizelyjs/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
+    <script src="https://cdn.optimizely.com/js/<%= htmlWebpackPlugin.options.optimizelyId %>.js"></script>
     <% } %>
   </head>
   <body>
