@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
-const config = getBaseConfig('webpack-dev');
+const config = getBaseConfig('webpack-dev-stage');
 
 /**
  * We customzie the plugins here for the following reasons:
@@ -34,13 +34,7 @@ config.plugins = [
 // This is a custom devServer configuration to allow this dev server to hit staging for various
 // URLs.
 config.devServer = {
-  host: '0.0.0.0',
-  port: 1998,
-  https: true,
-  historyApiFallback: true,
-  hot: true,
-  inline: true,
-  publicPath: '/',
+  ...config.devServer,
   proxy: {
     '/proxy/ecommerce': {
       target: 'https://ecommerce.stage.edx.org',
