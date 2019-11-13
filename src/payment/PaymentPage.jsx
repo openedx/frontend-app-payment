@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
-import { AppContext, fetchUserAccount } from '@edx/frontend-base';
+import { AppContext } from '@edx/frontend-base';
 
 import messages from './PaymentPage.messages';
 
@@ -36,7 +36,6 @@ class PaymentPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchUserAccount(this.context.authenticatedUser.username);
     this.props.fetchBasket();
   }
 
@@ -133,7 +132,6 @@ PaymentPage.propTypes = {
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
-  fetchUserAccount: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -149,6 +147,5 @@ export default connect(
   paymentSelector,
   {
     fetchBasket,
-    fetchUserAccount,
   },
 )(injectIntl(PaymentPage));

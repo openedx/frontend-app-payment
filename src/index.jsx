@@ -51,6 +51,8 @@ App.initialize({
     headerMessages,
     footerMessages,
   ],
+  requireAuthenticatedUser: true,
+  hydrateAuthenticatedUser: true,
   overrideHandlers: {
     loadConfig: (app) => {
       App.mergeConfig({
