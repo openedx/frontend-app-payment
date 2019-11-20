@@ -4,6 +4,17 @@ import { FormattedMessage, injectIntl } from '@edx/frontend-i18n';
 
 
 class ProductLineItem extends React.PureComponent {
+  renderEnrollmentCount(courseKey, enrollmentCountData) {
+    const courseObj = enrollmentCountData.find(course => course.key === courseKey);
+    const enrollmentCount = courseObj.enrollment_count;
+    if (courseObj !== undefined) {
+      return (
+        <p className="num-enrolled"><strong>{enrollmentCount}</strong> already enrolled!</p>
+      );
+    }
+    return null;
+  }
+
   renderCertificateType(certificateType) {
     switch (certificateType) {
       case 'professional':
@@ -28,10 +39,14 @@ class ProductLineItem extends React.PureComponent {
 
   render() {
     const {
+      isNumEnrolledExperiment,
+      enrollmentCountData,
       imageUrl,
       title,
       certificateType,
+      courseKey,
     } = this.props;
+
     return (
       <div className="row align-items-center mb-3">
         <div className="col-5">
@@ -42,6 +57,9 @@ class ProductLineItem extends React.PureComponent {
         <div className="col-7">
           <h6 className="m-0" aria-level="3">{title}</h6>
           <p className="m-0">{this.renderCertificateType(certificateType)}</p>
+          {isNumEnrolledExperiment ?
+            this.renderEnrollmentCount(courseKey, enrollmentCountData) : null
+          }
         </div>
       </div>
     );
@@ -49,15 +67,24 @@ class ProductLineItem extends React.PureComponent {
 }
 
 ProductLineItem.propTypes = {
+  isNumEnrolledExperiment: PropTypes.bool,
+  enrollmentCountData: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    enrollment_count: PropTypes.number,
+  })),
   imageUrl: PropTypes.string,
   title: PropTypes.string,
   certificateType: PropTypes.oneOf(['audit', 'honor', 'verified', 'no-id-professional', 'professional', 'credit']),
+  courseKey: PropTypes.string,
 };
 
 ProductLineItem.defaultProps = {
+  isNumEnrolledExperiment: false,
+  enrollmentCountData: null,
   certificateType: undefined,
   title: null,
   imageUrl: null,
+  courseKey: null,
 };
 
 export default injectIntl(ProductLineItem);

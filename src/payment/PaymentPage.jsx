@@ -27,11 +27,15 @@ class PaymentPage extends React.Component {
     const {
       experimentVariables: {
         isPaymentVisualExperiment = false,
+        isNumEnrolledExperiment = false,
+        enrollmentCountData = [],
       } = {},
     } = window;
 
     this.state = {
       isPaymentVisualExperiment,
+      isNumEnrolledExperiment,
+      enrollmentCountData,
     };
   }
 
@@ -42,7 +46,11 @@ class PaymentPage extends React.Component {
 
   renderContent() {
     const { isEmpty, isRedirect } = this.props;
-    const { isPaymentVisualExperiment } = this.state;
+    const {
+      isPaymentVisualExperiment,
+      isNumEnrolledExperiment,
+      enrollmentCountData,
+    } = this.state;
 
     // If we're going to be redirecting to another page instead of showing the user the interface,
     // show a minimal spinner while the redirect is happening.  In other cases we want to show the
@@ -79,7 +87,11 @@ class PaymentPage extends React.Component {
           />
         </h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
-          <Cart isPaymentVisualExperiment={isPaymentVisualExperiment} />
+          <Cart
+            isPaymentVisualExperiment={isPaymentVisualExperiment}
+            isNumEnrolledExperiment={isNumEnrolledExperiment}
+            enrollmentCountData={enrollmentCountData}
+          />
         </div>
         <div className="col-md-7 pl-md-5">
           <Checkout isPaymentVisualExperiment={isPaymentVisualExperiment} />

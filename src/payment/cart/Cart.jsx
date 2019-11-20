@@ -27,6 +27,8 @@ class Cart extends React.Component {
       orderType,
       isCurrencyConverted,
       isPaymentVisualExperiment,
+      isNumEnrolledExperiment,
+      enrollmentCountData,
       orderTotal,
       showCouponForm,
       summaryPrice,
@@ -49,7 +51,13 @@ class Cart extends React.Component {
         </span>
 
         <CartContents>
-          {products.map(product => <ProductLineItem key={product.title} {...product} />)}
+          {products.map(product => (<ProductLineItem
+            key={product.title}
+            isNumEnrolledExperiment={isNumEnrolledExperiment}
+            isPaymentVisualExperiment={isPaymentVisualExperiment}
+            enrollmentCountData={enrollmentCountData}
+            {...product}
+          />))}
 
           {isBulkOrder ? <UpdateQuantityForm /> : null}
         </CartContents>
@@ -99,6 +107,11 @@ class Cart extends React.Component {
 Cart.propTypes = {
   intl: intlShape.isRequired,
   isPaymentVisualExperiment: PropTypes.bool,
+  isNumEnrolledExperiment: PropTypes.bool,
+  enrollmentCountData: PropTypes.arrayOf(PropTypes.shape({
+    key: PropTypes.string,
+    enrollment_count: PropTypes.number,
+  })),
   loading: PropTypes.bool,
   products: PropTypes.arrayOf(PropTypes.shape({
     imageUrl: PropTypes.string,
@@ -122,6 +135,8 @@ Cart.propTypes = {
 
 Cart.defaultProps = {
   isPaymentVisualExperiment: false,
+  isNumEnrolledExperiment: false,
+  enrollmentCountData: null,
   loading: true,
   products: [],
   orderType: ORDER_TYPES.SEAT,
