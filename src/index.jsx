@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-analytics';
+import { logError } from '@edx/frontend-logging';
 import Header, { messages as headerMessages } from '@edx/frontend-component-header';
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
 
@@ -46,7 +47,7 @@ App.subscribe(APP_AUTHENTICATED, () => {
 
   // Temporary fix for ARCH-1304
   // Force refresh the jwt cookie before any post request.
-  // This should be unneeded but some requests are failing
+  // This should be unnecessary but some requests are failing
   // with a JWT expired error on the server. This ensures
   // that the jwt cookie sent to the server for any post request
   // is brand new and therefore less likely to have any timing
