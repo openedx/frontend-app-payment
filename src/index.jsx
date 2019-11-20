@@ -54,14 +54,12 @@ App.subscribe(APP_AUTHENTICATED, () => {
   // problems.
   App.apiClient.interceptors.request.use(async (requestConfig) => {
     if (requestConfig.method === 'post') {
-      try {
-        await fetch(process.env.REFRESH_ACCESS_TOKEN_ENDPOINT, {
-          method: 'POST',
-          credentials: 'include',
-        });
-      } catch (e) {
+      await fetch(process.env.REFRESH_ACCESS_TOKEN_ENDPOINT, {
+        method: 'POST',
+        credentials: 'include',
+      }).catch(() => {
         logError(new Error('There was a failure to force refresh the jwt token. (In temporary fix for ARCH-1304)'));
-      }
+      });
     }
 
     return requestConfig;
