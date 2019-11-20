@@ -43,6 +43,25 @@ App.subscribe(APP_ERROR, (error) => {
 
 App.subscribe(APP_AUTHENTICATED, () => {
   App.apiClient.interceptors.response.use(responseInterceptor);
+
+  // Temporary fix for ARCH-1304
+  // Force refresh the jwt cookie before any post request.
+  // This should be unneeded but some requests are failing
+  // with a JWT expired error on the server. This ensures
+  // that the jwt cookie sent to the server for any post request
+  // is brand new and therefore less likely to have any timing
+  // problems.
+  App.apiClient.interceptors.request.use(async (requestConfig) => {
+    if (requestConfig.method === 'post') {
+      try {
+        await fetch(process.env.REFRESH_ACCESS_TOKEN_ENDPOINT, { method: 'POST' });
+      } catch (e) {
+        logError(new Error('There was a failure to force refresh the jwt token. (In temporary fix for ARCH-1304)'));
+      }
+    }
+
+    return requestConfig;
+  });
 });
 
 App.initialize({
