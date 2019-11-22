@@ -4,13 +4,13 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import defaultsDeep from 'lodash.defaultsdeep';
 import configureMockStore from 'redux-mock-store';
-import { IntlProvider } from '@edx/frontend-i18n';
-import { sendTrackEvent } from '@edx/frontend-analytics';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CouponForm from './CouponForm';
 import { addCoupon, removeCoupon } from '../data/actions';
 
-jest.mock('@edx/frontend-analytics', () => ({
+jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
 

@@ -1254,11 +1254,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     Macao
                   </option>
                   <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
                     value="MG"
                   >
                     Madagascar
@@ -1412,6 +1407,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     value="NF"
                   >
                     Norfolk Island
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    North Macedonia, Republic of
                   </option>
                   <option
                     value="MP"
@@ -3288,11 +3288,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     Macao
                   </option>
                   <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
                     value="MG"
                   >
                     Madagascar
@@ -3446,6 +3441,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     value="NF"
                   >
                     Norfolk Island
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    North Macedonia, Republic of
                   </option>
                   <option
                     value="MP"
@@ -5326,11 +5326,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Macao
                   </option>
                   <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
                     value="MG"
                   >
                     Madagascar
@@ -5484,6 +5479,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value="NF"
                   >
                     Norfolk Island
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    North Macedonia, Republic of
                   </option>
                   <option
                     value="MP"
@@ -7531,11 +7531,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Macao
                   </option>
                   <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
                     value="MG"
                   >
                     Madagascar
@@ -7689,6 +7684,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value="NF"
                   >
                     Norfolk Island
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    North Macedonia, Republic of
                   </option>
                   <option
                     value="MP"
@@ -8727,10 +8727,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               </span>
               <span>
                 <span>
-                  <span>
-                    MX$8,500
-                  </span>
-                   *
+                  $445.19
                 </span>
               </span>
             </div>
@@ -8748,22 +8745,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 className="text-right"
               >
                 <span>
-                  <span>
-                    MX$8,500
-                  </span>
-                   *
-                </span>
-              </span>
-            </div>
-            <div
-              className="text-muted font-italic"
-            >
-              <span>
-                * This total contains an approximate conversion. You will be charged 
-                <span>
                   $445.19
                 </span>
-                 USD.
               </span>
             </div>
           </div>
@@ -9633,11 +9616,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Macao
                   </option>
                   <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
                     value="MG"
                   >
                     Madagascar
@@ -9791,6 +9769,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value="NF"
                   >
                     Norfolk Island
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    North Macedonia, Republic of
                   </option>
                   <option
                     value="MP"
@@ -11714,11 +11697,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Macao
                   </option>
                   <option
-                    value="MK"
-                  >
-                    Macedonia, the Former Yugoslav Republic of
-                  </option>
-                  <option
                     value="MG"
                   >
                     Madagascar
@@ -11872,6 +11850,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value="NF"
                   >
                     Norfolk Island
+                  </option>
+                  <option
+                    value="MK"
+                  >
+                    North Macedonia, Republic of
                   </option>
                   <option
                     value="MP"

@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink } from '@edx/paragon';
-import { App } from '@edx/frontend-base';
+import { getConfig } from '@edx/frontend-platform';
 
 function FreeCheckoutOrderButton({ onClick }) {
   return (
     <Hyperlink
-      destination={`${App.config.ECOMMERCE_BASE_URL}/checkout/free-checkout/`}
+      destination={`${getConfig().ECOMMERCE_BASE_URL}/checkout/free-checkout/`}
       className="btn btn-primary btn-lg"
       onClick={onClick}
     >

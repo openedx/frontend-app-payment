@@ -1,7 +1,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 

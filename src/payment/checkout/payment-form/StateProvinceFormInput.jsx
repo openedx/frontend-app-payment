@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field } from 'redux-form';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';

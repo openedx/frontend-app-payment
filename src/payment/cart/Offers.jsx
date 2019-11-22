@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedNumber } from '@edx/frontend-i18n';
+import { FormattedMessage, FormattedNumber } from '@edx/frontend-platform/i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 

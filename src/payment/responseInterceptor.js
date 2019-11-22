@@ -1,4 +1,4 @@
-import { logError } from '@edx/frontend-logging';
+import { logError } from '@edx/frontend-platform/logging';
 
 // For every ajax response, check if the API has
 // responded with a redirect value. If so, redirect.

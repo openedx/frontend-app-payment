@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, FormattedNumber, injectIntl } from '@edx/frontend-i18n';
+import { FormattedMessage, FormattedNumber, injectIntl } from '@edx/frontend-platform/i18n';
 
 import { currencyDisclaimerSelector } from '../data/selectors';
 

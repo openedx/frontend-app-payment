@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton, Input } from '@edx/paragon';
 
 import { updateQuantity } from '../data/actions';

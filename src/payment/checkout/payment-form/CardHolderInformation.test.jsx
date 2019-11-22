@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 import { Factory } from 'rosie';
-import { fetchUserAccountSuccess } from '@edx/frontend-auth';
 import { createStore } from 'redux';
 
 import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
@@ -12,26 +12,53 @@ import createRootReducer from '../../../data/reducers';
 
 import '../../__factories__/userAccount.factory';
 
-jest.mock('@edx/frontend-analytics', () => ({
+jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+configureI18n({
+  config: {
+    ENVIRONMENT: process.env.ENVIRONMENT,
+    LANGUAGE_PREFERENCE_COOKIE_NAME: process.env.LANGUAGE_PREFERENCE_COOKIE_NAME,
+  },
+  loggingService: {
+    logError: jest.fn(),
+    logInfo: jest.fn(),
+  },
+  messages: {
+    uk: {},
+    th: {},
+    ru: {},
+    'pt-br': {},
+    pl: {},
+    'ko-kr': {},
+    id: {},
+    he: {},
+    ca: {},
+    'zh-cn': {},
+    fr: {},
+    'es-419': {},
+    ar: {}
+  },
+});
 
 describe('<CardHolderInformation />', () => {
   let store;
 
   describe('handleSelectCountry', () => {
     it('updates state with selected country', () => {
-      const userAccount = Factory.build('userAccount');
+      const authenticatedUser = Factory.build('userAccount');
 
       store = createStore(createRootReducer(), {});
-      store.dispatch(fetchUserAccountSuccess(userAccount));
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentForm onSubmitPayment={() => {}} onSubmitButtonClick={() => {}}>
-              <CardHolderInformation />
-            </PaymentForm>
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser }}>
+            <Provider store={store}>
+              <PaymentForm onSubmitPayment={() => {}} onSubmitButtonClick={() => {}}>
+                <CardHolderInformation />
+              </PaymentForm>
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const wrapper = mount(component);

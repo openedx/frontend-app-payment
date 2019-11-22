@@ -1,11 +1,16 @@
-import { App } from '@edx/frontend-base';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { ensureConfig, getConfig, mergeConfig } from '@edx/frontend-platform';
 import formurlencoded from 'form-urlencoded';
-import { logApiClientError } from '@edx/frontend-logging';
+import { logError } from '@edx/frontend-platform/logging';
 
 import handleRequestError from '../../data/handleRequestError';
 import { generateAndSubmitForm } from '../../data/utils';
 
-App.ensureConfig([
+mergeConfig({
+  CYBERSOURCE_URL: process.env.CYBERSOURCE_URL,
+});
+
+ensureConfig([
   'CYBERSOURCE_URL',
   'ECOMMERCE_BASE_URL',
   'ENVIRONMENT',
@@ -18,15 +23,15 @@ App.ensureConfig([
  * 'hits' then we must not perform the transaction.
  */
 export async function sdnCheck(basketId, firstName, lastName, city, country) {
-  const { data } = await App.apiClient.post(
-    `${App.config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
+  const { data } = await getAuthenticatedHttpClient().post(
+    `${getConfig().ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
     {
       name: `${firstName} ${lastName}`,
       city,
       country,
     },
   ).catch((error) => {
-    logApiClientError(error, {
+    logError(error, {
       messagePrefix: 'SDN Check Error',
       paymentMethod: 'Cybersource',
       paymentErrorType: 'SDN Check',
@@ -113,8 +118,8 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
 
   if (sdnCheckResponse.hits > 0) {
     /* istanbul ignore next */
-    if (App.config.ENVIRONMENT !== 'test') {
-      global.location.href = `${App.config.ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+    if (getConfig().ENVIRONMENT !== 'test') {
+      global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
     }
     throw new Error('This card holder did not pass the SDN check.');
   }
@@ -134,8 +139,8 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   if (basket.discountJwt) {
     formData.discount_jwt = basket.discountJwt;
   }
-  const { data } = await App.apiClient.post(
-    `${App.config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
+  const { data } = await getAuthenticatedHttpClient().post(
+    `${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`,
     formurlencoded(formData),
     {
       headers: {
@@ -143,7 +148,7 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
       },
     },
   ).catch((error) => {
-    logApiClientError(error, {
+    logError(error, {
       messagePrefix: 'Cybersource Submit Error',
       paymentMethod: 'Cybersource',
       paymentErrorType: 'Submit Error',
@@ -181,5 +186,5 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
     cybersourcePaymentParams.discount_jwt = basket.discountJwt;
   }
 
-  generateAndSubmitForm(App.config.CYBERSOURCE_URL, cybersourcePaymentParams);
+  generateAndSubmitForm(getConfig().CYBERSOURCE_URL, cybersourcePaymentParams);
 }

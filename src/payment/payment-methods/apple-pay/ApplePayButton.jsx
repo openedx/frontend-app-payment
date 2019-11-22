@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { logError } from '@edx/frontend-logging';
-import { injectIntl, intlShape } from '@edx/frontend-i18n';
+import { logError } from '@edx/frontend-platform/logging';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import messages from './ApplePay.messages';
 
 class ApplePayButton extends React.Component {

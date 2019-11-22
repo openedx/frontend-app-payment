@@ -1,4 +1,8 @@
-import { App } from '@edx/frontend-base';
+
+import { getConfig } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
@@ -26,16 +30,27 @@ import '../__factories__/basket.factory';
 
 import * as cybersourceService from '../payment-methods/cybersource';
 
-jest.mock('@edx/frontend-logging');
+jest.mock('@edx/frontend-platform/auth');
+jest.mock('@edx/frontend-platform/logging');
 jest.mock('../payment-methods/cybersource', () => ({
   checkout: jest.fn(),
 }));
+
+const axiosMock = new MockAdapter(axios);
+getAuthenticatedHttpClient.mockReturnValue(axios);
+
+const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
+const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
+const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
+const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
+
+axiosMock.reset();
+axiosMock.onAny().reply(200);
 
 describe('saga tests', () => {
   let dispatched;
   let caughtErrors;
   let sagaOptions;
-  let response;
   let basketProcessingState;
   let basketNotProcessingState;
   let courseKey;
@@ -43,6 +58,7 @@ describe('saga tests', () => {
   beforeEach(() => {
     dispatched = [];
     caughtErrors = [];
+    axiosMock.reset();
 
     // Used to reset the dispatch and onError handlers for runSaga.
     sagaOptions = {
@@ -56,31 +72,6 @@ describe('saga tests', () => {
       payment: { basket: { isBasketProcessing: false, products: [{ courseKey, productType: 'Seat' }] } },
     };
   });
-
-  /**
-   * Creates a mock of the apiClient's "get" method.  Will resolve all calls to it with the same
-   * data response. This means it may not be as useful if you need to test a service that makes
-   * multiple, different API calls.
-   */
-  function createBasketMockApiClient(data, options = { throws: false }) {
-    const mockHandler = () =>
-      new Promise((resolve, reject) => {
-        if (options.throws) {
-          const error = new Error();
-          error.response = data;
-          reject(error);
-        } else {
-          resolve(data); // resolving here results in a successful server response.
-        }
-      });
-    return {
-      // Mocked apiClient methods
-      get: jest.fn(mockHandler),
-      post: jest.fn(mockHandler),
-      delete: jest.fn(mockHandler),
-      interceptors: { response: { use: jest.fn() } },
-    };
-  }
 
   describe('handleFetchBasket', () => {
     it('should bail if the basket is processing', async () => {
@@ -99,37 +90,23 @@ describe('saga tests', () => {
     });
 
     it('should update basket data', async () => {
-      response = {
-        data: Factory.build(
-          'basket',
-          {
-            // We include offers here solely to exercise some logic in transformResults.  It's
-            // otherwise unrelated to this particular test.
-            offers: [
-              {
-                provider: 'me',
-                benefitValue: '12',
-              },
-              {
-                provider: null,
-                benefitValue: '15',
-              },
-            ],
-          },
-          // We use a different product type here SOLELY to exercise a different clause in
-          // getOrderType in the service.  It's otherwise unrelated to this test.
-          { numProducts: 1, productType: 'Seat' },
-        ),
-      };
+      const basketResponseData = Factory.build(
+        'basket',
+        {
+          // We include offers here solely to exercise some logic in transformResults.  It's
+          // otherwise unrelated to this particular test.
+          offers: [
+            { provider: 'me', benefitValue: '12' },
+            { provider: null, benefitValue: '15' },
+          ],
+        },
+        // We use a different product type here SOLELY to exercise a different clause in
+        // getOrderType in the service.  It's otherwise unrelated to this test.
+        { numProducts: 1, productType: 'Seat' },
+      );
 
-      const mockApiClient = createBasketMockApiClient(response);
-      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
-        resolve(response);
-      }));
-      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
-        resolve({ data: { discount_applicable: true } });
-      }));
-      App.apiClient = mockApiClient;
+      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
+      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`).reply(200, { discount_applicable: true });
 
       try {
         await runSaga({
@@ -140,57 +117,45 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(3);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
-      expect(mockApiClient.get).toHaveBeenCalledWith(
-        `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
-        {
-          xhrFields: { withCredentials: true },
-        },
-      );
+      expect(axiosMock.history.get.length).toBe(3);
+      expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
+      expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
+      expect(axiosMock.history.get[1].withCredentials).toBe(true);
+      expect(axiosMock.history.get[2].url).toEqual(BASKET_API_ENDPOINT);
     });
 
     it('should update basket data with jwt on second call', async () => {
-      response = {
-        data: Factory.build(
-          'basket',
-          {
-            // We include offers here solely to exercise some logic in transformResults.  It's
-            // otherwise unrelated to this particular test.
-            offers: [
-              {
-                provider: 'me',
-                benefitValue: '12',
-              },
-              {
-                provider: null,
-                benefitValue: '15',
-              },
-            ],
-          },
-          // We use a different product type here SOLELY to exercise a different clause in
-          // getOrderType in the service.  It's otherwise unrelated to this test.
-          { numProducts: 1, productType: 'Seat' },
-        ),
+      const basketResponseData = Factory.build(
+        'basket',
+        {
+          // We include offers here solely to exercise some logic in transformResults.  It's
+          // otherwise unrelated to this particular test.
+          offers: [
+            { provider: 'me', benefitValue: '12' },
+            { provider: null, benefitValue: '15' },
+          ],
+        },
+        // We use a different product type here SOLELY to exercise a different clause in
+        // getOrderType in the service.  It's otherwise unrelated to this test.
+        { numProducts: 1, productType: 'Seat' },
+      );
+      const basketResponseData2 = {
+        ...basketResponseData,
+        discountJwt: 'i_am_a_jwt',
       };
-      const response2 = response;
-      response2.data.discountJwt = 'i_am_a_jwt';
 
-      const mockApiClient = createBasketMockApiClient(response);
-      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
-        resolve(response);
-      }));
-      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
-        resolve({ data: { discount_applicable: true, jwt: 'i_am_a_jwt' } });
-      }));
-      App.apiClient = mockApiClient;
+      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
+      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+        .reply(200, { discount_applicable: true, jwt: 'i_am_a_jwt' });
+      axiosMock.onGet(`${BASKET_API_ENDPOINT}?discount_jwt=i_am_a_jwt`)
+        .reply(200, basketResponseData2);
 
       try {
         await runSaga({
@@ -201,32 +166,27 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
-        basketDataReceived(transformResults(response2.data)),
+        basketDataReceived(transformResults(basketResponseData2)),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
 
-      expect(mockApiClient.get).toHaveBeenCalledTimes(3);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/?discount_jwt=i_am_a_jwt`);
-      expect(mockApiClient.get).toHaveBeenCalledWith(
-        `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
-        {
-          xhrFields: { withCredentials: true },
-        },
-      );
+      expect(axiosMock.history.get.length).toBe(3);
+      expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
+      expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
+      expect(axiosMock.history.get[1].withCredentials).toBe(true);
+      expect(axiosMock.history.get[2].url).toEqual(`${BASKET_API_ENDPOINT}?discount_jwt=i_am_a_jwt`);
     });
 
     it('should update basket data without calling discount check API', async () => {
-      response = {
-        data: Factory.build('basket'), // No products!
-      };
+      const basketResponseData = Factory.build('basket'); // No products!
 
-      const mockApiClient = createBasketMockApiClient(response);
-      App.apiClient = mockApiClient;
+      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
+      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+        .reply(200, { discount_applicable: true });
 
       try {
         await runSaga(
@@ -243,23 +203,23 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.get).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`);
+
+      expect(axiosMock.history.get.length).toBe(1);
+      expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
     });
 
     it('should update basket data and show an info message', async () => {
-      response = {
-        data: Factory.build('basket', {}, { numProducts: 1, numInfoMessages: 1 }),
-      };
+      const basketResponseData = Factory.build('basket', {}, { numProducts: 1, numInfoMessages: 1 });
 
-      const mockApiClient = createBasketMockApiClient(response);
-      App.apiClient = mockApiClient;
+      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
+      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+        .reply(200, { discount_applicable: false });
 
       try {
         await runSaga(
@@ -271,42 +231,31 @@ describe('saga tests', () => {
         ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
-      const message = response.data.messages[0];
+      const message = basketResponseData.messages[0];
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
         addMessage(message.code, null, message.data, MESSAGE_TYPES.INFO),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(2);
+      expect(axiosMock.history.get.length).toBe(2);
     });
 
     it('should update basket data and show an error message', async () => {
-      response = {
-        // We use a different product type here SOLELY to exercise a different clause in
-        // getOrderType in the service.  It's otherwise unrelated to this test.
-        data: Factory.build(
-          'basket',
-          {},
-          { numProducts: 1, numErrorMessages: 1, productType: 'Enrollment Code' },
-        ),
-      };
+      const basketResponseData = Factory.build(
+        'basket',
+        {},
+        { numProducts: 1, numErrorMessages: 1 },
+      );
 
-      const mockApiClient = createBasketMockApiClient(response, { throws: true });
-      mockApiClient.get.mockReturnValueOnce(new Promise((reject) => {
-        reject(response);
-      }));
-      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
-        resolve({ data: { discount_applicable: true } });
-      }));
-      mockApiClient.get.mockReturnValueOnce(new Promise((resolve) => {
-        resolve(response);
-      }));
-      App.apiClient = mockApiClient;
+      axiosMock.onGet(BASKET_API_ENDPOINT).replyOnce(403, basketResponseData);
+      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+        .reply(200, { discount_applicable: true });
+      axiosMock.onGet(BASKET_API_ENDPOINT).replyOnce(200, basketResponseData);
 
       try {
         await runSaga(
@@ -318,27 +267,23 @@ describe('saga tests', () => {
         ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
-      const message = response.data.messages[0];
-
+      const message = basketResponseData.messages[0];
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
         clearMessages(),
         addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
+        basketDataReceived(transformResults(basketResponseData)),
         addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
         basketProcessing(false),
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(3);
+      expect(axiosMock.history.get.length).toBe(3);
     });
 
     it('should show a fallback error message', async () => {
-      response = {}; // no meaningful data
-
-      const mockApiClient = createBasketMockApiClient(response, { throws: true });
-      App.apiClient = mockApiClient;
+      axiosMock.onGet(BASKET_API_ENDPOINT).reply(403);
 
       try {
         await runSaga(
@@ -358,7 +303,7 @@ describe('saga tests', () => {
         fetchBasket.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.get).toHaveBeenCalledTimes(1);
+      expect(axiosMock.history.get.length).toBe(1);
     });
   });
 
@@ -380,10 +325,9 @@ describe('saga tests', () => {
     });
 
     it('should update basket data', async () => {
-      response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
+      const basketResponseData = Factory.build('basket', {}, { numProducts: 1 });
 
-      const mockApiClient = createBasketMockApiClient(response);
-      App.apiClient = mockApiClient;
+      axiosMock.onPost(COUPON_API_ENDPOINT).replyOnce(200, basketResponseData);
 
       try {
         await runSaga(
@@ -398,26 +342,20 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
         basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.post).toHaveBeenCalledWith(
-        `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
-        { code: 'DEMO25' },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
+      expect(axiosMock.history.post.length).toBe(1);
+      expect(axiosMock.history.post[0].url).toBe(COUPON_API_ENDPOINT);
+      expect(axiosMock.history.post[0].data).toEqual(JSON.stringify({ code: 'DEMO25' }));
     });
 
     it('should update basket data and show an error message', async () => {
-      response = { data: Factory.build('basket', {}, { numProducts: 1, numErrorMessages: 1 }) };
+      const basketResponseData = Factory.build('basket', {}, { numProducts: 1, numErrorMessages: 1 });
 
-      const mockApiClient = createBasketMockApiClient(response, { throws: true });
-      App.apiClient = mockApiClient;
+      axiosMock.onPost(COUPON_API_ENDPOINT).replyOnce(403, basketResponseData);
 
       try {
         await runSaga(
@@ -430,24 +368,23 @@ describe('saga tests', () => {
         ).toPromise();
       } catch (e) {} // eslint-disable-line no-empty
 
-      const message = response.data.messages[0];
+      const message = basketResponseData.messages[0];
 
       expect(dispatched).toEqual([
         basketProcessing(true),
         clearMessages(),
         addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
+      expect(axiosMock.history.post.length).toBe(1);
+      expect(axiosMock.history.post[0].url).toBe(COUPON_API_ENDPOINT);
+      expect(axiosMock.history.post[0].data).toEqual(JSON.stringify({ code: 'DEMO25' }));
     });
 
     it('should show a fallback error message', async () => {
-      // response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
-
-      const mockApiClient = createBasketMockApiClient({}, { throws: true });
-      App.apiClient = mockApiClient;
+      axiosMock.onPost(COUPON_API_ENDPOINT).replyOnce(500);
 
       try {
         await runSaga(
@@ -467,7 +404,7 @@ describe('saga tests', () => {
         basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
+      expect(axiosMock.history.post.length).toBe(1);
     });
   });
 
@@ -489,10 +426,9 @@ describe('saga tests', () => {
     });
 
     it('should update basket data', async () => {
-      response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
+      const basketResponseData = Factory.build('basket', {}, { numProducts: 1 });
 
-      const mockApiClient = createBasketMockApiClient(response);
-      App.apiClient = mockApiClient;
+      axiosMock.onDelete(`${COUPON_API_ENDPOINT}my_personal_coupon_id`).replyOnce(200, basketResponseData);
 
       try {
         await runSaga(
@@ -507,13 +443,13 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
         basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.delete).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.delete).toHaveBeenCalledWith(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/my_personal_coupon_id`);
+      expect(axiosMock.history.delete.length).toBe(1);
+      expect(axiosMock.history.delete[0].url).toBe(`${COUPON_API_ENDPOINT}my_personal_coupon_id`);
     });
   });
 
@@ -535,10 +471,9 @@ describe('saga tests', () => {
     });
 
     it('should update basket data', async () => {
-      response = { data: Factory.build('basket', {}, { numProducts: 1 }) };
+      const basketResponseData = Factory.build('basket', {}, { numProducts: 1 });
 
-      const mockApiClient = createBasketMockApiClient(response);
-      App.apiClient = mockApiClient;
+      axiosMock.onPost(QUANTITY_API_ENDPOINT).replyOnce(200, basketResponseData);
 
       try {
         await runSaga(
@@ -553,16 +488,14 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
-        basketDataReceived(transformResults(response.data)),
+        basketDataReceived(transformResults(basketResponseData)),
         clearMessages(),
         basketProcessing(false),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(mockApiClient.post).toHaveBeenCalledTimes(1);
-      expect(mockApiClient.post).toHaveBeenCalledWith(
-        `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`,
-        { quantity: 10 },
-      );
+      expect(axiosMock.history.post.length).toBe(1);
+      expect(axiosMock.history.post[0].url).toBe(QUANTITY_API_ENDPOINT);
+      expect(axiosMock.history.post[0].data).toEqual(JSON.stringify({ quantity: 10 }));
     });
   });
 

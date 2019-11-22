@@ -1,5 +1,8 @@
-import { App } from '@edx/frontend-base';
-import { logApiClientError } from '@edx/frontend-logging';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getConfig } from '@edx/frontend-platform';
+import MockAdapter from 'axios-mock-adapter';
+import axios from 'axios';
+import { logError } from '@edx/frontend-platform/logging';
 
 import { checkout, normalizeFieldErrors } from './service';
 import { generateAndSubmitForm } from '../../data/utils';
@@ -8,18 +11,22 @@ jest.mock('../../data/utils', () => ({
   generateAndSubmitForm: jest.fn(),
 }));
 
-jest.mock('@edx/frontend-logging', () => ({
-  logApiClientError: jest.fn(),
+jest.mock('@edx/frontend-platform/logging', () => ({
+  logError: jest.fn(),
 }));
 
-const config = {
-  ECOMMERCE_BASE_URL: 'ecommerce.org',
-  CYBERSOURCE_URL: 'cybersource.org',
-  ENVIRONMENT: 'test',
-};
+jest.mock('@edx/frontend-platform/auth');
 
-const SDN_URL = `${config.ECOMMERCE_BASE_URL}/api/v2/sdn/search/`;
-const CYBERSOURCE_API = `${config.ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`;
+const axiosMock = new MockAdapter(axios);
+getAuthenticatedHttpClient.mockReturnValue(axios);
+
+const SDN_URL = `${getConfig().ECOMMERCE_BASE_URL}/api/v2/sdn/search/`;
+const CYBERSOURCE_API = `${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`;
+
+beforeEach(() => {
+  axiosMock.reset();
+  logError.mockReset();
+});
 
 describe('Cybersource Service', () => {
   const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
@@ -43,9 +50,6 @@ describe('Cybersource Service', () => {
     },
   };
   const cardValues = Object.values(formDetails.cardDetails);
-
-  App.config = config;
-  App.apiClient = {};
 
   describe('normalizeCheckoutErrors', () => {
     it('should return fieldErrors if fieldErrors is not an object', () => {
@@ -88,42 +92,30 @@ describe('Cybersource Service', () => {
       Object.values(generateAndSubmitForm).map(handler => handler.mockClear);
     });
 
-    const expectNoCardDataToBePresent = (postData) => {
-      Object.values(postData).forEach((value) => {
-        if (typeof value === 'object') {
-          expectNoCardDataToBePresent(postData);
-        } else {
-          expect(cardValues.includes(value)).toBe(false);
-        }
-      });
+    const expectNoCardDataToBePresent = (value) => {
+      if (typeof value === 'object') {
+        Object.values(value).forEach(expectNoCardDataToBePresent);
+      } else {
+        expect(cardValues.includes(value)).toBe(false);
+      }
     };
 
     it('should generate and submit a form on success', async () => {
-      const successResponse = {
-        data: {
-          form_fields: {
-            allThe: 'all the form fields form cybersource',
-          },
+      const successResponseData = {
+        form_fields: {
+          allThe: 'all the form fields form cybersource',
         },
       };
-      const sdnResponse = { data: { hits: 0 } };
-
-      App.apiClient.post = (url, postData) =>
-        new Promise((resolve) => {
-          expectNoCardDataToBePresent(postData);
-          if (url === CYBERSOURCE_API) {
-            resolve(successResponse);
-          }
-          if (url === SDN_URL) {
-            resolve(sdnResponse);
-          }
-        });
+      const sdnResponseData = { hits: 0 };
+      axiosMock.onPost(CYBERSOURCE_API).reply(200, successResponseData);
+      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
 
       await expect(checkout(basket, formDetails)).resolves.toEqual(undefined);
+      expectNoCardDataToBePresent(axiosMock.history.post[0].data);
       expect(generateAndSubmitForm).toHaveBeenCalledWith(
-        config.CYBERSOURCE_URL,
+        getConfig().CYBERSOURCE_URL,
         expect.objectContaining({
-          ...successResponse.data.form_fields,
+          ...successResponseData.form_fields,
           card_number: '4111111111111111',
           card_type: 'VISA??',
           card_cvn: '123',
@@ -133,100 +125,72 @@ describe('Cybersource Service', () => {
     });
 
     it('should throw an error if there are SDN hits', () => {
-      const successResponse = {
-        data: {
-          form_fields: {
-            allThe: 'all the form fields form cybersource',
-          },
+      const successResponseData = {
+        form_fields: {
+          allThe: 'all the form fields form cybersource',
         },
       };
-      const sdnResponse = { data: { hits: 1 } };
-
-      App.apiClient.post = (url, postData) =>
-        new Promise((resolve) => {
-          expectNoCardDataToBePresent(postData);
-          if (url === CYBERSOURCE_API) {
-            resolve(successResponse);
-          }
-          if (url === SDN_URL) {
-            resolve(sdnResponse);
-          }
-        });
+      const sdnResponseData = { hits: 1 };
+      axiosMock.onPost(CYBERSOURCE_API).reply(200, successResponseData);
+      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
 
       return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
     });
 
     it('should throw an error if the SDN check errors', async () => {
-      const sdnErrorResponse = { boo: 'yah' };
+      const sdnErrorResponseData = { boo: 'yah' };
 
-      App.apiClient.post = () =>
-        new Promise((resolve, reject) => {
-          reject(sdnErrorResponse);
+      axiosMock.onPost(SDN_URL).reply(403, sdnErrorResponseData);
+      expect.hasAssertions();
+      await checkout(basket, formDetails).catch((error) => {
+        expect(logError).toHaveBeenCalledWith(error, {
+          messagePrefix: 'SDN Check Error',
+          paymentMethod: 'Cybersource',
+          paymentErrorType: 'SDN Check',
+          basketId: basket.basketId,
         });
-
-      await expect(checkout(basket, formDetails)).rejects.toEqual(sdnErrorResponse);
-      expect(logApiClientError).toHaveBeenCalledWith(sdnErrorResponse, {
-        messagePrefix: 'SDN Check Error',
-        paymentMethod: 'Cybersource',
-        paymentErrorType: 'SDN Check',
-        basketId: basket.basketId,
       });
     });
 
     it('should throw an error if the cybersource checkout request errors', async () => {
-      const errorResponse = {
-        data: {
-          field_errors: {
-            booyah: 'Booyah is bad.',
-          },
+      const errorResponseData = {
+        field_errors: {
+          booyah: 'Booyah is bad.',
         },
       };
-      const error = new Error();
-      error.response = errorResponse;
-      const sdnResponse = { data: { hits: 0 } };
+      const sdnResponseData = { hits: 0 };
 
-      App.apiClient.post = url =>
-        new Promise((resolve, reject) => {
-          if (url === SDN_URL) {
-            resolve(sdnResponse);
-          }
-          if (url === CYBERSOURCE_API) {
-            reject(error);
-          }
+      axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
+      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
+
+      expect.hasAssertions();
+      await checkout(basket, formDetails).catch(() => {
+        expectNoCardDataToBePresent(axiosMock.history.post[1].data);
+        expect(logError).toHaveBeenCalledWith(expect.any(Error), {
+          messagePrefix: 'Cybersource Submit Error',
+          paymentMethod: 'Cybersource',
+          paymentErrorType: 'Submit Error',
+          basketId: basket.basketId,
         });
-
-      await expect(checkout(basket, formDetails)).rejects.toEqual(error);
-      expect(logApiClientError).toHaveBeenCalledWith(error, {
-        messagePrefix: 'Cybersource Submit Error',
-        paymentMethod: 'Cybersource',
-        paymentErrorType: 'Submit Error',
-        basketId: basket.basketId,
       });
     });
 
     it('should throw an unknown error if the cybersource checkout request without a response body', async () => {
-      const errorResponse = {};
-      const error = new Error();
-      error.response = errorResponse;
-      const sdnResponse = { data: { hits: 0 } };
+      const errorResponseData = {};
+      const sdnResponseData = { hits: 0 };
 
-      App.apiClient.post = url =>
-        new Promise((resolve, reject) => {
-          if (url === SDN_URL) {
-            resolve(sdnResponse);
-          }
-          if (url === CYBERSOURCE_API) {
-            reject(error);
-          }
+      axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
+      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
+
+      expect.hasAssertions();
+      await checkout(basket, formDetails).catch(() => {
+        expectNoCardDataToBePresent(axiosMock.history.post[1].data);
+        expect(logError).toHaveBeenCalledWith(expect.any(Error), {
+          messagePrefix: 'Cybersource Submit Error',
+          paymentMethod: 'Cybersource',
+          paymentErrorType: 'Submit Error',
+          basketId: basket.basketId,
         });
-
-      await expect(checkout(basket, formDetails)).rejects.toEqual(error);
-
-      expect(logApiClientError).toHaveBeenCalledWith(error, {
-        messagePrefix: 'Cybersource Submit Error',
-        paymentMethod: 'Cybersource',
-        paymentErrorType: 'Submit Error',
-        basketId: basket.basketId,
       });
     });
   });

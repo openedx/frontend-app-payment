@@ -1,6 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import PayPalButton from './PayPalButton';
 

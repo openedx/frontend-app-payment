@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
-import { sendTrackEvent } from '@edx/frontend-analytics';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
 import { paymentSelector } from '../data/selectors';

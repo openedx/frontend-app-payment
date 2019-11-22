@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { sendTrackEvent } from '@edx/frontend-analytics';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { markPerformanceIfAble, getPerformanceProperties } from '../performanceEventing';
 

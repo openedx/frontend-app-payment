@@ -2,16 +2,22 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 
 import ConnectedOrderDetails from './OrderDetails';
 import { SEAT_PRODUCT_TYPE, COURSE_ENTITLEMENT_PRODUCT_TYPE, ENROLLMENT_CODE_PRODUCT_TYPE, VERIFIED_CERTIFICATE_TYPE, CREDIT_CERTIFICATE_TYPE } from './data/constants';
 
-jest.mock('@edx/frontend-logging', () => ({
+jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 
 const mockStore = configureMockStore();
+const appContextValue = {
+  authenticatedUser: {
+    email: 'staff@example.com',
+  },
+};
 
 describe('OrderDetails', () => {
   let state;
@@ -104,11 +110,13 @@ describe('OrderDetails', () => {
     state.payment.basket.loaded = true;
     const component = (
       <IntlProvider locale="en">
-        <Provider
-          store={mockStore(state)}
-        >
-          <ConnectedOrderDetails />
-        </Provider>
+        <AppContext.Provider value={appContextValue}>
+          <Provider
+            store={mockStore(state)}
+          >
+            <ConnectedOrderDetails />
+          </Provider>
+        </AppContext.Provider>
       </IntlProvider>
     );
     const tree = renderer.create(component).toJSON();

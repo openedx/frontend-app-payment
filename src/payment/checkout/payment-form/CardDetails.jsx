@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip';
 import { Field } from 'redux-form';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 import messages from './CardDetails.messages';
 

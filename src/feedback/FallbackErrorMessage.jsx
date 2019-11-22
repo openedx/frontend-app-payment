@@ -1,6 +1,6 @@
 import React from 'react';
-import { App } from '@edx/frontend-base';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { getConfig } from '@edx/frontend-platform';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink } from '@edx/paragon';
 
 const FallbackErrorMessage = () => (
@@ -10,7 +10,7 @@ const FallbackErrorMessage = () => (
     description="The error message when a basket fails to load"
     values={{
       supportLink: (
-        <Hyperlink destination={App.config.SUPPORT_URL}>
+        <Hyperlink destination={getConfig().SUPPORT_URL}>
           <FormattedMessage
             id="payment.error.fetch.basket.support.fragment"
             defaultMessage="contact support"

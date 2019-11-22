@@ -1,10 +1,11 @@
-import { App } from '@edx/frontend-base';
+import { ensureConfig, getConfig } from '@edx/frontend-platform';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
 import handleRequestError from './handleRequestError';
 import { camelCaseObject } from './utils';
 import { ORDER_TYPES } from './constants';
 
-App.ensureConfig([
+ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
 ], 'payment API service');
@@ -50,24 +51,24 @@ function handleBasketApiError(requestError) {
 
 export async function getBasket(discountJwt) {
   const discountJwtArg = typeof discountJwt !== 'undefined' ? `?discount_jwt=${discountJwt}` : '';
-  const { data } = await App.apiClient
-    .get(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
+  const { data } = await getAuthenticatedHttpClient()
+    .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
     .catch(handleBasketApiError);
 
   return transformResults(data);
 }
 
 export async function postQuantity(quantity) {
-  const { data } = await App.apiClient
-    .post(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
+  const { data } = await getAuthenticatedHttpClient()
+    .post(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
 export async function postCoupon(code) {
-  const { data } = await App.apiClient
+  const { data } = await getAuthenticatedHttpClient()
     .post(
-      `${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
+      `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
       { code },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -78,17 +79,17 @@ export async function postCoupon(code) {
 }
 
 export async function deleteCoupon(id) {
-  const { data } = await App.apiClient
-    .delete(`${App.config.ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
+  const { data } = await getAuthenticatedHttpClient()
+    .delete(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
 export async function getDiscountData(courseKey) {
-  const { data } = await App.apiClient.get(
-    `${App.config.LMS_BASE_URL}/api/discounts/course/${courseKey}`,
+  const { data } = await getAuthenticatedHttpClient().get(
+    `${getConfig().LMS_BASE_URL}/api/discounts/course/${courseKey}`,
     {
-      xhrFields: { withCredentials: true },
+      withCredentials: true,
     },
   );
   return data;
