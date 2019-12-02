@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import * as analytics from '@edx/frontend-platform/analytics';
 import Cookies from 'universal-cookie';
 
@@ -19,6 +19,10 @@ import { transformResults } from './data/service';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
 import { AppContext } from '@edx/frontend-platform/react';
+
+mergeConfig({
+  CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
+});
 
 const config = getConfig();
 
@@ -124,7 +128,7 @@ describe('<PaymentPage />', () => {
       expect(tree.toJSON()).toMatchSnapshot();
     });
 
-    it('should render the basket in a different currency', () => {;
+    it('should render the basket in a different currency', () => {
       Cookies.result[process.env.CURRENCY_COOKIE_NAME] = {
         code: 'MXN',
         rate: 19.092733,
