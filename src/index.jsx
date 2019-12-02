@@ -5,13 +5,11 @@ import {
   APP_INIT_ERROR,
   APP_READY,
   APP_AUTH_INITIALIZED,
-  APP_ANALYTICS_INITIALIZED,
   mergeConfig,
   subscribe,
 } from '@edx/frontend-platform';
 import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
-import { identifyAuthenticatedUser } from '@edx/frontend-platform/analytics';
-import { getAuthenticatedHttpClient, getAuthenticatedUser } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';

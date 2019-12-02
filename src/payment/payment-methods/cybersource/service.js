@@ -1,14 +1,10 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { ensureConfig, getConfig, mergeConfig } from '@edx/frontend-platform';
+import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import formurlencoded from 'form-urlencoded';
 import { logError } from '@edx/frontend-platform/logging';
 
 import handleRequestError from '../../data/handleRequestError';
 import { generateAndSubmitForm } from '../../data/utils';
-
-mergeConfig({
-  CYBERSOURCE_URL: process.env.CYBERSOURCE_URL,
-});
 
 ensureConfig([
   'CYBERSOURCE_URL',

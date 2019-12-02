@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink } from '@edx/paragon';
 import LocalizedPrice from './cart/LocalizedPrice';
-import { getConfig, mergeConfig } from '@edx/frontend-platform';
-
-
-mergeConfig({
-  SUPPORT_URL: process.env.SUPPORT_URL,
-});
+import { getConfig } from '@edx/frontend-platform';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SingleEnrollmentCodeWarning = ({ values }) => (
