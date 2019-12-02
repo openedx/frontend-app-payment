@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { Factory } from 'rosie';
 
 import Checkout from './Checkout';
@@ -40,8 +41,6 @@ configureI18n({
     ar: {}
   },
 });
-
-import { sendTrackEvent } from '@edx/frontend-platform/analytics'; // eslint-disable-line import/first
 
 const mockStore = configureMockStore();
 
