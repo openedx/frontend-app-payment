@@ -20,8 +20,6 @@ import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
 import { AppContext } from '@edx/frontend-platform/react';
 
-const config = getConfig();
-
 jest.mock('universal-cookie', () => {
   class MockCookies {
     static result = {
@@ -39,16 +37,12 @@ jest.mock('universal-cookie', () => {
   return MockCookies;
 });
 
-
-// Mock language cookie
-Object.defineProperty(global.document, 'cookie', {
-  writable: true,
-  value: `${getConfig().LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
-});
-
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+const config = getConfig();
+const locale = 'en';
 
 configureI18n({
   config: {
@@ -94,7 +88,7 @@ describe('<PaymentPage />', () => {
     it('should render its default (loading) state', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -109,7 +103,7 @@ describe('<PaymentPage />', () => {
     it('should render the basket', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -137,7 +131,7 @@ describe('<PaymentPage />', () => {
       );
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -155,7 +149,7 @@ describe('<PaymentPage />', () => {
     it('should render the basket with an enterprise offer', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -186,7 +180,7 @@ describe('<PaymentPage />', () => {
     it('should render the basket for a bulk order', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -209,7 +203,7 @@ describe('<PaymentPage />', () => {
     it('should render an empty basket', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -227,7 +221,7 @@ describe('<PaymentPage />', () => {
     it('should render a redirect spinner', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -251,7 +245,7 @@ describe('<PaymentPage />', () => {
     it('should render a free basket', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
@@ -275,7 +269,7 @@ describe('<PaymentPage />', () => {
     it('should render all custom alert messages', () => {
       const component = (
         <IntlProvider locale="en">
-          <AppContext.Provider value={{ authenticatedUser, config }}>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
             <Provider store={store}>
               <PaymentPage />
             </Provider>
