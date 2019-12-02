@@ -41,15 +41,6 @@ mergeConfig({
   APPLE_PAY_MERCHANT_CAPABILITIES: process.env.APPLE_PAY_MERCHANT_CAPABILITIES && process.env.APPLE_PAY_MERCHANT_CAPABILITIES.split(','),
 });
 
-subscribe(APP_ANALYTICS_INITIALIZED, () => {
-  const authenticatedUser = getAuthenticatedUser();
-  if (authenticatedUser === null) {
-    identifyAnonymousUser();
-  } else {
-    identifyAuthenticatedUser(authenticatedUser.userId);
-  }
-});
-
 subscribe(APP_READY, () => {
   markPerformanceIfAble('Payment app began painting');
   sendTrackEvent(
