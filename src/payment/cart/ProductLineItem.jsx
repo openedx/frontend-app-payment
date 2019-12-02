@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from '@edx/frontend-platform/i18n';
-
+import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 
 class ProductLineItem extends React.PureComponent {
   renderEnrollmentCount(courseKey, enrollmentCountData) {
@@ -9,12 +8,7 @@ class ProductLineItem extends React.PureComponent {
     if (courseObj) {
       const enrollmentCount = courseObj.enrollment_count;
       return (
-        <FormattedHTMLMessage
-          id="payment.productlineitem.label.numberEnrolled"
-          description="Number of learners enrolled in all of the course runs of this course."
-          defaultMessage={'<p class="num-enrolled font-weight-bold">{enrollmentCount} already enrolled!</p>'}
-          values={enrollmentCount}
-        />
+        <p className="num-enrolled"><span className="font-weight-bold">{enrollmentCount}</span> already enrolled!</p>
       );
     }
     return null;
