@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from '@edx/frontend-i18n';
-
+import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 
 class ProductLineItem extends React.PureComponent {
   renderEnrollmentCount(courseKey, enrollmentCountData) {

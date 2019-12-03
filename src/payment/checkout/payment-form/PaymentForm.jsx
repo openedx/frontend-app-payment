@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { sendTrackEvent } from '@edx/frontend-analytics';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
 
 import { getCardTypeId, SUPPORTED_CARDS } from './utils/credit-card';

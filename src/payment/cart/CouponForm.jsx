@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Input, ValidationFormGroup } from '@edx/paragon';
-import { FormattedMessage } from '@edx/frontend-i18n';
-import { sendTrackEvent } from '@edx/frontend-analytics';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import { addCoupon, removeCoupon } from '../data/actions';
 import LocalizedPrice from './LocalizedPrice';

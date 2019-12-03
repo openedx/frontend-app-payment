@@ -1,4 +1,4 @@
-import { logApiClientError, logInfo } from '@edx/frontend-logging';
+import { logError, logInfo } from '@edx/frontend-platform/logging';
 import { camelCaseObject } from './utils';
 
 function handleFieldErrors(errors) {
@@ -74,6 +74,6 @@ export default function handleRequestError(error) {
   }
 
   // Other errors
-  logApiClientError(error);
+  logError(error);
   throw error;
 }

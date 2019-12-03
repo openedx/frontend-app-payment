@@ -1,5 +1,5 @@
-import { App } from '@edx/frontend-base';
-import { logInfo } from '@edx/frontend-logging';
+import { getConfig } from '@edx/frontend-platform';
+import { logInfo } from '@edx/frontend-platform/logging';
 
 /**
  * This component's job is to redirect to the ecommerce service and log the path
@@ -15,6 +15,6 @@ export default function EcommerceRedirect() {
   // This is intended as a stopgap until more permanent server-side logic can be put
   // in place.
   // More info here on why: https://openedx.atlassian.net/browse/ARCH-1074
-  global.location.href = `${App.config.ECOMMERCE_BASE_URL}${global.location.pathname}${global.location.search}${global.location.hash}`;
+  global.location.href = `${getConfig().ECOMMERCE_BASE_URL}${global.location.pathname}${global.location.search}${global.location.hash}`;
   return null;
 }

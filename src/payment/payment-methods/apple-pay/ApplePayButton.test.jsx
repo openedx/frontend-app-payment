@@ -1,19 +1,19 @@
-import { App } from '@edx/frontend-base';
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
-import { IntlProvider } from '@edx/frontend-i18n';
-import { logError } from '@edx/frontend-logging';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { logError } from '@edx/frontend-platform/logging';
+import { getConfig } from '@edx/frontend-platform';
 
 import ApplePayButton from './ApplePayButton';
 
 // Mock language cookie
 Object.defineProperty(global.document, 'cookie', {
   writable: true,
-  value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
+  value: `${getConfig().LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
 });
 
-jest.mock('@edx/frontend-logging', () => ({
+jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 

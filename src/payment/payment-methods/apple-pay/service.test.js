@@ -1,26 +1,27 @@
-import { App } from '@edx/frontend-base';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getConfig } from '@edx/frontend-platform';
+import MockAdapter from 'axios-mock-adapter';
+import axios from 'axios';
+import { logError } from '@edx/frontend-platform/logging';
 
 import { checkout } from './service';
 
-jest.mock('@edx/frontend-logging', () => ({
-  logApiClientError: jest.fn(),
+jest.mock('@edx/frontend-platform/logging', () => ({
+  logError: jest.fn(),
 }));
 
+jest.mock('@edx/frontend-platform/auth');
+
+const axiosMock = new MockAdapter(axios);
+getAuthenticatedHttpClient.mockReturnValue(axios);
+
+beforeEach(() => {
+  axiosMock.reset();
+  logError.mockReset();
+});
+
 describe('Perform Apple Pay Payment', () => {
-  const config = {
-    APPLE_PAY_MERCHANT_NAME: 'edX e-commerce',
-    APPLE_PAY_COUNTRY_CODE: 'USA',
-    APPLE_PAY_CURRENCY_CODE: 'USD',
-    APPLE_PAY_START_SESSION_URL: '/start-session',
-    APPLE_PAY_AUTHORIZE_URL: '/authorize',
-    APPLE_PAY_SUPPORTED_NETWORKS: ['amex', 'discover', 'visa', 'masterCard'],
-    APPLE_PAY_MERCHANT_CAPABILITIES: ['supports3DS', 'supportsCredit', 'supportsDebit'],
-    ECOMMERCE_BASE_URL: 'ecommerce.org',
-    ECOMMERCE_RECEIPT_BASE_URL: 'ecommerce.org/receipt',
-    ENVIRONMENT: 'test',
-  };
   const basket = { orderTotal: 50 };
-  const apiClient = {};
   const applePayVersion = 2;
   const appleEndpointResponses = {
     validateMerchant: { validationURL: 'validationURL' },
@@ -48,9 +49,6 @@ describe('Perform Apple Pay Payment', () => {
     onPaymentCancel: jest.fn(),
   };
 
-  App.config = config;
-  App.apiClient = apiClient;
-
   beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
     global.ApplePaySession.mockClear();
@@ -62,22 +60,20 @@ describe('Perform Apple Pay Payment', () => {
   });
 
   it('should create a new apple pay session', () => {
-    const successResponse = { data: 1234 };
-
-    App.apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
-      resolve(successResponse);
-    }));
+    const successResponseData = 1234;
+    axiosMock.onPost(getConfig().APPLE_PAY_START_SESSION_URL).reply(200, successResponseData);
+    axiosMock.onPost(getConfig().APPLE_PAY_AUTHORIZE_URL).reply(200, {});
 
     return checkout(basket).then(() => {
       expect(global.ApplePaySession).toHaveBeenCalledWith(
         applePayVersion,
         expect.objectContaining({
-          countryCode: config.APPLE_PAY_COUNTRY_CODE,
-          currencyCode: config.APPLE_PAY_CURRENCY_CODE,
-          supportedNetworks: config.APPLE_PAY_SUPPORTED_NETWORKS,
-          merchantCapabilities: config.APPLE_PAY_MERCHANT_CAPABILITIES,
+          countryCode: getConfig().APPLE_PAY_COUNTRY_CODE,
+          currencyCode: getConfig().APPLE_PAY_CURRENCY_CODE,
+          supportedNetworks: getConfig().APPLE_PAY_SUPPORTED_NETWORKS,
+          merchantCapabilities: getConfig().APPLE_PAY_MERCHANT_CAPABILITIES,
           total: {
-            label: config.APPLE_PAY_MERCHANT_NAME,
+            label: getConfig().APPLE_PAY_MERCHANT_NAME,
             type: 'final',
             amount: 50,
           },
@@ -91,22 +87,17 @@ describe('Perform Apple Pay Payment', () => {
   });
 
   it('should validate the merchant and submit the payment for authorization', () => {
-    const validateSuccessResponse = { data: 1234 };
-    const authSuccessResponse = { data: { number: 'the order number' } };
-
-    App.apiClient.post = jest.fn(url => new Promise((resolve) => {
-      if (url === config.APPLE_PAY_START_SESSION_URL) {
-        resolve(validateSuccessResponse);
-      } else if (url === config.APPLE_PAY_AUTHORIZE_URL) {
-        resolve(authSuccessResponse);
-      }
-    }));
+    const validateSuccessResponseData = 1234;
+    const authSuccessResponseData = { number: 'the order number' };
+    axiosMock.onPost(getConfig().APPLE_PAY_START_SESSION_URL)
+      .reply(200, validateSuccessResponseData);
+    axiosMock.onPost(getConfig().APPLE_PAY_AUTHORIZE_URL).reply(200, authSuccessResponseData);
 
     return checkout(basket).then((orderNumber) => {
       expect(applePaySession.completeMerchantValidation)
-        .toHaveBeenCalledWith(validateSuccessResponse.data);
+        .toHaveBeenCalledWith(validateSuccessResponseData);
 
-      expect(orderNumber).toEqual(authSuccessResponse.data.number);
+      expect(orderNumber).toEqual(authSuccessResponseData.number);
       expect(applePaySession.completePayment)
         .toHaveBeenCalledWith(global.ApplePaySession.STATUS_SUCCESS);
     });
@@ -114,13 +105,7 @@ describe('Perform Apple Pay Payment', () => {
 
 
   it('should abort if merchant validation fails', () => {
-    App.apiClient.post = jest.fn(url => new Promise((resolve, reject) => {
-      if (url === config.APPLE_PAY_START_SESSION_URL) {
-        reject(new Error('error'));
-      }
-
-      resolve({});
-    }));
+    axiosMock.onPost(getConfig().APPLE_PAY_START_SESSION_URL).reply(403);
 
     return checkout(basket).catch((error) => {
       expect(error.code).toEqual('apple-pay-merchant-validation-failure');
@@ -128,13 +113,8 @@ describe('Perform Apple Pay Payment', () => {
   });
 
   it('should complete the session with a failed status if authorization fails', () => {
-    App.apiClient.post = jest.fn(url => new Promise((resolve, reject) => {
-      if (url === config.APPLE_PAY_AUTHORIZE_URL) {
-        reject(new Error('error'));
-      }
-
-      resolve({});
-    }));
+    axiosMock.onPost(getConfig().APPLE_PAY_START_SESSION_URL).reply(200);
+    axiosMock.onPost(getConfig().APPLE_PAY_AUTHORIZE_URL).reply(403, {});
 
     return checkout(basket).catch((error) => {
       expect(applePaySession.completePayment)
@@ -144,9 +124,12 @@ describe('Perform Apple Pay Payment', () => {
   });
 
   it('should fire the cancel handler on cancel', () => {
-    App.apiClient.post = jest.fn().mockReturnValue(new Promise((resolve) => {
-      setTimeout(resolve, 250); // wait long enough to cancel the session
-    }));
+    axiosMock.onPost(getConfig().APPLE_PAY_START_SESSION_URL)
+      .reply(() => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve([200]);
+        }, 250);
+      }));
 
     const checkoutPromise = checkout(basket)
       .catch(error => expect(error.aborted).toEqual(true));

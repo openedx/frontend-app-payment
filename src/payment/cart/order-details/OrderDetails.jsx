@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-i18n';
+import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 
 import messages from './messages';
 import { orderDetailsMapStateToProps } from './data/selectors';
@@ -68,7 +69,7 @@ class OrderDetails extends Component {
           description="Informs the user that they will receive enrollment codes at the specified email address."
           tagName="p"
           values={{
-            userEmail: this.props.userEmail,
+            userEmail: this.context.authenticatedUser.email,
           }}
         />
       </React.Fragment>
@@ -101,6 +102,8 @@ class OrderDetails extends Component {
   }
 }
 
+OrderDetails.contextType = AppContext;
+
 OrderDetails.propTypes = {
   intl: intlShape.isRequired,
   messageType: PropTypes.oneOf([
@@ -110,12 +113,10 @@ OrderDetails.propTypes = {
     'seat.credit',
     'seat',
   ]),
-  userEmail: PropTypes.string,
 };
 
 OrderDetails.defaultProps = {
   messageType: null,
-  userEmail: '', // Not ideal - the alternative is to not display the component until the user account is loaded.
 };
 
 export default connect(

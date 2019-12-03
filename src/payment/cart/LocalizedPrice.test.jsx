@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import Cookies from 'universal-cookie';
 
 import LocalizedPrice from './LocalizedPrice';
@@ -18,7 +18,7 @@ jest.mock('universal-cookie', () => {
   return MockCookies;
 });
 
-jest.mock('@edx/frontend-logging', () => ({
+jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 

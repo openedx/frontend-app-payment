@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import renderer from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import {
   SingleEnrollmentCodeWarning,
@@ -15,7 +15,9 @@ const mockStore = configureMockStore();
 describe('SingleEnrollmentCodeWarning', () => {
   it('should render with values', () => {
     const component = (
-      <SingleEnrollmentCodeWarning values={{ courseAboutUrl: 'http://edx.org' }} />
+      <IntlProvider locale="en">
+        <SingleEnrollmentCodeWarning values={{ courseAboutUrl: 'http://edx.org' }} />
+      </IntlProvider>
     );
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();
@@ -41,7 +43,9 @@ describe('EnrollmentCodeQuantityUpdated', () => {
 describe('TransactionDeclined', () => {
   it('should render with values', () => {
     const component = (
-      <TransactionDeclined />
+      <IntlProvider locale="en">
+        <TransactionDeclined />
+      </IntlProvider>
     );
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();

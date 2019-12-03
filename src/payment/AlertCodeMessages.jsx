@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '@edx/frontend-i18n';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink } from '@edx/paragon';
 import LocalizedPrice from './cart/LocalizedPrice';
-import { App } from '@edx/frontend-base';
+import { getConfig } from '@edx/frontend-platform';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SingleEnrollmentCodeWarning = ({ values }) => (
@@ -74,7 +74,7 @@ export const TransactionDeclined = () => (
       description="Asks the user to check their information and includes a link to contact support for help."
       values={{
         link: (
-          <Hyperlink destination={App.config.SUPPORT_URL}>
+          <Hyperlink destination={getConfig().SUPPORT_URL}>
             <FormattedMessage
               id="payment.error.fetch.basket.support.fragment"
               defaultMessage="contact support"

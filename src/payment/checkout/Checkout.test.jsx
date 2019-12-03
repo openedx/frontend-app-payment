@@ -2,7 +2,8 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { Factory } from 'rosie';
 
 import Checkout from './Checkout';
@@ -11,11 +12,35 @@ import '../__factories__/basket.factory';
 import '../__factories__/userAccount.factory';
 import { transformResults } from '../data/service';
 
-jest.mock('@edx/frontend-analytics', () => ({
+jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
 
-import { sendTrackEvent } from '@edx/frontend-analytics'; // eslint-disable-line import/first
+configureI18n({
+  config: {
+    ENVIRONMENT: process.env.ENVIRONMENT,
+    LANGUAGE_PREFERENCE_COOKIE_NAME: process.env.LANGUAGE_PREFERENCE_COOKIE_NAME,
+  },
+  loggingService: {
+    logError: jest.fn(),
+    logInfo: jest.fn(),
+  },
+  messages: {
+    uk: {},
+    th: {},
+    ru: {},
+    'pt-br': {},
+    pl: {},
+    'ko-kr': {},
+    id: {},
+    he: {},
+    ca: {},
+    'zh-cn': {},
+    fr: {},
+    'es-419': {},
+    ar: {}
+  },
+});
 
 const mockStore = configureMockStore();
 

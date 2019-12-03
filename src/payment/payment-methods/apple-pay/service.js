@@ -1,7 +1,8 @@
-import { App } from '@edx/frontend-base';
-import { logApiClientError } from '@edx/frontend-logging';
+import { ensureConfig, getConfig } from '@edx/frontend-platform';
+import { logError } from '@edx/frontend-platform/logging';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
-App.ensureConfig([
+ensureConfig([
   'ECOMMERCE_BASE_URL',
   'ENVIRONMENT',
   'APPLE_PAY_MERCHANT_NAME',
@@ -25,9 +26,9 @@ App.ensureConfig([
 /* istanbul ignore next - you can't mock window.location.href in jsdom */
 export const redirectToReceipt = (orderNumber, disableBackButton = false) => {
   const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(disableBackButton)}`;
-  if (App.config.ENVIRONMENT !== 'test') {
+  if (getConfig().ENVIRONMENT !== 'test') {
     /* istanbul ignore next */
-    global.location.href = `${App.config.ECOMMERCE_BASE_URL}/checkout/receipt/?${queryParams}`;
+    global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/checkout/receipt/?${queryParams}`;
   }
 };
 
@@ -53,12 +54,12 @@ export function checkout(basket) {
     const version = 2;
     const totalAmount = basket.orderTotal;
     const paymentRequest = {
-      countryCode: App.config.APPLE_PAY_COUNTRY_CODE,
-      currencyCode: App.config.APPLE_PAY_CURRENCY_CODE,
-      supportedNetworks: App.config.APPLE_PAY_SUPPORTED_NETWORKS,
-      merchantCapabilities: App.config.APPLE_PAY_MERCHANT_CAPABILITIES,
+      countryCode: getConfig().APPLE_PAY_COUNTRY_CODE,
+      currencyCode: getConfig().APPLE_PAY_CURRENCY_CODE,
+      supportedNetworks: getConfig().APPLE_PAY_SUPPORTED_NETWORKS,
+      merchantCapabilities: getConfig().APPLE_PAY_MERCHANT_CAPABILITIES,
       total: {
-        label: App.config.APPLE_PAY_MERCHANT_NAME,
+        label: getConfig().APPLE_PAY_MERCHANT_NAME,
         type: 'final',
         amount: totalAmount,
       },
@@ -76,14 +77,14 @@ export function checkout(basket) {
         is_payment_microfrontend: true,
       };
 
-      return App.apiClient.post(App.config.APPLE_PAY_START_SESSION_URL, postData)
+      return getAuthenticatedHttpClient().post(getConfig().APPLE_PAY_START_SESSION_URL, postData)
         .then((response) => {
           applePaySession.completeMerchantValidation(response.data);
         })
         .catch((error) => {
           // eslint-disable-next-line no-param-reassign
           error.code = 'apple-pay-merchant-validation-failure';
-          logApiClientError(error, {
+          logError(error, {
             messagePrefix: 'Apple Pay Merchant Validation Failure',
             paymentMethod: 'Apple Pay',
             paymentErrorType: 'Merchant Validation',
@@ -97,7 +98,7 @@ export function checkout(basket) {
     applePaySession.onpaymentauthorized = (event) => {
       const postData = event.payment;
 
-      return App.apiClient.post(App.config.APPLE_PAY_AUTHORIZE_URL, postData)
+      return getAuthenticatedHttpClient().post(getConfig().APPLE_PAY_AUTHORIZE_URL, postData)
         .then(({ data }) => {
           const orderNumber = data.number;
           applePaySession.completePayment(global.ApplePaySession.STATUS_SUCCESS);
@@ -107,7 +108,7 @@ export function checkout(basket) {
         .catch((error) => {
           // eslint-disable-next-line no-param-reassign
           error.code = 'apple-pay-authorization-failure';
-          logApiClientError(error, {
+          logError(error, {
             messagePrefix: 'Apple Pay Authorization Failure',
             paymentMethod: 'Apple Pay',
             paymentErrorType: 'Authorization',

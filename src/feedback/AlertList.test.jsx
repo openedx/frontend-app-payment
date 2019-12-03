@@ -2,14 +2,14 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import renderer, { act } from 'react-test-renderer';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import ConnectedAlertList from './AlertList';
 import createRootReducer from '../data/reducers';
 import { addMessage } from './data/actions';
 import { MESSAGE_TYPES } from './data/constants';
 
-jest.mock('@edx/frontend-logging', () => ({
+jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 

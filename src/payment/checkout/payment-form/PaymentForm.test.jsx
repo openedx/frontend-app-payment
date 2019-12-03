@@ -3,37 +3,65 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
-import { IntlProvider } from '@edx/frontend-i18n';
-import { fetchUserAccountSuccess } from '@edx/frontend-auth';
+import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { Factory } from 'rosie';
 
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
 import '../../__factories__/userAccount.factory';
+import { AppContext } from '@edx/frontend-platform/react';
 
-jest.mock('@edx/frontend-analytics', () => ({
+jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+configureI18n({
+  config: {
+    ENVIRONMENT: process.env.ENVIRONMENT,
+    LANGUAGE_PREFERENCE_COOKIE_NAME: process.env.LANGUAGE_PREFERENCE_COOKIE_NAME,
+  },
+  loggingService: {
+    logError: jest.fn(),
+    logInfo: jest.fn(),
+  },
+  messages: {
+    uk: {},
+    th: {},
+    ru: {},
+    'pt-br': {},
+    pl: {},
+    'ko-kr': {},
+    id: {},
+    he: {},
+    ca: {},
+    'zh-cn': {},
+    fr: {},
+    'es-419': {},
+    ar: {}
+  },
+});
+
+const authenticatedUser = Factory.build('userAccount');
 
 describe('<PaymentForm />', () => {
   let paymentForm;
   let store;
 
   beforeEach(() => {
-    const userAccount = Factory.build('userAccount');
 
     store = createStore(createRootReducer(), {});
-    store.dispatch(fetchUserAccountSuccess(userAccount));
 
     const wrapper = mount((
       <IntlProvider locale="en">
-        <Provider store={store}>
-          <PaymentForm
-            handleSubmit={() => {}}
-            onSubmitPayment={() => {}}
-            onSubmitButtonClick={() => {}}
-          />
-        </Provider>
+        <AppContext.Provider value={{ authenticatedUser }}>
+          <Provider store={store}>
+            <PaymentForm
+              handleSubmit={() => {}}
+              onSubmitPayment={() => {}}
+              onSubmitButtonClick={() => {}}
+            />
+          </Provider>
+        </AppContext.Provider>
       </IntlProvider>
     ));
     paymentForm = wrapper.find(PaymentFormComponent).first().instance();
@@ -94,14 +122,16 @@ describe('<PaymentForm />', () => {
     it('returns organization fields for a bulk order', () => {
       const wrapper = mount((
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentForm
-              isBulkOrder
-              handleSubmit={() => {}}
-              onSubmitPayment={() => {}}
-              onSubmitButtonClick={() => {}}
-            />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser }}>
+            <Provider store={store}>
+              <PaymentForm
+                isBulkOrder
+                handleSubmit={() => {}}
+                onSubmitPayment={() => {}}
+                onSubmitButtonClick={() => {}}
+              />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       ));
       paymentForm = wrapper.find(PaymentFormComponent).first().instance();
@@ -215,3 +245,4 @@ describe('<PaymentForm />', () => {
     });
   });
 });
+

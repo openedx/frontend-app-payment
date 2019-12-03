@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import { Provider } from 'react-redux';
-import { IntlProvider } from '@edx/frontend-i18n';
-import { fetchUserAccountSuccess } from '@edx/frontend-auth';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 import { Factory } from 'rosie';
 import { createStore } from 'redux';
 import Cookies from 'universal-cookie';
@@ -15,7 +15,7 @@ import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/service';
 
 
-jest.mock('@edx/frontend-analytics', () => ({
+jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
 jest.mock('universal-cookie', () => {
@@ -36,16 +36,17 @@ describe('<Cart />', () => {
   let userAccount;
 
   beforeEach(() => {
-    userAccount = Factory.build('userAccount');
+    const authenticatedUser = Factory.build('userAccount');
     Cookies.result = undefined;
     store = createStore(createRootReducer(), {});
-    store.dispatch(fetchUserAccountSuccess(userAccount));
 
     const component = (
       <IntlProvider locale="en">
-        <Provider store={store}>
-          <Cart />
-        </Provider>
+        <AppContext.Provider value={{ authenticatedUser }}>
+          <Provider store={store}>
+            <Cart />
+          </Provider>
+        </AppContext.Provider>
       </IntlProvider>
     );
     tree = renderer.create(component);
@@ -115,7 +116,6 @@ describe('<Cart />', () => {
     tree = renderer.create(component);
 
     act(() => {
-      store.dispatch(fetchUserAccountSuccess(userAccount));
       store.dispatch(basketDataReceived(transformResults(Factory.build(
         'basket',
         {},
@@ -129,7 +129,6 @@ describe('<Cart />', () => {
 
   it('renders a bulk enrollment cart', () => {
     act(() => {
-      store.dispatch(fetchUserAccountSuccess(userAccount));
       store.dispatch(basketDataReceived(transformResults(Factory.build(
         'basket',
         {},

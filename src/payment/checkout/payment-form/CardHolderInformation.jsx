@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { clearFields, Field } from 'redux-form';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-i18n';
+import { injectIntl, intlShape, FormattedMessage, getCountryList, getLocale } from '@edx/frontend-platform/i18n';
 
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
 
-import { countryOptionsSelector } from '../../data/selectors';
 import messages from './CardHolderInformation.messages';
 import StateProvinceFormInput from './StateProvinceFormInput';
 
@@ -16,6 +15,7 @@ export class CardHolderInformationComponent extends React.Component {
     super(props);
 
     this.state = { selectedCountry: null };
+    this.countryOptions = getCountryList(getLocale()).map(({ code, name }) => ({ value: code, label: name }));
   }
 
   handleSelectCountry = (event, newValue) => {
@@ -29,8 +29,8 @@ export class CardHolderInformationComponent extends React.Component {
         {this.props.intl.formatMessage(messages['payment.card.holder.information.country.options.empty'])}
       </option>
     )];
-    for (let i = 0; i < this.props.countryOptions.length; i += 1) {
-      const { value, label } = this.props.countryOptions[i];
+    for (let i = 0; i < this.countryOptions.length; i += 1) {
+      const { value, label } = this.countryOptions[i];
       items.push(<option key={value} value={value}>{label}</option>);
     }
     return items;
@@ -402,6 +402,6 @@ CardHolderInformationComponent.defaultProps = {
 };
 
 export default connect(
-  countryOptionsSelector,
+  () =>{},
   { clearFields },
 )(injectIntl(CardHolderInformationComponent));

@@ -1,14 +1,13 @@
 /* eslint-disable global-require */
-import { App } from '@edx/frontend-base';
 import React from 'react';
 import renderer, { act } from 'react-test-renderer';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
-import { IntlProvider } from '@edx/frontend-i18n';
-import * as analytics from '@edx/frontend-analytics';
-import { fetchUserAccountSuccess } from '@edx/frontend-auth';
+import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
+import * as analytics from '@edx/frontend-platform/analytics';
 import Cookies from 'universal-cookie';
 
 import './__factories__/basket.factory';
@@ -19,52 +18,81 @@ import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
+import { AppContext } from '@edx/frontend-platform/react';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {
-    static result = {};
+    static result = {
+      [process.env.LANGUAGE_PREFERENCE_COOKIE_NAME]: 'en',
+      [process.env.CURRENCY_COOKIE_NAME]:  {
+        code: 'MXN',
+        rate: 19.092733,
+      },
+    };
 
-    get() {
-      return MockCookies.result;
+    get(cookieName) {
+      return MockCookies.result[cookieName];
     }
   }
   return MockCookies;
 });
 
-
-// Mock language cookie
-Object.defineProperty(global.document, 'cookie', {
-  writable: true,
-  value: `${App.config.LANGUAGE_PREFERENCE_COOKIE_NAME}=en`,
-});
-App.apiClient = jest.fn();
-
-jest.mock('@edx/frontend-analytics', () => ({
+jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+const config = getConfig();
+const locale = 'en';
+
+configureI18n({
+  config: {
+    ENVIRONMENT: process.env.ENVIRONMENT,
+    LANGUAGE_PREFERENCE_COOKIE_NAME: process.env.LANGUAGE_PREFERENCE_COOKIE_NAME,
+  },
+  loggingService: {
+    logError: jest.fn(),
+    logInfo: jest.fn(),
+  },
+  messages: {
+    uk: {},
+    th: {},
+    ru: {},
+    'pt-br': {},
+    pl: {},
+    'ko-kr': {},
+    id: {},
+    he: {},
+    ca: {},
+    'zh-cn': {},
+    fr: {},
+    'es-419': {},
+    ar: {}
+  },
+});
+
+const authenticatedUser = Factory.build('userAccount');
 
 describe('<PaymentPage />', () => {
   let store;
 
   beforeEach(() => {
-    const userAccount = Factory.build('userAccount');
-
     store = createStore(createRootReducer(), {}, applyMiddleware(thunkMiddleware));
-    store.dispatch(fetchUserAccountSuccess(userAccount));
   });
 
   describe('Renders correctly in various states', () => {
     beforeEach(() => {
       analytics.sendTrackingLogEvent = jest.fn();
-      Cookies.result = undefined;
+      Cookies.result[process.env.CURRENCY_COOKIE_NAME] = undefined;
     });
 
     it('should render its default (loading) state', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
 
@@ -75,9 +103,11 @@ describe('<PaymentPage />', () => {
     it('should render the basket', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);
@@ -89,7 +119,7 @@ describe('<PaymentPage />', () => {
     });
 
     it('should render the basket in a different currency', () => {
-      Cookies.result = {
+      Cookies.result[process.env.CURRENCY_COOKIE_NAME] = {
         code: 'MXN',
         rate: 19.092733,
       };
@@ -101,9 +131,11 @@ describe('<PaymentPage />', () => {
       );
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);
@@ -117,9 +149,11 @@ describe('<PaymentPage />', () => {
     it('should render the basket with an enterprise offer', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);
@@ -146,9 +180,11 @@ describe('<PaymentPage />', () => {
     it('should render the basket for a bulk order', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
 
@@ -167,9 +203,11 @@ describe('<PaymentPage />', () => {
     it('should render an empty basket', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);
@@ -183,9 +221,11 @@ describe('<PaymentPage />', () => {
     it('should render a redirect spinner', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);
@@ -205,9 +245,11 @@ describe('<PaymentPage />', () => {
     it('should render a free basket', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);
@@ -227,9 +269,11 @@ describe('<PaymentPage />', () => {
     it('should render all custom alert messages', () => {
       const component = (
         <IntlProvider locale="en">
-          <Provider store={store}>
-            <PaymentPage />
-          </Provider>
+          <AppContext.Provider value={{ authenticatedUser, config, locale }}>
+            <Provider store={store}>
+              <PaymentPage />
+            </Provider>
+          </AppContext.Provider>
         </IntlProvider>
       );
       const tree = renderer.create(component);

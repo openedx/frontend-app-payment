@@ -1,12 +1,11 @@
-import { App } from '@edx/frontend-base';
+import { getConfig, getQueryParameters } from '@edx/frontend-platform';
 import { createSelector } from 'reselect';
-import { localeSelector, getCountryList } from '@edx/frontend-i18n';
 import Cookies from 'universal-cookie';
 
 export const storeName = 'payment';
 
 export const localizedCurrencySelector = () => {
-  const cookie = new Cookies().get(App.config.CURRENCY_COOKIE_NAME);
+  const cookie = new Cookies().get(getConfig().CURRENCY_COOKIE_NAME);
   let currencyCode;
   let conversionRate;
 
@@ -48,7 +47,7 @@ export const updateQuantityFormSelector = createSelector(
   }),
 );
 
-export const queryParamsSelector = () => App.getQueryParams(global.location.search);
+export const queryParamsSelector = () => getQueryParameters(global.location.search);
 
 export const paymentSelector = createSelector(
   basketSelector,
@@ -66,11 +65,4 @@ export const paymentSelector = createSelector(
         (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
     };
   },
-);
-
-export const countryOptionsSelector = createSelector(
-  localeSelector,
-  locale => ({
-    countryOptions: getCountryList(locale).map(({ code, name }) => ({ value: code, label: name })),
-  }),
 );
