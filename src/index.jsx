@@ -75,7 +75,7 @@ subscribe(APP_AUTH_INITIALIZED, () => {
   // is brand new and therefore less likely to have any timing
   // problems.
   getAuthenticatedHttpClient().interceptors.request.use(async (requestConfig) => {
-    if (requestConfig.method === 'post') {
+    if (fetch && requestConfig.method === 'post') {
       await fetch(process.env.REFRESH_ACCESS_TOKEN_ENDPOINT, {
         method: 'POST',
         credentials: 'include',
