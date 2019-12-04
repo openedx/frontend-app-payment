@@ -1,5 +1,6 @@
 import 'babel-polyfill';
 
+import axios from 'axios';
 import {
   initialize,
   APP_INIT_ERROR,
@@ -25,6 +26,9 @@ import configureStore from './data/configureStore';
 
 import './index.scss';
 import './assets/favicon.ico';
+
+const tempHttpClient = axios.create();
+tempHttpClient.defaults.withCredentials = true;
 
 mergeConfig({
   CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
@@ -75,13 +79,12 @@ subscribe(APP_AUTH_INITIALIZED, () => {
   // is brand new and therefore less likely to have any timing
   // problems.
   getAuthenticatedHttpClient().interceptors.request.use(async (requestConfig) => {
-    if (fetch && requestConfig.method === 'post') {
-      await fetch(process.env.REFRESH_ACCESS_TOKEN_ENDPOINT, {
-        method: 'POST',
-        credentials: 'include',
-      }).catch(() => {
+    if (requestConfig.method === 'post') {
+      try {
+        await tempHttpClient.post(process.env.REFRESH_ACCESS_TOKEN_ENDPOINT);
+      } catch (e) {
         logError(new Error('There was a failure to force refresh the jwt token. (In temporary fix for ARCH-1304)'));
-      });
+      }
     }
 
     return requestConfig;
