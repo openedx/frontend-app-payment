@@ -28,6 +28,7 @@ class PaymentPage extends React.Component {
       experimentVariables: {
         isPaymentVisualExperiment = false,
         isNumEnrolledExperiment = false,
+        REV1045Experiment = false,
         enrollmentCountData = [],
       } = {},
     } = window;
@@ -35,6 +36,7 @@ class PaymentPage extends React.Component {
     this.state = {
       isPaymentVisualExperiment,
       isNumEnrolledExperiment,
+      REV1045Experiment,
       enrollmentCountData,
     };
   }
@@ -48,6 +50,7 @@ class PaymentPage extends React.Component {
     const {
       isPaymentVisualExperiment,
       isNumEnrolledExperiment,
+      REV1045Experiment,
       enrollmentCountData,
     } = this.state;
 
@@ -89,6 +92,7 @@ class PaymentPage extends React.Component {
           <Cart
             isPaymentVisualExperiment={isPaymentVisualExperiment}
             isNumEnrolledExperiment={isNumEnrolledExperiment}
+            REV1045Experiment={REV1045Experiment}
             enrollmentCountData={enrollmentCountData}
           />
         </div>

@@ -85,7 +85,10 @@ class OrderDetails extends Component {
 
   render() {
     if (this.props.messageType === null) {
-      return null;
+      return (this.props.REV1045Experiment ? <React.Fragment><div className="skeleton py-2 mb-3 w-50" />
+      <div className="skeleton py-2 mb-2 mr-4" />
+      <div className="skeleton py-2 mb-5 w-75" />
+      </React.Fragment> : null)
     }
     return (
       <div className="basket-section">
@@ -113,10 +116,12 @@ OrderDetails.propTypes = {
     'seat.credit',
     'seat',
   ]),
+  REV1045Experiment: PropTypes.bool,
 };
 
 OrderDetails.defaultProps = {
   messageType: null,
+  REV1045Experiment: false,
 };
 
 export default connect(
