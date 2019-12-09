@@ -195,6 +195,7 @@ export class PaymentFormComponent extends React.Component {
     const {
       handleSubmit,
       loading,
+      loaded,
       disabled,
       isProcessing,
       isBulkOrder,
@@ -266,6 +267,7 @@ PaymentFormComponent.propTypes = {
   isQuantityUpdating: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
+  loaded: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
 };
@@ -273,6 +275,7 @@ PaymentFormComponent.propTypes = {
 PaymentFormComponent.defaultProps = {
   disabled: false,
   loading: true,
+  loaded: false,
   isBulkOrder: false,
   isQuantityUpdating: false,
   isProcessing: false,

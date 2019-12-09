@@ -135,6 +135,7 @@ class Checkout extends React.Component {
           onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
           disabled={submitting}
           loading={loading}
+          loaded={loaded}
           isProcessing={cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
