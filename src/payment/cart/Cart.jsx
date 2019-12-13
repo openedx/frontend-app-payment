@@ -29,6 +29,7 @@ class Cart extends React.Component {
       isPaymentVisualExperiment,
       isNumEnrolledExperiment,
       REV1045Experiment,
+      isPriceMessageExperiment,
       enrollmentCountData,
       orderTotal,
       showCouponForm,
@@ -94,6 +95,12 @@ class Cart extends React.Component {
       <div className="skeleton py-2 mb-5" /></React.Fragment>)}
 
         <OrderDetails REV1045Experiment={REV1045Experiment} />
+        {isPriceMessageExperiment ?
+          <React.Fragment>
+            <h5>Thanks for supporting our mission!</h5>
+            <p>Did you know? We rely on paid commitments to support our mission of increasing access to high-quality education for learners like you, everywhere.</p>
+          </React.Fragment>
+        : null}
       </div>
     );
   }
@@ -124,6 +131,7 @@ Cart.propTypes = {
   isPaymentVisualExperiment: PropTypes.bool,
   isNumEnrolledExperiment: PropTypes.bool,
   REV1045Experiment: PropTypes.bool,
+  isPriceMessageExperiment: PropTypes.bool,
   enrollmentCountData: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
     enrollment_count: PropTypes.number,
@@ -154,6 +162,7 @@ Cart.defaultProps = {
   isPaymentVisualExperiment: false,
   isNumEnrolledExperiment: false,
   REV1045Experiment: false,
+  isPriceMessageExperiment: false,
   enrollmentCountData: null,
   loading: true,
   loaded: false,
