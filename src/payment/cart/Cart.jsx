@@ -96,10 +96,10 @@ class Cart extends React.Component {
 
         <OrderDetails REV1045Experiment={REV1045Experiment} />
         {isPriceMessageExperiment ?
-          <React.Fragment>
+          <div className="price-messaging">
             <h5>Thanks for supporting our mission!</h5>
             <p>Did you know? We rely on paid commitments to support our mission of increasing access to high-quality education for learners like you, everywhere.</p>
-          </React.Fragment>
+          </div>
         : null}
       </div>
     );
