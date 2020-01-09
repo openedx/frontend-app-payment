@@ -2194,11 +2194,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     Year
                   </option>
                   <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
                     value={2020}
                   >
                     2020
@@ -2272,6 +2267,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     value={2034}
                   >
                     2034
+                  </option>
+                  <option
+                    value={2035}
+                  >
+                    2035
                   </option>
                 </select>
               </div>
@@ -4228,11 +4228,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     Year
                   </option>
                   <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
                     value={2020}
                   >
                     2020
@@ -4306,6 +4301,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     value={2034}
                   >
                     2034
+                  </option>
+                  <option
+                    value={2035}
+                  >
+                    2035
                   </option>
                 </select>
               </div>
@@ -6266,11 +6266,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Year
                   </option>
                   <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
                     value={2020}
                   >
                     2020
@@ -6344,6 +6339,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value={2034}
                   >
                     2034
+                  </option>
+                  <option
+                    value={2035}
+                  >
+                    2035
                   </option>
                 </select>
               </div>
@@ -8505,11 +8505,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Year
                   </option>
                   <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
                     value={2020}
                   >
                     2020
@@ -8583,6 +8578,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value={2034}
                   >
                     2034
+                  </option>
+                  <option
+                    value={2035}
+                  >
+                    2035
                   </option>
                 </select>
               </div>
@@ -10573,11 +10573,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Year
                   </option>
                   <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
                     value={2020}
                   >
                     2020
@@ -10651,6 +10646,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value={2034}
                   >
                     2034
+                  </option>
+                  <option
+                    value={2035}
+                  >
+                    2035
                   </option>
                 </select>
               </div>
@@ -12654,11 +12654,6 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     Year
                   </option>
                   <option
-                    value={2019}
-                  >
-                    2019
-                  </option>
-                  <option
                     value={2020}
                   >
                     2020
@@ -12732,6 +12727,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     value={2034}
                   >
                     2034
+                  </option>
+                  <option
+                    value={2035}
+                  >
+                    2035
                   </option>
                 </select>
               </div>
