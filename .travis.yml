@@ -8,7 +8,7 @@ script:
 - make validate-no-uncommitted-package-lock-changes
 - npm run i18n_extract
 - npm run lint
-- npm audit
+- npm audit --audit-level=moderate
 - npm run test
 - npm run build
 - npm run is-es5
