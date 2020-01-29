@@ -78,6 +78,7 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
           Summary
         </span>
       </h5>
+       
       <div
         className="summary-row d-flex"
       >
@@ -207,6 +208,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
           Summary
         </span>
       </h5>
+       
       <div
         className="summary-row d-flex"
       >
@@ -438,6 +440,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
           Summary
         </span>
       </h5>
+       
       <div
         className="summary-row"
       >
@@ -626,6 +629,7 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
           Summary
         </span>
       </h5>
+       
       <div
         className="summary-row d-flex"
       >
@@ -772,6 +776,7 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
           Summary
         </span>
       </h5>
+       
       <div
         className="summary-row d-flex"
       >

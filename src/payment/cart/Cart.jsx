@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { Collapsible } from '@edx/paragon';
 
 import messages from './Cart.messages';
 import { cartSelector } from '../data/selectors';
@@ -30,6 +31,7 @@ class Cart extends React.Component {
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
+      isTransparentPricingExperiment,
       enrollmentCountData,
       orderTotal,
       showCouponForm,
@@ -94,6 +96,16 @@ class Cart extends React.Component {
       <div className="skeleton py-2 mb-2" />
       <div className="skeleton py-2 mb-5" /></React.Fragment>)}
 
+        {isTransparentPricingExperiment ?
+          <Collapsible
+            styling="basic"
+            title="Fair-Price Promise"
+            className="pb-5 pt-1 mt-n5"
+            id="fair-price-collapsible"
+          >
+            <p style={{ textAlign: 'justify' }}>Major brands in online education markup their products 2-5x the actual cost due to subscription pricing. We do things differently. To make online education accessible to everyone everywhere, we keep our pricing simple and transparent. A one-time investment will bring you an array of possibilities; whether entering the job market, changing fields, seeking promotion or exploring new interests, edX delivers courses for curious minds with an affordable price tag.</p>
+          </Collapsible> : null }
+
         <OrderDetails REV1045Experiment={REV1045Experiment} />
         {isPriceMessageExperiment ?
           <div className="price-messaging">
@@ -132,6 +144,7 @@ Cart.propTypes = {
   isNumEnrolledExperiment: PropTypes.bool,
   REV1045Experiment: PropTypes.bool,
   isPriceMessageExperiment: PropTypes.bool,
+  isTransparentPricingExperiment: PropTypes.bool,
   enrollmentCountData: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
     enrollment_count: PropTypes.number,
@@ -163,6 +176,7 @@ Cart.defaultProps = {
   isNumEnrolledExperiment: false,
   REV1045Experiment: false,
   isPriceMessageExperiment: false,
+  isTransparentPricingExperiment: false,
   enrollmentCountData: null,
   loading: true,
   loaded: false,

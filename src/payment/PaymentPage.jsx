@@ -30,6 +30,7 @@ class PaymentPage extends React.Component {
         isNumEnrolledExperiment = false,
         REV1045Experiment = false,
         isPriceMessageExperiment = false,
+        isTransparentPricingExperiment = false,
         enrollmentCountData = [],
       } = {},
     } = window;
@@ -39,6 +40,7 @@ class PaymentPage extends React.Component {
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
+      isTransparentPricingExperiment,
       enrollmentCountData,
     };
   }
@@ -54,6 +56,7 @@ class PaymentPage extends React.Component {
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
+      isTransparentPricingExperiment,
       enrollmentCountData,
     } = this.state;
 
@@ -97,6 +100,7 @@ class PaymentPage extends React.Component {
             isNumEnrolledExperiment={isNumEnrolledExperiment}
             REV1045Experiment={REV1045Experiment}
             isPriceMessageExperiment={isPriceMessageExperiment}
+            isTransparentPricingExperiment={isTransparentPricingExperiment}
             enrollmentCountData={enrollmentCountData}
           />
         </div>
