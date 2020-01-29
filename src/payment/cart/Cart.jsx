@@ -40,7 +40,7 @@ class Cart extends React.Component {
       summaryQuantity,
       summaryDiscounts,
       offers,
-      loaded
+      loaded,
     } = this.props;
 
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
@@ -56,45 +56,54 @@ class Cart extends React.Component {
         </span>
 
         <CartContents>
-          {products && products.length ? products.map(product => (<ProductLineItem
-            key={product.title}
-            isNumEnrolledExperiment={isNumEnrolledExperiment}
-            REV1045Experiment={REV1045Experiment}
-            isPaymentVisualExperiment={isPaymentVisualExperiment}
-            enrollmentCountData={enrollmentCountData}
-            {...product}
-          />)) : (REV1045Experiment ? <div className="row align-items-center mb-5">
-        <div className="col-5">
-          <div className="skeleton embed-responsive embed-responsive-16by9" />
-        </div>
-        <div className="col-7">
-          <div className="skeleton py-2 mb-3 w-50" />
-          <div className="skeleton py-2 mr-4" />
-        </div>
-      </div> : null)}
+          {products && products.length ? products.map(product => (
+            <ProductLineItem
+              key={product.title}
+              isNumEnrolledExperiment={isNumEnrolledExperiment}
+              REV1045Experiment={REV1045Experiment}
+              isPaymentVisualExperiment={isPaymentVisualExperiment}
+              enrollmentCountData={enrollmentCountData}
+              {...product}
+            />)) : (REV1045Experiment ?
+              <div className="row align-items-center mb-5">
+                <div className="col-5">
+                  <div className="skeleton embed-responsive embed-responsive-16by9" />
+                </div>
+                <div className="col-7">
+                  <div className="skeleton py-2 mb-3 w-50" />
+                  <div className="skeleton py-2 mr-4" />
+                </div>
+              </div> : null)}
 
           {isBulkOrder ? <UpdateQuantityForm /> : null}
         </CartContents>
 
-        {!REV1045Experiment || loaded ? <OrderSummary>
-          {isBulkOrder ? (
+        {!REV1045Experiment || loaded ?
+          <OrderSummary> {isBulkOrder ? (
             <BulkOrderSummaryTable
               price={summaryPrice}
               subtotal={summarySubtotal}
               quantity={summaryQuantity}
             />
-          ) : (
-            <SummaryTable price={summaryPrice} />
-          )}
+          ) : (<SummaryTable price={summaryPrice} />)}
+            <Offers
+              discounts={summaryDiscounts}
+              offers={offers}
+              isBundle={products.length > 1}
+            />
 
-          <Offers discounts={summaryDiscounts} offers={offers} isBundle={products.length > 1} />
-          {showCouponForm ?
-            <CouponForm isPaymentVisualExperiment={isPaymentVisualExperiment} /> : null}
-          <TotalTable total={orderTotal} />
-          {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
-        </OrderSummary> : (<React.Fragment><div className="skeleton py-2 mb-3 w-50" />
-      <div className="skeleton py-2 mb-2" />
-      <div className="skeleton py-2 mb-5" /></React.Fragment>)}
+            {showCouponForm ?
+              <CouponForm isPaymentVisualExperiment={isPaymentVisualExperiment} /> : null}
+
+            <TotalTable total={orderTotal} />
+
+            {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
+          </OrderSummary> : (
+            <React.Fragment>
+              <div className="skeleton py-2 mb-3 w-50" />
+              <div className="skeleton py-2 mb-2" />
+              <div className="skeleton py-2 mb-5" />
+            </React.Fragment>)}
 
         {isTransparentPricingExperiment ?
           <Collapsible
@@ -121,7 +130,6 @@ class Cart extends React.Component {
     const {
       intl,
       loading,
-      loaded,
       REV1045Experiment,
     } = this.props;
 
