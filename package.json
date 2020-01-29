@@ -22,7 +22,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm audit"
+      "pre-commit": "npm run lint && npm audit --audit-level=moderate"
     }
   },
   "author": "edX",
