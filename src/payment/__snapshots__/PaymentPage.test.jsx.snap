@@ -94,6 +94,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                 Summary
               </span>
             </h5>
+             
             <div
               className="summary-row d-flex"
             >
@@ -353,6 +354,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 Summary
               </span>
             </h5>
+             
             <div
               className="summary-row d-flex"
             >
@@ -4425,6 +4427,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 Summary
               </span>
             </h5>
+             
             <div
               className="summary-row d-flex"
             >
@@ -6541,6 +6544,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 Summary
               </span>
             </h5>
+             
             <div
               className="summary-row"
             >
@@ -8715,6 +8719,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 Summary
               </span>
             </h5>
+             
             <div
               className="summary-row d-flex"
             >
@@ -10783,6 +10788,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 Summary
               </span>
             </h5>
+             
             <div
               className="summary-row d-flex"
             >

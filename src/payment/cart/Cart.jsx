@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { Collapsible } from '@edx/paragon';
 
 import messages from './Cart.messages';
 import { cartSelector } from '../data/selectors';
@@ -30,6 +31,7 @@ class Cart extends React.Component {
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
+      isTransparentPricingExperiment,
       enrollmentCountData,
       orderTotal,
       showCouponForm,
@@ -38,7 +40,7 @@ class Cart extends React.Component {
       summaryQuantity,
       summaryDiscounts,
       offers,
-      loaded
+      loaded,
     } = this.props;
 
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
@@ -54,45 +56,64 @@ class Cart extends React.Component {
         </span>
 
         <CartContents>
-          {products && products.length ? products.map(product => (<ProductLineItem
-            key={product.title}
-            isNumEnrolledExperiment={isNumEnrolledExperiment}
-            REV1045Experiment={REV1045Experiment}
-            isPaymentVisualExperiment={isPaymentVisualExperiment}
-            enrollmentCountData={enrollmentCountData}
-            {...product}
-          />)) : (REV1045Experiment ? <div className="row align-items-center mb-5">
-        <div className="col-5">
-          <div className="skeleton embed-responsive embed-responsive-16by9" />
-        </div>
-        <div className="col-7">
-          <div className="skeleton py-2 mb-3 w-50" />
-          <div className="skeleton py-2 mr-4" />
-        </div>
-      </div> : null)}
+          {products && products.length ? products.map(product => (
+            <ProductLineItem
+              key={product.title}
+              isNumEnrolledExperiment={isNumEnrolledExperiment}
+              REV1045Experiment={REV1045Experiment}
+              isPaymentVisualExperiment={isPaymentVisualExperiment}
+              enrollmentCountData={enrollmentCountData}
+              {...product}
+            />)) : (REV1045Experiment ?
+              <div className="row align-items-center mb-5">
+                <div className="col-5">
+                  <div className="skeleton embed-responsive embed-responsive-16by9" />
+                </div>
+                <div className="col-7">
+                  <div className="skeleton py-2 mb-3 w-50" />
+                  <div className="skeleton py-2 mr-4" />
+                </div>
+              </div> : null)}
 
           {isBulkOrder ? <UpdateQuantityForm /> : null}
         </CartContents>
 
-        {!REV1045Experiment || loaded ? <OrderSummary>
-          {isBulkOrder ? (
+        {!REV1045Experiment || loaded ?
+          <OrderSummary> {isBulkOrder ? (
             <BulkOrderSummaryTable
               price={summaryPrice}
               subtotal={summarySubtotal}
               quantity={summaryQuantity}
             />
-          ) : (
-            <SummaryTable price={summaryPrice} />
-          )}
+          ) : (<SummaryTable price={summaryPrice} />)}
+            <Offers
+              discounts={summaryDiscounts}
+              offers={offers}
+              isBundle={products.length > 1}
+            />
 
-          <Offers discounts={summaryDiscounts} offers={offers} isBundle={products.length > 1} />
-          {showCouponForm ?
-            <CouponForm isPaymentVisualExperiment={isPaymentVisualExperiment} /> : null}
-          <TotalTable total={orderTotal} />
-          {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
-        </OrderSummary> : (<React.Fragment><div className="skeleton py-2 mb-3 w-50" />
-      <div className="skeleton py-2 mb-2" />
-      <div className="skeleton py-2 mb-5" /></React.Fragment>)}
+            {showCouponForm ?
+              <CouponForm isPaymentVisualExperiment={isPaymentVisualExperiment} /> : null}
+
+            <TotalTable total={orderTotal} />
+
+            {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
+          </OrderSummary> : (
+            <React.Fragment>
+              <div className="skeleton py-2 mb-3 w-50" />
+              <div className="skeleton py-2 mb-2" />
+              <div className="skeleton py-2 mb-5" />
+            </React.Fragment>)}
+
+        {isTransparentPricingExperiment ?
+          <Collapsible
+            styling="basic"
+            title="Fair-Price Promise"
+            className="pb-5 pt-1 mt-n5"
+            id="fair-price-collapsible"
+          >
+            <p style={{ textAlign: 'justify' }}>Major brands in online education markup their products 2-5x the actual cost due to subscription pricing. We do things differently. To make online education accessible to everyone everywhere, we keep our pricing simple and transparent. A one-time investment will bring you an array of possibilities; whether entering the job market, changing fields, seeking promotion or exploring new interests, edX delivers courses for curious minds with an affordable price tag.</p>
+          </Collapsible> : null }
 
         <OrderDetails REV1045Experiment={REV1045Experiment} />
         {isPriceMessageExperiment ?
@@ -109,7 +130,6 @@ class Cart extends React.Component {
     const {
       intl,
       loading,
-      loaded,
       REV1045Experiment,
     } = this.props;
 
@@ -132,6 +152,7 @@ Cart.propTypes = {
   isNumEnrolledExperiment: PropTypes.bool,
   REV1045Experiment: PropTypes.bool,
   isPriceMessageExperiment: PropTypes.bool,
+  isTransparentPricingExperiment: PropTypes.bool,
   enrollmentCountData: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
     enrollment_count: PropTypes.number,
@@ -163,6 +184,7 @@ Cart.defaultProps = {
   isNumEnrolledExperiment: false,
   REV1045Experiment: false,
   isPriceMessageExperiment: false,
+  isTransparentPricingExperiment: false,
   enrollmentCountData: null,
   loading: true,
   loaded: false,
