@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Payment | edX</title>
+  <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+<style>
+</style>
+<body>
+  <header>
+    <div class="nav">
+      <img src="assets/logo.svg" alt="edX" class="logo">
+      <nav aria-label="Main"></nav>
+      <button class="user-button" aria-label="Account menu for user" aria-haspopup="menu" aria-expanded="true">
+         <img src="assets/avatar.svg" alt="avatar" class="avatar">
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://courses.edx.org/dashboard">Dashboard</a>
+        <a class="dropdown-item" href="https://courses.edx.org/logout">Logout</a></div>
+    </div>
+  </header>
+  <main>
+    <div class="container-fluid payment-container" aria-label="Payment">
+      <div class="row">
+        <!-- Cart  -->
+        <div class="cart col-5">
+          <!-- Product Line Item -->
+          <section aria-live="polite" aria-relevant="all" aria-label="Shopping Cart Details">
+            <div class="checkout-section" aria-label="Shopping cart details are loaded.">
+              <h5>In Your Cart</h5>
+              <p>Your purchase contains the following:<p>
+              <div class="row">
+                <div style="display: inline-flex;">
+                  <img class="img-thumbnail" src="https://prod-discovery.edx-cdn.org/media/course/image/ac499cd6-a3ac-4a5f-a307-bb28ea318de1-0a473d1ec055.small.png" alt="" />
+                  <div class="product-line-item">
+                    <h4>Title HERE</h4>
+                    <p>Verified Certificate</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- Summary -->
+          <div class="checkout-section" role="region" aria-labelledby="summary-heading" aria-live="polite">
+            <h5>Summary</h5>
+            <p class="col-10">Price</p>
+            <span>$350.00</span>
+            <!-- Coupon form  -->
+            <p>Add coupon code (optional)</p>
+            <form style="display: inline-flex; margin-bottom: 1rem;">
+              <input style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-describedby="">
+              <button class="submit-button" style="font-size: 1rem; width: 6.5rem; font-weight: 400;">Apply</button>
+            </form>
+            <h4 class="col-10">TOTAL</h4>
+            <span><strong>$350.00</strong></span>
+          </div>
+          <!-- Order Details -->
+          <div class="checkout-section">
+            <h5>Order Details</h5>
+            <p>After you complete your order you will be automatically enrolled in the verified track of the course.</p>
+          </div>
+        </div>
+
+        <!-- Checkout  -->
+        <div class="checkout col-7">
+          <section aria-label="Payment Details">
+            <!-- Payment Method  -->
+            <div class="checkout-section">
+              <h5>Select Payment Method</h5>
+              <div class="payment-method">
+                <button class="active-button"><img src="assets/accepted-card-logos.png" alt="card-logos"></button>
+                <button><img src="assets/paypal-logo.png" alt="paypal-logo"></button>
+              </div>
+            </div>
+            <!-- Checout Form  -->
+            <div class="card">
+              <div class="checkout-section">
+                <h5>Card Holder Infomation</h5>
+                  <form>
+                    <div class="col-left">
+                      First name (required)<br>
+                      <input type="text" name="firstname"><br>
+                    </div>
+                    <div class="col-right">
+                      Last name (required)<br>
+                      <input type="text" name="lastname"><br>
+                    </div>
+
+                    <div class="col-left">
+                      Address (required)<br>
+                      <input type="text" name="address"><br>
+                    </div>
+                    <div class="col-right">
+                      Suite/Apartment Number<br>
+                      <input type="text" name="address2"><br>
+                    </div>
+
+                    <div class="col-left">
+                      City (required)<br>
+                      <input type="text" name="city"><br>
+                    </div>
+                    <div class="col-right">
+                      Country (required)<br>
+                      <input type="text" name="country"><br>
+                    </div>
+
+                    <div class="col-left">
+                      State/Province<br>
+                      <input type="text" name="state"><br>
+                    </div>
+                    <div class="col-right">
+                      Zip/Postal Code<br>
+                      <input type="text" name="zip"><br>
+                    </div>
+                </div>
+
+              <div class="checkout-section">
+                <!-- Billing -->
+                <h5>Billing Infomation</h5>
+                  <div class="col-right">
+                    Card Number (required)<br>
+                    <input type="text" name="card"><br>
+                  </div>
+                  <div class="col-left">
+                    Security Code (required)<br>
+                    <input type="text" name="security"><br>
+                  </div>
+                  <div class="col-right">
+                    Expiration Month (required)<br>
+                    <input type="text" name="month"><br>
+                  </div>
+                  <div class="col-left">
+                    Expiration Year (required)<br>
+                    <input type="text" name="year"><br>
+                  </div>
+              </div>
+              <button id="place-order-button" class="submit-button col-right" style="font-size: 1.25rem; width: 48%; font-weight: 500; margin-top: 2rem;">Place Order</button>
+              </form>
+            </div>
+          </div>
+        </section>
+  </main>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
