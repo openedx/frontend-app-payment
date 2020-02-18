@@ -3,6 +3,7 @@ const glob = require('glob');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
@@ -29,6 +30,14 @@ config.plugins = [
   new MiniCssExtractPlugin({
     filename: '[name].[chunkhash].css',
   }),
+  // Copies over static html checkout pages to dist folder for the REV-1074 experiment
+  // Stage also uses this config and dev uses this config when running npm run build
+  new CopyPlugin([
+    {
+      from: path.resolve(__dirname, 'public/REV1074'),
+      to: path.resolve(__dirname, 'dist'),
+    },
+  ]),
   // Generates an HTML file in the output directory.
   new HtmlWebpackPlugin({
     inject: false, // Manually inject head and body tags in the template itself.
