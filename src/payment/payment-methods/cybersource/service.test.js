@@ -152,7 +152,7 @@ describe('Cybersource Service', () => {
       });
     });
 
-    it('should throw an error if the cybersource checkout request errors', async () => {
+    it('should throw an error if the cybersource checkout request errors on the fields', async () => {
       const errorResponseData = {
         field_errors: {
           booyah: 'Booyah is bad.',
@@ -172,6 +172,26 @@ describe('Cybersource Service', () => {
           paymentErrorType: 'Submit Error',
           basketId: basket.basketId,
         });
+      });
+    });
+
+    it('should throw an error if the cybersource checkout request errors on the SDN check', async () => {
+      const errorResponseData = {
+        error: 'There was an error submitting the basket',
+        sdn_check_failure: { hit_count: 1 },
+      };
+      const sdnResponseData = { hits: 0 };
+
+      axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
+      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
+
+      expect.hasAssertions();
+      await expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
+      expect(logError).toHaveBeenCalledWith(expect.any(Error), {
+        messagePrefix: 'SDN Check Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'SDN Check Submit Api',
+        basketId: basket.basketId,
       });
     });
 

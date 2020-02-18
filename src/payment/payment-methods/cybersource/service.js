@@ -144,23 +144,35 @@ export async function checkout(basket, { cardHolderInfo, cardDetails }) {
       },
     },
   ).catch((error) => {
-    logError(error, {
-      messagePrefix: 'Cybersource Submit Error',
-      paymentMethod: 'Cybersource',
-      paymentErrorType: 'Submit Error',
-      basketId,
-    });
-
-    if (error.response && error.response.data) {
-      // This endpoint does not return field error data in a format we expect.  Fix it.
-      error.response.data = { // eslint-disable-line no-param-reassign
-        field_errors: normalizeFieldErrors(error.response.data.field_errors),
-      };
-
-      handleApiError(error);
+    const errorData = error.response ? error.response.data : null;
+    if (errorData && error.response.data.sdn_check_failure) {
+      /* istanbul ignore next */
+      if (getConfig().ENVIRONMENT !== 'test') {
+        global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+      }
+      logError(error, {
+        messagePrefix: 'SDN Check Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'SDN Check Submit Api',
+        basketId,
+      });
+      throw new Error('This card holder did not pass the SDN check.');
+    } else {
+      logError(error, {
+        messagePrefix: 'Cybersource Submit Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'Submit Error',
+        basketId,
+      });
+      if (errorData) { // It's a field error
+        // This endpoint does not return field error data in a format we expect.  Fix it.
+        error.response.data = { // eslint-disable-line no-param-reassign
+          field_errors: normalizeFieldErrors(error.response.data.field_errors),
+        };
+        handleApiError(error);
+      }
+      throw error;
     }
-
-    throw error;
   });
 
   const {
