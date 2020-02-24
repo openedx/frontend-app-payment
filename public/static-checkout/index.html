@@ -47,15 +47,15 @@
           <div class="checkout-section" role="region" aria-labelledby="summary-heading" aria-live="polite">
             <h5>Summary</h5>
             <p class="col-10">Price</p>
-            <span>$350.00</span>
+            <span id="summaryprice">$350.00</span>
             <!-- Coupon form  -->
             <p>Add coupon code (optional)</p>
             <form style="display: inline-flex; margin-bottom: 1rem;">
-              <input style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-describedby="">
-              <button class="submit-button" style="font-size: 1rem; width: 6.5rem; font-weight: 400;">Apply</button>
+              <input id="couponcode" style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-describedby="">
+              <button id="coupon-button" class="submit-button" style="font-size: 1rem; width: 6.5rem; font-weight: 400;">Apply</button>
             </form>
             <h4 class="col-10">TOTAL</h4>
-            <span><strong>$350.00</strong></span>
+            <span id="total"><strong>$350.00</strong></span>
           </div>
           <!-- Order Details -->
           <div class="checkout-section">
@@ -82,25 +82,25 @@
                   <form>
                     <div class="col-left">
                       First name (required)<br>
-                      <input type="text" name="firstname"><br>
+                      <input id="firstname" type="text" name="firstname"><br>
                     </div>
                     <div class="col-right">
                       Last name (required)<br>
-                      <input type="text" name="lastname"><br>
+                      <input id="lastname" type="text" name="lastname"><br>
                     </div>
 
                     <div class="col-left">
                       Address (required)<br>
-                      <input type="text" name="address"><br>
+                      <input id="address1" type="text" name="address1"><br>
                     </div>
                     <div class="col-right">
                       Suite/Apartment Number<br>
-                      <input type="text" name="address2"><br>
+                      <input id="address2"type="text" name="address2"><br>
                     </div>
 
                     <div class="col-left">
                       City (required)<br>
-                      <input type="text" name="city"><br>
+                      <input id="city" type="text" name="city"><br>
                     </div>
                     <div class="col-right">
                       Country (required)<br>
@@ -117,24 +117,42 @@
                     </div>
                     <div class="col-right">
                       Zip/Postal Code<br>
-                      <input type="text" name="zip"><br>
+                      <input id="zip" type="text" name="zip"><br>
                     </div>
                 </div>
 
               <div class="checkout-section">
                 <!-- Billing -->
                 <h5>Billing Infomation</h5>
-                  <div class="col-right">
+                  <div class="col-left">
                     Card Number (required)<br>
-                    <input type="text" name="cardNumber"><br>
+                    <input id="cardnumber" type="text" name="cardnumber"><br>
+                  </div>
+                  <div class="col-right">
+                    Security Code (required)<br>
+                    <input id="cardcode" type="text" name="cardcode"><br>
                   </div>
                   <div class="col-left">
-                    Security Code (required)<br>
-                    <input type="text" name="cardSecurityCode"><br>
+                    Expiration Month (required)<br>
+                    <select id="cardmonth" name="cardmonth">
+                      <option selected>Month</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                      <option>6</option>
+                      <option>7</option>
+                      <option>8</option>
+                      <option>9</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                    </select>
                   </div>
                   <div class="col-right">
                     Expiration Year (required)<br>
-                    <select id="cardExpirationYear" name="cardExpirationYear">
+                    <select id="cardyear" name="cardyear">
                       <option selected>Year</option>
                       <option>2020</option>
                       <option>2021</option>
@@ -152,24 +170,6 @@
                       <option>2033</option>
                       <option>2034</option>
                       <option>2035</option>
-                    </select>
-                  </div>
-                  <div class="col-left">
-                    Expiration Month (required)<br>
-                    <select id="cardExpirationMonth" name="cardExpirationMonth">
-                      <option selected>Month</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                      <option>11</option>
-                      <option>12</option>
                     </select>
                   </div>
               </div>

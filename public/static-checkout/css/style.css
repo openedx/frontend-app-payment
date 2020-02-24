@@ -12,7 +12,7 @@ body {
   -moz-box-sizing: border-box;
 }
 
-a:visited {
+a {
   color: inherit;
   text-decoration: none;
 }
@@ -127,7 +127,6 @@ header {
   margin: auto;
   max-width: 1440px;
   width: 100%;
-  box-sizing: border-box;
 }
 
 .payment-container {
@@ -253,7 +252,9 @@ header {
 .col-11 {width: 91.65%;}
 .col-12 {width: 8.33%;}
 
+/* FIX: add media queries for responsiveness for all sizes */
 @media only screen and (max-width: 768px) {
   [class*="col-"] {width: 100%;}
   .col-right.col-left {float: none;}
 }
+
