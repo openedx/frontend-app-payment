@@ -1,4 +1,5 @@
 const checkoutButton = document.querySelector('#place-order-button');
+const couponButton = document.getElementById('coupon-button');
 const userButton = document.querySelector('.user-button');
 const countrySelect = document.getElementById('country');
 const stateSelect = document.getElementById('state');
@@ -379,8 +380,49 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCountryState();
 });
 
+// eslint-disable-next-line no-unused-vars
+function calculateTotal(couponAmount) {
+  const summaryPrice = document.getElementById('summaryprice').value;
+  // FIX: get price, coupon amount and calculate total
+  // eslint-disable-next-line radix
+  const total = parseInt(summaryPrice - couponAmount);
+  return total;
+}
+
 checkoutButton.addEventListener('click', (event) => {
   event.preventDefault();
+  const formData = {
+    paymentInformation: {
+      card: {
+        number: document.getElementById('cardnumber').value,
+        expirationMonth: document.getElementById('cardmonth').value,
+        expirationYear: document.getElementById('cardyear').value,
+        securityCode: document.getElementById('cardcode').value,
+      },
+    },
+    orderInformation: {
+      amountDetails: {
+        totalAmount: '145',
+        currency: 'USD',
+      },
+      billTo: {
+        firstName: document.getElementById('firstname').value,
+        lastName: document.getElementById('lastname').value,
+        address1: document.getElementById('address1').value,
+        address2: document.getElementById('address2').value,
+        locality: document.getElementById('city').value,
+        administrativeArea: document.getElementById('state').value,
+        postalCode: document.getElementById('zip').value,
+        country: document.getElementById('country').value,
+      },
+    },
+  };
+  console.log('checkout clicked, formData:', formData);
+});
 
-  console.log('checkout clicked');
+couponButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  const couponCode = document.getElementById('couponcode').value;
+  // FIX: get coupon code amount and call calculateTotal() to get updated total
+  console.log('coupon button, couponCode:', couponCode);
 });
