@@ -76,14 +76,9 @@ header {
   vertical-align: middle;
 }
 
-.user-button span {
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding-left: 0.5rem;
-}
-
 .dropdown-menu {
+  position: absolute;
+  right: 0;
   display: none;
   padding: .5rem 0;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.3);
@@ -93,30 +88,17 @@ header {
   font-size: 1rem;
   background: #fff;
   width: 158px;
-  float: right;
   margin-top: 3.2rem;
   margin-right: 1rem;
-  position: relative;
 }
 
 .show {
   display: block;
 }
 
-.dropdown-item a {
-  left: 0; 
-  top: 100%; 
-  width: 100%;
-  display: block;
-  text-decoration: none;
-  width: 100%;
-  white-space: nowrap;
+a.dropdown-item {
+  position: relative;
   padding: 0.25rem 1.5rem;
-  clear: both;
-  text-align: inherit;
-  background-color: transparent;
-  border: 0;
-  position: absolute;
 }
 
 .dropdown-item:hover {
@@ -210,11 +192,6 @@ header {
   transform: translate(0%, 25%);
 }
 
-.grid-container {
-  width: 100%;
-  max-width: 1380px;
-}
-
 .checkout-section {
   margin-bottom: 3rem;
 }
@@ -227,30 +204,14 @@ header {
   float: left;
 }
 
-.row:before,
-.row:after {
-  content:"";
-  display: table ;
-  clear:both;
-}
-
 [class*='col-'] {
   display: inline-block;
   min-height: 1px;
 }
 
-.col-1 {width: 8.33%;}
-.col-2 {width: 16.66%;}
-.col-3 {width: 24.99%;}
-.col-4 {width: 33.32%;}
 .col-5 {width: 41.65%;}
-.col-6 {width: 50%;}
 .col-7 {width: 58.33%;}
-.col-8 {width: 66.66%;}
-.col-9 {width: 74.99%;}
 .col-10 {width: 83.32%;}
-.col-11 {width: 91.65%;}
-.col-12 {width: 8.33%;}
 
 /* FIX: add media queries for responsiveness for all sizes */
 @media only screen and (max-width: 768px) {

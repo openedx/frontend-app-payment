@@ -2,7 +2,7 @@ const checkoutButton = document.querySelector('#place-order-button');
 const couponButton = document.getElementById('coupon-button');
 const userButton = document.querySelector('.user-button');
 const countrySelect = document.getElementById('country');
-const stateSelect = document.getElementById('state');
+let stateSelect = document.getElementById('state');
 
 userButton.addEventListener('click', () => {
   document.querySelector('.dropdown-menu').classList.toggle('show');
@@ -37,7 +37,7 @@ const countryList = {
   AU: 'Australia',
   AT: 'Austria',
   AZ: 'Azerbaijan',
-  BS: 'Bahamas (the)',
+  BS: 'Bahamas',
   BH: 'Bahrain',
   BD: 'Bangladesh',
   BB: 'Barbados',
@@ -47,62 +47,59 @@ const countryList = {
   BJ: 'Benin',
   BM: 'Bermuda',
   BT: 'Bhutan',
-  BO: 'Bolivia (Plurinational State of)',
-  BQ: 'Bonaire, Sint Eustatius and Saba',
+  BO: 'Bolivia',
   BA: 'Bosnia and Herzegovina',
   BW: 'Botswana',
   BV: 'Bouvet Island',
   BR: 'Brazil',
-  IO: 'British Indian Ocean Territory (the)',
+  IO: 'British Indian Ocean Territory',
   BN: 'Brunei Darussalam',
   BG: 'Bulgaria',
   BF: 'Burkina Faso',
   BI: 'Burundi',
-  CV: 'Cabo Verde',
   KH: 'Cambodia',
   CM: 'Cameroon',
   CA: 'Canada',
-  KY: 'Cayman Islands (the)',
-  CF: 'Central African Republic (the)',
+  CV: 'Cape Verde',
+  KY: 'Cayman Islands',
+  CF: 'Central African Republic',
   TD: 'Chad',
   CL: 'Chile',
   CN: 'China',
   CX: 'Christmas Island',
-  CC: 'Cocos (Keeling) Islands (the)',
+  CC: 'Cocos (Keeling) Islands',
   CO: 'Colombia',
-  KM: 'Comoros (the)',
-  CD: 'Congo (the Democratic Republic of the)',
-  CG: 'Congo (the)',
-  CK: 'Cook Islands (the)',
+  KM: 'Comoros',
+  CG: 'Congo',
+  CD: 'Congo, the Democratic Republic of the',
+  CK: 'Cook Islands',
   CR: 'Costa Rica',
+  CI: 'Cote D\'Ivoire',
   HR: 'Croatia',
   CU: 'Cuba',
-  CW: 'Curaçao',
   CY: 'Cyprus',
-  CZ: 'Czechia',
-  CI: 'Côte d\'Ivoire',
+  CZ: 'Czech Republic',
   DK: 'Denmark',
   DJ: 'Djibouti',
   DM: 'Dominica',
-  DO: 'Dominican Republic (the)',
+  DO: 'Dominican Republic',
   EC: 'Ecuador',
   EG: 'Egypt',
   SV: 'El Salvador',
   GQ: 'Equatorial Guinea',
   ER: 'Eritrea',
   EE: 'Estonia',
-  SZ: 'Eswatini',
   ET: 'Ethiopia',
-  FK: 'Falkland Islands (the) [Malvinas]',
-  FO: 'Faroe Islands (the)',
+  FK: 'Falkland Islands (Malvinas)',
+  FO: 'Faroe Islands',
   FJ: 'Fiji',
   FI: 'Finland',
   FR: 'France',
   GF: 'French Guiana',
   PF: 'French Polynesia',
-  TF: 'French Southern Territories (the)',
+  TF: 'French Southern Territories',
   GA: 'Gabon',
-  GM: 'Gambia (the)',
+  GM: 'Gambia',
   GE: 'Georgia',
   DE: 'Germany',
   GH: 'Ghana',
@@ -113,37 +110,34 @@ const countryList = {
   GP: 'Guadeloupe',
   GU: 'Guam',
   GT: 'Guatemala',
-  GG: 'Guernsey',
   GN: 'Guinea',
   GW: 'Guinea-Bissau',
   GY: 'Guyana',
   HT: 'Haiti',
-  HM: 'Heard Island and McDonald Islands',
-  VA: 'Holy See (the)',
+  HM: 'Heard Island and Mcdonald Islands',
+  VA: 'Holy See (Vatican City State)',
   HN: 'Honduras',
   HK: 'Hong Kong',
   HU: 'Hungary',
   IS: 'Iceland',
   IN: 'India',
   ID: 'Indonesia',
-  IR: 'Iran (Islamic Republic of)',
+  IR: 'Iran, Islamic Republic of',
   IQ: 'Iraq',
   IE: 'Ireland',
-  IM: 'Isle of Man',
   IL: 'Israel',
   IT: 'Italy',
   JM: 'Jamaica',
   JP: 'Japan',
-  JE: 'Jersey',
   JO: 'Jordan',
   KZ: 'Kazakhstan',
   KE: 'Kenya',
   KI: 'Kiribati',
-  KP: 'Korea (the Democratic People\'s Republic of)',
-  KR: 'Korea (the Republic of)',
+  KP: 'North Korea',
+  KR: 'South Korea',
   KW: 'Kuwait',
   KG: 'Kyrgyzstan',
-  LA: 'Lao People\'s Democratic Republic (the)',
+  LA: 'Lao People\'s Democratic Republic',
   LV: 'Latvia',
   LB: 'Lebanon',
   LS: 'Lesotho',
@@ -159,17 +153,16 @@ const countryList = {
   MV: 'Maldives',
   ML: 'Mali',
   MT: 'Malta',
-  MH: 'Marshall Islands (the)',
+  MH: 'Marshall Islands',
   MQ: 'Martinique',
   MR: 'Mauritania',
   MU: 'Mauritius',
   YT: 'Mayotte',
   MX: 'Mexico',
-  FM: 'Micronesia (Federated States of)',
-  MD: 'Moldova (the Republic of)',
+  FM: 'Micronesia, Federated States of',
+  MD: 'Moldova, Republic of',
   MC: 'Monaco',
   MN: 'Mongolia',
-  ME: 'Montenegro',
   MS: 'Montserrat',
   MA: 'Morocco',
   MZ: 'Mozambique',
@@ -177,40 +170,38 @@ const countryList = {
   NA: 'Namibia',
   NR: 'Nauru',
   NP: 'Nepal',
-  NL: 'Netherlands (the)',
+  NL: 'Netherlands',
   NC: 'New Caledonia',
   NZ: 'New Zealand',
   NI: 'Nicaragua',
-  NE: 'Niger (the)',
+  NE: 'Niger',
   NG: 'Nigeria',
   NU: 'Niue',
   NF: 'Norfolk Island',
-  MP: 'Northern Mariana Islands (the)',
+  MK: 'North Macedonia, Republic of',
+  MP: 'Northern Mariana Islands',
   NO: 'Norway',
   OM: 'Oman',
   PK: 'Pakistan',
   PW: 'Palau',
-  PS: 'Palestine, State of',
+  PS: 'Palestinian Territory, Occupied',
   PA: 'Panama',
   PG: 'Papua New Guinea',
   PY: 'Paraguay',
   PE: 'Peru',
-  PH: 'Philippines (the)',
+  PH: 'Philippines',
   PN: 'Pitcairn',
   PL: 'Poland',
   PT: 'Portugal',
   PR: 'Puerto Rico',
   QA: 'Qatar',
-  MK: 'Republic of North Macedonia',
+  RE: 'Reunion',
   RO: 'Romania',
-  RU: 'Russian Federation (the)',
+  RU: 'Russian Federation',
   RW: 'Rwanda',
-  RE: 'Réunion',
-  BL: 'Saint Barthélemy',
-  SH: 'Saint Helena, Ascension and Tristan da Cunha',
+  SH: 'Saint Helena',
   KN: 'Saint Kitts and Nevis',
   LC: 'Saint Lucia',
-  MF: 'Saint Martin (French part)',
   PM: 'Saint Pierre and Miquelon',
   VC: 'Saint Vincent and the Grenadines',
   WS: 'Samoa',
@@ -218,27 +209,25 @@ const countryList = {
   ST: 'Sao Tome and Principe',
   SA: 'Saudi Arabia',
   SN: 'Senegal',
-  RS: 'Serbia',
   SC: 'Seychelles',
   SL: 'Sierra Leone',
   SG: 'Singapore',
-  SX: 'Sint Maarten (Dutch part)',
   SK: 'Slovakia',
   SI: 'Slovenia',
   SB: 'Solomon Islands',
   SO: 'Somalia',
   ZA: 'South Africa',
   GS: 'South Georgia and the South Sandwich Islands',
-  SS: 'South Sudan',
   ES: 'Spain',
   LK: 'Sri Lanka',
-  SD: 'Sudan (the)',
+  SD: 'Sudan',
   SR: 'Suriname',
   SJ: 'Svalbard and Jan Mayen',
+  SZ: 'Swaziland',
   SE: 'Sweden',
   CH: 'Switzerland',
   SY: 'Syrian Arab Republic',
-  TW: 'Taiwan (Province of China)',
+  TW: 'Taiwan',
   TJ: 'Tajikistan',
   TZ: 'Tanzania, United Republic of',
   TH: 'Thailand',
@@ -250,27 +239,39 @@ const countryList = {
   TN: 'Tunisia',
   TR: 'Turkey',
   TM: 'Turkmenistan',
-  TC: 'Turks and Caicos Islands (the)',
+  TC: 'Turks and Caicos Islands',
   TV: 'Tuvalu',
   UG: 'Uganda',
   UA: 'Ukraine',
-  AE: 'United Arab Emirates (the)',
-  GB: 'United Kingdom of Great Britain and Northern Ireland (the)',
-  UM: 'United States Minor Outlying Islands (the)',
-  US: 'United States of America (the)',
+  AE: 'United Arab Emirates',
+  GB: 'United Kingdom',
+  US: 'United States of America',
+  UM: 'United States Minor Outlying Islands',
   UY: 'Uruguay',
   UZ: 'Uzbekistan',
   VU: 'Vanuatu',
-  VE: 'Venezuela (Bolivarian Republic of)',
+  VE: 'Venezuela',
   VN: 'Viet Nam',
-  VG: 'Virgin Islands (British)',
-  VI: 'Virgin Islands (U.S.)',
+  VG: 'Virgin Islands, British',
+  VI: 'Virgin Islands, U.S.',
   WF: 'Wallis and Futuna',
   EH: 'Western Sahara',
   YE: 'Yemen',
   ZM: 'Zambia',
   ZW: 'Zimbabwe',
   AX: 'Åland Islands',
+  BQ: 'Bonaire, Sint Eustatius and Saba',
+  CW: 'Curaçao',
+  GG: 'Guernsey',
+  IM: 'Isle of Man',
+  JE: 'Jersey',
+  ME: 'Montenegro',
+  BL: 'Saint Barthélemy',
+  MF: 'Saint Martin (French part)',
+  RS: 'Serbia',
+  SX: 'Sint Maarten (Dutch part)',
+  SS: 'South Sudan',
+  XK: 'Kosovo',
 };
 
 const countryStates = {
@@ -365,13 +366,22 @@ function renderCountryState() {
     countrySelect.appendChild(country);
   }
   countrySelect.onchange = function getCountryStates() {
+    let stateSelectHtml = document.createElement('div');
+    stateSelectHtml.innerHTML = '<select id="state" name="state"><option value="" selected="selected">Choose state/province</option></select>';
     stateSelect.length = 1;
-    if (countrySelect.value === '39') {
-      renderStates('CA');
-    } else if (countrySelect.value === '235') {
-      renderStates('US');
+    if (!(countrySelect.value === '37' || countrySelect.value === '223')) {
+      stateSelectHtml = document.createElement('div');
+      stateSelectHtml.innerHTML = '<input id="state" type="text" name="state">';
+      stateSelect.parentNode.replaceChild(stateSelectHtml, stateSelect);
+      stateSelect = document.getElementById('state');
     } else {
-      console.log('FIX: other country change select to input text');
+      stateSelect.parentNode.replaceChild(stateSelectHtml, stateSelect);
+      stateSelect = document.getElementById('state');
+      if (countrySelect.value === '37') {
+        renderStates('CA');
+      } else if (countrySelect.value === '223') {
+        renderStates('US');
+      }
     }
   };
 }
@@ -379,15 +389,6 @@ function renderCountryState() {
 document.addEventListener('DOMContentLoaded', () => {
   renderCountryState();
 });
-
-// eslint-disable-next-line no-unused-vars
-function calculateTotal(couponAmount) {
-  const summaryPrice = document.getElementById('summaryprice').value;
-  // FIX: get price, coupon amount and calculate total
-  // eslint-disable-next-line radix
-  const total = parseInt(summaryPrice - couponAmount);
-  return total;
-}
 
 checkoutButton.addEventListener('click', (event) => {
   event.preventDefault();
@@ -423,6 +424,7 @@ checkoutButton.addEventListener('click', (event) => {
 couponButton.addEventListener('click', (event) => {
   event.preventDefault();
   const couponCode = document.getElementById('couponcode').value;
-  // FIX: get coupon code amount and call calculateTotal() to get updated total
-  console.log('coupon button, couponCode:', couponCode);
+  const path = window.location.pathname;
+  const sku = path.substring(path.lastIndexOf('/') + 1, path.length - 5);
+  window.location.href = `https://www.ecommerce.edx.org/basket/add/?sku=${sku}&coupon=${couponCode}`;
 });
