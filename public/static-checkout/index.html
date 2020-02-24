@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -25,9 +24,7 @@
   <main>
     <div class="container-fluid payment-container" aria-label="Payment">
       <div class="row">
-        <!-- Cart  -->
         <div class="cart col-5">
-          <!-- Product Line Item -->
           <section aria-live="polite" aria-relevant="all" aria-label="Shopping Cart Details">
             <div class="checkout-section" aria-label="Shopping cart details are loaded.">
               <h5>In Your Cart</h5>
@@ -43,31 +40,25 @@
               </div>
             </div>
           </section>
-          <!-- Summary -->
           <div class="checkout-section" role="region" aria-labelledby="summary-heading" aria-live="polite">
             <h5>Summary</h5>
             <p class="col-10">Price</p>
             <span id="summaryprice">$350.00</span>
-            <!-- Coupon form  -->
             <p>Add coupon code (optional)</p>
-            <form style="display: inline-flex; margin-bottom: 1rem;">
+            <div style="display: inline-flex; margin-bottom: 1rem;">
               <input id="couponcode" style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-describedby="">
               <button id="coupon-button" class="submit-button" style="font-size: 1rem; width: 6.5rem; font-weight: 400;">Apply</button>
-            </form>
+            </div>
             <h4 class="col-10">TOTAL</h4>
             <span id="total"><strong>$350.00</strong></span>
           </div>
-          <!-- Order Details -->
           <div class="checkout-section">
             <h5>Order Details</h5>
             <p>After you complete your order you will be automatically enrolled in the verified track of the course.</p>
           </div>
         </div>
-
-        <!-- Checkout  -->
         <div class="checkout col-7">
           <section aria-label="Payment Details">
-            <!-- Payment Method  -->
             <div class="checkout-section">
               <h5>Select Payment Method</h5>
               <div class="payment-method">
@@ -75,7 +66,6 @@
                 <button><img src="assets/paypal-logo.png" alt="paypal-logo"></button>
               </div>
             </div>
-            <!-- Checout Form  -->
             <div class="card">
               <div class="checkout-section">
                 <h5>Card Holder Infomation</h5>
@@ -88,7 +78,6 @@
                       Last name (required)<br>
                       <input id="lastname" type="text" name="lastname"><br>
                     </div>
-
                     <div class="col-left">
                       Address (required)<br>
                       <input id="address1" type="text" name="address1"><br>
@@ -97,7 +86,6 @@
                       Suite/Apartment Number<br>
                       <input id="address2"type="text" name="address2"><br>
                     </div>
-
                     <div class="col-left">
                       City (required)<br>
                       <input id="city" type="text" name="city"><br>
@@ -108,21 +96,18 @@
                         <option value="0">Choose country</option>
                       </select><br>
                     </div>
-
                     <div class="col-left">
                       State/Province<br>
-                      <select id="state" name="country">
-                        <option value="" selected="selected">Choose state/province</option>
-                      </select><br>
+                      <div>
+                        <input id="state" type="text" name="state">
+                      </div><br>
                     </div>
                     <div class="col-right">
                       Zip/Postal Code<br>
                       <input id="zip" type="text" name="zip"><br>
                     </div>
                 </div>
-
               <div class="checkout-section">
-                <!-- Billing -->
                 <h5>Billing Infomation</h5>
                   <div class="col-left">
                     Card Number (required)<br>
