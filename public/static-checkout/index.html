@@ -5,6 +5,7 @@
   <title>Payment | edX</title>
   <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
   <link href="css/style.css" rel="stylesheet" type="text/css">
+  <script src="js/emma-paypal.js"></script>
 </head>
 <style>
 </style>
@@ -60,7 +61,7 @@
               <h5>Select Payment Method</h5>
               <div class="payment-method">
                 <button class="active-button"><img src="assets/accepted-card-logos.png" alt="card-logos"></button>
-                <button><img src="assets/paypal-logo.png" alt="paypal-logo"></button>
+                <button onclick="submitPaypal()"><img src="assets/paypal-logo.png" alt="paypal-logo"></button>
               </div>
             </div>
             <div class="card">
