@@ -23,19 +23,16 @@
   </header>
   <main>
     <div class="container-fluid payment-container" aria-label="Payment">
-      <div class="row">
         <div class="cart col-5">
           <section aria-live="polite" aria-relevant="all" aria-label="Shopping Cart Details">
             <div class="checkout-section" aria-label="Shopping cart details are loaded.">
               <h5>In Your Cart</h5>
               <p>Your purchase contains the following:<p>
-              <div class="row">
-                <div style="display: inline-flex;">
-                  <img class="img-thumbnail" src="https://prod-discovery.edx-cdn.org/media/course/image/ac499cd6-a3ac-4a5f-a307-bb28ea318de1-0a473d1ec055.small.png" alt="" />
-                  <div class="product-line-item">
-                    <h4>Title HERE</h4>
-                    <p>Verified Certificate</p>
-                  </div>
+              <div style="display: inline-flex;">
+                <img class="img-thumbnail" src="https://prod-discovery.edx-cdn.org/media/course/image/ac499cd6-a3ac-4a5f-a307-bb28ea318de1-0a473d1ec055.small.png" alt="" />
+                <div class="product-line-item">
+                  <h4>Title HERE</h4>
+                  <p>Verified Certificate</p>
                 </div>
               </div>
             </div>
@@ -47,7 +44,7 @@
             <p>Add coupon code (optional)</p>
             <div style="display: inline-flex; margin-bottom: 1rem;">
               <input id="couponcode" style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-describedby="">
-              <button id="coupon-button" class="submit-button" style="font-size: 1rem; width: 6.5rem; font-weight: 400;">Apply</button>
+              <button id="coupon-button" class="submit-button" style="font-size: 1rem; padding: 0.5rem 1.5rem;">Apply</button>
             </div>
             <h4 class="col-10">TOTAL</h4>
             <span id="total"><strong>$350.00</strong></span>
@@ -106,7 +103,7 @@
                       Zip/Postal Code<br>
                       <input id="zip" type="text" name="zip"><br>
                     </div>
-                </div>
+              </div>
               <div class="checkout-section">
                 <h5>Billing Infomation</h5>
                   <div class="col-left">
@@ -158,11 +155,11 @@
                     </select>
                   </div>
               </div>
-              <button id="place-order-button" class="submit-button col-right" style="font-size: 1.25rem; width: 48%; font-weight: 500; margin-top: 2rem;">Place Order</button>
-              </form>
+              <button id="place-order-button" class="submit-button col-right">Place Order</button>
+                  </form>
             </div>
-          </div>
-        </section>
+          </section>
+    </div>
   </main>
   <script src="js/scripts.js"></script>
 </body>

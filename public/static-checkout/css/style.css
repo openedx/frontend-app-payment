@@ -107,6 +107,7 @@ a.dropdown-item {
 
 .container-fluid {
   margin: auto;
+  margin-bottom: 4rem;
   max-width: 1440px;
   width: 100%;
 }
@@ -176,6 +177,13 @@ a.dropdown-item {
   border: 2px solid;
 }
 
+#place-order-button {
+  font-size: 1.25rem; 
+  width: 48%; 
+  font-weight: 500; 
+  margin: 3rem 0;
+}
+
 .img-thumbnail {
   border: 1px solid #b9babe;
   padding: 0.25rem;
@@ -214,6 +222,10 @@ a.dropdown-item {
 .col-10 {width: 83.32%;}
 
 /* FIX: add media queries for responsiveness for all sizes */
+@media only screen and (max-width: 990px) {
+  .col-right {float: none;}
+}
+
 @media only screen and (max-width: 768px) {
   [class*="col-"] {width: 100%;}
   .col-right.col-left {float: none;}
