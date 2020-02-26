@@ -22,9 +22,7 @@ p {
   margin-bottom: 1rem;
 }
 
-h4 {
-  margin: 0;
-}
+h4 {margin: 0;}
 
 h5 {
   font-size: 1.25rem;
@@ -56,24 +54,19 @@ header {
   float: left;
 }
 
-.avatar {
-  pointer-events: none;
-}
+.avatar {pointer-events: none;}
 
 .user-button {
   top: 50%;
   position: absolute;
-  left: 90%;
+  left: 97%;
   transform: translate(-50%, -50%);
   float: right;
   cursor: pointer;
   background-color: #fff;
-  border-color: #fff;
-  border-radius: 50rem;
-  border: 2px solid transparent;
-  padding: 0.375rem;
-  display: inline-flex;
-  vertical-align: middle;
+  border-color: transparent;
+  padding: 0.7rem;
+  margin-right: 1.1rem;
 }
 
 .dropdown-menu {
@@ -82,28 +75,22 @@ header {
   display: none;
   padding: .5rem 0;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.3);
-  margin: 0.125rem 0 0;
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 0.3rem;
-  font-size: 1rem;
   background: #fff;
-  width: 158px;
-  margin-top: 3.2rem;
-  margin-right: 1rem;
+  width: 8rem;
+  margin-top: 3.7rem;
+  margin-right: 1.1rem;
 }
 
-.show {
-  display: block;
-}
+.show {display: block;}
 
 a.dropdown-item {
   position: relative;
   padding: 0.25rem 1.5rem;
 }
 
-.dropdown-item:hover {
-  background-color: #f9f9f9;
-}
+.dropdown-item:hover {background-color: #f9f9f9;}
 
 .container-fluid {
   margin: auto;
@@ -118,15 +105,16 @@ a.dropdown-item {
 }
 
 .cart {
-  border-right: 1px solid #b9babe;
-  padding-left: 15px;
-  padding-right: 48px;
+  padding-left: 1.5rem;
+  padding-right: 2.5rem;
 }
 
 .checkout {
+  border-left: 1px solid #b9babe;
   float: right !important;
-  padding-right: 15px;
-  padding-left: 48px;
+  padding-right: 2rem;
+  padding-left: 3rem;
+  margin-bottom: 3rem;
 }
 
 .payment-method button {
@@ -138,13 +126,16 @@ a.dropdown-item {
   cursor: pointer;
 }
 
-.active-button {
-  border-bottom: .1875rem solid #23419f;
-}
+.active-button {border-bottom: .1875rem solid #23419f;}
 
 .payment-method img {
   max-width: 100%;
   max-height: 100%;
+}
+
+.form-col {
+  float: left;
+  padding-right: 1.5rem;
 }
 
 .payment-container input, .payment-container select {
@@ -158,12 +149,11 @@ a.dropdown-item {
   font-weight: 400;
   line-height: 1.5;
   color: #2d323e;
-  width: 23rem;
+  /* width: 23rem; */
+  width: 100%;
 }
 
-.payment-container select {
-  height: calc(1.5em + .75rem + 2px);
-}
+.payment-container select {height: calc(1.5em + .75rem + 2px);}
 
 .submit-button {
   color: white;
@@ -180,8 +170,8 @@ a.dropdown-item {
 #place-order-button {
   font-size: 1.25rem; 
   width: 48%; 
-  font-weight: 500; 
-  margin: 3rem 0;
+  font-weight: 500;
+  float: right;
 }
 
 .img-thumbnail {
@@ -200,17 +190,7 @@ a.dropdown-item {
   transform: translate(0%, 25%);
 }
 
-.checkout-section {
-  margin-bottom: 3rem;
-}
-
-.col-right {
-  float: right;
-}
-
-.col-left {
-  float: left;
-}
+.checkout-section {margin-bottom: 3rem;}
 
 [class*='col-'] {
   display: inline-block;
@@ -218,16 +198,56 @@ a.dropdown-item {
 }
 
 .col-5 {width: 41.65%;}
+.col-6 {width: 50%;}
 .col-7 {width: 58.33%;}
 .col-10 {width: 83.32%;}
 
-/* FIX: add media queries for responsiveness for all sizes */
-@media only screen and (max-width: 990px) {
-  .col-right {float: none;}
+@media only screen and (max-width: 1065px) {
+  .col-10 {width: 75%;}
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 990px) {
+  .col-6 {width: 100%;}
+  #place-order-button {width: 100%;}
+  .form-col { padding-right: 0;}
+}
+
+@media only screen and (max-width: 825px) {
   [class*="col-"] {width: 100%;}
-  .col-right.col-left {float: none;}
+  .form-col {padding-right: 0;}
+  .logo {
+    height: 1.5rem;
+    padding-top: 0.7rem;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+  }
+  header {
+    height: 3.2rem;
+    -webkit-box-shadow: 0 .125rem .25rem rgba(0,0,0,.3)!important;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.3)!important;
+  }
+  .user-button:hover {
+    background: rgba(0,0,0,.1);
+    padding: 0.7rem;
+  }
+  .dropdown-menu {
+    width: 100%;
+    margin: 3.2rem 0 0 0;
+  }
+  a.dropdown-item {
+    display: block;
+    padding: 0.5rem 1.5rem;
+    color: #23419f;
+  }
+  .dropdown-item:hover {
+    background-color: transparent;
+    color: #152760;
+  }
+  .checkout {
+    border-left: none;
+    padding-left: 1.5rem;
+  }
 }
 
