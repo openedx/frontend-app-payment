@@ -39,7 +39,7 @@
           </section>
           <div class="checkout-section" role="region" aria-labelledby="summary-heading" aria-live="polite">
             <h5>Summary</h5>
-            <p class="col-10">Price</p>
+            <span class="col-10">Price</span>
             <span id="summaryprice">$350.00</span>
             <p>Add coupon code (optional)</p>
             <div style="display: inline-flex; margin-bottom: 1rem;">
@@ -51,7 +51,7 @@
           </div>
           <div class="checkout-section">
             <h5>Order Details</h5>
-            <p>After you complete your order you will be automatically enrolled in the verified track of the course.</p>
+            <p>After you complete your order you will be automatically enrolled in the course.</p>
           </div>
         </div>
         <div class="checkout col-7">
@@ -66,57 +66,58 @@
             <div class="card">
               <div class="checkout-section">
                 <h5>Card Holder Infomation</h5>
-                  <form>
-                    <div class="col-left">
+                <form>
+                  <div class="col-6 form-col">
+                    <div>
                       First name (required)<br>
                       <input id="firstname" type="text" name="firstname"><br>
                     </div>
-                    <div class="col-right">
+                    <div>
                       Last name (required)<br>
                       <input id="lastname" type="text" name="lastname"><br>
                     </div>
-                    <div class="col-left">
+                    <div>
                       Address (required)<br>
                       <input id="address1" type="text" name="address1"><br>
                     </div>
-                    <div class="col-right">
+                    <div>
                       Suite/Apartment Number<br>
                       <input id="address2"type="text" name="address2"><br>
                     </div>
-                    <div class="col-left">
+                  </div>
+                  <div class="col-6">
+                    <div>
                       City (required)<br>
                       <input id="city" type="text" name="city"><br>
                     </div>
-                    <div class="col-right">
+                    <div>
                       Country (required)<br>
                       <select id="country" name="country">
                         <option value="0">Choose country</option>
                       </select><br>
                     </div>
-                    <div class="col-left">
+                    <div>
                       State/Province<br>
                       <div>
                         <input id="state" type="text" name="state">
                       </div><br>
                     </div>
-                    <div class="col-right">
+                    <div>
                       Zip/Postal Code<br>
                       <input id="zip" type="text" name="zip"><br>
                     </div>
+                  </div>
               </div>
               <div class="checkout-section">
                 <h5>Billing Infomation</h5>
-                  <div class="col-left">
+                <div class="col-6 form-col">
+                  <div>
                     Card Number (required)<br>
                     <input id="cardnumber" type="text" name="cardnumber"><br>
                   </div>
-                  <div class="col-right">
-                    Security Code (required)<br>
-                    <input id="cardcode" type="text" name="cardcode"><br>
-                  </div>
-                  <div class="col-left">
+                  <div>
                     Expiration Month (required)<br>
-                    <select id="cardmonth" name="cardmonth">
+                    <select id="cardmonth" name="cardmonth" style="margin-bottom: 1.5rem;">
                       <option selected>Month</option>
                       <option>1</option>
                       <option>2</option>
@@ -132,7 +133,13 @@
                       <option>12</option>
                     </select>
                   </div>
-                  <div class="col-right">
+                </div>
+                <div class="col-6">
+                  <div>
+                    Security Code (required)<br>
+                    <input id="cardcode" type="text" name="cardcode"><br>
+                  </div>
+                  <div>
                     Expiration Year (required)<br>
                     <select id="cardyear" name="cardyear">
                       <option selected>Year</option>
@@ -154,8 +161,9 @@
                       <option>2035</option>
                     </select>
                   </div>
+                </div>
               </div>
-              <button id="place-order-button" class="submit-button col-right">Place Order</button>
+              <button id="place-order-button" class="submit-button" >Place Order</button>
                   </form>
             </div>
           </section>
