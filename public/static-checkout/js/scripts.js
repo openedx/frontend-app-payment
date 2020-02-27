@@ -1,27 +1,13 @@
-const checkoutButton = document.querySelector('#place-order-button');
-const couponButton = document.getElementById('coupon-button');
-const userButton = document.querySelector('.user-button');
-const countrySelect = document.getElementById('country');
-let stateSelect = document.getElementById('state');
-
-userButton.addEventListener('click', () => {
-  document.querySelector('.dropdown-menu').classList.toggle('show');
-});
-
-window.onclick = function closeMenu(event) {
-  if (!event.target.matches('.user-button')) {
-    const dropdownMenu = document.getElementsByClassName('dropdown-menu');
-    let i;
-    for (i = 0; i < dropdownMenu.length; i += 1) {
-      const open = dropdownMenu[i];
-      if (open.classList.contains('show')) {
-        open.classList.remove('show');
-      }
-    }
-  }
-};
-
-const countryList = {
+/* eslint-disable vars-on-top */
+/* eslint-disable prefer-template */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-var */
+var checkoutButton = document.querySelector('#place-order-button');
+var couponButton = document.getElementById('coupon-button');
+var userButton = document.querySelector('.user-button');
+var countrySelect = document.getElementById('country');
+var stateSelect = document.getElementById('state');
+var countryList = {
   AF: 'Afghanistan',
   AL: 'Albania',
   DZ: 'Algeria',
@@ -273,8 +259,7 @@ const countryList = {
   SS: 'South Sudan',
   XK: 'Kosovo',
 };
-
-const countryStates = {
+var countryStates = {
   CA: {
     AB: 'Alberta',
     BC: 'British Columbia',
@@ -348,25 +333,42 @@ const countryStates = {
   },
 };
 
+userButton.addEventListener('click', function toggleUserDropdown() {
+  document.querySelector('.dropdown-menu').classList.toggle('show');
+}, false);
+
+window.onclick = function closeMenu(event) {
+  if (!event.target.matches('.user-button')) {
+    var dropdownMenu = document.getElementsByClassName('dropdown-menu');
+    var i;
+    for (i = 0; i < dropdownMenu.length; i += 1) {
+      var open = dropdownMenu[i];
+      if (open.classList.contains('show')) {
+        open.classList.remove('show');
+      }
+    }
+  }
+};
+
 function renderStates(country) {
-  const states = Object.values(countryStates[country]);
-  for (let i = 0; i < states.length; i += 1) {
-    const state = document.createElement('option');
+  var states = Object.values(countryStates[country]);
+  for (var i = 0; i < states.length; i += 1) {
+    var state = document.createElement('option');
     state.innerHTML = states[i];
     stateSelect.appendChild(state);
   }
 }
 
 function renderCountryState() {
-  const countries = Object.values(countryList);
-  for (let i = 0; i < countries.length; i += 1) {
-    const country = document.createElement('option');
+  var countries = Object.values(countryList);
+  for (var i = 0; i < countries.length; i += 1) {
+    var country = document.createElement('option');
     country.value = i;
     country.innerHTML = countries[i];
     countrySelect.appendChild(country);
   }
   countrySelect.onchange = function getCountryStates() {
-    let stateSelectHtml = document.createElement('div');
+    var stateSelectHtml = document.createElement('div');
     stateSelectHtml.innerHTML = '<select id="state" name="state"><option value="" selected="selected">Choose state/province</option></select>';
     stateSelect.length = 1;
     if (!(countrySelect.value === '37' || countrySelect.value === '223')) {
@@ -386,13 +388,13 @@ function renderCountryState() {
   };
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function handleCountrySelection() {
   renderCountryState();
 });
 
-checkoutButton.addEventListener('click', (event) => {
+checkoutButton.addEventListener('click', function handleSubmit(event) {
   event.preventDefault();
-  const formData = {
+  var formData = {
     paymentInformation: {
       card: {
         number: document.getElementById('cardnumber').value,
@@ -419,12 +421,12 @@ checkoutButton.addEventListener('click', (event) => {
     },
   };
   console.log('checkout clicked, formData:', formData);
-});
+}, false);
 
-couponButton.addEventListener('click', (event) => {
+couponButton.addEventListener('click', function couponRedirectToMicrofrontend(event) {
   event.preventDefault();
-  const couponCode = document.getElementById('couponcode').value;
-  const path = window.location.pathname;
-  const sku = path.substring(path.lastIndexOf('/') + 1, path.length - 5);
-  window.location.href = `https://www.ecommerce.edx.org/basket/add/?sku=${sku}&coupon=${couponCode}`;
-});
+  var couponCode = document.getElementById('couponcode').value;
+  var path = window.location.pathname;
+  var sku = path.substring(path.lastIndexOf('/') + 1, path.length - 5);
+  window.location.href = 'https://www.ecommerce.edx.org/basket/add/?sku=' + sku + '&coupon=' + couponCode;
+}, false);
