@@ -124,6 +124,7 @@ a.dropdown-item {
   border-radius: 0.3rem;
   height: 44px;
   cursor: pointer;
+  background-color: #fff;
 }
 
 .active-button {border-bottom: .1875rem solid #23419f;}
@@ -195,6 +196,19 @@ a.dropdown-item {
 [class*='col-'] {
   display: inline-block;
   min-height: 1px;
+}
+
+.lock-icon {
+  float: right;
+  right: 10%;
+  margin-right: -5%;
+  position: relative;
+  top: -1.7rem;
+  pointer-events: none;
+  width: 0.875em;
+  font-size: inherit;
+  overflow: visible;
+  vertical-align: -0.125em;
 }
 
 .col-5 {width: 41.65%;}
