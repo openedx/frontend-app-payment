@@ -22,12 +22,29 @@ p {
   margin-bottom: 1rem;
 }
 
-h4 {margin: 0;}
+h6 {
+  margin: 0;
+  font-size: 1rem;
+}
 
 h5 {
   font-size: 1.25rem;
   margin-top: 0;
   margin-bottom: 0.5rem;
+}
+
+.screen-reader-only {
+  border: 0; 
+  clip: rect(0 0 0 0); 
+  clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  -webkit-clip-path: polygon(0px 0px, 0px 0px, 0px 0px);
+  height: 1px; 
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }
 
 header {
@@ -60,10 +77,11 @@ header {
   top: 50%;
   position: absolute;
   left: 97%;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   float: right;
   cursor: pointer;
-  background-color: #fff;
+  background-color: transparent;
   border-color: transparent;
   padding: 0.7rem;
   margin-right: 1.1rem;
@@ -122,6 +140,7 @@ a.dropdown-item {
   padding: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 0.3rem;
+  border: 1px solid #b9babe; 
   height: 44px;
   cursor: pointer;
   background-color: #fff;
@@ -150,7 +169,6 @@ a.dropdown-item {
   font-weight: 400;
   line-height: 1.5;
   color: #2d323e;
-  /* width: 23rem; */
   width: 100%;
 }
 
@@ -169,6 +187,7 @@ a.dropdown-item {
 }
 
 #place-order-button {
+  margin-top: 3rem;
   font-size: 1.25rem; 
   width: 48%; 
   font-weight: 500;
@@ -181,6 +200,7 @@ a.dropdown-item {
   background-color: #fff;
   border-radius: 0.3rem;
   width: 40%;
+  height: 100%;
 }
 
 .product-line-item {
@@ -188,6 +208,7 @@ a.dropdown-item {
   vertical-align: middle;
   top: 50%;
   left: 50%;
+  -webkit-transform: translate(0%, 25%);
   transform: translate(0%, 25%);
 }
 
@@ -228,6 +249,7 @@ a.dropdown-item {
 
 @media only screen and (max-width: 825px) {
   [class*="col-"] {width: 100%;}
+  .col-nums {width: 85%;}
   .form-col {padding-right: 0;}
   .logo {
     height: 1.5rem;

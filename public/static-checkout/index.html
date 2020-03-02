@@ -6,8 +6,6 @@
   <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
   <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
-<style>
-</style>
 <body>
   <header>
     <div class="nav">
@@ -18,106 +16,105 @@
       </button>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="https://courses.edx.org/dashboard">Dashboard</a>
-        <a class="dropdown-item" href="https://courses.edx.org/logout">Logout</a></div>
+        <a class="dropdown-item" href="https://courses.edx.org/logout">Logout</a>
+      </div>
     </div>
   </header>
   <main>
     <div class="container-fluid payment-container" aria-label="Payment">
-        <div class="cart col-5">
-          <section aria-live="polite" aria-relevant="all" aria-label="Shopping Cart Details">
-            <div class="checkout-section" aria-label="Shopping cart details are loaded.">
-              <h5>In Your Cart</h5>
-              <p>Your purchase contains the following:<p>
-              <div style="display: inline-flex;">
-                <img class="img-thumbnail" src="https://prod-discovery.edx-cdn.org/media/course/image/ac499cd6-a3ac-4a5f-a307-bb28ea318de1-0a473d1ec055.small.png" alt="" />
-                <div class="product-line-item">
-                  <h4>Title HERE</h4>
-                  <p>Verified Certificate</p>
-                </div>
+      <h1 class="screen-reader-only">Payment Page</h1>
+      <div class="cart col-5">
+        <section aria-label="Shopping Cart Details">
+          <div class="checkout-section" aria-label="Shopping cart details are loaded.">
+            <h5 aria-level="2">In Your Cart</h5>
+            <p>Your purchase contains the following:<p>
+            <div style="display: inline-flex;">
+              <img class="img-thumbnail" src="https://prod-discovery.edx-cdn.org/media/course/image/ac499cd6-a3ac-4a5f-a307-bb28ea318de1-0a473d1ec055.small.png" alt="" />
+              <div class="product-line-item">
+                <h6 aria-level="3">Title HERE</h6>
+                <p>Verified Certificate</p>
               </div>
             </div>
-          </section>
-          <div class="checkout-section" role="region" aria-labelledby="summary-heading" aria-live="polite">
-            <h5>Summary</h5>
-            <span class="col-10">Price</span>
-            <span id="summaryprice">$350.00</span>
-            <p>Add coupon code (optional)</p>
-            <div style="display: inline-flex; margin-bottom: 1rem;">
-              <input id="couponcode" style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-describedby="">
-              <button id="coupon-button" class="submit-button" style="font-size: 1rem; padding: 0.5rem 1.5rem;">Apply</button>
-            </div>
-            <h4 class="col-10">TOTAL</h4>
-            <span id="total"><strong>$350.00</strong></span>
           </div>
-          <div class="checkout-section">
-            <h5>Order Details</h5>
-            <p>After you complete your order you will be automatically enrolled in the course.</p>
+        </section>
+        <div class="checkout-section" role="region">
+          <h5 aria-level="2">Summary</h5>
+          <span class="col-10 col-nums">Price</span>
+          <span id="summaryprice">$350.00</span>
+          <p>Add coupon code (optional)</p>
+          <div style="display: inline-flex; margin-bottom: 1rem;">
+            <input id="couponcode" style="margin-right: 0.5rem; width: 12rem;" type="text" name="couponcode" aria-label="coupon code">
+            <button id="coupon-button" class="submit-button" style="font-size: 1rem; padding: 0.5rem 1.5rem;">Apply</button>
           </div>
+          <h6 class="col-10 col-nums" aria-level="3">TOTAL</h6>
+          <span id="total"><strong>$350.00</strong></span>
         </div>
-        <div class="checkout col-7">
-          <section aria-label="Payment Details">
-            <div class="checkout-section">
-              <h5>Select Payment Method</h5>
-              <div class="payment-method">
-                <button class="active-button"><img src="assets/accepted-card-logos.png" alt="card-logos"></button>
-                <button><img src="assets/paypal-logo.png" alt="paypal-logo"></button>
-              </div>
+        <div class="checkout-section">
+          <h5 aria-level="2">Order Details</h5>
+          <p>After you complete your order you will be automatically enrolled in the verified track of the course.</p>
+        </div>
+      </div>
+      <div class="checkout col-7">
+        <section aria-label="Payment Details">
+          <div class="checkout-section">
+            <h5 aria-level="2">Select Payment Method</h5>
+            <div class="payment-method">
+              <button class="active-button"><img src="assets/accepted-card-logos.png" alt="card-logos"></button>
+              <button><img src="assets/paypal-logo.png" alt="paypal-logo"></button>
             </div>
-            <div class="card">
-              <div class="checkout-section">
-                <h5>Card Holder Infomation</h5>
-                <form>
-                  <div class="col-6 form-col">
-                    <div>
-                      First name (required)<br>
-                      <input id="firstname" type="text" name="firstname"><br>
-                    </div>
-                    <div>
-                      Address (required)<br>
-                      <input id="address1" type="text" name="address1"><br>
-                    </div>
-                    <div>
-                      City (required)<br>
-                      <input id="city" type="text" name="city"><br>
-                    </div>
-                    <div>
-                      State/Province<br>
-                      <div>
-                        <input id="state" type="text" name="state">
-                      </div><br>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div>
-                      Last name (required)<br>
-                      <input id="lastname" type="text" name="lastname"><br>
-                    </div>
-                    <div>
-                      Suite/Apartment Number<br>
-                      <input id="address2"type="text" name="address2"><br>
-                    </div>
-                    <div>
-                      Country (required)<br>
-                      <select id="country" name="country">
-                        <option value="0">Choose country</option>
-                      </select><br>
-                    </div>
-                    <div>
-                      Zip/Postal Code<br>
-                      <input id="zip" type="text" name="zip"><br>
-                    </div>
-                  </div>
-              </div>
-              <div class="checkout-section">
-                <h5>Billing Infomation</h5>
+          </div>
+          <div class="card">
+            <div class="checkout-section">
+              <h5 aria-level="2">Card Holder Infomation</h5>
+              <form>
                 <div class="col-6 form-col">
                   <div>
-                    Card Number (required)<br>
-                    <input id="cardnumber" type="text" name="cardnumber"><img src="assets/lock.svg" alt="lock" class="lock-icon"><br>
+                    <label for="firstname"><span>First name (required)</span></label><br>
+                    <input id="firstname" type="text" name="firstname" aria-label="first name"><br>
                   </div>
                   <div>
-                    Expiration Month (required)<br>
-                    <select id="cardmonth" name="cardmonth" style="margin-bottom: 1.5rem;">
+                    <label for="address1"><span>Address (required)</span></label><br>
+                    <input id="address1" type="text" name="address1" aria-label="address"><br>
+                  </div>
+                  <div>
+                    <label for="city"><span>City (required)</span></label><br>
+                    <input id="city" type="text" name="city" aria-label="city"><br>
+                  </div>
+                  <div aria-live="polite">
+                    <label for="state"><span>State/Province</span></label><br>
+                      <input id="state" type="text" name="state" aria-label="state"><br>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div>
+                    <label for="lastname"><span>Last name (required)</span></label><br>
+                    <input id="lastname" type="text" name="lastname" aria-label="last name"><br>
+                  </div>
+                  <div>
+                    <label for="address2"><span>Suite/Apartment Number</span></label><br>
+                    <input id="address2" type="text" name="address2" aria-label="suite/apartment number"><br>
+                  </div>
+                  <div>
+                    <label for="country"><span>Country (required)</span></label><br>
+                    <select id="country" name="country" aria-label="country">
+                      <option value="0">Choose country</option>
+                    </select><br>
+                  </div>
+                  <div>
+                    <label for="zip"><span>Zip/Postal Code</span></label><br>
+                    <input id="zip" type="text" name="zip" aria-label="zip code"><br>
+                  </div>
+                </div>
+
+                <h5 aria-level="2">Billing Infomation</h5>
+                <div class="col-6 form-col">
+                  <div>
+                    <label for="cardnumber"><span>Card Number (required)</span></label><br>
+                    <input id="cardnumber" type="text" name="cardnumber" aria-label="card number"><img src="assets/lock.svg" alt="lock" class="lock-icon"><br>
+                  </div>
+                  <div>
+                    <label for="cardmonth"><span>Expiration Month (required)</span></label><br>
+                    <select id="cardmonth" name="cardmonth" aria-label="expiration month">
                       <option selected>Month</option>
                       <option>1</option>
                       <option>2</option>
@@ -131,17 +128,17 @@
                       <option>10</option>
                       <option>11</option>
                       <option>12</option>
-                    </select>
+                    </select><br>
                   </div>
                 </div>
                 <div class="col-6">
                   <div>
-                    Security Code (required)<br>
-                    <input id="cardcode" type="text" name="cardcode"><img src="assets/lock.svg" alt="lock" class="lock-icon"><br>
+                    <label for="cardcode"><span>Security Code (required)</span></label><br>
+                    <input id="cardcode" type="text" name="cardcode" aria-label="security code"><img src="assets/lock.svg" alt="lock" class="lock-icon"><br>
                   </div>
                   <div>
-                    Expiration Year (required)<br>
-                    <select id="cardyear" name="cardyear">
+                    <label for="cardyear"><span>Expiration Year (required)</span></label><br>
+                    <select id="cardyear" name="cardyear" aria-label="expiration year">
                       <option selected>Year</option>
                       <option>2020</option>
                       <option>2021</option>
@@ -162,11 +159,12 @@
                     </select>
                   </div>
                 </div>
-              </div>
-              <button id="place-order-button" class="submit-button" >Place Order</button>
-                  </form>
+                <button id="place-order-button" class="submit-button" >Place Order</button>
+              </form>
             </div>
-          </section>
+          </div>
+        </section>
+      </div>
     </div>
   </main>
   <script src="js/scripts.js"></script>
