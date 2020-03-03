@@ -360,10 +360,11 @@ function renderStates(country) {
 }
 
 function renderCountryState() {
-  var countries = Object.values(countryList);
-  for (var i = 0; i < countries.length; i += 1) {
-    var country = document.createElement('option');
-    country.value = i;
+  const countries = Object.values(countryList);
+  const countryCodes = Object.keys(countryList);
+  for (let i = 0; i < countries.length; i += 1) {
+    const country = document.createElement('option');
+    country.value = countryCodes[i];
     country.innerHTML = countries[i];
     countrySelect.appendChild(country);
   }
@@ -371,7 +372,7 @@ function renderCountryState() {
     var stateSelectHtml = document.createElement('div');
     stateSelectHtml.innerHTML = '<select id="state" name="state"><option value="" selected="selected">Choose state/province</option></select>';
     stateSelect.length = 1;
-    if (!(countrySelect.value === '37' || countrySelect.value === '223')) {
+    if (!(countrySelect.value === 'CA' || countrySelect.value === 'US')) {
       stateSelectHtml = document.createElement('div');
       stateSelectHtml.innerHTML = '<input id="state" type="text" name="state">';
       stateSelect.parentNode.replaceChild(stateSelectHtml, stateSelect);
@@ -379,9 +380,9 @@ function renderCountryState() {
     } else {
       stateSelect.parentNode.replaceChild(stateSelectHtml, stateSelect);
       stateSelect = document.getElementById('state');
-      if (countrySelect.value === '37') {
+      if (countrySelect.value === 'CA') {
         renderStates('CA');
-      } else if (countrySelect.value === '223') {
+      } else if (countrySelect.value === 'US') {
         renderStates('US');
       }
     }

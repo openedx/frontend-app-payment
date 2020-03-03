@@ -16,6 +16,7 @@ function getBasketId(){
     const urlParams = new URLSearchParams(queryString);
     // Emma: sql or other injection?
     const basketId = urlParams.get('basketId')
+    // Emma: what if the basketId is not in the param?
     return basketId
 }
 
@@ -31,6 +32,7 @@ function submitPaypal(){
     xhr.withCredentials = true
 
     xhr.onreadystatechange = function() { // Call a function when the state changes.
+        // Emma: what do we do about error responses?
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             console.log("the request response: ",this.response)
             var form = document.createElement("form");
@@ -42,7 +44,6 @@ function submitPaypal(){
     }
 
     var basket_id = getBasketId()
-    console.log(basket_id)
     xhr.send(JSON.stringify({
         basket_id: basket_id,
         payment_processor: 'paypal',
