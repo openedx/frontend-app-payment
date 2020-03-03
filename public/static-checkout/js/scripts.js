@@ -2,263 +2,12 @@
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-var */
-var checkoutButton = document.querySelector('#place-order-button');
+var checkoutButton = document.getElementById('place-order-button');
+var paypalButton = document.getElementById('submit-paypal');
 var couponButton = document.getElementById('coupon-button');
 var userButton = document.querySelector('.user-button');
 var countrySelect = document.getElementById('country');
 var stateSelect = document.getElementById('state');
-var countryList = {
-  AF: 'Afghanistan',
-  AL: 'Albania',
-  DZ: 'Algeria',
-  AS: 'American Samoa',
-  AD: 'Andorra',
-  AO: 'Angola',
-  AI: 'Anguilla',
-  AQ: 'Antarctica',
-  AG: 'Antigua and Barbuda',
-  AR: 'Argentina',
-  AM: 'Armenia',
-  AW: 'Aruba',
-  AU: 'Australia',
-  AT: 'Austria',
-  AZ: 'Azerbaijan',
-  BS: 'Bahamas',
-  BH: 'Bahrain',
-  BD: 'Bangladesh',
-  BB: 'Barbados',
-  BY: 'Belarus',
-  BE: 'Belgium',
-  BZ: 'Belize',
-  BJ: 'Benin',
-  BM: 'Bermuda',
-  BT: 'Bhutan',
-  BO: 'Bolivia',
-  BA: 'Bosnia and Herzegovina',
-  BW: 'Botswana',
-  BV: 'Bouvet Island',
-  BR: 'Brazil',
-  IO: 'British Indian Ocean Territory',
-  BN: 'Brunei Darussalam',
-  BG: 'Bulgaria',
-  BF: 'Burkina Faso',
-  BI: 'Burundi',
-  KH: 'Cambodia',
-  CM: 'Cameroon',
-  CA: 'Canada',
-  CV: 'Cape Verde',
-  KY: 'Cayman Islands',
-  CF: 'Central African Republic',
-  TD: 'Chad',
-  CL: 'Chile',
-  CN: 'China',
-  CX: 'Christmas Island',
-  CC: 'Cocos (Keeling) Islands',
-  CO: 'Colombia',
-  KM: 'Comoros',
-  CG: 'Congo',
-  CD: 'Congo, the Democratic Republic of the',
-  CK: 'Cook Islands',
-  CR: 'Costa Rica',
-  CI: 'Cote D\'Ivoire',
-  HR: 'Croatia',
-  CU: 'Cuba',
-  CY: 'Cyprus',
-  CZ: 'Czech Republic',
-  DK: 'Denmark',
-  DJ: 'Djibouti',
-  DM: 'Dominica',
-  DO: 'Dominican Republic',
-  EC: 'Ecuador',
-  EG: 'Egypt',
-  SV: 'El Salvador',
-  GQ: 'Equatorial Guinea',
-  ER: 'Eritrea',
-  EE: 'Estonia',
-  ET: 'Ethiopia',
-  FK: 'Falkland Islands (Malvinas)',
-  FO: 'Faroe Islands',
-  FJ: 'Fiji',
-  FI: 'Finland',
-  FR: 'France',
-  GF: 'French Guiana',
-  PF: 'French Polynesia',
-  TF: 'French Southern Territories',
-  GA: 'Gabon',
-  GM: 'Gambia',
-  GE: 'Georgia',
-  DE: 'Germany',
-  GH: 'Ghana',
-  GI: 'Gibraltar',
-  GR: 'Greece',
-  GL: 'Greenland',
-  GD: 'Grenada',
-  GP: 'Guadeloupe',
-  GU: 'Guam',
-  GT: 'Guatemala',
-  GN: 'Guinea',
-  GW: 'Guinea-Bissau',
-  GY: 'Guyana',
-  HT: 'Haiti',
-  HM: 'Heard Island and Mcdonald Islands',
-  VA: 'Holy See (Vatican City State)',
-  HN: 'Honduras',
-  HK: 'Hong Kong',
-  HU: 'Hungary',
-  IS: 'Iceland',
-  IN: 'India',
-  ID: 'Indonesia',
-  IR: 'Iran, Islamic Republic of',
-  IQ: 'Iraq',
-  IE: 'Ireland',
-  IL: 'Israel',
-  IT: 'Italy',
-  JM: 'Jamaica',
-  JP: 'Japan',
-  JO: 'Jordan',
-  KZ: 'Kazakhstan',
-  KE: 'Kenya',
-  KI: 'Kiribati',
-  KP: 'North Korea',
-  KR: 'South Korea',
-  KW: 'Kuwait',
-  KG: 'Kyrgyzstan',
-  LA: 'Lao People\'s Democratic Republic',
-  LV: 'Latvia',
-  LB: 'Lebanon',
-  LS: 'Lesotho',
-  LR: 'Liberia',
-  LY: 'Libya',
-  LI: 'Liechtenstein',
-  LT: 'Lithuania',
-  LU: 'Luxembourg',
-  MO: 'Macao',
-  MG: 'Madagascar',
-  MW: 'Malawi',
-  MY: 'Malaysia',
-  MV: 'Maldives',
-  ML: 'Mali',
-  MT: 'Malta',
-  MH: 'Marshall Islands',
-  MQ: 'Martinique',
-  MR: 'Mauritania',
-  MU: 'Mauritius',
-  YT: 'Mayotte',
-  MX: 'Mexico',
-  FM: 'Micronesia, Federated States of',
-  MD: 'Moldova, Republic of',
-  MC: 'Monaco',
-  MN: 'Mongolia',
-  MS: 'Montserrat',
-  MA: 'Morocco',
-  MZ: 'Mozambique',
-  MM: 'Myanmar',
-  NA: 'Namibia',
-  NR: 'Nauru',
-  NP: 'Nepal',
-  NL: 'Netherlands',
-  NC: 'New Caledonia',
-  NZ: 'New Zealand',
-  NI: 'Nicaragua',
-  NE: 'Niger',
-  NG: 'Nigeria',
-  NU: 'Niue',
-  NF: 'Norfolk Island',
-  MK: 'North Macedonia, Republic of',
-  MP: 'Northern Mariana Islands',
-  NO: 'Norway',
-  OM: 'Oman',
-  PK: 'Pakistan',
-  PW: 'Palau',
-  PS: 'Palestinian Territory, Occupied',
-  PA: 'Panama',
-  PG: 'Papua New Guinea',
-  PY: 'Paraguay',
-  PE: 'Peru',
-  PH: 'Philippines',
-  PN: 'Pitcairn',
-  PL: 'Poland',
-  PT: 'Portugal',
-  PR: 'Puerto Rico',
-  QA: 'Qatar',
-  RE: 'Reunion',
-  RO: 'Romania',
-  RU: 'Russian Federation',
-  RW: 'Rwanda',
-  SH: 'Saint Helena',
-  KN: 'Saint Kitts and Nevis',
-  LC: 'Saint Lucia',
-  PM: 'Saint Pierre and Miquelon',
-  VC: 'Saint Vincent and the Grenadines',
-  WS: 'Samoa',
-  SM: 'San Marino',
-  ST: 'Sao Tome and Principe',
-  SA: 'Saudi Arabia',
-  SN: 'Senegal',
-  SC: 'Seychelles',
-  SL: 'Sierra Leone',
-  SG: 'Singapore',
-  SK: 'Slovakia',
-  SI: 'Slovenia',
-  SB: 'Solomon Islands',
-  SO: 'Somalia',
-  ZA: 'South Africa',
-  GS: 'South Georgia and the South Sandwich Islands',
-  ES: 'Spain',
-  LK: 'Sri Lanka',
-  SD: 'Sudan',
-  SR: 'Suriname',
-  SJ: 'Svalbard and Jan Mayen',
-  SZ: 'Swaziland',
-  SE: 'Sweden',
-  CH: 'Switzerland',
-  SY: 'Syrian Arab Republic',
-  TW: 'Taiwan',
-  TJ: 'Tajikistan',
-  TZ: 'Tanzania, United Republic of',
-  TH: 'Thailand',
-  TL: 'Timor-Leste',
-  TG: 'Togo',
-  TK: 'Tokelau',
-  TO: 'Tonga',
-  TT: 'Trinidad and Tobago',
-  TN: 'Tunisia',
-  TR: 'Turkey',
-  TM: 'Turkmenistan',
-  TC: 'Turks and Caicos Islands',
-  TV: 'Tuvalu',
-  UG: 'Uganda',
-  UA: 'Ukraine',
-  AE: 'United Arab Emirates',
-  GB: 'United Kingdom',
-  US: 'United States of America',
-  UM: 'United States Minor Outlying Islands',
-  UY: 'Uruguay',
-  UZ: 'Uzbekistan',
-  VU: 'Vanuatu',
-  VE: 'Venezuela',
-  VN: 'Viet Nam',
-  VG: 'Virgin Islands, British',
-  VI: 'Virgin Islands, U.S.',
-  WF: 'Wallis and Futuna',
-  EH: 'Western Sahara',
-  YE: 'Yemen',
-  ZM: 'Zambia',
-  ZW: 'Zimbabwe',
-  AX: 'Åland Islands',
-  BQ: 'Bonaire, Sint Eustatius and Saba',
-  CW: 'Curaçao',
-  GG: 'Guernsey',
-  IM: 'Isle of Man',
-  JE: 'Jersey',
-  ME: 'Montenegro',
-  BL: 'Saint Barthélemy',
-  MF: 'Saint Martin (French part)',
-  RS: 'Serbia',
-  SX: 'Sint Maarten (Dutch part)',
-  SS: 'South Sudan',
-  XK: 'Kosovo',
-};
 var countryStates = {
   CA: {
     AB: 'Alberta',
@@ -333,6 +82,35 @@ var countryStates = {
   },
 };
 
+var ecommerceBaseUrl;
+if(window.location.hostname === "payment.edx.org"){
+  ecommerceBaseUrl = "https://ecommerce.edx.org"
+} else if(window.location.hostname === "payment.stage.edx.org"){
+  ecommerceBaseUrl = "https://ecommerce.stage.edx.org"
+} else if(window.location.hostname === "localhost"){
+  ecommerceBaseUrl = "http://localhost:18130"
+}
+
+function getBasketId(){
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  // Emma: sql or other injection?
+  var basketId = urlParams.get('basketId')
+  // Emma: what if the basketId is not in the param?
+  return basketId
+}
+
+function redirectToMFE(couponCode){
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  var sku = urlParams.get('sku')
+  var newUrl = ecommerceBaseUrl + '/basket/add/?sku=' + sku
+  if(couponCode){
+    newUrl = newUrl.concat('&coupon=',couponCode)
+  }
+  window.location.href = newUrl
+}
+
 userButton.addEventListener('click', function toggleUserDropdown() {
   document.querySelector('.dropdown-menu').classList.toggle('show');
 }, false);
@@ -360,14 +138,6 @@ function renderStates(country) {
 }
 
 function renderCountryState() {
-  const countries = Object.values(countryList);
-  const countryCodes = Object.keys(countryList);
-  for (let i = 0; i < countries.length; i += 1) {
-    const country = document.createElement('option');
-    country.value = countryCodes[i];
-    country.innerHTML = countries[i];
-    countrySelect.appendChild(country);
-  }
   countrySelect.onchange = function getCountryStates() {
     var stateSelectHtml = document.createElement('div');
     stateSelectHtml.innerHTML = '<select id="state" name="state"><option value="" selected="selected">Choose state/province</option></select>';
@@ -427,7 +197,136 @@ checkoutButton.addEventListener('click', function handleSubmit(event) {
 couponButton.addEventListener('click', function couponRedirectToMicrofrontend(event) {
   event.preventDefault();
   var couponCode = document.getElementById('couponcode').value;
-  var path = window.location.pathname;
-  var sku = path.substring(path.lastIndexOf('/') + 1, path.length - 5);
-  window.location.href = 'https://www.ecommerce.edx.org/basket/add/?sku=' + sku + '&coupon=' + couponCode;
+  redirectToMFE(couponCode)
 }, false);
+
+
+function parse_cookies() {
+  var cookies = {};
+  if (document.cookie && document.cookie !== '') {
+      document.cookie.split(';').forEach(function (c) {
+          var m = c.trim().match(/(\w+)=(.*)/);
+          if(m !== undefined) {
+              cookies[m[1]] = decodeURIComponent(m[2]);
+          }
+      });
+  }
+  return cookies;
+}
+
+paypalButton.addEventListener('click', function submitPaypal(event){
+  var cookies = parse_cookies();
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", ecommerceBaseUrl + "/api/v2/checkout/", true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('X-CSRFToken', cookies['csrftoken']); 
+  xhr.setRequestHeader('USE-JWT-COOKIE', true); 
+  xhr.withCredentials = true
+  xhr.onreadystatechange = function() { 
+    if (this.readyState === XMLHttpRequest.DONE){
+      if(this.status === 200) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = JSON.parse(this.response).payment_page_url
+        document.body.appendChild(form);
+        form.submit();
+      } else {
+        redirectToMFE();
+      }
+    }
+  }
+  var basket_id = getBasketId()
+  xhr.send(JSON.stringify({
+    basket_id: basket_id,
+    payment_processor: 'paypal',
+  }));
+});
+
+checkoutButton.addEventListener('click', function submitCybersource(event){
+  var cookies = parse_cookies();
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", ecommerceBaseUrl + "/payment/cybersource/api-submit/", true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.setRequestHeader('X-CSRFToken', cookies['csrftoken']); 
+  xhr.setRequestHeader('USE-JWT-COOKIE', true); 
+  xhr.withCredentials = true
+  xhr.onreadystatechange = function() { 
+    if (this.readyState === XMLHttpRequest.DONE){
+      if(this.status === 200) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        if(window.location.hostname === "payment.edx.org"){
+          form.action = 'https://secureacceptance.cybersource.com/silent/pay'
+        } else {
+          form.action = 'https://testsecureacceptance.cybersource.com/silent/pay'
+        }
+        ecommerceFormFields = JSON.parse(this.response).form_fields
+        for (var key of Object.keys(ecommerceFormFields)) {
+          var element = document.createElement("input");
+          element.type = 'hidden';
+          element.value = ecommerceFormFields[key];
+          element.name = key;
+          form.appendChild(element);  
+        }
+        var cardNumber = document.getElementById('cardnumber').value
+        cardNumber.type = 'hidden';
+        var cardNumberElement = document.createElement("input");
+        cardNumberElement.value = (cardNumber.match(/\d+/g) || []).join('');
+        cardNumberElement.name = 'card_number';
+        form.appendChild(cardNumberElement);
+
+        // Emma: make sure to test all the possible number options
+        var cardTypeElement = document.createElement("input");
+        cardTypeElement.type = 'hidden';
+        if (cardNumber.charAt(0) === "4"){
+          cardTypeElement.value = '001' //visa
+        }
+        else if(cardNumber.substring(0,2) === "34" || cardNumber.substring(0,2) === "37"){
+          cardTypeElement.value = '003' //American Express
+        }
+        else if(cardNumber.substring(0,4) === "6011" || cardNumber.substring(0,2) === "65" || /^64[4-9]/.test(cardNumber)){
+          cardTypeElement.value = '004' //Discover
+        }
+        else if(cardNumber.substring(0,4) === "2720" || /^5[1-5]/.test(cardNumber) || /^222[1-9]/.test(cardNumber) || /^22[3-9]/.test(cardNumber) || /^2[3-6]/.test(cardNumber) || /^27[0-1]/.test(cardNumber)){
+          cardTypeElement.value = '002' //Mastercard
+        }
+        else{
+          redirectToMFE();
+        }
+        cardTypeElement.name = 'card_type';
+        form.appendChild(cardTypeElement);
+
+        var cardCVNElement = document.createElement("input");
+        cardCVNElement.type = 'hidden';
+        cardCVNElement.value = document.getElementById('cardcode').value;
+        cardCVNElement.name = 'card_cvn';
+        form.appendChild(cardCVNElement);
+
+        var cardExpirationElement = document.createElement("input");
+        cardExpirationElement.type = 'hidden';
+        cardExpirationElement.value = document.getElementById('cardmonth').value.concat('-',  document.getElementById('cardyear').value);
+        cardExpirationElement.name = 'card_expiry_date';
+        form.appendChild(cardExpirationElement);
+
+        document.body.appendChild(form);
+        form.submit();
+      } else {
+        redirectToMFE();
+      }
+    }
+  }
+  urlEncodedDataPairs = [];
+  urlEncodedDataPairs.push(encodeURIComponent("basket") + '=' + encodeURIComponent(getBasketId() ));
+  urlEncodedDataPairs.push(encodeURIComponent("first_name") + '=' + encodeURIComponent(document.getElementById('firstname').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("last_name") + '=' + encodeURIComponent(document.getElementById('lastname').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("address_line1") + '=' + encodeURIComponent(document.getElementById('address1').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("address_line2") + '=' + encodeURIComponent(document.getElementById('address2').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("city") + '=' + encodeURIComponent(document.getElementById('city').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("country") + '=' + encodeURIComponent(document.getElementById('country').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("state") + '=' + encodeURIComponent(document.getElementById('state').value ));
+  urlEncodedDataPairs.push(encodeURIComponent("postal_code") + '=' + encodeURIComponent(document.getElementById('zip').value ));
+
+  var urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+  xhr.send(urlEncodedData);
+});
+
