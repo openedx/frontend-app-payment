@@ -214,7 +214,15 @@ function parse_cookies() {
   return cookies;
 }
 
+function disableForm(){
+  var toDisable = document.querySelectorAll('input, select, button')
+  Array.prototype.forEach.call(toDisable, function (elementToDisable) {
+    elementToDisable.disabled = true;
+  });
+}
+
 paypalButton.addEventListener('click', function submitPaypal(event){
+  disableForm()
   var cookies = parse_cookies();
   var xhr = new XMLHttpRequest();
   xhr.open("POST", ecommerceBaseUrl + "/api/v2/checkout/", true);
@@ -243,6 +251,7 @@ paypalButton.addEventListener('click', function submitPaypal(event){
 });
 
 checkoutButton.addEventListener('click', function submitCybersource(event){
+  disableForm()
   var cookies = parse_cookies();
   var xhr = new XMLHttpRequest();
   xhr.open("POST", ecommerceBaseUrl + "/payment/cybersource/api-submit/", true);
