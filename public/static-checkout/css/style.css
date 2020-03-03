@@ -170,6 +170,7 @@ a.dropdown-item {
   line-height: 1.5;
   color: #2d323e;
   width: 100%;
+  margin-top: 0.5rem;
 }
 
 .payment-container select {height: calc(1.5em + .75rem + 2px);}
@@ -230,6 +231,47 @@ a.dropdown-item {
   font-size: inherit;
   overflow: visible;
   vertical-align: -0.125em;
+}
+
+.help-icon {
+  margin-left: 0.25rem;
+  width: 1rem;
+  vertical-align: middle;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: #2d323e;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 13px;
+  padding: 0.5rem 1.25rem;
+  position: absolute;
+  transition: opacity 0.3s ease-out;
+  z-index: 1;
+  top: 130%;
+  left: -565%;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #2d323e transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 .col-5 {width: 41.65%;}
