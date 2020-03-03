@@ -185,6 +185,7 @@ a.dropdown-item {
   border-radius: 50rem;
   text-align: center;
   border: 2px solid;
+  cursor: pointer;
 }
 
 #place-order-button {
@@ -193,6 +194,7 @@ a.dropdown-item {
   width: 48%; 
   font-weight: 500;
   float: right;
+  cursor: pointer;
 }
 
 .img-thumbnail {

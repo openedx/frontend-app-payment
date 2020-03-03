@@ -333,6 +333,8 @@ var countryStates = {
   },
 };
 
+document.querySelectorAll('input, select').disabled = true;
+
 userButton.addEventListener('click', function toggleUserDropdown() {
   document.querySelector('.dropdown-menu').classList.toggle('show');
 }, false);
