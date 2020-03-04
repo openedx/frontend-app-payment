@@ -76,10 +76,9 @@ header {
 .user-button {
   top: 50%;
   position: absolute;
-  left: 97%;
+  right: 2%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  float: right;
   cursor: pointer;
   background-color: transparent;
   border-color: transparent;
@@ -89,7 +88,7 @@ header {
 
 .dropdown-menu {
   position: absolute;
-  right: 0;
+  right: 4.5%;
   display: none;
   padding: .5rem 0;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.3);
@@ -98,12 +97,12 @@ header {
   background: #fff;
   width: 8rem;
   margin-top: 3.7rem;
-  margin-right: 1.1rem;
 }
 
 .show {display: block;}
 
 a.dropdown-item {
+  display: block;
   position: relative;
   padding: 0.25rem 1.5rem;
 }
@@ -130,9 +129,9 @@ a.dropdown-item {
 .checkout {
   border-left: 1px solid #b9babe;
   float: right !important;
-  padding-right: 2rem;
+  padding-right: 1rem;
   padding-left: 3rem;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .payment-method button {
@@ -146,16 +145,19 @@ a.dropdown-item {
   background-color: #fff;
 }
 
-.active-button {border-bottom: .1875rem solid #23419f;}
+.active-button {border-bottom: .1875rem solid #23419f !important;}
 
 .payment-method img {
   max-width: 100%;
   max-height: 100%;
 }
 
-.form-col {
-  float: left;
-  padding-right: 1.5rem;
+.row {
+  display: flex;
+}
+
+.ml {
+  margin-left: 1rem;
 }
 
 .payment-container input, .payment-container select {
@@ -189,7 +191,7 @@ a.dropdown-item {
 }
 
 #place-order-button {
-  margin-top: 3rem;
+  margin-top: 2rem;
   font-size: 1.25rem; 
   width: 48%; 
   font-weight: 500;
@@ -214,8 +216,6 @@ a.dropdown-item {
   -webkit-transform: translate(0%, 25%);
   transform: translate(0%, 25%);
 }
-
-.checkout-section {margin-bottom: 3rem;}
 
 [class*='col-'] {
   display: inline-block;
@@ -286,15 +286,15 @@ a.dropdown-item {
 }
 
 @media only screen and (max-width: 990px) {
+  .row {display: block;}
+  .ml {margin-left: 0;}
   .col-6 {width: 100%;}
   #place-order-button {width: 100%;}
-  .form-col { padding-right: 0;}
 }
 
 @media only screen and (max-width: 825px) {
   [class*="col-"] {width: 100%;}
   .col-nums {width: 85%;}
-  .form-col {padding-right: 0;}
   .logo {
     height: 1.5rem;
     padding-top: 0.7rem;
@@ -308,12 +308,14 @@ a.dropdown-item {
     -webkit-box-shadow: 0 .125rem .25rem rgba(0,0,0,.3)!important;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.3)!important;
   }
+  .user-button {margin-right: 0; right: -3%}
   .user-button:hover {
     background: rgba(0,0,0,.1);
     padding: 0.7rem;
   }
   .dropdown-menu {
     width: 100%;
+    right: 0;
     margin: 3.2rem 0 0 0;
   }
   a.dropdown-item {
