@@ -1,8 +1,9 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable vars-on-top */
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-var */
-var checkoutButton = document.getElementById('place-order-button');
+var checkoutForm = document.getElementById('checkout-form');
 var paypalButton = document.getElementById('submit-paypal');
 var couponButton = document.getElementById('coupon-button');
 var userButton = document.querySelector('.user-button');
@@ -81,7 +82,6 @@ var countryStates = {
     WY: 'Wyoming',
   },
 };
-
 var ecommerceBaseUrl;
 if (window.location.hostname === 'payment.edx.org') {
   ecommerceBaseUrl = 'https://ecommerce.edx.org';
@@ -91,35 +91,14 @@ if (window.location.hostname === 'payment.edx.org') {
   ecommerceBaseUrl = 'http://localhost:18130';
 }
 
-function getBasketId() {
-  var queryString = window.location.search;
-  var urlParams = new URLSearchParams(queryString);
-  // Emma: sql or other injection?
-  var basketId = urlParams.get('basketId');
-  // Emma: what if the basketId is not in the param?
-  return basketId;
-}
-
-function redirectToMFE(couponCode) {
-  var queryString = window.location.search;
-  var urlParams = new URLSearchParams(queryString);
-  var sku = urlParams.get('sku');
-  var newUrl = ecommerceBaseUrl + '/basket/add/?sku=' + sku;
-  if (couponCode) {
-    newUrl = newUrl.concat('&coupon=', couponCode);
-  }
-  window.location.href = newUrl;
-}
-
-userButton.addEventListener('click', function toggleUserDropdown() {
+userButton.addEventListener('click', function () {
   document.querySelector('.dropdown-menu').classList.toggle('show');
 }, false);
 
 window.onclick = function closeMenu(event) {
   if (!event.target.matches('.user-button')) {
     var dropdownMenu = document.getElementsByClassName('dropdown-menu');
-    var i;
-    for (i = 0; i < dropdownMenu.length; i += 1) {
+    for (var i = 0; i < dropdownMenu.length; i++) {
       var open = dropdownMenu[i];
       if (open.classList.contains('show')) {
         open.classList.remove('show');
@@ -128,9 +107,31 @@ window.onclick = function closeMenu(event) {
   }
 };
 
+function redirectToMFE(couponCode) {
+  var url = window.location.href;
+  var sku = /static-checkout\/([^&#]*).html/.exec(url)[1];
+  var newUrl = ecommerceBaseUrl + '/basket/add/?sku=' + sku;
+  if (couponCode) {
+    newUrl = newUrl.concat('&coupon=', couponCode);
+  }
+  window.location.href = newUrl;
+}
+
+function getBasketId() {
+  var url = window.location.href;
+  var basketParams = /[?&]basketId=([^&#]*)/.exec(url);
+  if (!basketParams) {
+    redirectToMFE();
+  } else {
+    var basketId = basketParams[1];
+    return basketId;
+  }
+  return null;
+}
+
 function renderStates(country) {
   var states = Object.values(countryStates[country]);
-  for (var i = 0; i < states.length; i += 1) {
+  for (var i = 0; i < states.length; i++) {
     var state = document.createElement('option');
     state.innerHTML = states[i];
     stateSelect.appendChild(state);
@@ -159,7 +160,7 @@ function renderCountryState() {
   };
 }
 
-document.addEventListener('DOMContentLoaded', function handleCountrySelection() {
+document.addEventListener('DOMContentLoaded', function () {
   renderCountryState();
 });
 
@@ -173,22 +174,22 @@ couponButton.addEventListener('click', function couponRedirectToMicrofrontend(ev
 function parseCookies() {
   var cookies = {};
   if (document.cookie && document.cookie !== '') {
-    document.cookie.split(';').forEach(function (c) {
-      var m = c.trim().match(/(\w+)=(.*)/);
+    var cookiesArray = document.cookie.split('; ');
+    for (var i = 0; i < cookiesArray.length; i++) {
+      var m = cookiesArray[i].trim().match(/(\w+)=(.*)/);
       if (m !== undefined) {
         cookies[m[1]] = decodeURIComponent(m[2]);
       }
-    });
+    }
   }
   return cookies;
 }
 
 function disableForm() {
-  var toDisable = document.querySelectorAll('input, select, button');
-  Array.prototype.forEach.call(toDisable, function (elementToDisable) {
-    // eslint-disable-next-line no-param-reassign
-    elementToDisable.disabled = true;
-  });
+  var elementsToDisable = document.querySelectorAll('input, select, button');
+  for (var i = 0; i < elementsToDisable.length; i++) {
+    elementsToDisable[i].disabled = true;
+  }
 }
 
 paypalButton.addEventListener('click', function submitPaypal() {
@@ -221,7 +222,7 @@ paypalButton.addEventListener('click', function submitPaypal() {
   }));
 });
 
-checkoutButton.addEventListener('click', function submitCybersource(event) {
+checkoutForm.addEventListener('submit', function submitCybersource(event) {
   event.preventDefault();
   disableForm();
   var cookies = parseCookies();
@@ -242,13 +243,14 @@ checkoutButton.addEventListener('click', function submitCybersource(event) {
           form.action = 'https://testsecureacceptance.cybersource.com/silent/pay';
         }
         var ecommerceFormFields = JSON.parse(this.response).form_fields;
-        Object.keys(ecommerceFormFields).forEach(function (key) {
+        var formKeys = Object.keys(ecommerceFormFields);
+        for (var i = 0; i < formKeys.length; i++) {
           var element = document.createElement('input');
           element.type = 'hidden';
-          element.value = ecommerceFormFields[key];
-          element.name = key;
+          element.value = ecommerceFormFields[formKeys[i]];
+          element.name = formKeys[i];
           form.appendChild(element);
-        });
+        }
         var cardNumber = document.getElementById('cardnumber').value;
         cardNumber.type = 'hidden';
         var cardNumberElement = document.createElement('input');
@@ -256,14 +258,13 @@ checkoutButton.addEventListener('click', function submitCybersource(event) {
         cardNumberElement.name = 'card_number';
         form.appendChild(cardNumberElement);
 
-        // Emma: make sure to test all the possible number options
         var cardTypeElement = document.createElement('input');
         cardTypeElement.type = 'hidden';
         if (cardNumber.charAt(0) === '4') {
-          cardTypeElement.value = '001'; // visa
-        } else if (cardNumber.substring(0, 2) === '34' || cardNumber.substring(0, 2) === '37') {
+          cardTypeElement.value = '001'; // Visa
+        } else if (/^3[47]/.test(cardNumber)) {
           cardTypeElement.value = '003'; // American Express
-        } else if (cardNumber.substring(0, 4) === '6011' || cardNumber.substring(0, 2) === '65' || /^64[4-9]/.test(cardNumber)) {
+        } else if (cardNumber.substring(0, 4) === '6011' || /^622[1-9]/.test(cardNumber) || /^64[4-9]/.test(cardNumber) || cardNumber.substring(0, 2) === '65') {
           cardTypeElement.value = '004'; // Discover
         } else if (cardNumber.substring(0, 4) === '2720' || /^5[1-5]/.test(cardNumber) || /^222[1-9]/.test(cardNumber) || /^22[3-9]/.test(cardNumber) || /^2[3-6]/.test(cardNumber) || /^27[0-1]/.test(cardNumber)) {
           cardTypeElement.value = '002'; // Mastercard
@@ -292,17 +293,20 @@ checkoutButton.addEventListener('click', function submitCybersource(event) {
       }
     }
   };
-  var urlEncodedDataPairs = [];
-  urlEncodedDataPairs.push(encodeURIComponent('basket') + '=' + encodeURIComponent(getBasketId()));
-  urlEncodedDataPairs.push(encodeURIComponent('first_name') + '=' + encodeURIComponent(document.getElementById('firstname').value));
-  urlEncodedDataPairs.push(encodeURIComponent('last_name') + '=' + encodeURIComponent(document.getElementById('lastname').value));
-  urlEncodedDataPairs.push(encodeURIComponent('address_line1') + '=' + encodeURIComponent(document.getElementById('address1').value));
-  urlEncodedDataPairs.push(encodeURIComponent('address_line2') + '=' + encodeURIComponent(document.getElementById('address2').value));
-  urlEncodedDataPairs.push(encodeURIComponent('city') + '=' + encodeURIComponent(document.getElementById('city').value));
-  urlEncodedDataPairs.push(encodeURIComponent('country') + '=' + encodeURIComponent(document.getElementById('country').value));
-  urlEncodedDataPairs.push(encodeURIComponent('state') + '=' + encodeURIComponent(document.getElementById('state').value));
-  urlEncodedDataPairs.push(encodeURIComponent('postal_code') + '=' + encodeURIComponent(document.getElementById('zip').value));
-
+  function encoder(name) {
+    return encodeURIComponent(document.getElementById(name).value);
+  }
+  var urlEncodedDataPairs = [
+    'basket=' + encodeURIComponent(getBasketId()),
+    'first_name=' + encoder('firstname'),
+    'last_name=' + encoder('lastname'),
+    'address_line1=' + encoder('address1'),
+    'address_line2=' + encoder('address2'),
+    'city=' + encoder('city'),
+    'country=' + encoder('country'),
+    'state=' + encoder('state'),
+    'postal_code=' + encoder('zip'),
+  ];
   var urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
   xhr.send(urlEncodedData);
 });
