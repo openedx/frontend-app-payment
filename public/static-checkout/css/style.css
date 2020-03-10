@@ -17,7 +17,7 @@ a {
 }
 
 p {
-  margin-top: 0;
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
@@ -61,7 +61,7 @@ header {
 
 .logo {
   height: 1.75rem;
-  margin-right: 1rem;
+  margin-left: 1rem;
   padding: 1rem 0;
   display: block;
   position: relative;
@@ -72,10 +72,8 @@ header {
 .avatar {pointer-events: none;}
 
 .user-button {
-  top: 50%;
-  position: absolute;
-  right: 2%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  float: right;
   cursor: pointer;
   background-color: transparent;
   border-color: transparent;
@@ -85,7 +83,7 @@ header {
 
 .dropdown-menu {
   position: absolute;
-  right: 4.5%;
+  right: 1.5%;
   display: none;
   padding: .5rem 0;
   box-shadow: 0 .125rem .25rem rgba(0,0,0,.3);
@@ -129,6 +127,10 @@ a.dropdown-item {
   padding-right: 1rem;
   padding-left: 3rem;
   margin-bottom: 4rem;
+}
+
+.mb {
+  margin-bottom: 2.5rem;
 }
 
 .payment-method button {
@@ -207,7 +209,7 @@ a.dropdown-item {
   padding: 0.25rem;
   background-color: #fff;
   border-radius: 0.3rem;
-  width: 40%;
+  width: 35%;
   height: 100%;
 }
 
@@ -278,6 +280,14 @@ a.dropdown-item {
   visibility: visible;
 }
 
+.basket {
+  display: flex;
+}
+
+#summaryprice, #total {
+  float: right;
+}
+
 .col-5 {width: 41.65%;}
 .col-6 {width: 50%;}
 .col-7 {width: 58.33%;}
@@ -296,7 +306,7 @@ a.dropdown-item {
 
 @media only screen and (max-width: 825px) {
   [class*="col-"] {width: 100%;}
-  .col-nums {width: 85%;}
+  .col-nums {width: 80%;}
   .logo {
     height: 1.5rem;
     padding-top: 0.7rem;
@@ -309,7 +319,13 @@ a.dropdown-item {
     height: 3.2rem;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.3)!important;
   }
-  .user-button {margin-right: 0; right: -3%}
+  .user-button {
+    position: absolute;
+    margin-right: 0;
+    right: -4%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
   .user-button:hover {
     background: rgba(0,0,0,.1);
     padding: 0.7rem;

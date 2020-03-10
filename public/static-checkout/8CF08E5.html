@@ -26,7 +26,7 @@
     <div class="container-fluid payment-container">
       <h1 class="screen-reader-only">Payment Page</h1>
       <div class="cart col-5">
-        <section aria-label="Shopping Cart Details">
+        <section class="mb" aria-label="Shopping Cart Details">
           <span class="screen-reader-only">Shopping cart details are loaded.</span>
           <div>
             <h5 aria-level="2">In Your Cart</h5>
@@ -35,12 +35,12 @@
               <img class="img-thumbnail" src="https://prod-discovery.edx-cdn.org/media/course/image/ac499cd6-a3ac-4a5f-a307-bb28ea318de1-0a473d1ec055.small.png" alt="" />
               <div class="product-line-item">
                 <h6 aria-level="3">Title HERE</h6>
-                <p>Verified Certificate</p>
+                <span>Verified Certificate</span>
               </div>
             </div>
           </div>
         </section>
-        <div role="region">
+        <div class="mb" role="region">
           <h5 aria-level="2">Summary</h5>
           <span class="col-10 col-nums">Price</span>
           <span id="summaryprice">$350.00</span>
@@ -59,7 +59,7 @@
       </div>
       <div class="checkout col-7">
         <section aria-label="Payment Details">
-          <div>
+          <div class="mb">
             <h5 aria-level="2">Select Payment Method</h5>
             <div class="payment-method">
               <button class="active-button"><img src="https://payment.edx.org/159f11b7867975b80646a8626d3ca344.png" alt="card-logos"></button>
@@ -69,7 +69,7 @@
           <div>
             <h5 aria-level="2">Card Holder Infomation</h5>
             <form id="checkout-form">
-              <div>
+              <div class="mb">
                 <div class="row">
                   <div class="col-6">
                     <label for="firstname"><span>First name (required)</span></label><br>
