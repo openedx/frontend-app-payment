@@ -3,6 +3,9 @@
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-arrow-callback */
 /* eslint-disable no-var */
+/* eslint-disable camelcase */
+/* eslint-disable func-names */
+/* eslint-disable prefer-destructuring */
 var checkoutForm = document.getElementById('checkout-form');
 var paypalButton = document.getElementById('submit-paypal');
 var couponButton = document.getElementById('coupon-button');
@@ -10,77 +13,77 @@ var userButton = document.querySelector('.user-button');
 var countrySelect = document.getElementById('country');
 var stateSelect = document.getElementById('state');
 var countryStates = {
-  CA: {
-    AB: 'Alberta',
-    BC: 'British Columbia',
-    MB: 'Manitoba',
-    NB: 'New Brunswick',
-    NL: 'Newfoundland and Labrador',
-    NS: 'Nova Scotia',
-    NT: 'Northwest Territories',
-    NU: 'Nunavut',
-    ON: 'Ontario',
-    PE: 'Prince Edward Island',
-    QC: 'Québec',
-    SK: 'Saskatchewan',
-    YT: 'Yukon',
-  },
-  US: {
-    AL: 'Alabama',
-    AK: 'Alaska',
-    AZ: 'Arizona',
-    AR: 'Arkansas',
-    AA: 'Armed Forces Americas',
-    AE: 'Armed Forces Europe',
-    AP: 'Armed Forces Pacific',
-    CA: 'California',
-    CO: 'Colorado',
-    CT: 'Connecticut',
-    DE: 'Delaware',
-    DC: 'District Of Columbia',
-    FL: 'Florida',
-    GA: 'Georgia',
-    HI: 'Hawaii',
-    ID: 'Idaho',
-    IL: 'Illinois',
-    IN: 'Indiana',
-    IA: 'Iowa',
-    KS: 'Kansas',
-    KY: 'Kentucky',
-    LA: 'Louisiana',
-    ME: 'Maine',
-    MD: 'Maryland',
-    MA: 'Massachusetts',
-    MI: 'Michigan',
-    MN: 'Minnesota',
-    MS: 'Mississippi',
-    MO: 'Missouri',
-    MT: 'Montana',
-    NE: 'Nebraska',
-    NV: 'Nevada',
-    NH: 'New Hampshire',
-    NJ: 'New Jersey',
-    NM: 'New Mexico',
-    NY: 'New York',
-    NC: 'North Carolina',
-    ND: 'North Dakota',
-    OH: 'Ohio',
-    OK: 'Oklahoma',
-    OR: 'Oregon',
-    PA: 'Pennsylvania',
-    RI: 'Rhode Island',
-    SC: 'South Carolina',
-    SD: 'South Dakota',
-    TN: 'Tennessee',
-    TX: 'Texas',
-    UT: 'Utah',
-    VT: 'Vermont',
-    VA: 'Virginia',
-    WA: 'Washington',
-    WV: 'West Virginia',
-    WI: 'Wisconsin',
-    WY: 'Wyoming',
-  },
+  CA: [
+    ['AB', 'Alberta'],
+    ['BC', 'British Columbia'],
+    ['MB', 'Manitoba'],
+    ['NB', 'New Brunswick'],
+    ['NL', 'Newfoundland and Labrador'],
+    ['NS', 'Nova Scotia'],
+    ['NT', 'Northwest Territories'],
+    ['NU', 'Nunavut'],
+    ['ON', 'Ontario'],
+    ['PE', 'Prince Edward Island'],
+    ['QC', 'Québec'],
+    ['SK', 'Saskatchewan'],
+    ['YT', 'Yukon'],
+  ],
+  US: [
+    ['AL', 'Alabama'],
+    ['AK', 'Alaska'],
+    ['AZ', 'Arizona'],
+    ['AR', 'Arkansas'],
+    ['AA', 'Armed Forces Americas'],
+    ['AE', 'Armed Forces Europe'],
+    ['AP', 'Armed Forces Pacific'],
+    ['CA', 'California'],
+    ['CO', 'Colorado'],
+    ['CT', 'Connecticut'],
+    ['DE', 'Delaware'],
+    ['DC', 'District Of Columbia'],
+    ['FL', 'Florida'],
+    ['GA', 'Georgia'],
+    ['HI', 'Hawaii'],
+    ['ID', 'Idaho'],
+    ['IL', 'Illinois'],
+    ['IN', 'Indiana'],
+    ['IA', 'Iowa'],
+    ['KS', 'Kansas'],
+    ['KY', 'Kentucky'],
+    ['LA', 'Louisiana'],
+    ['ME', 'Maine'],
+    ['MD', 'Maryland'],
+    ['MA', 'Massachusetts'],
+    ['MI', 'Michigan'],
+    ['MN', 'Minnesota'],
+    ['MS', 'Mississippi'],
+    ['MO', 'Missouri'],
+    ['MT', 'Montana'],
+    ['NE', 'Nebraska'],
+    ['NV', 'Nevada'],
+    ['NH', 'New Hampshire'],
+    ['NJ', 'New Jersey'],
+    ['NM', 'New Mexico'],
+    ['NY', 'New York'],
+    ['NC', 'North Carolina'],
+    ['ND', 'North Dakota'],
+    ['OH', 'Ohio'],
+    ['OK', 'Oklahoma'],
+    ['OR', 'Oregon'],
+    ['PA', 'Pennsylvania'],
+    ['RI', 'Rhode Island'],
+    ['SC', 'South Carolina'],
+    ['SD', 'South Dakota'],
+    ['TN', 'Tennessee'],
+    ['TX', 'Texas'],
+    ['UT', 'Utah'],
+    ['VT', 'Vermont'],
+    ['VA', 'Virginia'],
+    ['WA', 'Washington'],
+    ['WV', 'West Virginia'],
+    ['WI', 'Wisconsin'],
+    ['WY', 'Wyoming'],
+  ],
 };
 var ecommerceBaseUrl;
 if (window.location.hostname === 'payment.edx.org') {
@@ -108,8 +111,8 @@ window.onclick = function closeMenu(event) {
 };
 
 function redirectToMFE(couponCode) {
-  var url = window.location.href;
-  var sku = /static-checkout\/([^&#]*).html/.exec(url)[1];
+  var url = window.location.pathname;
+  var sku = /.*\/([^&#]*).html/.exec(url)[1];
   var newUrl = ecommerceBaseUrl + '/basket/add/?sku=' + sku;
   if (couponCode) {
     newUrl = newUrl.concat('&coupon=', couponCode);
@@ -118,8 +121,8 @@ function redirectToMFE(couponCode) {
 }
 
 function getBasketId() {
-  var url = window.location.href;
-  var basketParams = /[?&]basketId=([^&#]*)/.exec(url);
+  var url = window.location.search;
+  var basketParams = /[?&]basket_id=([^&#]*)/.exec(url);
   if (!basketParams) {
     redirectToMFE();
   } else {
@@ -133,7 +136,8 @@ function renderStates(country) {
   var states = Object.values(countryStates[country]);
   for (var i = 0; i < states.length; i++) {
     var state = document.createElement('option');
-    state.innerHTML = states[i];
+    state.setAttribute('value', states[i][0]);
+    state.innerHTML = states[i][1];
     stateSelect.appendChild(state);
   }
 }
@@ -215,9 +219,9 @@ paypalButton.addEventListener('click', function submitPaypal() {
       }
     }
   };
-  var basketId = getBasketId();
+  var basket_id = getBasketId();
   xhr.send(JSON.stringify({
-    basketId,
+    basket_id,
     payment_processor: 'paypal',
   }));
 });
