@@ -314,4 +314,3 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
   var urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
   xhr.send(urlEncodedData);
 });
-
