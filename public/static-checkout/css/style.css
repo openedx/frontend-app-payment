@@ -4,6 +4,7 @@ body {
   line-height: 1.5;
   font-size: 1rem;
   color: #171c29;
+  margin: 0 auto;
 }
 
 *, :after, :before {
@@ -17,8 +18,8 @@ a {
 }
 
 p {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0;
 }
 
 h6 {
@@ -47,22 +48,22 @@ h5 {
 
 header {
   border-bottom: 1px solid #e7e7e7;
+}
+
+.header {
   height: 3.75rem;
   position: relative;
   z-index: 1000;
   margin: -8px;
-}
-
-.nav {
   max-width: 1440px;
-  margin: auto;
-  padding-left: 15px;
+  margin: 0 auto;
 }
 
 .logo {
   height: 1.75rem;
   margin-left: 1rem;
-  padding: 1rem 0;
+  padding-top: 1rem;
+  padding-left: 0.6rem;
   display: block;
   position: relative;
   box-sizing: content-box;
