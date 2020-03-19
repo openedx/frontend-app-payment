@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "build": "fedx-scripts webpack && node create-apple-merchant-file.js",
+    "audit:whitelisted": "npx audit-ci -m -w acorn decompress minimist",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "is-es5": "es-check es5 ./dist/*.js",
     "lint": "fedx-scripts eslint",
@@ -22,7 +23,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm audit"
+      "pre-commit": "npm run lint && npm run audit:whitelisted"
     }
   },
   "author": "edX",
@@ -73,6 +74,7 @@
   },
   "devDependencies": {
     "@edx/frontend-build": "^2.0.6",
+    "audit-ci": "^2.5.1",
     "axios-mock-adapter": "1.17.0",
     "chance": "1.1.0",
     "clean-webpack-plugin": "3.0.0",
@@ -95,6 +97,6 @@
     "redux-mock-store": "1.5.3",
     "rosie": "2.0.1",
     "webpack": "4.41.0",
-    "webpack-bundle-analyzer": "3.5.2"
+    "webpack-bundle-analyzer": "^3.6.1"
   }
 }
