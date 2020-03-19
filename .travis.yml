@@ -1,14 +1,13 @@
 language: node_js
 node_js: 12
 before_install:
-- npm install -g npm@6
+- npx audit-ci -m -w acorn decompress minimist
 install:
 - npm ci
 script:
 - make validate-no-uncommitted-package-lock-changes
 - npm run i18n_extract
 - npm run lint
-- npm audit
 - npm run test
 - npm run build
 - npm run is-es5
