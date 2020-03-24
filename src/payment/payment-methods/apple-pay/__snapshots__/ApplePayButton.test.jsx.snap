@@ -7,5 +7,6 @@ exports[`<ApplePayButton /> should render properly 1`] = `
   id="applePayBtn"
   lang="en"
   title="Pay with Apple Pay"
+  type="button"
 />
 `;

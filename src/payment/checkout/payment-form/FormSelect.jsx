@@ -10,7 +10,7 @@ const FormSelect = ({
   meta: { touched, error },
   ...other
 }) => (
-  <React.Fragment>
+  <>
     <select
       {...other}
       {...input}
@@ -21,7 +21,7 @@ const FormSelect = ({
       {options}
     </select>
     {touched && error && <span className="text-danger">{error}</span>}
-  </React.Fragment>
+  </>
 );
 
 FormSelect.propTypes = {

@@ -33,7 +33,6 @@ jest.mock('universal-cookie', () => {
 describe('<Cart />', () => {
   let store;
   let tree;
-  let userAccount;
 
   beforeEach(() => {
     const authenticatedUser = Factory.build('userAccount');

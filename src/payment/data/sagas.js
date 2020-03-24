@@ -1,4 +1,6 @@
-import { call, put, takeEvery, select } from 'redux-saga/effects';
+import {
+  call, put, takeEvery, select,
+} from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { camelCaseObject, convertKeyNames } from './utils';
 

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { clearFields, Field } from 'redux-form';
-import { injectIntl, intlShape, FormattedMessage, getCountryList, getLocale } from '@edx/frontend-platform/i18n';
+import {
+  injectIntl, intlShape, FormattedMessage, getCountryList, getLocale,
+} from '@edx/frontend-platform/i18n';
 
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
@@ -385,23 +387,18 @@ export class CardHolderInformationComponent extends React.Component {
 CardHolderInformationComponent.propTypes = {
   clearFields: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
-  countryOptions: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  })),
   disabled: PropTypes.bool,
   showBulkEnrollmentFields: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
-  countryOptions: [],
   disabled: false,
   showBulkEnrollmentFields: false,
   isPaymentVisualExperiment: false,
 };
 
 export default connect(
-  () =>{},
+  () => {},
   { clearFields },
 )(injectIntl(CardHolderInformationComponent));

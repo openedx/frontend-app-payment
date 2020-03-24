@@ -53,9 +53,8 @@ export const paymentSelector = createSelector(
   basketSelector,
   queryParamsSelector,
   (basket, queryParams) => {
-    const isCouponRedeemRedirect =
-      !!queryParams &&
-      queryParams.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
+    const isCouponRedeemRedirect = !!queryParams
+      && queryParams.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
     return {
       ...basket,
       isCouponRedeemRedirect,

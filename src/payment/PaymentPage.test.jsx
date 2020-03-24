@@ -12,19 +12,19 @@ import Cookies from 'universal-cookie';
 
 import './__factories__/basket.factory';
 import './__factories__/userAccount.factory';
-import { PaymentPage } from './';
+import { AppContext } from '@edx/frontend-platform/react';
+import { PaymentPage } from '.';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/service';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
-import { AppContext } from '@edx/frontend-platform/react';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {
     static result = {
       [process.env.LANGUAGE_PREFERENCE_COOKIE_NAME]: 'en',
-      [process.env.CURRENCY_COOKIE_NAME]:  {
+      [process.env.CURRENCY_COOKIE_NAME]: {
         code: 'MXN',
         rate: 19.092733,
       },
@@ -66,7 +66,7 @@ configureI18n({
     'zh-cn': {},
     fr: {},
     'es-419': {},
-    ar: {}
+    ar: {},
   },
 });
 

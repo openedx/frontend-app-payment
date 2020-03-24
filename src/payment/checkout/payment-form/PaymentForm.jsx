@@ -30,7 +30,7 @@ export class PaymentFormComponent extends React.Component {
 
   onSubmit = (values) => {
     // istanbul ignore if
-    if (this.props.disabled) return;
+    if (this.props.disabled) { return; }
     const requiredFields = this.getRequiredFields(values);
     const {
       firstName,
@@ -159,9 +159,9 @@ export class PaymentFormComponent extends React.Component {
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
     if (
-      cardExpirationMonth &&
-      parseInt(cardExpirationMonth, 10) < currentMonth &&
-      parseInt(cardExpirationYear, 10) === currentYear
+      cardExpirationMonth
+      && parseInt(cardExpirationMonth, 10) < currentMonth
+      && parseInt(cardExpirationYear, 10) === currentYear
     ) {
       errors.cardExpirationMonth = this.props.intl.formatMessage(messages['payment.form.errors.card.expired']);
     }
@@ -195,7 +195,6 @@ export class PaymentFormComponent extends React.Component {
     const {
       handleSubmit,
       loading,
-      loaded,
       disabled,
       isProcessing,
       isBulkOrder,
@@ -205,9 +204,9 @@ export class PaymentFormComponent extends React.Component {
 
     let submitButtonState = 'default';
     // istanbul ignore if
-    if (disabled) submitButtonState = 'disabled';
+    if (disabled) { submitButtonState = 'disabled'; }
     // istanbul ignore if
-    if (isProcessing) submitButtonState = 'processing';
+    if (isProcessing) { submitButtonState = 'processing'; }
 
     return (
       <form
@@ -267,7 +266,6 @@ PaymentFormComponent.propTypes = {
   isQuantityUpdating: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
-  loaded: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
 };
@@ -275,7 +273,6 @@ PaymentFormComponent.propTypes = {
 PaymentFormComponent.defaultProps = {
   disabled: false,
   loading: true,
-  loaded: false,
   isBulkOrder: false,
   isQuantityUpdating: false,
   isProcessing: false,

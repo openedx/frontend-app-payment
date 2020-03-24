@@ -13,15 +13,15 @@ function CurrencyDisclaimer(props) {
         defaultMessage="* This total contains an approximate conversion. You will be charged {actualAmount} {actualCurrencyCode}."
         description="A notification that shows if we are displaying approximate prices in the user's local currency, instead of USD."
         values={{
-            actualAmount: (
-              <FormattedNumber
-                value={props.actualAmount}
-                style="currency" // eslint-disable-line react/style-prop-object
-                currency={props.actualCurrencyCode}
-              />
-            ),
-            actualCurrencyCode: props.actualCurrencyCode,
-          }}
+          actualAmount: (
+            <FormattedNumber
+              value={props.actualAmount}
+              style="currency" // eslint-disable-line react/style-prop-object
+              currency={props.actualCurrencyCode}
+            />
+          ),
+          actualCurrencyCode: props.actualCurrencyCode,
+        }}
       />
     </div>
   );

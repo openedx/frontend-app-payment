@@ -18,7 +18,7 @@ class OrderDetails extends Component {
 
   renderEnrollmentCodeMessage() {
     return (
-      <React.Fragment>
+      <>
         <FormattedMessage
           id="payment.order.details.enrollment.code.terms"
           defaultMessage="By purchasing, you and your organization agree to the following terms:"
@@ -72,7 +72,7 @@ class OrderDetails extends Component {
             userEmail: this.context.authenticatedUser.email,
           }}
         />
-      </React.Fragment>
+      </>
     );
   }
 
@@ -85,10 +85,12 @@ class OrderDetails extends Component {
 
   render() {
     if (this.props.messageType === null) {
-      return (this.props.REV1045Experiment ? <React.Fragment><div className="skeleton py-2 mb-3 w-50" />
-      <div className="skeleton py-2 mb-2 mr-4" />
-      <div className="skeleton py-2 mb-5 w-75" />
-      </React.Fragment> : null)
+      return (this.props.REV1045Experiment ? (
+        <><div className="skeleton py-2 mb-3 w-50" />
+          <div className="skeleton py-2 mb-2 mr-4" />
+          <div className="skeleton py-2 mb-5 w-75" />
+        </>
+      ) : null);
     }
     return (
       <div className="basket-section">

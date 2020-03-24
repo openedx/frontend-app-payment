@@ -23,7 +23,7 @@ class ApplePayButton extends React.Component {
   }
 
   render() {
-    if (!this.state.canMakePayments) return null;
+    if (!this.state.canMakePayments) { return null; }
     const { intl, ...props } = this.props;
 
     return (
@@ -32,6 +32,7 @@ class ApplePayButton extends React.Component {
         id="applePayBtn"
         className={classNames('apple-pay-button', props.className)}
         title={intl.formatMessage(messages['payment.apple.pay.pay.with.apple.pay'])}
+        type="button"
         lang={intl.locale}
       />
     );

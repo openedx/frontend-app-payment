@@ -101,7 +101,7 @@ class Checkout extends React.Component {
 
     const basketClassName = isPaymentVisualExperiment ? 'basket-section-experiment mb-0' : 'basket-section';
     return (
-      <React.Fragment>
+      <>
         <div className={basketClassName}>
           <h5 aria-level="2">
             <FormattedMessage
@@ -112,7 +112,7 @@ class Checkout extends React.Component {
           </h5>
 
           <p className="d-flex flex-wrap">
-            <button className="payment-method-button active">
+            <button type="button" className="payment-method-button active">
               <img
                 src={AcceptedCardLogos}
                 alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
@@ -141,9 +141,10 @@ class Checkout extends React.Component {
           isQuantityUpdating={isQuantityUpdating}
           isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
-      </React.Fragment>
+      </>
     );
   }
+
   render() {
     const { intl } = this.props;
 

@@ -23,6 +23,7 @@ const config = getBaseConfig('webpack-prod');
  *   usage of this configuration
  * - We add purgecss-webpack-plugin.
  */
+
 config.plugins = [
   // Cleans the dist directory before each build
   new CleanWebpackPlugin(),
@@ -92,5 +93,16 @@ config.plugins = [
     whitelistPatterns: [/-enter/, /-appear/, /-exit/],
   }),
 ];
+
+/**
+ * The loader in the default config references a different version of
+ * MiniCssExtractPlugin and will break if we don't swap it with the one used in
+ * this file.
+ *
+ * TODO: This is a very brittle. We should improve this in the future by either
+ * defining the whole of the webpack config here or impementing some better
+ * configuration modification functionality in frontend-build.
+ */
+config.module.rules[2].use[0] = MiniCssExtractPlugin.loader;
 
 module.exports = config;
