@@ -23,7 +23,6 @@ const config = getBaseConfig('webpack-prod');
  *   usage of this configuration
  * - We add purgecss-webpack-plugin.
  */
-
 config.plugins = [
   // Cleans the dist directory before each build
   new CleanWebpackPlugin(),
