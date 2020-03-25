@@ -14,8 +14,8 @@ export function sendRev1074Event(eventType, eventData) {
     eventData.timing = window.performance.timing.toJSON();
   }
   const encodedEvent = [
-    'event_type=edx.experiment.rev1074.' + encodeURIComponent(eventType),
-    'page=' + encodeURIComponent(window.location.href),
+    'event_type=edx.experiment.rev1074.' + eventType,
+    'page=' + window.location.href,
     'event=' + encodeURIComponent(JSON.stringify(eventData)),
   ].join('&').replace(/%20/g, '+');
 
