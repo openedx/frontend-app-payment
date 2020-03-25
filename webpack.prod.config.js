@@ -34,7 +34,7 @@ config.plugins = [
   // Stage also uses this config and dev uses this config when running npm run build
   new CopyPlugin([
     {
-      from: path.resolve(__dirname, 'public/static-checkout'),
+      from: path.resolve(__dirname, 'public/static-checkout/pages'),
       to: path.resolve(__dirname, 'dist'),
     },
   ]),
