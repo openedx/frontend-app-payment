@@ -10,7 +10,7 @@ import { getConfig } from '@edx/frontend-platform';
 /* eslint-disable dot-notation */
 export function sendRev1074Event(eventType, eventData) {
   eventData['_export'] = 'false'; // Don't let these events be exported to partners
-  if (window.performance.timing) {
+  if (window.performance && window.performance.timing) {
     eventData.timing = window.performance.timing.toJSON();
   }
   const encodedEvent = [

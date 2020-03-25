@@ -14,7 +14,9 @@ class OrderSummary extends React.Component {
       getPerformanceProperties(),
     );
     let eventData = {};
-    let renderTime = window.performance.getEntriesByName("Order Summary component rendered");
+    let renderTime = window.performance &&
+      window.performance.getEntriesByName &&
+      window.performance.getEntriesByName("Order Summary component rendered");
     if (renderTime) {
       eventData["summaryRenderTiming"] = renderTime[renderTime.length - 1].toJSON();
     }
