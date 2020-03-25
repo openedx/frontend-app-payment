@@ -2,9 +2,9 @@ import { getConfig } from '@edx/frontend-platform';
 
 
 // HACK: short-lived function to send some testing events; sticking it here since there doesn't
-// seem to be a general 'utils' file
+// seem to be a general 'utils' file.
 // HACK: deliberately not doing this through the regular sendTrackEvent system to more closely
-// match how these will be sent in the static page test
+// match how these will be sent in the static page test.
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-template */
 /* eslint-disable dot-notation */
