@@ -21,7 +21,7 @@ import Header, { messages as headerMessages } from '@edx/frontend-component-head
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
 
 import appMessages from './i18n';
-import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties } from './payment';
+import { PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties, sendRev1074Event } from './payment';
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -49,6 +49,8 @@ subscribe(APP_READY, () => {
     'edx.bi.ecommerce.payment_mfe.started_painting',
     getPerformanceProperties(),
   );
+  sendRev1074Event('payment_mfe.started_painting', {});
+
   ReactDOM.render(
     <AppProvider store={configureStore()}>
       <Header />
