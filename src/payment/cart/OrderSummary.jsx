@@ -17,7 +17,7 @@ class OrderSummary extends React.Component {
     let renderTime = window.performance &&
       window.performance.getEntriesByName &&
       window.performance.getEntriesByName("Order Summary component rendered");
-    if (renderTime) {
+    if (renderTime && renderTime.length > 0) {
       eventData["summaryRenderTiming"] = renderTime[renderTime.length - 1].toJSON();
     }
     sendRev1074Event('payment_mfe.order_summary_rendered', eventData);
