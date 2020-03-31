@@ -13,14 +13,16 @@ class OrderSummary extends React.Component {
       'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
       getPerformanceProperties(),
     );
-    let eventData = {};
-    let renderTime = window.performance &&
-      window.performance.getEntriesByName &&
-      window.performance.getEntriesByName("Order Summary component rendered");
-    if (renderTime && renderTime.length > 0) {
-      eventData["summaryRenderTiming"] = renderTime[renderTime.length - 1].toJSON();
+    let renderTiming;
+    try {
+      const entries = window.performance.getEntriesByName("Order Summary component rendered");
+      if (entries && entries.length > 0) {
+        renderTiming = entries[entries.length - 1].toJSON();
+      }
+    } catch (e) {
+      renderTiming = { error: e.toString() };
     }
-    sendRev1074Event('payment_mfe.order_summary_rendered', eventData);
+    sendRev1074Event('payment_mfe.order_summary_rendered', { summaryRenderTiming: renderTiming});
   }
 
   render() {

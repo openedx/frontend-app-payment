@@ -10,9 +10,15 @@ import { getConfig } from '@edx/frontend-platform';
 /* eslint-disable dot-notation */
 export function sendRev1074Event(eventType, eventData) {
   eventData['_export'] = 'false'; // Don't let these events be exported to partners
-  if (window.performance && window.performance.timing) {
-    eventData.timing = window.performance.timing.toJSON();
+
+  let perfTiming;
+  try {
+    perfTiming = window.performance.timing.toJSON();
+  } catch (e) {
+    perfTiming = { error: e.toString() };
   }
+  eventData.timing = perfTiming;
+
   const encodedEvent = [
     'event_type=edx.experiment.rev1074.' + eventType,
     'page=' + window.location.href,
