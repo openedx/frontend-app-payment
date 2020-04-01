@@ -87,12 +87,16 @@ var countryStates = {
   ],
 };
 var ecommerceBaseUrl;
+var lmsBaseUrl;
 if (window.location.hostname === 'payment.edx.org') {
   ecommerceBaseUrl = 'https://ecommerce.edx.org';
+  lmsBaseUrl = 'https://courses.edx.org';
 } else if (window.location.hostname === 'payment.stage.edx.org') {
   ecommerceBaseUrl = 'https://ecommerce.stage.edx.org';
+  lmsBaseUrl = 'https://courses.stage.edx.org';
 } else if (window.location.hostname === 'localhost') {
   ecommerceBaseUrl = 'http://localhost:18130';
+  lmsBaseUrl = 'http://localhost:18000';
 }
 
 userButton.addEventListener('click', function () {
@@ -110,6 +114,33 @@ window.onclick = function closeMenu(event) {
     }
   }
 };
+
+/* eslint-disable no-param-reassign */
+/* eslint-disable dot-notation */
+function sendRev1074Event(eventType, eventData) {
+  eventData['_export'] = 'false'; // Don't let these events be exported to partners
+
+  var perfTiming;
+  try {
+    perfTiming = window.performance.timing.toJSON();
+  } catch (e) {
+    perfTiming = { error: e.toString() };
+  }
+  eventData.timing = perfTiming;
+
+  var encodedEvent = [
+    'event_type=edx.experiment.rev1074.' + eventType,
+    'page=' + window.location.href,
+    'event=' + encodeURIComponent(JSON.stringify(eventData)),
+  ].join('&').replace(/%20/g, '+');
+
+  var eventUrl = lmsBaseUrl + '/event';
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', eventUrl + '?' + encodedEvent);
+  xhr.send();
+}
+/* eslint-enable no-param-reassign */
+/* eslint-enable dot-notation */
 
 function redirectToMFE(couponCode) {
   var url = window.location.pathname;
@@ -168,6 +199,12 @@ function renderCountryState() {
 document.addEventListener('DOMContentLoaded', function () {
   renderCountryState();
 });
+
+/* eslint-disable no-unused-vars */
+window.onload = function sendPageLoaded(event) {
+  sendRev1074Event('static.page_loaded', {});
+};
+/* eslint-enable no-unused-vars */
 
 couponButton.addEventListener('click', function couponRedirectToMicrofrontend(event) {
   event.preventDefault();
