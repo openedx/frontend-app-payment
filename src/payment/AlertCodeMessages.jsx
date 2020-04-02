@@ -70,19 +70,8 @@ export const TransactionDeclined = () => (
   <>
     <FormattedMessage
       id="payment.messages.transaction.declined.body"
-      defaultMessage="Please double-check the information you provided and try again. For help, {link}."
-      description="Asks the user to check their information and includes a link to contact support for help."
-      values={{
-        link: (
-          <Hyperlink destination={getConfig().SUPPORT_URL}>
-            <FormattedMessage
-              id="payment.error.fetch.basket.support.fragment"
-              defaultMessage="contact support"
-              description="The support link as in 'please {contact support}'"
-            />
-          </Hyperlink>
-        ),
-      }}
+      defaultMessage="Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance."
+      description="Asks the user to check their information or contact their payment provider for help."
     />
   </>
 );

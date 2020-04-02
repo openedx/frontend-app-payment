@@ -4,6 +4,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import { markPerformanceIfAble, getPerformanceProperties } from '../performanceEventing';
+import { sendRev1074Event } from '..';
 
 class OrderSummary extends React.Component {
   componentDidMount() {
@@ -12,6 +13,16 @@ class OrderSummary extends React.Component {
       'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
       getPerformanceProperties(),
     );
+    let renderTiming;
+    try {
+      const entries = window.performance.getEntriesByName("Order Summary component rendered");
+      if (entries && entries.length > 0) {
+        renderTiming = entries[entries.length - 1].toJSON();
+      }
+    } catch (e) {
+      renderTiming = { error: e.toString() };
+    }
+    sendRev1074Event('payment_mfe.order_summary_rendered', { summaryRenderTiming: renderTiming});
   }
 
   render() {
