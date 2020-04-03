@@ -73,11 +73,11 @@
     "universal-cookie": "4.0.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "^5.0.3",
-    "audit-ci": "^2.5.1",
+    "@edx/frontend-build": "5.0.3",
+    "audit-ci": "2.5.1",
     "axios-mock-adapter": "1.17.0",
     "chance": "1.1.0",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "5.1.1",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
     "es-check": "5.0.0",
@@ -92,6 +92,6 @@
     "reactifex": "1.1.1",
     "redux-mock-store": "1.5.3",
     "rosie": "2.0.1",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "4.2.2"
   }
 }
