@@ -22,8 +22,9 @@ import Footer, { messages as footerMessages } from '@edx/frontend-component-foot
 
 import appMessages from './i18n';
 import {
-  PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties, sendRev1074Event,
+  PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties,
 } from './payment';
+import sendRev1074Event from './payment/sendRev1074Event';
 import configureStore from './data/configureStore';
 
 import './index.scss';

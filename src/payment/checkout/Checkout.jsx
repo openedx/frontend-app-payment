@@ -10,7 +10,7 @@ import { paymentSelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
-import { sendRev1074Event } from '../../payment';
+import sendRev1074Event from '../sendRev1074Event';
 import PaymentForm from './payment-form/PaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
