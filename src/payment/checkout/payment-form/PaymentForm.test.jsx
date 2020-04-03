@@ -6,10 +6,10 @@ import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { Factory } from 'rosie';
 
+import { AppContext } from '@edx/frontend-platform/react';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
 import '../../__factories__/userAccount.factory';
-import { AppContext } from '@edx/frontend-platform/react';
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -37,7 +37,7 @@ configureI18n({
     'zh-cn': {},
     fr: {},
     'es-419': {},
-    ar: {}
+    ar: {},
   },
 });
 
@@ -48,7 +48,6 @@ describe('<PaymentForm />', () => {
   let store;
 
   beforeEach(() => {
-
     store = createStore(createRootReducer(), {});
 
     const wrapper = mount((
@@ -245,4 +244,3 @@ describe('<PaymentForm />', () => {
     });
   });
 });
-

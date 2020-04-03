@@ -18,17 +18,21 @@ class ProductLineItem extends React.PureComponent {
     switch (certificateType) {
       case 'professional':
       case 'no-id-professional':
-        return (<FormattedMessage
-          id="payment.productlineitem.professional.certificate"
-          defaultMessage="Professional Certificate"
-          description="Course certificate type on product details section"
-        />);
+        return (
+          <FormattedMessage
+            id="payment.productlineitem.professional.certificate"
+            defaultMessage="Professional Certificate"
+            description="Course certificate type on product details section"
+          />
+        );
       case 'verified':
-        return (<FormattedMessage
-          id="payment.productlineitem.verified.certificate"
-          defaultMessage="Verified Certificate"
-          description="Course certificate type on product details section"
-        />);
+        return (
+          <FormattedMessage
+            id="payment.productlineitem.verified.certificate"
+            defaultMessage="Verified Certificate"
+            description="Course certificate type on product details section"
+          />
+        );
       case 'honor':
       case 'audit':
       default:
@@ -56,9 +60,8 @@ class ProductLineItem extends React.PureComponent {
         <div className="col-7">
           <h6 className="m-0" aria-level="3">{title}</h6>
           <p className="m-0">{this.renderCertificateType(certificateType)}</p>
-          {isNumEnrolledExperiment ?
-            this.renderEnrollmentCount(courseKey, enrollmentCountData) : null
-          }
+          {isNumEnrolledExperiment
+            ? this.renderEnrollmentCount(courseKey, enrollmentCountData) : null}
         </div>
       </div>
     );

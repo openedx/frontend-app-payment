@@ -15,7 +15,7 @@
     "audit:whitelisted": "npx audit-ci -m -w acorn decompress minimist",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "is-es5": "es-check es5 ./dist/*.js",
-    "lint": "fedx-scripts eslint",
+    "lint": "fedx-scripts eslint . --ext .js,.jsx",
     "snapshot": "fedx-scripts jest --updateSnapshot",
     "start": "fedx-scripts webpack-dev-server --progress",
     "start:stage": "fedx-scripts webpack-dev-server --config=webpack.dev-stage.config.js --progress",
@@ -39,7 +39,7 @@
     "@edx/frontend-component-footer": "10.0.3",
     "@edx/frontend-component-header": "2.0.3",
     "@edx/frontend-platform": "1.1.9",
-    "@edx/paragon": "7.1.4",
+    "@edx/paragon": "7.2.1",
     "@fortawesome/fontawesome-svg-core": "1.2.25",
     "@fortawesome/free-brands-svg-icons": "5.11.2",
     "@fortawesome/free-regular-svg-icons": "5.11.2",
@@ -73,22 +73,18 @@
     "universal-cookie": "4.0.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "^2.0.6",
-    "audit-ci": "^2.5.1",
+    "@edx/frontend-build": "5.0.3",
+    "audit-ci": "2.5.1",
     "axios-mock-adapter": "1.17.0",
     "chance": "1.1.0",
-    "clean-webpack-plugin": "3.0.0",
-    "copy-webpack-plugin": "^5.1.1",
-    "dotenv-webpack": "1.7.0",
+    "copy-webpack-plugin": "5.1.1",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
     "es-check": "5.0.0",
     "glob": "7.1.4",
     "html-webpack-plugin": "3.2.0",
     "husky": "3.0.7",
-    "jest": "24.9.0",
     "lodash.defaultsdeep": "4.6.1",
-    "mini-css-extract-plugin": "0.8.0",
     "new-relic-source-map-webpack-plugin": "1.2.0",
     "purgecss-webpack-plugin": "1.6.0",
     "react-axe": "3.3.0",
@@ -96,7 +92,6 @@
     "reactifex": "1.1.1",
     "redux-mock-store": "1.5.3",
     "rosie": "2.0.1",
-    "webpack": "4.41.0",
-    "webpack-bundle-analyzer": "^3.6.1"
+    "webpack-merge": "4.2.2"
   }
 }

@@ -10,7 +10,7 @@ const FormInput = ({
   meta: { touched, error },
   ...other
 }) => (
-  <React.Fragment>
+  <>
     <input
       {...other}
       {...input}
@@ -20,7 +20,7 @@ const FormInput = ({
       disabled={disabled}
     />
     {touched && error && <span className="text-danger">{error}</span>}
-  </React.Fragment>
+  </>
 );
 
 FormInput.propTypes = {

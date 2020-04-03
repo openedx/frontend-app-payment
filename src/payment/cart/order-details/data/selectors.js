@@ -16,8 +16,7 @@ import {
 
 export const storePath = ['payment', 'basket'];
 
-const paymentSelector = (state, props) =>
-  getModuleState(state, props.storePath ? props.storePath : storePath);
+const paymentSelector = (state, props) => getModuleState(state, props.storePath ? props.storePath : storePath);
 
 const lastProductSelector = createSelector(
   paymentSelector,

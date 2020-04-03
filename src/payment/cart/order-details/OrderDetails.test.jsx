@@ -6,7 +6,13 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import ConnectedOrderDetails from './OrderDetails';
-import { SEAT_PRODUCT_TYPE, COURSE_ENTITLEMENT_PRODUCT_TYPE, ENROLLMENT_CODE_PRODUCT_TYPE, VERIFIED_CERTIFICATE_TYPE, CREDIT_CERTIFICATE_TYPE } from './data/constants';
+import {
+  SEAT_PRODUCT_TYPE,
+  COURSE_ENTITLEMENT_PRODUCT_TYPE,
+  ENROLLMENT_CODE_PRODUCT_TYPE,
+  VERIFIED_CERTIFICATE_TYPE,
+  CREDIT_CERTIFICATE_TYPE,
+} from './data/constants';
 
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),

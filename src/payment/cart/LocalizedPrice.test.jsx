@@ -80,7 +80,7 @@ describe('LocalizedPrice', () => {
     const component = (
       <IntlProvider locale="en">
         <Provider
-          store={mockStore(Object.assign({}, state))}
+          store={mockStore({ ...state })}
         >
           <LocalizedPrice amount={10} />
         </Provider>

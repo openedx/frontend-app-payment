@@ -205,7 +205,7 @@ Appendix A: Using Local Dev Server with stage.edx.org APIs
 ----------------------------------------------------------
 
 If you would like to run this frontend against stage.edx.org you can run ``npm run start:stage`` and
-access your development server at `https://local.stage.edx.org:1998 <https://local.stage.edx.org:1998>`_ after the initial setup
+access your development server at `https://local.stage.edx.org <https://local.stage.edx.org>`_ after the initial setup
 described below:
 
 - Update the ``/etc/hosts`` file on your computer and add:
@@ -218,7 +218,7 @@ described below:
 
   ``npm run start:stage``
 
-- Navigate to `https://local.stage.edx.org:1998 <https://local.stage.edx.org:1998>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link:
+- Navigate to `https://local.stage.edx.org <https://local.stage.edx.org>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link:
   "Proceed to local.stage.edx.org (unsafe)".
 
 .. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-payment.svg?branch=master

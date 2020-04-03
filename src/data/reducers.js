@@ -10,11 +10,10 @@ import {
   storeName as feedbackStoreName,
 } from '../feedback';
 
-const createRootReducer = () =>
-  combineReducers({
-    [paymentStoreName]: paymentReducer,
-    [feedbackStoreName]: feedbackReducer,
-    form: formReducer,
-  });
+const createRootReducer = () => combineReducers({
+  [paymentStoreName]: paymentReducer,
+  [feedbackStoreName]: feedbackReducer,
+  form: formReducer,
+});
 
 export default createRootReducer;

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OrderDetails should render the button by default 1`] = `
-<button>
+<button
+  type="button"
+>
   <img
     alt="PayPal"
     src="test-file-stub"
@@ -10,7 +12,9 @@ exports[`OrderDetails should render the button by default 1`] = `
 `;
 
 exports[`OrderDetails should render the button with a spinner when processing 1`] = `
-<button>
+<button
+  type="button"
+>
   <span
     className="button-spinner-icon text-primary mr-2"
   />

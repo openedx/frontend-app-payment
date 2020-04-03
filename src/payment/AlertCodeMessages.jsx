@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Hyperlink } from '@edx/paragon';
 import LocalizedPrice from './cart/LocalizedPrice';
-import { getConfig } from '@edx/frontend-platform';
 
 // eslint-disable-next-line import/prefer-default-export
 export const SingleEnrollmentCodeWarning = ({ values }) => (
-  <React.Fragment>
+  <>
     <FormattedMessage
       id="payment.messages.enrollment-code-product-info.header"
       defaultMessage="Purchasing just for yourself?"
@@ -30,7 +29,7 @@ export const SingleEnrollmentCodeWarning = ({ values }) => (
         ),
       }}
     />
-  </React.Fragment>
+  </>
 );
 
 SingleEnrollmentCodeWarning.propTypes = {
@@ -40,7 +39,7 @@ SingleEnrollmentCodeWarning.propTypes = {
 };
 
 export const EnrollmentCodeQuantityUpdated = ({ values }) => (
-  <React.Fragment>
+  <>
     <FormattedMessage
       id="payment.messages.enrollment.code.product.info.quantity.updated.header"
       defaultMessage="We've updated your quantity."
@@ -56,7 +55,7 @@ export const EnrollmentCodeQuantityUpdated = ({ values }) => (
         price: <LocalizedPrice amount={values.price} />,
       }}
     />
-  </React.Fragment>
+  </>
 );
 
 EnrollmentCodeQuantityUpdated.propTypes = {
@@ -67,11 +66,11 @@ EnrollmentCodeQuantityUpdated.propTypes = {
 };
 
 export const TransactionDeclined = () => (
-  <React.Fragment>
+  <>
     <FormattedMessage
       id="payment.messages.transaction.declined.body"
       defaultMessage="Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance."
       description="Asks the user to check their information or contact their payment provider for help."
     />
-  </React.Fragment>
+  </>
 );

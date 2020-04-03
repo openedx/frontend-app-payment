@@ -426,6 +426,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           >
             <button
               className="payment-method-button active"
+              type="button"
             >
               <img
                 alt="Credit Card"
@@ -436,6 +437,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               className="payment-method-button"
               disabled={false}
               onClick={[Function]}
+              type="button"
             >
               <img
                 alt="PayPal"
@@ -2460,6 +2462,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           >
             <button
               className="payment-method-button active"
+              type="button"
             >
               <img
                 alt="Credit Card"
@@ -2470,6 +2473,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               className="payment-method-button skeleton-pulse"
               disabled={true}
               onClick={[Function]}
+              type="button"
             >
               <img
                 alt="PayPal"
@@ -4499,6 +4503,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           >
             <button
               className="payment-method-button active"
+              type="button"
             >
               <img
                 alt="Credit Card"
@@ -4509,6 +4514,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="payment-method-button"
               disabled={false}
               onClick={[Function]}
+              type="button"
             >
               <img
                 alt="PayPal"
@@ -6675,6 +6681,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           >
             <button
               className="payment-method-button active"
+              type="button"
             >
               <img
                 alt="Credit Card"
@@ -6685,6 +6692,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="payment-method-button"
               disabled={false}
               onClick={[Function]}
+              type="button"
             >
               <img
                 alt="PayPal"
@@ -8808,6 +8816,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           >
             <button
               className="payment-method-button active"
+              type="button"
             >
               <img
                 alt="Credit Card"
@@ -8818,6 +8827,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="payment-method-button"
               disabled={false}
               onClick={[Function]}
+              type="button"
             >
               <img
                 alt="PayPal"
@@ -10890,6 +10900,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           >
             <button
               className="payment-method-button active"
+              type="button"
             >
               <img
                 alt="Credit Card"
@@ -10900,6 +10911,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="payment-method-button"
               disabled={false}
               onClick={[Function]}
+              type="button"
             >
               <img
                 alt="PayPal"
