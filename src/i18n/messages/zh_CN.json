@@ -6,7 +6,7 @@
   "payment.messages.enrollment-code-product-info.link": "click here to enroll directly",
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "We've updated your quantity.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "Your cart includes {quantity} enrollment codes at a total cost of {price}, that you will receive via email.",
-  "payment.messages.transaction.declined.body": "Please double-check the information you provided and try again. For help, {link}.",
+  "payment.messages.transaction.declined.body": "Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance.",
   "payment.bulk.summary.table.label.price": "Price",
   "payment.bulk.summary.table.label.quantity": "Quantity",
   "payment.bulk.summary.table.label.subtotal": "Subtotal",
