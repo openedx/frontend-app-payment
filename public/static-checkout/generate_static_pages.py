@@ -15,9 +15,9 @@ html = html[:script_index] + js + html[script_index:]
 
 # Read in course data and generate a page for each course
 with open('courselist.csv', newline='') as csvfile:
-    coursehtml = (html + '.')[:-1]
     csvreader = csv.reader(csvfile, delimiter=',')
     for row in csvreader:
+        coursehtml = (html + '.')[:-1]
         # Insert title price and image url into the page html
         title, image, sku, price = row
         coursehtml = coursehtml.replace('replacetitle', title)
