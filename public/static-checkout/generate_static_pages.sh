@@ -9,6 +9,9 @@ mkdir dist
 rm -rf pages/
 mkdir pages
 echo "dist folder reset"
+ASSETS="assets"
+cp -R "$ASSETS" dist/
+echo "$ASSETS copied to dist"
 HTML_FILE_NAME="unminified.html"
 CSS_FILE_NAME="unminified.css"
 JS_FILE_NAME="unminified.js"
