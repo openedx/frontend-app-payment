@@ -57,6 +57,10 @@ const config = merge({
           from: path.resolve(__dirname, 'public/static-checkout/pages'),
           to: path.resolve(__dirname, 'dist'),
         },
+        {
+          from: path.resolve(__dirname, 'public/static-checkout/assets'),
+          to: path.resolve(__dirname, 'dist'),
+        },
       ]),
       // Generates an HTML file in the output directory.
       new HtmlWebpackPlugin({
