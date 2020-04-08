@@ -88,6 +88,7 @@ var countryStates = {
 };
 var ecommerceBaseUrl;
 var lmsBaseUrl;
+var csrfToken;
 if (window.location.hostname === 'payment.edx.org') {
   ecommerceBaseUrl = 'https://ecommerce.edx.org';
   lmsBaseUrl = 'https://courses.edx.org';
@@ -98,6 +99,23 @@ if (window.location.hostname === 'payment.edx.org') {
   ecommerceBaseUrl = 'http://localhost:18130';
   lmsBaseUrl = 'http://localhost:18000';
 }
+
+function getCSRFToken() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', ecommerceBaseUrl + '/csrf/api/v1/token', false);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('USE-JWT-COOKIE', true);
+  xhr.withCredentials = true;
+  // eslint-disable-next-line func-names
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE) {
+      csrfToken = JSON.parse(this.response).csrfToken;
+    }
+  };
+  xhr.send();
+}
+
+getCSRFToken();
 
 userButton.addEventListener('click', function () {
   document.querySelector('.dropdown-menu').classList.toggle('show');
@@ -212,20 +230,6 @@ couponButton.addEventListener('click', function couponRedirectToMicrofrontend(ev
   redirectToMFE(couponCode);
 }, false);
 
-function parseCookies() {
-  var cookies = {};
-  if (document.cookie && document.cookie !== '') {
-    var cookiesArray = document.cookie.split('; ');
-    for (var i = 0; i < cookiesArray.length; i++) {
-      var m = cookiesArray[i].trim().match(/(\w+)=(.*)/);
-      if (m !== undefined) {
-        cookies[m[1]] = decodeURIComponent(m[2]);
-      }
-    }
-  }
-  return cookies;
-}
-
 function disableForm() {
   var elementsToDisable = document.querySelectorAll('input, select, button');
   for (var i = 0; i < elementsToDisable.length; i++) {
@@ -239,11 +243,10 @@ paypalButton.addEventListener('click', function submitPaypal() {
   spinner.classList.add('button-spinner-icon');
   paypalButton.insertBefore(spinner, paypalButton.firstChild);
   document.querySelector('#submit-paypal img').style.filter = 'grayscale(1)';
-  var cookies = parseCookies();
   var xhr = new XMLHttpRequest();
   xhr.open('POST', ecommerceBaseUrl + '/api/v2/checkout/', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('X-CSRFToken', cookies.csrftoken);
+  xhr.setRequestHeader('X-CSRFToken', csrfToken);
   xhr.setRequestHeader('USE-JWT-COOKIE', true);
   xhr.withCredentials = true;
   // eslint-disable-next-line func-names
@@ -270,11 +273,10 @@ paypalButton.addEventListener('click', function submitPaypal() {
 checkoutForm.addEventListener('submit', function submitCybersource(event) {
   event.preventDefault();
   disableForm();
-  var cookies = parseCookies();
   var xhr = new XMLHttpRequest();
   xhr.open('POST', ecommerceBaseUrl + '/payment/cybersource/api-submit/', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.setRequestHeader('X-CSRFToken', cookies.csrftoken);
+  xhr.setRequestHeader('X-CSRFToken', csrfToken);
   xhr.setRequestHeader('USE-JWT-COOKIE', true);
   xhr.withCredentials = true;
   xhr.onreadystatechange = function () {
