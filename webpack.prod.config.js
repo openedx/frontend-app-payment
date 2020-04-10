@@ -50,7 +50,7 @@ const config = merge({
 })(
   {
     plugins: [
-      // Copies over static html checkout pages to dist folder for the REV-1074 experiment
+      // Copies over static html checkout pages and assets to dist folder for the REV-1074 experiment
       // Stage also uses this config and dev uses this config when running npm run build
       new CopyPlugin([
         {
