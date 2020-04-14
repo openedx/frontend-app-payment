@@ -20,7 +20,6 @@ jest.mock('@edx/frontend-platform/auth');
 const axiosMock = new MockAdapter(axios);
 getAuthenticatedHttpClient.mockReturnValue(axios);
 
-const SDN_URL = `${getConfig().ECOMMERCE_BASE_URL}/api/v2/sdn/search/`;
 const CYBERSOURCE_API = `${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`;
 
 beforeEach(() => {
@@ -106,9 +105,7 @@ describe('Cybersource Service', () => {
           allThe: 'all the form fields form cybersource',
         },
       };
-      const sdnResponseData = { hits: 0 };
       axiosMock.onPost(CYBERSOURCE_API).reply(200, successResponseData);
-      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
 
       await expect(checkout(basket, formDetails)).resolves.toEqual(undefined);
       expectNoCardDataToBePresent(axiosMock.history.post[0].data);
@@ -124,33 +121,6 @@ describe('Cybersource Service', () => {
       );
     });
 
-    it('should throw an error if there are SDN hits', () => {
-      const successResponseData = {
-        form_fields: {
-          allThe: 'all the form fields form cybersource',
-        },
-      };
-      const sdnResponseData = { hits: 1 };
-      axiosMock.onPost(CYBERSOURCE_API).reply(200, successResponseData);
-      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
-
-      return expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
-    });
-
-    it('should throw an error if the SDN check errors', async () => {
-      const sdnErrorResponseData = { boo: 'yah' };
-
-      axiosMock.onPost(SDN_URL).reply(403, sdnErrorResponseData);
-      expect.hasAssertions();
-      await checkout(basket, formDetails).catch((error) => {
-        expect(logError).toHaveBeenCalledWith(error, {
-          messagePrefix: 'SDN Check Error',
-          paymentMethod: 'Cybersource',
-          paymentErrorType: 'SDN Check',
-          basketId: basket.basketId,
-        });
-      });
-    });
 
     it('should throw an error if the cybersource checkout request errors on the fields', async () => {
       const errorResponseData = {
@@ -158,14 +128,12 @@ describe('Cybersource Service', () => {
           booyah: 'Booyah is bad.',
         },
       };
-      const sdnResponseData = { hits: 0 };
 
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
-      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
 
       expect.hasAssertions();
       await checkout(basket, formDetails).catch(() => {
-        expectNoCardDataToBePresent(axiosMock.history.post[1].data);
+        expectNoCardDataToBePresent(axiosMock.history.post[0].data);
         expect(logError).toHaveBeenCalledWith(expect.any(Error), {
           messagePrefix: 'Cybersource Submit Error',
           paymentMethod: 'Cybersource',
@@ -180,10 +148,8 @@ describe('Cybersource Service', () => {
         error: 'There was an error submitting the basket',
         sdn_check_failure: { hit_count: 1 },
       };
-      const sdnResponseData = { hits: 0 };
 
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
-      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
 
       expect.hasAssertions();
       await expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
@@ -197,14 +163,12 @@ describe('Cybersource Service', () => {
 
     it('should throw an unknown error if the cybersource checkout request without a response body', async () => {
       const errorResponseData = {};
-      const sdnResponseData = { hits: 0 };
 
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
-      axiosMock.onPost(SDN_URL).reply(200, sdnResponseData);
 
       expect.hasAssertions();
       await checkout(basket, formDetails).catch(() => {
-        expectNoCardDataToBePresent(axiosMock.history.post[1].data);
+        expectNoCardDataToBePresent(axiosMock.history.post[0].data);
         expect(logError).toHaveBeenCalledWith(expect.any(Error), {
           messagePrefix: 'Cybersource Submit Error',
           paymentMethod: 'Cybersource',
