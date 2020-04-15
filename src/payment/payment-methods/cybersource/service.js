@@ -13,34 +13,6 @@ ensureConfig([
 ], 'CyberSource API service');
 
 /**
- * SDN: Specially Designated Nationals And Blocked Persons List.
- * This check ensures that by making a transaction with this user
- * we do not violate US sanctions. If this request returns with
- * 'hits' then we must not perform the transaction.
- */
-export async function sdnCheck(basketId, firstName, lastName, city, country) {
-  const { data } = await getAuthenticatedHttpClient().post(
-    `${getConfig().ECOMMERCE_BASE_URL}/api/v2/sdn/search/`,
-    {
-      name: `${firstName} ${lastName}`,
-      city,
-      country,
-    },
-  ).catch((error) => {
-    logError(error, {
-      messagePrefix: 'SDN Check Error',
-      paymentMethod: 'Cybersource',
-      paymentErrorType: 'SDN Check',
-      basketId,
-    });
-
-    throw error;
-  });
-
-  return data;
-}
-
-/**
  * Converts a field_errors object of this form:
  *
  * { "field_name": "Error message.", "other_field_name": "Other error message." }
@@ -104,21 +76,6 @@ function getCardNumberDigits(cardNumber) {
 export async function checkout(basket, { cardHolderInfo, cardDetails }) {
   const { basketId } = basket;
 
-  const sdnCheckResponse = await sdnCheck(
-    basketId,
-    cardHolderInfo.firstName,
-    cardHolderInfo.lastName,
-    cardHolderInfo.city,
-    cardHolderInfo.country,
-  );
-
-  if (sdnCheckResponse.hits > 0) {
-    /* istanbul ignore next */
-    if (getConfig().ENVIRONMENT !== 'test') {
-      global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
-    }
-    throw new Error('This card holder did not pass the SDN check.');
-  }
   const formData = {
     basket: basketId,
     first_name: cardHolderInfo.firstName,

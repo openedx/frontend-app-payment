@@ -53,7 +53,6 @@ and log in with a staff account. Related endpoints:
   - POST /bff/payment/v0/quantity/
   - POST /bff/payment/v0/vouchers/
   - DELETE /bff/payment/v0/vouchers/{voucherid}
-  - POST /api/v2/sdn/search/
   - POST /payment/cybersource/api-submit/
   - POST /payment/cybersource/apple-pay/authorize/
   - POST /payment/cybersource/apple-pay/start-session/
