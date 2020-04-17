@@ -48,13 +48,14 @@ class ProductLineItem extends React.PureComponent {
       title,
       certificateType,
       courseKey,
+      sku,
     } = this.props;
 
     return (
       <div className="row align-items-center mb-3">
         <div className="col-5">
           <div className="embed-responsive embed-responsive-16by9">
-            <img className="img-thumbnail product-thumbnail" src={imageUrl} alt="" />
+            <img className="img-thumbnail product-thumbnail" data-sku={sku} src={imageUrl} alt="" />
           </div>
         </div>
         <div className="col-7">
@@ -78,6 +79,7 @@ ProductLineItem.propTypes = {
   title: PropTypes.string,
   certificateType: PropTypes.oneOf(['audit', 'honor', 'verified', 'no-id-professional', 'professional', 'credit']),
   courseKey: PropTypes.string,
+  sku: PropTypes.string,
 };
 
 ProductLineItem.defaultProps = {
@@ -87,6 +89,7 @@ ProductLineItem.defaultProps = {
   title: null,
   imageUrl: null,
   courseKey: null,
+  sku: null,
 };
 
 export default injectIntl(ProductLineItem);
