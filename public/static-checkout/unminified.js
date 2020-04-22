@@ -165,7 +165,7 @@ function redirectToMFE(couponCode) {
   var sku = /.*\/([^&#]*).html/.exec(url)[1];
   var newUrl = ecommerceBaseUrl + '/basket/add/?sku=' + sku;
   if (couponCode) {
-    newUrl = newUrl.concat('&coupon=', couponCode);
+    newUrl = newUrl.concat('&code=', couponCode);
   }
   window.location.href = newUrl;
 }
