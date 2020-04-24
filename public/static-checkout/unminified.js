@@ -335,6 +335,8 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
 
         document.body.appendChild(form);
         form.submit();
+      } else if (this.responseText.indexOf('sdn_check_failure')) {
+        window.location.href = 'https://ecommerce.edx.org/payment/sdn/failure/';
       } else {
         redirectToMFE();
       }
