@@ -27,6 +27,7 @@ export default function sendRev1074Event(eventType, eventData) {
   const eventUrl = getConfig().LMS_BASE_URL + '/event';
   const xhr = new XMLHttpRequest();
   xhr.open('GET', eventUrl + '?' + encodedEvent);
+  xhr.withCredentials = true;
   xhr.send();
 }
 /* eslint-enable no-param-reassign */

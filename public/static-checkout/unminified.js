@@ -155,6 +155,7 @@ function sendRev1074Event(eventType, eventData) {
   var eventUrl = lmsBaseUrl + '/event';
   var xhr = new XMLHttpRequest();
   xhr.open('GET', eventUrl + '?' + encodedEvent);
+  xhr.withCredentials = true;
   xhr.send();
 }
 /* eslint-enable no-param-reassign */
