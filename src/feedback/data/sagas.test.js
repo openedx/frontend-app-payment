@@ -229,6 +229,31 @@ describe('saga tests', () => {
       ]);
     });
 
+    it('should add message if one is supplied in the url', async () => {
+      const messages = [
+        {
+          code: 'hey_hey',
+          userMessage: 'Good stuff!',
+          messageType: MESSAGE_TYPES.INFO,
+        },
+      ];
+      await runSaga(
+        {
+          dispatch: action => dispatched.push(action),
+        },
+        handleMessages,
+        messages,
+        true, // clearExistingMessages
+        '?error_message=Code%20EDXWELCOME%20is%20invalid.',
+      ).toPromise();
+
+      expect(dispatched).toEqual([
+        clearMessages(),
+        addMessage('error_message', 'Code EDXWELCOME is invalid.', {}, MESSAGE_TYPES.ERROR),
+        addMessage('hey_hey', 'Good stuff!', undefined, MESSAGE_TYPES.INFO),
+      ]);
+    });
+
     it('should do nothing if messages argument is not an array', async () => {
       const messages = 'notanarray';
       await runSaga(

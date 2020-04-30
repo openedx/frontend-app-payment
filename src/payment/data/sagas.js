@@ -72,7 +72,7 @@ export function* handleDiscountCheck() {
         );
         result.discountJwt = discount.jwt;
         yield put(basketDataReceived(result));
-        yield call(handleMessages, result.messages, false);
+        yield call(handleMessages, result.messages, false, window.location.search);
       }
     }
   }
@@ -88,7 +88,7 @@ export function* handleFetchBasket() {
     yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
     const result = yield call(PaymentApiService.getBasket);
     yield put(basketDataReceived(result)); // update redux store with basket data
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessages, result.messages, true, window.location.search);
     yield call(handleDiscountCheck); // check if a discount should be added to the basket
   } catch (error) {
     yield call(handleErrors, error, true);
@@ -116,7 +116,7 @@ export function* performBasketOperation(operation, ...operationArgs) {
     yield put(basketProcessing(true));
     const result = yield call(operation, ...operationArgs);
     yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessages, result.messages, true, window.location.search);
   } catch (error) {
     yield call(handleErrors, error, true);
     if (error.basket) {
