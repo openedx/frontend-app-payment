@@ -330,7 +330,7 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
 
         var cardExpirationElement = document.createElement('input');
         cardExpirationElement.type = 'hidden';
-        cardExpirationElement.value = document.getElementById('cardmonth').value.concat('-', document.getElementById('cardyear').value);
+        cardExpirationElement.value = document.getElementById('cardMonth').value.concat('-', document.getElementById('cardYear').value);
         cardExpirationElement.name = 'card_expiry_date';
         form.appendChild(cardExpirationElement);
 
@@ -350,8 +350,8 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
 
   var urlEncodedDataPairs = [
     'basket=' + encodeURIComponent(getBasketId()),
-    'first_name=' + encoder('firstname'),
-    'last_name=' + encoder('lastname'),
+    'first_name=' + encoder('firstName'),
+    'last_name=' + encoder('lastName'),
     'address_line1=' + encoder('address1'),
     'address_line2=' + encoder('address2'),
     'city=' + encoder('city'),
