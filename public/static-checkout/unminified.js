@@ -135,16 +135,18 @@ window.onclick = function closeMenu(event) {
 
 /* eslint-disable no-param-reassign */
 /* eslint-disable dot-notation */
-function sendRev1074Event(eventType, eventData) {
+function sendRev1074Event(eventType, eventData, addPerformanceTiming) {
   eventData['_export'] = 'false'; // Don't let these events be exported to partners
 
-  var perfTiming;
-  try {
-    perfTiming = window.performance.timing.toJSON();
-  } catch (e) {
-    perfTiming = { error: e.toString() };
+  if (addPerformanceTiming) {
+    var perfTiming;
+    try {
+      perfTiming = window.performance.timing.toJSON();
+    } catch (e) {
+      perfTiming = { error: e.toString() };
+    }
+    eventData.timing = perfTiming;
   }
-  eventData.timing = perfTiming;
 
   var encodedEvent = [
     'event_type=edx.experiment.rev1074.' + eventType,
@@ -161,6 +163,9 @@ function sendRev1074Event(eventType, eventData) {
 /* eslint-enable no-param-reassign */
 /* eslint-enable dot-notation */
 
+// At this point, send the start paint event. We know that the page will already be painted, but not fully loaded...
+sendRev1074Event('static.started_painting', {}, true);
+
 function redirectToMFE(couponCode) {
   var url = window.location.pathname;
   var sku = /.*\/([^&#]*).html/.exec(url)[1];
@@ -175,6 +180,7 @@ function getBasketId() {
   var url = window.location.search;
   var basketParams = /[?&]basket_id=([^&#]*)/.exec(url);
   if (!basketParams) {
+    sendRev1074Event('static.redirect_to_mfe', { reason: 'basket_id not found' }, false);
     redirectToMFE();
   } else {
     var basketId = basketParams[1];
@@ -221,13 +227,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* eslint-disable no-unused-vars */
 window.onload = function sendPageLoaded(event) {
-  sendRev1074Event('static.page_loaded', {});
+  sendRev1074Event('static.page_loaded', {}, true);
 };
 /* eslint-enable no-unused-vars */
 
 couponButton.addEventListener('click', function couponRedirectToMicrofrontend(event) {
   event.preventDefault();
   var couponCode = document.getElementById('couponcode').value;
+  sendRev1074Event('static.redirect_to_mfe', { reason: 'coupon entered' }, false);
   redirectToMFE(couponCode);
 }, false);
 
@@ -244,6 +251,10 @@ paypalButton.addEventListener('click', function submitPaypal() {
   spinner.classList.add('button-spinner-icon');
   paypalButton.insertBefore(spinner, paypalButton.firstChild);
   document.querySelector('#submit-paypal img').style.filter = 'grayscale(1)';
+
+  // Send the paypal payment event
+  sendRev1074Event('static.payment_selected', { type: 'click', category: 'checkout', paymentMethod: 'PayPal' }, false);
+
   var xhr = new XMLHttpRequest();
   xhr.open('POST', ecommerceBaseUrl + '/api/v2/checkout/', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
@@ -260,6 +271,7 @@ paypalButton.addEventListener('click', function submitPaypal() {
         document.body.appendChild(form);
         form.submit();
       } else {
+        sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Paypal', responseStatus: this.status }, false);
         redirectToMFE();
       }
     }
@@ -274,6 +286,12 @@ paypalButton.addEventListener('click', function submitPaypal() {
 checkoutForm.addEventListener('submit', function submitCybersource(event) {
   event.preventDefault();
   disableForm();
+
+  // Send the cybersource payment event
+  sendRev1074Event('static.payment_selected', {
+    type: 'click', category: 'checkout', paymentMethod: 'Credit Card', checkoutType: 'client_side',
+  }, false);
+
   var xhr = new XMLHttpRequest();
   xhr.open('POST', ecommerceBaseUrl + '/payment/cybersource/api-submit/', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -317,6 +335,7 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
         } else if (cardNumber.substring(0, 4) === '2720' || /^5[1-5]/.test(cardNumber) || /^222[1-9]/.test(cardNumber) || /^22[3-9]/.test(cardNumber) || /^2[3-6]/.test(cardNumber) || /^27[0-1]/.test(cardNumber)) {
           cardTypeElement.value = '002'; // Mastercard
         } else {
+          sendRev1074Event('static.redirect_to_mfe', { reason: 'unknown card type' }, false);
           redirectToMFE();
         }
         cardTypeElement.name = 'card_type';
@@ -339,6 +358,7 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
       } else if (this.responseText.indexOf('sdn_check_failure')) {
         window.location.href = 'https://ecommerce.edx.org/payment/sdn/failure/';
       } else {
+        sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Cybersource', responseStatus: this.status }, false);
         redirectToMFE();
       }
     }
