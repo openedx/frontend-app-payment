@@ -6,7 +6,7 @@
   "payment.messages.enrollment-code-product-info.link": "haga clic aquí para inscribirte directamente",
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "Hemos actualizado tu cantidad.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "Tu carrito incluye {quantity} códigos de inscripción con un coste total de {price}, que recibirás vía correo electrónico.",
-  "payment.messages.transaction.declined.body": "Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance.",
+  "payment.messages.transaction.declined.body": "No se pudo procesar su pago. Por favor revise su información de pago o contacte su banco o institución financiera para mayor asistencia.",
   "payment.bulk.summary.table.label.price": "Precio",
   "payment.bulk.summary.table.label.quantity": "Cantidad",
   "payment.bulk.summary.table.label.subtotal": "Subtotal",
