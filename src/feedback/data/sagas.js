@@ -38,7 +38,7 @@ export function* handleErrors(e, clearExistingMessages) {
   }
 }
 
-export function* handleMessages(messages, clearExistingMessages) {
+export function* handleMessages(messages, clearExistingMessages, url) {
   // If this doesn't contain anything we understand, bail.
   if (!Array.isArray(messages)) {
     return null;
@@ -46,6 +46,12 @@ export function* handleMessages(messages, clearExistingMessages) {
 
   if (clearExistingMessages) {
     yield put(clearMessages());
+  }
+
+  // Display an error message if one is passed through as a url parameter
+  if (url && url.indexOf('error_message') > 0) {
+    const errorMessage = new URLSearchParams(url).get('error_message');
+    yield put(addMessage('error_message', `${errorMessage}`, {}, MESSAGE_TYPES.ERROR));
   }
 
   for (let i = 0; i < messages.length; i++) { // eslint-disable-line no-plusplus
