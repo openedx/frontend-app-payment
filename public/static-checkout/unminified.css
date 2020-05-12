@@ -109,10 +109,14 @@ a.dropdown-item {
   padding-right: 2.5rem;
   padding-bottom: 3rem;
 }
+.basket {
+  display: flex;
+  align-items: center;
+}
 .checkout {
   border-left: 1px solid #b9babe;
   float: right !important;
-  padding-right: 1rem;
+  padding-right: 2rem;
   padding-left: 3rem;
   margin-bottom: 4rem;
 }
@@ -203,10 +207,6 @@ a.dropdown-item {
 }
 .product-line-item {
   padding-left: 2rem;
-  vertical-align: middle;
-  top: 50%;
-  left: 50%;
-  transform: translate(0%, 25%);
 }
 [class*='col-'] {
   display: inline-block;
