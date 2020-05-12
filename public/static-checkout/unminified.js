@@ -355,7 +355,7 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
 
         document.body.appendChild(form);
         form.submit();
-      } else if (this.responseText.indexOf('sdn_check_failure')) {
+      } else if (this.responseText.indexOf('sdn_check_failure') > 0) {
         window.location.href = 'https://ecommerce.edx.org/payment/sdn/failure/';
       } else {
         sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Cybersource', responseStatus: this.status }, false);
