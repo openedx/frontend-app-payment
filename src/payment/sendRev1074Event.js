@@ -7,16 +7,19 @@ import { getConfig } from '@edx/frontend-platform';
 /* eslint-disable no-param-reassign */
 /* eslint-disable prefer-template */
 /* eslint-disable dot-notation */
-export default function sendRev1074Event(eventType, eventData) {
+export default function sendRev1074Event(eventType, eventData, addPerformanceTiming) {
   eventData['_export'] = 'false'; // Don't let these events be exported to partners
 
-  let perfTiming;
-  try {
-    perfTiming = window.performance.timing.toJSON();
-  } catch (e) {
-    perfTiming = { error: e.toString() };
+  if (addPerformanceTiming) {
+    let perfTiming;
+    try {
+      perfTiming = window.performance.timing.toJSON();
+      eventData.millisecondsToNow = window.performance.now();
+    } catch (e) {
+      perfTiming = { error: e.toString() };
+    }
+    eventData.timing = perfTiming;
   }
-  eventData.timing = perfTiming;
 
   const encodedEvent = [
     'event_type=edx.experiment.rev1074.' + eventType,

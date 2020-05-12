@@ -52,7 +52,7 @@ subscribe(APP_READY, () => {
     'edx.bi.ecommerce.payment_mfe.started_painting',
     getPerformanceProperties(),
   );
-  sendRev1074Event('payment_mfe.started_painting', {});
+  sendRev1074Event('payment_mfe.started_painting', {}, true);
 
   ReactDOM.render(
     <AppProvider store={configureStore()}>

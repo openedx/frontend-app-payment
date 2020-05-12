@@ -22,7 +22,7 @@ class OrderSummary extends React.Component {
     } catch (e) {
       renderTiming = { error: e.toString() };
     }
-    sendRev1074Event('payment_mfe.order_summary_rendered', { summaryRenderTiming: renderTiming });
+    sendRev1074Event('payment_mfe.order_summary_rendered', { summaryRenderTiming: renderTiming }, true);
   }
 
   render() {
