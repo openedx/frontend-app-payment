@@ -102,7 +102,7 @@ if (window.location.hostname === 'payment.edx.org') {
 
 function getCSRFToken() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', ecommerceBaseUrl + '/csrf/api/v1/token', false);
+  xhr.open('GET', ecommerceBaseUrl + '/csrf/api/v1/token', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.setRequestHeader('USE-JWT-COOKIE', true);
   xhr.withCredentials = true;
@@ -114,8 +114,6 @@ function getCSRFToken() {
   };
   xhr.send();
 }
-
-getCSRFToken();
 
 userButton.addEventListener('click', function () {
   document.querySelector('.dropdown-menu').classList.toggle('show');
@@ -229,6 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
 /* eslint-disable no-unused-vars */
 window.onload = function sendPageLoaded(event) {
   sendRev1074Event('static.page_loaded', {}, true);
+  getCSRFToken();
 };
 /* eslint-enable no-unused-vars */
 
@@ -259,29 +258,36 @@ paypalButton.addEventListener('click', function submitPaypal() {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', ecommerceBaseUrl + '/api/v2/checkout/', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('X-CSRFToken', csrfToken);
   xhr.setRequestHeader('USE-JWT-COOKIE', true);
-  xhr.withCredentials = true;
-  // eslint-disable-next-line func-names
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE) {
-      if (this.status === 200) {
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = JSON.parse(this.response).payment_page_url;
-        document.body.appendChild(form);
-        form.submit();
-      } else {
-        sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Paypal', responseStatus: this.status }, false);
-        redirectToMFE();
-      }
+  function waitForCSRFTokenPaypal() {
+    if (typeof csrfToken !== 'undefined') {
+      xhr.setRequestHeader('X-CSRFToken', csrfToken);
+      xhr.withCredentials = true;
+      // eslint-disable-next-line func-names
+      xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = JSON.parse(this.response).payment_page_url;
+            document.body.appendChild(form);
+            form.submit();
+          } else {
+            sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Paypal', responseStatus: this.status }, false);
+            redirectToMFE();
+          }
+        }
+      };
+      var basket_id = getBasketId();
+      xhr.send(JSON.stringify({
+        basket_id: basket_id,
+        payment_processor: 'paypal',
+      }));
+    } else {
+      setTimeout(waitForCSRFTokenPaypal, 250);
     }
-  };
-  var basket_id = getBasketId();
-  xhr.send(JSON.stringify({
-    basket_id: basket_id,
-    payment_processor: 'paypal',
-  }));
+  }
+  waitForCSRFTokenPaypal();
 });
 
 checkoutForm.addEventListener('submit', function submitCybersource(event) {
@@ -296,90 +302,97 @@ checkoutForm.addEventListener('submit', function submitCybersource(event) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', ecommerceBaseUrl + '/payment/cybersource/api-submit/', true);
   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-  xhr.setRequestHeader('X-CSRFToken', csrfToken);
   xhr.setRequestHeader('USE-JWT-COOKIE', true);
-  xhr.withCredentials = true;
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE) {
-      if (this.status === 200) {
-        var form = document.createElement('form');
-        form.method = 'POST';
-        if (window.location.hostname === 'payment.edx.org') {
-          form.action = 'https://secureacceptance.cybersource.com/silent/pay';
-        } else {
-          form.action = 'https://testsecureacceptance.cybersource.com/silent/pay';
-        }
-        var ecommerceFormFields = JSON.parse(this.response).form_fields;
-        var formKeys = Object.keys(ecommerceFormFields);
-        for (var i = 0; i < formKeys.length; i++) {
-          var element = document.createElement('input');
-          element.type = 'hidden';
-          element.value = ecommerceFormFields[formKeys[i]];
-          element.name = formKeys[i];
-          form.appendChild(element);
-        }
-        var cardNumber = document.getElementById('cardnumber').value;
-        cardNumber.type = 'hidden';
-        var cardNumberElement = document.createElement('input');
-        cardNumberElement.value = (cardNumber.match(/\d+/g) || []).join('');
-        cardNumberElement.name = 'card_number';
-        form.appendChild(cardNumberElement);
-
-        var cardTypeElement = document.createElement('input');
-        cardTypeElement.type = 'hidden';
-        if (cardNumber.charAt(0) === '4') {
-          cardTypeElement.value = '001'; // Visa
-        } else if (/^3[47]/.test(cardNumber)) {
-          cardTypeElement.value = '003'; // American Express
-        } else if (cardNumber.substring(0, 4) === '6011' || /^622[1-9]/.test(cardNumber) || /^64[4-9]/.test(cardNumber) || cardNumber.substring(0, 2) === '65') {
-          cardTypeElement.value = '004'; // Discover
-        } else if (cardNumber.substring(0, 4) === '2720' || /^5[1-5]/.test(cardNumber) || /^222[1-9]/.test(cardNumber) || /^22[3-9]/.test(cardNumber) || /^2[3-6]/.test(cardNumber) || /^27[0-1]/.test(cardNumber)) {
-          cardTypeElement.value = '002'; // Mastercard
-        } else {
-          sendRev1074Event('static.redirect_to_mfe', { reason: 'unknown card type' }, false);
-          redirectToMFE();
-        }
-        cardTypeElement.name = 'card_type';
-        form.appendChild(cardTypeElement);
-
-        var cardCVNElement = document.createElement('input');
-        cardCVNElement.type = 'hidden';
-        cardCVNElement.value = document.getElementById('cardcode').value;
-        cardCVNElement.name = 'card_cvn';
-        form.appendChild(cardCVNElement);
-
-        var cardExpirationElement = document.createElement('input');
-        cardExpirationElement.type = 'hidden';
-        cardExpirationElement.value = document.getElementById('cardMonth').value.concat('-', document.getElementById('cardYear').value);
-        cardExpirationElement.name = 'card_expiry_date';
-        form.appendChild(cardExpirationElement);
-
-        document.body.appendChild(form);
-        form.submit();
-      } else if (this.responseText.indexOf('sdn_check_failure') > 0) {
-        window.location.href = 'https://ecommerce.edx.org/payment/sdn/failure/';
-      } else {
-        sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Cybersource', responseStatus: this.status }, false);
-        redirectToMFE();
-      }
+  function waitForCSRFTokenCybersource() {
+    function encoder(name) {
+      return encodeURIComponent(document.getElementById(name).value);
     }
-  };
 
-  function encoder(name) {
-    return encodeURIComponent(document.getElementById(name).value);
+    if (typeof csrfToken !== 'undefined') {
+      xhr.setRequestHeader('X-CSRFToken', csrfToken);
+      xhr.withCredentials = true;
+      xhr.onreadystatechange = function () {
+        if (this.readyState === XMLHttpRequest.DONE) {
+          if (this.status === 200) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            if (window.location.hostname === 'payment.edx.org') {
+              form.action = 'https://secureacceptance.cybersource.com/silent/pay';
+            } else {
+              form.action = 'https://testsecureacceptance.cybersource.com/silent/pay';
+            }
+            var ecommerceFormFields = JSON.parse(this.response).form_fields;
+            var formKeys = Object.keys(ecommerceFormFields);
+            for (var i = 0; i < formKeys.length; i++) {
+              var element = document.createElement('input');
+              element.type = 'hidden';
+              element.value = ecommerceFormFields[formKeys[i]];
+              element.name = formKeys[i];
+              form.appendChild(element);
+            }
+            var cardNumber = document.getElementById('cardnumber').value;
+            cardNumber.type = 'hidden';
+            var cardNumberElement = document.createElement('input');
+            cardNumberElement.value = (cardNumber.match(/\d+/g) || []).join('');
+            cardNumberElement.name = 'card_number';
+            form.appendChild(cardNumberElement);
+
+            var cardTypeElement = document.createElement('input');
+            cardTypeElement.type = 'hidden';
+            if (cardNumber.charAt(0) === '4') {
+              cardTypeElement.value = '001'; // Visa
+            } else if (/^3[47]/.test(cardNumber)) {
+              cardTypeElement.value = '003'; // American Express
+            } else if (cardNumber.substring(0, 4) === '6011' || /^622[1-9]/.test(cardNumber) || /^64[4-9]/.test(cardNumber) || cardNumber.substring(0, 2) === '65') {
+              cardTypeElement.value = '004'; // Discover
+            } else if (cardNumber.substring(0, 4) === '2720' || /^5[1-5]/.test(cardNumber) || /^222[1-9]/.test(cardNumber) || /^22[3-9]/.test(cardNumber) || /^2[3-6]/.test(cardNumber) || /^27[0-1]/.test(cardNumber)) {
+              cardTypeElement.value = '002'; // Mastercard
+            } else {
+              sendRev1074Event('static.redirect_to_mfe', { reason: 'unknown card type' }, false);
+              redirectToMFE();
+            }
+            cardTypeElement.name = 'card_type';
+            form.appendChild(cardTypeElement);
+
+            var cardCVNElement = document.createElement('input');
+            cardCVNElement.type = 'hidden';
+            cardCVNElement.value = document.getElementById('cardcode').value;
+            cardCVNElement.name = 'card_cvn';
+            form.appendChild(cardCVNElement);
+
+            var cardExpirationElement = document.createElement('input');
+            cardExpirationElement.type = 'hidden';
+            cardExpirationElement.value = document.getElementById('cardMonth').value.concat('-', document.getElementById('cardYear').value);
+            cardExpirationElement.name = 'card_expiry_date';
+            form.appendChild(cardExpirationElement);
+
+            document.body.appendChild(form);
+            form.submit();
+          } else if (this.responseText.indexOf('sdn_check_failure') > 0) {
+            window.location.href = 'https://ecommerce.edx.org/payment/sdn/failure/';
+          } else {
+            sendRev1074Event('static.redirect_to_mfe', { reason: 'bad ecommerce response for Cybersource', responseStatus: this.status }, false);
+            redirectToMFE();
+          }
+        }
+      };
+
+      var urlEncodedDataPairs = [
+        'basket=' + encodeURIComponent(getBasketId()),
+        'first_name=' + encoder('firstName'),
+        'last_name=' + encoder('lastName'),
+        'address_line1=' + encoder('address1'),
+        'address_line2=' + encoder('address2'),
+        'city=' + encoder('city'),
+        'country=' + encoder('country'),
+        'state=' + encoder('state'),
+        'postal_code=' + encoder('zip'),
+      ];
+      var urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+      xhr.send(urlEncodedData);
+    } else {
+      setTimeout(waitForCSRFTokenCybersource, 250);
+    }
   }
-
-  var urlEncodedDataPairs = [
-    'basket=' + encodeURIComponent(getBasketId()),
-    'first_name=' + encoder('firstName'),
-    'last_name=' + encoder('lastName'),
-    'address_line1=' + encoder('address1'),
-    'address_line2=' + encoder('address2'),
-    'city=' + encoder('city'),
-    'country=' + encoder('country'),
-    'state=' + encoder('state'),
-    'postal_code=' + encoder('zip'),
-  ];
-  var urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
-  xhr.send(urlEncodedData);
+  waitForCSRFTokenCybersource();
 });
