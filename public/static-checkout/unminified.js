@@ -142,6 +142,7 @@ function sendRev1074Event(eventType, eventData, addPerformanceTiming) {
     var perfTiming;
     try {
       perfTiming = window.performance.timing.toJSON();
+      eventData.millisecondsToNow = window.performance.now();
     } catch (e) {
       perfTiming = { error: e.toString() };
     }
