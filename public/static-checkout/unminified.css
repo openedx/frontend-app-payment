@@ -64,7 +64,10 @@ header {
   box-sizing: content-box;
   float: left;
 }
-.avatar {pointer-events: none;}
+.avatar {
+  pointer-events: none;
+  overflow: hidden;
+}
 .user-button {
   position: relative;
   float: right;
@@ -259,9 +262,6 @@ a.dropdown-item {
 }
 .tooltip:hover .tooltiptext {
   visibility: visible;
-}
-.basket {
-  display: flex;
 }
 #summaryprice, #total {
   float: right;

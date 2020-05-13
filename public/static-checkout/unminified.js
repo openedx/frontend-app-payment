@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 /* eslint-disable vars-on-top */
 /* eslint-disable prefer-template */
@@ -11,6 +12,7 @@ var checkoutForm = document.getElementById('checkout-form');
 var paypalButton = document.getElementById('submit-paypal');
 var couponButton = document.getElementById('coupon-button');
 var userButton = document.querySelector('.user-button');
+var dropdownMenu = document.getElementsByClassName('dropdown-menu');
 var countrySelect = document.getElementById('country');
 var stateSelect = document.getElementById('state');
 var countryStates = {
@@ -118,10 +120,15 @@ function getCSRFToken() {
 userButton.addEventListener('click', function () {
   document.querySelector('.dropdown-menu').classList.toggle('show');
 }, false);
+dropdownMenu[0].addEventListener('click', function (event) {
+  event.stopPropagation();
+}, false);
 
 window.onclick = function closeMenu(event) {
+  if (!event.target.matches) {
+    event.target.matches = event.target.msMatchesSelector;
+  }
   if (!event.target.matches('.user-button')) {
-    var dropdownMenu = document.getElementsByClassName('dropdown-menu');
     for (var i = 0; i < dropdownMenu.length; i++) {
       var open = dropdownMenu[i];
       if (open.classList.contains('show')) {
