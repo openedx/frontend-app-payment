@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build": "fedx-scripts webpack && node create-apple-merchant-file.js",
-    "audit:whitelisted": "npx audit-ci -m -w acorn decompress minimist",
+    "audit:whitelisted": "npx audit-ci -m -w acorn decompress minimist http-proxy",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "is-es5": "es-check es5 ./dist/*.js",
     "lint": "fedx-scripts eslint . --ext .js,.jsx",
