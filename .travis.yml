@@ -1,7 +1,7 @@
 language: node_js
 node_js: 12
 before_install:
-- npx audit-ci -m -w acorn decompress minimist
+- npx audit-ci -m -w acorn decompress minimist http-proxy
 install:
 - npm ci
 script:

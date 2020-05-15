@@ -19,7 +19,7 @@ with open('courselist.csv', newline='') as csvfile:
     for row in csvreader:
         coursehtml = (html + '.')[:-1]
         # Insert title price and image url into the page html
-        title, image, sku, price = row
+        title, image, sku, price, coure_run_key, course_key, org = row
         coursehtml = coursehtml.replace('replacetitle', title)
         coursehtml = coursehtml.replace('replaceprice', '$' + price, 2)
         image_url = 'https://prod-discovery.edx-cdn.org/' + image
