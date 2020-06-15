@@ -3,7 +3,6 @@ const merge = require('webpack-merge');
 const { getBaseConfig } = require('@edx/frontend-build');
 const glob = require('glob');
 const PurgecssPlugin = require('purgecss-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
 
@@ -50,18 +49,6 @@ const config = merge({
 })(
   {
     plugins: [
-      // Copies over static html checkout pages and assets to dist folder for the REV-1074 experiment
-      // Stage also uses this config and dev uses this config when running npm run build
-      new CopyPlugin([
-        {
-          from: path.resolve(__dirname, 'public/static-checkout/pages'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'public/static-checkout/assets'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-      ]),
       // Generates an HTML file in the output directory.
       new HtmlWebpackPlugin({
         inject: false, // Manually inject head and body tags in the template itself.
