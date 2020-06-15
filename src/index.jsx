@@ -24,7 +24,6 @@ import appMessages from './i18n';
 import {
   PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties,
 } from './payment';
-import sendRev1074Event from './payment/sendRev1074Event';
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -52,7 +51,6 @@ subscribe(APP_READY, () => {
     'edx.bi.ecommerce.payment_mfe.started_painting',
     getPerformanceProperties(),
   );
-  sendRev1074Event('payment_mfe.started_painting', {}, true);
 
   ReactDOM.render(
     <AppProvider store={configureStore()}>

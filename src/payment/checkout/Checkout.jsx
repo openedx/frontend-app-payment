@@ -10,7 +10,6 @@ import { paymentSelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
-import sendRev1074Event from '../sendRev1074Event';
 import PaymentForm from './payment-form/PaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
@@ -25,7 +24,6 @@ class Checkout extends React.Component {
       'edx.bi.ecommerce.basket.payment_selected',
       { type: 'click', category: 'checkout', paymentMethod: 'PayPal' },
     );
-    sendRev1074Event('payment_mfe.payment_selected', { type: 'click', category: 'checkout', paymentMethod: 'PayPal' });
 
     this.props.submitPayment({ method: 'paypal' });
   }
@@ -38,7 +36,6 @@ class Checkout extends React.Component {
       'edx.bi.ecommerce.basket.payment_selected',
       { type: 'click', category: 'checkout', paymentMethod: 'Apple Pay' },
     );
-    sendRev1074Event('payment_mfe.payment_selected', { type: 'click', category: 'checkout', paymentMethod: 'Apple Pay' });
 
     this.props.submitPayment({ method: 'apple-pay' });
   }
@@ -56,15 +53,6 @@ class Checkout extends React.Component {
     // Check for PayPal, ApplePay and Free Basket as well
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
-      {
-        type: 'click',
-        category: 'checkout',
-        paymentMethod: 'Credit Card',
-        checkoutType: 'client_side',
-      },
-    );
-    sendRev1074Event(
-      'payment_mfe.payment_selected',
       {
         type: 'click',
         category: 'checkout',
