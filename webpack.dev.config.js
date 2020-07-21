@@ -21,7 +21,6 @@ const config = merge({
       new HtmlWebpackPlugin({
         inject: false, // Appends script tags linking to the webpack bundles at the end of the body
         template: path.resolve(__dirname, 'public/index.html'),
-        optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
         newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
         newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
       }),
