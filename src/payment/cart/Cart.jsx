@@ -112,7 +112,7 @@ class Cart extends React.Component {
             </Collapsible>
           ) : null }
 
-        <OrderDetails REV1045Experiment={REV1045Experiment} />
+        <OrderDetails REV1045Experiment={REV1045Experiment} products={products} />
         {isPriceMessageExperiment
           ? (
             <div className="price-messaging">

@@ -8,7 +8,54 @@ import messages from './messages';
 import { orderDetailsMapStateToProps } from './data/selectors';
 
 class OrderDetails extends Component {
+  getCookie(name) {
+    const match = document.cookie.match(`${name}=([^;]*)`);
+    return match ? match[1] : undefined;
+  }
+
+  getExcludedCourses() {
+    return ['course1', 'course2'];
+  }
+
+  getText() {
+    let text;
+    const variation = this.getCookie('name_track_variation');
+    const language = this.getCookie('prod-edx-language-preference');
+    if (this.props.products.length === 1) {
+      if (this.getExcludedCourses().indexOf(this.props.products[0].courseKey) > -1) {
+        return null;
+      }
+    } else {
+      return null;
+    }
+
+    if (language === 'es-419') {
+      if (variation === 'V1') {
+        text = 'Después de completar tu pedido, tendrás acceso ilimitado al curso.';
+      } else if (variation === 'V2') {
+        text = 'Después de completar tu pedido, estarás automáticamente en la Opción de Logro.';
+      } else if (variation === 'V3') {
+        text = 'Después de completar tu pedido, podrás acceder a todos los materiales del curso y serás elegibile para poder obtener un certificado.';
+      }
+    } else if (variation === 'V1') {
+      text = 'After you complete your order you will obtain a verified certificate and unlimited access to the course';
+    } else if (variation === 'V2') {
+      text = 'After you complete your order you will automatically be in Achieve Mode.';
+    } else if (variation === 'V3') {
+      text = 'After you complete your order you will unlock access to all course materials and be eligible to pursue a certificate.';
+    }
+    return text;
+  }
+
   renderSimpleMessage() {
+    const text = this.getText();
+    if (text) {
+      return (
+        <p>
+          {text}
+        </p>
+      );
+    }
     return (
       <p>
         {this.props.intl.formatMessage(messages[`payment.order.details.course.${this.props.messageType}`])}
@@ -119,11 +166,15 @@ OrderDetails.propTypes = {
     'seat',
   ]),
   REV1045Experiment: PropTypes.bool,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    courseKey: PropTypes.string,
+  })),
 };
 
 OrderDetails.defaultProps = {
   messageType: null,
   REV1045Experiment: false,
+  products: [],
 };
 
 export default connect(

@@ -3,6 +3,40 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from '@edx/frontend-platform/i18n';
 
 class ProductLineItem extends React.PureComponent {
+  getCookie(name) {
+    const match = document.cookie.match(`${name}=([^;]*)`);
+    return match ? match[1] : undefined;
+  }
+
+  getExcludedCourses() {
+    return ['course1', 'course2'];
+  }
+
+  getText(courseKey) {
+    let text;
+    const variation = this.getCookie('name_track_variation');
+    const language = this.getCookie('prod-edx-language-preference');
+    if (this.getExcludedCourses().indexOf(courseKey) > -1) {
+      return null;
+    }
+    if (language === 'es-419') {
+      if (variation === 'V1') {
+        text = 'Opción de Logro';
+      } else if (variation === 'V2') {
+        text = 'Opción Ilimitada';
+      } else if (variation === 'V3') {
+        text = ' ';
+      }
+    } else if (variation === 'V1') {
+      text = 'Unlimited Track';
+    } else if (variation === 'V2') {
+      text = 'Achieve Mode';
+    } else if (variation === 'V3') {
+      text = ' ';
+    }
+    return text;
+  }
+
   renderEnrollmentCount(courseKey, enrollmentCountData) {
     const courseObj = enrollmentCountData.find(course => course.key === courseKey);
     if (courseObj) {
@@ -14,7 +48,8 @@ class ProductLineItem extends React.PureComponent {
     return null;
   }
 
-  renderCertificateType(certificateType) {
+  renderCertificateType(certificateType, courseKey) {
+    const text = this.getText(courseKey);
     switch (certificateType) {
       case 'professional':
       case 'no-id-professional':
@@ -26,6 +61,9 @@ class ProductLineItem extends React.PureComponent {
           />
         );
       case 'verified':
+        if (text) {
+          return (text);
+        }
         return (
           <FormattedMessage
             id="payment.productlineitem.verified.certificate"
@@ -59,7 +97,7 @@ class ProductLineItem extends React.PureComponent {
         </div>
         <div className="col-7">
           <h6 className="m-0" aria-level="3">{title}</h6>
-          <p className="m-0">{this.renderCertificateType(certificateType)}</p>
+          <p className="m-0">{this.renderCertificateType(certificateType, courseKey)}</p>
           {isNumEnrolledExperiment
             ? this.renderEnrollmentCount(courseKey, enrollmentCountData) : null}
         </div>
