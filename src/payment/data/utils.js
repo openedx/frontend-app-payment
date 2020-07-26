@@ -1,5 +1,6 @@
 import camelCase from 'lodash.camelcase';
 import snakeCase from 'lodash.snakecase';
+import { getConfig } from '@edx/frontend-platform';
 
 export function modifyObjectKeys(object, modify) {
   // If the passed in object is not an object, return it.
@@ -128,4 +129,9 @@ export function generateAndSubmitForm(url, params = {}) {
 
   global.document.body.appendChild(form);
   form.submit();
+}
+
+export function isWaffleFlagEnabled(flagName, defaultValue = false) {
+  const value = getConfig().WAFFLE_FLAGS[flagName];
+  return typeof value !== 'undefined' ? value : defaultValue;
 }

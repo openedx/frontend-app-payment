@@ -5,7 +5,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
 
-import { getCardTypeId, SUPPORTED_CARDS } from './utils/credit-card';
+import { getCardTypeId, CARD_TYPES } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
@@ -65,6 +65,11 @@ export class PaymentFormComponent extends React.Component {
       throw new SubmissionError(errors);
     }
 
+    let cardTypeId = null;
+    if (!this.props.flexMicroformEnabled) {
+      cardTypeId = getCardTypeId(cardNumber);
+    }
+
     this.props.onSubmitPayment({
       cardHolderInfo: {
         firstName,
@@ -80,7 +85,7 @@ export class PaymentFormComponent extends React.Component {
       },
       cardDetails: {
         cardNumber,
-        cardTypeId: getCardTypeId(cardNumber),
+        cardTypeId,
         securityCode,
         cardExpirationMonth,
         cardExpirationYear,
@@ -128,6 +133,18 @@ export class PaymentFormComponent extends React.Component {
       };
     }
 
+    if (this.props.flexMicroformEnabled) {
+      requiredFields = {
+        firstName,
+        lastName,
+        address,
+        city,
+        country,
+        cardExpirationMonth,
+        cardExpirationYear,
+      };
+    }
+
     if (getStates(country) && !this.props.isPaymentVisualExperiment) {
       requiredFields.state = state;
     }
@@ -142,16 +159,18 @@ export class PaymentFormComponent extends React.Component {
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
     const errors = {};
 
-    const { card, isValid } = CardValidator.number(cardNumber);
-    if (cardNumber) {
-      if (!isValid) {
-        errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.invalid.card.number']);
-      } else {
-        if (!Object.keys(SUPPORTED_CARDS).includes(card.type)) {
-          errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.unsupported.card']);
-        }
-        if (securityCode && securityCode.length !== card.code.size) {
-          errors.securityCode = this.props.intl.formatMessage(messages['payment.form.errors.invalid.security.code']);
+    if (!this.props.flexMicroformEnabled) {
+      const { card, isValid } = CardValidator.number(cardNumber);
+      if (cardNumber) {
+        if (!isValid) {
+          errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.invalid.card.number']);
+        } else {
+          if (!Object.keys(CARD_TYPES).includes(card.type)) {
+            errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.unsupported.card']);
+          }
+          if (securityCode && securityCode.length !== card.code.size) {
+            errors.securityCode = this.props.intl.formatMessage(messages['payment.form.errors.invalid.security.code']);
+          }
         }
       }
     }
@@ -200,6 +219,8 @@ export class PaymentFormComponent extends React.Component {
       isBulkOrder,
       isQuantityUpdating,
       isPaymentVisualExperiment,
+      captureKeyId,
+      flexMicroformEnabled,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -219,7 +240,12 @@ export class PaymentFormComponent extends React.Component {
           disabled={disabled}
           isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
-        <CardDetails disabled={disabled} isPaymentVisualExperiment={isPaymentVisualExperiment} />
+        <CardDetails
+          disabled={disabled}
+          isPaymentVisualExperiment={isPaymentVisualExperiment}
+          captureKeyId={captureKeyId}
+          flexMicroformEnabled={flexMicroformEnabled}
+        />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
             {
@@ -268,6 +294,8 @@ PaymentFormComponent.propTypes = {
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
+  flexMicroformEnabled: PropTypes.bool,
+  captureKeyId: PropTypes.string,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -277,6 +305,8 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   isPaymentVisualExperiment: false,
+  flexMicroformEnabled: false,
+  captureKeyId: null,
 };
 
 // The key `form` here needs to match the key provided to

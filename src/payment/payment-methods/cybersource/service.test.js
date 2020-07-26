@@ -9,6 +9,7 @@ import { generateAndSubmitForm } from '../../data/utils';
 
 jest.mock('../../data/utils', () => ({
   generateAndSubmitForm: jest.fn(),
+  isWaffleFlagEnabled: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-platform/logging', () => ({

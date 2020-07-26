@@ -150,6 +150,18 @@
   .price-messaging p {
     margin-bottom: 2px;
   }
+
+  .flex-microform {
+    @extend .form-control
+  }
+
+  .flex-microform-focused {
+    @extend .form-control:focus
+  }
+
+  .flex-microform-disabled {
+    @extend .form-control:disabled
+  }
 }
 
 #securityCodeHelp {

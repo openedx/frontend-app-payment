@@ -80,6 +80,8 @@ class Checkout extends React.Component {
       paymentMethod,
       submitting,
       orderType,
+      flexMicroformEnabled,
+      captureKeyId,
     } = this.props;
 
     const submissionDisabled = loading || isBasketProcessing;
@@ -140,6 +142,8 @@ class Checkout extends React.Component {
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
           isPaymentVisualExperiment={isPaymentVisualExperiment}
+          flexMicroformEnabled={flexMicroformEnabled}
+          captureKeyId={captureKeyId}
         />
       </>
     );
@@ -169,6 +173,8 @@ Checkout.propTypes = {
   isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
+  flexMicroformEnabled: PropTypes.bool,
+  captureKeyId: PropTypes.string,
 };
 
 Checkout.defaultProps = {
@@ -180,6 +186,8 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   isPaymentVisualExperiment: false,
+  flexMicroformEnabled: false,
+  captureKeyId: null,
 };
 
 export default connect(paymentSelector, { submitPayment })(injectIntl(Checkout));
