@@ -122,7 +122,6 @@ describe('Cybersource Service', () => {
       );
     });
 
-
     it('should throw an error if the cybersource checkout request errors on the fields', async () => {
       const errorResponseData = {
         field_errors: {

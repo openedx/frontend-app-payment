@@ -32,7 +32,6 @@ const baseCoupon = {
   benefitType: 'Absolute',
 };
 
-
 const renderCouponFormWithState = store => (
   <IntlProvider locale="en">
     <Provider store={store}>

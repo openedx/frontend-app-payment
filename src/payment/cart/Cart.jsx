@@ -145,7 +145,6 @@ class Cart extends React.Component {
   }
 }
 
-
 Cart.propTypes = {
   intl: intlShape.isRequired,
   isPaymentVisualExperiment: PropTypes.bool,

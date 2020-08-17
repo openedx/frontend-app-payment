@@ -1,6 +1,5 @@
 import { createRoutine } from 'redux-saga-routines';
 
-
 // Routines are action + action creator pairs in a series.
 // Actions adhere to the flux standard action format.
 // Routines by default are in the form of:
