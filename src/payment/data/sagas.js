@@ -2,7 +2,7 @@ import {
   call, put, takeEvery, select,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
-import { camelCaseObject, convertKeyNames } from './utils';
+import { camelCaseObject, convertKeyNames, isWaffleFlagEnabled } from './utils';
 
 // Actions
 import {
@@ -20,7 +20,7 @@ import { handleErrors, handleMessages } from '../../feedback';
 
 // Services
 import * as PaymentApiService from './service';
-import { checkout as checkoutCybersource } from '../payment-methods/cybersource';
+import { checkout as checkoutCybersource, checkoutWithToken } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 
@@ -148,7 +148,10 @@ export function* handleSubmitPayment({ payload }) {
   try {
     yield put(basketProcessing(true));
     yield put(submitPayment.request());
-    const paymentMethodCheckout = paymentMethods[method];
+    let paymentMethodCheckout = paymentMethods[method];
+    if (method === 'cybersource' && isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false)) {
+      paymentMethodCheckout = checkoutWithToken;
+    }
     const basket = yield select(state => ({ ...state.payment.basket }));
     yield call(paymentMethodCheckout, basket, paymentArgs);
     yield put(submitPayment.success());

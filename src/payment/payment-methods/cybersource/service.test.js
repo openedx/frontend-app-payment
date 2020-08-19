@@ -9,6 +9,7 @@ import { generateAndSubmitForm } from '../../data/utils';
 
 jest.mock('../../data/utils', () => ({
   generateAndSubmitForm: jest.fn(),
+  isWaffleFlagEnabled: jest.fn(),
 }));
 
 jest.mock('@edx/frontend-platform/logging', () => ({
@@ -120,7 +121,6 @@ describe('Cybersource Service', () => {
         }),
       );
     });
-
 
     it('should throw an error if the cybersource checkout request errors on the fields', async () => {
       const errorResponseData = {

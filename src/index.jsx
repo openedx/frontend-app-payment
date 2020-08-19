@@ -7,7 +7,9 @@ import {
   APP_READY,
   APP_AUTH_INITIALIZED,
   mergeConfig,
+  getConfig,
   subscribe,
+  getQueryParameters,
 } from '@edx/frontend-platform';
 import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
@@ -32,6 +34,16 @@ import './assets/favicon.ico';
 const tempHttpClient = axios.create();
 tempHttpClient.defaults.withCredentials = true;
 
+const allQueryParams = getQueryParameters(global.location.search);
+const waffleFlags = {};
+const WAFFLE_PREFIX = 'dwft_';
+Object.keys(allQueryParams).forEach((param) => {
+  if (param.startsWith(WAFFLE_PREFIX)) {
+    const truth = /^\s*(true|t|1|on)\s*$/i;
+    const configKey = param.substring(WAFFLE_PREFIX.length, param.length);
+    waffleFlags[configKey] = truth.test(allQueryParams[param]);
+  }
+});
 mergeConfig({
   CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
   SUPPORT_URL: process.env.SUPPORT_URL,
@@ -43,6 +55,7 @@ mergeConfig({
   APPLE_PAY_AUTHORIZE_URL: process.env.APPLE_PAY_AUTHORIZE_URL,
   APPLE_PAY_SUPPORTED_NETWORKS: process.env.APPLE_PAY_SUPPORTED_NETWORKS && process.env.APPLE_PAY_SUPPORTED_NETWORKS.split(','),
   APPLE_PAY_MERCHANT_CAPABILITIES: process.env.APPLE_PAY_MERCHANT_CAPABILITIES && process.env.APPLE_PAY_MERCHANT_CAPABILITIES.split(','),
+  WAFFLE_FLAGS: waffleFlags,
 });
 
 subscribe(APP_READY, () => {
@@ -73,6 +86,18 @@ subscribe(APP_INIT_ERROR, (error) => {
 
 subscribe(APP_AUTH_INITIALIZED, () => {
   getAuthenticatedHttpClient().interceptors.response.use(responseInterceptor);
+
+  getAuthenticatedHttpClient().interceptors.request.use(async (requestConfig) => {
+    const params = requestConfig.params || {};
+    const curWaffleFlags = getConfig().WAFFLE_FLAGS;
+    Object.keys(curWaffleFlags).forEach((key) => {
+      const fullKey = encodeURIComponent(WAFFLE_PREFIX + key);
+      const value = curWaffleFlags[key] ? '1' : '0';
+      params[fullKey] = value;
+    });
+    requestConfig.params = params; // eslint-disable-line no-param-reassign
+    return requestConfig;
+  });
 
   // Temporary fix for ARCH-1304
   // Force refresh the jwt cookie before any post request.

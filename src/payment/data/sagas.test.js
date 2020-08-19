@@ -1,4 +1,3 @@
-
 import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import axios from 'axios';

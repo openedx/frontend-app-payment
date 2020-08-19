@@ -22,5 +22,4 @@ const FallbackErrorMessage = () => (
   />
 );
 
-
 export default FallbackErrorMessage;

@@ -107,6 +107,8 @@ describe('redux tests', () => {
           isBasketProcessing: false,
           isEmpty: false,
           isRedirect: false,
+          flexMicroformEnabled: false,
+          captureKeyId: null,
         });
       });
 
@@ -127,6 +129,8 @@ describe('redux tests', () => {
           isBasketProcessing: false,
           isEmpty: false,
           isRedirect: true, // this is also now true.
+          flexMicroformEnabled: false,
+          captureKeyId: null,
         });
       });
     });
