@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { logError } from '@edx/frontend-platform/logging';
 import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
-
-const POLLING_TIME_MS = 100;
 
 class FlexMicroform extends React.Component {
   constructor(props) {
@@ -14,7 +13,6 @@ class FlexMicroform extends React.Component {
     this.state = {
       microformStatus: DEFAULT_STATUS,
     };
-    this.timer = null;
   }
 
   componentDidMount() {
@@ -25,26 +23,16 @@ class FlexMicroform extends React.Component {
     this.initialize();
   }
 
-  componentWillUnmount() {
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-  }
-
   initialize = () => {
-    if (window.microform !== null) {
+    if (window.microform !== null || !this.props.captureKeyId) {
       return;
-    }
-    if (!this.props.captureKeyId) {
-      return;
-    }
-    if (this.timer) {
-      clearTimeout(this.timer);
-      this.timer = null;
     }
     if (typeof window.Flex === 'undefined') {
-      this.timer = setTimeout(this.initialize, POLLING_TIME_MS);
+      logError(new Error('Unable to initialize Cybersource FlexMicroform'), {
+        messagePrefix: 'Cybersource FlexMicroform Error',
+        paymentMethod: 'Cybersource',
+        paymentErrorType: 'Checkout',
+      });
       return;
     }
     window.microform = new window.Flex(this.props.captureKeyId).microform({
