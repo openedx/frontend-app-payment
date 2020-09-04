@@ -64,7 +64,15 @@ export const paymentSelector = createSelector(
       isRedirect:
         (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
       flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
-      captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
+      // captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
     };
   },
+);
+
+export const captureKeySelector = createSelector(
+  basketSelector,
+  basket => ({
+    // REM: dunno if we want to move this out of the basket. space
+    captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
+  }),
 );

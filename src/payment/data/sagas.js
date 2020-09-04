@@ -8,11 +8,14 @@ import { camelCaseObject, convertKeyNames, isWaffleFlagEnabled } from './utils';
 import {
   basketDataReceived,
   basketProcessing,
+  captureKeyDataReceived,
+  captureKeyProcessing,
   fetchBasket,
   addCoupon,
   removeCoupon,
   updateQuantity,
   submitPayment,
+  fetchCaptureKey,
 } from './actions';
 
 // Sagas
@@ -32,6 +35,10 @@ export const paymentMethods = {
 
 function* isBasketProcessing() {
   return yield select(state => state.payment.basket.isBasketProcessing);
+}
+
+function* isCaptureKeyProcessing() {
+  return yield select(state => state.payment.isCaptureKeyProcessing);
 }
 
 export function* handleReduxFormValidationErrors(error) {
@@ -99,6 +106,24 @@ export function* handleFetchBasket() {
   } finally {
     yield put(basketProcessing(false)); // we are done modifying the basket
     yield put(fetchBasket.fulfill()); // mark the basket as finished loading
+  }
+}
+
+export function* handleFetchCaptureKey() {
+  if (yield isCaptureKeyProcessing()) {
+    // Do nothing if there is a request currently in flight
+    return;
+  }
+
+  try {
+    yield put(captureKeyProcessing(true)); // we are waiting for a capture key
+    const result = yield call(PaymentApiService.getCaptureKey);
+    yield put(captureKeyDataReceived(result)); // update redux store with capture key data
+  } catch (error) {
+    // TODO: how should errors here be handled?
+  } finally {
+    yield put(captureKeyProcessing(false)); // we are done capture key
+    yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
   }
 }
 
@@ -179,6 +204,7 @@ export function* handleSubmitPayment({ payload }) {
 }
 
 export default function* saga() {
+  yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
