@@ -63,16 +63,18 @@ export const paymentSelector = createSelector(
         basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:
         (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
-      flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
+      // flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
       // captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
     };
   },
 );
 
-export const captureKeySelector = createSelector(
-  basketSelector,
-  basket => ({
-    // REM: dunno if we want to move this out of the basket. space
-    captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
+export const captureKeySelector = state => state[storeName].captureKey;
+
+export const updateCaptureKeySelector = createSelector(
+  captureKeySelector,
+  captureKey => ({
+    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
+    captureKeyId: captureKey.captureContext ? captureKey.captureContext.keyId : null,
   }),
 );
