@@ -53,7 +53,6 @@ export async function getCaptureKey() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context/`)
     .catch(handleBasketApiError);
-  // console.log({ "BJH: CaptureKey got data": data });
   return data;
 }
 
@@ -62,7 +61,6 @@ export async function getBasket(discountJwt) {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
     .catch(handleBasketApiError);
-  // console.log({ "BJH: Basket got data": data });
   return transformResults(data);
 }
 

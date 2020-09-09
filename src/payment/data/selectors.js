@@ -75,6 +75,6 @@ export const updateCaptureKeySelector = createSelector(
   captureKeySelector,
   captureKey => ({
     flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
-    captureKeyId: captureKey.captureContext ? captureKey.captureContext.keyId : null,
+    captureKeyId: captureKey.capture_context ? captureKey.capture_context.key_id : null,
   }),
 );

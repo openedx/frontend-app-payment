@@ -10,7 +10,7 @@ import { DEFAULT_STATUS, STATUS_READY } from './constants';
 import { fetchCaptureKey } from '../../../data/actions';
 
 // Selectors
-import { captureKeySelector } from '../../../data/selectors';
+import { updateCaptureKeySelector } from '../../../data/selectors';
 
 class FlexMicroform extends React.Component {
   constructor(props) {
@@ -32,9 +32,7 @@ class FlexMicroform extends React.Component {
   }
 
   initialize = () => {
-    // console.log({ "BJH: FlexForm props": this.props });
-
-    if (window.microform !== null || !this.props.capture_context || !this.props.capture_context.key_id) {
+    if (window.microform !== null || !this.props.captureKeyId) {
       return;
     }
     if (typeof window.Flex === 'undefined') {
@@ -45,7 +43,7 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    window.microform = new window.Flex(this.props.capture_context.key_id).microform({
+    window.microform = new window.Flex(this.props.captureKeyId).microform({
       styles: {
         input: {
           'font-size': '16px',
@@ -75,6 +73,7 @@ class FlexMicroform extends React.Component {
 FlexMicroform.propTypes = {
   captureKeyId: PropTypes.string,
   disabled: PropTypes.bool,
+  fetchCaptureKey: PropTypes.func.isRequired,
 };
 
 FlexMicroform.defaultProps = {
@@ -83,7 +82,7 @@ FlexMicroform.defaultProps = {
 };
 
 export default connect(
-  captureKeySelector,
+  updateCaptureKeySelector,
   {
     fetchCaptureKey,
   },
