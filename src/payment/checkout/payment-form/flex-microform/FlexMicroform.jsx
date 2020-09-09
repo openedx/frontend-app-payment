@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { logError } from '@edx/frontend-platform/logging';
 import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
+
+// Actions
+import { fetchCaptureKey } from '../../../data/actions';
+
+// Selectors
+import { captureKeySelector } from '../../../data/selectors';
 
 class FlexMicroform extends React.Component {
   constructor(props) {
@@ -72,4 +79,9 @@ FlexMicroform.defaultProps = {
   disabled: false,
 };
 
-export default FlexMicroform;
+export default connect(
+  captureKeySelector,
+  {
+    fetchCaptureKey,
+  },
+)(FlexMicroform);
