@@ -23,6 +23,7 @@ class FlexMicroform extends React.Component {
   }
 
   componentDidMount() {
+    this.props.fetchCaptureKey();
     this.initialize();
   }
 
@@ -31,7 +32,9 @@ class FlexMicroform extends React.Component {
   }
 
   initialize = () => {
-    if (window.microform !== null || !this.props.captureKeyId) {
+    // console.log({ "BJH: FlexForm props": this.props });
+
+    if (window.microform !== null || !this.props.capture_context || !this.props.capture_context.key_id) {
       return;
     }
     if (typeof window.Flex === 'undefined') {
@@ -42,7 +45,7 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    window.microform = new window.Flex(this.props.captureKeyId).microform({
+    window.microform = new window.Flex(this.props.capture_context.key_id).microform({
       styles: {
         input: {
           'font-size': '16px',
