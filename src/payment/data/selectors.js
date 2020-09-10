@@ -63,8 +63,6 @@ export const paymentSelector = createSelector(
         basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:
         (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
-      // flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
-      // captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
     };
   },
 );

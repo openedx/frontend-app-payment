@@ -61,8 +61,6 @@ const basket = (state = basketInitialState, action = null) => {
 };
 
 const captureContextInitialState = {
-  ccLoading: true,
-  ccLoaded: false,
   isCaptureKeyProcessing: false,
   flexMicroformEnabled: false,
   captureKeyId: '',
@@ -71,16 +69,8 @@ const captureContextInitialState = {
 const captureKey = (state = captureContextInitialState, action = null) => {
   if (action !== null) {
     switch (action.type) {
-      case fetchCaptureKey.TRIGGER: return {
-        ...state,
-        ccLoading: true,
-        ccLoaded: false,
-      };
-      case fetchCaptureKey.FULFILL: return {
-        ...state,
-        ccLoading: false,
-        ccLoaded: true,
-      };
+      case fetchCaptureKey.TRIGGER: return state;
+      case fetchCaptureKey.FULFILL: return state;
 
       case CAPTURE_KEY_DATA_RECEIVED: return { ...state, ...action.payload };
 
