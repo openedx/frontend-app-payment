@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
@@ -10,6 +11,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
+import { updateCaptureKeySelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 
 const CardValidator = require('../card-validator');
@@ -305,4 +307,4 @@ PaymentFormComponent.defaultProps = {
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(injectIntl(PaymentFormComponent));
+export default reduxForm({ form: 'payment' })(connect(updateCaptureKeySelector)(injectIntl(PaymentFormComponent)));
