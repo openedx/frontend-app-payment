@@ -175,7 +175,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(
-  // paymentSelector,
   mapStateToProps,
   {
     fetchBasket,

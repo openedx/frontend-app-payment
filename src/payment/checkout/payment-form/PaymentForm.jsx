@@ -219,8 +219,6 @@ export class PaymentFormComponent extends React.Component {
       isBulkOrder,
       isQuantityUpdating,
       isPaymentVisualExperiment,
-      captureKeyId,
-      flexMicroformEnabled,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -243,8 +241,6 @@ export class PaymentFormComponent extends React.Component {
         <CardDetails
           disabled={disabled}
           isPaymentVisualExperiment={isPaymentVisualExperiment}
-          captureKeyId={captureKeyId}
-          flexMicroformEnabled={flexMicroformEnabled}
         />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
@@ -295,7 +291,6 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   flexMicroformEnabled: PropTypes.bool,
-  captureKeyId: PropTypes.string,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -306,7 +301,6 @@ PaymentFormComponent.defaultProps = {
   isProcessing: false,
   isPaymentVisualExperiment: false,
   flexMicroformEnabled: false,
-  captureKeyId: null,
 };
 
 // The key `form` here needs to match the key provided to

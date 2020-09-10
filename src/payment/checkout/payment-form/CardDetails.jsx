@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { Field } from 'redux-form';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +14,8 @@ import FormSelect from './FormSelect';
 import FlexMicroform from './flex-microform/FlexMicroform';
 
 import { getCardIcon } from './utils/credit-card';
+
+import { updateCaptureKeySelector } from '../../data/selectors';
 
 export class CardDetailsComponent extends React.Component {
   constructor(props) {
@@ -329,4 +332,4 @@ CardDetailsComponent.defaultProps = {
   captureKeyId: null,
 };
 
-export default injectIntl(CardDetailsComponent);
+export default connect(updateCaptureKeySelector)(injectIntl(CardDetailsComponent));
