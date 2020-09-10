@@ -6,9 +6,6 @@ import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
 
-// Actions
-import { fetchCaptureKey } from '../../../data/actions';
-
 // Selectors
 import { updateCaptureKeySelector } from '../../../data/selectors';
 
@@ -23,7 +20,6 @@ class FlexMicroform extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchCaptureKey();
     this.initialize();
   }
 
@@ -73,7 +69,6 @@ class FlexMicroform extends React.Component {
 FlexMicroform.propTypes = {
   captureKeyId: PropTypes.string,
   disabled: PropTypes.bool,
-  fetchCaptureKey: PropTypes.func.isRequired,
 };
 
 FlexMicroform.defaultProps = {
@@ -83,7 +78,4 @@ FlexMicroform.defaultProps = {
 
 export default connect(
   updateCaptureKeySelector,
-  {
-    fetchCaptureKey,
-  },
 )(FlexMicroform);
