@@ -38,7 +38,7 @@ function* isBasketProcessing() {
 }
 
 function* isCaptureKeyProcessing() {
-  return yield select(state => state.payment.isCaptureKeyProcessing);
+  return yield select(state => state.payment.captureKey.isCaptureKeyProcessing);
 }
 
 export function* handleReduxFormValidationErrors(error) {
