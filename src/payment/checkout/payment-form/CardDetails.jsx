@@ -222,7 +222,7 @@ export class CardDetailsComponent extends React.Component {
                 <label htmlFor="cardNumber">
                   <FormattedMessage
                     id="payment.card.details.number.label"
-                    defaultMessage="Card Number: (required)"
+                    defaultMessage="Card Number (required)"
                     description="The label for the required credit card number field"
                   />
                 </label>
