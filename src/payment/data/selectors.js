@@ -63,8 +63,16 @@ export const paymentSelector = createSelector(
         basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:
         (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
-      flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
-      captureKeyId: basket.captureContext ? basket.captureContext.keyId : null,
     };
   },
+);
+
+export const captureKeySelector = state => state[storeName].captureKey;
+
+export const updateCaptureKeySelector = createSelector(
+  captureKeySelector,
+  captureKey => ({
+    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
+    captureKeyId: captureKey.capture_context ? captureKey.capture_context.key_id : null,
+  }),
 );

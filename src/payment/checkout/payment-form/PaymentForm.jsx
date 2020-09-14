@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
@@ -10,6 +11,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import messages from './PaymentForm.messages';
+import { updateCaptureKeySelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 
 const CardValidator = require('../card-validator');
@@ -219,8 +221,6 @@ export class PaymentFormComponent extends React.Component {
       isBulkOrder,
       isQuantityUpdating,
       isPaymentVisualExperiment,
-      captureKeyId,
-      flexMicroformEnabled,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -243,8 +243,6 @@ export class PaymentFormComponent extends React.Component {
         <CardDetails
           disabled={disabled}
           isPaymentVisualExperiment={isPaymentVisualExperiment}
-          captureKeyId={captureKeyId}
-          flexMicroformEnabled={flexMicroformEnabled}
         />
         <div className="row justify-content-end">
           <div className="col-lg-6 form-group">
@@ -295,7 +293,6 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   flexMicroformEnabled: PropTypes.bool,
-  captureKeyId: PropTypes.string,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -306,9 +303,8 @@ PaymentFormComponent.defaultProps = {
   isProcessing: false,
   isPaymentVisualExperiment: false,
   flexMicroformEnabled: false,
-  captureKeyId: null,
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(injectIntl(PaymentFormComponent));
+export default reduxForm({ form: 'payment' })(connect(updateCaptureKeySelector)(injectIntl(PaymentFormComponent)));

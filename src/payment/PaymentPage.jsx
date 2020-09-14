@@ -7,10 +7,10 @@ import { AppContext } from '@edx/frontend-platform/react';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from './data/actions';
+import { fetchBasket, fetchCaptureKey } from './data/actions';
 
 // Selectors
-import { paymentSelector } from './data/selectors';
+import { paymentSelector, updateCaptureKeySelector } from './data/selectors';
 
 // Components
 import PageLoading from './PageLoading';
@@ -47,6 +47,7 @@ class PaymentPage extends React.Component {
 
   componentDidMount() {
     this.props.fetchBasket();
+    this.props.fetchCaptureKey();
   }
 
   renderContent() {
@@ -156,6 +157,7 @@ PaymentPage.propTypes = {
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
+  fetchCaptureKey: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -167,9 +169,15 @@ PaymentPage.defaultProps = {
   summarySubtotal: undefined,
 };
 
+const mapStateToProps = (state) => ({
+  ...paymentSelector(state),
+  ...updateCaptureKeySelector(state),
+});
+
 export default connect(
-  paymentSelector,
+  mapStateToProps,
   {
     fetchBasket,
+    fetchCaptureKey,
   },
 )(injectIntl(PaymentPage));
