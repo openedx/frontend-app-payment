@@ -1,8 +1,9 @@
 import {
-  call, put, takeEvery, select,
+  call, put, takeEvery, select, delay,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { camelCaseObject, convertKeyNames, isWaffleFlagEnabled } from './utils';
+import { MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
 import {
@@ -109,6 +110,50 @@ export function* handleFetchBasket() {
   }
 }
 
+export function* handleCaptureKeyTimeout() {
+  try {
+    // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
+    yield delay(12 * 60 * 1000);
+    yield call(
+      handleMessages,
+      [{
+        code: '2mins',
+        userMessage: 'Please complete your purchase within two minutes',
+        messageType: MESSAGE_TYPES.INFO,
+      }],
+      true, // Clear other messages
+      window.location.search,
+    );
+
+    yield delay(1 * 60 * 1000);
+    yield call(
+      handleMessages,
+      [{
+        code: '1mins',
+        userMessage: 'Please complete your purchase within one minute',
+        messageType: MESSAGE_TYPES.INFO,
+      }],
+      true, // Clear other messages
+      window.location.search,
+    );
+
+    // HACK: until we get the capture key reloading working, tell the user to do it
+    yield delay(1 * 60 * 1000);
+    yield call(
+      handleMessages,
+      [{
+        code: '0mins',
+        userMessage: 'Please reload the page to make your purchase',
+        messageType: MESSAGE_TYPES.ERROR,
+      }],
+      true, // Clear other messages
+      window.location.search,
+    );
+  } catch (error) {
+    // TODO: how should errors here be handled?
+  }
+}
+
 export function* handleFetchCaptureKey() {
   if (yield isCaptureKeyProcessing()) {
     // Do nothing if there is a request currently in flight
@@ -119,6 +164,7 @@ export function* handleFetchCaptureKey() {
     yield put(captureKeyProcessing(true)); // we are waiting for a capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
+    yield call(handleCaptureKeyTimeout);
   } catch (error) {
     // TODO: how should errors here be handled?
   } finally {
