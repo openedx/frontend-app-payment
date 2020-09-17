@@ -24,18 +24,6 @@ export function* handleErrors(e, clearExistingMessages) {
       yield put(addMessage(message.code, message.userMessage, message.data, message.messageType));
     }
   }
-  if (e.fieldErrors !== undefined) {
-    for (let i = 0; i < e.fieldErrors.length; i++) { // eslint-disable-line no-plusplus
-      const fieldError = e.fieldErrors[i];
-      yield put(addMessage(
-        fieldError.code,
-        fieldError.userMessage,
-        fieldError.data,
-        MESSAGE_TYPES.ERROR,
-        fieldError.fieldName,
-      ));
-    }
-  }
 }
 
 export function* handleMessages(messages, clearExistingMessages, url) {
