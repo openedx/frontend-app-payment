@@ -56,7 +56,10 @@ class FlexMicroform extends React.Component {
   render() {
     return (
       <div className="row">
-        <CreditCardNumberField microformStatus={this.state.microformStatus} disabled={this.props.disabled} />
+        <CreditCardNumberField
+          microformStatus={this.state.microformStatus}
+          disabled={this.props.disabled}
+        />
         <CreditCardVerificationNumberField
           microformStatus={this.state.microformStatus}
           disabled={this.props.disabled}
