@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import messages from './PaymentForm.messages';
 
 // eslint-disable-next-line object-curly-newline
 const FormSelect = ({
@@ -7,6 +9,7 @@ const FormSelect = ({
   id,
   options,
   disabled,
+  intl,
   meta: { touched, error },
   ...other
 }) => (
@@ -20,7 +23,7 @@ const FormSelect = ({
     >
       {options}
     </select>
-    {touched && error && <span className="text-danger">{error}</span>}
+    {touched && error && <span className="text-danger">{messages[error] ? intl.formatMessage(messages[error]) : error}</span>}
   </>
 );
 
@@ -33,6 +36,7 @@ FormSelect.propTypes = {
     touched: PropTypes.bool.isRequired,
     error: PropTypes.string,
   }).isRequired,
+  intl: intlShape.isRequired,
 };
 
-export default FormSelect;
+export default injectIntl(FormSelect);

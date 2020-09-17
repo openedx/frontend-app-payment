@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
+import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
 
 import { getCardTypeId, CARD_TYPES } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
-import messages from './PaymentForm.messages';
 import { updateCaptureKeySelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 
@@ -165,13 +164,13 @@ export class PaymentFormComponent extends React.Component {
       const { card, isValid } = CardValidator.number(cardNumber);
       if (cardNumber) {
         if (!isValid) {
-          errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.invalid.card.number']);
+          errors.cardNumber = 'payment.form.errors.invalid.card.number';
         } else {
           if (!Object.keys(CARD_TYPES).includes(card.type)) {
-            errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.unsupported.card']);
+            errors.cardNumber = 'payment.form.errors.unsupported.card';
           }
           if (securityCode && securityCode.length !== card.code.size) {
-            errors.securityCode = this.props.intl.formatMessage(messages['payment.form.errors.invalid.security.code']);
+            errors.securityCode = 'payment.form.errors.invalid.security.code';
           }
         }
       }
@@ -184,7 +183,7 @@ export class PaymentFormComponent extends React.Component {
       && parseInt(cardExpirationMonth, 10) < currentMonth
       && parseInt(cardExpirationYear, 10) === currentYear
     ) {
-      errors.cardExpirationMonth = this.props.intl.formatMessage(messages['payment.form.errors.card.expired']);
+      errors.cardExpirationMonth = 'payment.form.errors.card.expired';
     }
 
     return errors;
@@ -195,7 +194,7 @@ export class PaymentFormComponent extends React.Component {
 
     Object.keys(values).forEach((key) => {
       if (!values[key]) {
-        errors[key] = this.props.intl.formatMessage(messages['payment.form.errors.required.field']);
+        errors[key] = 'payment.form.errors.required.field';
       }
     });
 
@@ -282,7 +281,6 @@ export class PaymentFormComponent extends React.Component {
 }
 
 PaymentFormComponent.propTypes = {
-  intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isProcessing: PropTypes.bool,
