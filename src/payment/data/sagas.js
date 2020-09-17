@@ -46,7 +46,6 @@ export function* handleReduxFormValidationErrors(error) {
   // error.fieldErrors is an array, and the fieldName key in it is snake case.
   // We need to convert this into an object with snakeCase keys and values that are the
   // userMessages.
-
   if (error.fieldErrors) {
     let fieldErrors = {};
     // Turn the error objects into key-value pairs on our new fieldErrors object.
