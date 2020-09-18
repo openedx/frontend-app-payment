@@ -206,12 +206,16 @@ export class PaymentFormComponent extends React.Component {
   }
 
   focusFirstError() {
-    if (this.state.shouldFocusFirstError) {
+    if (this.state.shouldFocusFirstError && Object.keys(this.props.submitErrors).length > 0) {
       const form = this.formRef.current;
       const elementSelectors = Object.keys(this.props.submitErrors).map((fieldName) => `[id=${fieldName}]`);
       const firstElementWithError = form.querySelector(elementSelectors.join(', '));
-      firstElementWithError.focus();
-      this.setState({ shouldFocusFirstError: false });
+      if (firstElementWithError.tagName === 'input' || firstElementWithError.tagName === 'select') {
+        firstElementWithError.focus();
+      }
+      this.setState({
+        shouldFocusFirstError: false,
+      });
     }
   }
 

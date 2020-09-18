@@ -12,20 +12,28 @@ const FormSelect = ({
   intl,
   meta: { touched, error },
   ...other
-}) => (
-  <>
-    <select
-      {...other}
-      {...input}
-      className="form-control"
-      id={id}
-      disabled={disabled}
-    >
-      {options}
-    </select>
-    {touched && error && <span className="text-danger">{messages[error] ? intl.formatMessage(messages[error]) : error}</span>}
-  </>
-);
+}) => {
+  const errorData = {};
+  if (touched && error) {
+    errorData['aria-describedby'] = `${id}-error`;
+    errorData['aria-invalid'] = 'true';
+  }
+  return (
+    <>
+      <select
+        {...other}
+        {...input}
+        className="form-control"
+        id={id}
+        disabled={disabled}
+        {...errorData}
+      >
+        {options}
+      </select>
+      {touched && error && <span id={`${id}-error`} className="text-danger">{messages[error] ? intl.formatMessage(messages[error]) : error}</span>}
+    </>
+  );
+};
 
 FormSelect.propTypes = {
   input: PropTypes.shape({}).isRequired,

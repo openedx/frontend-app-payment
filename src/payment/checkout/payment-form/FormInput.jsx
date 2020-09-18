@@ -12,19 +12,27 @@ const FormInput = ({
   intl,
   meta: { touched, error },
   ...other
-}) => (
-  <>
-    <input
-      {...other}
-      {...input}
-      type={type}
-      className="form-control"
-      id={id}
-      disabled={disabled}
-    />
-    {touched && error && <span className="text-danger">{messages[error] ? intl.formatMessage(messages[error]) : error}</span>}
-  </>
-);
+}) => {
+  const errorData = {};
+  if (touched && error) {
+    errorData['aria-describedby'] = `${id}-error`;
+    errorData['aria-invalid'] = 'true';
+  }
+  return (
+    <>
+      <input
+        {...errorData}
+        {...other}
+        {...input}
+        type={type}
+        className="form-control"
+        id={id}
+        disabled={disabled}
+      />
+      {touched && error && <span id={`${id}-error`} className="text-danger">{messages[error] ? intl.formatMessage(messages[error]) : error}</span>}
+    </>
+  );
+};
 
 FormInput.propTypes = {
   input: PropTypes.shape({}).isRequired,

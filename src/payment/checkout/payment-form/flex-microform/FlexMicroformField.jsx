@@ -23,9 +23,20 @@ class FlexMicroformField extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.field === null) {
       this.initialize();
-    } else if (prevProps.disabled !== this.props.disabled) {
+      return;
+    }
+
+    if (prevProps.disabled !== this.props.disabled) {
       this.field.update({
         disabled: this.props.disabled,
+      });
+    }
+
+    if (prevProps.meta.error !== this.props.meta.error) {
+      const errorMessage = messages[this.props.meta.error];
+      const translatedMessage = errorMessage ? this.props.intl.formatMessage(errorMessage) : this.props.meta.error;
+      this.field.update({
+        description: translatedMessage,
       });
     }
   }
@@ -46,6 +57,7 @@ class FlexMicroformField extends React.Component {
 
   render() {
     const loading = this.field === null;
+    const errorMessage = messages[this.props.meta.error];
     return (
       <>
         <span>
@@ -72,8 +84,18 @@ class FlexMicroformField extends React.Component {
           <div className="skeleton py-3" ref={this.loadingElement} />
           {!loading && <FontAwesomeIcon icon={faLock} className="lock-icon" />}
         </span>
+
+        {/* For screen readers, we inject the description into the iframe,
+            so that aria-describedby is correct. So, we use aria-hidden
+            to hide this version from screen readers.
+        */}
         {this.props.meta.touched && this.props.meta.error && (
-          <span className="text-danger">{messages[this.props.meta.error] ? this.props.intl.formatMessage(messages[this.props.meta.error]) : this.props.meta.error}</span>
+          <span
+            id={`${this.props.id}-error`}
+            className="text-danger"
+            aria-hidden="true"
+          >{errorMessage ? this.props.intl.formatMessage(errorMessage) : this.props.meta.error}
+          </span>
         )}
       </>
     );
