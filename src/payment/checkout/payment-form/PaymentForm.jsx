@@ -10,7 +10,7 @@ import { getCardTypeId, CARD_TYPES } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
-import { updateCaptureKeySelector } from '../../data/selectors';
+import { updatePaymentFormSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 
 const CardValidator = require('../card-validator');
@@ -19,6 +19,7 @@ export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.formRef = React.createRef();
+    this.state = { shouldFocusFirstError: false };
   }
 
   componentDidMount() {
@@ -29,9 +30,14 @@ export class PaymentFormComponent extends React.Component {
     );
   }
 
+  componentDidUpdate() {
+    this.focusFirstError();
+  }
+
   onSubmit = (values) => {
     // istanbul ignore if
     if (this.props.disabled) { return; }
+    this.setState({ shouldFocusFirstError: true });
     const requiredFields = this.getRequiredFields(values);
     const {
       firstName,
@@ -61,8 +67,6 @@ export class PaymentFormComponent extends React.Component {
     };
 
     if (Object.keys(errors).length > 0) {
-      const firstErrorName = Object.keys(errors)[0];
-      this.scrollToError(firstErrorName);
       throw new SubmissionError(errors);
     }
 
@@ -201,13 +205,13 @@ export class PaymentFormComponent extends React.Component {
     return errors;
   }
 
-  scrollToError(error) {
-    const form = this.formRef.current;
-    const formElement = form.querySelector(`[name=${error}]`);
-    /* istanbul ignore else */
-    if (formElement) {
-      const elementParent = formElement.parentElement;
-      elementParent.scrollIntoView(true);
+  focusFirstError() {
+    if (this.state.shouldFocusFirstError) {
+      const form = this.formRef.current;
+      const elementSelectors = Object.keys(this.props.submitErrors).map((fieldName) => `[id=${fieldName}]`);
+      const firstElementWithError = form.querySelector(elementSelectors.join(', '));
+      firstElementWithError.focus();
+      this.setState({ shouldFocusFirstError: false });
     }
   }
 
@@ -291,6 +295,7 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   flexMicroformEnabled: PropTypes.bool,
+  submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 
 PaymentFormComponent.defaultProps = {
@@ -301,8 +306,9 @@ PaymentFormComponent.defaultProps = {
   isProcessing: false,
   isPaymentVisualExperiment: false,
   flexMicroformEnabled: false,
+  submitErrors: {},
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(connect(updateCaptureKeySelector)(injectIntl(PaymentFormComponent)));
+export default reduxForm({ form: 'payment' })(connect(updatePaymentFormSelector('payment'))(injectIntl(PaymentFormComponent)));
