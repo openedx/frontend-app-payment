@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { getCardIconForType } from '../utils/credit-card';
@@ -26,7 +27,10 @@ class CreditCardNumberField extends React.Component {
   render() {
     return (
       <div className="col-lg-6 form-group">
-        <FlexMicroformField
+        <Field
+          id="cardNumber"
+          name="cardNumber"
+          component={FlexMicroformField}
           fieldType="number"
           microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
@@ -39,7 +43,9 @@ class CreditCardNumberField extends React.Component {
             />
           )}
         />
-        {this.state.cardIcon !== null && <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />}
+        {this.state.cardIcon !== null && (
+          <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
+        )}
       </div>
     );
   }

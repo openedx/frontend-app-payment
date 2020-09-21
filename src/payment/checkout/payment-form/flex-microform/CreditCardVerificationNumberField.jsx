@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import FlexMicroformField from './FlexMicroformField';
@@ -8,7 +9,10 @@ import { DEFAULT_STATUS } from './constants';
 function CreditCardVerificationNumberField(props) {
   return (
     <div className="col-lg-6 form-group">
-      <FlexMicroformField
+      <Field
+        id="securityCode"
+        name="securityCode"
+        component={FlexMicroformField}
         microformStatus={props.microformStatus}
         disabled={props.disabled}
         fieldType="securityCode"

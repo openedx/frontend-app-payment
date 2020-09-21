@@ -162,6 +162,11 @@
   .flex-microform-disabled {
     @extend .form-control:disabled
   }
+
+  .microform-label {
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
 }
 
 #securityCodeHelp {

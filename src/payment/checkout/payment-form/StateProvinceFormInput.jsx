@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Field } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
 
@@ -100,4 +99,4 @@ StateProvinceFormInput.defaultProps = {
   country: null,
 };
 
-export default connect()(injectIntl(StateProvinceFormInput));
+export default injectIntl(StateProvinceFormInput);

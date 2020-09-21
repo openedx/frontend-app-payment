@@ -68,6 +68,20 @@ export const paymentSelector = createSelector(
 );
 
 export const captureKeySelector = state => state[storeName].captureKey;
+export function submitErrorsSelector(formName) {
+  return (state => ({
+    submitErrors: state.form[formName] ? state.form[formName].submitErrors : {},
+  }));
+}
+
+export const updatePaymentFormSelector = formName => createSelector(
+  [captureKeySelector, submitErrorsSelector(formName)],
+  (captureKey, submitErrors) => ({
+    ...submitErrors,
+    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
+    captureKeyId: captureKey.capture_context ? captureKey.capture_context.key_id : null,
+  }),
+);
 
 export const updateCaptureKeySelector = createSelector(
   captureKeySelector,

@@ -399,6 +399,6 @@ CardHolderInformationComponent.defaultProps = {
 };
 
 export default connect(
-  () => {},
+  null,
   { clearFields },
 )(injectIntl(CardHolderInformationComponent));

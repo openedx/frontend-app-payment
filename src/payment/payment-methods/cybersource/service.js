@@ -79,7 +79,30 @@ function getPaymentToken(microformOptions) {
 export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails }) {
   const { basketId } = basket;
 
-  const paymentToken = await getPaymentToken(cardDetails);
+  const paymentToken = await getPaymentToken(cardDetails).catch((error) => {
+    if (error.reason !== 'CREATE_TOKEN_VALIDATION_FIELDS') {
+      throw error;
+    }
+    const microformFieldMap = {
+      number: 'cardNumber',
+      securityCode: 'securityCode',
+    };
+    const microformMessageMap = {
+      number: 'payment.form.errors.invalid.card.number',
+      securityCode: 'payment.form.errors.invalid.security.code',
+    };
+    const fieldError = new Error('Cybersource Token Creation field validation failed');
+    fieldError.fieldErrors = [];
+    error.details.forEach((errorEntry) => {
+      fieldError.fieldErrors.push({
+        code: null,
+        data: null,
+        userMessage: microformMessageMap[errorEntry.location],
+        fieldName: microformFieldMap[errorEntry.location],
+      });
+    });
+    throw fieldError;
+  });
   const formData = {
     basket: basketId,
     first_name: cardHolderInfo.firstName,
