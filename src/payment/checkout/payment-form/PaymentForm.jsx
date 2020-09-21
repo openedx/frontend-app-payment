@@ -212,6 +212,8 @@ export class PaymentFormComponent extends React.Component {
       const firstElementWithError = form.querySelector(elementSelectors.join(', '));
       if (firstElementWithError.tagName === 'input' || firstElementWithError.tagName === 'select') {
         firstElementWithError.focus();
+      } else {
+        firstElementWithError.scrollIntoView();
       }
       this.setState({
         shouldFocusFirstError: false,
