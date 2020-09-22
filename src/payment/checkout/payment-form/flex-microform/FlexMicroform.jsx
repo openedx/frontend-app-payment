@@ -5,6 +5,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
+import { microformStatus } from '../../../data/actions';
 
 // Selectors
 import { updateCaptureKeySelector } from '../../../data/selectors';
@@ -14,9 +15,9 @@ class FlexMicroform extends React.Component {
     super(props);
 
     window.microform = null;
-    this.state = {
-      captureKey: { microformStatus: DEFAULT_STATUS },
-    };
+    // this.state = {
+    //   captureKey: { microformStatus: DEFAULT_STATUS },
+    // };
   }
 
   componentDidMount() {
@@ -50,9 +51,10 @@ class FlexMicroform extends React.Component {
         },
       },
     });
-    this.setState({
-      captureKey: { microformStatus: STATUS_READY },
-    });
+    // this.setState({
+    //   captureKey: { microformStatus: STATUS_READY },
+    // });
+    this.props.dispatch(microformStatus(STATUS_READY));
   };
 
   render() {

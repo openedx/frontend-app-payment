@@ -117,17 +117,17 @@ export function* handleFetchBasket() {
 export function* handleCaptureKeyTimeout() {
   try {
     // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
-    // yield delay(12 * 60 * 1000);  // BJH: commented out to shorten testing
-    // yield call(
-    //   handleMessages,
-    //   [{
-    //     code: '2mins',
-    //     userMessage: 'Please complete your purchase within two minutes',
-    //     messageType: MESSAGE_TYPES.INFO,
-    //   }],
-    //   true, // Clear other messages
-    //   window.location.search,
-    // );
+    yield delay(12 * 60 * 1000);  // BJH: commented out to shorten testing
+    yield call(
+      handleMessages,
+      [{
+        code: '2mins',
+        userMessage: 'Please complete your purchase within two minutes',
+        messageType: MESSAGE_TYPES.INFO,
+      }],
+      true, // Clear other messages
+      window.location.search,
+    );
 
     yield delay(1 * 60 * 1000);
     yield call(
