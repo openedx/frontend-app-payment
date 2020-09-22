@@ -25,7 +25,7 @@ import {
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants'
 
 // Sagas
-import { handleErrors, handleMessages } from '../../feedback';
+import { handleErrors, handleMessages, clearMessages } from '../../feedback';
 
 // Services
 import * as PaymentApiService from './service';
@@ -141,19 +141,8 @@ export function* handleCaptureKeyTimeout() {
       window.location.search,
     );
 
-    // HACK: until we get the capture key reloading working, tell the user to do it
     yield delay(1 * 60 * 1000);
-    // yield call(
-    //   handleMessages,
-    //   [{
-    //     code: '0mins',
-    //     userMessage: 'Please reload the page to make your purchase',
-    //     messageType: MESSAGE_TYPES.ERROR,
-    //   }],
-    //   true, // Clear other messages
-    //   window.location.search,
-    // );
-    // yield call(handleFetchCaptureKey);
+    yield put(clearMessages());
     yield put(fetchCaptureKey());
   } catch (error) {
     // TODO: how should errors here be handled?
@@ -161,21 +150,16 @@ export function* handleCaptureKeyTimeout() {
 }
 
 export function* handleFetchCaptureKey() {
-  console.log("handleFetchCaptureKey top")
   if (yield isCaptureKeyProcessing()) {
     // Do nothing if there is a request currently in flight
-    console.log("handleFetchCaptureKey BAILED")
     return;
   }
 
-  console.log("handleFetchCaptureKey start fetching")
   try {
     yield put(captureKeyProcessing(true)); // we are waiting for a capture key
     yield put(microformStatus(DEFAULT_STATUS)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
-    console.log("handleFetchCaptureKey called service")
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    // yield call(handleCaptureKeyTimeout);
     yield put(captureKeyStartTimeout());
   } catch (error) {
     // TODO: how should errors here be handled?
@@ -183,8 +167,6 @@ export function* handleFetchCaptureKey() {
     yield put(captureKeyProcessing(false)); // we are done capture key
     yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
   }
-  // yield call(handleCaptureKeyTimeout);
-  // yield put(captureKeyStartTimeout());
 }
 
 /**
@@ -232,6 +214,7 @@ export function* handleSubmitPayment({ payload }) {
   const { method, ...paymentArgs } = payload;
   try {
     yield put(basketProcessing(true));
+    yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
     let paymentMethodCheckout = paymentMethods[method];
     if (method === 'cybersource' && isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false)) {

@@ -22,7 +22,6 @@ class FlexMicroformField extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if (this.field === null || prevProps.captureKeyId !== this.props.captureKeyId) {
     if (this.field === null || prevProps.microformStatus !== this.props.microformStatus) {
       this.initialize();
       return;
@@ -49,15 +48,8 @@ class FlexMicroformField extends React.Component {
 
   initialize() {
     if (!window.microform || this.props.microformStatus !== STATUS_READY) {
-      console.log("FlexMicroformField Init BAILED");
       return;
     }
-    // if (this.field !== null) {
-    //   console.log("MicroformField disposing old field");
-    //   this.field.unload();
-    //   this.field.dispose();
-    // }
-    console.log(`FlexMicroformField Init ${this.props.fieldType}`);
     this.field = window.microform.createField(this.props.fieldType, {
       disabled: this.props.disabled,
       description: this.props.intl.formatMessage(this.props.label.props),

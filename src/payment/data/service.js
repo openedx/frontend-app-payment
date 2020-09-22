@@ -53,7 +53,6 @@ export async function getCaptureKey() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context/`)
     .catch(handleBasketApiError);
-  console.log({ "getCaptureKey data": data });
   return data;
 }
 
