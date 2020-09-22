@@ -34,6 +34,7 @@ class CreditCardNumberField extends React.Component {
           fieldType="number"
           microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
+          captureKeyId={this.props.captureKeyId}
           onChange={this.onNumberChange}
           label={(
             <FormattedMessage

@@ -11,6 +11,9 @@ import {
   basketProcessing,
   captureKeyDataReceived,
   captureKeyProcessing,
+  CAPTURE_KEY_START_TIMEOUT,
+  captureKeyStartTimeout,
+  microformStatus,
   fetchBasket,
   addCoupon,
   removeCoupon,
@@ -18,6 +21,8 @@ import {
   submitPayment,
   fetchCaptureKey,
 } from './actions';
+
+import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants'
 
 // Sagas
 import { handleErrors, handleMessages } from '../../feedback';
@@ -112,17 +117,17 @@ export function* handleFetchBasket() {
 export function* handleCaptureKeyTimeout() {
   try {
     // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
-    yield delay(12 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '2mins',
-        userMessage: 'Please complete your purchase within two minutes',
-        messageType: MESSAGE_TYPES.INFO,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
+    // yield delay(12 * 60 * 1000);  // BJH: commented out to shorten testing
+    // yield call(
+    //   handleMessages,
+    //   [{
+    //     code: '2mins',
+    //     userMessage: 'Please complete your purchase within two minutes',
+    //     messageType: MESSAGE_TYPES.INFO,
+    //   }],
+    //   true, // Clear other messages
+    //   window.location.search,
+    // );
 
     yield delay(1 * 60 * 1000);
     yield call(
@@ -138,38 +143,48 @@ export function* handleCaptureKeyTimeout() {
 
     // HACK: until we get the capture key reloading working, tell the user to do it
     yield delay(1 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '0mins',
-        userMessage: 'Please reload the page to make your purchase',
-        messageType: MESSAGE_TYPES.ERROR,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
+    // yield call(
+    //   handleMessages,
+    //   [{
+    //     code: '0mins',
+    //     userMessage: 'Please reload the page to make your purchase',
+    //     messageType: MESSAGE_TYPES.ERROR,
+    //   }],
+    //   true, // Clear other messages
+    //   window.location.search,
+    // );
+    // yield call(handleFetchCaptureKey);
+    yield put(fetchCaptureKey());
   } catch (error) {
     // TODO: how should errors here be handled?
   }
 }
 
 export function* handleFetchCaptureKey() {
+  console.log("handleFetchCaptureKey top")
   if (yield isCaptureKeyProcessing()) {
     // Do nothing if there is a request currently in flight
+    console.log("handleFetchCaptureKey BAILED")
     return;
   }
 
+  console.log("handleFetchCaptureKey start fetching")
   try {
     yield put(captureKeyProcessing(true)); // we are waiting for a capture key
+    yield put(microformStatus(DEFAULT_STATUS)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
+    console.log("handleFetchCaptureKey called service")
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    yield call(handleCaptureKeyTimeout);
+    // yield call(handleCaptureKeyTimeout);
+    yield put(captureKeyStartTimeout());
   } catch (error) {
     // TODO: how should errors here be handled?
   } finally {
     yield put(captureKeyProcessing(false)); // we are done capture key
     yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
   }
+  // yield call(handleCaptureKeyTimeout);
+  // yield put(captureKeyStartTimeout());
 }
 
 /**
@@ -250,6 +265,7 @@ export function* handleSubmitPayment({ payload }) {
 
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
+  yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);

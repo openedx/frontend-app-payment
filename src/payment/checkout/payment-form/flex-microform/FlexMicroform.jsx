@@ -15,7 +15,7 @@ class FlexMicroform extends React.Component {
 
     window.microform = null;
     this.state = {
-      microformStatus: DEFAULT_STATUS,
+      captureKey: { microformStatus: DEFAULT_STATUS },
     };
   }
 
@@ -23,12 +23,13 @@ class FlexMicroform extends React.Component {
     this.initialize();
   }
 
-  componentDidUpdate() {
-    this.initialize();
+  componentDidUpdate(prevProps) {
+    this.initialize(prevProps);
   }
 
-  initialize = () => {
-    if (window.microform !== null || !this.props.captureKeyId) {
+  initialize = (prevProps = {}) => {
+    console.log("FlexMicroform Init");
+    if (!this.props.captureKeyId || prevProps.captureKeyId === this.props.captureKeyId) {
       return;
     }
     if (typeof window.Flex === 'undefined') {
@@ -39,6 +40,7 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
+    console.log({ "New flex microform with key": this.props.captureKeyId });
     window.microform = new window.Flex(this.props.captureKeyId).microform({
       styles: {
         input: {
@@ -49,7 +51,7 @@ class FlexMicroform extends React.Component {
       },
     });
     this.setState({
-      microformStatus: STATUS_READY,
+      captureKey: { microformStatus: STATUS_READY },
     });
   };
 
@@ -61,8 +63,9 @@ class FlexMicroform extends React.Component {
           disabled={this.props.disabled}
         />
         <CreditCardVerificationNumberField
-          microformStatus={this.state.microformStatus}
+          microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
+          captureKeyId={this.props.captureKeyId}
         />
       </div>
     );
