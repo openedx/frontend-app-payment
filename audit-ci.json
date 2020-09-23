@@ -1,0 +1,7 @@
+{
+    "allowlist": [
+        "acorn",
+        "bl"
+    ],
+    "moderate": true
+}
