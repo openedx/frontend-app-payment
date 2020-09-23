@@ -86,33 +86,6 @@ describe('saga tests', () => {
       ]);
     });
 
-    it('should dispatch addMessage actions on field errors', async () => {
-      error.fieldErrors = [
-        {
-          code: 'uhoh',
-          userMessage: 'Uhoh oh no!',
-          fieldName: 'field1',
-        },
-        {
-          code: 'oh_goodness',
-          userMessage: 'This is really bad!',
-          fieldName: 'field2',
-        },
-      ];
-      await runSaga(
-        {
-          dispatch: action => dispatched.push(action),
-        },
-        handleErrors,
-        error,
-      ).toPromise();
-
-      expect(dispatched).toEqual([
-        addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR, 'field1'),
-        addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
-      ]);
-    });
-
     it('should dispatch addMessage actions on a mix of error types', async () => {
       error.errors = [
         {
@@ -138,7 +111,6 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR),
-        addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
       ]);
     });
 

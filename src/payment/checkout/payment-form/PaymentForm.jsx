@@ -218,13 +218,19 @@ export class PaymentFormComponent extends React.Component {
       const form = this.formRef.current;
       const elementSelectors = Object.keys(this.props.submitErrors).map((fieldName) => `[id=${fieldName}]`);
       const firstElementWithError = form.querySelector(elementSelectors.join(', '));
-      if (firstElementWithError.tagName === 'input' || firstElementWithError.tagName === 'select') {
+      if (['input', 'select'].includes(firstElementWithError.tagName.toLowerCase())) {
         firstElementWithError.focus();
+        this.setState({ shouldFocusFirstError: false, firstErrorId: null });
       } else {
         this.setState({
           firstErrorId: firstElementWithError.id,
         });
       }
+    } else if (this.state.shouldFocusFirstError && this.state.firstErrorId !== null) {
+      this.setState({
+        shouldFocusFirstError: false,
+        firstErrorId: null,
+      });
     }
   }
 
@@ -246,7 +252,7 @@ export class PaymentFormComponent extends React.Component {
     if (isProcessing) { submitButtonState = 'processing'; }
 
     return (
-      <ErrorFocusContext.Provider value={this.state.shouldFocusFirstError && this.state.firstErrorId}>
+      <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
