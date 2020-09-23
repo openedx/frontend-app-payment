@@ -52,7 +52,6 @@ export const CAPTURE_KEY_START_TIMEOUT = 'CAPTURE_KEY_START_TIMEOUT';
 
 export const captureKeyStartTimeout = () => ({
   type: CAPTURE_KEY_START_TIMEOUT,
-  // payload: isProcessing,
 });
 export const CAPTURE_KEY_DATA_RECEIVED = 'CAPTURE_KEY_DATA_RECEIVED';
 
