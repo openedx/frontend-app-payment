@@ -12,6 +12,7 @@ import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import { updatePaymentFormSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
+import { ErrorFocusContext } from './contexts';
 
 const CardValidator = require('../card-validator');
 
@@ -19,7 +20,10 @@ export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.formRef = React.createRef();
-    this.state = { shouldFocusFirstError: false };
+    this.state = {
+      firstErrorId: null,
+      shouldFocusFirstError: false,
+    };
   }
 
   componentDidMount() {
@@ -206,18 +210,21 @@ export class PaymentFormComponent extends React.Component {
   }
 
   focusFirstError() {
-    if (this.state.shouldFocusFirstError && Object.keys(this.props.submitErrors).length > 0) {
+    if (
+      this.state.shouldFocusFirstError
+      && !this.state.firstErrorId
+      && Object.keys(this.props.submitErrors).length > 0
+    ) {
       const form = this.formRef.current;
       const elementSelectors = Object.keys(this.props.submitErrors).map((fieldName) => `[id=${fieldName}]`);
       const firstElementWithError = form.querySelector(elementSelectors.join(', '));
       if (firstElementWithError.tagName === 'input' || firstElementWithError.tagName === 'select') {
         firstElementWithError.focus();
       } else {
-        firstElementWithError.scrollIntoView();
+        this.setState({
+          firstErrorId: firstElementWithError.id,
+        });
       }
-      this.setState({
-        shouldFocusFirstError: false,
-      });
     }
   }
 
@@ -239,53 +246,55 @@ export class PaymentFormComponent extends React.Component {
     if (isProcessing) { submitButtonState = 'processing'; }
 
     return (
-      <form
-        onSubmit={handleSubmit(this.onSubmit)}
-        ref={this.formRef}
-        noValidate
-      >
-        <CardHolderInformation
-          showBulkEnrollmentFields={isBulkOrder}
-          disabled={disabled}
-          isPaymentVisualExperiment={isPaymentVisualExperiment}
-        />
-        <CardDetails
-          disabled={disabled}
-          isPaymentVisualExperiment={isPaymentVisualExperiment}
-        />
-        <div className="row justify-content-end">
-          <div className="col-lg-6 form-group">
-            {
-              loading || isQuantityUpdating ? (
-                <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
-              ) : (
-                <StatefulButton
-                  type="submit"
-                  id="placeOrderButton"
-                  className="btn btn-primary btn-lg btn-block"
-                  state={submitButtonState}
-                  onClick={this.props.onSubmitButtonClick}
-                  labels={{
-                    default: (
-                      <FormattedMessage
-                        id="payment.form.submit.button.text"
-                        defaultMessage="Place Order"
-                        description="The label for the payment form submit button"
-                      />
-                    ),
-                  }}
-                  icons={{
-                    processing: (
-                      <span className="button-spinner-icon" />
-                    ),
-                  }}
-                  disabledStates={['processing', 'disabled']}
-                />
-              )
-            }
+      <ErrorFocusContext.Provider value={this.state.shouldFocusFirstError && this.state.firstErrorId}>
+        <form
+          onSubmit={handleSubmit(this.onSubmit)}
+          ref={this.formRef}
+          noValidate
+        >
+          <CardHolderInformation
+            showBulkEnrollmentFields={isBulkOrder}
+            disabled={disabled}
+            isPaymentVisualExperiment={isPaymentVisualExperiment}
+          />
+          <CardDetails
+            disabled={disabled}
+            isPaymentVisualExperiment={isPaymentVisualExperiment}
+          />
+          <div className="row justify-content-end">
+            <div className="col-lg-6 form-group">
+              {
+                loading || isQuantityUpdating ? (
+                  <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
+                ) : (
+                  <StatefulButton
+                    type="submit"
+                    id="placeOrderButton"
+                    className="btn btn-primary btn-lg btn-block"
+                    state={submitButtonState}
+                    onClick={this.props.onSubmitButtonClick}
+                    labels={{
+                      default: (
+                        <FormattedMessage
+                          id="payment.form.submit.button.text"
+                          defaultMessage="Place Order"
+                          description="The label for the payment form submit button"
+                        />
+                      ),
+                    }}
+                    icons={{
+                      processing: (
+                        <span className="button-spinner-icon" />
+                      ),
+                    }}
+                    disabledStates={['processing', 'disabled']}
+                  />
+                )
+              }
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </ErrorFocusContext.Provider>
     );
   }
 }
