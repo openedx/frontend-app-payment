@@ -18,11 +18,16 @@ class FlexMicroformField extends React.Component {
   }
 
   componentDidMount() {
-    this.initialize();
+    if (window.microform && this.props.microformStatus === STATUS_READY) {
+      this.initialize();
+    }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.field === null || prevProps.microformStatus !== this.props.microformStatus) {
+    if (window.microform
+      && this.props.microformStatus === STATUS_READY
+      && (this.field === null || prevProps.microformStatus !== STATUS_READY)
+    ) {
       this.initialize();
       return;
     }
@@ -47,9 +52,6 @@ class FlexMicroformField extends React.Component {
   }
 
   initialize() {
-    if (!window.microform || this.props.microformStatus !== STATUS_READY) {
-      return;
-    }
     this.field = window.microform.createField(this.props.fieldType, {
       disabled: this.props.disabled,
       description: this.props.intl.formatMessage(this.props.label.props),
