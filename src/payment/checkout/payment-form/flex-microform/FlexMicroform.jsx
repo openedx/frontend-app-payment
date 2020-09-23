@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logError } from '@edx/frontend-platform/logging';
 import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
-import { STATUS_READY } from './constants';
+import { DEFAULT_STATUS, STATUS_READY } from './constants';
 import { microformStatus } from '../../../data/actions';
 
 // Selectors
@@ -60,7 +60,7 @@ class FlexMicroform extends React.Component {
         <CreditCardVerificationNumberField
           microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
-          captureKeyId={this.props.captureKeyId}
+          // captureKeyId={this.props.captureKeyId}
         />
       </div>
     );
@@ -69,11 +69,14 @@ class FlexMicroform extends React.Component {
 
 FlexMicroform.propTypes = {
   captureKeyId: PropTypes.string,
+  microformStatus: PropTypes.string,
   disabled: PropTypes.bool,
+  dispatch: PropTypes.func.isRequired,
 };
 
 FlexMicroform.defaultProps = {
   captureKeyId: null,
+  microformStatus: DEFAULT_STATUS,
   disabled: false,
 };
 

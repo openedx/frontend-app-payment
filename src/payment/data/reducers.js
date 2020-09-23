@@ -11,7 +11,7 @@ import {
   fetchCaptureKey,
 } from './actions';
 
-import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants'
+import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 
 const basketInitialState = {
   loading: true,

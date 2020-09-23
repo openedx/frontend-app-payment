@@ -22,7 +22,7 @@ import {
   fetchCaptureKey,
 } from './actions';
 
-import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants'
+import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 
 // Sagas
 import { handleErrors, handleMessages, clearMessages } from '../../feedback';
@@ -117,7 +117,7 @@ export function* handleFetchBasket() {
 export function* handleCaptureKeyTimeout() {
   try {
     // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
-    yield delay(12 * 60 * 1000);  // BJH: commented out to shorten testing
+    yield delay(12 * 60 * 1000);
     yield call(
       handleMessages,
       [{
