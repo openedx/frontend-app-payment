@@ -37,7 +37,6 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    console.log({ "New flex microform with key": this.props.captureKeyId });
     window.microform = new window.Flex(this.props.captureKeyId).microform({
       styles: {
         input: {
@@ -60,7 +59,6 @@ class FlexMicroform extends React.Component {
         <CreditCardVerificationNumberField
           microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
-          // captureKeyId={this.props.captureKeyId}
         />
       </div>
     );

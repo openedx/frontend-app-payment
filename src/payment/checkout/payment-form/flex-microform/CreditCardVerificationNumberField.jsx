@@ -15,7 +15,6 @@ function CreditCardVerificationNumberField(props) {
         component={FlexMicroformField}
         microformStatus={props.microformStatus}
         disabled={props.disabled}
-        // captureKeyId={props.captureKeyId}
         fieldType="securityCode"
         label={(
           <FormattedMessage
