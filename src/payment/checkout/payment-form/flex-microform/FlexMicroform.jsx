@@ -25,7 +25,7 @@ class FlexMicroform extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.captureKeyId && prevProps.captureKeyId !== this.props.captureKeyId) {
-      this.initialize(prevProps.captureKeyId);
+      this.initialize(this.props.captureKeyId);
     }
   }
 
@@ -54,7 +54,7 @@ class FlexMicroform extends React.Component {
     return (
       <div className="row">
         <CreditCardNumberField
-          microformStatus={this.state.microformStatus}
+          microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
         />
         <CreditCardVerificationNumberField
