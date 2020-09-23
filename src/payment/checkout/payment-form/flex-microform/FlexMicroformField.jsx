@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
-import { ErrorFocusContext } from '../contexts';
 import messages from '../PaymentForm.messages';
 
 class FlexMicroformField extends React.Component {
@@ -39,10 +38,6 @@ class FlexMicroformField extends React.Component {
       this.field.update({
         description: `${this.props.label}\n${translatedMessage}`,
       });
-    }
-
-    if (this.context === this.props.id) {
-      this.field.focus();
     }
   }
 
@@ -107,8 +102,6 @@ class FlexMicroformField extends React.Component {
     );
   }
 }
-
-FlexMicroformField.contextType = ErrorFocusContext;
 
 FlexMicroformField.propTypes = {
   fieldType: PropTypes.string.isRequired,
