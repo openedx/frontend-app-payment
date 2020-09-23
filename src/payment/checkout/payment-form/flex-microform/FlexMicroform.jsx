@@ -18,17 +18,18 @@ class FlexMicroform extends React.Component {
   }
 
   componentDidMount() {
-    this.initialize();
+    if (this.props.captureKeyId) {
+      this.initialize(this.props.captureKeyId);
+    }
   }
 
   componentDidUpdate(prevProps) {
-    this.initialize(prevProps);
+    if (this.props.captureKeyId && prevProps.captureKeyId !== this.props.captureKeyId) {
+      this.initialize(prevProps.captureKeyId);
+    }
   }
 
-  initialize = (prevProps = {}) => {
-    if (!this.props.captureKeyId || prevProps.captureKeyId === this.props.captureKeyId) {
-      return;
-    }
+  initialize = (captureKeyId) => {
     if (typeof window.Flex === 'undefined') {
       logError(new Error('Unable to initialize Cybersource FlexMicroform'), {
         messagePrefix: 'Cybersource FlexMicroform Error',
@@ -37,7 +38,7 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    window.microform = new window.Flex(this.props.captureKeyId).microform({
+    window.microform = new window.Flex(captureKeyId).microform({
       styles: {
         input: {
           'font-size': '16px',
