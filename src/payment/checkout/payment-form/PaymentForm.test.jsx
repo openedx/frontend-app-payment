@@ -5,6 +5,7 @@ import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { Factory } from 'rosie';
+import configureMockStore from 'redux-mock-store';
 
 import { AppContext } from '@edx/frontend-platform/react';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
@@ -14,6 +15,8 @@ import '../../__factories__/userAccount.factory';
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+const mockStore = configureMockStore();
 
 configureI18n({
   config: {
@@ -65,6 +68,7 @@ describe('<PaymentForm />', () => {
     ));
     paymentForm = wrapper.find(PaymentFormComponent).first().instance();
   });
+
   describe('getRequiredFields', () => {
     it('returns expected required fields', () => {
       const testFormValues = [
@@ -157,7 +161,6 @@ describe('<PaymentForm />', () => {
     it('throws expected errors', () => {
       paymentForm.validateRequiredFields = jest.fn();
       paymentForm.validateCardDetails = jest.fn();
-      paymentForm.scrollToError = jest.fn();
       const testFormValues = {
         firstName: '',
         lastName: '',
@@ -190,7 +193,6 @@ describe('<PaymentForm />', () => {
 
       testData.forEach((testCaseData) => {
         paymentForm.validateRequiredFields.mockReturnValueOnce(testCaseData[0]);
-        paymentForm.scrollToError.mockReturnValueOnce(testCaseData[0]);
         paymentForm.validateCardDetails.mockReturnValueOnce(testCaseData[1]);
         if (testCaseData[2]) {
           expect(() => paymentForm.onSubmit(testFormValues)).toThrow(testCaseData[2]);
@@ -207,10 +209,10 @@ describe('<PaymentForm />', () => {
       const testData = [
         // cardNumber, securityCode, cardExpirationMonth, cardExpirationYear, expectedErrors
         ['', '', '', '', {}],
-        ['', '', `${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'Card expired' }],
-        ['41111', '', '', '', { cardNumber: 'Invalid card number' }],
-        ['30569309025904', '', '', '', { cardNumber: 'Unsupported card type' }],
-        ['4111-1111-1111-1111', '12345', '', '', { securityCode: 'Invalid security code' }],
+        ['', '', `${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'payment.form.errors.card.expired' }],
+        ['41111', '', '', '', { cardNumber: 'payment.form.errors.invalid.card.number' }],
+        ['30569309025904', '', '', '', { cardNumber: 'payment.form.errors.unsupported.card' }],
+        ['4111-1111-1111-1111', '12345', '', '', { securityCode: 'payment.form.errors.invalid.security.code' }],
       ];
 
       testData.forEach((testCaseData) => {
@@ -230,17 +232,41 @@ describe('<PaymentForm />', () => {
         lastName: undefined,
       };
       const expectedErrors = {
-        lastName: 'This field is required',
+        lastName: 'payment.form.errors.required.field',
       };
       expect(paymentForm.validateRequiredFields(values)).toEqual(expectedErrors);
     });
   });
-  describe('scrollToError', () => {
-    it('scrolls to the input name of the first error', () => {
-      global.HTMLElement.prototype.scrollIntoView = jest.fn();
-      const error = 'firstName';
-      paymentForm.scrollToError(error);
-      expect(global.HTMLElement.prototype.scrollIntoView).toHaveBeenCalled();
+  describe('focusFirstError', () => {
+    it('focuses on the input name of the first error', () => {
+      const wrapper = mount((
+        <IntlProvider locale="en">
+          <AppContext.Provider value={{ authenticatedUser }}>
+            <Provider store={mockStore({
+              form: {
+                payment: {
+                  submitErrors: { firstName: 'error' },
+                },
+              },
+            })}
+            >
+              <PaymentForm
+                handleSubmit={() => {}}
+                onSubmitPayment={() => {}}
+                onSubmitButtonClick={() => {}}
+              />
+            </Provider>
+          </AppContext.Provider>
+        </IntlProvider>
+      ));
+      paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+      const firstNameField = wrapper.find('#firstName').hostNodes().getDOMNode();
+      firstNameField.focus = jest.fn();
+      paymentForm.setState({
+        shouldFocusFirstError: true,
+        firstErrorId: null,
+      });
+      expect(firstNameField.focus).toHaveBeenCalled();
     });
   });
 });

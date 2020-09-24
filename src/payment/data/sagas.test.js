@@ -12,12 +12,14 @@ import paymentSaga, {
   handleUpdateQuantity,
   handleRemoveCoupon,
   handleAddCoupon,
+  handleFetchCaptureKey,
 } from './sagas';
 import { transformResults } from './service';
 import {
   basketDataReceived,
   basketProcessing,
   fetchBasket,
+  fetchCaptureKey,
   addCoupon,
   removeCoupon,
   updateQuantity,
@@ -711,7 +713,6 @@ describe('saga tests', () => {
       basketProcessing(true),
       submitPayment.request(),
       clearMessages(),
-      addMessage(null, 'This is a field error!', null, 'error', 'field1'),
       stopSubmit('payment', {
         field1: 'This is a field error!',
       }),
@@ -727,6 +728,7 @@ describe('saga tests', () => {
   it('should pass actions to the correct sagas', () => {
     const gen = paymentSaga();
 
+    expect(gen.next().value).toEqual(takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey));
     expect(gen.next().value).toEqual(takeEvery(fetchBasket.TRIGGER, handleFetchBasket));
     expect(gen.next().value).toEqual(takeEvery(addCoupon.TRIGGER, handleAddCoupon));
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
