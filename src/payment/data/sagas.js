@@ -115,38 +115,34 @@ export function* handleFetchBasket() {
 }
 
 export function* handleCaptureKeyTimeout() {
-  try {
-    // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
-    yield delay(12 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '2mins',
-        userMessage: 'Please complete your purchase within two minutes (For security, your credit card information will then need to be re-entered to complete your purchase)',
-        messageType: MESSAGE_TYPES.INFO,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
+  // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
+  yield delay(12 * 60 * 1000);
+  yield call(
+    handleMessages,
+    [{
+      code: '2mins',
+      userMessage: 'Please complete your purchase within two minutes (For security, your credit card information will then need to be re-entered to complete your purchase)',
+      messageType: MESSAGE_TYPES.INFO,
+    }],
+    true, // Clear other messages
+    window.location.search,
+  );
 
-    yield delay(1 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '1mins',
-        userMessage: 'Please complete your purchase within one minute (For security, your credit card information will then need to be re-entered to complete your purchase)',
-        messageType: MESSAGE_TYPES.INFO,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
+  yield delay(1 * 60 * 1000);
+  yield call(
+    handleMessages,
+    [{
+      code: '1mins',
+      userMessage: 'Please complete your purchase within one minute (For security, your credit card information will then need to be re-entered to complete your purchase)',
+      messageType: MESSAGE_TYPES.INFO,
+    }],
+    true, // Clear other messages
+    window.location.search,
+  );
 
-    yield delay(1 * 60 * 1000);
-    yield put(clearMessages());
-    yield put(fetchCaptureKey());
-  } catch (error) {
-    // TODO: how should errors here be handled?
-  }
+  yield delay(1 * 60 * 1000);
+  yield put(clearMessages());
+  yield put(fetchCaptureKey());
 }
 
 export function* handleFetchCaptureKey() {
@@ -162,7 +158,7 @@ export function* handleFetchCaptureKey() {
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
     yield put(captureKeyStartTimeout());
   } catch (error) {
-    // TODO: how should errors here be handled?
+    yield call(handleErrors, error, true);
   } finally {
     yield put(captureKeyProcessing(false)); // we are done capture key
     yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
