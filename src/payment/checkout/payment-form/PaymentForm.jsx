@@ -10,7 +10,7 @@ import { getCardTypeId, CARD_TYPES } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
-import { updatePaymentFormSelector } from '../../data/selectors';
+import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
@@ -330,6 +330,14 @@ PaymentFormComponent.defaultProps = {
   submitErrors: {},
 };
 
+const mapStateToProps = (state) => {
+  const newProps = {
+    ...updateCaptureKeySelector(state),
+    ...updateSubmitErrorsSelector('payment')(state),
+  };
+  return newProps;
+};
+
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(connect(updatePaymentFormSelector('payment'))(injectIntl(PaymentFormComponent)));
+export default reduxForm({ form: 'payment' })(connect(mapStateToProps)(injectIntl(PaymentFormComponent)));
