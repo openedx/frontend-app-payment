@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
+import { updateCaptureKeySelector } from '../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../performanceEventing';
 
 class OrderSummary extends React.Component {
@@ -10,7 +13,10 @@ class OrderSummary extends React.Component {
     markPerformanceIfAble('Order Summary component rendered');
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
-      getPerformanceProperties(),
+      {
+        ...getPerformanceProperties(),
+        flexMicroformEnabled: this.props.flexMicroformEnabled,
+      },
     );
   }
 
@@ -41,10 +47,12 @@ class OrderSummary extends React.Component {
 
 OrderSummary.propTypes = {
   children: PropTypes.node,
+  flexMicroformEnabled: PropTypes.bool,
 };
 
 OrderSummary.defaultProps = {
   children: undefined,
+  flexMicroformEnabled: false,
 };
 
-export default OrderSummary;
+export default connect(updateCaptureKeySelector, {})(OrderSummary);
