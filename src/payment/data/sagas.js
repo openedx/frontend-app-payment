@@ -22,7 +22,7 @@ import {
   fetchCaptureKey,
 } from './actions';
 
-import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
+import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
 
 // Sagas
 import { handleErrors, handleMessages, clearMessages } from '../../feedback';
@@ -153,7 +153,7 @@ export function* handleFetchCaptureKey() {
 
   try {
     yield put(captureKeyProcessing(true)); // we are waiting for a capture key
-    yield put(microformStatus(DEFAULT_STATUS)); // we are refreshing the capture key
+    yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
     yield put(captureKeyStartTimeout());
