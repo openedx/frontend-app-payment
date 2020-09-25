@@ -11,6 +11,9 @@ import {
   basketProcessing,
   captureKeyDataReceived,
   captureKeyProcessing,
+  CAPTURE_KEY_START_TIMEOUT,
+  captureKeyStartTimeout,
+  microformStatus,
   fetchBasket,
   addCoupon,
   removeCoupon,
@@ -19,8 +22,10 @@ import {
   fetchCaptureKey,
 } from './actions';
 
+import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
+
 // Sagas
-import { handleErrors, handleMessages } from '../../feedback';
+import { handleErrors, handleMessages, clearMessages } from '../../feedback';
 
 // Services
 import * as PaymentApiService from './service';
@@ -110,47 +115,34 @@ export function* handleFetchBasket() {
 }
 
 export function* handleCaptureKeyTimeout() {
-  try {
-    // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
-    yield delay(12 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '2mins',
-        userMessage: 'Please complete your purchase within two minutes',
-        messageType: MESSAGE_TYPES.INFO,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
+  // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
+  yield delay(12 * 60 * 1000);
+  yield call(
+    handleMessages,
+    [{
+      code: '2mins',
+      userMessage: 'Please complete your purchase within two minutes (For security, your credit card information will then need to be re-entered to complete your purchase)',
+      messageType: MESSAGE_TYPES.INFO,
+    }],
+    true, // Clear other messages
+    window.location.search,
+  );
 
-    yield delay(1 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '1mins',
-        userMessage: 'Please complete your purchase within one minute',
-        messageType: MESSAGE_TYPES.INFO,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
+  yield delay(1 * 60 * 1000);
+  yield call(
+    handleMessages,
+    [{
+      code: '1mins',
+      userMessage: 'Please complete your purchase within one minute (For security, your credit card information will then need to be re-entered to complete your purchase)',
+      messageType: MESSAGE_TYPES.INFO,
+    }],
+    true, // Clear other messages
+    window.location.search,
+  );
 
-    // HACK: until we get the capture key reloading working, tell the user to do it
-    yield delay(1 * 60 * 1000);
-    yield call(
-      handleMessages,
-      [{
-        code: '0mins',
-        userMessage: 'Please reload the page to make your purchase',
-        messageType: MESSAGE_TYPES.ERROR,
-      }],
-      true, // Clear other messages
-      window.location.search,
-    );
-  } catch (error) {
-    // TODO: how should errors here be handled?
-  }
+  yield delay(1 * 60 * 1000);
+  yield put(clearMessages());
+  yield put(fetchCaptureKey());
 }
 
 export function* handleFetchCaptureKey() {
@@ -161,11 +153,12 @@ export function* handleFetchCaptureKey() {
 
   try {
     yield put(captureKeyProcessing(true)); // we are waiting for a capture key
+    yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    yield call(handleCaptureKeyTimeout);
+    yield put(captureKeyStartTimeout());
   } catch (error) {
-    // TODO: how should errors here be handled?
+    yield call(handleErrors, error, true);
   } finally {
     yield put(captureKeyProcessing(false)); // we are done capture key
     yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
@@ -217,6 +210,7 @@ export function* handleSubmitPayment({ payload }) {
   const { method, ...paymentArgs } = payload;
   try {
     yield put(basketProcessing(true));
+    yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
     let paymentMethodCheckout = paymentMethods[method];
     if (method === 'cybersource' && isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false)) {
@@ -250,6 +244,7 @@ export function* handleSubmitPayment({ payload }) {
 
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
+  yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);

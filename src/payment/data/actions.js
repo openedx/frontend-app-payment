@@ -41,6 +41,18 @@ export const captureKeyProcessing = isProcessing => ({
   payload: isProcessing,
 });
 
+export const MICROFORM_STATUS = 'MICROFORM_STATUS';
+
+export const microformStatus = status => ({
+  type: MICROFORM_STATUS,
+  payload: status,
+});
+
+export const CAPTURE_KEY_START_TIMEOUT = 'CAPTURE_KEY_START_TIMEOUT';
+
+export const captureKeyStartTimeout = () => ({
+  type: CAPTURE_KEY_START_TIMEOUT,
+});
 export const CAPTURE_KEY_DATA_RECEIVED = 'CAPTURE_KEY_DATA_RECEIVED';
 
 export const captureKeyDataReceived = captureKey => ({

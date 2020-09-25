@@ -5,6 +5,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
+import { microformStatus } from '../../../data/actions';
 
 // Selectors
 import { updateCaptureKeySelector } from '../../../data/selectors';
@@ -14,23 +15,21 @@ class FlexMicroform extends React.Component {
     super(props);
 
     window.microform = null;
-    this.state = {
-      microformStatus: DEFAULT_STATUS,
-    };
   }
 
   componentDidMount() {
-    this.initialize();
-  }
-
-  componentDidUpdate() {
-    this.initialize();
-  }
-
-  initialize = () => {
-    if (window.microform !== null || !this.props.captureKeyId) {
-      return;
+    if (this.props.captureKeyId) {
+      this.initialize(this.props.captureKeyId);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.captureKeyId && prevProps.captureKeyId !== this.props.captureKeyId) {
+      this.initialize(this.props.captureKeyId);
+    }
+  }
+
+  initialize = (captureKeyId) => {
     if (typeof window.Flex === 'undefined') {
       logError(new Error('Unable to initialize Cybersource FlexMicroform'), {
         messagePrefix: 'Cybersource FlexMicroform Error',
@@ -39,7 +38,7 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    window.microform = new window.Flex(this.props.captureKeyId).microform({
+    window.microform = new window.Flex(captureKeyId).microform({
       styles: {
         input: {
           'font-size': '16px',
@@ -48,20 +47,18 @@ class FlexMicroform extends React.Component {
         },
       },
     });
-    this.setState({
-      microformStatus: STATUS_READY,
-    });
+    this.props.dispatch(microformStatus(STATUS_READY));
   };
 
   render() {
     return (
       <div className="row">
         <CreditCardNumberField
-          microformStatus={this.state.microformStatus}
+          microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
         />
         <CreditCardVerificationNumberField
-          microformStatus={this.state.microformStatus}
+          microformStatus={this.props.microformStatus}
           disabled={this.props.disabled}
         />
       </div>
@@ -71,11 +68,14 @@ class FlexMicroform extends React.Component {
 
 FlexMicroform.propTypes = {
   captureKeyId: PropTypes.string,
+  microformStatus: PropTypes.string,
   disabled: PropTypes.bool,
+  dispatch: PropTypes.func.isRequired,
 };
 
 FlexMicroform.defaultProps = {
   captureKeyId: null,
+  microformStatus: DEFAULT_STATUS,
   disabled: false,
 };
 

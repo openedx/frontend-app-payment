@@ -5,10 +5,13 @@ import {
   BASKET_PROCESSING,
   CAPTURE_KEY_DATA_RECEIVED,
   CAPTURE_KEY_PROCESSING,
+  MICROFORM_STATUS,
   fetchBasket,
   submitPayment,
   fetchCaptureKey,
 } from './actions';
+
+import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 
 const basketInitialState = {
   loading: true,
@@ -63,6 +66,7 @@ const basket = (state = basketInitialState, action = null) => {
 const captureContextInitialState = {
   isCaptureKeyProcessing: false,
   flexMicroformEnabled: false,
+  microformStatus: DEFAULT_STATUS,
   captureKeyId: '',
 };
 
@@ -77,6 +81,11 @@ const captureKey = (state = captureContextInitialState, action = null) => {
       case CAPTURE_KEY_PROCESSING: return {
         ...state,
         isCaptureKeyProcessing: action.payload,
+      };
+
+      case MICROFORM_STATUS: return {
+        ...state,
+        microformStatus: action.payload,
       };
 
       default:
