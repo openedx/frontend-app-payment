@@ -58,8 +58,8 @@ class FlexMicroformField extends React.Component {
     });
     this.loadingElement.current.className = 'd-none';
     this.field.load(this.element.current);
-    if (this.props.onChange) {
-      this.field.on('change', this.props.onChange);
+    if (this.props.onValueChange) {
+      this.field.on('change', this.props.onValueChange);
     }
   }
 
@@ -115,7 +115,7 @@ FlexMicroformField.contextType = ErrorFocusContext;
 FlexMicroformField.propTypes = {
   fieldType: PropTypes.string.isRequired,
   microformStatus: PropTypes.string,
-  onChange: PropTypes.func,
+  onValueChange: PropTypes.func,
   label: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   helpText: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   disabled: PropTypes.bool,
@@ -129,7 +129,7 @@ FlexMicroformField.propTypes = {
 
 FlexMicroformField.defaultProps = {
   microformStatus: DEFAULT_STATUS,
-  onChange: null,
+  onValueChange: null,
   helpText: null,
   disabled: false,
 };
