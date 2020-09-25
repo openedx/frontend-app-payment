@@ -10,7 +10,7 @@ import { getCardTypeId, CARD_TYPES } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
-import { updatePaymentFormSelector } from '../../data/selectors';
+import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
@@ -212,25 +212,21 @@ export class PaymentFormComponent extends React.Component {
   focusFirstError() {
     if (
       this.state.shouldFocusFirstError
-      && !this.state.firstErrorId
       && Object.keys(this.props.submitErrors).length > 0
     ) {
       const form = this.formRef.current;
       const elementSelectors = Object.keys(this.props.submitErrors).map((fieldName) => `[id=${fieldName}]`);
       const firstElementWithError = form.querySelector(elementSelectors.join(', '));
-      if (['input', 'select'].includes(firstElementWithError.tagName.toLowerCase())) {
-        firstElementWithError.focus();
-        this.setState({ shouldFocusFirstError: false, firstErrorId: null });
-      } else {
-        this.setState({
-          firstErrorId: firstElementWithError.id,
-        });
+      if (firstElementWithError) {
+        if (['input', 'select'].includes(firstElementWithError.tagName.toLowerCase())) {
+          firstElementWithError.focus();
+          this.setState({ shouldFocusFirstError: false, firstErrorId: null });
+        } else if (this.state.firstErrorId !== firstElementWithError.id) {
+          this.setState({
+            firstErrorId: firstElementWithError.id,
+          });
+        }
       }
-    } else if (this.state.shouldFocusFirstError && this.state.firstErrorId !== null) {
-      this.setState({
-        shouldFocusFirstError: false,
-        firstErrorId: null,
-      });
     }
   }
 
@@ -250,7 +246,6 @@ export class PaymentFormComponent extends React.Component {
     if (disabled) { submitButtonState = 'disabled'; }
     // istanbul ignore if
     if (isProcessing) { submitButtonState = 'processing'; }
-
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         <form
@@ -330,6 +325,14 @@ PaymentFormComponent.defaultProps = {
   submitErrors: {},
 };
 
+const mapStateToProps = (state) => {
+  const newProps = {
+    ...updateCaptureKeySelector(state),
+    ...updateSubmitErrorsSelector('payment')(state),
+  };
+  return newProps;
+};
+
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(connect(updatePaymentFormSelector('payment'))(injectIntl(PaymentFormComponent)));
+export default reduxForm({ form: 'payment' })(connect(mapStateToProps)(injectIntl(PaymentFormComponent)));

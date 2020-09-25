@@ -70,24 +70,21 @@ export const paymentSelector = createSelector(
 
 export const captureKeySelector = state => (state[storeName] ? state[storeName].captureKey : null);
 export function submitErrorsSelector(formName) {
-  return (state => ({
-    submitErrors: state.form && state.form[formName] ? state.form[formName].submitErrors : {},
-  }));
+  return (state => (state.form && state.form[formName] ? state.form[formName].submitErrors : {}));
 }
 
-export const updatePaymentFormSelector = formName => createSelector(
-  [captureKeySelector, submitErrorsSelector(formName)],
-  (captureKey, submitErrors) => ({
-    ...submitErrors,
-    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
-    captureKeyId: captureKey && captureKey.capture_context ? captureKey.capture_context.key_id : null,
-  }),
+export const updateSubmitErrorsSelector = formName => createSelector(
+  submitErrorsSelector(formName),
+  submitErrors => ({ submitErrors }),
 );
 
 export const updateCaptureKeySelector = createSelector(
   captureKeySelector,
   captureKey => ({
-    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
+    flexMicroformEnabled: isWaffleFlagEnabled(
+      'payment.cybersource.flex_microform_enabled',
+      (!captureKey || captureKey.flex_microform_enabled === undefined) ? false : captureKey.flex_microform_enabled,
+    ),
     microformStatus: captureKey ? captureKey.microformStatus : DEFAULT_STATUS,
     captureKeyId: captureKey && captureKey.capture_context ? captureKey.capture_context.key_id : null,
   }),

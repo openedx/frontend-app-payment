@@ -68,7 +68,7 @@ class FlexMicroformField extends React.Component {
     const errorMessage = messages[this.props.meta.error];
     return (
       <>
-        <span>
+        <span key={`${this.props.id}-field}`}>
           <span className="microform-label" aria-hidden>{this.props.label}</span>
           {this.props.helpText && (
             <>
@@ -102,6 +102,7 @@ class FlexMicroformField extends React.Component {
             id={`${this.props.id}-error`}
             className="text-danger"
             aria-hidden="true"
+            key={`${this.props.id}-error}`}
           >{errorMessage ? this.props.intl.formatMessage(errorMessage) : this.props.meta.error}
           </span>
         )}
