@@ -13,6 +13,7 @@ import paymentSaga, {
   handleRemoveCoupon,
   handleAddCoupon,
   handleFetchCaptureKey,
+  handleCaptureKeyTimeout,
 } from './sagas';
 import { transformResults } from './service';
 import {
@@ -24,6 +25,7 @@ import {
   removeCoupon,
   updateQuantity,
   submitPayment,
+  CAPTURE_KEY_START_TIMEOUT,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
@@ -538,6 +540,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         submitPayment.success(),
         basketProcessing(false),
@@ -581,6 +584,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         basketProcessing(false),
         submitPayment.fulfill(),
@@ -616,6 +620,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         clearMessages(),
         addMessage('uhoh', null, null, 'error'),
@@ -661,6 +666,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         clearMessages(),
         addMessage('ohboy', null, null, 'error'),
@@ -711,6 +717,7 @@ describe('saga tests', () => {
 
     expect(dispatched).toEqual([
       basketProcessing(true),
+      clearMessages(),
       submitPayment.request(),
       clearMessages(),
       stopSubmit('payment', {
@@ -729,6 +736,7 @@ describe('saga tests', () => {
     const gen = paymentSaga();
 
     expect(gen.next().value).toEqual(takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey));
+    expect(gen.next().value).toEqual(takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout));
     expect(gen.next().value).toEqual(takeEvery(fetchBasket.TRIGGER, handleFetchBasket));
     expect(gen.next().value).toEqual(takeEvery(addCoupon.TRIGGER, handleAddCoupon));
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
