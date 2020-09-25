@@ -120,8 +120,7 @@ export function* handleCaptureKeyTimeout() {
   yield call(
     handleMessages,
     [{
-      code: '2mins',
-      userMessage: 'Please complete your purchase within two minutes (For security, your credit card information will then need to be re-entered to complete your purchase)',
+      code: 'capture-key-2mins-message',
       messageType: MESSAGE_TYPES.INFO,
     }],
     true, // Clear other messages
@@ -132,8 +131,7 @@ export function* handleCaptureKeyTimeout() {
   yield call(
     handleMessages,
     [{
-      code: '1mins',
-      userMessage: 'Please complete your purchase within one minute (For security, your credit card information will then need to be re-entered to complete your purchase)',
+      code: 'capture-key-1min-message',
       messageType: MESSAGE_TYPES.INFO,
     }],
     true, // Clear other messages

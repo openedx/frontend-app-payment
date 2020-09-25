@@ -74,3 +74,37 @@ export const TransactionDeclined = () => (
     />
   </>
 );
+
+export const CaptureKeyTimeoutExplanation = () => (
+  <>
+    <FormattedMessage
+      id="payment.messages.key.timeout.body"
+      defaultMessage="For security, your credit card information will then need to be re-entered to complete your purchase."
+      description="Briefly explains the credit card field timeout."
+    />
+  </>
+);
+
+export const CaptureKeyTimeoutTwoMinutes = () => (
+  <>
+    <FormattedMessage
+      id="payment.messages.key.timeout.2mins.header"
+      defaultMessage="Please complete your purchase within two minutes"
+      description="Notifies the user that the credit card fields will time out in two minutes"
+      tagName="h6"
+    />
+    <CaptureKeyTimeoutExplanation />
+  </>
+);
+
+export const CaptureKeyTimeoutOneMinute = () => (
+  <>
+    <FormattedMessage
+      id="payment.messages.key.timeout.1min.header"
+      defaultMessage="Please complete your purchase within one minute"
+      description="Notifies the user that the credit card fields will time out in one minute"
+      tagName="h6"
+    />
+    <CaptureKeyTimeoutExplanation />
+  </>
+);
