@@ -3,7 +3,7 @@
 frontend-app-payment
 ====================
 
-Please tag **@edx/arch-team** on any PRs or issues.  Thanks.
+Please tag **@edx/revenue-squad** on any PRs or issues.  Thanks.
 
 Introduction
 ------------
