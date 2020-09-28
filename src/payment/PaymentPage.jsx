@@ -15,7 +15,13 @@ import { paymentSelector, updateCaptureKeySelector } from './data/selectors';
 // Components
 import PageLoading from './PageLoading';
 import AlertList from '../feedback/AlertList';
-import { SingleEnrollmentCodeWarning, EnrollmentCodeQuantityUpdated, TransactionDeclined } from './AlertCodeMessages';
+import {
+  SingleEnrollmentCodeWarning,
+  EnrollmentCodeQuantityUpdated,
+  TransactionDeclined,
+  CaptureKeyTimeoutTwoMinutes,
+  CaptureKeyTimeoutOneMinute,
+} from './AlertCodeMessages';
 import EmptyCartMessage from './EmptyCartMessage';
 import Cart from './cart/Cart';
 import Checkout from './checkout/Checkout';
@@ -139,6 +145,12 @@ class PaymentPage extends React.Component {
             ),
             'transaction-declined-message': (
               <TransactionDeclined />
+            ),
+            'capture-key-2mins-message': (
+              <CaptureKeyTimeoutTwoMinutes />
+            ),
+            'capture-key-1min-message': (
+              <CaptureKeyTimeoutOneMinute />
             ),
             'apple-pay-merchant-validation-failure': intl.formatMessage(messages['payment.apple.pay.merchant.validation.failure']),
             'apple-pay-authorization-failure': intl.formatMessage(messages['payment.apple.pay.authorization.failure']),
