@@ -53,7 +53,9 @@ class PaymentPage extends React.Component {
 
   componentDidMount() {
     this.props.fetchBasket();
-    this.props.fetchCaptureKey();
+    if (this.props.flexMicroformEnabled) {
+      this.props.fetchCaptureKey();
+    }
   }
 
   renderContent() {
@@ -170,6 +172,7 @@ PaymentPage.propTypes = {
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
   fetchCaptureKey: PropTypes.func.isRequired,
+  flexMicroformEnabled: PropTypes.bool,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -177,6 +180,7 @@ PaymentPage.propTypes = {
 PaymentPage.defaultProps = {
   isEmpty: false,
   isRedirect: false,
+  flexMicroformEnabled: false,
   summaryQuantity: undefined,
   summarySubtotal: undefined,
 };
