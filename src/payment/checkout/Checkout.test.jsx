@@ -112,6 +112,7 @@ describe('<Checkout />', () => {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
+        flexMicroformEnabled: false,
       });
     });
 

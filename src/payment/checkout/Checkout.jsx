@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector } from '../data/selectors';
+import { paymentSelector, updateCaptureKeySelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
@@ -58,6 +58,7 @@ class Checkout extends React.Component {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
+        flexMicroformEnabled: this.props.flexMicroformEnabled,
       },
     );
   }
@@ -169,6 +170,7 @@ Checkout.propTypes = {
   isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
+  flexMicroformEnabled: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -180,6 +182,12 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   isPaymentVisualExperiment: false,
+  flexMicroformEnabled: false,
 };
 
-export default connect(paymentSelector, { submitPayment })(injectIntl(Checkout));
+const mapStateToProps = (state) => ({
+  ...paymentSelector(state),
+  ...updateCaptureKeySelector(state),
+});
+
+export default connect(mapStateToProps, { submitPayment })(injectIntl(Checkout));
