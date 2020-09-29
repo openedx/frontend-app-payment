@@ -169,15 +169,17 @@ export class CardDetailsComponent extends React.Component {
                   description="The label for the required credit card expiration month field"
                 />
               </label>
-              <Field
-                id="cardExpirationMonth"
-                name="cardExpirationMonth"
-                component={FormSelect}
-                options={this.renderExperimentExpirationMonthOptions()}
-                required
-                disabled={disabled}
-                autoComplete="cc-exp-month"
-              />
+              <div data-hj-suppress>
+                <Field
+                  id="cardExpirationMonth"
+                  name="cardExpirationMonth"
+                  component={FormSelect}
+                  options={this.renderExperimentExpirationMonthOptions()}
+                  required
+                  disabled={disabled}
+                  autoComplete="cc-exp-month"
+                />
+              </div>
             </div>
             <div className="col-lg-6 form-group">
               <label htmlFor="cardExpirationYear">
@@ -187,15 +189,17 @@ export class CardDetailsComponent extends React.Component {
                   description="The label for the required credit card expiration year field"
                 />
               </label>
-              <Field
-                id="cardExpirationYear"
-                name="cardExpirationYear"
-                component={FormSelect}
-                options={this.renderExperimentExpirationYearOptions()}
-                required
-                disabled={disabled}
-                autoComplete="cc-exp-year"
-              />
+              <div data-hj-suppress>
+                <Field
+                  id="cardExpirationYear"
+                  name="cardExpirationYear"
+                  component={FormSelect}
+                  options={this.renderExperimentExpirationYearOptions()}
+                  required
+                  disabled={disabled}
+                  autoComplete="cc-exp-year"
+                />
+              </div>
             </div>
           </div>
 
@@ -283,15 +287,17 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card expiration month field"
               />
             </label>
-            <Field
-              id="cardExpirationMonth"
-              name="cardExpirationMonth"
-              component={FormSelect}
-              options={this.renderExpirationMonthOptions()}
-              required
-              disabled={disabled}
-              autoComplete="cc-exp-month"
-            />
+            <div data-hj-suppress>
+              <Field
+                id="cardExpirationMonth"
+                name="cardExpirationMonth"
+                component={FormSelect}
+                options={this.renderExpirationMonthOptions()}
+                required
+                disabled={disabled}
+                autoComplete="cc-exp-month"
+              />
+            </div>
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="cardExpirationYear">
@@ -301,15 +307,17 @@ export class CardDetailsComponent extends React.Component {
                 description="The label for the required credit card expiration year field"
               />
             </label>
-            <Field
-              id="cardExpirationYear"
-              name="cardExpirationYear"
-              component={FormSelect}
-              options={this.renderExpirationYearOptions()}
-              required
-              disabled={disabled}
-              autoComplete="cc-exp-year"
-            />
+            <div data-hj-suppress>
+              <Field
+                id="cardExpirationYear"
+                name="cardExpirationYear"
+                component={FormSelect}
+                options={this.renderExpirationYearOptions()}
+                required
+                disabled={disabled}
+                autoComplete="cc-exp-year"
+              />
+            </div>
           </div>
         </div>
       </div>

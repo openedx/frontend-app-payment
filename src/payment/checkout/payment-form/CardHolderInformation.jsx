@@ -134,15 +134,17 @@ export class CardHolderInformationComponent extends React.Component {
                   description="The label for the required card holder country field"
                 />
               </label>
-              <Field
-                id="country"
-                name="country"
-                component={FormSelect}
-                options={this.renderCountryOptions()}
-                required
-                disabled={disabled}
-                autoComplete="country"
-              />
+              <div data-hj-suppress>
+                <Field
+                  id="country"
+                  name="country"
+                  component={FormSelect}
+                  options={this.renderCountryOptions()}
+                  required
+                  disabled={disabled}
+                  autoComplete="country"
+                />
+              </div>
             </div>
           </div>
 
@@ -313,16 +315,18 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the required card holder country field"
               />
             </label>
-            <Field
-              id="country"
-              name="country"
-              component={FormSelect}
-              options={this.renderCountryOptions()}
-              required
-              onChange={this.handleSelectCountry}
-              disabled={disabled}
-              autoComplete="country"
-            />
+            <div data-hj-suppres>
+              <Field
+                id="country"
+                name="country"
+                component={FormSelect}
+                options={this.renderCountryOptions()}
+                required
+                onChange={this.handleSelectCountry}
+                disabled={disabled}
+                autoComplete="country"
+              />
+            </div>
           </div>
         </div>
 
