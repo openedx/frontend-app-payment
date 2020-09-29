@@ -154,7 +154,9 @@ export function* handleFetchCaptureKey() {
     yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    yield put(captureKeyStartTimeout());
+    if (isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false)) {
+      yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
+    }
   } catch (error) {
     yield call(handleErrors, error, true);
   } finally {
