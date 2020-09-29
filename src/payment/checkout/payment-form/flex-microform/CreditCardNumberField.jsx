@@ -25,23 +25,26 @@ class CreditCardNumberField extends React.Component {
   };
 
   render() {
+    const label = (
+      <FormattedMessage
+        id="payment.card.details.number.label"
+        defaultMessage="Card Number (required)"
+        description="The label for the required credit card number field"
+      />
+    );
     return (
       <div className="col-lg-6 form-group">
         <Field
           id="cardNumber"
           name="cardNumber"
           component={FlexMicroformField}
-          fieldType="number"
-          microformStatus={this.props.microformStatus}
-          disabled={this.props.disabled}
-          onChange={this.onNumberChange}
-          label={(
-            <FormattedMessage
-              id="payment.card.details.number.label"
-              defaultMessage="Card Number (required)"
-              description="The label for the required credit card number field"
-            />
-          )}
+          props={{
+            fieldType: 'number',
+            microformStatus: this.props.microformStatus,
+            disabled: this.props.disabled,
+            onChange: this.onNumberChange,
+            label,
+          }}
         />
         {this.state.cardIcon !== null && (
           <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />
