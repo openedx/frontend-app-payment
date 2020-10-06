@@ -148,7 +148,7 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
           basketId,
         });
         if (errorData && errorData.redirectTo) {
-          global.location.href = errorData.redirect_to;
+          global.location.href = errorData.redirectTo;
         } else {
           if (errorData && errorData.field_errors) {
             // It's a field error
