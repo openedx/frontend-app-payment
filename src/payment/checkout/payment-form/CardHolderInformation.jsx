@@ -315,7 +315,7 @@ export class CardHolderInformationComponent extends React.Component {
                 description="The label for the required card holder country field"
               />
             </label>
-            <div data-hj-suppres>
+            <div data-hj-suppress>
               <Field
                 id="country"
                 name="country"

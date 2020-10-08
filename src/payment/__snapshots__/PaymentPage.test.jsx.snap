@@ -614,7 +614,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <div
-                  data-hj-suppres={true}
+                  data-hj-suppress={true}
                 >
                   <select
                     autoComplete="country"
@@ -2662,7 +2662,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <div
-                  data-hj-suppres={true}
+                  data-hj-suppress={true}
                 >
                   <select
                     autoComplete="country"
@@ -4715,7 +4715,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <div
-                  data-hj-suppres={true}
+                  data-hj-suppress={true}
                 >
                   <select
                     autoComplete="country"
@@ -6935,7 +6935,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <div
-                  data-hj-suppres={true}
+                  data-hj-suppress={true}
                 >
                   <select
                     autoComplete="country"
@@ -9052,7 +9052,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <div
-                  data-hj-suppres={true}
+                  data-hj-suppress={true}
                 >
                   <select
                     autoComplete="country"
@@ -11148,7 +11148,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <div
-                  data-hj-suppres={true}
+                  data-hj-suppress={true}
                 >
                   <select
                     autoComplete="country"
