@@ -1903,9 +1903,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   </span>
                 </label>
                 <input
+                  autoComplete="address-level1"
                   className="form-control"
                   disabled={false}
                   id="state"
+                  maxLength="20"
                   name="state"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -3951,9 +3953,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   </span>
                 </label>
                 <input
+                  autoComplete="address-level1"
                   className="form-control"
                   disabled={false}
                   id="state"
+                  maxLength="20"
                   name="state"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -6004,9 +6008,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autoComplete="address-level1"
                   className="form-control"
                   disabled={false}
                   id="state"
+                  maxLength="20"
                   name="state"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -8224,9 +8230,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autoComplete="address-level1"
                   className="form-control"
                   disabled={false}
                   id="state"
+                  maxLength="20"
                   name="state"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -10341,9 +10349,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autoComplete="address-level1"
                   className="form-control"
                   disabled={false}
                   id="state"
+                  maxLength="20"
                   name="state"
                   onBlur={[Function]}
                   onChange={[Function]}
@@ -12437,9 +12447,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   </span>
                 </label>
                 <input
+                  autoComplete="address-level1"
                   className="form-control"
                   disabled={false}
                   id="state"
+                  maxLength="20"
                   name="state"
                   onBlur={[Function]}
                   onChange={[Function]}

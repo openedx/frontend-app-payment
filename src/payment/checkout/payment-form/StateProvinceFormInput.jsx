@@ -29,7 +29,7 @@ class StateProvinceFormInput extends React.Component {
     return options;
   }
 
-  renderField(options, disabled, id) {
+  renderField(options, disabled, id, otherProps) {
     if (options.length) {
       return (
         <>
@@ -47,7 +47,7 @@ class StateProvinceFormInput extends React.Component {
 
     return (
       <>
-        <Field id="state" name="state" component={FormInput} type="text" disabled={disabled} />
+        <Field id="state" name="state" component={FormInput} type="text" disabled={disabled} props={otherProps} />
       </>
     );
   }
@@ -77,12 +77,17 @@ class StateProvinceFormInput extends React.Component {
   }
 
   render() {
-    const { disabled, id } = this.props;
+    const {
+      disabled,
+      id,
+      country,
+      ...otherProps
+    } = this.props;
     const options = this.getOptions();
     return (
       <>
         {this.renderLabel(options.length > 0)}
-        {this.renderField(options, disabled, id)}
+        {this.renderField(options, disabled, id, otherProps)}
       </>
     );
   }

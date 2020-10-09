@@ -99,6 +99,7 @@ export class CardDetailsComponent extends React.Component {
 
   render() {
     const { disabled, isPaymentVisualExperiment } = this.props;
+    const loading = this.props.flexMicroformEnabled && (this.props.captureKeyId === null);
 
     if (isPaymentVisualExperiment) {
       return (
@@ -288,15 +289,18 @@ export class CardDetailsComponent extends React.Component {
               />
             </label>
             <div data-hj-suppress>
-              <Field
-                id="cardExpirationMonth"
-                name="cardExpirationMonth"
-                component={FormSelect}
-                options={this.renderExpirationMonthOptions()}
-                required
-                disabled={disabled}
-                autoComplete="cc-exp-month"
-              />
+              {loading && <div className="skeleton py-3" />}
+              {!loading && (
+                <Field
+                  id="cardExpirationMonth"
+                  name="cardExpirationMonth"
+                  component={FormSelect}
+                  options={this.renderExpirationMonthOptions()}
+                  required
+                  disabled={disabled}
+                  autoComplete="cc-exp-month"
+                />
+              )}
             </div>
           </div>
           <div className="col-lg-6 form-group">
@@ -308,15 +312,18 @@ export class CardDetailsComponent extends React.Component {
               />
             </label>
             <div data-hj-suppress>
-              <Field
-                id="cardExpirationYear"
-                name="cardExpirationYear"
-                component={FormSelect}
-                options={this.renderExpirationYearOptions()}
-                required
-                disabled={disabled}
-                autoComplete="cc-exp-year"
-              />
+              {loading && <div className="skeleton py-3" />}
+              {!loading && (
+                <Field
+                  id="cardExpirationYear"
+                  name="cardExpirationYear"
+                  component={FormSelect}
+                  options={this.renderExpirationYearOptions()}
+                  required
+                  disabled={disabled}
+                  autoComplete="cc-exp-year"
+                />
+              )}
             </div>
           </div>
         </div>

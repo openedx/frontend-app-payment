@@ -15,6 +15,9 @@ class FlexMicroformField extends React.Component {
     this.field = null;
     this.element = React.createRef();
     this.loadingElement = React.createRef();
+    this.state = {
+      loaded: false,
+    };
   }
 
   componentDidMount() {
@@ -61,10 +64,12 @@ class FlexMicroformField extends React.Component {
     if (this.props.onChange) {
       this.field.on('change', this.props.onChange);
     }
+    this.setState({
+      loaded: true,
+    });
   }
 
   render() {
-    const loading = this.field === null;
     const errorMessage = messages[this.props.meta.error];
     return (
       <>
@@ -90,7 +95,7 @@ class FlexMicroformField extends React.Component {
           )}
           <div id={this.props.id} ref={this.element} />
           <div className="skeleton py-3" ref={this.loadingElement} />
-          {!loading && <FontAwesomeIcon icon={faLock} className="lock-icon" />}
+          {this.state.loaded && <FontAwesomeIcon icon={faLock} className="lock-icon" />}
         </span>
 
         {/* For screen readers, we inject the description into the iframe,

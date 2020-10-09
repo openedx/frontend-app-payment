@@ -337,7 +337,7 @@ export class CardHolderInformationComponent extends React.Component {
               disabled={disabled}
               id="state"
               autoComplete="address-level1"
-              maxLength="60"
+              maxLength="20"
             />
           </div>
           <div className="col-lg-6 form-group">
