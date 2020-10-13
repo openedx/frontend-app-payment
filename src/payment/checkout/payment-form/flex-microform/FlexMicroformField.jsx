@@ -45,7 +45,7 @@ class FlexMicroformField extends React.Component {
       const errorMessage = messages[this.props.meta.error];
       const translatedMessage = errorMessage ? this.props.intl.formatMessage(errorMessage) : this.props.meta.error;
       this.field.update({
-        description: `${this.props.label}\n${translatedMessage}`,
+        description: translatedMessage,
       });
     }
 
@@ -57,7 +57,7 @@ class FlexMicroformField extends React.Component {
   initialize() {
     this.field = window.microform.createField(this.props.fieldType, {
       disabled: this.props.disabled,
-      description: this.props.intl.formatMessage(this.props.label.props),
+      title: this.props.intl.formatMessage(this.props.label.props),
     });
     this.loadingElement.current.className = 'd-none';
     this.field.load(this.element.current);
