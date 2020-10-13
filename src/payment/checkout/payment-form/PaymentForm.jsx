@@ -75,7 +75,7 @@ export class PaymentFormComponent extends React.Component {
     }
 
     let cardTypeId = null;
-    if (!this.props.flexMicroformEnabled) {
+    if (false /* !this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
       cardTypeId = getCardTypeId(cardNumber);
     }
 
@@ -142,7 +142,7 @@ export class PaymentFormComponent extends React.Component {
       };
     }
 
-    if (this.props.flexMicroformEnabled) {
+    if (true /* this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
       requiredFields = {
         firstName,
         lastName,
@@ -168,7 +168,7 @@ export class PaymentFormComponent extends React.Component {
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
     const errors = {};
 
-    if (!this.props.flexMicroformEnabled) {
+    if (false /* !this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
       const { card, isValid } = CardValidator.number(cardNumber);
       if (cardNumber) {
         if (!isValid) {
@@ -311,7 +311,7 @@ PaymentFormComponent.propTypes = {
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
-  flexMicroformEnabled: PropTypes.bool,
+  flexMicroformEnabled: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 
