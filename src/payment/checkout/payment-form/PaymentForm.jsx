@@ -311,7 +311,7 @@ PaymentFormComponent.propTypes = {
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
-  flexMicroformEnabled: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+  // flexMicroformEnabled: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 
@@ -322,7 +322,11 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   isPaymentVisualExperiment: false,
+<<<<<<< HEAD
   flexMicroformEnabled: false,
+=======
+  // flexMicroformEnabled: true,
+>>>>>>> Comment-out microformEnabled props up and down the tree
   submitErrors: {},
 };
 
