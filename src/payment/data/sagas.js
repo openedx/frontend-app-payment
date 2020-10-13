@@ -155,9 +155,7 @@ export function* handleFetchCaptureKey() {
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
     // eslint-disable-next-line no-constant-condition
-    if (true /* isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false) */) {
-      yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
-    }
+    yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
   } catch (error) {
     yield call(handleErrors, error, true);
   } finally {
@@ -214,7 +212,7 @@ export function* handleSubmitPayment({ payload }) {
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
     let paymentMethodCheckout = paymentMethods[method];
-    if (method === 'cybersource' && true /* isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false) */) {
+    if (method === 'cybersource') {
       paymentMethodCheckout = checkoutWithToken;
     }
     const basket = yield select(state => ({ ...state.payment.basket }));
