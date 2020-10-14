@@ -58,7 +58,7 @@ class Checkout extends React.Component {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
-        // flexMicroformEnabled: this.props.flexMicroformEnabled,
+        flexMicroformEnabled: true,
       },
     );
   }
