@@ -81,7 +81,7 @@ export const updateSubmitErrorsSelector = formName => createSelector(
 export const updateCaptureKeySelector = createSelector(
   captureKeySelector,
   captureKey => ({
-    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
+    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', true),
     microformStatus: captureKey ? captureKey.microformStatus : DEFAULT_STATUS,
     captureKeyId: captureKey && captureKey.capture_context ? captureKey.capture_context.key_id : null,
   }),

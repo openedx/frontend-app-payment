@@ -182,7 +182,7 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   isPaymentVisualExperiment: false,
-  flexMicroformEnabled: false,
+  flexMicroformEnabled: true,
 };
 
 const mapStateToProps = (state) => ({

@@ -321,7 +321,7 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   isPaymentVisualExperiment: false,
-  flexMicroformEnabled: false,
+  flexMicroformEnabled: true,
   submitErrors: {},
 };
 
