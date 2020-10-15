@@ -6,6 +6,8 @@ import { logError } from '@edx/frontend-platform/logging';
 import handleRequestError from '../../data/handleRequestError';
 import { generateAndSubmitForm } from '../../data/utils';
 
+import { CARD_ICONS } from '../../checkout/payment-form/utils/credit-card';
+
 ensureConfig(['CYBERSOURCE_URL', 'ECOMMERCE_BASE_URL', 'ENVIRONMENT'], 'CyberSource API service');
 
 /**
@@ -84,18 +86,36 @@ function getPaymentToken(microformOptions) {
 export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails }) {
   const { basketId } = basket;
 
+  const microformFieldMap = {
+    cardType: 'cardNumber',
+    number: 'cardNumber',
+    securityCode: 'securityCode',
+  };
+  const microformMessageMap = {
+    cardType: 'payment.form.errors.unsupported.card',
+    number: 'payment.form.errors.invalid.card.number',
+    securityCode: 'payment.form.errors.invalid.security.code',
+  };
+
+  const { cybsCardType } = window.microform.fields.number;
+  // HACK: card icons dict is keyed by the numeric card type, moving to card name would be better
+  if (cybsCardType && !(CARD_ICONS[cybsCardType])) {
+    const fieldError = new Error('Cybersource microform field validation failed');
+    fieldError.fieldErrors = [
+      {
+        code: null,
+        data: null,
+        userMessage: microformMessageMap.cardType,
+        fieldName: microformFieldMap.cardType,
+      },
+    ];
+    throw fieldError;
+  }
+
   const paymentToken = await getPaymentToken(cardDetails).catch((error) => {
     if (error.reason !== 'CREATE_TOKEN_VALIDATION_FIELDS') {
       throw error;
     }
-    const microformFieldMap = {
-      number: 'cardNumber',
-      securityCode: 'securityCode',
-    };
-    const microformMessageMap = {
-      number: 'payment.form.errors.invalid.card.number',
-      securityCode: 'payment.form.errors.invalid.security.code',
-    };
     const fieldError = new Error('Cybersource Token Creation field validation failed');
     fieldError.fieldErrors = [];
     error.details.forEach((errorEntry) => {

@@ -19,7 +19,9 @@ class CreditCardNumberField extends React.Component {
   onNumberChange = (data) => {
     let cardIcon = null;
     if (data.card && data.card.length > 0) {
-      cardIcon = getCardIconForType(data.card[0].cybsCardType);
+      const { cybsCardType } = data.card[0];
+      cardIcon = getCardIconForType(cybsCardType);
+      window.microform.fields.number.cybsCardType = cybsCardType;
     }
     this.setState({ cardIcon });
   };
