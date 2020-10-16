@@ -83,51 +83,59 @@ function getPaymentToken(microformOptions) {
   });
 }
 
-export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails }) {
-  const { basketId } = basket;
-
-  const microformFieldMap = {
-    cardType: 'cardNumber',
-    number: 'cardNumber',
-    securityCode: 'securityCode',
-  };
+function composeFieldError(reason, errors) {
   const microformMessageMap = {
-    cardType: 'payment.form.errors.unsupported.card',
-    number: 'payment.form.errors.invalid.card.number',
-    securityCode: 'payment.form.errors.invalid.security.code',
+    cardType: {
+      fieldName: 'cardNumber',
+      userMessage: 'payment.form.errors.unsupported.card',
+    },
+    number: {
+      fieldName: 'cardNumber',
+      userMessage: 'payment.form.errors.invalid.card.number',
+    },
+    securityCode: {
+      fieldName: 'securityCode',
+      userMessage: 'payment.form.errors.invalid.security.code',
+    },
   };
 
-  const { cybsCardType } = window.microform.fields.number;
+  const fieldError = new Error(reason);
+  fieldError.fieldErrors = [];
+  errors.forEach((errorEntry) => {
+    fieldError.fieldErrors.push({
+      code: null,
+      data: null,
+      ...microformMessageMap[errorEntry],
+    });
+  });
+  return fieldError;
+}
+
+export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails }) {
+  if (!window.microform) {
+    throw new Error('Microform not initialized');
+  }
+
+  const { valid, cybsCardType } = window.microform.fields.number;
+  if (!valid) {
+    throw composeFieldError('Cybersource microform field validation failed', ['number']);
+  }
   // HACK: card icons dict is keyed by the numeric card type, moving to card name would be better
   if (cybsCardType && !(CARD_ICONS[cybsCardType])) {
-    const fieldError = new Error('Cybersource microform field validation failed');
-    fieldError.fieldErrors = [
-      {
-        code: null,
-        data: null,
-        userMessage: microformMessageMap.cardType,
-        fieldName: microformFieldMap.cardType,
-      },
-    ];
-    throw fieldError;
+    throw composeFieldError('Cybersource microform field validation failed', ['cardType']);
   }
 
   const paymentToken = await getPaymentToken(cardDetails).catch((error) => {
     if (error.reason !== 'CREATE_TOKEN_VALIDATION_FIELDS') {
       throw error;
     }
-    const fieldError = new Error('Cybersource Token Creation field validation failed');
-    fieldError.fieldErrors = [];
-    error.details.forEach((errorEntry) => {
-      fieldError.fieldErrors.push({
-        code: null,
-        data: null,
-        userMessage: microformMessageMap[errorEntry.location],
-        fieldName: microformFieldMap[errorEntry.location],
-      });
-    });
-    throw fieldError;
+    throw composeFieldError(
+      'Cybersource Token Creation field validation failed',
+      Array.from(error.details, ({ location }) => location),
+    );
   });
+
+  const { basketId } = basket;
   const formData = {
     basket: basketId,
     first_name: cardHolderInfo.firstName,
