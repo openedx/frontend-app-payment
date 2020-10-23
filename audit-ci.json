@@ -1,5 +1,6 @@
 {
     "allowlist": [
+        "object-path"
     ],
     "moderate": true
 }
