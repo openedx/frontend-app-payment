@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import * as analytics from '@edx/frontend-platform/analytics';
 import Cookies from 'universal-cookie';
 
@@ -40,6 +40,12 @@ jest.mock('universal-cookie', () => {
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+mergeConfig({
+  WAFFLE_FLAGS: {
+    'payment.cybersource.flex_microform_enabled': false,
+  },
+});
 
 const config = getConfig();
 const locale = 'en';

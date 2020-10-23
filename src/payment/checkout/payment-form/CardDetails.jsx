@@ -343,7 +343,7 @@ CardDetailsComponent.propTypes = {
 CardDetailsComponent.defaultProps = {
   disabled: false,
   isPaymentVisualExperiment: false,
-  flexMicroformEnabled: false,
+  flexMicroformEnabled: true,
   captureKeyId: null,
 };
 
