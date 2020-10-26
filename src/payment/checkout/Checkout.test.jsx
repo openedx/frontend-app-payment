@@ -2,7 +2,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { mount } from 'enzyme';
-import { mergeConfig } from '@edx/frontend-platform';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { Factory } from 'rosie';
@@ -16,12 +15,6 @@ import { transformResults } from '../data/service';
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
-
-mergeConfig({
-  WAFFLE_FLAGS: {
-    'payment.cybersource.flex_microform_enabled': false,
-  },
-});
 
 configureI18n({
   config: {
@@ -82,7 +75,7 @@ describe('<Checkout />', () => {
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
-            <Checkout flexMicroformEnabled={false} />
+            <Checkout />
           </Provider>
         </IntlProvider>
       );
@@ -119,7 +112,7 @@ describe('<Checkout />', () => {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
-        flexMicroformEnabled: false,
+        flexMicroformEnabled: true,
       });
     });
 
