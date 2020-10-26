@@ -6,7 +6,6 @@ import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { Factory } from 'rosie';
 import configureMockStore from 'redux-mock-store';
-import { mergeConfig } from '@edx/frontend-platform';
 
 import { AppContext } from '@edx/frontend-platform/react';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
@@ -18,12 +17,6 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
 }));
 
 const mockStore = configureMockStore();
-
-mergeConfig({
-  WAFFLE_FLAGS: {
-    'payment.cybersource.flex_microform_enabled': false,
-  },
-});
 
 configureI18n({
   config: {
@@ -68,7 +61,6 @@ describe('<PaymentForm />', () => {
               handleSubmit={() => {}}
               onSubmitPayment={() => {}}
               onSubmitButtonClick={() => {}}
-              flexMicroformEnabled={false}
             />
           </Provider>
         </AppContext.Provider>
@@ -86,8 +78,6 @@ describe('<PaymentForm />', () => {
           address: '',
           city: '',
           country: 'UK',
-          cardNumber: '',
-          securityCode: '',
           cardExpirationMonth: '',
           cardExpirationYear: '',
           optionalField: '',
@@ -98,8 +88,6 @@ describe('<PaymentForm />', () => {
           address: '',
           city: '',
           country: 'CA',
-          cardNumber: '',
-          securityCode: '',
           cardExpirationMonth: '',
           cardExpirationYear: '',
           optionalField: '',
@@ -110,8 +98,6 @@ describe('<PaymentForm />', () => {
           address: '',
           city: '',
           country: 'US',
-          cardNumber: '',
-          securityCode: '',
           cardExpirationMonth: '',
           cardExpirationYear: '',
           optionalField: '',
@@ -140,7 +126,6 @@ describe('<PaymentForm />', () => {
                 handleSubmit={() => {}}
                 onSubmitPayment={() => {}}
                 onSubmitButtonClick={() => {}}
-                flexMicroformEnabled={false}
               />
             </Provider>
           </AppContext.Provider>
@@ -219,9 +204,6 @@ describe('<PaymentForm />', () => {
         // cardNumber, securityCode, cardExpirationMonth, cardExpirationYear, expectedErrors
         ['', '', '', '', {}],
         ['', '', `${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'payment.form.errors.card.expired' }],
-        ['41111', '', '', '', { cardNumber: 'payment.form.errors.invalid.card.number' }],
-        ['30569309025904', '', '', '', { cardNumber: 'payment.form.errors.unsupported.card' }],
-        ['4111-1111-1111-1111', '12345', '', '', { securityCode: 'payment.form.errors.invalid.security.code' }],
       ];
 
       testData.forEach((testCaseData) => {
