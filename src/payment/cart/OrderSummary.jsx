@@ -52,7 +52,7 @@ OrderSummary.propTypes = {
 
 OrderSummary.defaultProps = {
   children: undefined,
-  flexMicroformEnabled: true,
+  flexMicroformEnabled: false,
 };
 
 export default connect(updateCaptureKeySelector, {})(OrderSummary);
