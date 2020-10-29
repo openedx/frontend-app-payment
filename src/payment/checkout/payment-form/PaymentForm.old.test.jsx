@@ -220,7 +220,7 @@ describe('<PaymentForm />', () => {
         ['', '', '', '', {}],
         ['', '', `${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'payment.form.errors.card.expired' }],
         ['41111', '', '', '', { cardNumber: 'payment.form.errors.invalid.card.number' }],
-        ['30569309025904', '', '', '', { cardNumber: 'payment.form.errors.unsupported.card' }],
+        ['6062828888666688', '', '', '', { cardNumber: 'payment.form.errors.unsupported.card' }],
         ['4111-1111-1111-1111', '12345', '', '', { securityCode: 'payment.form.errors.invalid.security.code' }],
       ];
 
