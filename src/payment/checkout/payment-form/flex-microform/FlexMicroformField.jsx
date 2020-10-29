@@ -35,13 +35,13 @@ class FlexMicroformField extends React.Component {
       return;
     }
 
-    if (prevProps.disabled !== this.props.disabled) {
+    if (this.field && prevProps.disabled !== this.props.disabled) {
       this.field.update({
         disabled: this.props.disabled,
       });
     }
 
-    if (prevProps.meta.error !== this.props.meta.error) {
+    if (this.field && prevProps.meta.error !== this.props.meta.error) {
       const errorMessage = messages[this.props.meta.error];
       const translatedMessage = errorMessage ? this.props.intl.formatMessage(errorMessage) : this.props.meta.error;
       this.field.update({
@@ -49,7 +49,7 @@ class FlexMicroformField extends React.Component {
       });
     }
 
-    if (this.context === this.props.id) {
+    if (this.field && this.context === this.props.id) {
       this.field.focus();
     }
   }
