@@ -239,6 +239,7 @@ export class PaymentFormComponent extends React.Component {
       isBulkOrder,
       isQuantityUpdating,
       isPaymentVisualExperiment,
+      flexMicroformEnabled,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -265,7 +266,7 @@ export class PaymentFormComponent extends React.Component {
           <div className="row justify-content-end">
             <div className="col-lg-6 form-group">
               {
-                loading || isQuantityUpdating ? (
+                loading || isQuantityUpdating || (flexMicroformEnabled && !window.microform) ? (
                   <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
                 ) : (
                   <StatefulButton
