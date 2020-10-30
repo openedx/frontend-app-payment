@@ -1,6 +1,8 @@
 import {
   faCcAmex,
+  faCcDinersClub,
   faCcDiscover,
+  faCcJcb,
   faCcMastercard,
   faCcVisa,
 } from '@fortawesome/free-brands-svg-icons';
@@ -9,14 +11,18 @@ const CardValidator = require('../../card-validator');
 
 export const CARD_TYPES = {
   'american-express': '003',
+  'diners-club': '005',
   discover: '004',
+  jcb: '007',
   mastercard: '002',
   visa: '001',
 };
 
 export const CARD_ICONS = {
   '003': faCcAmex,
+  '005': faCcDinersClub,
   '004': faCcDiscover,
+  '007': faCcJcb,
   '002': faCcMastercard,
   '001': faCcVisa,
 };

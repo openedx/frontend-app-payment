@@ -5,7 +5,7 @@ import { getCardIcon, getCardTypeId } from './credit-card';
 describe('credit-card', () => {
   describe('getCardIcon', () => {
     it('should return null for unsupported card types', () => {
-      const cardIcon = getCardIcon('36');
+      const cardIcon = getCardIcon('606282');
       expect(cardIcon).toBeNull();
     });
 
@@ -21,7 +21,7 @@ describe('credit-card', () => {
 
   describe('getCardTypeId', () => {
     it('should return null for unsupported card types', () => {
-      const cardIcon = getCardTypeId('36');
+      const cardIcon = getCardTypeId('606282');
       expect(cardIcon).toBeNull();
     });
 
