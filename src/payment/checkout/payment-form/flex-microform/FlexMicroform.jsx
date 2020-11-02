@@ -5,7 +5,7 @@ import { logError } from '@edx/frontend-platform/logging';
 import CreditCardNumberField from './CreditCardNumberField';
 import CreditCardVerificationNumberField from './CreditCardVerificationNumberField';
 import { DEFAULT_STATUS, STATUS_READY } from './constants';
-import { microformStatus } from '../../../data/actions';
+import { microformStatus, fetchCaptureKey, captureKeyProcessing } from '../../../data/actions';
 
 // Selectors
 import { updateCaptureKeySelector } from '../../../data/selectors';
@@ -38,16 +38,25 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    window.microform = new window.Flex(captureKeyId).microform({
-      styles: {
-        input: {
-          'font-size': '16px',
-          'font-family': 'Roboto, "Helvetica Neue", Arial, sans-serif',
-          color: '#2d323e',
+    try {
+      window.microform = new window.Flex(captureKeyId).microform({
+        styles: {
+          input: {
+            'font-size': '16px',
+            'font-family': 'Roboto, "Helvetica Neue", Arial, sans-serif',
+            color: '#2d323e',
+          },
         },
-      },
-    });
-    this.props.dispatch(microformStatus(STATUS_READY));
+      });
+      this.props.dispatch(microformStatus(STATUS_READY));
+    } catch (err) {
+      if (err.reason === 'CAPTURE_CONTEXT_EXPIRED') {
+        this.props.dispatch(captureKeyProcessing(false));
+        this.props.dispatch(fetchCaptureKey());
+      } else {
+        throw err;
+      }
+    }
   };
 
   render() {
