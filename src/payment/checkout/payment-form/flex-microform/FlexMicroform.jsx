@@ -15,6 +15,7 @@ class FlexMicroform extends React.Component {
     super(props);
 
     window.microform = null;
+    this.state.captureContextRetryCount = 0;
   }
 
   componentDidMount() {
@@ -50,7 +51,14 @@ class FlexMicroform extends React.Component {
       });
       this.props.dispatch(microformStatus(STATUS_READY));
     } catch (err) {
-      if (err.reason === 'CAPTURE_CONTEXT_EXPIRED') {
+      if (err.reason === 'CAPTURE_CONTEXT_EXPIRED' && this.state.captureContextRetryCount < 5) {
+        this.captureContextRetryCount++;
+        logError(err, {
+          messagePrefix: 'Cybersource FlexMicroform CaptureContext Error',
+          paymentMethod: 'Cybersource',
+          paymentErrorType: 'Checkout',
+          captureContextRetries: this.captureContextRetryCount,
+        });
         this.props.dispatch(captureKeyProcessing(false));
         this.props.dispatch(fetchCaptureKey());
       } else {
