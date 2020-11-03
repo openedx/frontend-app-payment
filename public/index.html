@@ -26,7 +26,7 @@
       ;NREUM.info={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",licenseKey:"<%= htmlWebpackPlugin.options.newRelicLicenseKey %>",applicationID:"<%= htmlWebpackPlugin.options.newRelicApplicationID %>",sa:1}
     </script>
 
-    <script type="text/javascript" src="https://flex.cybersource.com/cybersource/assets/microform/0.11/flex-microform.min.js"></script>
+    <script type="text/javascript" src="flex-microform.js"></script>
     <% _.forEach(htmlWebpackPlugin.files.js, function(file) { %>
       <% /* NOTE: A future version of html-webpack-plugin will allow us to inject the scripts with
             htmlWebpackPlugin.tags.bodyTags instead of our manual looping. */ %>

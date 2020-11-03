@@ -11,7 +11,7 @@
     "ie 11"
   ],
   "scripts": {
-    "build": "fedx-scripts webpack && node create-apple-merchant-file.js",
+    "build": "fedx-scripts webpack && node create-apple-merchant-file.js && node copy-vendored.js",
     "audit:whitelisted": "npx audit-ci --config audit-ci.json",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "is-es5": "es-check es5 ./dist/*.js",
