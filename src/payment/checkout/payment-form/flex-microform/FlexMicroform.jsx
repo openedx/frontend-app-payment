@@ -38,7 +38,7 @@ class FlexMicroform extends React.Component {
       });
       return;
     }
-    window.microform = new window.Flex(captureKeyId).microform({
+    const styles = {
       styles: {
         input: {
           'font-size': '16px',
@@ -46,7 +46,36 @@ class FlexMicroform extends React.Component {
           color: '#2d323e',
         },
       },
-    });
+    };
+    try {
+      window.microform = new window.Flex(captureKeyId).microform(styles);
+    } catch(err) {
+      if (err.reason && err.reason === "CAPTURE_CONTEXT_EXPIRED") {
+        const realDateNow = Date.now;
+        try {
+          const jwtData = captureKeyId.split(".")[1];
+          const parsedJwt = atob(jwtData.replace(/-/g, "+").replace(/_/g, "/"));
+          Date.now = function() {
+            return parsedJwt.iat * 1000;
+          }
+          window.microform = new window.Flex(captureKeyId).microform(styles);
+        } catch(err1) {
+          logError(err1, {
+            messagePrefix: 'Cybersource FlexMicroform Rescue Attempt Error',
+            paymentMethod: 'Cybersource',
+            paymentErrorType: 'Checkout',
+            captureKeyId,
+          });
+        } finally {
+          Date.now = realDateNow;
+        }
+        if (typeof(window.microform) === 'undefined') {
+          throw err;
+        }
+      } else {
+        throw err;
+      }
+    }
     this.props.dispatch(microformStatus(STATUS_READY));
   };
 
