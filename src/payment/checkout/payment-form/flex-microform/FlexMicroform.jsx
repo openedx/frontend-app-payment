@@ -49,17 +49,17 @@ class FlexMicroform extends React.Component {
     };
     try {
       window.microform = new window.Flex(captureKeyId).microform(styles);
-    } catch(err) {
-      if (err.reason && err.reason === "CAPTURE_CONTEXT_EXPIRED") {
+    } catch (err) {
+      if (err.reason && err.reason === 'CAPTURE_CONTEXT_EXPIRED') {
         const realDateNow = Date.now;
         try {
-          const jwtData = captureKeyId.split(".")[1];
-          const parsedJwt = atob(jwtData.replace(/-/g, "+").replace(/_/g, "/"));
-          Date.now = function() {
+          const jwtPayloadStr = captureKeyId.split('.')[1];
+          const parsedJwt = atob(jwtPayloadStr.replace(/-/g, '+').replace(/_/g, '/'));
+          Date.now = function () {
             return parsedJwt.iat * 1000;
-          }
+          };
           window.microform = new window.Flex(captureKeyId).microform(styles);
-        } catch(err1) {
+        } catch (err1) {
           logError(err1, {
             messagePrefix: 'Cybersource FlexMicroform Rescue Attempt Error',
             paymentMethod: 'Cybersource',
@@ -69,7 +69,7 @@ class FlexMicroform extends React.Component {
         } finally {
           Date.now = realDateNow;
         }
-        if (typeof(window.microform) === 'undefined') {
+        if (window.microform === null) {
           throw err;
         }
       } else {
