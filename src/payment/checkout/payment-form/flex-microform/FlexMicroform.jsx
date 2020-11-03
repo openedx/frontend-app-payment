@@ -51,8 +51,8 @@ class FlexMicroform extends React.Component {
       });
       this.props.dispatch(microformStatus(STATUS_READY));
     } catch (err) {
-      if (err.reason && err.reason === 'CAPTURE_CONTEXT_EXPIRED' && this.captureContextRetryCount < 5) {
-        this.captureContextRetryCount++;
+      if (err.reason && err.reason === 'CAPTURE_CONTEXT_EXPIRED' && this.state.captureContextRetryCount < 5) {
+        this.state.captureContextRetryCount++;
         logError(err, {
           messagePrefix: 'Cybersource FlexMicroform CaptureContext Error',
           paymentMethod: 'Cybersource',
