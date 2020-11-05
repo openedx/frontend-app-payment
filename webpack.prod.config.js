@@ -53,6 +53,7 @@ const config = merge({
       new HtmlWebpackPlugin({
         inject: false, // Manually inject head and body tags in the template itself.
         template: path.resolve(__dirname, 'public/index.html'),
+        optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
         newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
         newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
         preconnect: (() => {
@@ -64,6 +65,10 @@ const config = merge({
 
           if (process.env.LMS_BASE_URL) {
             preconnectDomains.push(process.env.LMS_BASE_URL);
+          }
+
+          if (process.env.OPTIMIZELY_PROJECT_ID) {
+            preconnectDomains.push('https://logx.optimizely.com');
           }
 
           return preconnectDomains;
