@@ -174,15 +174,15 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
         });
         throw new Error('This card holder did not pass the SDN check.');
       } else {
-        logError(error, {
-          messagePrefix: 'Cybersource Submit Error',
-          paymentMethod: 'Cybersource',
-          paymentErrorType: 'Submit Error',
-          basketId,
-        });
         if (errorData && errorData.redirectTo) {
           global.location.href = errorData.redirectTo;
         } else {
+          logError(error, {
+            messagePrefix: 'Cybersource Submit Error',
+            paymentMethod: 'Cybersource',
+            paymentErrorType: 'Submit Error',
+            basketId,
+          });
           if (errorData && errorData.field_errors) {
             // It's a field error
             // This endpoint does not return field error data in a format we expect.  Fix it.
