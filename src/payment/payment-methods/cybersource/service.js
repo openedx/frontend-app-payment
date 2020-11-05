@@ -174,7 +174,17 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
         });
         throw new Error('This card holder did not pass the SDN check.');
       } else if (errorData && errorData.redirectTo) {
+        // This was an expected issue and the back-end is requesting a redirect.
+        // We use this when the payment has been declined.
         global.location.href = errorData.redirectTo;
+      } else if (errorData && errorData.field_errors) {
+        // It's a field error
+        // This endpoint does not return field error data in a format we expect.  Fix it.
+        error.response.data = { // eslint-disable-line no-param-reassign
+          field_errors: normalizeFieldErrors(error.response.data.field_errors),
+        };
+        handleApiError(error);
+        throw error;
       } else {
         logError(error, {
           messagePrefix: 'Cybersource Submit Error',
@@ -182,13 +192,6 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
           paymentErrorType: 'Submit Error',
           basketId,
         });
-        if (errorData && errorData.field_errors) {
-          // It's a field error
-          // This endpoint does not return field error data in a format we expect.  Fix it.
-          error.response.data = { // eslint-disable-line no-param-reassign
-            field_errors: normalizeFieldErrors(error.response.data.field_errors),
-          };
-        }
         handleApiError(error);
         throw error;
       }
