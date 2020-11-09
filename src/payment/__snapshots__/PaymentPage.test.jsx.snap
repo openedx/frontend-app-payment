@@ -1962,122 +1962,74 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
+                  >
+                    <span>
+                      Card Number (required)
+                    </span>
                   </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <div
+                    id="cardNumber"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
                   >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    <span>
+                      Security Code (required)
+                    </span>
                   </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <span
+                    className="ml-1"
+                    data-for="securityCodeHelp"
+                    data-tip={true}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      data-icon="question-circle"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </span>
+                  <div
+                    className="__react_component_tooltip place-bottom type-dark "
+                    data-id="tooltip"
+                    id="securityCodeHelp"
+                  >
+                    <span>
+                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    </span>
+                  </div>
+                  <div
+                    id="securityCode"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
             </div>
             <div
@@ -2096,86 +2048,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-month"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Month
-                    </option>
-                    <option
-                      value={1}
-                    >
-                      1
-                    </option>
-                    <option
-                      value={2}
-                    >
-                      2
-                    </option>
-                    <option
-                      value={3}
-                    >
-                      3
-                    </option>
-                    <option
-                      value={4}
-                    >
-                      4
-                    </option>
-                    <option
-                      value={5}
-                    >
-                      5
-                    </option>
-                    <option
-                      value={6}
-                    >
-                      6
-                    </option>
-                    <option
-                      value={7}
-                    >
-                      7
-                    </option>
-                    <option
-                      value={8}
-                    >
-                      8
-                    </option>
-                    <option
-                      value={9}
-                    >
-                      9
-                    </option>
-                    <option
-                      value={10}
-                    >
-                      10
-                    </option>
-                    <option
-                      value={11}
-                    >
-                      11
-                    </option>
-                    <option
-                      value={12}
-                    >
-                      12
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
               <div
@@ -2191,106 +2066,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-year"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Year
-                    </option>
-                    <option
-                      value={2020}
-                    >
-                      2020
-                    </option>
-                    <option
-                      value={2021}
-                    >
-                      2021
-                    </option>
-                    <option
-                      value={2022}
-                    >
-                      2022
-                    </option>
-                    <option
-                      value={2023}
-                    >
-                      2023
-                    </option>
-                    <option
-                      value={2024}
-                    >
-                      2024
-                    </option>
-                    <option
-                      value={2025}
-                    >
-                      2025
-                    </option>
-                    <option
-                      value={2026}
-                    >
-                      2026
-                    </option>
-                    <option
-                      value={2027}
-                    >
-                      2027
-                    </option>
-                    <option
-                      value={2028}
-                    >
-                      2028
-                    </option>
-                    <option
-                      value={2029}
-                    >
-                      2029
-                    </option>
-                    <option
-                      value={2030}
-                    >
-                      2030
-                    </option>
-                    <option
-                      value={2031}
-                    >
-                      2031
-                    </option>
-                    <option
-                      value={2032}
-                    >
-                      2032
-                    </option>
-                    <option
-                      value={2033}
-                    >
-                      2033
-                    </option>
-                    <option
-                      value={2034}
-                    >
-                      2034
-                    </option>
-                    <option
-                      value={2035}
-                    >
-                      2035
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
             </div>
@@ -2301,24 +2079,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             <div
               className="col-lg-6 form-group"
             >
-              <button
-                aria-disabled={false}
-                aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
-                id="placeOrderButton"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
+              <div
+                className="skeleton btn btn-block btn-lg rounded-pill"
               >
-                <span
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span>
-                    Place Order
-                  </span>
-                </span>
-              </button>
+                 
+              </div>
             </div>
           </div>
         </form>
@@ -4012,122 +3777,74 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
+                  >
+                    <span>
+                      Card Number (required)
+                    </span>
                   </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <div
+                    id="cardNumber"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
                   >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    <span>
+                      Security Code (required)
+                    </span>
                   </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <span
+                    className="ml-1"
+                    data-for="securityCodeHelp"
+                    data-tip={true}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      data-icon="question-circle"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </span>
+                  <div
+                    className="__react_component_tooltip place-bottom type-dark "
+                    data-id="tooltip"
+                    id="securityCodeHelp"
+                  >
+                    <span>
+                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    </span>
+                  </div>
+                  <div
+                    id="securityCode"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
             </div>
             <div
@@ -4146,86 +3863,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-month"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Month
-                    </option>
-                    <option
-                      value={1}
-                    >
-                      1
-                    </option>
-                    <option
-                      value={2}
-                    >
-                      2
-                    </option>
-                    <option
-                      value={3}
-                    >
-                      3
-                    </option>
-                    <option
-                      value={4}
-                    >
-                      4
-                    </option>
-                    <option
-                      value={5}
-                    >
-                      5
-                    </option>
-                    <option
-                      value={6}
-                    >
-                      6
-                    </option>
-                    <option
-                      value={7}
-                    >
-                      7
-                    </option>
-                    <option
-                      value={8}
-                    >
-                      8
-                    </option>
-                    <option
-                      value={9}
-                    >
-                      9
-                    </option>
-                    <option
-                      value={10}
-                    >
-                      10
-                    </option>
-                    <option
-                      value={11}
-                    >
-                      11
-                    </option>
-                    <option
-                      value={12}
-                    >
-                      12
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
               <div
@@ -4241,106 +3881,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-year"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Year
-                    </option>
-                    <option
-                      value={2020}
-                    >
-                      2020
-                    </option>
-                    <option
-                      value={2021}
-                    >
-                      2021
-                    </option>
-                    <option
-                      value={2022}
-                    >
-                      2022
-                    </option>
-                    <option
-                      value={2023}
-                    >
-                      2023
-                    </option>
-                    <option
-                      value={2024}
-                    >
-                      2024
-                    </option>
-                    <option
-                      value={2025}
-                    >
-                      2025
-                    </option>
-                    <option
-                      value={2026}
-                    >
-                      2026
-                    </option>
-                    <option
-                      value={2027}
-                    >
-                      2027
-                    </option>
-                    <option
-                      value={2028}
-                    >
-                      2028
-                    </option>
-                    <option
-                      value={2029}
-                    >
-                      2029
-                    </option>
-                    <option
-                      value={2030}
-                    >
-                      2030
-                    </option>
-                    <option
-                      value={2031}
-                    >
-                      2031
-                    </option>
-                    <option
-                      value={2032}
-                    >
-                      2032
-                    </option>
-                    <option
-                      value={2033}
-                    >
-                      2033
-                    </option>
-                    <option
-                      value={2034}
-                    >
-                      2034
-                    </option>
-                    <option
-                      value={2035}
-                    >
-                      2035
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
             </div>
@@ -6067,122 +5610,74 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
+                  >
+                    <span>
+                      Card Number (required)
+                    </span>
                   </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <div
+                    id="cardNumber"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
                   >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    <span>
+                      Security Code (required)
+                    </span>
                   </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <span
+                    className="ml-1"
+                    data-for="securityCodeHelp"
+                    data-tip={true}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      data-icon="question-circle"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </span>
+                  <div
+                    className="__react_component_tooltip place-bottom type-dark "
+                    data-id="tooltip"
+                    id="securityCodeHelp"
+                  >
+                    <span>
+                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    </span>
+                  </div>
+                  <div
+                    id="securityCode"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
             </div>
             <div
@@ -6201,86 +5696,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-month"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Month
-                    </option>
-                    <option
-                      value={1}
-                    >
-                      1
-                    </option>
-                    <option
-                      value={2}
-                    >
-                      2
-                    </option>
-                    <option
-                      value={3}
-                    >
-                      3
-                    </option>
-                    <option
-                      value={4}
-                    >
-                      4
-                    </option>
-                    <option
-                      value={5}
-                    >
-                      5
-                    </option>
-                    <option
-                      value={6}
-                    >
-                      6
-                    </option>
-                    <option
-                      value={7}
-                    >
-                      7
-                    </option>
-                    <option
-                      value={8}
-                    >
-                      8
-                    </option>
-                    <option
-                      value={9}
-                    >
-                      9
-                    </option>
-                    <option
-                      value={10}
-                    >
-                      10
-                    </option>
-                    <option
-                      value={11}
-                    >
-                      11
-                    </option>
-                    <option
-                      value={12}
-                    >
-                      12
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
               <div
@@ -6296,106 +5714,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-year"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Year
-                    </option>
-                    <option
-                      value={2020}
-                    >
-                      2020
-                    </option>
-                    <option
-                      value={2021}
-                    >
-                      2021
-                    </option>
-                    <option
-                      value={2022}
-                    >
-                      2022
-                    </option>
-                    <option
-                      value={2023}
-                    >
-                      2023
-                    </option>
-                    <option
-                      value={2024}
-                    >
-                      2024
-                    </option>
-                    <option
-                      value={2025}
-                    >
-                      2025
-                    </option>
-                    <option
-                      value={2026}
-                    >
-                      2026
-                    </option>
-                    <option
-                      value={2027}
-                    >
-                      2027
-                    </option>
-                    <option
-                      value={2028}
-                    >
-                      2028
-                    </option>
-                    <option
-                      value={2029}
-                    >
-                      2029
-                    </option>
-                    <option
-                      value={2030}
-                    >
-                      2030
-                    </option>
-                    <option
-                      value={2031}
-                    >
-                      2031
-                    </option>
-                    <option
-                      value={2032}
-                    >
-                      2032
-                    </option>
-                    <option
-                      value={2033}
-                    >
-                      2033
-                    </option>
-                    <option
-                      value={2034}
-                    >
-                      2034
-                    </option>
-                    <option
-                      value={2035}
-                    >
-                      2035
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
             </div>
@@ -6406,24 +5727,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <div
               className="col-lg-6 form-group"
             >
-              <button
-                aria-disabled={false}
-                aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
-                id="placeOrderButton"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
+              <div
+                className="skeleton btn btn-block btn-lg rounded-pill"
               >
-                <span
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span>
-                    Place Order
-                  </span>
-                </span>
-              </button>
+                 
+              </div>
             </div>
           </div>
         </form>
@@ -8323,122 +7631,74 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
+                  >
+                    <span>
+                      Card Number (required)
+                    </span>
                   </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <div
+                    id="cardNumber"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
                   >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    <span>
+                      Security Code (required)
+                    </span>
                   </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <span
+                    className="ml-1"
+                    data-for="securityCodeHelp"
+                    data-tip={true}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      data-icon="question-circle"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </span>
+                  <div
+                    className="__react_component_tooltip place-bottom type-dark "
+                    data-id="tooltip"
+                    id="securityCodeHelp"
+                  >
+                    <span>
+                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    </span>
+                  </div>
+                  <div
+                    id="securityCode"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
             </div>
             <div
@@ -8457,86 +7717,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-month"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Month
-                    </option>
-                    <option
-                      value={1}
-                    >
-                      1
-                    </option>
-                    <option
-                      value={2}
-                    >
-                      2
-                    </option>
-                    <option
-                      value={3}
-                    >
-                      3
-                    </option>
-                    <option
-                      value={4}
-                    >
-                      4
-                    </option>
-                    <option
-                      value={5}
-                    >
-                      5
-                    </option>
-                    <option
-                      value={6}
-                    >
-                      6
-                    </option>
-                    <option
-                      value={7}
-                    >
-                      7
-                    </option>
-                    <option
-                      value={8}
-                    >
-                      8
-                    </option>
-                    <option
-                      value={9}
-                    >
-                      9
-                    </option>
-                    <option
-                      value={10}
-                    >
-                      10
-                    </option>
-                    <option
-                      value={11}
-                    >
-                      11
-                    </option>
-                    <option
-                      value={12}
-                    >
-                      12
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
               <div
@@ -8552,106 +7735,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-year"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Year
-                    </option>
-                    <option
-                      value={2020}
-                    >
-                      2020
-                    </option>
-                    <option
-                      value={2021}
-                    >
-                      2021
-                    </option>
-                    <option
-                      value={2022}
-                    >
-                      2022
-                    </option>
-                    <option
-                      value={2023}
-                    >
-                      2023
-                    </option>
-                    <option
-                      value={2024}
-                    >
-                      2024
-                    </option>
-                    <option
-                      value={2025}
-                    >
-                      2025
-                    </option>
-                    <option
-                      value={2026}
-                    >
-                      2026
-                    </option>
-                    <option
-                      value={2027}
-                    >
-                      2027
-                    </option>
-                    <option
-                      value={2028}
-                    >
-                      2028
-                    </option>
-                    <option
-                      value={2029}
-                    >
-                      2029
-                    </option>
-                    <option
-                      value={2030}
-                    >
-                      2030
-                    </option>
-                    <option
-                      value={2031}
-                    >
-                      2031
-                    </option>
-                    <option
-                      value={2032}
-                    >
-                      2032
-                    </option>
-                    <option
-                      value={2033}
-                    >
-                      2033
-                    </option>
-                    <option
-                      value={2034}
-                    >
-                      2034
-                    </option>
-                    <option
-                      value={2035}
-                    >
-                      2035
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
             </div>
@@ -8662,24 +7748,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <div
               className="col-lg-6 form-group"
             >
-              <button
-                aria-disabled={false}
-                aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
-                id="placeOrderButton"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
+              <div
+                className="skeleton btn btn-block btn-lg rounded-pill"
               >
-                <span
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span>
-                    Place Order
-                  </span>
-                </span>
-              </button>
+                 
+              </div>
             </div>
           </div>
         </form>
@@ -10408,122 +9481,74 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
+                  >
+                    <span>
+                      Card Number (required)
+                    </span>
                   </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <div
+                    id="cardNumber"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
                   >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    <span>
+                      Security Code (required)
+                    </span>
                   </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <span
+                    className="ml-1"
+                    data-for="securityCodeHelp"
+                    data-tip={true}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      data-icon="question-circle"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </span>
+                  <div
+                    className="__react_component_tooltip place-bottom type-dark "
+                    data-id="tooltip"
+                    id="securityCodeHelp"
+                  >
+                    <span>
+                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    </span>
+                  </div>
+                  <div
+                    id="securityCode"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
             </div>
             <div
@@ -10542,86 +9567,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-month"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Month
-                    </option>
-                    <option
-                      value={1}
-                    >
-                      1
-                    </option>
-                    <option
-                      value={2}
-                    >
-                      2
-                    </option>
-                    <option
-                      value={3}
-                    >
-                      3
-                    </option>
-                    <option
-                      value={4}
-                    >
-                      4
-                    </option>
-                    <option
-                      value={5}
-                    >
-                      5
-                    </option>
-                    <option
-                      value={6}
-                    >
-                      6
-                    </option>
-                    <option
-                      value={7}
-                    >
-                      7
-                    </option>
-                    <option
-                      value={8}
-                    >
-                      8
-                    </option>
-                    <option
-                      value={9}
-                    >
-                      9
-                    </option>
-                    <option
-                      value={10}
-                    >
-                      10
-                    </option>
-                    <option
-                      value={11}
-                    >
-                      11
-                    </option>
-                    <option
-                      value={12}
-                    >
-                      12
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
               <div
@@ -10637,106 +9585,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-year"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Year
-                    </option>
-                    <option
-                      value={2020}
-                    >
-                      2020
-                    </option>
-                    <option
-                      value={2021}
-                    >
-                      2021
-                    </option>
-                    <option
-                      value={2022}
-                    >
-                      2022
-                    </option>
-                    <option
-                      value={2023}
-                    >
-                      2023
-                    </option>
-                    <option
-                      value={2024}
-                    >
-                      2024
-                    </option>
-                    <option
-                      value={2025}
-                    >
-                      2025
-                    </option>
-                    <option
-                      value={2026}
-                    >
-                      2026
-                    </option>
-                    <option
-                      value={2027}
-                    >
-                      2027
-                    </option>
-                    <option
-                      value={2028}
-                    >
-                      2028
-                    </option>
-                    <option
-                      value={2029}
-                    >
-                      2029
-                    </option>
-                    <option
-                      value={2030}
-                    >
-                      2030
-                    </option>
-                    <option
-                      value={2031}
-                    >
-                      2031
-                    </option>
-                    <option
-                      value={2032}
-                    >
-                      2032
-                    </option>
-                    <option
-                      value={2033}
-                    >
-                      2033
-                    </option>
-                    <option
-                      value={2034}
-                    >
-                      2034
-                    </option>
-                    <option
-                      value={2035}
-                    >
-                      2035
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
             </div>
@@ -10747,24 +9598,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <div
               className="col-lg-6 form-group"
             >
-              <button
-                aria-disabled={false}
-                aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
-                id="placeOrderButton"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
+              <div
+                className="skeleton btn btn-block btn-lg rounded-pill"
               >
-                <span
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span>
-                    Place Order
-                  </span>
-                </span>
-              </button>
+                 
+              </div>
             </div>
           </div>
         </form>
@@ -12506,122 +11344,74 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="cardNumber"
-                >
-                  <span>
-                    Card Number (required)
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
+                  >
+                    <span>
+                      Card Number (required)
+                    </span>
                   </span>
-                </label>
-                <input
-                  autoComplete="cc-number"
-                  className="form-control"
-                  disabled={false}
-                  id="cardNumber"
-                  maxLength="20"
-                  name="cardNumber"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <div
+                    id="cardNumber"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="securityCode"
-                >
-                  <span>
-                    Security Code (required)
-                  </span>
-                </label>
-                <span
-                  className="ml-1"
-                  data-for="securityCodeHelp"
-                  data-tip={true}
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
-                    data-icon="question-circle"
-                    data-prefix="fas"
-                    focusable="false"
-                    role="img"
-                    style={Object {}}
-                    viewBox="0 0 512 512"
-                    xmlns="http://www.w3.org/2000/svg"
+                <span>
+                  <span
+                    aria-hidden={true}
+                    className="microform-label"
                   >
-                    <path
-                      d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
-                      fill="currentColor"
-                      style={Object {}}
-                    />
-                  </svg>
-                </span>
-                <div
-                  className="__react_component_tooltip place-bottom type-dark "
-                  data-id="tooltip"
-                  id="securityCodeHelp"
-                >
-                  <span>
-                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    <span>
+                      Security Code (required)
+                    </span>
                   </span>
-                </div>
-                <input
-                  autoComplete="cc-csc"
-                  className="form-control"
-                  disabled={false}
-                  id="securityCode"
-                  maxLength="4"
-                  name="securityCode"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  required={true}
-                  type="tel"
-                  value=""
-                />
-                <svg
-                  aria-hidden="true"
-                  className="svg-inline--fa fa-lock fa-w-14 fa-null fa-rotate-null fa-pull-null lock-icon"
-                  data-icon="lock"
-                  data-prefix="fas"
-                  focusable="false"
-                  role="img"
-                  style={Object {}}
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M400 224h-24v-72C376 68.2 307.8 0 224 0S72 68.2 72 152v72H48c-26.5 0-48 21.5-48 48v192c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V272c0-26.5-21.5-48-48-48zm-104 0H152v-72c0-39.7 32.3-72 72-72s72 32.3 72 72v72z"
-                    fill="currentColor"
-                    style={Object {}}
+                  <span
+                    className="ml-1"
+                    data-for="securityCodeHelp"
+                    data-tip={true}
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      data-icon="question-circle"
+                      data-prefix="fas"
+                      focusable="false"
+                      role="img"
+                      style={Object {}}
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        fill="currentColor"
+                        style={Object {}}
+                      />
+                    </svg>
+                  </span>
+                  <div
+                    className="__react_component_tooltip place-bottom type-dark "
+                    data-id="tooltip"
+                    id="securityCodeHelp"
+                  >
+                    <span>
+                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
+                    </span>
+                  </div>
+                  <div
+                    id="securityCode"
                   />
-                </svg>
+                  <div
+                    className="skeleton py-3"
+                  />
+                </span>
               </div>
             </div>
             <div
@@ -12640,86 +11430,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-month"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationMonth"
-                    name="cardExpirationMonth"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Month
-                    </option>
-                    <option
-                      value={1}
-                    >
-                      1
-                    </option>
-                    <option
-                      value={2}
-                    >
-                      2
-                    </option>
-                    <option
-                      value={3}
-                    >
-                      3
-                    </option>
-                    <option
-                      value={4}
-                    >
-                      4
-                    </option>
-                    <option
-                      value={5}
-                    >
-                      5
-                    </option>
-                    <option
-                      value={6}
-                    >
-                      6
-                    </option>
-                    <option
-                      value={7}
-                    >
-                      7
-                    </option>
-                    <option
-                      value={8}
-                    >
-                      8
-                    </option>
-                    <option
-                      value={9}
-                    >
-                      9
-                    </option>
-                    <option
-                      value={10}
-                    >
-                      10
-                    </option>
-                    <option
-                      value={11}
-                    >
-                      11
-                    </option>
-                    <option
-                      value={12}
-                    >
-                      12
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
               <div
@@ -12735,106 +11448,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   data-hj-suppress={true}
                 >
-                  <select
-                    autoComplete="cc-exp-year"
-                    className="form-control"
-                    disabled={false}
-                    id="cardExpirationYear"
-                    name="cardExpirationYear"
-                    onBlur={[Function]}
-                    onChange={[Function]}
-                    onDragStart={[Function]}
-                    onDrop={[Function]}
-                    onFocus={[Function]}
-                    required={true}
-                    value=""
-                  >
-                    <option
-                      value=""
-                    >
-                      Year
-                    </option>
-                    <option
-                      value={2020}
-                    >
-                      2020
-                    </option>
-                    <option
-                      value={2021}
-                    >
-                      2021
-                    </option>
-                    <option
-                      value={2022}
-                    >
-                      2022
-                    </option>
-                    <option
-                      value={2023}
-                    >
-                      2023
-                    </option>
-                    <option
-                      value={2024}
-                    >
-                      2024
-                    </option>
-                    <option
-                      value={2025}
-                    >
-                      2025
-                    </option>
-                    <option
-                      value={2026}
-                    >
-                      2026
-                    </option>
-                    <option
-                      value={2027}
-                    >
-                      2027
-                    </option>
-                    <option
-                      value={2028}
-                    >
-                      2028
-                    </option>
-                    <option
-                      value={2029}
-                    >
-                      2029
-                    </option>
-                    <option
-                      value={2030}
-                    >
-                      2030
-                    </option>
-                    <option
-                      value={2031}
-                    >
-                      2031
-                    </option>
-                    <option
-                      value={2032}
-                    >
-                      2032
-                    </option>
-                    <option
-                      value={2033}
-                    >
-                      2033
-                    </option>
-                    <option
-                      value={2034}
-                    >
-                      2034
-                    </option>
-                    <option
-                      value={2035}
-                    >
-                      2035
-                    </option>
-                  </select>
+                  <div
+                    className="skeleton py-3"
+                  />
                 </div>
               </div>
             </div>
@@ -12845,24 +11461,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <div
               className="col-lg-6 form-group"
             >
-              <button
-                aria-disabled={false}
-                aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-lg btn-block"
-                id="placeOrderButton"
-                onBlur={[Function]}
-                onClick={[Function]}
-                onKeyDown={[Function]}
-                type="submit"
+              <div
+                className="skeleton btn btn-block btn-lg rounded-pill"
               >
-                <span
-                  className="d-flex align-items-center justify-content-center"
-                >
-                  <span>
-                    Place Order
-                  </span>
-                </span>
-              </button>
+                 
+              </div>
             </div>
           </div>
         </form>
