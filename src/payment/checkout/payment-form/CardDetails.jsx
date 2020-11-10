@@ -337,7 +337,7 @@ CardDetailsComponent.propTypes = {
   disabled: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
   captureKeyId: PropTypes.string,
-  // flexMicroformEnabled: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+  // flexMicroformEnabled: PropTypes.bool,
 };
 
 CardDetailsComponent.defaultProps = {

@@ -311,7 +311,7 @@ PaymentFormComponent.propTypes = {
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
-  // flexMicroformEnabled: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+  // flexMicroformEnabled: PropTypes.bool,
   submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 

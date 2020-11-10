@@ -154,7 +154,6 @@ export function* handleFetchCaptureKey() {
     yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    // eslint-disable-next-line no-constant-condition
     yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
   } catch (error) {
     yield call(handleErrors, error, true);
