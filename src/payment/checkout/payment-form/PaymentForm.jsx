@@ -75,7 +75,7 @@ export class PaymentFormComponent extends React.Component {
     }
 
     let cardTypeId = null;
-    if (false /* !this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
+    if (!this.props.flexMicroformEnabled) {
       cardTypeId = getCardTypeId(cardNumber);
     }
 
@@ -142,7 +142,7 @@ export class PaymentFormComponent extends React.Component {
       };
     }
 
-    if (true /* this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
+    if (this.props.flexMicroformEnabled) {
       requiredFields = {
         firstName,
         lastName,
@@ -168,7 +168,7 @@ export class PaymentFormComponent extends React.Component {
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
     const errors = {};
 
-    if (false /* !this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
+    if (!this.props.flexMicroformEnabled) {
       const { card, isValid } = CardValidator.number(cardNumber);
       if (cardNumber) {
         if (!isValid) {
@@ -239,7 +239,7 @@ export class PaymentFormComponent extends React.Component {
       isBulkOrder,
       isQuantityUpdating,
       isPaymentVisualExperiment,
-      // flexMicroformEnabled,
+      flexMicroformEnabled,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -266,7 +266,7 @@ export class PaymentFormComponent extends React.Component {
           <div className="row justify-content-end">
             <div className="col-lg-6 form-group">
               {
-                loading || isQuantityUpdating || (true /* flexMicroformEnabled */ && !window.microform) ? (
+                loading || isQuantityUpdating || (flexMicroformEnabled && !window.microform) ? (
                   <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
                 ) : (
                   <StatefulButton
@@ -311,7 +311,7 @@ PaymentFormComponent.propTypes = {
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
-  // flexMicroformEnabled: PropTypes.bool,
+  flexMicroformEnabled: PropTypes.bool,
   submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 
@@ -322,7 +322,7 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   isPaymentVisualExperiment: false,
-  // flexMicroformEnabled: true,
+  flexMicroformEnabled: false,
   submitErrors: {},
 };
 

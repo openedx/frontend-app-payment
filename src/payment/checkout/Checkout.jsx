@@ -58,7 +58,7 @@ class Checkout extends React.Component {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
-        flexMicroformEnabled: true,
+        flexMicroformEnabled: this.props.flexMicroformEnabled,
       },
     );
   }
@@ -170,7 +170,7 @@ Checkout.propTypes = {
   isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
-  // flexMicroformEnabled: PropTypes.bool,
+  flexMicroformEnabled: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -182,7 +182,7 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   isPaymentVisualExperiment: false,
-  // flexMicroformEnabled: true,
+  flexMicroformEnabled: false,
 };
 
 const mapStateToProps = (state) => ({

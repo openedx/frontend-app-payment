@@ -15,7 +15,7 @@ class OrderSummary extends React.Component {
       'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
       {
         ...getPerformanceProperties(),
-        flexMicroformEnabled: true,
+        flexMicroformEnabled: this.props.flexMicroformEnabled,
       },
     );
   }
@@ -47,12 +47,12 @@ class OrderSummary extends React.Component {
 
 OrderSummary.propTypes = {
   children: PropTypes.node,
-  // flexMicroformEnabled: PropTypes.bool,
+  flexMicroformEnabled: PropTypes.bool,
 };
 
 OrderSummary.defaultProps = {
   children: undefined,
-  // flexMicroformEnabled: true,
+  flexMicroformEnabled: false,
 };
 
 export default connect(updateCaptureKeySelector, {})(OrderSummary);
