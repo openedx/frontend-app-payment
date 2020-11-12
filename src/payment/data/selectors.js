@@ -1,6 +1,7 @@
 import { getConfig, getQueryParameters } from '@edx/frontend-platform';
 import { createSelector } from 'reselect';
 import Cookies from 'universal-cookie';
+import { isWaffleFlagEnabled } from './utils';
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 
 export const storeName = 'payment';
@@ -80,7 +81,7 @@ export const updateSubmitErrorsSelector = formName => createSelector(
 export const updateCaptureKeySelector = createSelector(
   captureKeySelector,
   captureKey => ({
-    // flexMicroformEnabled: true,
+    flexMicroformEnabled: isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false),
     microformStatus: captureKey ? captureKey.microformStatus : DEFAULT_STATUS,
     captureKeyId: captureKey && captureKey.capture_context ? captureKey.capture_context.key_id : null,
   }),
