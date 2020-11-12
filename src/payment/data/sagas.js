@@ -2,7 +2,7 @@ import {
   call, put, takeEvery, select, delay,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
-import { camelCaseObject, convertKeyNames, isWaffleFlagEnabled } from './utils';
+import { camelCaseObject, convertKeyNames } from './utils';
 import { MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
@@ -154,9 +154,7 @@ export function* handleFetchCaptureKey() {
     yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    if (isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false)) {
-      yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
-    }
+    yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
   } catch (error) {
     yield call(handleErrors, error, true);
   } finally {
@@ -213,7 +211,7 @@ export function* handleSubmitPayment({ payload }) {
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
     let paymentMethodCheckout = paymentMethods[method];
-    if (method === 'cybersource' && isWaffleFlagEnabled('payment.cybersource.flex_microform_enabled', false)) {
+    if (method === 'cybersource') {
       paymentMethodCheckout = checkoutWithToken;
     }
     const basket = yield select(state => ({ ...state.payment.basket }));
