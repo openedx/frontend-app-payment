@@ -12,7 +12,6 @@ Object {
   },
   "captureKey": Object {
     "captureKeyId": "",
-    "flexMicroformEnabled": false,
     "isCaptureKeyProcessing": false,
     "microformStatus": "LOADING",
   },
@@ -31,7 +30,6 @@ Object {
   },
   "captureKey": Object {
     "captureKeyId": "",
-    "flexMicroformEnabled": false,
     "isCaptureKeyProcessing": false,
     "microformStatus": "LOADING",
   },
@@ -50,7 +48,6 @@ Object {
   },
   "captureKey": Object {
     "captureKeyId": "",
-    "flexMicroformEnabled": false,
     "isCaptureKeyProcessing": false,
     "microformStatus": "LOADING",
   },

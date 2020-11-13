@@ -99,7 +99,7 @@ export class CardDetailsComponent extends React.Component {
 
   render() {
     const { disabled, isPaymentVisualExperiment } = this.props;
-    const loading = this.props.flexMicroformEnabled && (this.props.captureKeyId === null);
+    const loading = true /* this.props.flexMicroformEnabled */ && (this.props.captureKeyId === null);
 
     if (isPaymentVisualExperiment) {
       return (
@@ -218,9 +218,9 @@ export class CardDetailsComponent extends React.Component {
           />
         </h5>
 
-        {this.props.flexMicroformEnabled
+        {true /* this.props.flexMicroformEnabled */
           && <FlexMicroform captureKeyId={this.props.captureKeyId} disabled={disabled} />}
-        {!this.props.flexMicroformEnabled
+        {false /* !this.props.flexMicroformEnabled */
           && (
             <div className="row">
               <div className="col-lg-6 form-group">
@@ -337,13 +337,13 @@ CardDetailsComponent.propTypes = {
   disabled: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
   captureKeyId: PropTypes.string,
-  flexMicroformEnabled: PropTypes.bool,
+  // flexMicroformEnabled: PropTypes.bool,
 };
 
 CardDetailsComponent.defaultProps = {
   disabled: false,
   isPaymentVisualExperiment: false,
-  flexMicroformEnabled: false,
+  // flexMicroformEnabled: true,
   captureKeyId: null,
 };
 
