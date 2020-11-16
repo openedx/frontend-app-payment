@@ -170,7 +170,6 @@ Checkout.propTypes = {
   isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
-  // flexMicroformEnabled: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -182,7 +181,6 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   isPaymentVisualExperiment: false,
-  // flexMicroformEnabled: true,
 };
 
 const mapStateToProps = (state) => ({

@@ -99,7 +99,7 @@ export class CardDetailsComponent extends React.Component {
 
   render() {
     const { disabled, isPaymentVisualExperiment } = this.props;
-    const loading = true /* this.props.flexMicroformEnabled */ && (this.props.captureKeyId === null);
+    const loading = this.props.captureKeyId === null;
 
     if (isPaymentVisualExperiment) {
       return (
@@ -218,66 +218,7 @@ export class CardDetailsComponent extends React.Component {
           />
         </h5>
 
-        {true /* this.props.flexMicroformEnabled */
-          && <FlexMicroform captureKeyId={this.props.captureKeyId} disabled={disabled} />}
-        {false /* !this.props.flexMicroformEnabled */
-          && (
-            <div className="row">
-              <div className="col-lg-6 form-group">
-                <label htmlFor="cardNumber">
-                  <FormattedMessage
-                    id="payment.card.details.number.label"
-                    defaultMessage="Card Number (required)"
-                    description="The label for the required credit card number field"
-                  />
-                </label>
-                <Field
-                  id="cardNumber"
-                  name="cardNumber"
-                  component={FormInput}
-                  type="tel"
-                  required
-                  disabled={disabled}
-                  onChange={this.handleCardNumberChange}
-                  autoComplete="cc-number"
-                  maxLength="20"
-                />
-                {this.state.cardIcon !== null && <FontAwesomeIcon icon={this.state.cardIcon} className="card-icon" />}
-                <FontAwesomeIcon icon={faLock} className="lock-icon" />
-              </div>
-              <div className="col-lg-6 form-group">
-                <label htmlFor="securityCode">
-                  <FormattedMessage
-                    id="payment.card.details.security.code.label"
-                    defaultMessage="Security Code (required)"
-                    description="The label for the required credit card security code field"
-                  />
-                </label>
-                <span data-tip data-for="securityCodeHelp" className="ml-1">
-                  <FontAwesomeIcon icon={faQuestionCircle} />
-                </span>
-                <ReactTooltip id="securityCodeHelp" place="bottom" effect="solid">
-                  <FormattedMessage
-                    id="payment.card.details.security.code.help.text"
-                    defaultMessage="The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card."
-                    description="The help text for the required credit card security code field"
-                  />
-                </ReactTooltip>
-                <Field
-                  id="securityCode"
-                  name="securityCode"
-                  component={FormInput}
-                  type="tel"
-                  required
-                  disabled={disabled}
-                  onChange={this.handleSecurityCodeChange}
-                  autoComplete="cc-csc"
-                  maxLength="4"
-                />
-                <FontAwesomeIcon icon={faLock} className="lock-icon" />
-              </div>
-            </div>
-          )}
+        <FlexMicroform captureKeyId={this.props.captureKeyId} disabled={disabled} />
 
         <div className="row">
           <div className="col-lg-6 form-group">
@@ -337,13 +278,11 @@ CardDetailsComponent.propTypes = {
   disabled: PropTypes.bool,
   isPaymentVisualExperiment: PropTypes.bool,
   captureKeyId: PropTypes.string,
-  // flexMicroformEnabled: PropTypes.bool,
 };
 
 CardDetailsComponent.defaultProps = {
   disabled: false,
   isPaymentVisualExperiment: false,
-  // flexMicroformEnabled: true,
   captureKeyId: null,
 };
 

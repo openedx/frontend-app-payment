@@ -6,15 +6,12 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
 
-import { getCardTypeId, CARD_TYPES } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
 import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
-
-const CardValidator = require('../card-validator');
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
@@ -74,10 +71,7 @@ export class PaymentFormComponent extends React.Component {
       throw new SubmissionError(errors);
     }
 
-    let cardTypeId = null;
-    if (false /* !this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
-      cardTypeId = getCardTypeId(cardNumber);
-    }
+    const cardTypeId = null; // TODO: PCI CLEANUP: if this is always null, remove it
 
     this.props.onSubmitPayment({
       cardHolderInfo: {
@@ -123,13 +117,11 @@ export class PaymentFormComponent extends React.Component {
       address,
       city,
       country,
-      cardNumber,
-      securityCode,
       cardExpirationMonth,
       cardExpirationYear,
     };
 
-    if (this.props.isPaymentVisualExperiment) {
+    if (this.props.isPaymentVisualExperiment) { // TODO: PCI CLEANUP: isPaymentVisualExperiment should drop away too
       requiredFields = {
         firstName,
         lastName,
@@ -137,18 +129,6 @@ export class PaymentFormComponent extends React.Component {
         country,
         cardNumber,
         securityCode,
-        cardExpirationMonth,
-        cardExpirationYear,
-      };
-    }
-
-    if (true /* this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
-      requiredFields = {
-        firstName,
-        lastName,
-        address,
-        city,
-        country,
         cardExpirationMonth,
         cardExpirationYear,
       };
@@ -165,24 +145,9 @@ export class PaymentFormComponent extends React.Component {
     return requiredFields;
   }
 
+  // TODO: PCI CLEANUP: come back to this and remove card number and security code
   validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
     const errors = {};
-
-    if (false /* !this.props.flexMicroformEnabled */) { // eslint-disable-line no-constant-condition
-      const { card, isValid } = CardValidator.number(cardNumber);
-      if (cardNumber) {
-        if (!isValid) {
-          errors.cardNumber = 'payment.form.errors.invalid.card.number';
-        } else {
-          if (!Object.keys(CARD_TYPES).includes(card.type)) {
-            errors.cardNumber = 'payment.form.errors.unsupported.card';
-          }
-          if (securityCode && securityCode.length !== card.code.size) {
-            errors.securityCode = 'payment.form.errors.invalid.security.code';
-          }
-        }
-      }
-    }
 
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
@@ -239,7 +204,6 @@ export class PaymentFormComponent extends React.Component {
       isBulkOrder,
       isQuantityUpdating,
       isPaymentVisualExperiment,
-      // flexMicroformEnabled,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -266,7 +230,7 @@ export class PaymentFormComponent extends React.Component {
           <div className="row justify-content-end">
             <div className="col-lg-6 form-group">
               {
-                loading || isQuantityUpdating || (true /* flexMicroformEnabled */ && !window.microform) ? (
+                loading || isQuantityUpdating || !window.microform ? (
                   <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
                 ) : (
                   <StatefulButton
@@ -311,7 +275,6 @@ PaymentFormComponent.propTypes = {
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
-  // flexMicroformEnabled: PropTypes.bool,
   submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 
@@ -322,7 +285,6 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   isPaymentVisualExperiment: false,
-  // flexMicroformEnabled: true,
   submitErrors: {},
 };
 
