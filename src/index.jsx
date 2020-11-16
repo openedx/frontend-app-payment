@@ -59,6 +59,9 @@ mergeConfig({
 });
 
 subscribe(APP_READY, () => {
+  if (process.env.NODE_ENV === 'development') {
+    global.analytics.debug();
+  }
   markPerformanceIfAble('Payment app began painting');
   sendTrackEvent(
     'edx.bi.ecommerce.payment_mfe.started_painting',

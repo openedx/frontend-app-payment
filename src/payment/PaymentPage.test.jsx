@@ -39,6 +39,7 @@ jest.mock('universal-cookie', () => {
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
+  sendPageEvent: jest.fn(),
 }));
 
 const config = getConfig();
