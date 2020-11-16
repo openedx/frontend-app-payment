@@ -220,7 +220,7 @@ described below:
 - Navigate to `https://local.stage.edx.org <https://local.stage.edx.org>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link:
   "Proceed to local.stage.edx.org (unsafe)".
 
-.. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-payment.svg?branch=master
-   :target: https://travis-ci.org/edx/frontend-app-payment
+.. |Build Status| image:: https://api.travis-ci.com/edx/frontend-app-payment.svg?branch=master
+   :target: https://travis-ci.com/edx/frontend-app-payment
 .. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-payment.svg
    :target: @edx/frontend-app-payment
