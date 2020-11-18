@@ -33,7 +33,6 @@ class PaymentPage extends React.Component {
 
     const {
       experimentVariables: {
-        isPaymentVisualExperiment = false,
         isNumEnrolledExperiment = false,
         REV1045Experiment = false,
         isPriceMessageExperiment = false,
@@ -43,7 +42,6 @@ class PaymentPage extends React.Component {
     } = window;
 
     this.state = {
-      isPaymentVisualExperiment,
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
@@ -61,7 +59,6 @@ class PaymentPage extends React.Component {
   renderContent() {
     const { isEmpty, isRedirect } = this.props;
     const {
-      isPaymentVisualExperiment,
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
@@ -105,7 +102,6 @@ class PaymentPage extends React.Component {
         </h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
           <Cart
-            isPaymentVisualExperiment={isPaymentVisualExperiment}
             isNumEnrolledExperiment={isNumEnrolledExperiment}
             REV1045Experiment={REV1045Experiment}
             isPriceMessageExperiment={isPriceMessageExperiment}
@@ -114,7 +110,7 @@ class PaymentPage extends React.Component {
           />
         </div>
         <div className="col-md-7 pl-md-5">
-          <Checkout isPaymentVisualExperiment={isPaymentVisualExperiment} />
+          <Checkout />
         </div>
       </div>
     );

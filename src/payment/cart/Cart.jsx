@@ -27,7 +27,6 @@ class Cart extends React.Component {
       products,
       orderType,
       isCurrencyConverted,
-      isPaymentVisualExperiment,
       isNumEnrolledExperiment,
       REV1045Experiment,
       isPriceMessageExperiment,
@@ -61,7 +60,6 @@ class Cart extends React.Component {
               key={product.title}
               isNumEnrolledExperiment={isNumEnrolledExperiment}
               REV1045Experiment={REV1045Experiment}
-              isPaymentVisualExperiment={isPaymentVisualExperiment}
               enrollmentCountData={enrollmentCountData}
               {...product}
             />
@@ -86,7 +84,7 @@ class Cart extends React.Component {
               />
 
               {showCouponForm
-                ? <CouponForm isPaymentVisualExperiment={isPaymentVisualExperiment} /> : null}
+                ? <CouponForm /> : null}
 
               <TotalTable total={orderTotal} />
 
@@ -147,7 +145,6 @@ class Cart extends React.Component {
 
 Cart.propTypes = {
   intl: intlShape.isRequired,
-  isPaymentVisualExperiment: PropTypes.bool,
   isNumEnrolledExperiment: PropTypes.bool,
   REV1045Experiment: PropTypes.bool,
   isPriceMessageExperiment: PropTypes.bool,
@@ -179,7 +176,6 @@ Cart.propTypes = {
 };
 
 Cart.defaultProps = {
-  isPaymentVisualExperiment: false,
   isNumEnrolledExperiment: false,
   REV1045Experiment: false,
   isPriceMessageExperiment: false,

@@ -104,14 +104,12 @@ export class PaymentFormComponent extends React.Component {
       city,
       country,
       state,
-      cardNumber,
-      securityCode,
       cardExpirationMonth,
       cardExpirationYear,
       organization,
     } = fieldValues;
 
-    let requiredFields = {
+    const requiredFields = {
       firstName,
       lastName,
       address,
@@ -121,20 +119,7 @@ export class PaymentFormComponent extends React.Component {
       cardExpirationYear,
     };
 
-    if (this.props.isPaymentVisualExperiment) { // TODO: PCI CLEANUP: isPaymentVisualExperiment should drop away too
-      requiredFields = {
-        firstName,
-        lastName,
-        city,
-        country,
-        cardNumber,
-        securityCode,
-        cardExpirationMonth,
-        cardExpirationYear,
-      };
-    }
-
-    if (getStates(country) && !this.props.isPaymentVisualExperiment) {
+    if (getStates(country)) {
       requiredFields.state = state;
     }
 
@@ -203,7 +188,6 @@ export class PaymentFormComponent extends React.Component {
       isProcessing,
       isBulkOrder,
       isQuantityUpdating,
-      isPaymentVisualExperiment,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -221,11 +205,9 @@ export class PaymentFormComponent extends React.Component {
           <CardHolderInformation
             showBulkEnrollmentFields={isBulkOrder}
             disabled={disabled}
-            isPaymentVisualExperiment={isPaymentVisualExperiment}
           />
           <CardDetails
             disabled={disabled}
-            isPaymentVisualExperiment={isPaymentVisualExperiment}
           />
           <div className="row justify-content-end">
             <div className="col-lg-6 form-group">
@@ -271,7 +253,6 @@ PaymentFormComponent.propTypes = {
   isProcessing: PropTypes.bool,
   isBulkOrder: PropTypes.bool,
   isQuantityUpdating: PropTypes.bool,
-  isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
@@ -284,7 +265,6 @@ PaymentFormComponent.defaultProps = {
   isBulkOrder: false,
   isQuantityUpdating: false,
   isProcessing: false,
-  isPaymentVisualExperiment: false,
   submitErrors: {},
 };
 
