@@ -20,6 +20,7 @@ export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.formRef = React.createRef();
+    this.submitButtonRef = React.createRef();
     this.state = {
       firstErrorId: null,
       shouldFocusFirstError: false,
@@ -272,6 +273,7 @@ export class PaymentFormComponent extends React.Component {
                   <StatefulButton
                     type="submit"
                     id="placeOrderButton"
+                    ref={this.submitButtonRef}
                     className="btn btn-primary btn-lg btn-block"
                     state={submitButtonState}
                     onClick={this.props.onSubmitButtonClick}

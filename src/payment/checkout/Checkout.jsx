@@ -16,6 +16,11 @@ import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
 
 class Checkout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.paymentFormRef = React.createRef();
+  }
+
   handleSubmitPayPal = () => {
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
@@ -132,6 +137,7 @@ class Checkout extends React.Component {
         </div>
 
         <PaymentForm
+          ref={this.paymentFormRef}
           onSubmitPayment={this.handleSubmitCybersource}
           onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
           disabled={submitting}

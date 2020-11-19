@@ -32,7 +32,7 @@ import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 import '../__factories__/basket.factory';
 
 // FIXME: TEST: used by tests temporarily commented out
-// import * as cybersourceService from '../payment-methods/cybersource';
+import * as cybersourceService from '../payment-methods/cybersource';
 
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
@@ -521,7 +521,6 @@ describe('saga tests', () => {
     });
 
     // FIXME: TEST: need to fake the microform somehow for this test to work
-    /*
     it('should successfully call cybersource checkout method', async () => {
       try {
         await runSaga(
@@ -550,8 +549,8 @@ describe('saga tests', () => {
         submitPayment.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(cybersourceService.checkout).toHaveBeenCalledTimes(1);
-      expect(cybersourceService.checkout).toHaveBeenCalledWith(
+      expect(cybersourceService.checkoutWithToken).toHaveBeenCalledTimes(1);
+      expect(cybersourceService.checkoutWithToken).toHaveBeenCalledWith(
         {
           foo: 'bar',
           isBasketProcessing: false,
@@ -561,7 +560,6 @@ describe('saga tests', () => {
         },
       );
     });
-    */
 
     // FIXME: TEST: need to fake the microform somehow for this test to work
     /*
