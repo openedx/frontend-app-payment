@@ -49,8 +49,6 @@ export class PaymentFormComponent extends React.Component {
       country,
       state,
       postalCode,
-      cardNumber,
-      securityCode,
       cardExpirationMonth,
       cardExpirationYear,
       organization,
@@ -60,8 +58,6 @@ export class PaymentFormComponent extends React.Component {
     const errors = {
       ...this.validateRequiredFields(requiredFields),
       ...this.validateCardDetails(
-        cardNumber,
-        securityCode,
         cardExpirationMonth,
         cardExpirationYear,
       ),
@@ -70,8 +66,6 @@ export class PaymentFormComponent extends React.Component {
     if (Object.keys(errors).length > 0) {
       throw new SubmissionError(errors);
     }
-
-    const cardTypeId = null; // TODO: PCI CLEANUP: if this is always null, remove it
 
     this.props.onSubmitPayment({
       cardHolderInfo: {
@@ -87,9 +81,6 @@ export class PaymentFormComponent extends React.Component {
         purchasedForOrganization,
       },
       cardDetails: {
-        cardNumber,
-        cardTypeId,
-        securityCode,
         cardExpirationMonth,
         cardExpirationYear,
       },
@@ -130,8 +121,7 @@ export class PaymentFormComponent extends React.Component {
     return requiredFields;
   }
 
-  // TODO: PCI CLEANUP: come back to this and remove card number and security code
-  validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
+  validateCardDetails(cardExpirationMonth, cardExpirationYear) {
     const errors = {};
 
     const currentMonth = new Date().getMonth() + 1;
