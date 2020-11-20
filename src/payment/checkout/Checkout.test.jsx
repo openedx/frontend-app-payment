@@ -72,6 +72,7 @@ describe('<Checkout />', () => {
 
       sendTrackEvent.mockClear();
       store = mockStore(state);
+      window.microform = { Mockroform: 'Mock' }; // HACK: BJH: make a proper mock and maybe properly swap the mock in and out
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
@@ -105,7 +106,7 @@ describe('<Checkout />', () => {
 
     // FIXME: TEST: need to fake the microform somehow for this test to work
     it('submits and tracks the payment form', () => {
-      const formSubmitButton = checkoutComponent.ref('paymentFormRef').ref('submitButtonRef'); // find('form button[type="submit"]').hostNodes();
+      const formSubmitButton = wrapper.find('form button[type="submit"]').hostNodes();
       formSubmitButton.simulate('click');
 
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.payment_selected', {
