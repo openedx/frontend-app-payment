@@ -47,12 +47,10 @@ class OrderSummary extends React.Component {
 
 OrderSummary.propTypes = {
   children: PropTypes.node,
-  // flexMicroformEnabled: PropTypes.bool,
 };
 
 OrderSummary.defaultProps = {
   children: undefined,
-  // flexMicroformEnabled: true,
 };
 
 export default connect(updateCaptureKeySelector, {})(OrderSummary);

@@ -161,8 +161,6 @@ describe('<PaymentForm />', () => {
         address: '',
         city: '',
         country: '',
-        cardNumber: '',
-        securityCode: '',
         cardExpirationMonth: '',
         cardExpirationYear: '',
       };
@@ -201,18 +199,16 @@ describe('<PaymentForm />', () => {
       const currentMonth = new Date().getMonth() + 1;
       const currentYear = new Date().getFullYear();
       const testData = [
-        // cardNumber, securityCode, cardExpirationMonth, cardExpirationYear, expectedErrors
-        ['', '', '', '', {}],
-        ['', '', `${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'payment.form.errors.card.expired' }],
+        // cardExpirationMonth, cardExpirationYear, expectedErrors
+        ['', '', {}],
+        [`${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'payment.form.errors.card.expired' }],
       ];
 
       testData.forEach((testCaseData) => {
         expect(paymentForm.validateCardDetails(
           testCaseData[0],
           testCaseData[1],
-          testCaseData[2],
-          testCaseData[3],
-        )).toEqual(testCaseData[4]);
+        )).toEqual(testCaseData[2]);
       });
     });
   });

@@ -65,7 +65,6 @@ const basket = (state = basketInitialState, action = null) => {
 
 const captureContextInitialState = {
   isCaptureKeyProcessing: false,
-  // flexMicroformEnabled: true,
   microformStatus: DEFAULT_STATUS,
   captureKeyId: '',
 };
