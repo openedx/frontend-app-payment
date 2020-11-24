@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
-// import { stopSubmit } from 'redux-form'; // FIXME: TEST: used by tests temporarily commented out
+import { stopSubmit } from 'redux-form';
 import { Factory } from 'rosie';
 import paymentSaga, {
   handleFetchBasket,
@@ -31,13 +31,12 @@ import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
 import '../__factories__/basket.factory';
 
-// FIXME: TEST: used by tests temporarily commented out
-// import * as cybersourceService from '../payment-methods/cybersource';
+import * as cybersourceService from '../payment-methods/cybersource';
 
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
 jest.mock('../payment-methods/cybersource', () => ({
-  checkout: jest.fn(),
+  checkoutWithToken: jest.fn(),
 }));
 
 const axiosMock = new MockAdapter(axios);
@@ -520,8 +519,6 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
     });
 
-    // FIXME: TEST: need to fake the microform somehow for this test to work
-    /*
     it('should successfully call cybersource checkout method', async () => {
       try {
         await runSaga(
@@ -550,8 +547,8 @@ describe('saga tests', () => {
         submitPayment.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(cybersourceService.checkout).toHaveBeenCalledTimes(1);
-      expect(cybersourceService.checkout).toHaveBeenCalledWith(
+      expect(cybersourceService.checkoutWithToken).toHaveBeenCalledTimes(1);
+      expect(cybersourceService.checkoutWithToken).toHaveBeenCalledWith(
         {
           foo: 'bar',
           isBasketProcessing: false,
@@ -561,14 +558,11 @@ describe('saga tests', () => {
         },
       );
     });
-    */
 
-    // FIXME: TEST: need to fake the microform somehow for this test to work
-    /*
     it('should bail on error handling if the error was aborted', async () => {
       const error = new Error();
       error.aborted = true;
-      cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+      cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
       try {
         await runSaga(
@@ -596,10 +590,7 @@ describe('saga tests', () => {
         submitPayment.fulfill(),
       ]);
     });
-    */
 
-    // FIXME: TEST: need to fake the microform somehow for this test to work
-    /*
     it('should perform single-error error handling if error was not aborted', async () => {
       const error = new Error();
       error.aborted = false;
@@ -607,7 +598,7 @@ describe('saga tests', () => {
       error.data = null;
       error.userMessage = null;
       error.messageType = 'error';
-      cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+      cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
       try {
         await runSaga(
@@ -637,10 +628,7 @@ describe('saga tests', () => {
         submitPayment.fulfill(),
       ]);
     });
-    */
 
-    // FIXME: TEST: need to fake the microform somehow for this test to work
-    /*
     it('should perform error handling and updating basket data if error was not aborted', async () => {
       const error = new Error();
       error.aborted = false;
@@ -656,7 +644,7 @@ describe('saga tests', () => {
         i: 'am',
         a: 'basket',
       };
-      cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+      cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
       try {
         await runSaga(
@@ -690,11 +678,8 @@ describe('saga tests', () => {
         submitPayment.fulfill(),
       ]);
     });
-    */
   });
 
-  // FIXME: TEST: need to fake the microform somehow for this test to work
-  /*
   it('should perform error handling for field errors', async () => {
     const error = new Error();
     error.aborted = false;
@@ -710,7 +695,7 @@ describe('saga tests', () => {
       i: 'am',
       a: 'basket',
     };
-    cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+    cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
     try {
       await runSaga(
@@ -746,7 +731,6 @@ describe('saga tests', () => {
       submitPayment.fulfill(),
     ]);
   });
-  */
 
   it('should pass actions to the correct sagas', () => {
     const gen = paymentSaga();
