@@ -1,14 +1,12 @@
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getConfig } from '@edx/frontend-platform';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
+import qs from 'qs';
 import { logError } from '@edx/frontend-platform/logging';
+import { CARD_TYPES } from '../../checkout/payment-form/utils/credit-card';
 
-import { normalizeFieldErrors } from './service';
-
-jest.mock('../../data/utils', () => ({
-  generateAndSubmitForm: jest.fn(),
-  isWaffleFlagEnabled: jest.fn(),
-}));
+import { checkoutWithToken, normalizeFieldErrors } from './service';
 
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
@@ -60,13 +58,24 @@ describe('Cybersource Service', () => {
     });
   });
 
-  // FIXME: TEST: need to fake the microform somehow for this test to work and convert to checkoutWithToken
-  /*
   describe('checkout', () => {
-    beforeEach(() => {
-      // Clear all instances and calls to constructor and all methods:
-      Object.values(generateAndSubmitForm).map(handler => handler.mockClear);
-    });
+    // eslint-disable-next-line no-unused-vars
+    const mockCreateToken = jest.fn(({ expirationMonth, expirationYear }, callback) => callback(null, 'mocktoken'));
+
+    window.microform = {
+      fields: {
+        number: {
+          valid: true,
+          cybsCardType: CARD_TYPES.visa,
+        },
+      },
+      createToken: mockCreateToken,
+      Mockroform: true,
+    };
+
+    const mockSetLocation = jest.fn();
+
+    const CYBERSOURCE_API = `${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/authorize/`;
 
     const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
     const formDetails = {
@@ -81,9 +90,6 @@ describe('Cybersource Service', () => {
         organization: 'skunkworks',
       },
       cardDetails: {
-        cardNumber: '4111-1111-1111-1111 ',
-        cardTypeId: 'VISA??',
-        securityCode: '123',
         cardExpirationMonth: '10',
         cardExpirationYear: '2022',
       },
@@ -91,35 +97,39 @@ describe('Cybersource Service', () => {
     const cardValues = Object.values(formDetails.cardDetails);
 
     const expectNoCardDataToBePresent = (value) => {
+      const noLeakMessage = 'Value is not in card details';
       if (typeof value === 'object') {
         Object.values(value).forEach(expectNoCardDataToBePresent);
       } else {
-        expect(cardValues.includes(value)).toBe(false);
+        const isLeak = cardValues.includes(value)
+          ? `Found leaked card details value: ${value}`
+          : noLeakMessage;
+        expect(isLeak).toBe(noLeakMessage);
       }
     };
 
     it('should generate and submit a form on success', async () => {
       const successResponseData = {
-        form_fields: {
-          allThe: 'all the form fields form cybersource',
-        },
+        receipt_page_url: 'mock://receipt.page',
       };
       axiosMock.onPost(CYBERSOURCE_API).reply(200, successResponseData);
 
-      await expect(checkout(basket, formDetails)).resolves.toEqual(undefined);
-      expectNoCardDataToBePresent(axiosMock.history.post[0].data);
-      expect(generateAndSubmitForm).toHaveBeenCalledWith(
-        getConfig().CYBERSOURCE_URL,
-        expect.objectContaining({
-          ...successResponseData.form_fields,
-          card_number: '4111111111111111',
-          card_type: 'VISA??',
-          card_cvn: '123',
-          card_expiry_date: '10-2022',
-        }),
+      await expect(checkoutWithToken(basket, formDetails, mockSetLocation)).resolves.toEqual(undefined);
+
+      const postedData = qs.parse(axiosMock.history.post[0].data);
+      expectNoCardDataToBePresent(postedData);
+      expect(mockCreateToken).toHaveBeenCalledWith(
+        {
+          expirationMonth: formDetails.cardDetails.cardExpirationMonth,
+          expirationYear: formDetails.cardDetails.cardExpirationYear,
+        },
+        expect.any(Function),
       );
+      expect(mockSetLocation).toHaveBeenCalledWith(successResponseData.receipt_page_url);
     });
 
+    // FIXME: TEST: need to fake the microform somehow for this test to work and convert to checkoutWithToken
+    /*
     it('should throw an error if the cybersource checkout request errors on the fields', async () => {
       const errorResponseData = {
         field_errors: {
@@ -177,6 +187,6 @@ describe('Cybersource Service', () => {
         });
       });
     });
+    */
   });
-  */
 });
