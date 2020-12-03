@@ -4,6 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import qs from 'qs';
 import { logError } from '@edx/frontend-platform/logging';
+import handleRequestError from '../../data/handleRequestError';
 import { CARD_TYPES } from '../../checkout/payment-form/utils/credit-card';
 
 import { checkoutWithToken, normalizeFieldErrors } from './service';
@@ -11,6 +12,8 @@ import { checkoutWithToken, normalizeFieldErrors } from './service';
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
+
+jest.mock('../../data/handleRequestError');
 
 jest.mock('@edx/frontend-platform/auth');
 
@@ -128,8 +131,20 @@ describe('Cybersource Service', () => {
       expect(mockSetLocation).toHaveBeenCalledWith(successResponseData.receipt_page_url);
     });
 
-    // FIXME: TEST: need to fake the microform somehow for this test to work and convert to checkoutWithToken
-    /*
+    it('should redirect if the cybersource checkout request returns a url to redirect to', async () => {
+      const errorRedirectData = {
+        redirectTo: 'mock://error.page',
+      };
+      axiosMock.onPost(CYBERSOURCE_API).reply(403, errorRedirectData);
+      mockSetLocation.mockClear();
+
+      await expect(checkoutWithToken(basket, formDetails, mockSetLocation)).rejects.toEqual(expect.any(Error));
+
+      const postedData = qs.parse(axiosMock.history.post[0].data);
+      expectNoCardDataToBePresent(postedData);
+      expect(mockSetLocation).toHaveBeenCalledWith(errorRedirectData.redirectTo);
+    });
+
     it('should throw an error if the cybersource checkout request errors on the fields', async () => {
       const errorResponseData = {
         field_errors: {
@@ -140,14 +155,9 @@ describe('Cybersource Service', () => {
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
 
       expect.hasAssertions();
-      await checkout(basket, formDetails).catch(() => {
+      await checkoutWithToken(basket, formDetails).catch(() => {
         expectNoCardDataToBePresent(axiosMock.history.post[0].data);
-        expect(logError).toHaveBeenCalledWith(expect.any(Error), {
-          messagePrefix: 'Cybersource Submit Error',
-          paymentMethod: 'Cybersource',
-          paymentErrorType: 'Submit Error',
-          basketId: basket.basketId,
-        });
+        expect(handleRequestError).toHaveBeenCalledWith(expect.any(Error));
       });
     });
 
@@ -158,10 +168,11 @@ describe('Cybersource Service', () => {
       };
 
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
+      mockSetLocation.mockClear();
 
       expect.hasAssertions();
-      await expect(checkout(basket, formDetails)).rejects.toEqual(
-        new Error('This card holder did not pass the SDN check.')
+      await expect(checkoutWithToken(basket, formDetails, mockSetLocation)).rejects.toEqual(
+        new Error('This card holder did not pass the SDN check.'),
       );
       expect(logError).toHaveBeenCalledWith(expect.any(Error), {
         messagePrefix: 'SDN Check Error',
@@ -177,7 +188,7 @@ describe('Cybersource Service', () => {
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
 
       expect.hasAssertions();
-      await checkout(basket, formDetails).catch(() => {
+      await checkoutWithToken(basket, formDetails).catch(() => {
         expectNoCardDataToBePresent(axiosMock.history.post[0].data);
         expect(logError).toHaveBeenCalledWith(expect.any(Error), {
           messagePrefix: 'Cybersource Submit Error',
@@ -187,6 +198,5 @@ describe('Cybersource Service', () => {
         });
       });
     });
-    */
   });
 });
