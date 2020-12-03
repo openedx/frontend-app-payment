@@ -252,9 +252,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
         <button
           className="btn btn-primary"
           disabled={false}
-          onBlur={[Function]}
           onClick={[Function]}
-          onKeyDown={[Function]}
           type="submit"
         >
           <span>
@@ -410,10 +408,9 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
         <button
           aria-disabled={false}
           aria-live="assertive"
-          className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn-primary btn-sm"
-          onBlur={[Function]}
+          className="pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-sm"
+          disabled={false}
           onClick={[Function]}
-          onKeyDown={[Function]}
           type="submit"
         >
           <span
