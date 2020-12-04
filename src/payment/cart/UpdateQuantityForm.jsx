@@ -74,7 +74,8 @@ function UpdateQuantityForm(props) {
             />
           ),
         }}
-        className="btn-primary btn-sm"
+        variant="primary"
+        size="sm"
       />
     </form>
   );

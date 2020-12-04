@@ -56,7 +56,7 @@ class CouponForm extends Component {
         </ValidationFormGroup>
         <Button
           disabled={isBasketProcessing}
-          className="btn-primary"
+          variant="primary"
           type="submit"
           onClick={this.handleSubmitButtonClick}
         >
@@ -122,7 +122,8 @@ class CouponForm extends Component {
       <form onSubmit={this.handleRemoveSubmit} className="d-flex align-items-center mb-3">
         {this.renderCouponMessage()}
         <Button
-          className="btn-link display-inline p-0 pl-3 border-0"
+          className="display-inline p-0 pl-3 border-0"
+          variant="link"
           type="submit"
           disabled={this.props.isBasketProcessing}
         >
