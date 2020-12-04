@@ -103,7 +103,11 @@ function composeFieldError(reason, errors) {
   return fieldError;
 }
 
-export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails }) {
+export async function checkoutWithToken(
+  basket,
+  { cardHolderInfo, cardDetails },
+  setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
+) {
   if (!window.microform) {
     throw new Error('Microform not initialized');
   }
@@ -156,7 +160,7 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
       if (errorData && error.response.data.sdn_check_failure) {
         /* istanbul ignore next */
         if (getConfig().ENVIRONMENT !== 'test') {
-          global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+          setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
         }
         logError(error, {
           messagePrefix: 'SDN Check Error',
@@ -168,7 +172,7 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
       } else if (errorData && errorData.redirectTo) {
         // This was an expected issue and the back-end is requesting a redirect.
         // We use this when the payment has been declined.
-        global.location.href = errorData.redirectTo;
+        setLocation(errorData.redirectTo);
       } else if (errorData && errorData.field_errors) {
         // It's a field error
         // This endpoint does not return field error data in a format we expect.  Fix it.
@@ -189,5 +193,5 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
       }
     });
 
-  global.location.href = data.receipt_page_url;
+  setLocation(data.receipt_page_url);
 }
