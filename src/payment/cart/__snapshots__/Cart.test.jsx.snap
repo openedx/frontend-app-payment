@@ -250,7 +250,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
           />
         </div>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           disabled={false}
           onClick={[Function]}
           type="submit"

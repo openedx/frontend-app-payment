@@ -628,6 +628,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -2080,7 +2085,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -2443,6 +2448,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -3895,7 +3905,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -4276,6 +4286,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -5728,7 +5743,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -6262,6 +6277,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -7748,7 +7768,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -8146,6 +8166,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -9598,7 +9623,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -10009,6 +10034,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -11461,7 +11491,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
