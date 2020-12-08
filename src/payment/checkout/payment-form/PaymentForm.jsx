@@ -203,7 +203,7 @@ export class PaymentFormComponent extends React.Component {
             <div className="col-lg-6 form-group">
               {
                 loading || isQuantityUpdating || !window.microform ? (
-                  <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
+                  <div className="skeleton btn btn-block btn-lg">&nbsp;</div>
                 ) : (
                   <StatefulButton
                     type="submit"

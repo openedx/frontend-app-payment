@@ -56,7 +56,7 @@ class CouponForm extends Component {
         </ValidationFormGroup>
         <Button
           disabled={isBasketProcessing}
-          variant="primary"
+          variant="outline-primary"
           type="submit"
           onClick={this.handleSubmitButtonClick}
         >
