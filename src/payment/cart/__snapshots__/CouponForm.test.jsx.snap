@@ -48,7 +48,7 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
     />
   </div>
   <button
-    className="btn btn-outline-primary"
+    className="btn btn-primary"
     disabled={false}
     onClick={[Function]}
     type="submit"
