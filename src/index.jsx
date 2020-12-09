@@ -29,7 +29,6 @@ import {
 import configureStore from './data/configureStore';
 
 import './index.scss';
-import './assets/favicon.ico';
 
 const tempHttpClient = axios.create();
 tempHttpClient.defaults.withCredentials = true;
