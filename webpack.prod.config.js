@@ -53,6 +53,7 @@ const config = merge({
       new HtmlWebpackPlugin({
         inject: false, // Manually inject head and body tags in the template itself.
         template: path.resolve(__dirname, 'public/index.html'),
+        FAVICON_URL: process.env.FAVICON_URL || null,
         optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
         newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
         newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
