@@ -155,15 +155,15 @@
   }
 
   .flex-microform {
-    @extend .form-control
+    @extend .form-control;
   }
 
   .flex-microform-focused {
-    @extend .form-control, :focus
+    @extend .form-control, :focus;
   }
 
   .flex-microform-disabled {
-    @extend .form-control, :disabled
+    @extend .form-control, :disabled;
   }
 
   .microform-label {
