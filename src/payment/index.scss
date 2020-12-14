@@ -90,7 +90,7 @@
     margin-right: map-get($spacers, 2);
     margin-bottom: map-get($spacers, 2);
     border: solid $border-width $border-color;
-    border-radius: $border-radius;
+    border-radius: 0;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
