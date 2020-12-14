@@ -631,6 +631,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     style={
                       Object {
                         "MozAppearance": "none",
+                        "WebkitAppearance": "none",
                       }
                     }
                     value=""
@@ -2451,6 +2452,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     style={
                       Object {
                         "MozAppearance": "none",
+                        "WebkitAppearance": "none",
                       }
                     }
                     value=""
@@ -4289,6 +4291,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     style={
                       Object {
                         "MozAppearance": "none",
+                        "WebkitAppearance": "none",
                       }
                     }
                     value=""
@@ -6280,6 +6283,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     style={
                       Object {
                         "MozAppearance": "none",
+                        "WebkitAppearance": "none",
                       }
                     }
                     value=""
@@ -8169,6 +8173,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     style={
                       Object {
                         "MozAppearance": "none",
+                        "WebkitAppearance": "none",
                       }
                     }
                     value=""
@@ -10037,6 +10042,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     style={
                       Object {
                         "MozAppearance": "none",
+                        "WebkitAppearance": "none",
                       }
                     }
                     value=""
