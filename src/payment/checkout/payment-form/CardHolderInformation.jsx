@@ -190,7 +190,6 @@ export class CardHolderInformationComponent extends React.Component {
                 onChange={this.handleSelectCountry}
                 disabled={disabled}
                 autoComplete="country"
-                style={{ MozAppearance: 'none' }}
               />
             </div>
           </div>

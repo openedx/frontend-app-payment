@@ -40,7 +40,6 @@ class StateProvinceFormInput extends React.Component {
             options={options}
             required
             disabled={disabled}
-            style={{ MozAppearance: 'none' }}
           />
         </>
       );
