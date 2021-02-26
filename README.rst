@@ -27,6 +27,8 @@ Getting Started
 
   ``cd frontend-app-payment && npm ci``
 
+  Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and production builds work and avoid unintentional changes to `package_lock.json` when doing other work.
+
 3. Start the dev server:
 
   ``npm start``
