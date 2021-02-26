@@ -25,7 +25,9 @@ Getting Started
 
 2. Install npm dependencies:
 
-  ``cd frontend-app-payment && npm install``
+  ``cd frontend-app-payment && npm ci``
+
+  Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and production builds work and avoid unintentional changes to ``package_lock.json`` when doing other work.
 
 3. Start the dev server:
 
@@ -212,7 +214,7 @@ described below:
   ``127.0.0.1 local.stage.edx.org``.
 
 - Log into stage: `https://courses.stage.edx.org/login <https://courses.stage.edx.org/login>`_.
-- Run `npm install` in this project directory
+- Run `npm ci` in this project directory
 - Start the frontend's dev server in staging mode:
 
   ``npm run start:stage``
