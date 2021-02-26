@@ -75,7 +75,7 @@
     "universal-cookie": "4.0.2"
   },
   "devDependencies": {
-    "@edx/frontend-build": "5.6.8",
+    "@edx/frontend-build": "5.6.10",
     "audit-ci": "^3.1.1",
     "axios-mock-adapter": "1.17.0",
     "chance": "1.1.0",
