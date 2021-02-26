@@ -93,7 +93,7 @@ const config = merge({
           glob.sync('node_modules/@edx/paragon/**/*', { nodir: true }),
         ),
         // Protect react-css-transition class names
-        whitelistPatterns: [/-enter/, /-appear/, /-exit/],
+        whitelistPatterns: [/-enter/, /-appear/, /-exit/, /flex-microform/],
       }),
     ],
   },
