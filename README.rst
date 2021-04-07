@@ -13,37 +13,42 @@ Micro-frontend for the single-page payment/checkout process. This application su
 Getting Started
 ---------------
 
-**Prerequisite**
+This MFE is bundled with `Devstack <https://github.com/edx/devstack>`_, see the `Getting Started <https://github.com/edx/devstack#getting-started>`_ section for setup instructions.
 
-`Devstack <https://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/latest/installation/index.html>`_.  If you start Devstack with ``make dev.up.ecommerce`` that should give you everything you need as a companion to this frontend.
+Once set up, this frontend and all its prerequisites can be started with:
 
-**Installation and Startup**
+.. code-block::
 
-1. Clone this repo:
+  cd devstack
+  make dev.up.frontend-app-payment
 
-  ``git clone https://github.com/edx/frontend-app-payment.git``
+The frontend runs at `http://localhost:1998 <http://localhost:1998>`_, though it is rare to interact with it directly.  Rather, log into the LMS at http://localhost:18000/login and enroll in a course, choosing "upgrade to verified" to be taken to the checkout page.
 
-2. Install npm dependencies:
+Development
+-----------
 
-  ``cd frontend-app-payment && npm ci``
+To work on this frontend: with the prerequisites running as above, bring down the ``frontend-app-payment`` container, then start the development server *outside* Docker as follows:
 
-  Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and production builds work and avoid unintentional changes to ``package_lock.json`` when doing other work.
+.. code-block::
 
-3. Start the dev server:
+  cd devstack
+  make dev.down.frontend-app-payment
+  cd ../frontend-app-payment
+  npm ci
+  npm start
 
-  ``npm start``
+Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and production builds work and avoid unintentional changes to ``package_lock.json`` when doing other work.
 
-The dev server is running at `http://localhost:1998 <http://localhost:1998>`_.
+The dev server also runs at `http://localhost:1998 <http://localhost:1998>`_, but again, it is rare to interact with it directly.  By default it will show an empty basket view.
 
-By default it will show an empty basket view.
+Enable in ecommerce
+-------------------
 
-**Enable in devstack**
+Devstack ecommerce has this frontend enabled by default, to enable it in another installation:
 
-To have your devstack ecommerce use this dev server:
+1. Go to ecommerce Django admin, and sign in as a Django superuser if needed.
 
-1. Go to `ecommerce Django admin <http://localhost:18130/admin/>`_, and sign in with the `edx user <https://github.com/edx/devstack#usernames-and-passwords>`_ if needed.
-
-2. In `Core > Site configurations > localhost:18130 <http://localhost:18130/admin/core/siteconfiguration/1/change/>`_, set "Enable Microfrontend for Basket Page" and set the accompanying url to ``http://localhost:1998``
+2. In ``Core > Site configurations > [YOUR CONFIG]``, set "Enable Microfrontend for Basket Page" and set the accompanying url to point to this frontend.
 
 API Documentation
 -----------------
