@@ -8,48 +8,52 @@ Please tag **@edx/arch-team** on any PRs or issues.  Thanks.
 Introduction
 ------------
 
-Micro-frontend for the single-page payment/checkout process. This application supports Apple Pay, PayPal, and Cybersource credit card payment types.
+Micro-frontend for the single-page payment/checkout process; order history and receipt pages are still served by the ecommerce service. This application only supports PayPal and Cybersource credit card payments.
 
 Getting Started
 ---------------
 
-**Prerequisite**
+This MFE is bundled with `Devstack <https://github.com/edx/devstack>`_, see the `Getting Started <https://github.com/edx/devstack#getting-started>`_ section for setup instructions.
 
-`Devstack <https://edx.readthedocs.io/projects/edx-installing-configuring-and-running/en/latest/installation/index.html>`_.  If you start Devstack with ``make dev.up.ecommerce`` that should give you everything you need as a companion to this frontend.
+Once set up, this frontend and all its prerequisites can be started with:
 
-**Installation and Startup**
+.. code-block::
 
-1. Clone this repo:
+  cd devstack
+  make dev.up.frontend-app-payment
 
-  ``git clone https://github.com/edx/frontend-app-payment.git``
+The frontend runs at `http://localhost:1998 <http://localhost:1998>`_, though it is rare to interact with it directly because the course key needs to be passed in a URL parameter to determine basket contents to check out.  Rather, log into the LMS at http://localhost:18000/login and enroll in a course, choosing to upgrade to be taken to the checkout page.
 
-2. Install npm dependencies:
+Development
+-----------
 
-  ``cd frontend-app-payment && npm ci``
+To work on this frontend: with the prerequisites running as above, bring down the ``frontend-app-payment`` container, then start the development server *outside* Docker as follows:
 
-  Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and production builds work and avoid unintentional changes to ``package_lock.json`` when doing other work.
+.. code-block::
 
-3. Start the dev server:
+  cd devstack
+  make dev.down.frontend-app-payment
+  cd ../frontend-app-payment
+  npm ci
+  npm start
 
-  ``npm start``
+Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and production builds work and avoid unintentional changes to ``package_lock.json`` when doing other work.
 
-The dev server is running at `http://localhost:1998 <http://localhost:1998>`_.
+The dev server also runs at `http://localhost:1998 <http://localhost:1998>`_, but again, it is rare to interact with it directly.  By default it will show an empty basket view.
 
-By default it will show an empty basket view.
+Configuration
+-------------
 
-**Enable in devstack**
+This frontend is configured in ecommerce Django admin:
 
-To have your devstack ecommerce use this dev server:
+In ``Core > Site configurations > [YOUR CONFIG]``, set "Enable Microfrontend for Basket Page" and set the accompanying url to point to this frontend.
 
-1. Go to `ecommerce Django admin <http://localhost:18130/admin/>`_, and sign in with the `edx user <https://github.com/edx/devstack#usernames-and-passwords>`_ if needed.
-
-2. In `Core > Site configurations > localhost:18130 <http://localhost:18130/admin/core/siteconfiguration/1/change/>`_, set "Enable Microfrontend for Basket Page" and set the accompanying url to ``http://localhost:1998``
+Devstack is configured this way by default.
 
 API Documentation
 -----------------
 
-To view the API documentation, navigate to `http://localhost:18130/api-docs`_
-and log in with a staff account. Related endpoints:
+To view the API documentation, navigate to `http://localhost:18130/api-docs`_ and log in with a staff account. Related endpoints:
 
   - GET /bff/payment/v0/payment/
   - POST /bff/payment/v0/quantity/
@@ -59,8 +63,7 @@ and log in with a staff account. Related endpoints:
   - POST /payment/cybersource/apple-pay/authorize/
   - POST /payment/cybersource/apple-pay/start-session/
 
-Note: bff means "Backend for frontend". BFF endpoints are designed specifically
-for this application.
+Note: bff means "Backend for frontend". BFF endpoints are designed specifically for this application.
 
 Cart States
 -----------
@@ -150,8 +153,7 @@ Breakdown of the ``src`` directory:
 Configuration
 -------------
 
-All API keys, endpoints, etc are provided through the webpack EnvironmentPlugin at
-build time as configured in `webpack/`
+All API keys, endpoints, etc are provided through the webpack EnvironmentPlugin at build time as configured in `webpack/`
 
 Notable Libraries Leveraged
 ---------------------------
@@ -172,12 +174,7 @@ The production build is created with ``npm run build``.
 
 **Purgecss**
 
-The production Webpack configuration for this repo uses `Purgecss <https://www.purgecss.com/>`_
-to remove unused CSS from the production css file. In webpack/webpack.prod.config.js the Purgecss
-plugin is configured to scan directories to determine what css selectors should remain. Currently
-the src/ directory is scanned along with all @edx/frontend-component* node modules and paragon.
-If you add and use a component in this repo that relies on HTML classes or ids for styling you
-must add it to the Purgecss configuration or it will be unstyled in the production build.
+The production Webpack configuration for this repo uses `Purgecss <https://www.purgecss.com/>`_ to remove unused CSS from the production css file.  In webpack/webpack.prod.config.js the Purgecss plugin is configured to scan directories to determine what css selectors should remain.  Currently the src/ directory is scanned along with all @edx/frontend-component* node modules and paragon.  If you add and use a component in this repo that relies on HTML classes or ids for styling you must add it to the Purgecss configuration or it will be unstyled in the production build.
 
 Internationalization
 --------------------
@@ -187,8 +184,7 @@ Please see `edx/frontend-i18n <https://github.com/edx/frontend-i18n>`_ for docum
 Localized Pricing
 -----------------
 
-The LocalizedPrice.jsx component makes use of a currency cookie to determine the user's preferred
-currency.  The code for localized pricing can be found in:
+The LocalizedPrice.jsx component makes use of a currency cookie to determine the user's preferred currency.  The code for localized pricing can be found in:
 
 **src/payment/cart/LocalizedPrice.jsx**
 
@@ -205,9 +201,7 @@ The "localizedCurrencySelector" reads the currency information defined in redux 
 Appendix A: Using Local Dev Server with stage.edx.org APIs
 ----------------------------------------------------------
 
-If you would like to run this frontend against stage.edx.org you can run ``npm run start:stage`` and
-access your development server at `https://local.stage.edx.org <https://local.stage.edx.org>`_ after the initial setup
-described below:
+If you would like to run this frontend against stage.edx.org you can run ``npm run start:stage`` and access your development server at `https://local.stage.edx.org <https://local.stage.edx.org>`_ after the initial setup described below:
 
 - Update the ``/etc/hosts`` file on your computer and add:
 
@@ -219,8 +213,7 @@ described below:
 
   ``npm run start:stage``
 
-- Navigate to `https://local.stage.edx.org <https://local.stage.edx.org>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link:
-  "Proceed to local.stage.edx.org (unsafe)".
+- Navigate to `https://local.stage.edx.org <https://local.stage.edx.org>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link: "Proceed to local.stage.edx.org (unsafe)".
 
 .. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-payment.svg?branch=master
    :target: https://travis-ci.org/edx/frontend-app-payment
