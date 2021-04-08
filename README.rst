@@ -22,7 +22,7 @@ Once set up, this frontend and all its prerequisites can be started with:
   cd devstack
   make dev.up.frontend-app-payment
 
-The frontend runs at `http://localhost:1998 <http://localhost:1998>`_, though it is rare to interact with it directly.  Rather, log into the LMS at http://localhost:18000/login and enroll in a course, choosing to upgrade to be taken to the checkout page.
+The frontend runs at `http://localhost:1998 <http://localhost:1998>`_, though it is rare to interact with it directly because the course key needs to be passed in a URL parameter to determine basket contents to check out.  Rather, log into the LMS at http://localhost:18000/login and enroll in a course, choosing to upgrade to be taken to the checkout page.
 
 Development
 -----------
