@@ -42,7 +42,7 @@ const COUNTRY_STATES_MAP = {
     TR: 'Tripura',
     UP: 'Uttar Pradesh',
     UT: 'Uttarakhand',
-    WB: 'WestBengal',
+    WB: 'West Bengal',
   },
   US: {
     AL: 'Alabama',
