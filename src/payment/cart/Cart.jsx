@@ -116,7 +116,7 @@ class Cart extends React.Component {
             <div className="price-messaging">
               <h5>Thanks for supporting our mission!</h5>
               {/* eslint-disable-next-line max-len */}
-              <p>Did you know? As a non-profit, we rely on paid commitments to support our mission of increasing access to high-quality education for learners like you, everywhere.</p>
+              <p>Did you know? We rely on paid commitments to support our mission of increasing access to high-quality education for learners like you, everywhere.</p>
             </div>
           )
           : null}
