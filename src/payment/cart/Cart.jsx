@@ -29,7 +29,6 @@ class Cart extends React.Component {
       isCurrencyConverted,
       isNumEnrolledExperiment,
       REV1045Experiment,
-      isPriceMessageExperiment,
       isTransparentPricingExperiment,
       enrollmentCountData,
       orderTotal,
@@ -111,15 +110,6 @@ class Cart extends React.Component {
           ) : null }
 
         <OrderDetails REV1045Experiment={REV1045Experiment} products={products} />
-        {isPriceMessageExperiment
-          ? (
-            <div className="price-messaging">
-              <h5>Thanks for supporting our mission!</h5>
-              {/* eslint-disable-next-line max-len */}
-              <p>Did you know? As a non-profit, we rely on paid commitments to support our mission of increasing access to high-quality education for learners like you, everywhere.</p>
-            </div>
-          )
-          : null}
       </div>
     );
   }
@@ -147,7 +137,6 @@ Cart.propTypes = {
   intl: intlShape.isRequired,
   isNumEnrolledExperiment: PropTypes.bool,
   REV1045Experiment: PropTypes.bool,
-  isPriceMessageExperiment: PropTypes.bool,
   isTransparentPricingExperiment: PropTypes.bool,
   enrollmentCountData: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,
@@ -178,7 +167,6 @@ Cart.propTypes = {
 Cart.defaultProps = {
   isNumEnrolledExperiment: false,
   REV1045Experiment: false,
-  isPriceMessageExperiment: false,
   isTransparentPricingExperiment: false,
   enrollmentCountData: null,
   loading: true,
