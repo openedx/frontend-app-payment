@@ -7,7 +7,7 @@
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "Hemos actualizado tu cantidad.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "Tu carrito incluye {quantity} códigos de inscripción con un coste total de {price}, que recibirás vía correo electrónico.",
   "payment.messages.transaction.declined.body": "No se pudo procesar su pago. Por favor revise su información de pago o contacte su banco o institución financiera para mayor asistencia.",
-  "payment.messages.key.timeout.body": "For security, your credit card information will then need to be re-entered to complete your purchase.",
+  "payment.messages.key.timeout.body": "Por tu seguridad, la información de tu tarjeta de credito tendrá que ser ingresada nuevamente para completar tu compra. ",
   "payment.messages.key.timeout.2mins.header": "Please complete your purchase within two minutes",
   "payment.messages.key.timeout.1min.header": "Please complete your purchase within one minute",
   "payment.bulk.summary.table.label.price": "Precio",
