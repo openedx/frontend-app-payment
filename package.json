@@ -50,7 +50,7 @@
     "babel-polyfill": "6.26.0",
     "classnames": "2.2.6",
     "form-urlencoded": "4.0.0",
-    "immer": "8.0.1",
+    "immer": "^9.0.6",
     "lodash.camelcase": "4.3.0",
     "lodash.pick": "4.4.0",
     "lodash.snakecase": "4.1.1",
