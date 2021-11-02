@@ -87,7 +87,6 @@
     "husky": "3.0.7",
     "lodash.defaultsdeep": "4.6.1",
     "new-relic-source-map-webpack-plugin": "1.2.0",
-    "purgecss-webpack-plugin": "1.6.0",
     "qs": "6.8.0",
     "react-axe": "3.3.0",
     "react-test-renderer": "16.10.1",
