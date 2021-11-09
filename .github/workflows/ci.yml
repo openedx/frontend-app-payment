@@ -20,8 +20,8 @@ jobs:
       with:
         node-version: 12
 
-#    - name: Run Whitelist Audit
-#      run: npm run audit:whitelisted
+    - name: Run Whitelist Audit
+      run: npm run audit:whitelisted
 
     - name: Install dependencies
       run: npm ci
