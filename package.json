@@ -79,7 +79,7 @@
     "audit-ci": "^3.1.1",
     "axios-mock-adapter": "1.17.0",
     "chance": "1.1.0",
-    "enzyme": "3.10.0",
+    "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.14.0",
     "es-check": "5.2.0",
     "glob": "7.1.4",
