@@ -80,7 +80,7 @@
     "axios-mock-adapter": "1.17.0",
     "chance": "1.1.0",
     "enzyme": "3.10.0",
-    "enzyme-adapter-react-16": "1.14.0",
+    "enzyme-adapter-react-16": "1.15.6",
     "es-check": "5.2.0",
     "glob": "7.1.4",
     "html-webpack-plugin": "3.2.0",
