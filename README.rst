@@ -215,7 +215,7 @@ If you would like to run this frontend against stage.edx.org you can run ``npm r
 
 - Navigate to `https://local.stage.edx.org <https://local.stage.edx.org>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link: "Proceed to local.stage.edx.org (unsafe)".
 
-.. |Build Status| image:: https://api.travis-ci.org/edx/frontend-app-payment.svg?branch=master
-   :target: https://travis-ci.org/edx/frontend-app-payment
+.. |build Status| image:: https://github.com/edx/frontend-app-payment/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/edx/frontend-app-payment/actions/workflows/ci.yml
 .. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-payment.svg
    :target: @edx/frontend-app-payment
