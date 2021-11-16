@@ -37,5 +37,5 @@ Include anything else that will help reviewers and consumers understand the chan
 -->
 
 ## Checklist
-- [ ] This PR does not change how credit card information is sent to our vendors.
-- [ ] I will [release and monitor](https://openedx.atlassian.net/wiki/spaces/RS/pages/1835106870/How+to+contribute+to+our+repositories) this PR promptly after merge.
+- [ ] Consider PCI compliance impact and whether this PR changes how credit card information is handled.
+- [ ] Intend to [release and monitor](https://openedx.atlassian.net/wiki/spaces/RS/pages/1835106870/How+to+contribute+to+our+repositories) this PR promptly after merge.
