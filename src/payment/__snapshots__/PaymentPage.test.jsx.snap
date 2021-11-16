@@ -199,72 +199,76 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
 <div
   className="page__payment container-fluid py-5"
 >
-  <div
-    className="alert fade alert-dismissible alert-info show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
+  Array [
     <div
-      className="alert-dialog"
+      className="alert fade alert-dismissible alert-info show"
+      hidden={false}
+      role="alert"
     >
-      Coupon code 'HAPPY' added to basket.
-    </div>
-  </div>
-  <div
-    className="alert fade alert-dismissible alert-info show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
+      <button
+        aria-label="Close"
+        className="btn close"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
       >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      <h6>
-        Purchasing just for yourself?
-      </h6>
-      <span>
-        If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
-        <a
-          className="pgn__hyperlink default-link standalone-link"
-          href="http://edx.org/about_ze_course"
-          onClick={[Function]}
-          target="_self"
+        <span
+          aria-hidden="true"
         >
+          ×
+        </span>
+      </button>
+      <div
+        className="alert-dialog"
+      >
+        Coupon code 'HAPPY' added to basket.
+      </div>
+    </div>,
+    <div
+      className="alert fade alert-dismissible alert-info show"
+      hidden={false}
+      role="alert"
+    >
+      <button
+        aria-label="Close"
+        className="btn close"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+        >
+          ×
+        </span>
+      </button>
+      <div
+        className="alert-dialog"
+      >
+        Array [
+          <h6>
+            Purchasing just for yourself?
+          </h6>,
           <span>
-            click here to enroll directly
-          </span>
-        </a>
-        .
-      </span>
-    </div>
-  </div>
+            If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
+            <a
+              className="pgn__hyperlink default-link standalone-link"
+              href="http://edx.org/about_ze_course"
+              onClick={[Function]}
+              target="_self"
+            >
+              <span>
+                click here to enroll directly
+              </span>
+            </a>
+            .
+          </span>,
+        ]
+      </div>
+    </div>,
+  ]
   <div
     className="row"
   >
@@ -1902,28 +1906,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -3725,28 +3731,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -5564,28 +5572,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -7558,28 +7568,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -9448,28 +9460,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -11317,28 +11331,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
