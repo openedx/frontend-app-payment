@@ -14,15 +14,11 @@
     "audit:whitelisted": "npx audit-ci --config audit-ci.json",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "lint": "fedx-scripts eslint . --ext .js,.jsx",
+    "prepare": "husky install",
     "snapshot": "fedx-scripts jest --updateSnapshot",
     "start": "fedx-scripts webpack-dev-server --progress",
     "start:stage": "fedx-scripts webpack-dev-server --config=webpack.dev-stage.config.js --progress",
     "test": "fedx-scripts jest --coverage"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run audit:whitelisted"
-    }
   },
   "author": "edX",
   "license": "AGPL-3.0",
