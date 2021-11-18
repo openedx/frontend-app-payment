@@ -11,11 +11,8 @@ exports[`CouponForm should render a coupon even if no known benefitType is suppl
     Coupon COUPONCODE applied
   </span>
   <button
-    className="btn btn-link display-inline p-0 pl-3 border-0"
+    className="display-inline p-0 pl-3 border-0 btn btn-link"
     disabled={false}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
     type="submit"
   >
     <span>
@@ -51,11 +48,9 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
     />
   </div>
   <button
-    className="btn btn-primary"
+    className="btn btn-outline-primary"
     disabled={false}
-    onBlur={[Function]}
     onClick={[Function]}
-    onKeyDown={[Function]}
     type="submit"
   >
     <span>
@@ -76,11 +71,8 @@ exports[`CouponForm should render a percentage value coupon 1`] = `
     Coupon COUPONCODE applied for 10% off
   </span>
   <button
-    className="btn btn-link display-inline p-0 pl-3 border-0"
+    className="display-inline p-0 pl-3 border-0 btn btn-link"
     disabled={false}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
     type="submit"
   >
     <span>
@@ -107,11 +99,8 @@ exports[`CouponForm should render an absolute value coupon 1`] = `
     </span>
   </span>
   <button
-    className="btn btn-link display-inline p-0 pl-3 border-0"
+    className="display-inline p-0 pl-3 border-0 btn btn-link"
     disabled={false}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
     type="submit"
   >
     <span>

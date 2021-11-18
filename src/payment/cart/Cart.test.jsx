@@ -1,11 +1,13 @@
 import React from 'react';
-import renderer, { act } from 'react-test-renderer';
+import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Factory } from 'rosie';
 import { createStore } from 'redux';
 import Cookies from 'universal-cookie';
+import { createSerializer } from 'enzyme-to-json';
 
 import '../__factories__/basket.factory';
 import '../__factories__/userAccount.factory';
@@ -14,6 +16,8 @@ import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/service';
 
+// run enzyme JSON serializer using options compatible with prior snapshots
+expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -28,7 +32,6 @@ jest.mock('universal-cookie', () => {
   }
   return MockCookies;
 });
-
 
 describe('<Cart />', () => {
   let store;
@@ -48,11 +51,11 @@ describe('<Cart />', () => {
         </AppContext.Provider>
       </IntlProvider>
     );
-    tree = renderer.create(component);
+    tree = mount(component);
   });
 
   it('renders the loading skeleton', () => {
-    expect(tree.toJSON()).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 
   it('renders a basic, one product cart', () => {
@@ -64,7 +67,8 @@ describe('<Cart />', () => {
       ))));
       store.dispatch(fetchBasket.fulfill());
     });
-    expect(tree.toJSON()).toMatchSnapshot();
+    tree.update();
+    expect(tree).toMatchSnapshot();
   });
 
   it('renders a basic, one product cart with coupon form', () => {
@@ -76,7 +80,8 @@ describe('<Cart />', () => {
       ))));
       store.dispatch(fetchBasket.fulfill());
     });
-    expect(tree.toJSON()).toMatchSnapshot();
+    tree.update();
+    expect(tree).toMatchSnapshot();
   });
 
   it('renders a cart with an offer', () => {
@@ -90,7 +95,8 @@ describe('<Cart />', () => {
       ))));
       store.dispatch(fetchBasket.fulfill());
     });
-    expect(tree.toJSON()).toMatchSnapshot();
+    tree.update();
+    expect(tree).toMatchSnapshot();
   });
 
   it('renders a cart in non USD currency', () => {
@@ -112,7 +118,7 @@ describe('<Cart />', () => {
         </Provider>
       </IntlProvider>
     );
-    tree = renderer.create(component);
+    tree = mount(component);
 
     act(() => {
       store.dispatch(basketDataReceived(transformResults(Factory.build(
@@ -123,7 +129,8 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    expect(tree.toJSON()).toMatchSnapshot();
+    tree.update();
+    expect(tree).toMatchSnapshot();
   });
 
   it('renders a bulk enrollment cart', () => {
@@ -136,6 +143,7 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
+    tree.update();
     expect(tree).toMatchSnapshot();
   });
 });

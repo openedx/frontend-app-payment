@@ -1,28 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
+import { updateCaptureKeySelector } from '../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../performanceEventing';
-import sendRev1074Event from '../sendRev1074Event';
 
 class OrderSummary extends React.Component {
   componentDidMount() {
     markPerformanceIfAble('Order Summary component rendered');
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
-      getPerformanceProperties(),
+      {
+        ...getPerformanceProperties(),
+        flexMicroformEnabled: true,
+      },
     );
-    let renderTiming;
-    try {
-      const entries = window.performance.getEntriesByName('Order Summary component rendered');
-      if (entries && entries.length > 0) {
-        renderTiming = entries[entries.length - 1].toJSON();
-      }
-    } catch (e) {
-      renderTiming = { error: e.toString() };
-    }
-    sendRev1074Event('payment_mfe.order_summary_rendered', { summaryRenderTiming: renderTiming });
   }
 
   render() {
@@ -58,4 +53,4 @@ OrderSummary.defaultProps = {
   children: undefined,
 };
 
-export default OrderSummary;
+export default connect(updateCaptureKeySelector, {})(OrderSummary);

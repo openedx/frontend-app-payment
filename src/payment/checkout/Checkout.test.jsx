@@ -72,6 +72,8 @@ describe('<Checkout />', () => {
 
       sendTrackEvent.mockClear();
       store = mockStore(state);
+      window.microform = { Mockroform: true };
+
       const component = (
         <IntlProvider locale="en">
           <Provider store={store}>
@@ -112,6 +114,7 @@ describe('<Checkout />', () => {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
+        flexMicroformEnabled: true,
       });
     });
 

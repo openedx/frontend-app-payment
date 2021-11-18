@@ -1,4 +1,3 @@
-
 import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import axios from 'axios';
@@ -13,16 +12,20 @@ import paymentSaga, {
   handleUpdateQuantity,
   handleRemoveCoupon,
   handleAddCoupon,
+  handleFetchCaptureKey,
+  handleCaptureKeyTimeout,
 } from './sagas';
 import { transformResults } from './service';
 import {
   basketDataReceived,
   basketProcessing,
   fetchBasket,
+  fetchCaptureKey,
   addCoupon,
   removeCoupon,
   updateQuantity,
   submitPayment,
+  CAPTURE_KEY_START_TIMEOUT,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
@@ -33,7 +36,7 @@ import * as cybersourceService from '../payment-methods/cybersource';
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
 jest.mock('../payment-methods/cybersource', () => ({
-  checkout: jest.fn(),
+  checkoutWithToken: jest.fn(),
 }));
 
 const axiosMock = new MockAdapter(axios);
@@ -537,14 +540,15 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         submitPayment.success(),
         basketProcessing(false),
         submitPayment.fulfill(),
       ]);
       expect(caughtErrors).toEqual([]);
-      expect(cybersourceService.checkout).toHaveBeenCalledTimes(1);
-      expect(cybersourceService.checkout).toHaveBeenCalledWith(
+      expect(cybersourceService.checkoutWithToken).toHaveBeenCalledTimes(1);
+      expect(cybersourceService.checkoutWithToken).toHaveBeenCalledWith(
         {
           foo: 'bar',
           isBasketProcessing: false,
@@ -558,7 +562,7 @@ describe('saga tests', () => {
     it('should bail on error handling if the error was aborted', async () => {
       const error = new Error();
       error.aborted = true;
-      cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+      cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
       try {
         await runSaga(
@@ -580,6 +584,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         basketProcessing(false),
         submitPayment.fulfill(),
@@ -593,7 +598,7 @@ describe('saga tests', () => {
       error.data = null;
       error.userMessage = null;
       error.messageType = 'error';
-      cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+      cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
       try {
         await runSaga(
@@ -615,6 +620,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         clearMessages(),
         addMessage('uhoh', null, null, 'error'),
@@ -638,7 +644,7 @@ describe('saga tests', () => {
         i: 'am',
         a: 'basket',
       };
-      cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+      cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
       try {
         await runSaga(
@@ -660,6 +666,7 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         basketProcessing(true),
+        clearMessages(),
         submitPayment.request(),
         clearMessages(),
         addMessage('ohboy', null, null, 'error'),
@@ -688,7 +695,7 @@ describe('saga tests', () => {
       i: 'am',
       a: 'basket',
     };
-    cybersourceService.checkout.mockImplementation(() => Promise.reject(error));
+    cybersourceService.checkoutWithToken.mockImplementation(() => Promise.reject(error));
 
     try {
       await runSaga(
@@ -710,9 +717,9 @@ describe('saga tests', () => {
 
     expect(dispatched).toEqual([
       basketProcessing(true),
+      clearMessages(),
       submitPayment.request(),
       clearMessages(),
-      addMessage(null, 'This is a field error!', null, 'error', 'field1'),
       stopSubmit('payment', {
         field1: 'This is a field error!',
       }),
@@ -728,6 +735,8 @@ describe('saga tests', () => {
   it('should pass actions to the correct sagas', () => {
     const gen = paymentSaga();
 
+    expect(gen.next().value).toEqual(takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey));
+    expect(gen.next().value).toEqual(takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout));
     expect(gen.next().value).toEqual(takeEvery(fetchBasket.TRIGGER, handleFetchBasket));
     expect(gen.next().value).toEqual(takeEvery(addCoupon.TRIGGER, handleAddCoupon));
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));

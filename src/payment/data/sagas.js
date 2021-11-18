@@ -1,31 +1,40 @@
 import {
-  call, put, takeEvery, select,
+  call, put, takeEvery, select, delay,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { camelCaseObject, convertKeyNames } from './utils';
+import { MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
 import {
   basketDataReceived,
   basketProcessing,
+  captureKeyDataReceived,
+  captureKeyProcessing,
+  CAPTURE_KEY_START_TIMEOUT,
+  captureKeyStartTimeout,
+  microformStatus,
   fetchBasket,
   addCoupon,
   removeCoupon,
   updateQuantity,
   submitPayment,
+  fetchCaptureKey,
 } from './actions';
 
+import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
+
 // Sagas
-import { handleErrors, handleMessages } from '../../feedback';
+import { handleErrors, handleMessages, clearMessages } from '../../feedback';
 
 // Services
 import * as PaymentApiService from './service';
-import { checkout as checkoutCybersource } from '../payment-methods/cybersource';
+import { checkoutWithToken } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 
 export const paymentMethods = {
-  cybersource: checkoutCybersource,
+  cybersource: checkoutWithToken,
   paypal: checkoutPaypal,
   'apple-pay': checkoutApplePay,
 };
@@ -34,11 +43,14 @@ function* isBasketProcessing() {
   return yield select(state => state.payment.basket.isBasketProcessing);
 }
 
+function* isCaptureKeyProcessing() {
+  return yield select(state => state.payment.captureKey.isCaptureKeyProcessing);
+}
+
 export function* handleReduxFormValidationErrors(error) {
   // error.fieldErrors is an array, and the fieldName key in it is snake case.
   // We need to convert this into an object with snakeCase keys and values that are the
   // userMessages.
-
   if (error.fieldErrors) {
     let fieldErrors = {};
     // Turn the error objects into key-value pairs on our new fieldErrors object.
@@ -72,7 +84,7 @@ export function* handleDiscountCheck() {
         );
         result.discountJwt = discount.jwt;
         yield put(basketDataReceived(result));
-        yield call(handleMessages, result.messages, false);
+        yield call(handleMessages, result.messages, false, window.location.search);
       }
     }
   }
@@ -88,7 +100,7 @@ export function* handleFetchBasket() {
     yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
     const result = yield call(PaymentApiService.getBasket);
     yield put(basketDataReceived(result)); // update redux store with basket data
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessages, result.messages, true, window.location.search);
     yield call(handleDiscountCheck); // check if a discount should be added to the basket
   } catch (error) {
     yield call(handleErrors, error, true);
@@ -99,6 +111,55 @@ export function* handleFetchBasket() {
   } finally {
     yield put(basketProcessing(false)); // we are done modifying the basket
     yield put(fetchBasket.fulfill()); // mark the basket as finished loading
+  }
+}
+
+export function* handleCaptureKeyTimeout() {
+  // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
+  yield delay(12 * 60 * 1000);
+  yield call(
+    handleMessages,
+    [{
+      code: 'capture-key-2mins-message',
+      messageType: MESSAGE_TYPES.INFO,
+    }],
+    true, // Clear other messages
+    window.location.search,
+  );
+
+  yield delay(1 * 60 * 1000);
+  yield call(
+    handleMessages,
+    [{
+      code: 'capture-key-1min-message',
+      messageType: MESSAGE_TYPES.INFO,
+    }],
+    true, // Clear other messages
+    window.location.search,
+  );
+
+  yield delay(1 * 60 * 1000);
+  yield put(clearMessages());
+  yield put(fetchCaptureKey());
+}
+
+export function* handleFetchCaptureKey() {
+  if (yield isCaptureKeyProcessing()) {
+    // Do nothing if there is a request currently in flight
+    return;
+  }
+
+  try {
+    yield put(captureKeyProcessing(true)); // we are waiting for a capture key
+    yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
+    const result = yield call(PaymentApiService.getCaptureKey);
+    yield put(captureKeyDataReceived(result)); // update redux store with capture key data
+    yield put(captureKeyStartTimeout()); // only start the timer if we're using the capture key
+  } catch (error) {
+    yield call(handleErrors, error, true);
+  } finally {
+    yield put(captureKeyProcessing(false)); // we are done capture key
+    yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
   }
 }
 
@@ -116,7 +177,7 @@ export function* performBasketOperation(operation, ...operationArgs) {
     yield put(basketProcessing(true));
     const result = yield call(operation, ...operationArgs);
     yield put(basketDataReceived(result));
-    yield call(handleMessages, result.messages, true);
+    yield call(handleMessages, result.messages, true, window.location.search);
   } catch (error) {
     yield call(handleErrors, error, true);
     if (error.basket) {
@@ -147,6 +208,7 @@ export function* handleSubmitPayment({ payload }) {
   const { method, ...paymentArgs } = payload;
   try {
     yield put(basketProcessing(true));
+    yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
     const paymentMethodCheckout = paymentMethods[method];
     const basket = yield select(state => ({ ...state.payment.basket }));
@@ -176,6 +238,8 @@ export function* handleSubmitPayment({ payload }) {
 }
 
 export default function* saga() {
+  yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
+  yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);

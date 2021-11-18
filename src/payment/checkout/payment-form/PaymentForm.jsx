@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
+import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
 
-import { getCardTypeId, SUPPORTED_CARDS } from './utils/credit-card';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import getStates from './utils/countryStatesMap';
-import messages from './PaymentForm.messages';
+import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
-
-const CardValidator = require('../card-validator');
+import { ErrorFocusContext } from './contexts';
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.formRef = React.createRef();
+    this.state = {
+      firstErrorId: null,
+      shouldFocusFirstError: false,
+    };
   }
 
   componentDidMount() {
@@ -28,9 +31,14 @@ export class PaymentFormComponent extends React.Component {
     );
   }
 
+  componentDidUpdate() {
+    this.focusFirstError();
+  }
+
   onSubmit = (values) => {
     // istanbul ignore if
     if (this.props.disabled) { return; }
+    this.setState({ shouldFocusFirstError: true });
     const requiredFields = this.getRequiredFields(values);
     const {
       firstName,
@@ -41,8 +49,6 @@ export class PaymentFormComponent extends React.Component {
       country,
       state,
       postalCode,
-      cardNumber,
-      securityCode,
       cardExpirationMonth,
       cardExpirationYear,
       organization,
@@ -52,16 +58,12 @@ export class PaymentFormComponent extends React.Component {
     const errors = {
       ...this.validateRequiredFields(requiredFields),
       ...this.validateCardDetails(
-        cardNumber,
-        securityCode,
         cardExpirationMonth,
         cardExpirationYear,
       ),
     };
 
     if (Object.keys(errors).length > 0) {
-      const firstErrorName = Object.keys(errors)[0];
-      this.scrollToError(firstErrorName);
       throw new SubmissionError(errors);
     }
 
@@ -79,9 +81,6 @@ export class PaymentFormComponent extends React.Component {
         purchasedForOrganization,
       },
       cardDetails: {
-        cardNumber,
-        cardTypeId: getCardTypeId(cardNumber),
-        securityCode,
         cardExpirationMonth,
         cardExpirationYear,
       },
@@ -96,39 +95,22 @@ export class PaymentFormComponent extends React.Component {
       city,
       country,
       state,
-      cardNumber,
-      securityCode,
       cardExpirationMonth,
       cardExpirationYear,
       organization,
     } = fieldValues;
 
-    let requiredFields = {
+    const requiredFields = {
       firstName,
       lastName,
       address,
       city,
       country,
-      cardNumber,
-      securityCode,
       cardExpirationMonth,
       cardExpirationYear,
     };
 
-    if (this.props.isPaymentVisualExperiment) {
-      requiredFields = {
-        firstName,
-        lastName,
-        city,
-        country,
-        cardNumber,
-        securityCode,
-        cardExpirationMonth,
-        cardExpirationYear,
-      };
-    }
-
-    if (getStates(country) && !this.props.isPaymentVisualExperiment) {
+    if (getStates(country)) {
       requiredFields.state = state;
     }
 
@@ -139,22 +121,8 @@ export class PaymentFormComponent extends React.Component {
     return requiredFields;
   }
 
-  validateCardDetails(cardNumber, securityCode, cardExpirationMonth, cardExpirationYear) {
+  validateCardDetails(cardExpirationMonth, cardExpirationYear) {
     const errors = {};
-
-    const { card, isValid } = CardValidator.number(cardNumber);
-    if (cardNumber) {
-      if (!isValid) {
-        errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.invalid.card.number']);
-      } else {
-        if (!Object.keys(SUPPORTED_CARDS).includes(card.type)) {
-          errors.cardNumber = this.props.intl.formatMessage(messages['payment.form.errors.unsupported.card']);
-        }
-        if (securityCode && securityCode.length !== card.code.size) {
-          errors.securityCode = this.props.intl.formatMessage(messages['payment.form.errors.invalid.security.code']);
-        }
-      }
-    }
 
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
@@ -163,7 +131,7 @@ export class PaymentFormComponent extends React.Component {
       && parseInt(cardExpirationMonth, 10) < currentMonth
       && parseInt(cardExpirationYear, 10) === currentYear
     ) {
-      errors.cardExpirationMonth = this.props.intl.formatMessage(messages['payment.form.errors.card.expired']);
+      errors.cardExpirationMonth = 'payment.form.errors.card.expired';
     }
 
     return errors;
@@ -174,20 +142,31 @@ export class PaymentFormComponent extends React.Component {
 
     Object.keys(values).forEach((key) => {
       if (!values[key]) {
-        errors[key] = this.props.intl.formatMessage(messages['payment.form.errors.required.field']);
+        errors[key] = 'payment.form.errors.required.field';
       }
     });
 
     return errors;
   }
 
-  scrollToError(error) {
-    const form = this.formRef.current;
-    const formElement = form.querySelector(`[name=${error}]`);
-    /* istanbul ignore else */
-    if (formElement) {
-      const elementParent = formElement.parentElement;
-      elementParent.scrollIntoView(true);
+  focusFirstError() {
+    if (
+      this.state.shouldFocusFirstError
+      && Object.keys(this.props.submitErrors).length > 0
+    ) {
+      const form = this.formRef.current;
+      const elementSelectors = Object.keys(this.props.submitErrors).map((fieldName) => `[id=${fieldName}]`);
+      const firstElementWithError = form.querySelector(elementSelectors.join(', '));
+      if (firstElementWithError) {
+        if (['input', 'select'].includes(firstElementWithError.tagName.toLowerCase())) {
+          firstElementWithError.focus();
+          this.setState({ shouldFocusFirstError: false, firstErrorId: null });
+        } else if (this.state.firstErrorId !== firstElementWithError.id) {
+          this.setState({
+            firstErrorId: firstElementWithError.id,
+          });
+        }
+      }
     }
   }
 
@@ -199,7 +178,6 @@ export class PaymentFormComponent extends React.Component {
       isProcessing,
       isBulkOrder,
       isQuantityUpdating,
-      isPaymentVisualExperiment,
     } = this.props;
 
     let submitButtonState = 'default';
@@ -207,67 +185,70 @@ export class PaymentFormComponent extends React.Component {
     if (disabled) { submitButtonState = 'disabled'; }
     // istanbul ignore if
     if (isProcessing) { submitButtonState = 'processing'; }
-
     return (
-      <form
-        onSubmit={handleSubmit(this.onSubmit)}
-        ref={this.formRef}
-        noValidate
-      >
-        <CardHolderInformation
-          showBulkEnrollmentFields={isBulkOrder}
-          disabled={disabled}
-          isPaymentVisualExperiment={isPaymentVisualExperiment}
-        />
-        <CardDetails disabled={disabled} isPaymentVisualExperiment={isPaymentVisualExperiment} />
-        <div className="row justify-content-end">
-          <div className="col-lg-6 form-group">
-            {
-              loading || isQuantityUpdating ? (
-                <div className="skeleton btn btn-block btn-lg rounded-pill">&nbsp;</div>
-              ) : (
-                <StatefulButton
-                  type="submit"
-                  id="placeOrderButton"
-                  className="btn btn-primary btn-lg btn-block"
-                  state={submitButtonState}
-                  onClick={this.props.onSubmitButtonClick}
-                  labels={{
-                    default: (
-                      <FormattedMessage
-                        id="payment.form.submit.button.text"
-                        defaultMessage="Place Order"
-                        description="The label for the payment form submit button"
-                      />
-                    ),
-                  }}
-                  icons={{
-                    processing: (
-                      <span className="button-spinner-icon" />
-                    ),
-                  }}
-                  disabledStates={['processing', 'disabled']}
-                />
-              )
-            }
+      <ErrorFocusContext.Provider value={this.state.firstErrorId}>
+        <form
+          onSubmit={handleSubmit(this.onSubmit)}
+          ref={this.formRef}
+          noValidate
+        >
+          <CardHolderInformation
+            showBulkEnrollmentFields={isBulkOrder}
+            disabled={disabled}
+          />
+          <CardDetails
+            disabled={disabled}
+          />
+          <div className="row justify-content-end">
+            <div className="col-lg-6 form-group">
+              {
+                loading || isQuantityUpdating || !window.microform ? (
+                  <div className="skeleton btn btn-block btn-lg">&nbsp;</div>
+                ) : (
+                  <StatefulButton
+                    type="submit"
+                    id="placeOrderButton"
+                    variant="primary"
+                    size="lg"
+                    block
+                    state={submitButtonState}
+                    onClick={this.props.onSubmitButtonClick}
+                    labels={{
+                      default: (
+                        <FormattedMessage
+                          id="payment.form.submit.button.text"
+                          defaultMessage="Place Order"
+                          description="The label for the payment form submit button"
+                        />
+                      ),
+                    }}
+                    icons={{
+                      processing: (
+                        <span className="button-spinner-icon" />
+                      ),
+                    }}
+                    disabledStates={['processing', 'disabled']}
+                  />
+                )
+              }
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </ErrorFocusContext.Provider>
     );
   }
 }
 
 PaymentFormComponent.propTypes = {
-  intl: intlShape.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   isProcessing: PropTypes.bool,
   isBulkOrder: PropTypes.bool,
   isQuantityUpdating: PropTypes.bool,
-  isPaymentVisualExperiment: PropTypes.bool,
   loading: PropTypes.bool,
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
+  submitErrors: PropTypes.objectOf(PropTypes.string),
 };
 
 PaymentFormComponent.defaultProps = {
@@ -276,9 +257,17 @@ PaymentFormComponent.defaultProps = {
   isBulkOrder: false,
   isQuantityUpdating: false,
   isProcessing: false,
-  isPaymentVisualExperiment: false,
+  submitErrors: {},
+};
+
+const mapStateToProps = (state) => {
+  const newProps = {
+    ...updateCaptureKeySelector(state),
+    ...updateSubmitErrorsSelector('payment')(state),
+  };
+  return newProps;
 };
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(injectIntl(PaymentFormComponent));
+export default reduxForm({ form: 'payment' })(connect(mapStateToProps)(injectIntl(PaymentFormComponent)));

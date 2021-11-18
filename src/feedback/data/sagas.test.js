@@ -86,33 +86,6 @@ describe('saga tests', () => {
       ]);
     });
 
-    it('should dispatch addMessage actions on field errors', async () => {
-      error.fieldErrors = [
-        {
-          code: 'uhoh',
-          userMessage: 'Uhoh oh no!',
-          fieldName: 'field1',
-        },
-        {
-          code: 'oh_goodness',
-          userMessage: 'This is really bad!',
-          fieldName: 'field2',
-        },
-      ];
-      await runSaga(
-        {
-          dispatch: action => dispatched.push(action),
-        },
-        handleErrors,
-        error,
-      ).toPromise();
-
-      expect(dispatched).toEqual([
-        addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR, 'field1'),
-        addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
-      ]);
-    });
-
     it('should dispatch addMessage actions on a mix of error types', async () => {
       error.errors = [
         {
@@ -138,7 +111,6 @@ describe('saga tests', () => {
 
       expect(dispatched).toEqual([
         addMessage('uhoh', 'Uhoh oh no!', undefined, MESSAGE_TYPES.ERROR),
-        addMessage('oh_goodness', 'This is really bad!', undefined, MESSAGE_TYPES.ERROR, 'field2'),
       ]);
     });
 
@@ -226,6 +198,31 @@ describe('saga tests', () => {
         clearMessages(),
         addMessage('hey_hey', 'Good stuff!', undefined, MESSAGE_TYPES.INFO),
         addMessage('oh_goodness', 'This is not so bad!', undefined, MESSAGE_TYPES.INFO),
+      ]);
+    });
+
+    it('should add message if one is supplied in the url', async () => {
+      const messages = [
+        {
+          code: 'hey_hey',
+          userMessage: 'Good stuff!',
+          messageType: MESSAGE_TYPES.INFO,
+        },
+      ];
+      await runSaga(
+        {
+          dispatch: action => dispatched.push(action),
+        },
+        handleMessages,
+        messages,
+        true, // clearExistingMessages
+        '?error_message=Code%20EDXWELCOME%20is%20invalid.',
+      ).toPromise();
+
+      expect(dispatched).toEqual([
+        clearMessages(),
+        addMessage('error_message', 'Code EDXWELCOME is invalid.', {}, MESSAGE_TYPES.ERROR),
+        addMessage('hey_hey', 'Good stuff!', undefined, MESSAGE_TYPES.INFO),
       ]);
     });
 

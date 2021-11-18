@@ -1,33 +1,52 @@
 import {
   faCcAmex,
+  faCcDinersClub,
   faCcDiscover,
+  faCcJcb,
   faCcMastercard,
   faCcVisa,
 } from '@fortawesome/free-brands-svg-icons';
 
 const CardValidator = require('../../card-validator');
 
-export const SUPPORTED_CARDS = {
-  'american-express': { cardTypeId: '003', cardIcon: faCcAmex },
-  discover: { cardTypeId: '004', cardIcon: faCcDiscover },
-  mastercard: { cardTypeId: '002', cardIcon: faCcMastercard },
-  visa: { cardTypeId: '001', cardIcon: faCcVisa },
+export const CARD_TYPES = {
+  'american-express': '003',
+  'diners-club': '005',
+  discover: '004',
+  jcb: '007',
+  mastercard: '002',
+  visa: '001',
 };
 
-export function getCardIcon(cardNumber) {
+export const CARD_ICONS = {
+  '003': faCcAmex,
+  '005': faCcDinersClub,
+  '004': faCcDiscover,
+  '007': faCcJcb,
+  '002': faCcMastercard,
+  '001': faCcVisa,
+};
+
+export function getCardIconForType(cardType) {
   let cardIcon = null;
-  const { card } = CardValidator.number(cardNumber);
-  if (card && SUPPORTED_CARDS[card.type] !== undefined) {
-    ({ cardIcon } = SUPPORTED_CARDS[card.type]);
+  if (CARD_ICONS[cardType] !== undefined) {
+    cardIcon = CARD_ICONS[cardType];
   }
   return cardIcon;
 }
 
 export function getCardTypeId(cardNumber) {
-  let cardTypeId = null;
   const { card } = CardValidator.number(cardNumber);
-  if (card && SUPPORTED_CARDS[card.type] !== undefined) {
-    ({ cardTypeId } = SUPPORTED_CARDS[card.type]);
+  if (card && CARD_TYPES[card.type] !== undefined) {
+    return CARD_TYPES[card.type];
   }
-  return cardTypeId;
+  return null;
+}
+
+export function getCardIcon(cardNumber) {
+  const cardType = getCardTypeId(cardNumber);
+  if (cardType === null) {
+    return null;
+  }
+  return getCardIconForType(cardType);
 }

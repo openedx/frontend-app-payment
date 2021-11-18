@@ -1,5 +1,12 @@
 {
   "extends": [
-    "config:base"
-  ]
+    "config:base",
+    ":noUnscheduledUpdates",
+    ":semanticCommits"
+  ],
+  "rebaseStalePrs": true,
+  "schedule": [
+    "every weekend"
+  ],
+  "timezone": "America/New_York"
 }

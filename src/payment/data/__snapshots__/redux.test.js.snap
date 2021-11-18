@@ -10,6 +10,11 @@ Object {
     "redirect": false,
     "submitting": false,
   },
+  "captureKey": Object {
+    "captureKeyId": "",
+    "isCaptureKeyProcessing": false,
+    "microformStatus": "LOADING",
+  },
 }
 `;
 
@@ -23,6 +28,11 @@ Object {
     "redirect": false,
     "submitting": false,
   },
+  "captureKey": Object {
+    "captureKeyId": "",
+    "isCaptureKeyProcessing": false,
+    "microformStatus": "LOADING",
+  },
 }
 `;
 
@@ -35,6 +45,11 @@ Object {
     "products": Array [],
     "redirect": false,
     "submitting": false,
+  },
+  "captureKey": Object {
+    "captureKeyId": "",
+    "isCaptureKeyProcessing": false,
+    "microformStatus": "LOADING",
   },
 }
 `;

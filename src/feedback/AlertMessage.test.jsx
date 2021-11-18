@@ -43,7 +43,6 @@ describe('AlertMessage', () => {
     expect(tree).toMatchSnapshot();
   });
 
-
   it('should render a userMessage function', () => {
     const component = (
       <AlertMessage

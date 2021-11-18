@@ -3,9 +3,15 @@ import { combineReducers } from 'redux';
 import {
   BASKET_DATA_RECEIVED,
   BASKET_PROCESSING,
+  CAPTURE_KEY_DATA_RECEIVED,
+  CAPTURE_KEY_PROCESSING,
+  MICROFORM_STATUS,
   fetchBasket,
   submitPayment,
+  fetchCaptureKey,
 } from './actions';
+
+import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 
 const basketInitialState = {
   loading: true,
@@ -57,8 +63,39 @@ const basket = (state = basketInitialState, action = null) => {
   return state;
 };
 
+const captureContextInitialState = {
+  isCaptureKeyProcessing: false,
+  microformStatus: DEFAULT_STATUS,
+  captureKeyId: '',
+};
+
+const captureKey = (state = captureContextInitialState, action = null) => {
+  if (action !== null) {
+    switch (action.type) {
+      case fetchCaptureKey.TRIGGER: return state;
+      case fetchCaptureKey.FULFILL: return state;
+
+      case CAPTURE_KEY_DATA_RECEIVED: return { ...state, ...action.payload };
+
+      case CAPTURE_KEY_PROCESSING: return {
+        ...state,
+        isCaptureKeyProcessing: action.payload,
+      };
+
+      case MICROFORM_STATUS: return {
+        ...state,
+        microformStatus: action.payload,
+      };
+
+      default:
+    }
+  }
+  return state;
+};
+
 const reducer = combineReducers({
   basket,
+  captureKey,
 });
 
 export default reducer;

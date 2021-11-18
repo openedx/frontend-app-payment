@@ -6,11 +6,10 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector } from '../data/selectors';
+import { paymentSelector, updateCaptureKeySelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
-import sendRev1074Event from '../sendRev1074Event';
 import PaymentForm from './payment-form/PaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
@@ -25,7 +24,6 @@ class Checkout extends React.Component {
       'edx.bi.ecommerce.basket.payment_selected',
       { type: 'click', category: 'checkout', paymentMethod: 'PayPal' },
     );
-    sendRev1074Event('payment_mfe.payment_selected', { type: 'click', category: 'checkout', paymentMethod: 'PayPal' });
 
     this.props.submitPayment({ method: 'paypal' });
   }
@@ -38,7 +36,6 @@ class Checkout extends React.Component {
       'edx.bi.ecommerce.basket.payment_selected',
       { type: 'click', category: 'checkout', paymentMethod: 'Apple Pay' },
     );
-    sendRev1074Event('payment_mfe.payment_selected', { type: 'click', category: 'checkout', paymentMethod: 'Apple Pay' });
 
     this.props.submitPayment({ method: 'apple-pay' });
   }
@@ -61,15 +58,7 @@ class Checkout extends React.Component {
         category: 'checkout',
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
-      },
-    );
-    sendRev1074Event(
-      'payment_mfe.payment_selected',
-      {
-        type: 'click',
-        category: 'checkout',
-        paymentMethod: 'Credit Card',
-        checkoutType: 'client_side',
+        flexMicroformEnabled: true,
       },
     );
   }
@@ -88,7 +77,6 @@ class Checkout extends React.Component {
       isBasketProcessing,
       loading,
       loaded,
-      isPaymentVisualExperiment,
       paymentMethod,
       submitting,
       orderType,
@@ -111,7 +99,7 @@ class Checkout extends React.Component {
       );
     }
 
-    const basketClassName = isPaymentVisualExperiment ? 'basket-section-experiment mb-0' : 'basket-section';
+    const basketClassName = 'basket-section';
     return (
       <>
         <div className={basketClassName}>
@@ -151,7 +139,6 @@ class Checkout extends React.Component {
           isProcessing={cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
-          isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
       </>
     );
@@ -178,7 +165,6 @@ Checkout.propTypes = {
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
-  isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
 };
@@ -191,7 +177,11 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
-  isPaymentVisualExperiment: false,
 };
 
-export default connect(paymentSelector, { submitPayment })(injectIntl(Checkout));
+const mapStateToProps = (state) => ({
+  ...paymentSelector(state),
+  ...updateCaptureKeySelector(state),
+});
+
+export default connect(mapStateToProps, { submitPayment })(injectIntl(Checkout));

@@ -103,7 +103,6 @@ describe('Perform Apple Pay Payment', () => {
     });
   });
 
-
   it('should abort if merchant validation fails', () => {
     axiosMock.onPost(getConfig().APPLE_PAY_START_SESSION_URL).reply(403);
 

@@ -24,21 +24,9 @@ export function* handleErrors(e, clearExistingMessages) {
       yield put(addMessage(message.code, message.userMessage, message.data, message.messageType));
     }
   }
-  if (e.fieldErrors !== undefined) {
-    for (let i = 0; i < e.fieldErrors.length; i++) { // eslint-disable-line no-plusplus
-      const fieldError = e.fieldErrors[i];
-      yield put(addMessage(
-        fieldError.code,
-        fieldError.userMessage,
-        fieldError.data,
-        MESSAGE_TYPES.ERROR,
-        fieldError.fieldName,
-      ));
-    }
-  }
 }
 
-export function* handleMessages(messages, clearExistingMessages) {
+export function* handleMessages(messages, clearExistingMessages, url) {
   // If this doesn't contain anything we understand, bail.
   if (!Array.isArray(messages)) {
     return null;
@@ -46,6 +34,12 @@ export function* handleMessages(messages, clearExistingMessages) {
 
   if (clearExistingMessages) {
     yield put(clearMessages());
+  }
+
+  // Display an error message if one is passed through as a url parameter
+  if (url && url.indexOf('error_message') > 0) {
+    const errorMessage = new URLSearchParams(url).get('error_message');
+    yield put(addMessage('error_message', `${errorMessage}`, {}, MESSAGE_TYPES.ERROR));
   }
 
   for (let i = 0; i < messages.length; i++) { // eslint-disable-line no-plusplus

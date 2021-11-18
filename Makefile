@@ -12,7 +12,7 @@ transifex_temp = ./temp/babel-plugin-react-intl
 
 precommit:
 	npm run lint
-	npm audit
+	npm run audit:whitelisted
 
 requirements:
 	npm install
@@ -48,7 +48,7 @@ push_translations:
 pull_translations:
 	tx pull -f --mode reviewed --language=$(transifex_langs)
 
-# This target is used by Travis.
+# This target is used by CI.
 validate-no-uncommitted-package-lock-changes:
 	# Checking for package-lock.json changes...
 	git diff --exit-code package-lock.json

@@ -1,9 +1,6 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const { getBaseConfig } = require('@edx/frontend-build');
-const glob = require('glob');
-const PurgecssPlugin = require('purgecss-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
 
@@ -15,7 +12,6 @@ const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
  * - We need to have a custom html-webpack-plugin configuration to support the above, and to
  *   allow us to preconnect to various domains.  See the public/index.html file for the companion
  *   usage of this configuration
- * - We add purgecss-webpack-plugin.
  */
 
 // We webpack-merge docs for reference on this usage
@@ -50,22 +46,11 @@ const config = merge({
 })(
   {
     plugins: [
-      // Copies over static html checkout pages and assets to dist folder for the REV-1074 experiment
-      // Stage also uses this config and dev uses this config when running npm run build
-      new CopyPlugin([
-        {
-          from: path.resolve(__dirname, 'public/static-checkout/pages'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-        {
-          from: path.resolve(__dirname, 'public/static-checkout/assets'),
-          to: path.resolve(__dirname, 'dist'),
-        },
-      ]),
       // Generates an HTML file in the output directory.
       new HtmlWebpackPlugin({
         inject: false, // Manually inject head and body tags in the template itself.
         template: path.resolve(__dirname, 'public/index.html'),
+        FAVICON_URL: process.env.FAVICON_URL || null,
         optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
         newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
         newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
@@ -93,19 +78,6 @@ const config = merge({
         staticAssetUrl: process.env.BASE_URL,
         // upload source maps in prod builds only
         noop: typeof process.env.NEW_RELIC_ADMIN_KEY === 'undefined',
-      }),
-      // Scan files for class names and ids and remove unused css
-      new PurgecssPlugin({
-        paths: [].concat(
-          // Scan files in this app
-          glob.sync('src/**/*', { nodir: true }),
-          // Scan files in any edx frontend-component
-          glob.sync('node_modules/@edx/frontend-component*/**/*', { nodir: true }),
-          // Scan files in paragon
-          glob.sync('node_modules/@edx/paragon/**/*', { nodir: true }),
-        ),
-        // Protect react-css-transition class names
-        whitelistPatterns: [/-enter/, /-appear/, /-exit/],
       }),
     ],
   },
