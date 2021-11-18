@@ -23,6 +23,7 @@ Array [
   <span>
     If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
     <a
+      className="pgn__hyperlink default-link standalone-link"
       href="http://edx.org"
       onClick={[Function]}
       target="_self"

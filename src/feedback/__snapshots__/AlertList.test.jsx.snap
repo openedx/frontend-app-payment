@@ -154,6 +154,7 @@ Array [
       <span>
         There was an unexpected problem. If the problem persists, please 
         <a
+          className="pgn__hyperlink default-link standalone-link"
           href="http://localhost:18000/support"
           onClick={[Function]}
           target="_self"
