@@ -4,11 +4,15 @@ import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import defaultsDeep from 'lodash.defaultsdeep';
 import configureMockStore from 'redux-mock-store';
+import { createSerializer } from 'enzyme-to-json';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CouponForm from './CouponForm';
 import { addCoupon, removeCoupon } from '../data/actions';
+
+// run enzyme JSON serializer using options compatible with prior snapshots
+expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -79,7 +83,7 @@ describe('CouponForm', () => {
 
   it('should render a form when there is no coupon', () => {
     const component = renderCouponFormWithState(mockStore(baseState));
-    const tree = renderer.create(component).toJSON();
+    const tree = mount(component);
     expect(tree).toMatchSnapshot();
   });
 
