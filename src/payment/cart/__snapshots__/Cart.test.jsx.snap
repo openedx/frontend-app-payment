@@ -41,7 +41,7 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
             <img
               alt=""
               className="img-thumbnail product-thumbnail"
-              src="https://edx.org/awuuvo.gif"
+              src="https://edx.org/vot.png"
             />
           </div>
         </div>
@@ -52,7 +52,7 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
             aria-level="3"
             className="m-0"
           >
-            Introduction to Lions
+            Introduction to Llamass
           </h6>
           <p
             className="m-0"
@@ -171,7 +171,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
             <img
               alt=""
               className="img-thumbnail product-thumbnail"
-              src="https://edx.org/pewalme.jpg"
+              src="https://edx.org/watpewal.gif"
             />
           </div>
         </div>
@@ -182,7 +182,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
             aria-level="3"
             className="m-0"
           >
-            Introduction to Asian Elephants
+            Introduction to Pigeonss
           </h6>
           <p
             className="m-0"
@@ -250,11 +250,9 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
           />
         </div>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           disabled={false}
-          onBlur={[Function]}
           onClick={[Function]}
-          onKeyDown={[Function]}
           type="submit"
         >
           <span>
@@ -338,7 +336,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
             <img
               alt=""
               className="img-thumbnail product-thumbnail"
-              src="https://edx.org/zacoh.gif"
+              src="https://edx.org/eckifega.png"
             />
           </div>
         </div>
@@ -349,7 +347,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
             aria-level="3"
             className="m-0"
           >
-            Introduction to Mules
+            Introduction to Chickenss
           </h6>
           <p
             className="m-0"
@@ -410,17 +408,18 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
         <button
           aria-disabled={false}
           aria-live="assertive"
-          className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn-primary btn-sm"
-          onBlur={[Function]}
+          className="pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-sm"
+          disabled={false}
           onClick={[Function]}
-          onKeyDown={[Function]}
           type="submit"
         >
           <span
             className="d-flex align-items-center justify-content-center"
           >
             <span>
-              Update
+              <span>
+                Update
+              </span>
             </span>
           </span>
         </button>
@@ -592,7 +591,7 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
             <img
               alt=""
               className="img-thumbnail product-thumbnail"
-              src="https://edx.org/piwopihe.png"
+              src="https://edx.org/lu.jpg"
             />
           </div>
         </div>
@@ -603,7 +602,7 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
             aria-level="3"
             className="m-0"
           >
-            Introduction to Turkeyss
+            Introduction to Guanacos
           </h6>
           <p
             className="m-0"
@@ -739,7 +738,7 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
             <img
               alt=""
               className="img-thumbnail product-thumbnail"
-              src="https://edx.org/pubhe.jpg"
+              src="https://edx.org/lekigud.gif"
             />
           </div>
         </div>
@@ -750,7 +749,7 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
             aria-level="3"
             className="m-0"
           >
-            Introduction to African Wild Dogs
+            Introduction to Pigs
           </h6>
           <p
             className="m-0"

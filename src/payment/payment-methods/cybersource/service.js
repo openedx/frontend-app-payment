@@ -4,7 +4,6 @@ import formurlencoded from 'form-urlencoded';
 import { logError } from '@edx/frontend-platform/logging';
 
 import handleRequestError from '../../data/handleRequestError';
-import { generateAndSubmitForm } from '../../data/utils';
 
 import { CARD_ICONS } from '../../checkout/payment-form/utils/credit-card';
 
@@ -56,13 +55,6 @@ function handleApiError(requestError) {
   }
 }
 
-// Strips spaces, hyphens, and any non-digit from a cardNumber
-function getCardNumberDigits(cardNumber) {
-  const numberPattern = /\d+/g;
-  const cardNumberDigitArray = cardNumber.match(numberPattern) || [];
-  return cardNumberDigitArray.join('');
-}
-
 function getPaymentToken(microformOptions) {
   return new Promise((resolve, reject) => {
     if (!window.microform) {
@@ -111,7 +103,11 @@ function composeFieldError(reason, errors) {
   return fieldError;
 }
 
-export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails }) {
+export async function checkoutWithToken(
+  basket,
+  { cardHolderInfo, cardDetails },
+  setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
+) {
   if (!window.microform) {
     throw new Error('Microform not initialized');
   }
@@ -164,7 +160,7 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
       if (errorData && error.response.data.sdn_check_failure) {
         /* istanbul ignore next */
         if (getConfig().ENVIRONMENT !== 'test') {
-          global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
+          setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
         }
         logError(error, {
           messagePrefix: 'SDN Check Error',
@@ -176,7 +172,7 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
       } else if (errorData && errorData.redirectTo) {
         // This was an expected issue and the back-end is requesting a redirect.
         // We use this when the payment has been declined.
-        global.location.href = errorData.redirectTo;
+        setLocation(errorData.redirectTo);
       } else if (errorData && errorData.field_errors) {
         // It's a field error
         // This endpoint does not return field error data in a format we expect.  Fix it.
@@ -197,94 +193,5 @@ export async function checkoutWithToken(basket, { cardHolderInfo, cardDetails })
       }
     });
 
-  global.location.href = data.receipt_page_url;
-}
-
-/**
- * Checkout with Cybersource.
- *
- * 1. Use card holder info to ensure we can make a transaction with this user
- * 2. Submit card holder data to our ecommerce /cybersource/api-submit/ endpoint.
- *    we must not send any payment information in this request.
- * 3. Generate a form and submit all data to CYBERSOURCE_URL. The user will
- *    then be redirected appropriately.
- */
-export async function checkout(basket, { cardHolderInfo, cardDetails }) {
-  const { basketId } = basket;
-
-  const formData = {
-    basket: basketId,
-    first_name: cardHolderInfo.firstName,
-    last_name: cardHolderInfo.lastName,
-    address_line1: cardHolderInfo.address,
-    address_line2: cardHolderInfo.unit,
-    city: cardHolderInfo.city,
-    country: cardHolderInfo.country,
-    state: cardHolderInfo.state,
-    postal_code: cardHolderInfo.postalCode,
-    organization: cardHolderInfo.organization,
-    purchased_for_organization: cardHolderInfo.purchasedForOrganization,
-  };
-  if (basket.discountJwt) {
-    formData.discount_jwt = basket.discountJwt;
-  }
-  const { data } = await getAuthenticatedHttpClient()
-    .post(`${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`, formurlencoded(formData), {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    })
-    .catch((error) => {
-      const errorData = error.response ? error.response.data : null;
-      if (errorData && error.response.data.sdn_check_failure) {
-        /* istanbul ignore next */
-        if (getConfig().ENVIRONMENT !== 'test') {
-          global.location.href = `${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`;
-        }
-        logError(error, {
-          messagePrefix: 'SDN Check Error',
-          paymentMethod: 'Cybersource',
-          paymentErrorType: 'SDN Check Submit Api',
-          basketId,
-        });
-        throw new Error('This card holder did not pass the SDN check.');
-      } else {
-        logError(error, {
-          messagePrefix: 'Cybersource Submit Error',
-          paymentMethod: 'Cybersource',
-          paymentErrorType: 'Submit Error',
-          basketId,
-        });
-        if (errorData) {
-          // It's a field error
-          // This endpoint does not return field error data in a format we expect.  Fix it.
-          error.response.data = { // eslint-disable-line no-param-reassign
-            field_errors: normalizeFieldErrors(error.response.data.field_errors),
-          };
-          handleApiError(error);
-        }
-        throw error;
-      }
-    });
-
-  const {
-    cardNumber,
-    cardTypeId,
-    securityCode,
-    cardExpirationMonth,
-    cardExpirationYear,
-  } = cardDetails;
-
-  const cybersourcePaymentParams = {
-    ...data.form_fields,
-    card_number: getCardNumberDigits(cardNumber),
-    card_type: cardTypeId,
-    card_cvn: securityCode,
-    card_expiry_date: [cardExpirationMonth.padStart(2, '0'), cardExpirationYear].join('-'),
-  };
-  if (basket.discountJwt) {
-    cybersourcePaymentParams.discount_jwt = basket.discountJwt;
-  }
-
-  generateAndSubmitForm(getConfig().CYBERSOURCE_URL, cybersourcePaymentParams);
+  setLocation(data.receipt_page_url);
 }

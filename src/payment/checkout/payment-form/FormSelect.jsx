@@ -27,6 +27,7 @@ const FormSelect = ({
         id={id}
         disabled={disabled}
         {...errorData}
+        style={{ MozAppearance: 'none', WebkitAppearance: 'none' }}
       >
         {options}
       </select>

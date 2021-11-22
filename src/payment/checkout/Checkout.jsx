@@ -77,7 +77,6 @@ class Checkout extends React.Component {
       isBasketProcessing,
       loading,
       loaded,
-      isPaymentVisualExperiment,
       paymentMethod,
       submitting,
       orderType,
@@ -100,7 +99,7 @@ class Checkout extends React.Component {
       );
     }
 
-    const basketClassName = isPaymentVisualExperiment ? 'basket-section-experiment mb-0' : 'basket-section';
+    const basketClassName = 'basket-section';
     return (
       <>
         <div className={basketClassName}>
@@ -140,7 +139,6 @@ class Checkout extends React.Component {
           isProcessing={cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
-          isPaymentVisualExperiment={isPaymentVisualExperiment}
         />
       </>
     );
@@ -167,10 +165,8 @@ Checkout.propTypes = {
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
-  isPaymentVisualExperiment: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
-  // flexMicroformEnabled: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -181,8 +177,6 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
-  isPaymentVisualExperiment: false,
-  // flexMicroformEnabled: true,
 };
 
 const mapStateToProps = (state) => ({

@@ -57,7 +57,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://edx.org/cente.png"
+                    src="https://edx.org/po.jpg"
                   />
                 </div>
               </div>
@@ -68,7 +68,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Bantengs
+                  Introduction to Dogs
                 </h6>
                 <p
                   className="m-0"
@@ -152,7 +152,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
         aria-label="Payment Details"
       >
         <a
-          className="btn btn-primary btn-lg"
+          className="pgn__hyperlink default-link standalone-link btn btn-primary btn-lg"
           href="http://localhost:18130/checkout/free-checkout/"
           onClick={[Function]}
           target="_self"
@@ -199,71 +199,76 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
 <div
   className="page__payment container-fluid py-5"
 >
-  <div
-    className="alert fade alert-dismissible alert-info show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
+  Array [
     <div
-      className="alert-dialog"
+      className="alert fade alert-dismissible alert-info show"
+      hidden={false}
+      role="alert"
     >
-      Coupon code 'HAPPY' added to basket.
-    </div>
-  </div>
-  <div
-    className="alert fade alert-dismissible alert-info show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
+      <button
+        aria-label="Close"
+        className="btn close"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
       >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      <h6>
-        Purchasing just for yourself?
-      </h6>
-      <span>
-        If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
-        <a
-          href="http://edx.org/about_ze_course"
-          onClick={[Function]}
-          target="_self"
+        <span
+          aria-hidden="true"
         >
+          ×
+        </span>
+      </button>
+      <div
+        className="alert-dialog"
+      >
+        Coupon code 'HAPPY' added to basket.
+      </div>
+    </div>,
+    <div
+      className="alert fade alert-dismissible alert-info show"
+      hidden={false}
+      role="alert"
+    >
+      <button
+        aria-label="Close"
+        className="btn close"
+        onBlur={[Function]}
+        onClick={[Function]}
+        onKeyDown={[Function]}
+        type="button"
+      >
+        <span
+          aria-hidden="true"
+        >
+          ×
+        </span>
+      </button>
+      <div
+        className="alert-dialog"
+      >
+        Array [
+          <h6>
+            Purchasing just for yourself?
+          </h6>,
           <span>
-            click here to enroll directly
-          </span>
-        </a>
-        .
-      </span>
-    </div>
-  </div>
+            If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
+            <a
+              className="pgn__hyperlink default-link standalone-link"
+              href="http://edx.org/about_ze_course"
+              onClick={[Function]}
+              target="_self"
+            >
+              <span>
+                click here to enroll directly
+              </span>
+            </a>
+            .
+          </span>,
+        ]
+      </div>
+    </div>,
+  ]
   <div
     className="row"
   >
@@ -317,7 +322,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://edx.org/fagavjen.gif"
+                    src="https://edx.org/se.jpg"
                   />
                 </div>
               </div>
@@ -328,7 +333,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Gayals
+                  Introduction to Chameleonss
                 </h6>
                 <p
                   className="m-0"
@@ -628,6 +633,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                        "WebkitAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -1895,28 +1906,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -1998,7 +2011,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      className="svg-inline--fa fa-question-circle fa-w-16 "
                       data-icon="question-circle"
                       data-prefix="fas"
                       focusable="false"
@@ -2015,7 +2028,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark "
+                    className="__react_component_tooltip place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -2080,7 +2093,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -2116,6 +2129,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
         <span>
           If you attempted to make a purchase, you have not been charged. Return to your 
           <a
+            className="pgn__hyperlink default-link standalone-link"
             href="http://localhost:18000"
             onClick={[Function]}
             target="_self"
@@ -2126,6 +2140,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
           </a>
            to try again, or 
           <a
+            className="pgn__hyperlink default-link standalone-link"
             href="http://localhost:18000/support"
             onClick={[Function]}
             target="_self"
@@ -2443,6 +2458,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                        "WebkitAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -3710,28 +3731,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -3813,7 +3836,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      className="svg-inline--fa fa-question-circle fa-w-16 "
                       data-icon="question-circle"
                       data-prefix="fas"
                       focusable="false"
@@ -3830,7 +3853,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark "
+                    className="__react_component_tooltip place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -3895,7 +3918,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -3965,7 +3988,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://edx.org/awuuvo.gif"
+                    src="https://edx.org/vot.png"
                   />
                 </div>
               </div>
@@ -3976,7 +3999,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Lions
+                  Introduction to Llamass
                 </h6>
                 <p
                   className="m-0"
@@ -4276,6 +4299,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                        "WebkitAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -5543,28 +5572,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -5646,7 +5677,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      className="svg-inline--fa fa-question-circle fa-w-16 "
                       data-icon="question-circle"
                       data-prefix="fas"
                       focusable="false"
@@ -5663,7 +5694,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark "
+                    className="__react_component_tooltip place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -5728,7 +5759,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -5798,7 +5829,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://edx.org/piwopihe.png"
+                    src="https://edx.org/lu.jpg"
                   />
                 </div>
               </div>
@@ -5809,7 +5840,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Turkeyss
+                  Introduction to Guanacos
                 </h6>
                 <p
                   className="m-0"
@@ -5870,17 +5901,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <button
                 aria-disabled={false}
                 aria-live="assertive"
-                className="btn pgn__stateful-btn pgn__stateful-btn-state-default btn-primary btn-sm"
-                onBlur={[Function]}
+                className="pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-sm"
+                disabled={false}
                 onClick={[Function]}
-                onKeyDown={[Function]}
                 type="submit"
               >
                 <span
                   className="d-flex align-items-center justify-content-center"
                 >
                   <span>
-                    Update
+                    <span>
+                      Update
+                    </span>
                   </span>
                 </span>
               </button>
@@ -6263,6 +6295,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                        "WebkitAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -7530,28 +7568,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -7667,7 +7707,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      className="svg-inline--fa fa-question-circle fa-w-16 "
                       data-icon="question-circle"
                       data-prefix="fas"
                       focusable="false"
@@ -7684,7 +7724,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark "
+                    className="__react_component_tooltip place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -7749,7 +7789,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -7819,7 +7859,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://edx.org/pewalme.jpg"
+                    src="https://edx.org/watpewal.gif"
                   />
                 </div>
               </div>
@@ -7830,7 +7870,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to Asian Elephants
+                  Introduction to Pigeonss
                 </h6>
                 <p
                   className="m-0"
@@ -8147,6 +8187,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                        "WebkitAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -9414,28 +9460,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -9517,7 +9565,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      className="svg-inline--fa fa-question-circle fa-w-16 "
                       data-icon="question-circle"
                       data-prefix="fas"
                       focusable="false"
@@ -9534,7 +9582,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark "
+                    className="__react_component_tooltip place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -9599,7 +9647,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>
@@ -9669,7 +9717,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <img
                     alt=""
                     className="img-thumbnail product-thumbnail"
-                    src="https://edx.org/pubhe.jpg"
+                    src="https://edx.org/lekigud.gif"
                   />
                 </div>
               </div>
@@ -9680,7 +9728,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   aria-level="3"
                   className="m-0"
                 >
-                  Introduction to African Wild Dogs
+                  Introduction to Pigs
                 </h6>
                 <p
                   className="m-0"
@@ -10010,6 +10058,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onDrop={[Function]}
                     onFocus={[Function]}
                     required={true}
+                    style={
+                      Object {
+                        "MozAppearance": "none",
+                        "WebkitAppearance": "none",
+                      }
+                    }
                     value=""
                   >
                     <option
@@ -11277,28 +11331,30 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                <label
-                  htmlFor="state"
-                >
-                  <span>
-                    State/Province
-                  </span>
-                </label>
-                <input
-                  autoComplete="address-level1"
-                  className="form-control"
-                  disabled={false}
-                  id="state"
-                  maxLength="20"
-                  name="state"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onDragStart={[Function]}
-                  onDrop={[Function]}
-                  onFocus={[Function]}
-                  type="text"
-                  value=""
-                />
+                Array [
+                  <label
+                    htmlFor="state"
+                  >
+                    <span>
+                      State/Province
+                    </span>
+                  </label>,
+                  <input
+                    autoComplete="address-level1"
+                    className="form-control"
+                    disabled={false}
+                    id="state"
+                    maxLength="20"
+                    name="state"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onDragStart={[Function]}
+                    onDrop={[Function]}
+                    onFocus={[Function]}
+                    type="text"
+                    value=""
+                  />,
+                ]
               </div>
               <div
                 className="col-lg-6 form-group"
@@ -11380,7 +11436,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 fa-null fa-rotate-null fa-pull-null "
+                      className="svg-inline--fa fa-question-circle fa-w-16 "
                       data-icon="question-circle"
                       data-prefix="fas"
                       focusable="false"
@@ -11397,7 +11453,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark "
+                    className="__react_component_tooltip place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -11462,7 +11518,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               className="col-lg-6 form-group"
             >
               <div
-                className="skeleton btn btn-block btn-lg rounded-pill"
+                className="skeleton btn btn-block btn-lg"
               >
                  
               </div>

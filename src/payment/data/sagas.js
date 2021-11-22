@@ -29,12 +29,12 @@ import { handleErrors, handleMessages, clearMessages } from '../../feedback';
 
 // Services
 import * as PaymentApiService from './service';
-import { checkout as checkoutCybersource, checkoutWithToken } from '../payment-methods/cybersource';
+import { checkoutWithToken } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 
 export const paymentMethods = {
-  cybersource: checkoutCybersource,
+  cybersource: checkoutWithToken,
   paypal: checkoutPaypal,
   'apple-pay': checkoutApplePay,
 };
@@ -210,10 +210,7 @@ export function* handleSubmitPayment({ payload }) {
     yield put(basketProcessing(true));
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
-    let paymentMethodCheckout = paymentMethods[method];
-    if (method === 'cybersource') {
-      paymentMethodCheckout = checkoutWithToken;
-    }
+    const paymentMethodCheckout = paymentMethods[method];
     const basket = yield select(state => ({ ...state.payment.basket }));
     yield call(paymentMethodCheckout, basket, paymentArgs);
     yield put(submitPayment.success());

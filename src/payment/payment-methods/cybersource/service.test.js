@@ -2,26 +2,23 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
+import qs from 'qs';
 import { logError } from '@edx/frontend-platform/logging';
+import handleRequestError from '../../data/handleRequestError';
+import { CARD_TYPES } from '../../checkout/payment-form/utils/credit-card';
 
-import { checkout, normalizeFieldErrors } from './service';
-import { generateAndSubmitForm } from '../../data/utils';
-
-jest.mock('../../data/utils', () => ({
-  generateAndSubmitForm: jest.fn(),
-  isWaffleFlagEnabled: jest.fn(),
-}));
+import { checkoutWithToken, normalizeFieldErrors } from './service';
 
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 
+jest.mock('../../data/handleRequestError');
+
 jest.mock('@edx/frontend-platform/auth');
 
 const axiosMock = new MockAdapter(axios);
 getAuthenticatedHttpClient.mockReturnValue(axios);
-
-const CYBERSOURCE_API = `${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/api-submit/`;
 
 beforeEach(() => {
   axiosMock.reset();
@@ -29,28 +26,6 @@ beforeEach(() => {
 });
 
 describe('Cybersource Service', () => {
-  const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
-  const formDetails = {
-    cardHolderInfo: {
-      firstName: 'Yo',
-      lastName: 'Yoyo',
-      address: 'Green ln',
-      unit: '#1',
-      city: 'City',
-      country: 'Everyland',
-      postalCode: '24631',
-      organization: 'skunkworks',
-    },
-    cardDetails: {
-      cardNumber: '4111-1111-1111-1111 ',
-      cardTypeId: 'VISA??',
-      securityCode: '123',
-      cardExpirationMonth: '10',
-      cardExpirationYear: '2022',
-    },
-  };
-  const cardValues = Object.values(formDetails.cardDetails);
-
   describe('normalizeCheckoutErrors', () => {
     it('should return fieldErrors if fieldErrors is not an object', () => {
       let result = normalizeFieldErrors(undefined);
@@ -87,39 +62,87 @@ describe('Cybersource Service', () => {
   });
 
   describe('checkout', () => {
-    beforeEach(() => {
-      // Clear all instances and calls to constructor and all methods:
-      Object.values(generateAndSubmitForm).map(handler => handler.mockClear);
-    });
+    // eslint-disable-next-line no-unused-vars
+    const mockCreateToken = jest.fn(({ expirationMonth, expirationYear }, callback) => callback(null, 'mocktoken'));
+
+    window.microform = {
+      fields: {
+        number: {
+          valid: true,
+          cybsCardType: CARD_TYPES.visa,
+        },
+      },
+      createToken: mockCreateToken,
+      Mockroform: true,
+    };
+
+    const mockSetLocation = jest.fn();
+
+    const CYBERSOURCE_API = `${getConfig().ECOMMERCE_BASE_URL}/payment/cybersource/authorize/`;
+
+    const basket = { basketId: 1, discountJwt: 'i_am_a_jwt' };
+    const formDetails = {
+      cardHolderInfo: {
+        firstName: 'Yo',
+        lastName: 'Yoyo',
+        address: 'Green ln',
+        unit: '#1',
+        city: 'City',
+        country: 'Everyland',
+        postalCode: '24631',
+        organization: 'skunkworks',
+      },
+      cardDetails: {
+        cardExpirationMonth: '10',
+        cardExpirationYear: '2022',
+      },
+    };
+    const cardValues = Object.values(formDetails.cardDetails);
 
     const expectNoCardDataToBePresent = (value) => {
+      const noLeakMessage = 'Value is not in card details';
       if (typeof value === 'object') {
         Object.values(value).forEach(expectNoCardDataToBePresent);
       } else {
-        expect(cardValues.includes(value)).toBe(false);
+        const isLeak = cardValues.includes(value)
+          ? `Found leaked card details value: ${value}`
+          : noLeakMessage;
+        expect(isLeak).toBe(noLeakMessage);
       }
     };
 
     it('should generate and submit a form on success', async () => {
       const successResponseData = {
-        form_fields: {
-          allThe: 'all the form fields form cybersource',
-        },
+        receipt_page_url: 'mock://receipt.page',
       };
       axiosMock.onPost(CYBERSOURCE_API).reply(200, successResponseData);
 
-      await expect(checkout(basket, formDetails)).resolves.toEqual(undefined);
-      expectNoCardDataToBePresent(axiosMock.history.post[0].data);
-      expect(generateAndSubmitForm).toHaveBeenCalledWith(
-        getConfig().CYBERSOURCE_URL,
-        expect.objectContaining({
-          ...successResponseData.form_fields,
-          card_number: '4111111111111111',
-          card_type: 'VISA??',
-          card_cvn: '123',
-          card_expiry_date: '10-2022',
-        }),
+      await expect(checkoutWithToken(basket, formDetails, mockSetLocation)).resolves.toEqual(undefined);
+
+      const postedData = qs.parse(axiosMock.history.post[0].data);
+      expectNoCardDataToBePresent(postedData);
+      expect(mockCreateToken).toHaveBeenCalledWith(
+        {
+          expirationMonth: formDetails.cardDetails.cardExpirationMonth,
+          expirationYear: formDetails.cardDetails.cardExpirationYear,
+        },
+        expect.any(Function),
       );
+      expect(mockSetLocation).toHaveBeenCalledWith(successResponseData.receipt_page_url);
+    });
+
+    it('should redirect if the cybersource checkout request returns a url to redirect to', async () => {
+      const errorRedirectData = {
+        redirectTo: 'mock://error.page',
+      };
+      axiosMock.onPost(CYBERSOURCE_API).reply(403, errorRedirectData);
+      mockSetLocation.mockClear();
+
+      await expect(checkoutWithToken(basket, formDetails, mockSetLocation)).rejects.toEqual(expect.any(Error));
+
+      const postedData = qs.parse(axiosMock.history.post[0].data);
+      expectNoCardDataToBePresent(postedData);
+      expect(mockSetLocation).toHaveBeenCalledWith(errorRedirectData.redirectTo);
     });
 
     it('should throw an error if the cybersource checkout request errors on the fields', async () => {
@@ -132,14 +155,9 @@ describe('Cybersource Service', () => {
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
 
       expect.hasAssertions();
-      await checkout(basket, formDetails).catch(() => {
+      await checkoutWithToken(basket, formDetails).catch(() => {
         expectNoCardDataToBePresent(axiosMock.history.post[0].data);
-        expect(logError).toHaveBeenCalledWith(expect.any(Error), {
-          messagePrefix: 'Cybersource Submit Error',
-          paymentMethod: 'Cybersource',
-          paymentErrorType: 'Submit Error',
-          basketId: basket.basketId,
-        });
+        expect(handleRequestError).toHaveBeenCalledWith(expect.any(Error));
       });
     });
 
@@ -150,9 +168,12 @@ describe('Cybersource Service', () => {
       };
 
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
+      mockSetLocation.mockClear();
 
       expect.hasAssertions();
-      await expect(checkout(basket, formDetails)).rejects.toEqual(new Error('This card holder did not pass the SDN check.'));
+      await expect(checkoutWithToken(basket, formDetails, mockSetLocation)).rejects.toEqual(
+        new Error('This card holder did not pass the SDN check.'),
+      );
       expect(logError).toHaveBeenCalledWith(expect.any(Error), {
         messagePrefix: 'SDN Check Error',
         paymentMethod: 'Cybersource',
@@ -167,7 +188,7 @@ describe('Cybersource Service', () => {
       axiosMock.onPost(CYBERSOURCE_API).reply(403, errorResponseData);
 
       expect.hasAssertions();
-      await checkout(basket, formDetails).catch(() => {
+      await checkoutWithToken(basket, formDetails).catch(() => {
         expectNoCardDataToBePresent(axiosMock.history.post[0].data);
         expect(logError).toHaveBeenCalledWith(expect.any(Error), {
           messagePrefix: 'Cybersource Submit Error',

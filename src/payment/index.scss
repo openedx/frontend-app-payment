@@ -90,7 +90,7 @@
     margin-right: map-get($spacers, 2);
     margin-bottom: map-get($spacers, 2);
     border: solid $border-width $border-color;
-    border-radius: $border-radius;
+    border-radius: 0;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -112,7 +112,6 @@
   }
   .skeleton {
     background-color: rgba(0,0,0, .1);
-    border-radius: $border-radius;
     animation: skeleton-pulse 2s infinite both;
   }
 
@@ -128,6 +127,10 @@
   #purchasedForOrganization {
     width: 18px;
     height: 18px;
+  }
+
+  #couponField {
+    width: 11rem;
   }
 
   .num-enrolled {
@@ -152,15 +155,15 @@
   }
 
   .flex-microform {
-    @extend .form-control
+    @extend .form-control;
   }
 
   .flex-microform-focused {
-    @extend .form-control, :focus
+    @extend .form-control, :focus;
   }
 
   .flex-microform-disabled {
-    @extend .form-control, :disabled
+    @extend .form-control, :disabled;
   }
 
   .microform-label {
