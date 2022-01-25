@@ -26,11 +26,6 @@ const messages = defineMessages({
     defaultMessage: 'This field is required',
     description: 'The form field feedback text for missing required field error.',
   },
-  'payment.form.errors.ascii.name': {
-    id: 'payment.form.errors.ascii.name',
-    defaultMessage: 'We apologize for the inconvenience but for the time being we require ASCII characters in the name field. We are working on addressing this and appreciate your patience.',
-    description: 'The form field feedback text for name format issue.',
-  },
 });
 
 export default messages;
