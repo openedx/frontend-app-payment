@@ -1,49 +1,25 @@
 const path = require('path');
-const merge = require('webpack-merge');
+const { mergeWithCustomize, unique } = require('webpack-merge');
 const { getBaseConfig } = require('@edx/frontend-build');
+// NOTE: This version of html-webpack-plugin must be the same major version as the one in
+// frontend-build to avoid potential issues.
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const NewRelicSourceMapPlugin = require('new-relic-source-map-webpack-plugin');
 
 /**
  * This plugin configuration overrides the default in webpack-prod for the following reasons:
  *
- * - It removes html-webpack-new-relic-plugin - we manually add our new relic script to the HTML
- *   in this repo.
- * - We need to have a custom html-webpack-plugin configuration to support the above, and to
- *   allow us to preconnect to various domains.  See the public/index.html file for the companion
- *   usage of this configuration
+ * We need to have a custom html-webpack-plugin configuration to allow us to preconnect to
+ * various domains.  See the public/index.html file for the companion usage of this configuration.
  */
 
-// We webpack-merge docs for reference on this usage
-// https://www.npmjs.com/package/webpack-merge#mergeuniquefield-fields-field--field
-const mergeUniquePlugins = merge.unique(
-  'plugins',
-  ['HtmlWebpackPlugin'],
-  plugin => plugin.constructor && plugin.constructor.name,
-);
-
-// Filter plugins in the preset config that we don't want
-function filterPlugins(plugins) {
-  const pluginsToRemove = [
-    'a', // "a" is the constructor name of HtmlWebpackNewRelicPlugin
-  ];
-  return plugins.filter(plugin => {
-    const pluginName = plugin.constructor && plugin.constructor.name;
-    return !pluginsToRemove.includes(pluginName);
-  });
-}
-
-const config = merge({
-  customizeArray(a, b, key) {
-    if (key === 'plugins') {
-      const uniquePlugins = mergeUniquePlugins(a, b, key);
-      return filterPlugins(uniquePlugins);
-    }
-
-    // Fall back to default merging
-    return undefined;
-  },
+const config = mergeWithCustomize({
+  customizeArray: unique(
+    'plugins',
+    ['HtmlWebpackPlugin'],
+    plugin => plugin.constructor && plugin.constructor.name,
+  ),
 })(
+  getBaseConfig('webpack-prod'),
   {
     plugins: [
       // Generates an HTML file in the output directory.
@@ -51,9 +27,7 @@ const config = merge({
         inject: false, // Manually inject head and body tags in the template itself.
         template: path.resolve(__dirname, 'public/index.html'),
         FAVICON_URL: process.env.FAVICON_URL || null,
-        optimizelyId: process.env.OPTIMIZELY_PROJECT_ID,
-        newRelicLicenseKey: process.env.NEW_RELIC_LICENSE_KEY || 'fake_license',
-        newRelicApplicationID: process.env.NEW_RELIC_APP_ID || 'fake_app',
+        OPTIMIZELY_PROJECT_ID: process.env.OPTIMIZELY_PROJECT_ID || null,
         preconnect: (() => {
           const preconnectDomains = [
             'https://api.segment.io',
@@ -72,16 +46,8 @@ const config = merge({
           return preconnectDomains;
         })(),
       }),
-      new NewRelicSourceMapPlugin({
-        applicationId: process.env.NEW_RELIC_APP_ID,
-        nrAdminKey: process.env.NEW_RELIC_ADMIN_KEY,
-        staticAssetUrl: process.env.BASE_URL,
-        // upload source maps in prod builds only
-        noop: typeof process.env.NEW_RELIC_ADMIN_KEY === 'undefined',
-      }),
     ],
   },
-  getBaseConfig('webpack-prod'),
 );
 
 module.exports = config;
