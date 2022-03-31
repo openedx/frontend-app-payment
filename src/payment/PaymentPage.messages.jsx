@@ -4,7 +4,7 @@ const messages = defineMessages({
   'payment.page.heading': {
     id: 'payment.page.heading',
     defaultMessage: 'Payment',
-    description: 'The page heading for payment.',
+    description: 'Page heading for payment.',
   },
   'payment.loading.payment': {
     id: 'payment.loading.payment',
