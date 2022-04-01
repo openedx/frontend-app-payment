@@ -92,7 +92,7 @@ class PaymentPage extends React.Component {
       <div className="row">
         <h1 className="sr-only">
           <FormattedMessage
-            id="payment.page.heading"
+            id="payment.heading.page"
             defaultMessage="Payment"
             description="The screenreader-only page heading"
           />

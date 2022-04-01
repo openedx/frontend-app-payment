@@ -1,8 +1,8 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
-  'payment.page.heading': {
-    id: 'payment.page.heading',
+  'payment.heading.page': {
+    id: 'payment.heading.page',
     defaultMessage: 'Payment',
     description: 'Page heading for payment.',
   },
