@@ -28,7 +28,6 @@ config.plugins.forEach((plugin) => {
       preconnectDomains.push('https://logx.optimizely.com');
     }
 
-    plugin.userOptions.inject = true; // Manually inject head and body tags in the template itself.
     plugin.userOptions.preconnect = preconnectDomains;
   }
 });
