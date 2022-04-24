@@ -87,7 +87,7 @@
   "payment.empty.basket.supportURL": "Contacter le support e-commerce d'edX",
   "payment.apple.pay.pay.with.apple.pay": "Payer avec Apple Pay",
   "payment.type.paypal": "PayPal",
-  "payment.heading.page": "Payment",
+  "payment.heading.page": "Paiement",
   "payment.loading.payment": "Chargement du panier...",
   "payment.loading.error": "Erreur : {error}",
   "payment.apple.pay.merchant.validation.failure": "Apple Pay n'est pas disponible pour le moment. SVP essayer une autre méthode de paiement.",
