@@ -189,6 +189,7 @@ export class PaymentFormComponent extends React.Component {
   }
 
   render() {
+    // Test change DO NOT MERGE
     const {
       handleSubmit,
       loading,
