@@ -1,2 +1,3 @@
 # PCI compliance requires stricter scrutiny, see PR template
-/src	@edx/revenue-squad
+/src	@openedx/revenue-squad
+CODEOWNERS  @openedx/revenue-squad
