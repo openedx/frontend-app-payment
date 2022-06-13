@@ -19,7 +19,7 @@ const AlertMessage = (props) => {
 
   const statusAlertProps = {
     alertType: ALERT_TYPES.WARNING,
-    onClose: useCallback(() => { closeHandler(id); }),
+    onClose: useCallback(() => { closeHandler(id); }, [closeHandler, id]),
     open: true,
   };
 
