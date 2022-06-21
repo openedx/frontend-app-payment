@@ -201,71 +201,89 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
 >
   Array [
     <div
-      className="alert fade alert-dismissible alert-info show"
-      hidden={false}
+      className="fade alert-content alert alert-info show"
+      dialog="Coupon code 'HAPPY' added to basket."
       role="alert"
     >
-      <button
-        aria-label="Close"
-        className="btn close"
-        onBlur={[Function]}
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        type="button"
-      >
-        <span
-          aria-hidden="true"
-        >
-          ×
-        </span>
-      </button>
       <div
-        className="alert-dialog"
+        className="pgn__alert-message-wrapper"
       >
-        Coupon code 'HAPPY' added to basket.
+        <div
+          className="alert-message-content"
+        >
+          Coupon code 'HAPPY' added to basket.
+        </div>
+        <div
+          className="pgn__alert-actions pgn__action-row"
+        >
+          <span
+            className="pgn__action-row-spacer"
+          />
+          <button
+            className="btn btn-tertiary btn-sm"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            Dismiss
+          </button>
+        </div>
       </div>
     </div>,
     <div
-      className="alert fade alert-dismissible alert-info show"
-      hidden={false}
+      className="fade alert-content alert alert-info show"
+      dialog={
+        <SingleEnrollmentCodeWarning
+          values={
+            Object {
+              "courseAboutUrl": "http://edx.org/about_ze_course",
+            }
+          }
+        />
+      }
       role="alert"
     >
-      <button
-        aria-label="Close"
-        className="btn close"
-        onBlur={[Function]}
-        onClick={[Function]}
-        onKeyDown={[Function]}
-        type="button"
-      >
-        <span
-          aria-hidden="true"
-        >
-          ×
-        </span>
-      </button>
       <div
-        className="alert-dialog"
+        className="pgn__alert-message-wrapper"
       >
-        Array [
-          <h6>
-            Purchasing just for yourself?
-          </h6>,
-          <span>
-            If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
-            <a
-              className="pgn__hyperlink default-link standalone-link"
-              href="http://edx.org/about_ze_course"
-              onClick={[Function]}
-              target="_self"
-            >
-              <span>
-                click here to enroll directly
-              </span>
-            </a>
-            .
-          </span>,
-        ]
+        <div
+          className="alert-message-content"
+        >
+          Array [
+            <h6>
+              Purchasing just for yourself?
+            </h6>,
+            <span>
+              If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
+              <a
+                className="pgn__hyperlink default-link standalone-link"
+                href="http://edx.org/about_ze_course"
+                onClick={[Function]}
+                target="_self"
+              >
+                <span>
+                  click here to enroll directly
+                </span>
+              </a>
+              .
+            </span>,
+          ]
+        </div>
+        <div
+          className="pgn__alert-actions pgn__action-row"
+        >
+          <span
+            className="pgn__action-row-spacer"
+          />
+          <button
+            className="btn btn-tertiary btn-sm"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
+          >
+            Dismiss
+          </button>
+        </div>
       </div>
     </div>,
   ]

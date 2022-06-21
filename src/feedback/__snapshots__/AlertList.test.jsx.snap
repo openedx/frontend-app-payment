@@ -5,166 +5,200 @@ exports[`AlertList should be null by default 1`] = `null`;
 exports[`AlertList should render messages of each type 1`] = `
 Array [
   <div
-    className="alert fade alert-dismissible alert-warning show"
-    hidden={false}
+    className="fade alert-content alert alert-warning show"
+    dialog="Boo indeed!"
     role="alert"
   >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
     <div
-      className="alert-dialog"
+      className="pgn__alert-message-wrapper"
     >
-      Boo indeed!
-    </div>
-  </div>,
-  <div
-    className="alert fade alert-dismissible alert-info show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
+      <div
+        className="alert-message-content"
       >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      Bah!
-    </div>
-  </div>,
-  <div
-    className="alert fade alert-dismissible alert-success show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
+        Boo indeed!
+      </div>
+      <div
+        className="pgn__alert-actions pgn__action-row"
       >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      Meh!
-    </div>
-  </div>,
-  <div
-    className="alert fade alert-dismissible alert-danger show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      Gah!  An error!
-    </div>
-  </div>,
-  <div
-    className="alert fade alert-dismissible alert-warning show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      Debug debug
-    </div>
-  </div>,
-  <div
-    className="alert fade alert-dismissible alert-danger show"
-    hidden={false}
-    role="alert"
-  >
-    <button
-      aria-label="Close"
-      className="btn close"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onKeyDown={[Function]}
-      type="button"
-    >
-      <span
-        aria-hidden="true"
-      >
-        ×
-      </span>
-    </button>
-    <div
-      className="alert-dialog"
-    >
-      <span>
-        There was an unexpected problem. If the problem persists, please 
-        <a
-          className="pgn__hyperlink default-link standalone-link"
-          href="http://localhost:18000/support"
+        <span
+          className="pgn__action-row-spacer"
+        />
+        <button
+          className="btn btn-tertiary btn-sm"
+          disabled={false}
           onClick={[Function]}
-          target="_self"
+          type="button"
         >
-          <span>
-            contact support
-          </span>
-        </a>
-        .
-      </span>
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="fade alert-content alert alert-info show"
+    dialog="Bah!"
+    role="alert"
+  >
+    <div
+      className="pgn__alert-message-wrapper"
+    >
+      <div
+        className="alert-message-content"
+      >
+        Bah!
+      </div>
+      <div
+        className="pgn__alert-actions pgn__action-row"
+      >
+        <span
+          className="pgn__action-row-spacer"
+        />
+        <button
+          className="btn btn-tertiary btn-sm"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="fade alert-content alert alert-success show"
+    dialog="Meh!"
+    role="alert"
+  >
+    <div
+      className="pgn__alert-message-wrapper"
+    >
+      <div
+        className="alert-message-content"
+      >
+        Meh!
+      </div>
+      <div
+        className="pgn__alert-actions pgn__action-row"
+      >
+        <span
+          className="pgn__action-row-spacer"
+        />
+        <button
+          className="btn btn-tertiary btn-sm"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="fade alert-content alert alert-danger show"
+    dialog="Gah!  An error!"
+    role="alert"
+  >
+    <div
+      className="pgn__alert-message-wrapper"
+    >
+      <div
+        className="alert-message-content"
+      >
+        Gah!  An error!
+      </div>
+      <div
+        className="pgn__alert-actions pgn__action-row"
+      >
+        <span
+          className="pgn__action-row-spacer"
+        />
+        <button
+          className="btn btn-tertiary btn-sm"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="fade alert-content alert alert-warning show"
+    dialog="Debug debug"
+    role="alert"
+  >
+    <div
+      className="pgn__alert-message-wrapper"
+    >
+      <div
+        className="alert-message-content"
+      >
+        Debug debug
+      </div>
+      <div
+        className="pgn__alert-actions pgn__action-row"
+      >
+        <span
+          className="pgn__action-row-spacer"
+        />
+        <button
+          className="btn btn-tertiary btn-sm"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="fade alert-content alert alert-danger show"
+    dialog={
+      <FallbackErrorMessage
+        values={Object {}}
+      />
+    }
+    role="alert"
+  >
+    <div
+      className="pgn__alert-message-wrapper"
+    >
+      <div
+        className="alert-message-content"
+      >
+        <span>
+          There was an unexpected problem. If the problem persists, please 
+          <a
+            className="pgn__hyperlink default-link standalone-link"
+            href="http://localhost:18000/support"
+            onClick={[Function]}
+            target="_self"
+          >
+            <span>
+              contact support
+            </span>
+          </a>
+          .
+        </span>
+      </div>
+      <div
+        className="pgn__alert-actions pgn__action-row"
+      >
+        <span
+          className="pgn__action-row-spacer"
+        />
+        <button
+          className="btn btn-tertiary btn-sm"
+          disabled={false}
+          onClick={[Function]}
+          type="button"
+        >
+          Dismiss
+        </button>
+      </div>
     </div>
   </div>,
 ]

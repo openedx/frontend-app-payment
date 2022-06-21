@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { StatusAlert } from '@edx/paragon';
+import { Alert } from '@edx/paragon';
 import { ALERT_TYPES, MESSAGE_TYPES } from './data/constants';
 
 // Put in a message type, get an alert type.
@@ -18,13 +18,13 @@ const AlertMessage = (props) => {
   } = props;
 
   const statusAlertProps = {
-    alertType: ALERT_TYPES.WARNING,
+    variant: ALERT_TYPES.WARNING,
     onClose: useCallback(() => { closeHandler(id); }),
-    open: true,
+    show: true,
   };
 
   if (messageType !== null && severityMap[messageType] !== undefined) {
-    statusAlertProps.alertType = severityMap[messageType];
+    statusAlertProps.variant = severityMap[messageType];
   }
 
   // The user message can be a
@@ -42,7 +42,11 @@ const AlertMessage = (props) => {
     statusAlertProps.dialog = userMessage;
   }
 
-  return <StatusAlert {...statusAlertProps} />;
+  return (
+    <Alert {...statusAlertProps} dismissible>
+      {statusAlertProps.dialog}
+    </Alert>
+  );
 };
 
 AlertMessage.propTypes = {

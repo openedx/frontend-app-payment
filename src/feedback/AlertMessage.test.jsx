@@ -21,7 +21,7 @@ describe('AlertMessage', () => {
     );
 
     const wrapper = mount(component);
-    wrapper.find('button.close').simulate('click');
+    wrapper.find('.btn').simulate('click');
 
     expect(closeHandlerMock).toHaveBeenCalledWith(123);
   });
