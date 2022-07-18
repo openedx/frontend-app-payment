@@ -19,6 +19,7 @@ const AlertMessage = (props) => {
 
   const statusAlertProps = {
     alertType: ALERT_TYPES.WARNING,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     onClose: useCallback(() => { closeHandler(id); }),
     open: true,
   };
