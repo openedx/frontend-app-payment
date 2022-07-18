@@ -11,7 +11,6 @@ function UpdateQuantityForm(props) {
   const id = 'code-quantity';
 
   /* istanbul ignore next */
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     props.updateQuantity(e.target.elements[id].value);
