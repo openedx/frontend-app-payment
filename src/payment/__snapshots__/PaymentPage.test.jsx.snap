@@ -5868,20 +5868,25 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <div
                   className="position-relative"
                 >
-                  <input
-                    className="form-control form-control-sm"
-                    defaultValue={1}
-                    id="code-quantity"
-                    max="100"
-                    min="1"
-                    name="code-quantity"
-                    style={
-                      Object {
-                        "width": "5rem",
+                  <div
+                    className="pgn__form-control-decorator-group form-control-sm"
+                  >
+                    <input
+                      className="has-value form-control"
+                      defaultValue={1}
+                      id="code-quantity"
+                      max="100"
+                      min="1"
+                      name="code-quantity"
+                      onBlur={[Function]}
+                      style={
+                        Object {
+                          "width": "5rem",
+                        }
                       }
-                    }
-                    type="number"
-                  />
+                      type="number"
+                    />
+                  </div>
                   <small
                     className="text-muted small"
                     style={
