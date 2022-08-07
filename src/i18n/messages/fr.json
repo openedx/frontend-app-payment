@@ -60,7 +60,7 @@
   "payment.page.card.details.year": "Année",
   "payment.card.holder.information.heading": "Informations du titulaire de la carte",
   "payment.card.holder.information.first.name.label": "Prénom (requis)",
-  "payment.card.holder.information.last.name.label": "Prénom (requis)",
+  "payment.card.holder.information.last.name.label": "Nom de famille (requis)",
   "payment.card.holder.information.organization.label": "Organisation (requis)",
   "payment.card.holder.information.address.label": "Adresse (requise)",
   "payment.card.holder.information.unit.label": "Numéro de suite / appartement",
