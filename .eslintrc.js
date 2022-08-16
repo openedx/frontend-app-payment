@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const { createConfig } = require('@edx/frontend-build');
 
 module.exports = createConfig('eslint', {
@@ -7,7 +8,7 @@ module.exports = createConfig('eslint', {
       labelAttributes: [],
       controlComponents: [],
       assert: 'htmlFor',
-      depth: 25
+      depth: 25,
     }],
   },
 });

@@ -14,7 +14,7 @@ function UpdateQuantityForm(props) {
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     props.updateQuantity(e.target.elements[id].value);
-  });
+  }, [props]);
 
   /* istanbul ignore next */
   const submitState = props.isBasketProcessing ? 'pending' : 'default';

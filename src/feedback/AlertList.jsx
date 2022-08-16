@@ -42,7 +42,7 @@ AlertList.propTypes = {
     code: PropTypes.string,
     userMessage: PropTypes.string,
     fieldName: PropTypes.string,
-    data: PropTypes.object,
+    data: PropTypes.shape({}),
   })),
   removeMessage: PropTypes.func.isRequired,
   messageCodes: PropTypes.objectOf(PropTypes.oneOfType([
