@@ -1,12 +1,11 @@
 {
   "extends": [
     "config:base",
-    ":noUnscheduledUpdates",
-    ":semanticCommits"
-  ],
-  "rebaseStalePrs": true,
-  "schedule": [
-    "every weekend"
-  ],
-  "timezone": "America/New_York"
+    "group:allNonMajor",
+    ":label(dependencies)",
+    ":rebaseStalePrs",
+    ":reviewer(edx-revenue-tasks)",
+    ":semanticCommits",
+    ":timezone(America/New_York)"
+  ]
 }
