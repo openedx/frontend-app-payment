@@ -28,6 +28,7 @@ class Checkout extends React.Component {
     this.props.submitPayment({ method: 'paypal' });
   };
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   handleSubmitApplePay = () => {
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
