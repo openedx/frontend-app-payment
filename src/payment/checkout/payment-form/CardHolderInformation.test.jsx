@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
