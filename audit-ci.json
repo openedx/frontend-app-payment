@@ -1,7 +1,6 @@
 {
     "allowlist": [
         "GHSA-44c6-4v22-4mhx",
-        "GHSA-cj88-88mr-972w",
         "GHSA-pfrx-2q88-qq97"
     ],
     "moderate": true
