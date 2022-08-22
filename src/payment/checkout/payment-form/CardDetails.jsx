@@ -39,45 +39,6 @@ export class CardDetailsComponent extends React.Component {
     ];
   }
 
-  renderExperimentExpirationMonthOptions() {
-    const getMonthOptions = () => {
-      const pad = month => `0${month}`.slice(-2);
-
-      const items = [];
-      for (let i = 1; i <= 12; i += 1) {
-      // Display months in the MM format
-        items.push(<option key={i} value={i}>{pad(i)}</option>);
-      }
-      return items;
-    };
-
-    const monthText = this.props.intl.formatMessage(messages['payment.page.card.details.month']);
-
-    return [
-      <option key="Month" value="">{monthText}</option>,
-      ...getMonthOptions(),
-    ];
-  }
-
-  renderExperimentExpirationYearOptions() {
-    const getYearOptions = (startYear, endYear) => {
-      const items = [];
-      for (let i = startYear; i <= endYear; i += 1) {
-        // Display years in the YY format
-        items.push(<option key={i} value={i}>{i.toString().slice(-2)}</option>);
-      }
-      return items;
-    };
-
-    const yearText = this.props.intl.formatMessage(messages['payment.page.card.details.year']);
-    const currentYear = new Date().getFullYear();
-
-    return [
-      <option key="Year" value="">{yearText}</option>,
-      ...getYearOptions(currentYear, currentYear + 15),
-    ];
-  }
-
   render() {
     const { disabled } = this.props;
     const loading = this.props.captureKeyId === null;
