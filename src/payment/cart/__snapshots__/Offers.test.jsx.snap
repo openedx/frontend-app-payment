@@ -10,25 +10,17 @@ exports[`<Offers /> renders a dynamic discount offer 1`] = `
     <span
       className="flex-grow-1"
     >
-      <span>
-        Discounts applied
-      </span>
+      Discounts applied
     </span>
     <span>
-      <span>
-        -$10.00
-      </span>
+      -$10.00
     </span>
   </p>
   <p
     className="m-0 text-muted"
   >
-    <span>
-      <span>
-        50%
-      </span>
-       discount for your first upgrade applied.
-    </span>
+    50%
+     discount for your first upgrade applied.
   </p>
 </div>
 `;
@@ -43,25 +35,17 @@ exports[`<Offers /> renders a percentage offer 1`] = `
     <span
       className="flex-grow-1"
     >
-      <span>
-        Discounts applied
-      </span>
+      Discounts applied
     </span>
     <span>
-      <span>
-        -$10.00
-      </span>
+      -$10.00
     </span>
   </p>
   <p
     className="m-0 text-muted"
   >
-    <span>
-      <span>
-        50%
-      </span>
-       discount provided by Pied Piper.
-    </span>
+    50%
+     discount provided by Pied Piper.
   </p>
 </div>
 `;
@@ -76,25 +60,17 @@ exports[`<Offers /> renders an absolute value offer 1`] = `
     <span
       className="flex-grow-1"
     >
-      <span>
-        Discounts applied
-      </span>
+      Discounts applied
     </span>
     <span>
-      <span>
-        -$10.00
-      </span>
+      -$10.00
     </span>
   </p>
   <p
     className="m-0 text-muted"
   >
-    <span>
-      <span>
-        $10.00
-      </span>
-       discount provided by Pied Piper.
-    </span>
+    $10.00
+     discount provided by Pied Piper.
   </p>
 </div>
 `;

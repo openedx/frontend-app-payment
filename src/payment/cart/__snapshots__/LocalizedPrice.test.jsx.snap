@@ -2,15 +2,9 @@
 
 exports[`LocalizedPrice should render localized currency 1`] = `
 <span>
-  <span>
-    MX$190
-  </span>
+  MX$190
    *
 </span>
 `;
 
-exports[`LocalizedPrice should render unlocalized currency 1`] = `
-<span>
-  $10.00
-</span>
-`;
+exports[`LocalizedPrice should render unlocalized currency 1`] = `"$10.00"`;
