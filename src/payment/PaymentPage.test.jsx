@@ -88,6 +88,7 @@ describe('<PaymentPage />', () => {
 
   describe('Renders correctly in various states', () => {
     beforeEach(() => {
+      // eslint-disable-next-line no-import-assign
       analytics.sendTrackingLogEvent = jest.fn();
       Cookies.result[process.env.CURRENCY_COOKIE_NAME] = undefined;
     });
