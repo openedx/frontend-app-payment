@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable global-require */
 import React from 'react';
 import { mount } from 'enzyme';
