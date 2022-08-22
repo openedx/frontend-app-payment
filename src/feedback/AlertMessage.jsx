@@ -12,7 +12,7 @@ const severityMap = {
   [MESSAGE_TYPES.ERROR]: ALERT_TYPES.DANGER,
 };
 
-const AlertMessage = (props) => {
+function AlertMessage(props) {
   const {
     id, messageType, userMessage, closeHandler, data,
   } = props;
@@ -43,7 +43,7 @@ const AlertMessage = (props) => {
   }
 
   return <StatusAlert {...statusAlertProps} />;
-};
+}
 
 AlertMessage.propTypes = {
   id: PropTypes.number.isRequired,
