@@ -29,9 +29,7 @@ exports[`<ProductLineItem /> Rendering should render the product details 1`] = `
     <p
       className="m-0"
     >
-      <span>
-        Verified Certificate
-      </span>
+      Verified Certificate
     </p>
   </div>
 </div>
@@ -132,9 +130,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for no-
     <p
       className="m-0"
     >
-      <span>
-        Professional Certificate
-      </span>
+      Professional Certificate
     </p>
   </div>
 </div>
@@ -169,9 +165,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for pro
     <p
       className="m-0"
     >
-      <span>
-        Professional Certificate
-      </span>
+      Professional Certificate
     </p>
   </div>
 </div>
@@ -239,9 +233,7 @@ exports[`<ProductLineItem /> Rendering should render the product details for ver
     <p
       className="m-0"
     >
-      <span>
-        Verified Certificate
-      </span>
+      Verified Certificate
     </p>
   </div>
 </div>
