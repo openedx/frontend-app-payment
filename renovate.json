@@ -8,5 +8,13 @@
   "schedule": [
     "every weekend"
   ],
-  "timezone": "America/New_York"
+  "timezone": "America/New_York",
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["@edx"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeSchedule": ["at any time"]
+    }
+  ]
 }
