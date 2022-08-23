@@ -1958,7 +1958,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip te3c7f300-dbb9-4443-b8e9-841d3ce9cf91 place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -1967,19 +1967,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                       dangerouslySetInnerHTML={
                         Object {
                           "__html": "
-  	.te3c7f300-dbb9-4443-b8e9-841d3ce9cf91 {
+  	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-top {
+  	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-top::before {
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
         border-top: 8px solid transparent;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-top::after {
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -1990,13 +1990,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         border-top-width: 6px;
     }
 
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-bottom {
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-bottom::before {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-bottom::after {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -2007,13 +2007,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         border-bottom-width: 6px;
     }
 
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-left {
+    .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-left::before {
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
         border-left: 8px solid transparent;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-left::after {
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -2024,13 +2024,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
         border-left-width: 6px;
     }
 
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-right {
+    .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-right::before {
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
         border-right: 8px solid transparent;
     }
-    .te3c7f300-dbb9-4443-b8e9-841d3ce9cf91.place-right::after {
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -3823,7 +3823,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip t1e7d5903-4d28-40f6-9f95-272061ca296f place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -3832,19 +3832,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                       dangerouslySetInnerHTML={
                         Object {
                           "__html": "
-  	.t1e7d5903-4d28-40f6-9f95-272061ca296f {
+  	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t1e7d5903-4d28-40f6-9f95-272061ca296f.place-top {
+  	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-top::before {
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-top::after {
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -3855,13 +3855,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
         border-top-width: 6px;
     }
 
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-bottom {
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-bottom::before {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-bottom::after {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -3872,13 +3872,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
         border-bottom-width: 6px;
     }
 
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-left {
+    .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-left::before {
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-left::after {
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -3889,13 +3889,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
         border-left-width: 6px;
     }
 
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-right {
+    .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-right::before {
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t1e7d5903-4d28-40f6-9f95-272061ca296f.place-right::after {
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -5694,7 +5694,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -5703,19 +5703,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       dangerouslySetInnerHTML={
                         Object {
                           "__html": "
-  	.tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae {
+  	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-top {
+  	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-top::before {
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-top::after {
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -5726,13 +5726,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-top-width: 6px;
     }
 
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-bottom {
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-bottom::before {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-bottom::after {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -5743,13 +5743,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-bottom-width: 6px;
     }
 
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-left {
+    .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-left::before {
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-left::after {
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -5760,13 +5760,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-left-width: 6px;
     }
 
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-right {
+    .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-right::before {
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tf6b2c0e4-a2e2-410e-9d3f-3a51b53e98ae.place-right::after {
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -7738,7 +7738,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip tcebb3817-eaa2-428b-b80e-b8d04f442b15 place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -7747,19 +7747,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       dangerouslySetInnerHTML={
                         Object {
                           "__html": "
-  	.tcebb3817-eaa2-428b-b80e-b8d04f442b15 {
+  	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-top {
+  	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-top::before {
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-top::after {
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -7770,13 +7770,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-top-width: 6px;
     }
 
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-bottom {
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-bottom::before {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-bottom::after {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -7787,13 +7787,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-bottom-width: 6px;
     }
 
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-left {
+    .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-left::before {
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-left::after {
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -7804,13 +7804,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-left-width: 6px;
     }
 
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-right {
+    .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-right::before {
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tcebb3817-eaa2-428b-b80e-b8d04f442b15.place-right::after {
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -9624,7 +9624,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip t614b83b1-9752-4588-b1b1-d94cebb1cd48 place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -9633,19 +9633,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       dangerouslySetInnerHTML={
                         Object {
                           "__html": "
-  	.t614b83b1-9752-4588-b1b1-d94cebb1cd48 {
+  	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-top {
+  	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-top::before {
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
         border-top: 8px solid transparent;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-top::after {
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -9656,13 +9656,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-top-width: 6px;
     }
 
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-bottom {
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-bottom::before {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-bottom::after {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -9673,13 +9673,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-bottom-width: 6px;
     }
 
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-left {
+    .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-left::before {
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
         border-left: 8px solid transparent;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-left::after {
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -9690,13 +9690,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-left-width: 6px;
     }
 
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-right {
+    .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-right::before {
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
         border-right: 8px solid transparent;
     }
-    .t614b83b1-9752-4588-b1b1-d94cebb1cd48.place-right::after {
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
@@ -11519,7 +11519,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip tf5365bc5-756c-4298-a854-193d921dda8d place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
@@ -11528,19 +11528,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       dangerouslySetInnerHTML={
                         Object {
                           "__html": "
-  	.tf5365bc5-756c-4298-a854-193d921dda8d {
+  	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
   	}
 
-  	.tf5365bc5-756c-4298-a854-193d921dda8d.place-top {
+  	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-top::before {
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
         border-top: 8px solid transparent;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-top::after {
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         bottom: -6px;
@@ -11551,13 +11551,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-top-width: 6px;
     }
 
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-bottom {
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-bottom::before {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
         border-bottom: 8px solid transparent;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-bottom::after {
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
         top: -6px;
@@ -11568,13 +11568,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-bottom-width: 6px;
     }
 
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-left {
+    .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-left::before {
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
         border-left: 8px solid transparent;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-left::after {
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         right: -6px;
@@ -11585,13 +11585,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         border-left-width: 6px;
     }
 
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-right {
+    .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-right::before {
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
         border-right: 8px solid transparent;
     }
-    .tf5365bc5-756c-4298-a854-193d921dda8d.place-right::after {
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
         border-top: 5px solid transparent;
         border-bottom: 5px solid transparent;
         left: -6px;
