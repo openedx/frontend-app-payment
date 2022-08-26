@@ -15,9 +15,7 @@ exports[`CouponForm should render a coupon even if no known benefitType is suppl
     disabled={false}
     type="submit"
   >
-    <span>
-      Remove
-    </span>
+    Remove
   </button>
 </form>
 `;
@@ -36,9 +34,7 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
         className="h6 d-block"
         htmlFor="couponField"
       >
-        <span>
-          Add coupon code (optional)
-        </span>
+        Add coupon code (optional)
       </label>,
       <div
         className="pgn__form-control-decorator-group"
@@ -60,9 +56,7 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
     onClick={[Function]}
     type="submit"
   >
-    <span>
-      Apply
-    </span>
+    Apply
   </button>
 </form>
 `;
@@ -82,9 +76,7 @@ exports[`CouponForm should render a percentage value coupon 1`] = `
     disabled={false}
     type="submit"
   >
-    <span>
-      Remove
-    </span>
+    Remove
   </button>
 </form>
 `;
@@ -97,22 +89,16 @@ exports[`CouponForm should render an absolute value coupon 1`] = `
   <span
     className="text-muted"
   >
-    <span>
-      Coupon COUPONCODE applied for 
-      <span>
-        $10.00
-      </span>
-       off
-    </span>
+    Coupon COUPONCODE applied for 
+    $10.00
+     off
   </span>
   <button
     className="display-inline p-0 pl-3 border-0 btn btn-link"
     disabled={false}
     type="submit"
   >
-    <span>
-      Remove
-    </span>
+    Remove
   </button>
 </form>
 `;

@@ -9,12 +9,13 @@ import { updateQuantityFormSelector } from '../data/selectors';
 
 function UpdateQuantityForm(props) {
   const id = 'code-quantity';
+  const updateQuantityCallback = props.updateQuantity;
 
   /* istanbul ignore next */
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    props.updateQuantity(e.target.elements[id].value);
-  });
+    updateQuantityCallback(e.target.elements[id].value);
+  }, [updateQuantityCallback]);
 
   /* istanbul ignore next */
   const submitState = props.isBasketProcessing ? 'pending' : 'default';
