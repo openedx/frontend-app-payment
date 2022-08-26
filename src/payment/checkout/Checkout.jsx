@@ -26,8 +26,9 @@ class Checkout extends React.Component {
     );
 
     this.props.submitPayment({ method: 'paypal' });
-  }
+  };
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
   handleSubmitApplePay = () => {
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
@@ -38,11 +39,11 @@ class Checkout extends React.Component {
     );
 
     this.props.submitPayment({ method: 'apple-pay' });
-  }
+  };
 
   handleSubmitCybersource = (formData) => {
     this.props.submitPayment({ method: 'cybersource', ...formData });
-  }
+  };
 
   // The payment form does client side validation that happens before
   // the submit handler above is fired. We send the tracking event here
@@ -61,14 +62,14 @@ class Checkout extends React.Component {
         flexMicroformEnabled: true,
       },
     );
-  }
+  };
 
   handleSubmitFreeCheckout = () => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.free_checkout',
       { type: 'click', category: 'checkout' },
     );
-  }
+  };
 
   renderCheckoutOptions() {
     const {

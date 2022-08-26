@@ -10,9 +10,7 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
     <span
       className="sr-only"
     >
-      <span>
-        Shopping cart details are loaded.
-      </span>
+      Shopping cart details are loaded.
     </span>
     <div
       className="basket-section"
@@ -20,14 +18,10 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
       <h5
         aria-level="2"
       >
-        <span>
-          In Your Cart
-        </span>
+        In Your Cart
       </h5>
       <p>
-        <span>
-          Your purchase contains the following:
-        </span>
+        Your purchase contains the following:
       </p>
       <div
         className="row align-items-center mb-3"
@@ -57,9 +51,7 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
           <p
             className="m-0"
           >
-            <span>
-              Verified Certificate
-            </span>
+            Verified Certificate
           </p>
         </div>
       </div>
@@ -74,9 +66,7 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
         aria-level="2"
         id="summary-heading"
       >
-        <span>
-          Summary
-        </span>
+        Summary
       </h5>
        
       <div
@@ -85,14 +75,10 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            Price
-          </span>
+          Price
         </span>
         <span>
-          <span>
-            $464.88
-          </span>
+          $464.88
         </span>
       </div>
       <div
@@ -101,16 +87,12 @@ exports[`<Cart /> renders a basic, one product cart 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            TOTAL
-          </span>
+          TOTAL
         </span>
         <span
           className="text-right"
         >
-          <span>
-            $464.88
-          </span>
+          $464.88
         </span>
       </div>
     </div>
@@ -140,9 +122,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
     <span
       className="sr-only"
     >
-      <span>
-        Shopping cart details are loaded.
-      </span>
+      Shopping cart details are loaded.
     </span>
     <div
       className="basket-section"
@@ -150,14 +130,10 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
       <h5
         aria-level="2"
       >
-        <span>
-          In Your Cart
-        </span>
+        In Your Cart
       </h5>
       <p>
-        <span>
-          Your purchase contains the following:
-        </span>
+        Your purchase contains the following:
       </p>
       <div
         className="row align-items-center mb-3"
@@ -187,9 +163,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
           <p
             className="m-0"
           >
-            <span>
-              Verified Certificate
-            </span>
+            Verified Certificate
           </p>
         </div>
       </div>
@@ -204,9 +178,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
         aria-level="2"
         id="summary-heading"
       >
-        <span>
-          Summary
-        </span>
+        Summary
       </h5>
        
       <div
@@ -215,14 +187,10 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            Price
-          </span>
+          Price
         </span>
         <span>
-          <span>
-            $445.19
-          </span>
+          $445.19
         </span>
       </div>
       <form
@@ -236,9 +204,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
             className="h6 d-block"
             htmlFor="couponField"
           >
-            <span>
-              Add coupon code (optional)
-            </span>
+            Add coupon code (optional)
           </label>
           <input
             aria-describedby=""
@@ -255,9 +221,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
           onClick={[Function]}
           type="submit"
         >
-          <span>
-            Apply
-          </span>
+          Apply
         </button>
       </form>
       <div
@@ -266,16 +230,12 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            TOTAL
-          </span>
+          TOTAL
         </span>
         <span
           className="text-right"
         >
-          <span>
-            $445.19
-          </span>
+          $445.19
         </span>
       </div>
     </div>
@@ -305,9 +265,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
     <span
       className="sr-only"
     >
-      <span>
-        Shopping cart details are loaded.
-      </span>
+      Shopping cart details are loaded.
     </span>
     <div
       className="basket-section"
@@ -315,14 +273,10 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
       <h5
         aria-level="2"
       >
-        <span>
-          In Your Cart
-        </span>
+        In Your Cart
       </h5>
       <p>
-        <span>
-          Your purchase contains the following:
-        </span>
+        Your purchase contains the following:
       </p>
       <div
         className="row align-items-center mb-3"
@@ -352,9 +306,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
           <p
             className="m-0"
           >
-            <span>
-              Verified Certificate
-            </span>
+            Verified Certificate
           </p>
         </div>
       </div>
@@ -368,9 +320,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
           <label
             htmlFor="code-quantity"
           >
-            <span>
-              Quantity
-            </span>
+            Quantity
           </label>
           <div
             className="position-relative"
@@ -399,9 +349,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
                 }
               }
             >
-              <span>
-                Max: 100
-              </span>
+              Max: 100
             </small>
           </div>
         </div>
@@ -417,9 +365,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
             className="d-flex align-items-center justify-content-center"
           >
             <span>
-              <span>
-                Update
-              </span>
+              Update
             </span>
           </span>
         </button>
@@ -435,9 +381,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
         aria-level="2"
         id="summary-heading"
       >
-        <span>
-          Summary
-        </span>
+        Summary
       </h5>
        
       <div
@@ -451,32 +395,24 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
               <th
                 className="font-weight-normal"
               >
-                <span>
-                  Price
-                </span>
+                Price
               </th>
               <th
                 className="font-weight-normal"
               >
-                <span>
-                  Quantity
-                </span>
+                Quantity
               </th>
               <th
                 className="font-weight-normal text-right"
               >
-                <span>
-                  Subtotal
-                </span>
+                Subtotal
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>
-                <span>
-                  $92.77
-                </span>
+                $92.77
               </td>
               <td>
                 1
@@ -484,9 +420,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
               <td
                 className="text-right"
               >
-                <span>
-                  $92.77
-                </span>
+                $92.77
               </td>
             </tr>
           </tbody>
@@ -498,16 +432,12 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            TOTAL
-          </span>
+          TOTAL
         </span>
         <span
           className="text-right"
         >
-          <span>
-            $92.77
-          </span>
+          $92.77
         </span>
       </div>
     </div>
@@ -560,9 +490,7 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
     <span
       className="sr-only"
     >
-      <span>
-        Shopping cart details are loaded.
-      </span>
+      Shopping cart details are loaded.
     </span>
     <div
       className="basket-section"
@@ -570,14 +498,10 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
       <h5
         aria-level="2"
       >
-        <span>
-          In Your Cart
-        </span>
+        In Your Cart
       </h5>
       <p>
-        <span>
-          Your purchase contains the following:
-        </span>
+        Your purchase contains the following:
       </p>
       <div
         className="row align-items-center mb-3"
@@ -607,9 +531,7 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
           <p
             className="m-0"
           >
-            <span>
-              Verified Certificate
-            </span>
+            Verified Certificate
           </p>
         </div>
       </div>
@@ -624,9 +546,7 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
         aria-level="2"
         id="summary-heading"
       >
-        <span>
-          Summary
-        </span>
+        Summary
       </h5>
        
       <div
@@ -635,15 +555,11 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            Price
-          </span>
+          Price
         </span>
         <span>
           <span>
-            <span>
-              MX$1,264
-            </span>
+            MX$1,264
              *
           </span>
         </span>
@@ -654,17 +570,13 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            TOTAL
-          </span>
+          TOTAL
         </span>
         <span
           className="text-right"
         >
           <span>
-            <span>
-              MX$1,264
-            </span>
+            MX$1,264
              *
           </span>
         </span>
@@ -672,13 +584,11 @@ exports[`<Cart /> renders a cart in non USD currency 1`] = `
       <div
         className="text-muted font-italic"
       >
-        <span>
-          * This total contains an approximate conversion. You will be charged 
-          <span>
-            $66.22
-          </span>
-           USD.
-        </span>
+        Array [
+          "* This total contains an approximate conversion. You will be charged ",
+          "$66.22",
+          " USD.",
+        ]
       </div>
     </div>
     <div
@@ -707,9 +617,7 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
     <span
       className="sr-only"
     >
-      <span>
-        Shopping cart details are loaded.
-      </span>
+      Shopping cart details are loaded.
     </span>
     <div
       className="basket-section"
@@ -717,14 +625,10 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
       <h5
         aria-level="2"
       >
-        <span>
-          In Your Cart
-        </span>
+        In Your Cart
       </h5>
       <p>
-        <span>
-          Your purchase contains the following:
-        </span>
+        Your purchase contains the following:
       </p>
       <div
         className="row align-items-center mb-3"
@@ -754,9 +658,7 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
           <p
             className="m-0"
           >
-            <span>
-              Verified Certificate
-            </span>
+            Verified Certificate
           </p>
         </div>
       </div>
@@ -771,9 +673,7 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
         aria-level="2"
         id="summary-heading"
       >
-        <span>
-          Summary
-        </span>
+        Summary
       </h5>
        
       <div
@@ -782,14 +682,10 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            Price
-          </span>
+          Price
         </span>
         <span>
-          <span>
-            $158.87
-          </span>
+          $158.87
         </span>
       </div>
       <div
@@ -801,25 +697,19 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
           <span
             className="flex-grow-1"
           >
-            <span>
-              Discounts applied
-            </span>
+            Discounts applied
           </span>
           <span>
-            <span>
-              $0.00
-            </span>
+            $0.00
           </span>
         </p>
         <p
           className="m-0 text-muted"
         >
-          <span>
-            <span>
-              50%
-            </span>
-             discount provided by Pied Piper.
-          </span>
+          Array [
+            "50%",
+            " discount provided by Pied Piper.",
+          ]
         </p>
       </div>
       <div
@@ -828,16 +718,12 @@ exports[`<Cart /> renders a cart with an offer 1`] = `
         <span
           className="flex-grow-1"
         >
-          <span>
-            TOTAL
-          </span>
+          TOTAL
         </span>
         <span
           className="text-right"
         >
-          <span>
-            $158.87
-          </span>
+          $158.87
         </span>
       </div>
     </div>
@@ -867,9 +753,7 @@ exports[`<Cart /> renders the loading skeleton 1`] = `
     <span
       className="sr-only"
     >
-      <span>
-        Loading, please wait...
-      </span>
+      Loading, please wait...
     </span>
     <div
       className="skeleton py-2 mb-3 w-50"

@@ -60,18 +60,16 @@ function getPaymentToken(microformOptions) {
     if (!window.microform) {
       reject(Error('Microform not initialized'));
     }
-    window.microform.createToken(
-      {
-        expirationMonth: microformOptions.cardExpirationMonth.padStart(2, '0'),
-        expirationYear: microformOptions.cardExpirationYear,
-      }, (err, token) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(token);
-        }
-      },
-    );
+    window.microform.createToken({
+      expirationMonth: microformOptions.cardExpirationMonth.padStart(2, '0'),
+      expirationYear: microformOptions.cardExpirationYear,
+    }, (err, token) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(token);
+      }
+    });
   });
 }
 

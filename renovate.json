@@ -1,14 +1,13 @@
 {
   "extends": [
     "config:base",
-    ":noUnscheduledUpdates",
-    ":semanticCommits"
+    "group:allNonMajor",
+    ":label(dependencies)",
+    ":rebaseStalePrs",
+    ":reviewer(edx-revenue-tasks)",
+    ":semanticCommits",
+    ":timezone(America/New_York)"
   ],
-  "rebaseStalePrs": true,
-  "schedule": [
-    "every weekend"
-  ],
-  "timezone": "America/New_York",
   "packageRules": [
     {
       "matchPackagePatterns": ["@edx"],
