@@ -32,23 +32,19 @@ class StateProvinceFormInput extends React.Component {
   renderField(options, disabled, id, otherProps) {
     if (options.length) {
       return (
-        <>
-          <Field
-            id={id}
-            name="state"
-            component={FormSelect}
-            options={options}
-            required
-            disabled={disabled}
-          />
-        </>
+        <Field
+          id={id}
+          name="state"
+          component={FormSelect}
+          options={options}
+          required
+          disabled={disabled}
+        />
       );
     }
 
     return (
-      <>
-        <Field id="state" name="state" component={FormInput} type="text" disabled={disabled} props={otherProps} />
-      </>
+      <Field id="state" name="state" component={FormInput} type="text" disabled={disabled} props={otherProps} />
     );
   }
 

@@ -10,9 +10,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -26,9 +24,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           <span
             className="sr-only"
           >
-            <span>
-              Shopping cart details are loaded.
-            </span>
+            Shopping cart details are loaded.
           </span>
           <div
             className="basket-section"
@@ -36,14 +32,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
             <h5
               aria-level="2"
             >
-              <span>
-                In Your Cart
-              </span>
+              In Your Cart
             </h5>
             <p>
-              <span>
-                Your purchase contains the following:
-              </span>
+              Your purchase contains the following:
             </p>
             <div
               className="row align-items-center mb-3"
@@ -73,9 +65,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
                 <p
                   className="m-0"
                 >
-                  <span>
-                    Verified Certificate
-                  </span>
+                  Verified Certificate
                 </p>
               </div>
             </div>
@@ -90,9 +80,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               aria-level="2"
               id="summary-heading"
             >
-              <span>
-                Summary
-              </span>
+              Summary
             </h5>
              
             <div
@@ -101,14 +89,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  Price
-                </span>
+                Price
               </span>
               <span>
-                <span>
-                  $103.07
-                </span>
+                $103.07
               </span>
             </div>
             <div
@@ -117,16 +101,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  TOTAL
-                </span>
+                TOTAL
               </span>
               <span
                 className="text-right"
               >
-                <span>
-                  $103.07
-                </span>
+                $103.07
               </span>
             </div>
           </div>
@@ -157,9 +137,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
           onClick={[Function]}
           target="_self"
         >
-          <span>
-            Place Order
-          </span>
+          Place Order
         </a>
       </section>
     </div>
@@ -253,20 +231,18 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             <h6>
               Purchasing just for yourself?
             </h6>,
-            <span>
-              If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
+            Array [
+              "If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner ",
               <a
                 className="pgn__hyperlink default-link standalone-link"
                 href="http://edx.org/about_ze_course"
                 onClick={[Function]}
                 target="_self"
               >
-                <span>
-                  click here to enroll directly
-                </span>
-              </a>
-              .
-            </span>,
+                click here to enroll directly
+              </a>,
+              ".",
+            ],
           ]
         </div>
         <div
@@ -293,9 +269,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -309,9 +283,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           <span
             className="sr-only"
           >
-            <span>
-              Shopping cart details are loaded.
-            </span>
+            Shopping cart details are loaded.
           </span>
           <div
             className="basket-section"
@@ -319,14 +291,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             <h5
               aria-level="2"
             >
-              <span>
-                In Your Cart
-              </span>
+              In Your Cart
             </h5>
             <p>
-              <span>
-                Your purchase contains the following:
-              </span>
+              Your purchase contains the following:
             </p>
             <div
               className="row align-items-center mb-3"
@@ -356,9 +324,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <p
                   className="m-0"
                 >
-                  <span>
-                    Verified Certificate
-                  </span>
+                  Verified Certificate
                 </p>
               </div>
             </div>
@@ -373,9 +339,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               aria-level="2"
               id="summary-heading"
             >
-              <span>
-                Summary
-              </span>
+              Summary
             </h5>
              
             <div
@@ -384,14 +348,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  Price
-                </span>
+                Price
               </span>
               <span>
-                <span>
-                  $413.39
-                </span>
+                $413.39
               </span>
             </div>
             <div
@@ -400,16 +360,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  TOTAL
-                </span>
+                TOTAL
               </span>
               <span
                 className="text-right"
               >
-                <span>
-                  $413.39
-                </span>
+                $413.39
               </span>
             </div>
           </div>
@@ -440,9 +396,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
           <h5
             aria-level="2"
           >
-            <span>
-              Select Payment Method
-            </span>
+            Select Payment Method
           </h5>
           <p
             className="d-flex flex-wrap"
@@ -479,9 +433,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             <h5
               aria-level="2"
             >
-              <span>
-                Card Holder Information
-              </span>
+              Card Holder Information
             </h5>
             <div
               className="row"
@@ -492,9 +444,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="firstName"
                 >
-                  <span>
-                    First Name (required)
-                  </span>
+                  First Name (required)
                 </label>
                 <input
                   autoComplete="given-name"
@@ -518,9 +468,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="lastName"
                 >
-                  <span>
-                    Last Name (required)
-                  </span>
+                  Last Name (required)
                 </label>
                 <input
                   autoComplete="family-name"
@@ -548,9 +496,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="address"
                 >
-                  <span>
-                    Address (required)
-                  </span>
+                  Address (required)
                 </label>
                 <input
                   autoComplete="street-address"
@@ -575,9 +521,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="unit"
                 >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
+                  Suite/Apartment Number
                 </label>
                 <input
                   autoComplete="address-line2"
@@ -605,9 +549,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="city"
                 >
-                  <span>
-                    City (required)
-                  </span>
+                  City (required)
                 </label>
                 <input
                   autoComplete="address-level2"
@@ -632,9 +574,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="country"
                 >
-                  <span>
-                    Country (required)
-                  </span>
+                  Country (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -1928,9 +1868,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   <label
                     htmlFor="state"
                   >
-                    <span>
-                      State/Province
-                    </span>
+                    State/Province
                   </label>,
                   <input
                     autoComplete="address-level1"
@@ -1955,9 +1893,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="postalCode"
                 >
-                  <span>
-                    Zip/Postal Code
-                  </span>
+                  Zip/Postal Code
                 </label>
                 <input
                   autoComplete="postal-code"
@@ -1983,9 +1919,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
             <h5
               aria-level="2"
             >
-              <span>
-                Billing Information
-              </span>
+              Billing Information
             </h5>
             <div
               className="row"
@@ -1998,9 +1932,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Card Number (required)
-                    </span>
+                    Card Number (required)
                   </span>
                   <div
                     id="cardNumber"
@@ -2018,9 +1950,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Security Code (required)
-                    </span>
+                    Security Code (required)
                   </span>
                   <span
                     className="ml-1"
@@ -2029,8 +1959,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 "
-                      data-icon="question-circle"
+                      className="svg-inline--fa fa-circle-question "
+                      data-icon="circle-question"
                       data-prefix="fas"
                       focusable="false"
                       role="img"
@@ -2039,20 +1969,100 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"
                         fill="currentColor"
                         style={Object {}}
                       />
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
-                    <span>
-                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                    </span>
+                    <style
+                      aria-hidden="true"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "
+  	.t00000000-0000-0000-0000-000000000000 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t00000000-0000-0000-0000-000000000000.place-top {
+        margin-top: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
+        margin-top: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-left {
+        margin-left: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-right {
+        margin-left: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  ",
+                        }
+                      }
+                    />
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
                   </div>
                   <div
                     id="securityCode"
@@ -2072,9 +2082,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="cardExpirationMonth"
                 >
-                  <span>
-                    Expiration Month (required)
-                  </span>
+                  Expiration Month (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -2090,9 +2098,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render all c
                 <label
                   htmlFor="cardExpirationYear"
                 >
-                  <span>
-                    Expiration Year (required)
-                  </span>
+                  Expiration Year (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -2137,38 +2143,32 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
       <h5
         className="card-title"
       >
-        <span>
-          Your basket is empty.
-        </span>
+        Your basket is empty.
       </h5>
       <p
         className="card-text"
       >
-        <span>
-          If you attempted to make a purchase, you have not been charged. Return to your 
+        Array [
+          "If you attempted to make a purchase, you have not been charged. Return to your ",
           <a
             className="pgn__hyperlink default-link standalone-link"
             href="http://localhost:18000"
             onClick={[Function]}
             target="_self"
           >
-            <span>
-              dashboard
-            </span>
-          </a>
-           to try again, or 
+            dashboard
+          </a>,
+          " to try again, or ",
           <a
             className="pgn__hyperlink default-link standalone-link"
             href="http://localhost:18000/support"
             onClick={[Function]}
             target="_self"
           >
-            <span>
-              contact edX E-commerce Support
-            </span>
-          </a>
-          .
-        </span>
+            contact edX E-commerce Support
+          </a>,
+          ".",
+        ]
       </p>
     </div>
   </div>
@@ -2185,9 +2185,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -2201,9 +2199,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           <span
             className="sr-only"
           >
-            <span>
-              Loading, please wait...
-            </span>
+            Loading, please wait...
           </span>
           <div
             className="skeleton py-2 mb-3 w-50"
@@ -2265,9 +2261,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
           <h5
             aria-level="2"
           >
-            <span>
-              Select Payment Method
-            </span>
+            Select Payment Method
           </h5>
           <p
             className="d-flex flex-wrap"
@@ -2304,9 +2298,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
             <h5
               aria-level="2"
             >
-              <span>
-                Card Holder Information
-              </span>
+              Card Holder Information
             </h5>
             <div
               className="row"
@@ -2317,9 +2309,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="firstName"
                 >
-                  <span>
-                    First Name (required)
-                  </span>
+                  First Name (required)
                 </label>
                 <input
                   autoComplete="given-name"
@@ -2343,9 +2333,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="lastName"
                 >
-                  <span>
-                    Last Name (required)
-                  </span>
+                  Last Name (required)
                 </label>
                 <input
                   autoComplete="family-name"
@@ -2373,9 +2361,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="address"
                 >
-                  <span>
-                    Address (required)
-                  </span>
+                  Address (required)
                 </label>
                 <input
                   autoComplete="street-address"
@@ -2400,9 +2386,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="unit"
                 >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
+                  Suite/Apartment Number
                 </label>
                 <input
                   autoComplete="address-line2"
@@ -2430,9 +2414,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="city"
                 >
-                  <span>
-                    City (required)
-                  </span>
+                  City (required)
                 </label>
                 <input
                   autoComplete="address-level2"
@@ -2457,9 +2439,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="country"
                 >
-                  <span>
-                    Country (required)
-                  </span>
+                  Country (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -3753,9 +3733,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   <label
                     htmlFor="state"
                   >
-                    <span>
-                      State/Province
-                    </span>
+                    State/Province
                   </label>,
                   <input
                     autoComplete="address-level1"
@@ -3780,9 +3758,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="postalCode"
                 >
-                  <span>
-                    Zip/Postal Code
-                  </span>
+                  Zip/Postal Code
                 </label>
                 <input
                   autoComplete="postal-code"
@@ -3808,9 +3784,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
             <h5
               aria-level="2"
             >
-              <span>
-                Billing Information
-              </span>
+              Billing Information
             </h5>
             <div
               className="row"
@@ -3823,9 +3797,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Card Number (required)
-                    </span>
+                    Card Number (required)
                   </span>
                   <div
                     id="cardNumber"
@@ -3843,9 +3815,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Security Code (required)
-                    </span>
+                    Security Code (required)
                   </span>
                   <span
                     className="ml-1"
@@ -3854,8 +3824,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 "
-                      data-icon="question-circle"
+                      className="svg-inline--fa fa-circle-question "
+                      data-icon="circle-question"
                       data-prefix="fas"
                       focusable="false"
                       role="img"
@@ -3864,20 +3834,100 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"
                         fill="currentColor"
                         style={Object {}}
                       />
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
-                    <span>
-                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                    </span>
+                    <style
+                      aria-hidden="true"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "
+  	.t00000000-0000-0000-0000-000000000000 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t00000000-0000-0000-0000-000000000000.place-top {
+        margin-top: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
+        margin-top: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-left {
+        margin-left: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-right {
+        margin-left: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  ",
+                        }
+                      }
+                    />
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
                   </div>
                   <div
                     id="securityCode"
@@ -3897,9 +3947,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="cardExpirationMonth"
                 >
-                  <span>
-                    Expiration Month (required)
-                  </span>
+                  Expiration Month (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -3915,9 +3963,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
                 <label
                   htmlFor="cardExpirationYear"
                 >
-                  <span>
-                    Expiration Year (required)
-                  </span>
+                  Expiration Year (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -3959,9 +4005,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -3975,9 +4019,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <span
             className="sr-only"
           >
-            <span>
-              Shopping cart details are loaded.
-            </span>
+            Shopping cart details are loaded.
           </span>
           <div
             className="basket-section"
@@ -3985,14 +4027,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                In Your Cart
-              </span>
+              In Your Cart
             </h5>
             <p>
-              <span>
-                Your purchase contains the following:
-              </span>
+              Your purchase contains the following:
             </p>
             <div
               className="row align-items-center mb-3"
@@ -4022,9 +4060,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <p
                   className="m-0"
                 >
-                  <span>
-                    Verified Certificate
-                  </span>
+                  Verified Certificate
                 </p>
               </div>
             </div>
@@ -4039,9 +4075,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               aria-level="2"
               id="summary-heading"
             >
-              <span>
-                Summary
-              </span>
+              Summary
             </h5>
              
             <div
@@ -4050,14 +4084,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  Price
-                </span>
+                Price
               </span>
               <span>
-                <span>
-                  $464.88
-                </span>
+                $464.88
               </span>
             </div>
             <div
@@ -4066,16 +4096,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  TOTAL
-                </span>
+                TOTAL
               </span>
               <span
                 className="text-right"
               >
-                <span>
-                  $464.88
-                </span>
+                $464.88
               </span>
             </div>
           </div>
@@ -4106,9 +4132,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <h5
             aria-level="2"
           >
-            <span>
-              Select Payment Method
-            </span>
+            Select Payment Method
           </h5>
           <p
             className="d-flex flex-wrap"
@@ -4145,9 +4169,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Card Holder Information
-              </span>
+              Card Holder Information
             </h5>
             <div
               className="row"
@@ -4158,9 +4180,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="firstName"
                 >
-                  <span>
-                    First Name (required)
-                  </span>
+                  First Name (required)
                 </label>
                 <input
                   autoComplete="given-name"
@@ -4184,9 +4204,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="lastName"
                 >
-                  <span>
-                    Last Name (required)
-                  </span>
+                  Last Name (required)
                 </label>
                 <input
                   autoComplete="family-name"
@@ -4214,9 +4232,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="address"
                 >
-                  <span>
-                    Address (required)
-                  </span>
+                  Address (required)
                 </label>
                 <input
                   autoComplete="street-address"
@@ -4241,9 +4257,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="unit"
                 >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
+                  Suite/Apartment Number
                 </label>
                 <input
                   autoComplete="address-line2"
@@ -4271,9 +4285,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="city"
                 >
-                  <span>
-                    City (required)
-                  </span>
+                  City (required)
                 </label>
                 <input
                   autoComplete="address-level2"
@@ -4298,9 +4310,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="country"
                 >
-                  <span>
-                    Country (required)
-                  </span>
+                  Country (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -5594,9 +5604,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <label
                     htmlFor="state"
                   >
-                    <span>
-                      State/Province
-                    </span>
+                    State/Province
                   </label>,
                   <input
                     autoComplete="address-level1"
@@ -5621,9 +5629,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="postalCode"
                 >
-                  <span>
-                    Zip/Postal Code
-                  </span>
+                  Zip/Postal Code
                 </label>
                 <input
                   autoComplete="postal-code"
@@ -5649,9 +5655,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Billing Information
-              </span>
+              Billing Information
             </h5>
             <div
               className="row"
@@ -5664,9 +5668,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Card Number (required)
-                    </span>
+                    Card Number (required)
                   </span>
                   <div
                     id="cardNumber"
@@ -5684,9 +5686,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Security Code (required)
-                    </span>
+                    Security Code (required)
                   </span>
                   <span
                     className="ml-1"
@@ -5695,8 +5695,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 "
-                      data-icon="question-circle"
+                      className="svg-inline--fa fa-circle-question "
+                      data-icon="circle-question"
                       data-prefix="fas"
                       focusable="false"
                       role="img"
@@ -5705,20 +5705,100 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"
                         fill="currentColor"
                         style={Object {}}
                       />
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
-                    <span>
-                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                    </span>
+                    <style
+                      aria-hidden="true"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "
+  	.t00000000-0000-0000-0000-000000000000 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t00000000-0000-0000-0000-000000000000.place-top {
+        margin-top: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
+        margin-top: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-left {
+        margin-left: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-right {
+        margin-left: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  ",
+                        }
+                      }
+                    />
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
                   </div>
                   <div
                     id="securityCode"
@@ -5738,9 +5818,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationMonth"
                 >
-                  <span>
-                    Expiration Month (required)
-                  </span>
+                  Expiration Month (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -5756,9 +5834,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationYear"
                 >
-                  <span>
-                    Expiration Year (required)
-                  </span>
+                  Expiration Year (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -5800,9 +5876,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -5816,9 +5890,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <span
             className="sr-only"
           >
-            <span>
-              Shopping cart details are loaded.
-            </span>
+            Shopping cart details are loaded.
           </span>
           <div
             className="basket-section"
@@ -5826,14 +5898,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                In Your Cart
-              </span>
+              In Your Cart
             </h5>
             <p>
-              <span>
-                Your purchase contains the following:
-              </span>
+              Your purchase contains the following:
             </p>
             <div
               className="row align-items-center mb-3"
@@ -5863,9 +5931,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <p
                   className="m-0"
                 >
-                  <span>
-                    Verified Certificate
-                  </span>
+                  Verified Certificate
                 </p>
               </div>
             </div>
@@ -5879,9 +5945,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="code-quantity"
                 >
-                  <span>
-                    Quantity
-                  </span>
+                  Quantity
                 </label>
                 <div
                   className="position-relative"
@@ -5910,9 +5974,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       }
                     }
                   >
-                    <span>
-                      Max: 100
-                    </span>
+                    Max: 100
                   </small>
                 </div>
               </div>
@@ -5928,9 +5990,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   className="d-flex align-items-center justify-content-center"
                 >
                   <span>
-                    <span>
-                      Update
-                    </span>
+                    Update
                   </span>
                 </span>
               </button>
@@ -5946,9 +6006,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               aria-level="2"
               id="summary-heading"
             >
-              <span>
-                Summary
-              </span>
+              Summary
             </h5>
              
             <div
@@ -5962,32 +6020,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     <th
                       className="font-weight-normal"
                     >
-                      <span>
-                        Price
-                      </span>
+                      Price
                     </th>
                     <th
                       className="font-weight-normal"
                     >
-                      <span>
-                        Quantity
-                      </span>
+                      Quantity
                     </th>
                     <th
                       className="font-weight-normal text-right"
                     >
-                      <span>
-                        Subtotal
-                      </span>
+                      Subtotal
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>
-                      <span>
-                        $66.22
-                      </span>
+                      $66.22
                     </td>
                     <td>
                       1
@@ -5995,9 +6045,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     <td
                       className="text-right"
                     >
-                      <span>
-                        $66.22
-                      </span>
+                      $66.22
                     </td>
                   </tr>
                 </tbody>
@@ -6009,16 +6057,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  TOTAL
-                </span>
+                TOTAL
               </span>
               <span
                 className="text-right"
               >
-                <span>
-                  $66.22
-                </span>
+                $66.22
               </span>
             </div>
           </div>
@@ -6072,9 +6116,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <h5
             aria-level="2"
           >
-            <span>
-              Select Payment Method
-            </span>
+            Select Payment Method
           </h5>
           <p
             className="d-flex flex-wrap"
@@ -6111,9 +6153,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Card Holder Information
-              </span>
+              Card Holder Information
             </h5>
             <div
               className="row"
@@ -6124,9 +6164,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="firstName"
                 >
-                  <span>
-                    First Name (required)
-                  </span>
+                  First Name (required)
                 </label>
                 <input
                   autoComplete="given-name"
@@ -6150,9 +6188,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="lastName"
                 >
-                  <span>
-                    Last Name (required)
-                  </span>
+                  Last Name (required)
                 </label>
                 <input
                   autoComplete="family-name"
@@ -6180,9 +6216,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="organization"
                 >
-                  <span>
-                    Organization (required)
-                  </span>
+                  Organization (required)
                 </label>
                 <input
                   autoComplete="organization"
@@ -6210,9 +6244,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="address"
                 >
-                  <span>
-                    Address (required)
-                  </span>
+                  Address (required)
                 </label>
                 <input
                   autoComplete="street-address"
@@ -6237,9 +6269,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="unit"
                 >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
+                  Suite/Apartment Number
                 </label>
                 <input
                   autoComplete="address-line2"
@@ -6267,9 +6297,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="city"
                 >
-                  <span>
-                    City (required)
-                  </span>
+                  City (required)
                 </label>
                 <input
                   autoComplete="address-level2"
@@ -6294,9 +6322,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="country"
                 >
-                  <span>
-                    Country (required)
-                  </span>
+                  Country (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -7590,9 +7616,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <label
                     htmlFor="state"
                   >
-                    <span>
-                      State/Province
-                    </span>
+                    State/Province
                   </label>,
                   <input
                     autoComplete="address-level1"
@@ -7617,9 +7641,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="postalCode"
                 >
-                  <span>
-                    Zip/Postal Code
-                  </span>
+                  Zip/Postal Code
                 </label>
                 <input
                   autoComplete="postal-code"
@@ -7666,9 +7688,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   className="mb-0"
                   htmlFor="purchasedForOrganization"
                 >
-                  <span>
-                    I am purchasing on behalf of my employer or other professional organization
-                  </span>
+                  I am purchasing on behalf of my employer or other professional organization
                 </label>
               </div>
             </div>
@@ -7679,9 +7699,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Billing Information
-              </span>
+              Billing Information
             </h5>
             <div
               className="row"
@@ -7694,9 +7712,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Card Number (required)
-                    </span>
+                    Card Number (required)
                   </span>
                   <div
                     id="cardNumber"
@@ -7714,9 +7730,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Security Code (required)
-                    </span>
+                    Security Code (required)
                   </span>
                   <span
                     className="ml-1"
@@ -7725,8 +7739,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 "
-                      data-icon="question-circle"
+                      className="svg-inline--fa fa-circle-question "
+                      data-icon="circle-question"
                       data-prefix="fas"
                       focusable="false"
                       role="img"
@@ -7735,20 +7749,100 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"
                         fill="currentColor"
                         style={Object {}}
                       />
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
-                    <span>
-                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                    </span>
+                    <style
+                      aria-hidden="true"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "
+  	.t00000000-0000-0000-0000-000000000000 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t00000000-0000-0000-0000-000000000000.place-top {
+        margin-top: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
+        margin-top: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-left {
+        margin-left: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-right {
+        margin-left: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  ",
+                        }
+                      }
+                    />
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
                   </div>
                   <div
                     id="securityCode"
@@ -7768,9 +7862,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationMonth"
                 >
-                  <span>
-                    Expiration Month (required)
-                  </span>
+                  Expiration Month (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -7786,9 +7878,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationYear"
                 >
-                  <span>
-                    Expiration Year (required)
-                  </span>
+                  Expiration Year (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -7830,9 +7920,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -7846,9 +7934,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <span
             className="sr-only"
           >
-            <span>
-              Shopping cart details are loaded.
-            </span>
+            Shopping cart details are loaded.
           </span>
           <div
             className="basket-section"
@@ -7856,14 +7942,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                In Your Cart
-              </span>
+              In Your Cart
             </h5>
             <p>
-              <span>
-                Your purchase contains the following:
-              </span>
+              Your purchase contains the following:
             </p>
             <div
               className="row align-items-center mb-3"
@@ -7893,9 +7975,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <p
                   className="m-0"
                 >
-                  <span>
-                    Verified Certificate
-                  </span>
+                  Verified Certificate
                 </p>
               </div>
             </div>
@@ -7910,9 +7990,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               aria-level="2"
               id="summary-heading"
             >
-              <span>
-                Summary
-              </span>
+              Summary
             </h5>
              
             <div
@@ -7921,15 +7999,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  Price
-                </span>
+                Price
               </span>
               <span>
                 <span>
-                  <span>
-                    MX$8,500
-                  </span>
+                  MX$8,500
                    *
                 </span>
               </span>
@@ -7940,17 +8014,13 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  TOTAL
-                </span>
+                TOTAL
               </span>
               <span
                 className="text-right"
               >
                 <span>
-                  <span>
-                    MX$8,500
-                  </span>
+                  MX$8,500
                    *
                 </span>
               </span>
@@ -7958,13 +8028,11 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <div
               className="text-muted font-italic"
             >
-              <span>
-                * This total contains an approximate conversion. You will be charged 
-                <span>
-                  $445.19
-                </span>
-                 USD.
-              </span>
+              Array [
+                "* This total contains an approximate conversion. You will be charged ",
+                "$445.19",
+                " USD.",
+              ]
             </div>
           </div>
           <div
@@ -7994,9 +8062,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <h5
             aria-level="2"
           >
-            <span>
-              Select Payment Method
-            </span>
+            Select Payment Method
           </h5>
           <p
             className="d-flex flex-wrap"
@@ -8033,9 +8099,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Card Holder Information
-              </span>
+              Card Holder Information
             </h5>
             <div
               className="row"
@@ -8046,9 +8110,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="firstName"
                 >
-                  <span>
-                    First Name (required)
-                  </span>
+                  First Name (required)
                 </label>
                 <input
                   autoComplete="given-name"
@@ -8072,9 +8134,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="lastName"
                 >
-                  <span>
-                    Last Name (required)
-                  </span>
+                  Last Name (required)
                 </label>
                 <input
                   autoComplete="family-name"
@@ -8102,9 +8162,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="address"
                 >
-                  <span>
-                    Address (required)
-                  </span>
+                  Address (required)
                 </label>
                 <input
                   autoComplete="street-address"
@@ -8129,9 +8187,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="unit"
                 >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
+                  Suite/Apartment Number
                 </label>
                 <input
                   autoComplete="address-line2"
@@ -8159,9 +8215,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="city"
                 >
-                  <span>
-                    City (required)
-                  </span>
+                  City (required)
                 </label>
                 <input
                   autoComplete="address-level2"
@@ -8186,9 +8240,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="country"
                 >
-                  <span>
-                    Country (required)
-                  </span>
+                  Country (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -9482,9 +9534,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <label
                     htmlFor="state"
                   >
-                    <span>
-                      State/Province
-                    </span>
+                    State/Province
                   </label>,
                   <input
                     autoComplete="address-level1"
@@ -9509,9 +9559,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="postalCode"
                 >
-                  <span>
-                    Zip/Postal Code
-                  </span>
+                  Zip/Postal Code
                 </label>
                 <input
                   autoComplete="postal-code"
@@ -9537,9 +9585,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Billing Information
-              </span>
+              Billing Information
             </h5>
             <div
               className="row"
@@ -9552,9 +9598,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Card Number (required)
-                    </span>
+                    Card Number (required)
                   </span>
                   <div
                     id="cardNumber"
@@ -9572,9 +9616,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Security Code (required)
-                    </span>
+                    Security Code (required)
                   </span>
                   <span
                     className="ml-1"
@@ -9583,8 +9625,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 "
-                      data-icon="question-circle"
+                      className="svg-inline--fa fa-circle-question "
+                      data-icon="circle-question"
                       data-prefix="fas"
                       focusable="false"
                       role="img"
@@ -9593,20 +9635,100 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"
                         fill="currentColor"
                         style={Object {}}
                       />
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
-                    <span>
-                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                    </span>
+                    <style
+                      aria-hidden="true"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "
+  	.t00000000-0000-0000-0000-000000000000 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t00000000-0000-0000-0000-000000000000.place-top {
+        margin-top: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
+        margin-top: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-left {
+        margin-left: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-right {
+        margin-left: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  ",
+                        }
+                      }
+                    />
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
                   </div>
                   <div
                     id="securityCode"
@@ -9626,9 +9748,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationMonth"
                 >
-                  <span>
-                    Expiration Month (required)
-                  </span>
+                  Expiration Month (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -9644,9 +9764,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationYear"
                 >
-                  <span>
-                    Expiration Year (required)
-                  </span>
+                  Expiration Year (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -9688,9 +9806,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
     <h1
       className="sr-only"
     >
-      <span>
-        Payment
-      </span>
+      Payment
     </h1>
     <div
       className="col-md-5 pr-md-5 col-basket-summary"
@@ -9704,9 +9820,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <span
             className="sr-only"
           >
-            <span>
-              Shopping cart details are loaded.
-            </span>
+            Shopping cart details are loaded.
           </span>
           <div
             className="basket-section"
@@ -9714,14 +9828,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                In Your Cart
-              </span>
+              In Your Cart
             </h5>
             <p>
-              <span>
-                Your purchase contains the following:
-              </span>
+              Your purchase contains the following:
             </p>
             <div
               className="row align-items-center mb-3"
@@ -9751,9 +9861,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <p
                   className="m-0"
                 >
-                  <span>
-                    Verified Certificate
-                  </span>
+                  Verified Certificate
                 </p>
               </div>
             </div>
@@ -9768,9 +9876,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               aria-level="2"
               id="summary-heading"
             >
-              <span>
-                Summary
-              </span>
+              Summary
             </h5>
              
             <div
@@ -9779,14 +9885,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  Price
-                </span>
+                Price
               </span>
               <span>
-                <span>
-                  $158.87
-                </span>
+                $158.87
               </span>
             </div>
             <div
@@ -9798,25 +9900,19 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <span
                   className="flex-grow-1"
                 >
-                  <span>
-                    Discounts applied
-                  </span>
+                  Discounts applied
                 </span>
                 <span>
-                  <span>
-                    $0.00
-                  </span>
+                  $0.00
                 </span>
               </p>
               <p
                 className="m-0 text-muted"
               >
-                <span>
-                  <span>
-                    50%
-                  </span>
-                   discount provided by Pied Piper.
-                </span>
+                Array [
+                  "50%",
+                  " discount provided by Pied Piper.",
+                ]
               </p>
             </div>
             <div
@@ -9825,16 +9921,12 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <span
                 className="flex-grow-1"
               >
-                <span>
-                  TOTAL
-                </span>
+                TOTAL
               </span>
               <span
                 className="text-right"
               >
-                <span>
-                  $158.87
-                </span>
+                $158.87
               </span>
             </div>
           </div>
@@ -9865,9 +9957,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <h5
             aria-level="2"
           >
-            <span>
-              Select Payment Method
-            </span>
+            Select Payment Method
           </h5>
           <p
             className="d-flex flex-wrap"
@@ -9904,9 +9994,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Card Holder Information
-              </span>
+              Card Holder Information
             </h5>
             <div
               className="row"
@@ -9917,9 +10005,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="firstName"
                 >
-                  <span>
-                    First Name (required)
-                  </span>
+                  First Name (required)
                 </label>
                 <input
                   autoComplete="given-name"
@@ -9943,9 +10029,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="lastName"
                 >
-                  <span>
-                    Last Name (required)
-                  </span>
+                  Last Name (required)
                 </label>
                 <input
                   autoComplete="family-name"
@@ -9973,9 +10057,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="address"
                 >
-                  <span>
-                    Address (required)
-                  </span>
+                  Address (required)
                 </label>
                 <input
                   autoComplete="street-address"
@@ -10000,9 +10082,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="unit"
                 >
-                  <span>
-                    Suite/Apartment Number
-                  </span>
+                  Suite/Apartment Number
                 </label>
                 <input
                   autoComplete="address-line2"
@@ -10030,9 +10110,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="city"
                 >
-                  <span>
-                    City (required)
-                  </span>
+                  City (required)
                 </label>
                 <input
                   autoComplete="address-level2"
@@ -10057,9 +10135,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="country"
                 >
-                  <span>
-                    Country (required)
-                  </span>
+                  Country (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -11353,9 +11429,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <label
                     htmlFor="state"
                   >
-                    <span>
-                      State/Province
-                    </span>
+                    State/Province
                   </label>,
                   <input
                     autoComplete="address-level1"
@@ -11380,9 +11454,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="postalCode"
                 >
-                  <span>
-                    Zip/Postal Code
-                  </span>
+                  Zip/Postal Code
                 </label>
                 <input
                   autoComplete="postal-code"
@@ -11408,9 +11480,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <h5
               aria-level="2"
             >
-              <span>
-                Billing Information
-              </span>
+              Billing Information
             </h5>
             <div
               className="row"
@@ -11423,9 +11493,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Card Number (required)
-                    </span>
+                    Card Number (required)
                   </span>
                   <div
                     id="cardNumber"
@@ -11443,9 +11511,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     aria-hidden={true}
                     className="microform-label"
                   >
-                    <span>
-                      Security Code (required)
-                    </span>
+                    Security Code (required)
                   </span>
                   <span
                     className="ml-1"
@@ -11454,8 +11520,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   >
                     <svg
                       aria-hidden="true"
-                      className="svg-inline--fa fa-question-circle fa-w-16 "
-                      data-icon="question-circle"
+                      className="svg-inline--fa fa-circle-question "
+                      data-icon="circle-question"
                       data-prefix="fas"
                       focusable="false"
                       role="img"
@@ -11464,20 +11530,100 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+                        d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 400c-18 0-32-14-32-32s13.1-32 32-32c17.1 0 32 14 32 32S273.1 400 256 400zM325.1 258L280 286V288c0 13-11 24-24 24S232 301 232 288V272c0-8 4-16 12-21l57-34C308 213 312 206 312 198C312 186 301.1 176 289.1 176h-51.1C225.1 176 216 186 216 198c0 13-11 24-24 24s-24-11-24-24C168 159 199 128 237.1 128h51.1C329 128 360 159 360 198C360 222 347 245 325.1 258z"
                         fill="currentColor"
                         style={Object {}}
                       />
                     </svg>
                   </span>
                   <div
-                    className="__react_component_tooltip place-bottom type-dark"
+                    className="__react_component_tooltip t00000000-0000-0000-0000-000000000000 place-bottom type-dark"
                     data-id="tooltip"
                     id="securityCodeHelp"
                   >
-                    <span>
-                      The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
-                    </span>
+                    <style
+                      aria-hidden="true"
+                      dangerouslySetInnerHTML={
+                        Object {
+                          "__html": "
+  	.t00000000-0000-0000-0000-000000000000 {
+	    color: #fff;
+	    background: #222;
+	    border: 1px solid transparent;
+  	}
+
+  	.t00000000-0000-0000-0000-000000000000.place-top {
+        margin-top: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #222;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-bottom {
+        margin-top: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #222;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-left {
+        margin-left: -10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #222;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t00000000-0000-0000-0000-000000000000.place-right {
+        margin-left: 10px;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t00000000-0000-0000-0000-000000000000.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #222;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  ",
+                        }
+                      }
+                    />
+                    The three last digits in the signature area on the back of your card. For American Express, it is the four digits on the front of the card.
                   </div>
                   <div
                     id="securityCode"
@@ -11497,9 +11643,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationMonth"
                 >
-                  <span>
-                    Expiration Month (required)
-                  </span>
+                  Expiration Month (required)
                 </label>
                 <div
                   data-hj-suppress={true}
@@ -11515,9 +11659,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                 <label
                   htmlFor="cardExpirationYear"
                 >
-                  <span>
-                    Expiration Year (required)
-                  </span>
+                  Expiration Year (required)
                 </label>
                 <div
                   data-hj-suppress={true}
