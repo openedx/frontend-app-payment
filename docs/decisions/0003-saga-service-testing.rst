@@ -175,4 +175,4 @@ References
 ----------
 
 * https://redux-saga.js.org/docs/advanced/Testing.html ("Testing the full Saga")
-* https://github.com/edx/frontend-app-payment/blob/master/src/payment/coupon/data/sagas.test.js
+* https://github.com/openedx/frontend-app-payment/blob/master/src/payment/coupon/data/sagas.test.js
