@@ -54,74 +54,74 @@ Here is a walk-through of some of the code as of this writing to help understand
 Frontend:
 ~~~~~~~~~
 
-- `Import Flex Microform <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/public/index.html#L33>`__ (This is where the version can be pinned)
+- `Import Flex Microform <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/public/index.html#L33>`__ (This is where the version can be pinned)
 
 - Request basket (this was not really changed):
 
-  - `Initiated in PaymentPage component <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/PaymentPage.jsx#L55>`__
+  - `Initiated in PaymentPage component <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/PaymentPage.jsx#L55>`__
 
-  - `Implemented as a saga <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L93>`__
+  - `Implemented as a saga <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L93>`__
 
-  - `Backend service <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/service.js#L59>`__
+  - `Backend service <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/service.js#L59>`__
 
 - Request capture key (aka capture context):
 
-  - `Initiated in PaymentPage component <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/PaymentPage.jsx#L56>`__
+  - `Initiated in PaymentPage component <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/PaymentPage.jsx#L56>`__
 
-  - `Implemented as a saga <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L146>`__
+  - `Implemented as a saga <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L146>`__
 
-  - `Backend service <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/service.js#L52>`__
+  - `Backend service <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/service.js#L52>`__
 
-  - `Actions <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/actions.js#L37-L61>`__
+  - `Actions <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/actions.js#L37-L61>`__
 
-  - `Reducers <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/reducers.js#L66-L94>`__
+  - `Reducers <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/reducers.js#L66-L94>`__
 
-  - `Selector <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/selectors.js#L80-L86>`__
+  - `Selector <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/selectors.js#L80-L86>`__
 
-- `Top-level payment form component <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/Checkout.jsx#L133-L142>`__ (can trace up or down the tree from here)
+- `Top-level payment form component <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/Checkout.jsx#L133-L142>`__ (can trace up or down the tree from here)
 
-- `Intialize microform <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/FlexMicroform.jsx#L32-L51>`__
+- `Intialize microform <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/FlexMicroform.jsx#L32-L51>`__
 
-- `Place order button visibility <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/PaymentForm.jsx#L205>`__
+- `Place order button visibility <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/PaymentForm.jsx#L205>`__
 
-- `Card type display <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/CreditCardNumberField.jsx#L19-L28>`__ (and prep for validation)
+- `Card type display <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/CreditCardNumberField.jsx#L19-L28>`__ (and prep for validation)
 
 - Checkout process:
 
-  - `Cybersource checkoutWithToken service hooked up here <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L37>`__
+  - `Cybersource checkoutWithToken service hooked up here <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L37>`__
 
-  - `Payment saga <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L203>`__
+  - `Payment saga <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L203>`__
 
-  - `CheckoutWithToken service <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/payment-methods/cybersource/service.js#L106>`__ (and CC validation)
+  - `CheckoutWithToken service <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/payment-methods/cybersource/service.js#L106>`__ (and CC validation)
 
 - Capture key refresh: warn user at 12min, 13min, refresh key and microform at 14min, the key expires after 15mins
 
-  - `captureKeyStartTimeout call <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L157>`__ (Sends action to start countdown)
+  - `captureKeyStartTimeout call <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L157>`__ (Sends action to start countdown)
 
-  - `Capture key timeout saga <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L117-L144>`__ (Recurses by sending `fetchCaptureKey` action)
+  - `Capture key timeout saga <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/data/sagas.js#L117-L144>`__ (Recurses by sending `fetchCaptureKey` action)
 
-  - `Timeout messages <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/AlertCodeMessages.jsx#L78-L109>`__
+  - `Timeout messages <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/AlertCodeMessages.jsx#L78-L109>`__
 
-  - `Re-init if capture key changed <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/FlexMicroform.jsx#L27>`__
+  - `Re-init if capture key changed <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/FlexMicroform.jsx#L27>`__
 
-  - `Re-create fields <https://github.com/edx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/FlexMicroformField.jsx#L30-L36>`__
+  - `Re-create fields <https://github.com/openedx/frontend-app-payment/blob/a674ea2ca5b803d07eae23614df6483422b7a9cd/src/payment/checkout/payment-form/flex-microform/FlexMicroformField.jsx#L30-L36>`__
 
 Backend:
 ~~~~~~~~
 
-- `CaptureContextApiView <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/basket/views.py#L751>`__
+- `CaptureContextApiView <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/basket/views.py#L751>`__
 
-  - `Actually get the capture context <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L178-L205>`__
+  - `Actually get the capture context <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L178-L205>`__
 
-  - `Unexpired capture context list <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L207-L227>`__ (Needed for handling users opening multiple tabs)
+  - `Unexpired capture context list <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L207-L227>`__ (Needed for handling users opening multiple tabs)
 
-- `CybersourceAuthorizeAPIView <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/views/cybersource.py#L404>`__
+- `CybersourceAuthorizeAPIView <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/views/cybersource.py#L404>`__
 
-  - `Actually authorize the payment <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L674-L809>`__
+  - `Actually authorize the payment <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L674-L809>`__
 
-- `Reverse "approved pending review" <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L618-L672>`__
+- `Reverse "approved pending review" <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/processors/cybersource.py#L618-L672>`__
 
-- `Backend tests <https://github.com/edx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/tests/processors/test_cybersource.py#L199>`__
+- `Backend tests <https://github.com/openedx/ecommerce/blob/bd09c1bc81f92b3775bed8003631dfe73706b79d/ecommerce/extensions/payment/tests/processors/test_cybersource.py#L199>`__
 
   - Processor response test strings can be pulled from read replica and sanitized:
 
