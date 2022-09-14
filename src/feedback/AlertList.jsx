@@ -42,7 +42,7 @@ AlertList.propTypes = {
     code: PropTypes.string,
     userMessage: PropTypes.string,
     fieldName: PropTypes.string,
-    data: PropTypes.shape({}),
+    data: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   })),
   removeMessage: PropTypes.func.isRequired,
   messageCodes: PropTypes.objectOf(PropTypes.oneOfType([

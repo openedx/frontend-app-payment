@@ -28,6 +28,19 @@ class Checkout extends React.Component {
     this.props.submitPayment({ method: 'paypal' });
   };
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  handleSubmitApplePay = () => {
+    // TO DO: after event parity, track data should be
+    // sent only if the payment is processed, not on click
+    // Check for PayPal and Free Basket as well
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      { type: 'click', category: 'checkout', paymentMethod: 'Apple Pay' },
+    );
+
+    this.props.submitPayment({ method: 'apple-pay' });
+  };
+
   handleSubmitCybersource = (formData) => {
     this.props.submitPayment({ method: 'cybersource', ...formData });
   };
@@ -114,7 +127,7 @@ class Checkout extends React.Component {
               isProcessing={payPalIsSubmitting}
             />
 
-            {/* Apple Pay temporarily disabled per REV-927  - https://github.com/edx/frontend-app-payment/pull/256 */}
+            {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
 

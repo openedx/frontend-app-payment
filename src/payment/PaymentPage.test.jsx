@@ -48,6 +48,11 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
   sendPageEvent: jest.fn(),
 }));
 
+// https://github.com/wwayne/react-tooltip/issues/595#issuecomment-638438372
+jest.mock('react-tooltip/node_modules/uuid', () => ({
+  v4: () => '00000000-0000-0000-0000-000000000000',
+}));
+
 const config = getConfig();
 const locale = 'en';
 

@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": false}] */
 const { createConfig } = require('@edx/frontend-build');
 
 module.exports = createConfig('eslint', {
