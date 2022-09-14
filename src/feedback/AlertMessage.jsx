@@ -11,6 +11,7 @@ const severityMap = {
   [MESSAGE_TYPES.WARNING]: ALERT_TYPES.WARNING,
   [MESSAGE_TYPES.ERROR]: ALERT_TYPES.DANGER,
 };
+
 function AlertMessage(props) {
   const {
     id, messageType, userMessage, closeHandler, data,
