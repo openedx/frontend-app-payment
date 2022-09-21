@@ -64,6 +64,24 @@ class Checkout extends React.Component {
     );
   };
 
+  handleSubmitStripe = (formData) => {
+    console.log('[Zebra] handleSubmitStripe called');
+    this.props.submitPayment({ method: 'stripe', ...formData });
+  };
+
+  handleSubmitStripeButtonClick = () => {
+    console.log('[Zebra] stripeEnabled button click');
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Credit Card - Stripe',
+        checkoutType: 'client_side',
+      },
+    );
+  };
+
   handleSubmitFreeCheckout = () => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.free_checkout',
@@ -73,6 +91,7 @@ class Checkout extends React.Component {
 
   renderCheckoutOptions() {
     const {
+      enableStripePaymentProcessor,
       intl,
       isFreeBasket,
       isBasketProcessing,
@@ -86,11 +105,15 @@ class Checkout extends React.Component {
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
+    const stripeEnabled = enableStripePaymentProcessor && loaded;
+    console.log('[Zebra] stripeEnabled? in Checkout.jsx');
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
     // istanbul ignore next
     const cybersourceIsSubmitting = submitting && paymentMethod === 'cybersource';
+    // istanbul ignore next
+    const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
 
     if (isFreeBasket) {
       return (
@@ -132,12 +155,16 @@ class Checkout extends React.Component {
         </div>
 
         <PaymentForm
-          onSubmitPayment={this.handleSubmitCybersource}
-          onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+          onSubmitPayment={
+            stripeEnabled ? this.handleSubmitStripe : this.handleSubmitCybersource
+          }
+          onSubmitButtonClick={
+            stripeEnabled ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
+          }
           disabled={submitting}
           loading={loading}
           loaded={loaded}
-          isProcessing={cybersourceIsSubmitting}
+          isProcessing={stripeEnabled ? stripeIsSubmitting : cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
         />
@@ -168,6 +195,7 @@ Checkout.propTypes = {
   isBasketProcessing: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
+  enableStripePaymentProcessor: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -178,6 +206,7 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
+  enableStripePaymentProcessor: false,
 };
 
 const mapStateToProps = (state) => ({
