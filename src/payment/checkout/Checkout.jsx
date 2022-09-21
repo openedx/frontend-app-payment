@@ -106,7 +106,7 @@ class Checkout extends React.Component {
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
     const stripeEnabled = enableStripePaymentProcessor && loaded;
-    console.log('[Zebra] stripeEnabled? in Checkout.jsx');
+    console.log('[Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
