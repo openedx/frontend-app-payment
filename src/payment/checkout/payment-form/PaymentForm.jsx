@@ -5,13 +5,20 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
+import StripeCardPayment from './StripeCardPayment';
 import getStates from './utils/countryStatesMap';
 import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
+
+const stripePromise = loadStripe("pk_test_51Li2KoIadiFyUl1xvRRiJohVzLNtnWUYNelHjMkzaf59Mq01ZMdsCGKzh9qyRwCIHBVEv0aQPkrvdH3OJ6F6WjSv00hdOx2EMb");
+
+
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
@@ -198,6 +205,16 @@ export class PaymentFormComponent extends React.Component {
       isQuantityUpdating,
     } = this.props;
 
+    //Stripe element config
+    //TODO: Move these to a better home
+    let appearance = {
+      theme: 'stripe',
+    };
+    let options = {
+      clientSecret: this.props.captureKeyId,
+      appearance,
+    };
+
     let submitButtonState = 'default';
     // istanbul ignore if
     if (disabled) { submitButtonState = 'disabled'; }
@@ -205,7 +222,12 @@ export class PaymentFormComponent extends React.Component {
     if (isProcessing) { submitButtonState = 'processing'; }
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
-        <form
+        {options.clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            <StripeCardPayment />
+          </Elements>
+          )}
+        {/* <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
           noValidate
@@ -214,6 +236,9 @@ export class PaymentFormComponent extends React.Component {
             showBulkEnrollmentFields={isBulkOrder}
             disabled={disabled}
           />
+
+          
+          
           <CardDetails
             disabled={disabled}
           />
@@ -251,7 +276,7 @@ export class PaymentFormComponent extends React.Component {
               }
             </div>
           </div>
-        </form>
+        </form> */}
       </ErrorFocusContext.Provider>
     );
   }
