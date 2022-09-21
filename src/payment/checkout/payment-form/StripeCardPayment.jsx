@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   PaymentElement,
   useStripe,
-  useElements
-} from "@stripe/react-stripe-js";
+  useElements,
+} from '@stripe/react-stripe-js';
 
 export default function StripeCardPayment() {
   const stripe = useStripe();
@@ -18,7 +18,7 @@ export default function StripeCardPayment() {
     }
 
     const clientSecret = new URLSearchParams(window.location.search).get(
-        "payment_intent_client_secret"
+      'payment_intent_client_secret',
     );
 
     if (!clientSecret) {
@@ -27,22 +27,21 @@ export default function StripeCardPayment() {
 
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       switch (paymentIntent.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
+        case 'succeeded':
+          setMessage('Payment succeeded!');
           break;
-        case "processing":
-          setMessage("Your payment is processing.");
+        case 'processing':
+          setMessage('Your payment is processing.');
           break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
+        case 'requires_payment_method':
+          setMessage('Your payment was not successful, please try again.');
           break;
         default:
-          setMessage("Something went wrong.");
+          setMessage('Something went wrong.');
           break;
       }
     });
   }, [stripe]);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +59,7 @@ export default function StripeCardPayment() {
       elements,
       confirmParams: {
         // TODO: Change to reciept page
-        return_url: "http://localhost:18000/",
+        return_url: 'http://localhost:18000/',
       },
     });
 
@@ -69,10 +68,10 @@ export default function StripeCardPayment() {
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
+    if (error.type === 'card_error' || error.type === 'validation_error') {
       setMessage(error.message);
     } else {
-      setMessage("An unexpected error occurred.");
+      setMessage('An unexpected error occurred.');
     }
 
     setIsLoading(false);
@@ -81,9 +80,9 @@ export default function StripeCardPayment() {
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
       <PaymentElement id="payment-element" />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
+      <button type="submit" disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? <div className="spinner" id="spinner" /> : 'Pay now' }
         </span>
       </button>
       {/* Show any error or success messages */}
@@ -91,4 +90,3 @@ export default function StripeCardPayment() {
     </form>
   );
 }
-

@@ -5,8 +5,8 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@edx/paragon';
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
@@ -16,9 +16,7 @@ import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
-const stripePromise = loadStripe("pk_test_51Li2KoIadiFyUl1xvRRiJohVzLNtnWUYNelHjMkzaf59Mq01ZMdsCGKzh9qyRwCIHBVEv0aQPkrvdH3OJ6F6WjSv00hdOx2EMb");
-
-
+const stripePromise = loadStripe('pk_test_51Li2KoIadiFyUl1xvRRiJohVzLNtnWUYNelHjMkzaf59Mq01ZMdsCGKzh9qyRwCIHBVEv0aQPkrvdH3OJ6F6WjSv00hdOx2EMb');
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
@@ -205,16 +203,16 @@ export class PaymentFormComponent extends React.Component {
       isQuantityUpdating,
     } = this.props;
 
-    //Stripe element config
-    //TODO: Move these to a better home
-    let appearance = {
+    // Stripe element config
+    // TODO: Move these to a better home
+    const appearance = {
       theme: 'stripe',
     };
-    let options = {
+    const options = {
       clientSecret: this.props.captureKeyId,
       appearance,
     };
-
+    const tempFlag = false;
     let submitButtonState = 'default';
     // istanbul ignore if
     if (disabled) { submitButtonState = 'disabled'; }
@@ -226,8 +224,10 @@ export class PaymentFormComponent extends React.Component {
           <Elements options={options} stripe={stripePromise}>
             <StripeCardPayment />
           </Elements>
-          )}
-        {/* <form
+        )}
+        {/* TODO: Use waffle flag instead */}
+        {tempFlag && (
+        <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
           noValidate
@@ -236,9 +236,6 @@ export class PaymentFormComponent extends React.Component {
             showBulkEnrollmentFields={isBulkOrder}
             disabled={disabled}
           />
-
-          
-          
           <CardDetails
             disabled={disabled}
           />
@@ -276,7 +273,8 @@ export class PaymentFormComponent extends React.Component {
               }
             </div>
           </div>
-        </form> */}
+        </form>
+        )}
       </ErrorFocusContext.Provider>
     );
   }
@@ -292,6 +290,7 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  captureKeyId: PropTypes.string,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -301,6 +300,7 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
+  captureKeyId: null,
 };
 
 const mapStateToProps = (state) => {
