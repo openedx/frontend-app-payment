@@ -16,7 +16,11 @@ import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
+<<<<<<< HEAD
 const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+=======
+const stripePromise = loadStripe('pk_test_51Li2KoIadiFyUl1xvRRiJohVzLNtnWUYNelHjMkzaf59Mq01ZMdsCGKzh9qyRwCIHBVEv0aQPkrvdH3OJ6F6WjSv00hdOx2EMb');
+>>>>>>> 69f54c38 (Added Stripe Elements to Checkout Page)
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
@@ -213,6 +217,10 @@ export class PaymentFormComponent extends React.Component {
       clientSecret: this.props.captureKeyId,
       appearance,
     };
+<<<<<<< HEAD
+=======
+    const tempFlag = false;
+>>>>>>> 69f54c38 (Added Stripe Elements to Checkout Page)
     let submitButtonState = 'default';
     // istanbul ignore if
     if (disabled) { submitButtonState = 'disabled'; }
@@ -227,7 +235,12 @@ export class PaymentFormComponent extends React.Component {
             onSubmitPayment={this.props.onSubmitPayment} */}
           </Elements>
         )}
+<<<<<<< HEAD
         {!stripeEnabled && (
+=======
+        {/* TODO: Use waffle flag instead */}
+        {tempFlag && (
+>>>>>>> 69f54c38 (Added Stripe Elements to Checkout Page)
         <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
@@ -292,7 +305,10 @@ PaymentFormComponent.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
   captureKeyId: PropTypes.string,
+<<<<<<< HEAD
   stripeEnabled: PropTypes.bool,
+=======
+>>>>>>> 69f54c38 (Added Stripe Elements to Checkout Page)
 };
 
 PaymentFormComponent.defaultProps = {
@@ -303,7 +319,10 @@ PaymentFormComponent.defaultProps = {
   isProcessing: false,
   submitErrors: {},
   captureKeyId: null,
+<<<<<<< HEAD
   stripeEnabled: true,
+=======
+>>>>>>> 69f54c38 (Added Stripe Elements to Checkout Page)
 };
 
 const mapStateToProps = (state) => {
