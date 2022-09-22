@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import {
   PaymentElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
 
-export default function StripeCardPayment() {
+export default function StripeCardPayment({ clientSecret }) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -16,10 +17,6 @@ export default function StripeCardPayment() {
     if (!stripe) {
       return;
     }
-
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      'payment_intent_client_secret',
-    );
 
     if (!clientSecret) {
       return;
@@ -41,7 +38,7 @@ export default function StripeCardPayment() {
           break;
       }
     });
-  }, [stripe]);
+  }, [stripe, clientSecret]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,3 +87,11 @@ export default function StripeCardPayment() {
     </form>
   );
 }
+
+StripeCardPayment.propTypes = {
+  clientSecret: PropTypes.string,
+};
+
+StripeCardPayment.defaultProps = {
+  clientSecret: null,
+};

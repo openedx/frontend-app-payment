@@ -3,10 +3,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { mount } from 'enzyme';
-import { SubmissionError } from 'redux-form';
+// import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { Factory } from 'rosie';
-import configureMockStore from 'redux-mock-store';
+// import configureMockStore from 'redux-mock-store';
 
 import { AppContext } from '@edx/frontend-platform/react';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
@@ -17,7 +17,7 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
 
-const mockStore = configureMockStore();
+// const mockStore = configureMockStore();
 
 configureI18n({
   config: {
@@ -152,7 +152,7 @@ describe('<PaymentForm />', () => {
       expect(formValues.organization).toEqual(requiredFields.organization);
     });
   });
-  //TODO: Disabling for now update once we can swap between stripe and cybersource
+  // TODO: Disabling for now update once we can swap between stripe and cybersource
   // describe('onSubmit', () => {
   //   it('throws expected errors', () => {
   //     paymentForm.validateRequiredFields = jest.fn();
@@ -257,5 +257,5 @@ describe('<PaymentForm />', () => {
   //     });
   //     expect(firstNameField.focus).toHaveBeenCalled();
   //   });
-  //});
+  // });
 });

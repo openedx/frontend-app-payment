@@ -311,8 +311,8 @@ describe('<PaymentPage />', () => {
         store.dispatch(fetchBasket.fulfill());
       });
       tree.update();
-      //TODO: Disabling for now update once we can swap between stripe and cybersource
-      //expect(tree).toMatchSnapshot();
+      // TODO: Disabling for now update once we can swap between stripe and cybersource
+      // expect(tree).toMatchSnapshot();
     });
   });
 });

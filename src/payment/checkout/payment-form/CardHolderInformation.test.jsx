@@ -1,18 +1,21 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React from 'react';
-import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
-import { Factory } from 'rosie';
-import { createStore } from 'redux';
+// import React from 'react';
+// import { Provider } from 'react-redux';
+// import { mount } from 'enzyme';
+import {
+  // IntlProvider,
+  configure as configureI18n,
+} from '@edx/frontend-platform/i18n';
+// import { AppContext } from '@edx/frontend-platform/react';
+// import { Factory } from 'rosie';
+// import { createStore } from 'redux';
 
-import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
-import PaymentForm from './PaymentForm';
-import createRootReducer from '../../../data/reducers';
+// import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
+// import PaymentForm from './PaymentForm';
+// import createRootReducer from '../../../data/reducers';
 
 import '../../__factories__/userAccount.factory';
-import { iteratee } from 'lodash';
+// import { iteratee } from 'lodash';
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -47,7 +50,7 @@ configureI18n({
 it('is using stripe', () => {
   expect(null).toEqual(null);
 });
-//TODO: Disabling for now update once we can swap between stripe and cybersource
+// TODO: Disabling for now update once we can swap between stripe and cybersource
 // describe('<CardHolderInformation />', () => {
 //   let store;
 

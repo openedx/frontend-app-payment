@@ -222,7 +222,7 @@ export class PaymentFormComponent extends React.Component {
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         {options.clientSecret && (
           <Elements options={options} stripe={stripePromise}>
-            <StripeCardPayment />
+            <StripeCardPayment clientSecret={options.clientSecret} />
           </Elements>
         )}
         {/* TODO: Use waffle flag instead */}

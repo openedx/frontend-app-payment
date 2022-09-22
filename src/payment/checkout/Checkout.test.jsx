@@ -104,8 +104,8 @@ describe('<Checkout />', () => {
     });
 
     // Apple Pay temporarily disabled per REV-927 - https://github.com/openedx/frontend-app-payment/pull/256
-    
-    //TODO: Disabling for now update once we can swap between stripe and cybersource
+
+    // TODO: Disabling for now update once we can swap between stripe and cybersource
     // it('submits and tracks the payment form', () => {
     //   const formSubmitButton = wrapper.find('form button[type="submit"]').hostNodes();
     //   formSubmitButton.simulate('click');
