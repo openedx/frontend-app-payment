@@ -64,6 +64,25 @@ class Checkout extends React.Component {
     );
   };
 
+  handleSubmitStripe = () => {
+    // TODO: We'll want to submit formData here in the next iteration
+    console.log('[Project Zebra] handleSubmitStripe called');
+    this.props.submitPayment({ method: 'stripe' });
+  };
+
+  handleSubmitStripeButtonClick = () => {
+    console.log('[Project Zebra] handleSubmitStripeButtonClick');
+    sendTrackEvent(
+      'edx.bi.ecommerce.basket.payment_selected',
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Credit Card - Stripe',
+        checkoutType: 'client_side',
+      },
+    );
+  };
+
   handleSubmitFreeCheckout = () => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.free_checkout',
@@ -87,10 +106,16 @@ class Checkout extends React.Component {
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
 
+    // TEMP: temporarily using true instead of enableStripePaymentProcessor to get REV-2799 unblocked
+    const stripeEnabled = true && loaded;
+    console.log('[Project Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
+
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
     // istanbul ignore next
     const cybersourceIsSubmitting = submitting && paymentMethod === 'cybersource';
+    // istanbul ignore next
+    const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
 
     if (isFreeBasket) {
       return (
@@ -132,12 +157,17 @@ class Checkout extends React.Component {
         </div>
 
         <PaymentForm
-          onSubmitPayment={this.handleSubmitCybersource}
-          onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+          onSubmitPayment={
+            stripeEnabled ? this.handleSubmitStripe : this.handleSubmitCybersource
+          }
+          onSubmitButtonClick={
+            stripeEnabled ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
+          }
+          stripeEnabled={stripeEnabled}
           disabled={submitting}
           loading={loading}
           loaded={loaded}
-          isProcessing={cybersourceIsSubmitting}
+          isProcessing={stripeEnabled ? stripeIsSubmitting : cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
         />
