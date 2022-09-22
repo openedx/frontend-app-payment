@@ -233,12 +233,17 @@ class Checkout extends React.Component {
 
         {shouldDisplayCyberSourcePaymentForm && (
         <PaymentForm
-          onSubmitPayment={this.handleSubmitCybersource}
-          onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+          onSubmitPayment={
+            stripeEnabled ? this.handleSubmitStripe : this.handleSubmitCybersource
+          }
+          onSubmitButtonClick={
+            stripeEnabled ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
+          }
+          stripeEnabled={stripeEnabled}
           disabled={submitting}
           loading={loading}
           loaded={loaded}
-          isProcessing={cybersourceIsSubmitting}
+          isProcessing={stripeEnabled ? stripeIsSubmitting : cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
         />
