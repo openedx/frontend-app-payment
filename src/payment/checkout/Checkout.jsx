@@ -163,6 +163,7 @@ class Checkout extends React.Component {
           onSubmitButtonClick={
             stripeEnabled ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
           }
+          stripeEnabled={stripeEnabled}
           disabled={submitting}
           loading={loading}
           loaded={loaded}
