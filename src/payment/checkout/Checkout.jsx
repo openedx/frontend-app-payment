@@ -64,13 +64,14 @@ class Checkout extends React.Component {
     );
   };
 
-  handleSubmitStripe = (formData) => {
-    console.log('[Zebra] handleSubmitStripe called');
-    this.props.submitPayment({ method: 'stripe', ...formData });
+  handleSubmitStripe = () => {
+    // TODO: We'll want to submit formData here in the next iteration
+    console.log('[Project Zebra] handleSubmitStripe called');
+    this.props.submitPayment({ method: 'stripe' });
   };
 
   handleSubmitStripeButtonClick = () => {
-    console.log('[Zebra] stripeEnabled button click');
+    console.log('[Project Zebra] handleSubmitStripeButtonClick');
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
       {
@@ -91,7 +92,6 @@ class Checkout extends React.Component {
 
   renderCheckoutOptions() {
     const {
-      enableStripePaymentProcessor,
       intl,
       isFreeBasket,
       isBasketProcessing,
@@ -105,8 +105,10 @@ class Checkout extends React.Component {
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
-    const stripeEnabled = enableStripePaymentProcessor && loaded;
-    console.log('[Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
+
+    // TEMP: temporarily using true instead of enableStripePaymentProcessor to get REV-2799 unblocked
+    const stripeEnabled = true && loaded;
+    console.log('[Project Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
@@ -195,7 +197,6 @@ Checkout.propTypes = {
   isBasketProcessing: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
-  enableStripePaymentProcessor: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -206,7 +207,6 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
-  enableStripePaymentProcessor: false,
 };
 
 const mapStateToProps = (state) => ({
