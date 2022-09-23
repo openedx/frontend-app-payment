@@ -14,6 +14,8 @@ import { fetchCaptureKey } from '../../data/actions';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -198,12 +200,22 @@ export class PaymentFormComponent extends React.Component {
       isProcessing,
       isBulkOrder,
       isQuantityUpdating,
+      stripeEnabled,
     } = this.props;
 
     const showLoadingButton = loading || isQuantityUpdating || !window.microform;
 
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
+        {stripeEnabled && options.clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            <StripeCardPayment clientSecret={options.clientSecret} />
+            {/* onSubmitButtonClick={this.props.onSubmitButtonClick}
+            onSubmitPayment={this.props.onSubmitPayment} */}
+          </Elements>
+        )}
+
+        {!stripeEnabled && (
         <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
@@ -223,6 +235,7 @@ export class PaymentFormComponent extends React.Component {
             isProcessing={isProcessing}
           />
         </form>
+        )}
       </ErrorFocusContext.Provider>
     );
   }
@@ -248,6 +261,8 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
+  captureKeyId: null,
+  stripeEnabled: true,
 };
 
 const mapStateToProps = (state) => {

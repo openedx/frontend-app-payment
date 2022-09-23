@@ -180,73 +180,24 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
   <div
     className="card"
   >
-    <div
-      className="card-body"
-    >
-      <h5
-        className="card-title"
-      >
-        Your basket is empty.
-      </h5>
-      <p
-        className="card-text"
-      >
-        Array [
-          "If you attempted to make a purchase, you have not been charged. Return to your ",
-          <a
-            className="pgn__hyperlink default-link standalone-link"
-            href="http://localhost:18000"
-            onClick={[Function]}
-            target="_self"
-          >
-            dashboard
-          </a>,
-          " to try again, or ",
-          <a
-            className="pgn__hyperlink default-link standalone-link"
-            href="http://localhost:18000/support"
-            onClick={[Function]}
-            target="_self"
-          >
-            contact edX E-commerce Support
-          </a>,
-          ".",
-        ]
-      </p>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`<PaymentPage /> Renders correctly in various states should render its default (loading) state 1`] = `
-<div
-  className="page__payment container-fluid py-5"
->
-  <div
-    className="row"
-  >
-    <h1
-      className="sr-only"
-    >
-      Payment
-    </h1>
-    <div
-      className="col-md-5 pr-md-5 col-basket-summary"
-    >
-      <section
-        aria-label="Shopping Cart Details"
-        aria-live="polite"
-        aria-relevant="all"
-      >
-        <div>
-          <span
-            className="sr-only"
-          >
-            Loading, please wait...
-          </span>
-          <div
-            className="skeleton py-2 mb-3 w-50"
-          />
+              <div
+                className="col-7"
+              >
+                <h6
+                  aria-level="3"
+                  className="m-0"
+                >
+                  Introduction to Llamass
+                </h6>
+                <p
+                  className="m-0"
+                >
+                  Verified Certificate
+                </p>
+              </div>
+            </div>
+          </div>
+>>>>>>> 10671ee0 (feat: Add Stripe Elements to Checkout Page(disabled Cybersource for now) (#639))
           <div
             className="skeleton py-2 mb-4 mr-4"
           />
@@ -256,19 +207,43 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
             <div
               className="col-5"
             >
+<<<<<<< HEAD
               <div
                 className="skeleton embed-responsive embed-responsive-16by9"
               />
+=======
+              <span
+                className="flex-grow-1"
+              >
+                Price
+              </span>
+              <span>
+                $464.88
+              </span>
+>>>>>>> 10671ee0 (feat: Add Stripe Elements to Checkout Page(disabled Cybersource for now) (#639))
             </div>
             <div
               className="col-7"
             >
+<<<<<<< HEAD
               <div
                 className="skeleton py-2 mb-3 w-50"
               />
               <div
                 className="skeleton py-2 mr-4"
               />
+=======
+              <span
+                className="flex-grow-1"
+              >
+                TOTAL
+              </span>
+              <span
+                className="text-right"
+              >
+                $464.88
+              </span>
+>>>>>>> 10671ee0 (feat: Add Stripe Elements to Checkout Page(disabled Cybersource for now) (#639))
             </div>
           </div>
           <div
@@ -516,6 +491,8 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
           <div
             className="basket-section"
           >
+=======
+>>>>>>> 10671ee0 (feat: Add Stripe Elements to Checkout Page(disabled Cybersource for now) (#639))
             <h5
               aria-level="2"
             >
@@ -6241,6 +6218,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <p>
               Your purchase contains the following:
             </p>
+<<<<<<< HEAD
             <div
               className="row align-items-center mb-3"
             >
