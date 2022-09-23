@@ -5,7 +5,7 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-
+// onSubmitPayment, onSubmitButtonClick
 export default function StripeCardPayment({ clientSecret }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -42,8 +42,7 @@ export default function StripeCardPayment({ clientSecret }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert('Payment Clicked');
-
+    // onSubmitButtonClick();
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -55,8 +54,7 @@ export default function StripeCardPayment({ clientSecret }) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // TODO: Change to reciept page
-        return_url: 'http://localhost:18000/',
+        return_url: process.env.STRIPE_RESPONSE_URL,
       },
     });
 
@@ -90,6 +88,8 @@ export default function StripeCardPayment({ clientSecret }) {
 
 StripeCardPayment.propTypes = {
   clientSecret: PropTypes.string,
+  // onSubmitPayment: PropTypes.func.isRequired,
+  // onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
 StripeCardPayment.defaultProps = {

@@ -16,7 +16,7 @@ import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
-const stripePromise = loadStripe('pk_test_51Li2KoIadiFyUl1xvRRiJohVzLNtnWUYNelHjMkzaf59Mq01ZMdsCGKzh9qyRwCIHBVEv0aQPkrvdH3OJ6F6WjSv00hdOx2EMb');
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
@@ -201,6 +201,7 @@ export class PaymentFormComponent extends React.Component {
       isProcessing,
       isBulkOrder,
       isQuantityUpdating,
+      stripeEnabled,
     } = this.props;
 
     // Stripe element config
@@ -212,7 +213,6 @@ export class PaymentFormComponent extends React.Component {
       clientSecret: this.props.captureKeyId,
       appearance,
     };
-    const tempFlag = false;
     let submitButtonState = 'default';
     // istanbul ignore if
     if (disabled) { submitButtonState = 'disabled'; }
@@ -220,13 +220,14 @@ export class PaymentFormComponent extends React.Component {
     if (isProcessing) { submitButtonState = 'processing'; }
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
-        {options.clientSecret && (
+        {stripeEnabled && options.clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <StripeCardPayment clientSecret={options.clientSecret} />
+            {/* onSubmitButtonClick={this.props.onSubmitButtonClick}
+            onSubmitPayment={this.props.onSubmitPayment} */}
           </Elements>
         )}
-        {/* TODO: Use waffle flag instead */}
-        {tempFlag && (
+        {!stripeEnabled && (
         <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
@@ -291,6 +292,7 @@ PaymentFormComponent.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
   captureKeyId: PropTypes.string,
+  stripeEnabled: PropTypes.bool,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -301,6 +303,7 @@ PaymentFormComponent.defaultProps = {
   isProcessing: false,
   submitErrors: {},
   captureKeyId: null,
+  stripeEnabled: true,
 };
 
 const mapStateToProps = (state) => {

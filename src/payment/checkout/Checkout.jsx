@@ -107,7 +107,7 @@ class Checkout extends React.Component {
     const isQuantityUpdating = isBasketProcessing && loaded;
 
     // TEMP: temporarily using true instead of enableStripePaymentProcessor to get REV-2799 unblocked
-    const stripeEnabled = true && loaded;
+    const stripeEnabled = true;// && loaded;
     console.log('[Project Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
 
     // istanbul ignore next
