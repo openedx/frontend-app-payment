@@ -92,12 +92,6 @@ StripeCardPayment.propTypes = {
   // onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
-StripeCardPayment.propTypes = {
-  clientSecret: PropTypes.string,
-  // onSubmitPayment: PropTypes.func.isRequired,
-  // onSubmitButtonClick: PropTypes.func.isRequired,
-};
-
 StripeCardPayment.defaultProps = {
   clientSecret: null,
 };

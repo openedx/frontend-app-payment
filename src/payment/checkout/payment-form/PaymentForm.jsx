@@ -16,11 +16,7 @@ import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
-<<<<<<< HEAD
 const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
-=======
-const stripePromise = loadStripe('pk_test_51Li2KoIadiFyUl1xvRRiJohVzLNtnWUYNelHjMkzaf59Mq01ZMdsCGKzh9qyRwCIHBVEv0aQPkrvdH3OJ6F6WjSv00hdOx2EMb');
->>>>>>> 69f54c38 (Added Stripe Elements to Checkout Page)
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
