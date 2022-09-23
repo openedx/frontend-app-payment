@@ -91,6 +91,7 @@ class Checkout extends React.Component {
   };
 
   renderCheckoutOptions() {
+    console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
       intl,
       isFreeBasket,
