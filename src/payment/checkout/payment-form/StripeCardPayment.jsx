@@ -5,7 +5,6 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-import { getConfig } from '@edx/frontend-platform';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
@@ -60,7 +59,8 @@ export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder 
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: getConfig().STRIPE_RESPONSE_URL,
+        // TODO: add STRIPE_RESPONSE_URL to frontend-platform so we can use it with getConfig()
+        return_url: process.env.STRIPE_RESPONSE_URL,
         // TODO: refactor and use a checkout function (like checkoutWithToken)
         // to handle the formData in a non vanilla JS way
         payment_method_data: {
