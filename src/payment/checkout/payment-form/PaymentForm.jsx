@@ -218,6 +218,7 @@ export class PaymentFormComponent extends React.Component {
     if (disabled) { submitButtonState = 'disabled'; }
     // istanbul ignore if
     if (isProcessing) { submitButtonState = 'processing'; }
+
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         {stripeEnabled && options.clientSecret && (
