@@ -222,7 +222,7 @@ export class PaymentFormComponent extends React.Component {
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         {stripeEnabled && options.clientSecret && (
           <Elements options={options} stripe={stripePromise}>
-            <StripeCardPayment clientSecret={options.clientSecret} />
+            <StripeCardPayment clientSecret={options.clientSecret} disabled={disabled} isBulkOrder={isBulkOrder} />
             {/* onSubmitButtonClick={this.props.onSubmitButtonClick}
             onSubmitPayment={this.props.onSubmitPayment} */}
           </Elements>
