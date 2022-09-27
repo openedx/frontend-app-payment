@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   PaymentElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
+
+import CardHolderInformation from './CardHolderInformation';
 // onSubmitPayment, onSubmitButtonClick
-export default function StripeCardPayment({ clientSecret }) {
+export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder }) {
   const stripe = useStripe();
   const elements = useElements();
 
+  const context = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -54,7 +59,24 @@ export default function StripeCardPayment({ clientSecret }) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
+        // TODO: add STRIPE_RESPONSE_URL to frontend-platform so we can use it with getConfig()
         return_url: process.env.STRIPE_RESPONSE_URL,
+        // TODO: refactor and use a checkout function (like checkoutWithToken)
+        // to handle the formData in a non vanilla JS way
+        payment_method_data: {
+          billing_details: {
+            address: {
+              city: e.target[4].value,
+              country: e.target[5].value,
+              line1: e.target[2].value,
+              line2: e.target[3].value,
+              postal_code: e.target[7].value,
+              state: e.target[6].value,
+            },
+            email: context.authenticatedUser.email,
+            name: `${e.target[0].value} ${e.target[1].value}`,
+          },
+        },
       },
     });
 
@@ -74,6 +96,17 @@ export default function StripeCardPayment({ clientSecret }) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <CardHolderInformation
+        showBulkEnrollmentFields={isBulkOrder}
+        disabled={disabled}
+      />
+      <h5 aria-level="2">
+        <FormattedMessage
+          id="payment.card.details.billing.information.heading"
+          defaultMessage="Billing Information"
+          description="The heading for the credit card details billing information form"
+        />
+      </h5>
       <PaymentElement id="payment-element" />
       <button type="submit" disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
@@ -88,10 +121,14 @@ export default function StripeCardPayment({ clientSecret }) {
 
 StripeCardPayment.propTypes = {
   clientSecret: PropTypes.string,
+  disabled: PropTypes.bool,
+  isBulkOrder: PropTypes.bool,
   // onSubmitPayment: PropTypes.func.isRequired,
   // onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
 StripeCardPayment.defaultProps = {
   clientSecret: null,
+  disabled: false,
+  isBulkOrder: false,
 };
