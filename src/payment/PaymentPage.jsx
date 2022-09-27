@@ -140,6 +140,7 @@ class PaymentPage extends React.Component {
             'transaction-declined-message': (
               <TransactionDeclined />
             ),
+            /* TODO: should not render when using Stripe, likely need to refactor handleFetchCaptureKey */
             'capture-key-2mins-message': (
               <CaptureKeyTimeoutTwoMinutes />
             ),
