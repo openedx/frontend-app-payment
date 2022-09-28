@@ -20,6 +20,8 @@ import {
   updateQuantity,
   submitPayment,
   fetchCaptureKey,
+  clientSecretProcessing,
+  fetchClientSecret,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -45,6 +47,10 @@ function* isBasketProcessing() {
 
 function* isCaptureKeyProcessing() {
   return yield select(state => state.payment.captureKey.isCaptureKeyProcessing);
+}
+
+function* isClientSecretProcessing() {
+  return yield select(state => state.payment.clientSecret.isClientSecretProcessing);
 }
 
 export function* handleReduxFormValidationErrors(error) {
@@ -143,6 +149,10 @@ export function* handleCaptureKeyTimeout() {
   yield put(fetchCaptureKey());
 }
 
+/**
+ * Redux Saga for getting the capture context for a cybersource payment
+ * @returns
+ */
 export function* handleFetchCaptureKey() {
   if (yield isCaptureKeyProcessing()) {
     // Do nothing if there is a request currently in flight
@@ -162,6 +172,26 @@ export function* handleFetchCaptureKey() {
   } finally {
     yield put(captureKeyProcessing(false)); // we are done capture key
     yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
+  }
+}
+
+/**
+ * Redux saga for getting hte client secret key for a Stripe payment
+ */
+export function* handleFetchClientSecret() {
+  if (yield isClientSecretProcessing()) {
+    return;
+  }
+
+  try {
+    yield put(clientSecretProcessing(true));
+    // TODO: possibly add status for stripe elements loading?
+    // const result = yield call(PaymentApiService.getClientSecret);
+  } catch (error) {
+    yield call(handleErrors, error, true);
+  } finally {
+    yield put(clientSecretProcessing(false));
+    yield put(fetchClientSecret.fulfill());
   }
 }
 
