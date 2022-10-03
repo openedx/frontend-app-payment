@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import {
   PaymentElement,
@@ -10,7 +11,9 @@ import { AppContext } from '@edx/frontend-platform/react';
 
 import CardHolderInformation from './CardHolderInformation';
 // onSubmitPayment, onSubmitButtonClick
-export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder }) {
+function StripeCardPayment({
+  clientSecret, disabled, handleSubmit, isBulkOrder,
+}) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -45,9 +48,26 @@ export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder 
     });
   }, [stripe, clientSecret]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // onSubmitButtonClick();
+  const onSubmit = async (values) => {
+    // istanbul ignore if
+    if (disabled) { return; }
+
+    const {
+      firstName,
+      lastName,
+      address,
+      unit,
+      city,
+      country,
+      state,
+      postalCode,
+      // TODO: find if the below can be saved in Stripe
+      // organization,
+      // purchasedForOrganization,
+    } = values;
+
+    // TODO: CardHolderInformation validation (validateRequiredFields)
+
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -62,19 +82,20 @@ export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder 
         // TODO: add STRIPE_RESPONSE_URL to frontend-platform so we can use it with getConfig()
         return_url: process.env.STRIPE_RESPONSE_URL,
         // TODO: refactor and use a checkout function (like checkoutWithToken)
-        // to handle the formData in a non vanilla JS way
+        // TODO: could also refactor so that this component is truly just a Stripe card details component
+        // taking out the form in the parent component
         payment_method_data: {
           billing_details: {
             address: {
-              city: e.target[4].value,
-              country: e.target[5].value,
-              line1: e.target[2].value,
-              line2: e.target[3].value,
-              postal_code: e.target[7].value,
-              state: e.target[6].value,
+              city,
+              country,
+              line1: address,
+              line2: unit,
+              postal_code: postalCode,
+              state,
             },
             email: context.authenticatedUser.email,
-            name: `${e.target[0].value} ${e.target[1].value}`,
+            name: `${firstName} ${lastName}`,
           },
         },
       },
@@ -95,7 +116,7 @@ export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder 
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
+    <form id="payment-form" onSubmit={handleSubmit(onSubmit)}>
       <CardHolderInformation
         showBulkEnrollmentFields={isBulkOrder}
         disabled={disabled}
@@ -122,9 +143,8 @@ export default function StripeCardPayment({ clientSecret, disabled, isBulkOrder 
 StripeCardPayment.propTypes = {
   clientSecret: PropTypes.string,
   disabled: PropTypes.bool,
+  handleSubmit: PropTypes.func.isRequired,
   isBulkOrder: PropTypes.bool,
-  // onSubmitPayment: PropTypes.func.isRequired,
-  // onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
 StripeCardPayment.defaultProps = {
@@ -132,3 +152,5 @@ StripeCardPayment.defaultProps = {
   disabled: false,
   isBulkOrder: false,
 };
+
+export default reduxForm({ form: 'stripe' })(StripeCardPayment);
