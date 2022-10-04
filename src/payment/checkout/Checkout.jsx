@@ -93,6 +93,7 @@ class Checkout extends React.Component {
   renderCheckoutOptions() {
     console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
+      enableStripePaymentProcessor,
       intl,
       isFreeBasket,
       isBasketProcessing,
@@ -102,14 +103,11 @@ class Checkout extends React.Component {
       submitting,
       orderType,
     } = this.props;
-
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
 
-    // TEMP: temporarily using true instead of enableStripePaymentProcessor to get REV-2799 unblocked
-    const stripeEnabled = true;// && loaded;
-    console.log('[Project Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
+    console.log('[Project Zebra] enableStripePaymentProcessor? in Checkout.jsx', enableStripePaymentProcessor);
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
@@ -159,16 +157,16 @@ class Checkout extends React.Component {
 
         <PaymentForm
           onSubmitPayment={
-            stripeEnabled ? this.handleSubmitStripe : this.handleSubmitCybersource
+            enableStripePaymentProcessor ? this.handleSubmitStripe : this.handleSubmitCybersource
           }
           onSubmitButtonClick={
-            stripeEnabled ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
+            enableStripePaymentProcessor ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
           }
-          stripeEnabled={stripeEnabled}
+          enableStripePaymentProcessor={enableStripePaymentProcessor}
           disabled={submitting}
           loading={loading}
           loaded={loaded}
-          isProcessing={stripeEnabled ? stripeIsSubmitting : cybersourceIsSubmitting}
+          isProcessing={enableStripePaymentProcessor ? stripeIsSubmitting : cybersourceIsSubmitting}
           isBulkOrder={isBulkOrder}
           isQuantityUpdating={isQuantityUpdating}
         />
@@ -199,6 +197,7 @@ Checkout.propTypes = {
   isBasketProcessing: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
+  enableStripePaymentProcessor: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -209,6 +208,7 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
+  enableStripePaymentProcessor: false,
 };
 
 const mapStateToProps = (state) => ({
