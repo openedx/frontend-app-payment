@@ -201,7 +201,7 @@ export class PaymentFormComponent extends React.Component {
       isProcessing,
       isBulkOrder,
       isQuantityUpdating,
-      stripeEnabled,
+      enableStripePaymentProcessor,
     } = this.props;
 
     // Stripe element config
@@ -221,7 +221,7 @@ export class PaymentFormComponent extends React.Component {
 
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
-        {stripeEnabled && options.clientSecret && (
+        {enableStripePaymentProcessor && options.clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <StripeCardPayment clientSecret={options.clientSecret} disabled={disabled} isBulkOrder={isBulkOrder} />
             {/* onSubmitButtonClick={this.props.onSubmitButtonClick}
@@ -229,7 +229,7 @@ export class PaymentFormComponent extends React.Component {
           </Elements>
         )}
 
-        {!stripeEnabled && (
+        {!enableStripePaymentProcessor && (
         <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
@@ -294,7 +294,7 @@ PaymentFormComponent.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
   captureKeyId: PropTypes.string,
-  stripeEnabled: PropTypes.bool,
+  enableStripePaymentProcessor: PropTypes.bool,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -305,7 +305,7 @@ PaymentFormComponent.defaultProps = {
   isProcessing: false,
   submitErrors: {},
   captureKeyId: null,
-  stripeEnabled: true,
+  enableStripePaymentProcessor: false,
 };
 
 const mapStateToProps = (state) => {
