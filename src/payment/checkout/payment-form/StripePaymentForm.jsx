@@ -12,7 +12,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 // onSubmitPayment, onSubmitButtonClick
-function StripeCardPayment({
+function StripePaymentForm({
   clientSecret, disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
 }) {
   const stripe = useStripe();
@@ -149,7 +149,7 @@ function StripeCardPayment({
   );
 }
 
-StripeCardPayment.propTypes = {
+StripePaymentForm.propTypes = {
   clientSecret: PropTypes.string,
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
@@ -160,7 +160,7 @@ StripeCardPayment.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
-StripeCardPayment.defaultProps = {
+StripePaymentForm.defaultProps = {
   clientSecret: null,
   disabled: false,
   isBulkOrder: false,
@@ -169,4 +169,4 @@ StripeCardPayment.defaultProps = {
   isProcessing: false,
 };
 
-export default reduxForm({ form: 'stripe' })(StripeCardPayment);
+export default reduxForm({ form: 'stripe' })(StripePaymentForm);
