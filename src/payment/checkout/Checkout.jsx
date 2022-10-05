@@ -13,7 +13,7 @@ import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
 import PaymentForm from './payment-form/PaymentForm';
-import StripeCardPayment from './payment-form/StripeCardPayment';
+import StripePaymentForm from './payment-form/StripePaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
@@ -171,7 +171,7 @@ class Checkout extends React.Component {
         </div>
         {enableStripePaymentProcessor && options.clientSecret ? (
           <Elements options={options} stripe={stripePromise}>
-            <StripeCardPayment
+            <StripePaymentForm
               onSubmitPayment={this.handleSubmitStripe}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
               clientSecret={options.clientSecret}
