@@ -3,20 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
 import { injectIntl } from '@edx/frontend-platform/i18n';
 
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-import StripeCardPayment from './StripeCardPayment';
 import getStates from './utils/countryStatesMap';
 import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
-
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
 export class PaymentFormComponent extends React.Component {
   constructor(props) {
@@ -201,32 +196,12 @@ export class PaymentFormComponent extends React.Component {
       isProcessing,
       isBulkOrder,
       isQuantityUpdating,
-      enableStripePaymentProcessor,
     } = this.props;
-
-    // Stripe element config
-    // TODO: Move these to a better home
-    const appearance = {
-      theme: 'stripe',
-    };
-    const options = {
-      clientSecret: this.props.captureKeyId,
-      appearance,
-    };
 
     const showLoadingButton = loading || isQuantityUpdating || !window.microform;
 
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
-        {enableStripePaymentProcessor && options.clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <StripeCardPayment clientSecret={options.clientSecret} disabled={disabled} isBulkOrder={isBulkOrder} />
-            {/* onSubmitButtonClick={this.props.onSubmitButtonClick}
-            onSubmitPayment={this.props.onSubmitPayment} */}
-          </Elements>
-        )}
-
-        {!enableStripePaymentProcessor && (
         <form
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
@@ -246,7 +221,6 @@ export class PaymentFormComponent extends React.Component {
             isProcessing={isProcessing}
           />
         </form>
-        )}
       </ErrorFocusContext.Provider>
     );
   }
@@ -262,8 +236,6 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
-  captureKeyId: PropTypes.string,
-  enableStripePaymentProcessor: PropTypes.bool,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -273,8 +245,6 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
-  captureKeyId: null,
-  enableStripePaymentProcessor: false,
 };
 
 const mapStateToProps = (state) => {
