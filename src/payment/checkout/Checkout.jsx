@@ -8,7 +8,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector, updateCaptureKeySelector } from '../data/selectors';
+import { paymentSelector, updateCaptureKeySelector, updateClientSecretSelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
@@ -240,6 +240,7 @@ Checkout.defaultProps = {
 const mapStateToProps = (state) => ({
   ...paymentSelector(state),
   ...updateCaptureKeySelector(state),
+  ...updateClientSecretSelector(state),
 });
 
 export default connect(mapStateToProps, { submitPayment })(injectIntl(Checkout));

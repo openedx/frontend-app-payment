@@ -9,7 +9,7 @@ import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 import getStates from './utils/countryStatesMap';
-import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
+import { updateCaptureKeySelector, updateClientSecretSelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
@@ -236,6 +236,7 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  clientSecretId: PropTypes.string,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -245,12 +246,14 @@ PaymentFormComponent.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
+  clientSecretId: null,
 };
 
 const mapStateToProps = (state) => {
   const newProps = {
     ...updateCaptureKeySelector(state),
     ...updateSubmitErrorsSelector('payment')(state),
+    ...updateClientSecretSelector(state),
   };
   return newProps;
 };

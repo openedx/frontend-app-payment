@@ -10,9 +10,10 @@ import {
   basketDataReceived,
   basketProcessing,
   captureKeyDataReceived,
+  clientSecretDataReceived,
   captureKeyProcessing,
   CAPTURE_KEY_START_TIMEOUT,
-  // captureKeyStartTimeout,
+  captureKeyStartTimeout,
   microformStatus,
   fetchBasket,
   addCoupon,
@@ -164,8 +165,7 @@ export function* handleFetchCaptureKey() {
     yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    // TODO: Not needed for Stripe, likely refactor to have Stripe's own hadleFetchCaptureKey
-    // yield put(captureKeyStartTimeout());
+    yield put(captureKeyStartTimeout());
     // only start the timer if we're using the capture key
   } catch (error) {
     yield call(handleErrors, error, true);
@@ -186,7 +186,8 @@ export function* handleFetchClientSecret() {
   try {
     yield put(clientSecretProcessing(true));
     // TODO: possibly add status for stripe elements loading?
-    // const result = yield call(PaymentApiService.getClientSecret);
+    const result = yield call(PaymentApiService.getClientSecret);
+    yield put(clientSecretDataReceived(result));
   } catch (error) {
     yield call(handleErrors, error, true);
   } finally {
@@ -272,6 +273,7 @@ export function* handleSubmitPayment({ payload }) {
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
+  yield takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);

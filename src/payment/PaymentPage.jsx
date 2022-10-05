@@ -8,10 +8,10 @@ import { sendPageEvent } from '@edx/frontend-platform/analytics';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket, fetchCaptureKey } from './data/actions';
+import { fetchBasket, fetchCaptureKey, fetchClientSecret } from './data/actions';
 
 // Selectors
-import { paymentSelector, updateCaptureKeySelector } from './data/selectors';
+import { paymentSelector, updateCaptureKeySelector, updateClientSecretSelector } from './data/selectors';
 
 // Components
 import PageLoading from './PageLoading';
@@ -52,6 +52,7 @@ class PaymentPage extends React.Component {
     sendPageEvent();
     this.props.fetchBasket();
     this.props.fetchCaptureKey();
+    this.props.fetchClientSecret();
   }
 
   renderContent() {
@@ -165,6 +166,7 @@ PaymentPage.propTypes = {
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
   fetchCaptureKey: PropTypes.func.isRequired,
+  fetchClientSecret: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -179,6 +181,7 @@ PaymentPage.defaultProps = {
 const mapStateToProps = (state) => ({
   ...paymentSelector(state),
   ...updateCaptureKeySelector(state),
+  ...updateClientSecretSelector(state),
 });
 
 export default connect(
@@ -186,5 +189,6 @@ export default connect(
   {
     fetchBasket,
     fetchCaptureKey,
+    fetchClientSecret,
   },
 )(injectIntl(PaymentPage));
