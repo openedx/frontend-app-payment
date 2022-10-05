@@ -10,9 +10,10 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import CardHolderInformation from './CardHolderInformation';
+import PlaceOrderButton from './PlaceOrderButton';
 // onSubmitPayment, onSubmitButtonClick
 function StripeCardPayment({
-  clientSecret, disabled, handleSubmit, isBulkOrder,
+  clientSecret, disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -20,6 +21,10 @@ function StripeCardPayment({
   const context = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // TODO: bug on loading state, showLoadingButton is true before Stripe card detail is fully rendered
+  // TODO: rename to distinguish loading of data and loading of card details
+  const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
 
   useEffect(() => {
     if (!stripe) {
@@ -82,8 +87,6 @@ function StripeCardPayment({
         // TODO: add STRIPE_RESPONSE_URL to frontend-platform so we can use it with getConfig()
         return_url: process.env.STRIPE_RESPONSE_URL,
         // TODO: refactor and use a checkout function (like checkoutWithToken)
-        // TODO: could also refactor so that this component is truly just a Stripe card details component
-        // taking out the form in the parent component
         payment_method_data: {
           billing_details: {
             address: {
@@ -129,12 +132,12 @@ function StripeCardPayment({
         />
       </h5>
       <PaymentElement id="payment-element" />
-      <button type="submit" disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner" /> : 'Pay now' }
-        </span>
-      </button>
-      {/* Show any error or success messages */}
+      <PlaceOrderButton
+        onSubmitButtonClick={onSubmitButtonClick}
+        showLoadingButton={showLoadingButton}
+        disabled={disabled}
+        isProcessing={isProcessing}
+      />
       {message && <div id="payment-message">{message}</div>}
     </form>
   );
@@ -145,12 +148,19 @@ StripeCardPayment.propTypes = {
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   isBulkOrder: PropTypes.bool,
+  loading: PropTypes.bool,
+  isQuantityUpdating: PropTypes.bool,
+  isProcessing: PropTypes.bool,
+  onSubmitButtonClick: PropTypes.func.isRequired,
 };
 
 StripeCardPayment.defaultProps = {
   clientSecret: null,
   disabled: false,
   isBulkOrder: false,
+  loading: false,
+  isQuantityUpdating: false,
+  isProcessing: false,
 };
 
 export default reduxForm({ form: 'stripe' })(StripeCardPayment);
