@@ -18,7 +18,11 @@ import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
 
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
+  betas: [process.env.STRIPE_BETA_FLAG],
+  apiVersion: process.env.STRIPE_API_VERSION,
+});
+
 class Checkout extends React.Component {
   handleSubmitPayPal = () => {
     // TO DO: after event parity, track data should be

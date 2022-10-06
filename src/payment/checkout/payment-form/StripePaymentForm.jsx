@@ -6,6 +6,7 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
@@ -81,12 +82,43 @@ function StripePaymentForm({
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const stripePaymentMethodHandler = async (result) => {
+      if (result.error) {
+        // Show error in payment form
+        if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
+          setMessage(result.error.message);
+        } else {
+          setMessage('An unexpected error occurred.');
+        }
+        setIsLoading(false);
+      } else {
+        // Otherwise send paymentIntent.id to your server
+        // TODO: refactor to fetch in service.js
+        const postData = JSON.stringify({ payment_intent_id: result.paymentIntent.id });
+        await getAuthenticatedHttpClient()
+          .post(
+            `${process.env.STRIPE_RESPONSE_URL}`,
+            { postData },
+            {
+              headers: { 'Content-Type': 'application/json' },
+            },
+          )
+          .catch(error => {
+            setMessage(error.message);
+          });
+        // .fetch(`${process.env.STRIPE_RESPONSE_URL}`, {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     payment_intent_id: result.paymentIntent.id,
+        //   }),
+        // });
+      }
+    };
+
+    const result = await stripe.updatePaymentIntent({
       elements,
-      confirmParams: {
-        // TODO: add STRIPE_RESPONSE_URL to frontend-platform so we can use it with getConfig()
-        return_url: process.env.STRIPE_RESPONSE_URL,
-        // TODO: refactor and use a checkout function (like checkoutWithToken)
+      params: {
         payment_method_data: {
           billing_details: {
             address: {
@@ -103,19 +135,7 @@ function StripePaymentForm({
         },
       },
     });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
-    } else {
-      setMessage('An unexpected error occurred.');
-    }
-
-    setIsLoading(false);
+    stripePaymentMethodHandler(result);
   };
 
   return (
