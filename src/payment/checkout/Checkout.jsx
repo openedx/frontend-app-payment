@@ -2,6 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
@@ -11,10 +13,12 @@ import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
 import PaymentForm from './payment-form/PaymentForm';
+import StripePaymentForm from './payment-form/StripePaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
 
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 class Checkout extends React.Component {
   handleSubmitPayPal = () => {
     // TO DO: after event parity, track data should be
@@ -93,6 +97,8 @@ class Checkout extends React.Component {
   renderCheckoutOptions() {
     console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
+      enableStripePaymentProcessor,
+      captureKeyId,
       intl,
       isFreeBasket,
       isBasketProcessing,
@@ -102,14 +108,21 @@ class Checkout extends React.Component {
       submitting,
       orderType,
     } = this.props;
-
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
 
-    // TEMP: temporarily using true instead of enableStripePaymentProcessor to get REV-2799 unblocked
-    const stripeEnabled = true;// && loaded;
-    console.log('[Project Zebra] stripeEnabled? in Checkout.jsx', stripeEnabled);
+    console.log('[Project Zebra] enableStripePaymentProcessor? in Checkout.jsx', enableStripePaymentProcessor);
+
+    // Stripe element config
+    // TODO: Move these to a better home
+    const appearance = {
+      theme: 'stripe',
+    };
+    const options = {
+      clientSecret: captureKeyId,
+      appearance,
+    };
 
     // istanbul ignore next
     const payPalIsSubmitting = submitting && paymentMethod === 'paypal';
@@ -156,22 +169,31 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-
-        <PaymentForm
-          onSubmitPayment={
-            stripeEnabled ? this.handleSubmitStripe : this.handleSubmitCybersource
-          }
-          onSubmitButtonClick={
-            stripeEnabled ? this.handleSubmitStripeButtonClick : this.handleSubmitCybersourceButtonClick
-          }
-          stripeEnabled={stripeEnabled}
-          disabled={submitting}
-          loading={loading}
-          loaded={loaded}
-          isProcessing={stripeEnabled ? stripeIsSubmitting : cybersourceIsSubmitting}
-          isBulkOrder={isBulkOrder}
-          isQuantityUpdating={isQuantityUpdating}
-        />
+        {enableStripePaymentProcessor && options.clientSecret ? (
+          <Elements options={options} stripe={stripePromise}>
+            <StripePaymentForm
+              onSubmitPayment={this.handleSubmitStripe}
+              onSubmitButtonClick={this.handleSubmitStripeButtonClick}
+              clientSecret={options.clientSecret}
+              disabled={submitting}
+              isBulkOrder={isBulkOrder}
+              isProcessing={stripeIsSubmitting}
+              loading={loading}
+              isQuantityUpdating={isQuantityUpdating}
+            />
+          </Elements>
+        ) : (
+          <PaymentForm
+            onSubmitPayment={this.handleSubmitCybersource}
+            onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+            disabled={submitting}
+            loading={loading}
+            loaded={loaded}
+            isProcessing={cybersourceIsSubmitting}
+            isBulkOrder={isBulkOrder}
+            isQuantityUpdating={isQuantityUpdating}
+          />
+        )}
       </>
     );
   }
@@ -199,6 +221,8 @@ Checkout.propTypes = {
   isBasketProcessing: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
+  enableStripePaymentProcessor: PropTypes.bool,
+  captureKeyId: PropTypes.string,
 };
 
 Checkout.defaultProps = {
@@ -209,6 +233,8 @@ Checkout.defaultProps = {
   isFreeBasket: false,
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
+  enableStripePaymentProcessor: false,
+  captureKeyId: null,
 };
 
 const mapStateToProps = (state) => ({
