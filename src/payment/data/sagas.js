@@ -152,7 +152,6 @@ export function* handleCaptureKeyTimeout() {
 
 /**
  * Redux Saga for getting the capture context for a cybersource payment
- * @returns
  */
 export function* handleFetchCaptureKey() {
   if (yield isCaptureKeyProcessing()) {
@@ -176,7 +175,7 @@ export function* handleFetchCaptureKey() {
 }
 
 /**
- * Redux saga for getting hte client secret key for a Stripe payment
+ * Redux saga for getting the client secret key for a Stripe payment
  */
 export function* handleFetchClientSecret() {
   if (yield isClientSecretProcessing()) {
