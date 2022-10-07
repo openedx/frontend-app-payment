@@ -98,7 +98,6 @@ class Checkout extends React.Component {
     console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
       enableStripePaymentProcessor,
-      captureKeyId,
       intl,
       isFreeBasket,
       isBasketProcessing,
@@ -120,7 +119,7 @@ class Checkout extends React.Component {
       theme: 'stripe',
     };
     const options = {
-      clientSecret: captureKeyId,
+      clientSecret: this.props.clientSecretId,
       appearance,
     };
 
@@ -169,7 +168,7 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-        {enableStripePaymentProcessor && options.clientSecret ? (
+        {!submissionDisabled && (enableStripePaymentProcessor ? (options.clientSecret && (
           <Elements options={options} stripe={stripePromise}>
             <StripePaymentForm
               onSubmitPayment={this.handleSubmitStripe}
@@ -182,7 +181,7 @@ class Checkout extends React.Component {
               isQuantityUpdating={isQuantityUpdating}
             />
           </Elements>
-        ) : (
+        )) : (
           <PaymentForm
             onSubmitPayment={this.handleSubmitCybersource}
             onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
@@ -193,7 +192,7 @@ class Checkout extends React.Component {
             isBulkOrder={isBulkOrder}
             isQuantityUpdating={isQuantityUpdating}
           />
-        )}
+        ))}
       </>
     );
   }
@@ -222,7 +221,7 @@ Checkout.propTypes = {
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
-  captureKeyId: PropTypes.string,
+  clientSecretId: PropTypes.string,
 };
 
 Checkout.defaultProps = {
@@ -234,7 +233,7 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
-  captureKeyId: null,
+  clientSecretId: null,
 };
 
 const mapStateToProps = (state) => ({
