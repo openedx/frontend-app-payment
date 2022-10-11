@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { reduxForm } from 'redux-form';
+import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
 import {
   PaymentElement,
@@ -12,7 +13,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-// onSubmitPayment, onSubmitButtonClick
+
 function StripePaymentForm({
   clientSecret, disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
 }) {
@@ -94,25 +95,18 @@ function StripePaymentForm({
       } else {
         // Otherwise send paymentIntent.id to your server
         // TODO: refactor to fetch in service.js
-        const postData = JSON.stringify({ payment_intent_id: result.paymentIntent.id });
+        const postData = formurlencoded({ payment_intent_id: result.paymentIntent.id });
         await getAuthenticatedHttpClient()
           .post(
             `${process.env.STRIPE_RESPONSE_URL}`,
             { postData },
             {
-              headers: { 'Content-Type': 'application/json' },
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             },
           )
           .catch(error => {
             setMessage(error.message);
           });
-        // .fetch(`${process.env.STRIPE_RESPONSE_URL}`, {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     payment_intent_id: result.paymentIntent.id,
-        //   }),
-        // });
       }
     };
 
