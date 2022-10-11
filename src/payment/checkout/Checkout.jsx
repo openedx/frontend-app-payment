@@ -8,7 +8,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector, updateCaptureKeySelector } from '../data/selectors';
+import { paymentSelector, updateCaptureKeySelector, updateClientSecretSelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
@@ -98,7 +98,6 @@ class Checkout extends React.Component {
     console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
       enableStripePaymentProcessor,
-      captureKeyId,
       intl,
       isFreeBasket,
       isBasketProcessing,
@@ -120,7 +119,7 @@ class Checkout extends React.Component {
       theme: 'stripe',
     };
     const options = {
-      clientSecret: captureKeyId,
+      clientSecret: this.props.clientSecretId,
       appearance,
     };
 
@@ -169,31 +168,36 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-        {enableStripePaymentProcessor && options.clientSecret ? (
-          <Elements options={options} stripe={stripePromise}>
-            <StripePaymentForm
-              onSubmitPayment={this.handleSubmitStripe}
-              onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-              clientSecret={options.clientSecret}
-              disabled={submitting}
-              isBulkOrder={isBulkOrder}
-              isProcessing={stripeIsSubmitting}
-              loading={loading}
-              isQuantityUpdating={isQuantityUpdating}
-            />
-          </Elements>
-        ) : (
-          <PaymentForm
-            onSubmitPayment={this.handleSubmitCybersource}
-            onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
-            disabled={submitting}
-            loading={loading}
-            loaded={loaded}
-            isProcessing={cybersourceIsSubmitting}
-            isBulkOrder={isBulkOrder}
-            isQuantityUpdating={isQuantityUpdating}
-          />
-        )}
+        {!loading
+          && (enableStripePaymentProcessor
+            ? (options.clientSecret && (
+              <Elements options={options} stripe={stripePromise}>
+                <StripePaymentForm
+                  onSubmitPayment={this.handleSubmitStripe}
+                  onSubmitButtonClick={this.handleSubmitStripeButtonClick}
+                  clientSecret={options.clientSecret}
+                  disabled={submitting}
+                  isBulkOrder={isBulkOrder}
+                  isProcessing={stripeIsSubmitting}
+                  loading={loading}
+                  isQuantityUpdating={isQuantityUpdating}
+                />
+              </Elements>
+            )
+            )
+            : (
+              <PaymentForm
+                onSubmitPayment={this.handleSubmitCybersource}
+                onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+                disabled={submitting}
+                loading={loading}
+                loaded={loaded}
+                isProcessing={cybersourceIsSubmitting}
+                isBulkOrder={isBulkOrder}
+                isQuantityUpdating={isQuantityUpdating}
+              />
+            )
+          )}
       </>
     );
   }
@@ -222,7 +226,7 @@ Checkout.propTypes = {
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
-  captureKeyId: PropTypes.string,
+  clientSecretId: PropTypes.string,
 };
 
 Checkout.defaultProps = {
@@ -234,12 +238,13 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
-  captureKeyId: null,
+  clientSecretId: null,
 };
 
 const mapStateToProps = (state) => ({
   ...paymentSelector(state),
   ...updateCaptureKeySelector(state),
+  ...updateClientSecretSelector(state),
 });
 
 export default connect(mapStateToProps, { submitPayment })(injectIntl(Checkout));

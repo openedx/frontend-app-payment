@@ -76,11 +76,20 @@ export const updateSubmitErrorsSelector = formName => createSelector(
   submitErrorsSelector(formName),
   submitErrors => ({ submitErrors }),
 );
-// TODO:modify to split capture key and order id
+
 export const updateCaptureKeySelector = createSelector(
   captureKeySelector,
   captureKey => ({
     microformStatus: captureKey ? captureKey.microformStatus : DEFAULT_STATUS,
     captureKeyId: captureKey && captureKey.capture_context ? captureKey.capture_context.key_id : null,
+  }),
+);
+
+export const clientSecretSelector = state => (state[storeName] ? state[storeName].clientSecret : null);
+
+export const updateClientSecretSelector = createSelector(
+  clientSecretSelector,
+  clientSecret => ({
+    clientSecretId: clientSecret && clientSecret.capture_context ? clientSecret.capture_context.key_id : null,
   }),
 );

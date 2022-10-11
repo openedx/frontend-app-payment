@@ -10,9 +10,10 @@ import {
   basketDataReceived,
   basketProcessing,
   captureKeyDataReceived,
+  clientSecretDataReceived,
   captureKeyProcessing,
   CAPTURE_KEY_START_TIMEOUT,
-  // captureKeyStartTimeout,
+  captureKeyStartTimeout,
   microformStatus,
   fetchBasket,
   addCoupon,
@@ -20,6 +21,8 @@ import {
   updateQuantity,
   submitPayment,
   fetchCaptureKey,
+  clientSecretProcessing,
+  fetchClientSecret,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -45,6 +48,10 @@ function* isBasketProcessing() {
 
 function* isCaptureKeyProcessing() {
   return yield select(state => state.payment.captureKey.isCaptureKeyProcessing);
+}
+
+function* isClientSecretProcessing() {
+  return yield select(state => state.payment.clientSecret.isClientSecretProcessing);
 }
 
 export function* handleReduxFormValidationErrors(error) {
@@ -143,6 +150,9 @@ export function* handleCaptureKeyTimeout() {
   yield put(fetchCaptureKey());
 }
 
+/**
+ * Redux Saga for getting the capture context for a cybersource payment
+ */
 export function* handleFetchCaptureKey() {
   if (yield isCaptureKeyProcessing()) {
     // Do nothing if there is a request currently in flight
@@ -154,14 +164,34 @@ export function* handleFetchCaptureKey() {
     yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
     const result = yield call(PaymentApiService.getCaptureKey);
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
-    // TODO: Not needed for Stripe, likely refactor to have Stripe's own hadleFetchCaptureKey
-    // yield put(captureKeyStartTimeout());
+    yield put(captureKeyStartTimeout());
     // only start the timer if we're using the capture key
   } catch (error) {
     yield call(handleErrors, error, true);
   } finally {
     yield put(captureKeyProcessing(false)); // we are done capture key
     yield put(fetchCaptureKey.fulfill()); // mark the capture key as finished loading
+  }
+}
+
+/**
+ * Redux saga for getting the client secret key for a Stripe payment
+ */
+export function* handleFetchClientSecret() {
+  if (yield isClientSecretProcessing()) {
+    return;
+  }
+
+  try {
+    yield put(clientSecretProcessing(true));
+    // TODO: possibly add status for stripe elements loading?
+    const result = yield call(PaymentApiService.getClientSecret);
+    yield put(clientSecretDataReceived(result));
+  } catch (error) {
+    yield call(handleErrors, error, true);
+  } finally {
+    yield put(clientSecretProcessing(false));
+    yield put(fetchClientSecret.fulfill());
   }
 }
 
@@ -242,6 +272,7 @@ export function* handleSubmitPayment({ payload }) {
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
+  yield takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
