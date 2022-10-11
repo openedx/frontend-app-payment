@@ -168,31 +168,36 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-        {!submissionDisabled && (enableStripePaymentProcessor ? (options.clientSecret && (
-          <Elements options={options} stripe={stripePromise}>
-            <StripePaymentForm
-              onSubmitPayment={this.handleSubmitStripe}
-              onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-              clientSecret={options.clientSecret}
-              disabled={submitting}
-              isBulkOrder={isBulkOrder}
-              isProcessing={stripeIsSubmitting}
-              loading={loading}
-              isQuantityUpdating={isQuantityUpdating}
-            />
-          </Elements>
-        )) : (
-          <PaymentForm
-            onSubmitPayment={this.handleSubmitCybersource}
-            onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
-            disabled={submitting}
-            loading={loading}
-            loaded={loaded}
-            isProcessing={cybersourceIsSubmitting}
-            isBulkOrder={isBulkOrder}
-            isQuantityUpdating={isQuantityUpdating}
-          />
-        ))}
+        {!loading
+          && (enableStripePaymentProcessor
+            ? (options.clientSecret && (
+              <Elements options={options} stripe={stripePromise}>
+                <StripePaymentForm
+                  onSubmitPayment={this.handleSubmitStripe}
+                  onSubmitButtonClick={this.handleSubmitStripeButtonClick}
+                  clientSecret={options.clientSecret}
+                  disabled={submitting}
+                  isBulkOrder={isBulkOrder}
+                  isProcessing={stripeIsSubmitting}
+                  loading={loading}
+                  isQuantityUpdating={isQuantityUpdating}
+                />
+              </Elements>
+            )
+            )
+            : (
+              <PaymentForm
+                onSubmitPayment={this.handleSubmitCybersource}
+                onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+                disabled={submitting}
+                loading={loading}
+                loaded={loaded}
+                isProcessing={cybersourceIsSubmitting}
+                isBulkOrder={isBulkOrder}
+                isQuantityUpdating={isQuantityUpdating}
+              />
+            )
+          )}
       </>
     );
   }
