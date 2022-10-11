@@ -13,7 +13,7 @@ import {
   clientSecretDataReceived,
   captureKeyProcessing,
   CAPTURE_KEY_START_TIMEOUT,
-  // captureKeyStartTimeout,
+  captureKeyStartTimeout,
   microformStatus,
   fetchBasket,
   addCoupon,

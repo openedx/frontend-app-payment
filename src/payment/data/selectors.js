@@ -76,7 +76,7 @@ export const updateSubmitErrorsSelector = formName => createSelector(
   submitErrorsSelector(formName),
   submitErrors => ({ submitErrors }),
 );
-// TODO:modify to split capture key and order id
+
 export const updateCaptureKeySelector = createSelector(
   captureKeySelector,
   captureKey => ({
