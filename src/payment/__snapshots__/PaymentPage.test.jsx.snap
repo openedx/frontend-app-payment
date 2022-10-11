@@ -2189,10 +2189,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </div>
           </div>
           <div
-            className="col-lg-6 form-group"
+            className="col-lg-6 form-group float-right"
           >
             <div
-              className="row justify-content-end"
+              className="row justify-content-end mt-4"
             >
               <div
                 className="skeleton btn btn-block btn-lg"
@@ -4233,10 +4233,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </div>
           </div>
           <div
-            className="col-lg-6 form-group"
+            className="col-lg-6 form-group float-right"
           >
             <div
-              className="row justify-content-end"
+              className="row justify-content-end mt-4"
             >
               <div
                 className="skeleton btn btn-block btn-lg"
@@ -6119,10 +6119,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </div>
           </div>
           <div
-            className="col-lg-6 form-group"
+            className="col-lg-6 form-group float-right"
           >
             <div
-              className="row justify-content-end"
+              className="row justify-content-end mt-4"
             >
               <div
                 className="skeleton btn btn-block btn-lg"
@@ -8014,10 +8014,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             </div>
           </div>
           <div
-            className="col-lg-6 form-group"
+            className="col-lg-6 form-group float-right"
           >
             <div
-              className="row justify-content-end"
+              className="row justify-content-end mt-4"
             >
               <div
                 className="skeleton btn btn-block btn-lg"
