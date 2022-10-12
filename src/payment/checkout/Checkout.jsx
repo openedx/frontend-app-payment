@@ -143,6 +143,10 @@ class Checkout extends React.Component {
     }
 
     const basketClassName = 'basket-section';
+
+    const loadingStripe = loading || !options.clientSecret;
+    const loadingCyberSource = loading && !enableStripePaymentProcessor;
+
     return (
       <>
         <div className={basketClassName}>
@@ -172,6 +176,37 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
+        {loadingCyberSource || loadingStripe
+          ? (
+            <>
+              <div className="skeleton py-1 mb-3 w-25" />
+              <div className="row">
+                <div className="col-lg-6">
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                </div>
+                <div className="col-lg-6">
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                </div>
+              </div>
+              <div className="skeleton py-1 mb-3 mt-5 w-25" />
+              <div className="row">
+                <div className="col-lg-6">
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                </div>
+                <div className="col-lg-6">
+                  <div className="skeleton py-3 mb-3" />
+                  <div className="skeleton py-3 mb-3" />
+                </div>
+              </div>
+            </>
+          ) : null}
         {!loading
           && (enableStripePaymentProcessor
             ? (options.clientSecret && (
