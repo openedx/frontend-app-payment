@@ -68,9 +68,8 @@ function StripePaymentForm({
       country,
       state,
       postalCode,
-      // TODO: find if the below can be saved in Stripe
-      // organization,
-      // purchasedForOrganization,
+      organization,
+      purchasedForOrganization,
     } = values;
 
     // TODO: CardHolderInformation validation (validateRequiredFields)
@@ -125,6 +124,10 @@ function StripePaymentForm({
             },
             email: context.authenticatedUser.email,
             name: `${firstName} ${lastName}`,
+          },
+          metadata: {
+            organization,
+            purchasedForOrganization,
           },
         },
       },
