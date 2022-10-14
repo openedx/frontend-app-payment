@@ -13,8 +13,8 @@ function PlaceOrderButton({
   if (isProcessing) { submitButtonState = 'processing'; }
 
   return (
-    <div className="col-lg-6 form-group">
-      <div className="row justify-content-end">
+    <div className="col-lg-6 form-group float-right">
+      <div className="row justify-content-end mt-4">
         {
         showLoadingButton ? (
           <div className="skeleton btn btn-block btn-lg">&nbsp;</div>
