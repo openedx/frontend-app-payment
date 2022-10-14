@@ -98,13 +98,13 @@ function StripePaymentForm({
         await getAuthenticatedHttpClient()
           .post(
             `${process.env.STRIPE_RESPONSE_URL}`,
-            { postData },
+            postData,
             {
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             },
           )
           .catch(error => {
-            setMessage(error.message);
+            console.log('[Project Zebra] POST error: ', error.message);
           });
       }
     };

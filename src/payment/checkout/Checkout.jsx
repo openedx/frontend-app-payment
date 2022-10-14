@@ -98,6 +98,39 @@ class Checkout extends React.Component {
     );
   };
 
+  renderBillingFormSkeleton() {
+    return (
+      <>
+        <div className="skeleton py-1 mb-3 w-25" />
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+          </div>
+          <div className="col-lg-6">
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+          </div>
+        </div>
+        <div className="skeleton py-1 mb-3 mt-5 w-25" />
+        <div className="row">
+          <div className="col-lg-6">
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+          </div>
+          <div className="col-lg-6">
+            <div className="skeleton py-3 mb-3" />
+            <div className="skeleton py-3 mb-3" />
+          </div>
+        </div>
+      </>
+    );
+  }
+
   renderCheckoutOptions() {
     console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
@@ -114,8 +147,6 @@ class Checkout extends React.Component {
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
-
-    console.log('[Project Zebra] enableStripePaymentProcessor? in Checkout.jsx', enableStripePaymentProcessor);
 
     // Stripe element config
     // TODO: Move these to a better home
@@ -144,8 +175,17 @@ class Checkout extends React.Component {
 
     const basketClassName = 'basket-section';
 
-    const loadingStripe = loading || !options.clientSecret;
-    const loadingCyberSource = loading && !enableStripePaymentProcessor;
+    // TODO: fix loading, enableStripePaymentProcessor and clientSecretId distinction
+    // 1. loading should be renamed to loadingBasket
+    // 2. enableStripePaymentProcessor can be temporarily false while loading is true
+    // since the flag is in the BFF basket endpoint. Possibly change this?
+    // 3. Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
+    // so we cannot rely on !options.clientSecret to distinguish btw payment processors
+    // 4. There is a delay from when the basket is done loading (plus the flag value)
+    // and when we get the clientSecretId so there is a point in time when loading skeleton
+    // is hidden but the Stripe billing and credit card fields are not shown
+    const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
+    const shouldDisplayCyberSourcePaymentForm = !loading && !enableStripePaymentProcessor;
 
     return (
       <>
@@ -176,67 +216,34 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-        {loadingCyberSource || loadingStripe
-          ? (
-            <>
-              <div className="skeleton py-1 mb-3 w-25" />
-              <div className="row">
-                <div className="col-lg-6">
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                </div>
-                <div className="col-lg-6">
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                </div>
-              </div>
-              <div className="skeleton py-1 mb-3 mt-5 w-25" />
-              <div className="row">
-                <div className="col-lg-6">
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                </div>
-                <div className="col-lg-6">
-                  <div className="skeleton py-3 mb-3" />
-                  <div className="skeleton py-3 mb-3" />
-                </div>
-              </div>
-            </>
-          ) : null}
-        {!loading
-          && (enableStripePaymentProcessor
-            ? (options.clientSecret && (
-              <Elements options={options} stripe={stripePromise}>
-                <StripePaymentForm
-                  onSubmitPayment={this.handleSubmitStripe}
-                  onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-                  clientSecret={options.clientSecret}
-                  disabled={submitting}
-                  isBulkOrder={isBulkOrder}
-                  isProcessing={stripeIsSubmitting}
-                  loading={loading}
-                  isQuantityUpdating={isQuantityUpdating}
-                />
-              </Elements>
-            )
-            )
-            : (
-              <PaymentForm
-                onSubmitPayment={this.handleSubmitCybersource}
-                onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
-                disabled={submitting}
-                loading={loading}
-                loaded={loaded}
-                isProcessing={cybersourceIsSubmitting}
-                isBulkOrder={isBulkOrder}
-                isQuantityUpdating={isQuantityUpdating}
-              />
-            )
-          )}
+
+        {shouldDisplayStripePaymentForm ? (
+          <Elements options={options} stripe={stripePromise}>
+            <StripePaymentForm
+              onSubmitPayment={this.handleSubmitStripe}
+              onSubmitButtonClick={this.handleSubmitStripeButtonClick}
+              clientSecret={options.clientSecret}
+              disabled={submitting}
+              isBulkOrder={isBulkOrder}
+              isProcessing={stripeIsSubmitting}
+              loading={loading}
+              isQuantityUpdating={isQuantityUpdating}
+            />
+          </Elements>
+        ) : (loading && (this.renderBillingFormSkeleton()))}
+
+        {shouldDisplayCyberSourcePaymentForm && (
+        <PaymentForm
+          onSubmitPayment={this.handleSubmitCybersource}
+          onSubmitButtonClick={this.handleSubmitCybersourceButtonClick}
+          disabled={submitting}
+          loading={loading}
+          loaded={loaded}
+          isProcessing={cybersourceIsSubmitting}
+          isBulkOrder={isBulkOrder}
+          isQuantityUpdating={isQuantityUpdating}
+        />
+        )}
       </>
     );
   }
