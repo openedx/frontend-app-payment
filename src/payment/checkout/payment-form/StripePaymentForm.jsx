@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { reduxForm } from 'redux-form';
+import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
 import {
   PaymentElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-// onSubmitPayment, onSubmitButtonClick
+
 function StripePaymentForm({
   clientSecret, disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
 }) {
@@ -66,9 +68,8 @@ function StripePaymentForm({
       country,
       state,
       postalCode,
-      // TODO: find if the below can be saved in Stripe
-      // organization,
-      // purchasedForOrganization,
+      organization,
+      purchasedForOrganization,
     } = values;
 
     // TODO: CardHolderInformation validation (validateRequiredFields)
@@ -81,12 +82,36 @@ function StripePaymentForm({
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const stripePaymentMethodHandler = async (result) => {
+      if (result.error) {
+        // Show error in payment form
+        if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
+          setMessage(result.error.message);
+        } else {
+          setMessage('An unexpected error occurred.');
+        }
+        setIsLoading(false);
+      } else {
+        // Otherwise send paymentIntent.id to your server
+        // TODO: refactor to fetch in service.js
+        const postData = formurlencoded({ payment_intent_id: result.paymentIntent.id });
+        await getAuthenticatedHttpClient()
+          .post(
+            `${process.env.STRIPE_RESPONSE_URL}`,
+            postData,
+            {
+              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            },
+          )
+          .catch(error => {
+            console.log('[Project Zebra] POST error: ', error.message);
+          });
+      }
+    };
+
+    const result = await stripe.updatePaymentIntent({
       elements,
-      confirmParams: {
-        // TODO: add STRIPE_RESPONSE_URL to frontend-platform so we can use it with getConfig()
-        return_url: process.env.STRIPE_RESPONSE_URL,
-        // TODO: refactor and use a checkout function (like checkoutWithToken)
+      params: {
         payment_method_data: {
           billing_details: {
             address: {
@@ -100,22 +125,14 @@ function StripePaymentForm({
             email: context.authenticatedUser.email,
             name: `${firstName} ${lastName}`,
           },
+          metadata: {
+            organization,
+            purchasedForOrganization,
+          },
         },
       },
     });
-
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message);
-    } else {
-      setMessage('An unexpected error occurred.');
-    }
-
-    setIsLoading(false);
+    stripePaymentMethodHandler(result);
   };
 
   return (
