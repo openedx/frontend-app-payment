@@ -103,6 +103,14 @@ function StripePaymentForm({
               headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             },
           )
+          .then(response => {
+            // TODO: This hits the receipt page twice, but Axios doesn't seem
+            // to support maxRedirects outside of NodeJS. Need to shift to a
+            // way that does not make two calls.
+            if (response.headers['content-type'].startsWith('text/html')) {
+              global.location.href = response.request.responseURL;
+            }
+          })
           .catch(error => {
             console.log('[Project Zebra] POST error: ', error.message);
           });
