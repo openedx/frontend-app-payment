@@ -29,7 +29,7 @@ function StripePaymentForm({
   const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
 
   useEffect(() => {
-    if (!stripe) {
+    if (!stripe || !isLoading) {
       return;
     }
 
@@ -53,7 +53,7 @@ function StripePaymentForm({
           break;
       }
     });
-  }, [stripe, clientSecret]);
+  }, [stripe, clientSecret, isLoading]);
 
   const onSubmit = async (values) => {
     // istanbul ignore if
