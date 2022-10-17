@@ -222,7 +222,6 @@ class Checkout extends React.Component {
             <StripePaymentForm
               onSubmitPayment={this.handleSubmitStripe}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-              clientSecret={options.clientSecret}
               disabled={submitting}
               isBulkOrder={isBulkOrder}
               isProcessing={stripeIsSubmitting}

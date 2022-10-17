@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { reduxForm } from 'redux-form';
 import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 
 function StripePaymentForm({
-  clientSecret, disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
+  disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -27,33 +27,6 @@ function StripePaymentForm({
   // TODO: bug on loading state, showLoadingButton is true before Stripe card detail is fully rendered
   // TODO: rename to distinguish loading of data and loading of card details
   const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
-
-  useEffect(() => {
-    if (!stripe || !isLoading) {
-      return;
-    }
-
-    if (!clientSecret) {
-      return;
-    }
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
-        case 'succeeded':
-          setMessage('Payment succeeded!');
-          break;
-        case 'processing':
-          setMessage('Your payment is processing.');
-          break;
-        case 'requires_payment_method':
-          setMessage('Your payment was not successful, please try again.');
-          break;
-        default:
-          setMessage('Something went wrong.');
-          break;
-      }
-    });
-  }, [stripe, clientSecret, isLoading]);
 
   const onSubmit = async (values) => {
     // istanbul ignore if
@@ -79,7 +52,7 @@ function StripePaymentForm({
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-
+    setMessage('');
     setIsLoading(true);
 
     const stripePaymentMethodHandler = async (result) => {
@@ -169,7 +142,6 @@ function StripePaymentForm({
 }
 
 StripePaymentForm.propTypes = {
-  clientSecret: PropTypes.string,
   disabled: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   isBulkOrder: PropTypes.bool,
@@ -180,7 +152,6 @@ StripePaymentForm.propTypes = {
 };
 
 StripePaymentForm.defaultProps = {
-  clientSecret: null,
   disabled: false,
   isBulkOrder: false,
   loading: false,
