@@ -55,8 +55,6 @@ function StripePaymentForm({
     setMessage('');
     setIsLoading(true);
 
-    setIsLoading(true);
-
     const stripePaymentMethodHandler = async (result) => {
       if (result.error) {
         // Show error in payment form
