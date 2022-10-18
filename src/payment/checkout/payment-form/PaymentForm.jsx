@@ -10,6 +10,7 @@ import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 import getStates from './utils/countryStatesMap';
 import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
+import { fetchCaptureKey } from '../../data/actions';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
@@ -29,6 +30,7 @@ export class PaymentFormComponent extends React.Component {
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
       getPerformanceProperties(),
     );
+    this.props.fetchCaptureKey();
   }
 
   componentDidUpdate() {
@@ -236,6 +238,7 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  fetchCaptureKey: PropTypes.func.isRequired,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -257,4 +260,9 @@ const mapStateToProps = (state) => {
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(connect(mapStateToProps)(injectIntl(PaymentFormComponent)));
+export default reduxForm({ form: 'payment' })(connect(
+  mapStateToProps,
+  {
+    fetchCaptureKey,
+  },
+)(injectIntl(PaymentFormComponent)));

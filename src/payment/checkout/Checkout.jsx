@@ -8,7 +8,7 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector, updateCaptureKeySelector, updateClientSecretSelector } from '../data/selectors';
+import { paymentSelector, updateClientSecretSelector } from '../data/selectors';
 import { submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
@@ -222,7 +222,6 @@ class Checkout extends React.Component {
             <StripePaymentForm
               onSubmitPayment={this.handleSubmitStripe}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-              clientSecret={options.clientSecret}
               disabled={submitting}
               isBulkOrder={isBulkOrder}
               isProcessing={stripeIsSubmitting}
@@ -289,7 +288,6 @@ Checkout.defaultProps = {
 
 const mapStateToProps = (state) => ({
   ...paymentSelector(state),
-  ...updateCaptureKeySelector(state),
   ...updateClientSecretSelector(state),
 });
 
