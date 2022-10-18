@@ -5,10 +5,13 @@ import {
   BASKET_PROCESSING,
   CAPTURE_KEY_DATA_RECEIVED,
   CAPTURE_KEY_PROCESSING,
+  CLIENT_SECRET_DATA_RECEIVED,
+  CLIENT_SECRET_PROCESSING,
   MICROFORM_STATUS,
   fetchBasket,
   submitPayment,
   fetchCaptureKey,
+  fetchClientSecret,
 } from './actions';
 
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
@@ -93,9 +96,29 @@ const captureKey = (state = captureContextInitialState, action = null) => {
   return state;
 };
 
+const clientSecretInitialState = {
+  isClientSecretProcessing: false,
+  clientSecretId: '',
+};
+
+const clientSecret = (state = clientSecretInitialState, action = null) => {
+  if (action != null) {
+    switch (action.type) {
+      case fetchClientSecret.TRIGGER: return state;
+      case fetchClientSecret.FULFILL: return state;
+      case CLIENT_SECRET_DATA_RECEIVED: return { ...state, ...action.payload };
+      case CLIENT_SECRET_PROCESSING: return { ...state, isClientSecretProcessing: action.payload };
+
+      default:
+    }
+  }
+  return state;
+};
+
 const reducer = combineReducers({
   basket,
   captureKey,
+  clientSecret,
 });
 
 export default reducer;
