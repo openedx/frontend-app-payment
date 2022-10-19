@@ -7,9 +7,14 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
+
+import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
+
+import handleRequestError from '../../data/handleRequestError';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
@@ -55,7 +60,25 @@ function StripePaymentForm({
     setMessage('');
     setIsLoading(true);
 
-    const stripePaymentMethodHandler = async (result) => {
+    // Processes API errors and converts them to error objects the sagas can use.
+    const handleApiError = (requestError) => {
+      try {
+        // Always throws an error:
+        handleRequestError(requestError);
+      } catch (errorWithMessages) {
+        const processedError = new Error();
+        processedError.messages = errorWithMessages.messages;
+        processedError.errors = errorWithMessages.errors;
+        processedError.fieldErrors = errorWithMessages.fieldErrors;
+
+        throw processedError;
+      }
+    };
+
+    const stripePaymentMethodHandler = async (
+      result,
+      setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
+    ) => {
       if (result.error) {
         // Show error in payment form
         if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
@@ -77,15 +100,27 @@ function StripePaymentForm({
             },
           )
           .then(response => {
-            // TODO: This hits the receipt page twice, but Axios doesn't seem
-            // to support maxRedirects outside of NodeJS. Need to shift to a
-            // way that does not make two calls.
-            if (response.headers['content-type'].startsWith('text/html')) {
-              global.location.href = response.request.responseURL;
-            }
+            setLocation(response.data.receipt_page_url);
           })
           .catch(error => {
-            console.log('[Project Zebra] POST error: ', error.message);
+            const errorData = error.response ? error.response.data : null;
+            if (errorData && error.response.data.sdn_check_failure) {
+              // SDN failure: redirect to Ecommerce SDN error page.
+              setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
+            } else if (errorData && errorData.user_message) {
+              // Stripe error: show to user.
+              setMessage(errorData.user_message);
+              handleApiError(error);
+            } else {
+              // Unknown error: log, attempt to handle, and throw.
+              logError(error, {
+                messagePrefix: 'Stripe Submit Error',
+                paymentMethod: 'Stripe',
+                paymentErrorType: 'Submit Error',
+              });
+              handleApiError(error);
+              throw error;
+            }
           });
       }
     };
