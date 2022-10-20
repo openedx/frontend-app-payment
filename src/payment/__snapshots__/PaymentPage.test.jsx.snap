@@ -382,16 +382,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render its d
             <div
               className="skeleton py-3 mb-3"
             />
-            <div
-              className="skeleton py-3 mb-3"
-            />
           </div>
           <div
             className="col-lg-6"
           >
-            <div
-              className="skeleton py-3 mb-3"
-            />
             <div
               className="skeleton py-3 mb-3"
             />
