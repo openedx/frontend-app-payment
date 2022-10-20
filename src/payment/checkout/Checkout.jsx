@@ -120,10 +120,8 @@ class Checkout extends React.Component {
         <div className="row">
           <div className="col-lg-6">
             <div className="skeleton py-3 mb-3" />
-            <div className="skeleton py-3 mb-3" />
           </div>
           <div className="col-lg-6">
-            <div className="skeleton py-3 mb-3" />
             <div className="skeleton py-3 mb-3" />
           </div>
         </div>
@@ -156,6 +154,9 @@ class Checkout extends React.Component {
     const options = {
       clientSecret: this.props.clientSecretId,
       appearance,
+      fields: {
+        billingDetails: 'never',
+      },
     };
 
     // istanbul ignore next
@@ -220,6 +221,7 @@ class Checkout extends React.Component {
         {shouldDisplayStripePaymentForm ? (
           <Elements options={options} stripe={stripePromise}>
             <StripePaymentForm
+              options={options}
               onSubmitPayment={this.handleSubmitStripe}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
               disabled={submitting}
