@@ -27,7 +27,7 @@ function StripePaymentForm({
 
   const context = useContext(AppContext);
   const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // TODO: bug on loading state, showLoadingButton is true before Stripe card detail is fully rendered
   // TODO: rename to distinguish loading of data and loading of card details
@@ -164,7 +164,10 @@ function StripePaymentForm({
           description="The heading for the credit card details billing information form"
         />
       </h5>
-      <PaymentElement id="payment-element" />
+      <PaymentElement
+        id="payment-element"
+        onReady={() => setIsLoading(false)}
+      />
       <PlaceOrderButton
         onSubmitButtonClick={onSubmitButtonClick}
         showLoadingButton={showLoadingButton}
