@@ -155,7 +155,9 @@ class Checkout extends React.Component {
       clientSecret: this.props.clientSecretId,
       appearance,
       fields: {
-        billingDetails: 'never',
+        billingDetails: {
+          address: 'never',
+        },
       },
     };
 
