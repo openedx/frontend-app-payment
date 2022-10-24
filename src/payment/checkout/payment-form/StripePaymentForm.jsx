@@ -29,7 +29,6 @@ function StripePaymentForm({
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // TODO: bug on loading state, showLoadingButton is true before Stripe card detail is fully rendered
   // TODO: rename to distinguish loading of data and loading of card details
   const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
 
