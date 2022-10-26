@@ -15,6 +15,7 @@ import paymentSaga, {
   handleFetchCaptureKey,
   handleCaptureKeyTimeout,
   handleFetchClientSecret,
+  handleIssueError,
 } from './sagas';
 import { transformResults } from './service';
 import {
@@ -28,6 +29,7 @@ import {
   submitPayment,
   CAPTURE_KEY_START_TIMEOUT,
   fetchClientSecret,
+  issueError,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
@@ -745,6 +747,7 @@ describe('saga tests', () => {
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
     expect(gen.next().value).toEqual(takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity));
     expect(gen.next().value).toEqual(takeEvery(submitPayment.TRIGGER, handleSubmitPayment));
+    expect(gen.next().value).toEqual(takeEvery(issueError.TRIGGER, handleIssueError));
 
     // If you find yourself adding something here, there are probably more tests to write!
 
