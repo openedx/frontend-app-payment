@@ -13,6 +13,7 @@ import { createRoutine } from 'redux-saga-routines';
 //
 // Created with redux-saga-routines
 export const fetchCaptureKey = createRoutine('FETCH_CAPTURE_KEY');
+export const fetchClientSecret = createRoutine('FETCH_CLIENT_SECRET');
 export const submitPayment = createRoutine('SUBMIT_PAYMENT');
 export const fetchBasket = createRoutine('FETCH_BASKET');
 export const addCoupon = createRoutine('ADD_COUPON');
@@ -41,6 +42,13 @@ export const captureKeyProcessing = isProcessing => ({
   payload: isProcessing,
 });
 
+export const CLIENT_SECRET_PROCESSING = 'CLIENT_SECRET_PROCESSING';
+
+export const clientSecretProcessing = isProcessing => ({
+  type: CLIENT_SECRET_PROCESSING,
+  payload: isProcessing,
+});
+
 export const MICROFORM_STATUS = 'MICROFORM_STATUS';
 
 export const microformStatus = status => ({
@@ -58,4 +66,11 @@ export const CAPTURE_KEY_DATA_RECEIVED = 'CAPTURE_KEY_DATA_RECEIVED';
 export const captureKeyDataReceived = captureKey => ({
   type: CAPTURE_KEY_DATA_RECEIVED,
   payload: captureKey,
+});
+
+export const CLIENT_SECRET_DATA_RECEIVED = 'CLIENT_SECRET_DATA_RECEIVED';
+
+export const clientSecretDataReceived = clientSecret => ({
+  type: CLIENT_SECRET_DATA_RECEIVED,
+  payload: clientSecret,
 });

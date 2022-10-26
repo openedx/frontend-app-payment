@@ -215,3 +215,9 @@ If you would like to run this frontend against stage.edx.org you can run ``npm r
    :target: https://github.com/openedx/frontend-app-payment/actions/workflows/ci.yml
 .. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-payment.svg
    :target: @edx/frontend-app-payment
+
+
+Appendix B: Adding No-Op Stuff to Test Sandbox Deploys
+----------------------------------------------------------
+
+Let's try this.
