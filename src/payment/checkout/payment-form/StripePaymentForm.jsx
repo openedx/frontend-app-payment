@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
@@ -10,17 +11,25 @@ import {
 
 import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 
-import handleRequestError from '../../data/handleRequestError';
+import { issueError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 
 function StripePaymentForm({
-  disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick, options,
+  disabled,
+  handleSubmit,
+  isBulkOrder,
+  loading,
+  isQuantityUpdating,
+  isProcessing,
+  onSubmitButtonClick,
+  options,
+  issueError: issueErrorDispatcher,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -59,21 +68,6 @@ function StripePaymentForm({
     setMessage('');
     setIsLoading(true);
 
-    // Processes API errors and converts them to error objects the sagas can use.
-    const handleApiError = (requestError) => {
-      try {
-        // Always throws an error:
-        handleRequestError(requestError);
-      } catch (errorWithMessages) {
-        const processedError = new Error();
-        processedError.messages = errorWithMessages.messages;
-        processedError.errors = errorWithMessages.errors;
-        processedError.fieldErrors = errorWithMessages.fieldErrors;
-
-        throw processedError;
-      }
-    };
-
     const stripePaymentMethodHandler = async (
       result,
       setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
@@ -109,7 +103,6 @@ function StripePaymentForm({
             } else if (errorData && errorData.user_message) {
               // Stripe error: show to user.
               setMessage(errorData.user_message);
-              handleApiError(error);
             } else {
               // Unknown error: log, attempt to handle, and throw.
               logError(error, {
@@ -117,9 +110,9 @@ function StripePaymentForm({
                 paymentMethod: 'Stripe',
                 paymentErrorType: 'Submit Error',
               });
-              handleApiError(error);
-              throw error;
+              issueErrorDispatcher();
             }
+            setIsLoading(false);
           });
       }
     };
@@ -188,6 +181,7 @@ StripePaymentForm.propTypes = {
   isProcessing: PropTypes.bool,
   onSubmitButtonClick: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
+  issueError: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
@@ -199,4 +193,9 @@ StripePaymentForm.defaultProps = {
   options: null,
 };
 
-export default reduxForm({ form: 'stripe' })(StripePaymentForm);
+export default reduxForm({ form: 'stripe' })(connect(
+  null,
+  {
+    issueError,
+  },
+)(injectIntl(StripePaymentForm)));

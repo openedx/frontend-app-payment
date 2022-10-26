@@ -19,6 +19,7 @@ export const fetchBasket = createRoutine('FETCH_BASKET');
 export const addCoupon = createRoutine('ADD_COUPON');
 export const removeCoupon = createRoutine('REMOVE_COUPON');
 export const updateQuantity = createRoutine('UPDATE_QUANTITY');
+export const issueError = createRoutine('ISSUE_ERROR');
 
 // Actions and their action creators
 export const BASKET_DATA_RECEIVED = 'BASKET_DATA_RECEIVED';
@@ -74,3 +75,5 @@ export const clientSecretDataReceived = clientSecret => ({
   type: CLIENT_SECRET_DATA_RECEIVED,
   payload: clientSecret,
 });
+
+export const ISSUE_ERROR = 'ISSUE_ERROR';
