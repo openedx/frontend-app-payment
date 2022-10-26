@@ -20,7 +20,7 @@ import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 
 function StripePaymentForm({
-  disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick,
+  disabled, handleSubmit, isBulkOrder, loading, isQuantityUpdating, isProcessing, onSubmitButtonClick, options,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -133,8 +133,8 @@ function StripePaymentForm({
               city,
               country,
               line1: address,
-              line2: unit,
-              postal_code: postalCode,
+              line2: unit || '',
+              postal_code: postalCode || '',
               state,
             },
             email: context.authenticatedUser.email,
@@ -165,6 +165,7 @@ function StripePaymentForm({
       </h5>
       <PaymentElement
         id="payment-element"
+        options={options}
         onReady={() => setIsLoading(false)}
       />
       <PlaceOrderButton
@@ -186,6 +187,7 @@ StripePaymentForm.propTypes = {
   isQuantityUpdating: PropTypes.bool,
   isProcessing: PropTypes.bool,
   onSubmitButtonClick: PropTypes.func.isRequired,
+  options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
 };
 
 StripePaymentForm.defaultProps = {
@@ -194,6 +196,7 @@ StripePaymentForm.defaultProps = {
   loading: false,
   isQuantityUpdating: false,
   isProcessing: false,
+  options: null,
 };
 
 export default reduxForm({ form: 'stripe' })(StripePaymentForm);

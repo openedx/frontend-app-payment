@@ -72,14 +72,7 @@ class Checkout extends React.Component {
     );
   };
 
-  handleSubmitStripe = () => {
-    // TODO: We'll want to submit formData here in the next iteration
-    console.log('[Project Zebra] handleSubmitStripe called');
-    this.props.submitPayment({ method: 'stripe' });
-  };
-
   handleSubmitStripeButtonClick = () => {
-    console.log('[Project Zebra] handleSubmitStripeButtonClick');
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
       {
@@ -120,10 +113,8 @@ class Checkout extends React.Component {
         <div className="row">
           <div className="col-lg-6">
             <div className="skeleton py-3 mb-3" />
-            <div className="skeleton py-3 mb-3" />
           </div>
           <div className="col-lg-6">
-            <div className="skeleton py-3 mb-3" />
             <div className="skeleton py-3 mb-3" />
           </div>
         </div>
@@ -132,7 +123,6 @@ class Checkout extends React.Component {
   }
 
   renderCheckoutOptions() {
-    console.log('[Project Zebra] props in Checkout.jsx', this.props);
     const {
       enableStripePaymentProcessor,
       intl,
@@ -156,6 +146,11 @@ class Checkout extends React.Component {
     const options = {
       clientSecret: this.props.clientSecretId,
       appearance,
+      fields: {
+        billingDetails: {
+          address: 'never',
+        },
+      },
     };
 
     // istanbul ignore next
@@ -220,7 +215,7 @@ class Checkout extends React.Component {
         {shouldDisplayStripePaymentForm ? (
           <Elements options={options} stripe={stripePromise}>
             <StripePaymentForm
-              onSubmitPayment={this.handleSubmitStripe}
+              options={options}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
               disabled={submitting}
               isBulkOrder={isBulkOrder}
