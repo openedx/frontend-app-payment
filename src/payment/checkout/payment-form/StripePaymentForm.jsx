@@ -129,7 +129,7 @@ function StripePaymentForm({
               line1: address,
               line2: unit || '',
               postal_code: postalCode || '',
-              state,
+              state: state || '',
             },
             email: context.authenticatedUser.email,
             name: `${firstName} ${lastName}`,
