@@ -127,7 +127,7 @@ class Checkout extends React.Component {
               isProcessing={payPalIsSubmitting}
             />
 
-            {/* Apple Pay temporarily disabled per REV-927  - https://github.com/edx/frontend-app-payment/pull/256 */}
+            {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
 

@@ -13,7 +13,7 @@ Micro-frontend for the single-page payment/checkout process; order history and r
 Getting Started
 ---------------
 
-This MFE is bundled with `Devstack <https://github.com/edx/devstack>`_, see the `Getting Started <https://github.com/edx/devstack#getting-started>`_ section for setup instructions.
+This MFE is bundled with `Devstack <https://github.com/openedx/devstack>`_, see the `Getting Started <https://github.com/openedx/devstack#getting-started>`_ section for setup instructions.
 
 Once set up, this frontend and all its prerequisites can be started with:
 
@@ -120,7 +120,7 @@ A discount offered to a user automatically. It can be applied to a subset of use
 Project Structure
 -----------------
 
-The source for this project is organized into nested submodules according to the ADR `Feature-based Application Organization <https://github.com/edx/frontend-cookiecutter-application/blob/master/docs/decisions/0002-feature-based-application-organization.rst>`_.
+The source for this project is organized into nested submodules according to the ADR `Feature-based Application Organization <https://github.com/openedx/frontend-cookiecutter-application/blob/master/docs/decisions/0002-feature-based-application-organization.rst>`_.
 
 Breakdown of the ``src`` directory:
 
@@ -128,7 +128,7 @@ Breakdown of the ``src`` directory:
   Image assets used by the top-level code.
 
 **common**
-  Boilerplate code that is common to many of our frontend applications.  Currently copied from place to place, it is intended to eventually live in `edx/frontend-common <https://github.com/edx/frontend-common>`_.
+  Boilerplate code that is common to many of our frontend applications.  Currently copied from place to place, it is intended to eventually live in `edx/frontend-common <https://github.com/openedx/frontend-common>`_.
 
 **components**
   Top-level App.jsx component, which is 95% shared across frontends and will eventually get similar treatment to the ``common`` directory.
@@ -137,7 +137,7 @@ Breakdown of the ``src`` directory:
   Top-level redux/redux-saga reducers and sagas.
 
 **feedback**
-  A reusable component which displays user feedback messages as alerts at the top of the page.  While it is currently only in use by this application, it's intended to be generic and shared across applications, so should remain free of payment-specific code.  It will eventually live in either `edx/paragon <https://github.com/edx/paragon>`_ or its own repo.
+  A reusable component which displays user feedback messages as alerts at the top of the page.  While it is currently only in use by this application, it's intended to be generic and shared across applications, so should remain free of payment-specific code.  It will eventually live in either `edx/paragon <https://github.com/openedx/paragon>`_ or its own repo.
 
 **i18n**
   The language configuration for the app.
@@ -175,7 +175,7 @@ The production build is created with ``npm run build``.
 Internationalization
 --------------------
 
-Please see `edx/frontend-i18n <https://github.com/edx/frontend-i18n>`_ for documentation on internationalization.  The repository README.rst explains how to use it, and the `How To <https://github.com/edx/frontend-i18n/blob/master/docs/how_tos/i18n.rst>`_ has more detail.
+Please see `edx/frontend-i18n <https://github.com/openedx/frontend-i18n>`_ for documentation on internationalization.  The repository README.rst explains how to use it, and the `How To <https://github.com/openedx/frontend-i18n/blob/master/docs/how_tos/i18n.rst>`_ has more detail.
 
 Localized Pricing
 -----------------
@@ -211,7 +211,7 @@ If you would like to run this frontend against stage.edx.org you can run ``npm r
 
 - Navigate to `https://local.stage.edx.org <https://local.stage.edx.org>`_. You will see a warning that this page is unsecured because there is no valid SSL certificate. Proceed past this screen by clicking the "Advanced" button on the bottom left and then click the revealed link: "Proceed to local.stage.edx.org (unsafe)".
 
-.. |build Status| image:: https://github.com/edx/frontend-app-payment/actions/workflows/ci.yml/badge.svg
-   :target: https://github.com/edx/frontend-app-payment/actions/workflows/ci.yml
+.. |build Status| image:: https://github.com/openedx/frontend-app-payment/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/openedx/frontend-app-payment/actions/workflows/ci.yml
 .. |license| image:: https://img.shields.io/npm/l/@edx/frontend-app-payment.svg
    :target: @edx/frontend-app-payment

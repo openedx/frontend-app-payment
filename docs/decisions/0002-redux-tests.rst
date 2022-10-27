@@ -100,4 +100,4 @@ These tests will exercise the contract between reducers, actions and selectors, 
 References
 ----------
 
-* Example tests: https://github.com/edx/frontend-app-payment/blob/master/src/payment/coupon/data/redux.test.js
+* Example tests: https://github.com/openedx/frontend-app-payment/blob/master/src/payment/coupon/data/redux.test.js
