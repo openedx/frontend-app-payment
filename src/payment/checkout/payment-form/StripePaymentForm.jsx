@@ -22,6 +22,7 @@ import PlaceOrderButton from './PlaceOrderButton';
 
 function StripePaymentForm({
   disabled,
+  enableStripePaymentProcessor,
   handleSubmit,
   isBulkOrder,
   loading,
@@ -148,6 +149,7 @@ function StripePaymentForm({
       <CardHolderInformation
         showBulkEnrollmentFields={isBulkOrder}
         disabled={disabled}
+        enableStripePaymentProcessor={enableStripePaymentProcessor}
       />
       <h5 aria-level="2">
         <FormattedMessage
@@ -174,6 +176,7 @@ function StripePaymentForm({
 
 StripePaymentForm.propTypes = {
   disabled: PropTypes.bool,
+  enableStripePaymentProcessor: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   isBulkOrder: PropTypes.bool,
   loading: PropTypes.bool,
@@ -186,6 +189,7 @@ StripePaymentForm.propTypes = {
 
 StripePaymentForm.defaultProps = {
   disabled: false,
+  enableStripePaymentProcessor: false,
   isBulkOrder: false,
   loading: false,
   isQuantityUpdating: false,

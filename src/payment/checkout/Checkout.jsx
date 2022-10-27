@@ -222,6 +222,7 @@ class Checkout extends React.Component {
               isProcessing={stripeIsSubmitting}
               loading={loading}
               isQuantityUpdating={isQuantityUpdating}
+              enableStripePaymentProcessor={enableStripePaymentProcessor}
             />
           </Elements>
         ) : (loading && (this.renderBillingFormSkeleton()))}
