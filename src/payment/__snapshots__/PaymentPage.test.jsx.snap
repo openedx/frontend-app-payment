@@ -2045,6 +2045,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={false}
                   type="text"
                   value=""
                 />
@@ -4057,6 +4058,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={false}
                   type="text"
                   value=""
                 />
@@ -5975,6 +5977,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={false}
                   type="text"
                   value=""
                 />
@@ -7870,6 +7873,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   onDragStart={[Function]}
                   onDrop={[Function]}
                   onFocus={[Function]}
+                  required={false}
                   type="text"
                   value=""
                 />
