@@ -4,7 +4,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import {
+  getLocale,
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+} from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
@@ -17,11 +22,6 @@ import StripePaymentForm from './payment-form/StripePaymentForm';
 import FreeCheckoutOrderButton from './FreeCheckoutOrderButton';
 import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
-
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
-  betas: [process.env.STRIPE_BETA_FLAG],
-  apiVersion: process.env.STRIPE_API_VERSION,
-});
 
 class Checkout extends React.Component {
   handleSubmitPayPal = () => {
@@ -181,6 +181,15 @@ class Checkout extends React.Component {
     // is hidden but the Stripe billing and credit card fields are not shown
     const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
     const shouldDisplayCyberSourcePaymentForm = !loading && !enableStripePaymentProcessor;
+
+    let stripePromise;
+    if (shouldDisplayStripePaymentForm) {
+      stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
+        betas: [process.env.STRIPE_BETA_FLAG],
+        apiVersion: process.env.STRIPE_API_VERSION,
+        locale: getLocale(),
+      });
+    }
 
     return (
       <>
