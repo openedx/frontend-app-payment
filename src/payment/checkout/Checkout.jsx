@@ -212,6 +212,11 @@ class Checkout extends React.Component {
           </p>
         </div>
 
+        {/* Passing the enableStripePaymentProcessor flag down the Stripe form component to
+        be used in the CardHolderInformation component (child). We could get the flag value
+        from Basket selector from the child component but this would require more change for a temp feature,
+        since the flag will not be needed when we remove CyberSource.
+        This is not needed in CyberSource form component since the default is set to false. */}
         {shouldDisplayStripePaymentForm ? (
           <Elements options={options} stripe={stripePromise}>
             <StripePaymentForm
