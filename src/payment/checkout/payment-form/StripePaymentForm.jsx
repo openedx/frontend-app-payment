@@ -189,7 +189,7 @@ StripePaymentForm.propTypes = {
 
 StripePaymentForm.defaultProps = {
   disabled: false,
-  enableStripePaymentProcessor: false,
+  enableStripePaymentProcessor: true,
   isBulkOrder: false,
   loading: false,
   isQuantityUpdating: false,
