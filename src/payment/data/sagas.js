@@ -271,8 +271,15 @@ export function* handleSubmitPayment({ payload }) {
 }
 
 export function* handleIssueError() {
-  // Show generic <FallbackErrorMessage>
-  yield call(handleErrors, {}, true);
+  // Show <TransactionDeclined>:
+  yield call(handleErrors, {
+    messages: [
+      {
+        code: 'transaction-declined-message',
+        messageType: 'error',
+      },
+    ],
+  }, true);
 }
 
 export default function* saga() {
