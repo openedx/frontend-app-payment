@@ -102,10 +102,10 @@ function StripePaymentForm({
               // SDN failure: redirect to Ecommerce SDN error page.
               setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
             } else if (errorData && errorData.user_message) {
-              // Stripe error: show to user.
-              setMessage(errorData.user_message);
+              // Stripe error: tell user.
+              issueErrorDispatcher();
             } else {
-              // Unknown error: log, attempt to handle, and throw.
+              // Unknown error: log and tell user.
               logError(error, {
                 messagePrefix: 'Stripe Submit Error',
                 paymentMethod: 'Stripe',
