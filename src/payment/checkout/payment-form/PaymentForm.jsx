@@ -8,7 +8,9 @@ import { injectIntl } from '@edx/frontend-platform/i18n';
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-import getStates from './utils/countryStatesMap';
+import {
+  getRequiredFields, validateCardDetails, validateRequiredFields, validateAsciiNames,
+} from './utils/form-validators';
 import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
 import { fetchCaptureKey } from '../../data/actions';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
@@ -44,7 +46,7 @@ export class PaymentFormComponent extends React.Component {
     // istanbul ignore if
     if (this.props.disabled) { return; }
     this.setState({ shouldFocusFirstError: true });
-    const requiredFields = this.getRequiredFields(values);
+    const requiredFields = getRequiredFields(values, this.props.isBulkOrder);
     const {
       firstName,
       lastName,
@@ -61,12 +63,12 @@ export class PaymentFormComponent extends React.Component {
     } = values;
 
     const errors = {
-      ...this.validateRequiredFields(requiredFields),
-      ...this.validateAsciiNames(
+      ...validateRequiredFields(requiredFields),
+      ...validateAsciiNames(
         firstName,
         lastName,
       ),
-      ...this.validateCardDetails(
+      ...validateCardDetails(
         cardExpirationMonth,
         cardExpirationYear,
       ),
@@ -95,82 +97,6 @@ export class PaymentFormComponent extends React.Component {
       },
     });
   };
-
-  getRequiredFields(fieldValues) {
-    const {
-      firstName,
-      lastName,
-      address,
-      city,
-      country,
-      state,
-      cardExpirationMonth,
-      cardExpirationYear,
-      organization,
-    } = fieldValues;
-
-    const requiredFields = {
-      firstName,
-      lastName,
-      address,
-      city,
-      country,
-      cardExpirationMonth,
-      cardExpirationYear,
-    };
-
-    if (getStates(country)) {
-      requiredFields.state = state;
-    }
-
-    if (this.props.isBulkOrder) {
-      requiredFields.organization = organization;
-    }
-
-    return requiredFields;
-  }
-
-  validateCardDetails(cardExpirationMonth, cardExpirationYear) {
-    const errors = {};
-
-    const currentMonth = new Date().getMonth() + 1;
-    const currentYear = new Date().getFullYear();
-    if (
-      cardExpirationMonth
-      && parseInt(cardExpirationMonth, 10) < currentMonth
-      && parseInt(cardExpirationYear, 10) === currentYear
-    ) {
-      errors.cardExpirationMonth = 'payment.form.errors.card.expired';
-    }
-
-    return errors;
-  }
-
-  validateAsciiNames(firstName, lastName) {
-    const errors = {};
-
-    if (
-      firstName
-      && lastName
-      && !/[A-Za-z]/.test(firstName + lastName)
-    ) {
-      errors.firstName = 'payment.form.errors.ascii.name';
-    }
-
-    return errors;
-  }
-
-  validateRequiredFields(values) {
-    const errors = {};
-
-    Object.keys(values).forEach((key) => {
-      if (!values[key]) {
-        errors[key] = 'payment.form.errors.required.field';
-      }
-    });
-
-    return errors;
-  }
 
   focusFirstError() {
     if (
