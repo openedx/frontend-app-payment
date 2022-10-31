@@ -98,6 +98,7 @@ describe('<Checkout />', () => {
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.payment_selected', {
         type: 'click',
         category: 'checkout',
+        stripeEnabled: false,
         paymentMethod: 'PayPal',
       });
       expect(store.getActions().pop()).toEqual(submitPayment({ method: 'paypal' }));
@@ -171,6 +172,7 @@ describe('<Checkout />', () => {
 
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.free_checkout', {
         type: 'click',
+        stripeEnabled: false,
         category: 'checkout',
       });
     });

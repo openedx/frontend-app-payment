@@ -30,7 +30,12 @@ class Checkout extends React.Component {
     // Check for ApplePay and Free Basket as well
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
-      { type: 'click', category: 'checkout', paymentMethod: 'PayPal' },
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'PayPal',
+        stripeEnabled: this.props.enableStripePaymentProcessor,
+      },
     );
 
     this.props.submitPayment({ method: 'paypal' });
@@ -43,7 +48,12 @@ class Checkout extends React.Component {
     // Check for PayPal and Free Basket as well
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
-      { type: 'click', category: 'checkout', paymentMethod: 'Apple Pay' },
+      {
+        type: 'click',
+        category: 'checkout',
+        paymentMethod: 'Apple Pay',
+        stripeEnabled: this.props.enableStripePaymentProcessor,
+      },
     );
 
     this.props.submitPayment({ method: 'apple-pay' });
@@ -68,6 +78,7 @@ class Checkout extends React.Component {
         paymentMethod: 'Credit Card',
         checkoutType: 'client_side',
         flexMicroformEnabled: true,
+        stripeEnabled: this.props.enableStripePaymentProcessor,
       },
     );
   };
@@ -80,6 +91,7 @@ class Checkout extends React.Component {
         category: 'checkout',
         paymentMethod: 'Credit Card - Stripe',
         checkoutType: 'client_side',
+        stripeEnabled: this.props.enableStripePaymentProcessor,
       },
     );
   };
@@ -87,7 +99,7 @@ class Checkout extends React.Component {
   handleSubmitFreeCheckout = () => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.free_checkout',
-      { type: 'click', category: 'checkout' },
+      { type: 'click', category: 'checkout', stripeEnabled: this.props.enableStripePaymentProcessor },
     );
   };
 
