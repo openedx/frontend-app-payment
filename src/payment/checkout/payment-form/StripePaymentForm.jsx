@@ -14,11 +14,13 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
-
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { issueError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
+
+import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
 
 function StripePaymentForm({
   disabled,
@@ -144,6 +146,18 @@ function StripePaymentForm({
     stripePaymentMethodHandler(result);
   };
 
+  const stripeElementsOnReady = () => {
+    setIsLoading(false);
+    markPerformanceIfAble('Stripe Elements component rendered');
+    sendTrackEvent(
+      'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
+      {
+        ...getPerformanceProperties(),
+        paymentProcessor: 'Stripe',
+      },
+    );
+  };
+
   return (
     <form id="payment-form" onSubmit={handleSubmit(onSubmit)}>
       <CardHolderInformation
@@ -161,7 +175,7 @@ function StripePaymentForm({
       <PaymentElement
         id="payment-element"
         options={options}
-        onReady={() => setIsLoading(false)}
+        onReady={stripeElementsOnReady}
       />
       <PlaceOrderButton
         onSubmitButtonClick={onSubmitButtonClick}

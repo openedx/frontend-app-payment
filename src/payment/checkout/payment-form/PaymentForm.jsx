@@ -28,7 +28,10 @@ export class PaymentFormComponent extends React.Component {
     markPerformanceIfAble('Payment Form component rendered');
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
-      getPerformanceProperties(),
+      {
+        ...getPerformanceProperties(),
+        paymentProcessor: 'Cybersource',
+      },
     );
     this.props.fetchCaptureKey();
   }
