@@ -59,6 +59,10 @@ export class PaymentFormComponent extends React.Component {
 
     const errors = {
       ...this.validateRequiredFields(requiredFields),
+      ...this.validateAsciiNames(
+        firstName,
+        lastName,
+      ),
       ...this.validateCardDetails(
         cardExpirationMonth,
         cardExpirationYear,
@@ -134,6 +138,20 @@ export class PaymentFormComponent extends React.Component {
       && parseInt(cardExpirationYear, 10) === currentYear
     ) {
       errors.cardExpirationMonth = 'payment.form.errors.card.expired';
+    }
+
+    return errors;
+  }
+
+  validateAsciiNames(firstName, lastName) {
+    const errors = {};
+
+    if (
+      firstName
+      && lastName
+      && !/[A-Za-z]/.test(firstName + lastName)
+    ) {
+      errors.firstName = 'payment.form.errors.ascii.name';
     }
 
     return errors;
