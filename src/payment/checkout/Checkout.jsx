@@ -182,6 +182,7 @@ class Checkout extends React.Component {
     const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
     const shouldDisplayCyberSourcePaymentForm = !loading && !enableStripePaymentProcessor;
 
+    // Doing this within the Checkout component so locale is configured and available
     let stripePromise;
     if (shouldDisplayStripePaymentForm) {
       stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
