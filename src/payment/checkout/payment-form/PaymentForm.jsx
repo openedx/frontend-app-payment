@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
-import { StatefulButton } from '@edx/paragon';
+import { injectIntl } from '@edx/frontend-platform/i18n';
 
 import CardDetails from './CardDetails';
 import CardHolderInformation from './CardHolderInformation';
+import PlaceOrderButton from './PlaceOrderButton';
 import getStates from './utils/countryStatesMap';
 import { updateCaptureKeySelector, updateSubmitErrorsSelector } from '../../data/selectors';
+import { fetchCaptureKey } from '../../data/actions';
 import { markPerformanceIfAble, getPerformanceProperties } from '../../performanceEventing';
 import { ErrorFocusContext } from './contexts';
 
@@ -27,8 +28,12 @@ export class PaymentFormComponent extends React.Component {
     markPerformanceIfAble('Payment Form component rendered');
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
-      getPerformanceProperties(),
+      {
+        ...getPerformanceProperties(),
+        paymentProcessor: 'Cybersource',
+      },
     );
+    this.props.fetchCaptureKey();
   }
 
   componentDidUpdate() {
@@ -198,11 +203,8 @@ export class PaymentFormComponent extends React.Component {
       isQuantityUpdating,
     } = this.props;
 
-    let submitButtonState = 'default';
-    // istanbul ignore if
-    if (disabled) { submitButtonState = 'disabled'; }
-    // istanbul ignore if
-    if (isProcessing) { submitButtonState = 'processing'; }
+    const showLoadingButton = loading || isQuantityUpdating || !window.microform;
+
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         <form
@@ -217,40 +219,12 @@ export class PaymentFormComponent extends React.Component {
           <CardDetails
             disabled={disabled}
           />
-          <div className="row justify-content-end">
-            <div className="col-lg-6 form-group">
-              {
-                loading || isQuantityUpdating || !window.microform ? (
-                  <div className="skeleton btn btn-block btn-lg">&nbsp;</div>
-                ) : (
-                  <StatefulButton
-                    type="submit"
-                    id="placeOrderButton"
-                    variant="primary"
-                    size="lg"
-                    block
-                    state={submitButtonState}
-                    onClick={this.props.onSubmitButtonClick}
-                    labels={{
-                      default: (
-                        <FormattedMessage
-                          id="payment.form.submit.button.text"
-                          defaultMessage="Place Order"
-                          description="The label for the payment form submit button"
-                        />
-                      ),
-                    }}
-                    icons={{
-                      processing: (
-                        <span className="button-spinner-icon" />
-                      ),
-                    }}
-                    disabledStates={['processing', 'disabled']}
-                  />
-                )
-              }
-            </div>
-          </div>
+          <PlaceOrderButton
+            onSubmitButtonClick={this.props.onSubmitButtonClick}
+            showLoadingButton={showLoadingButton}
+            disabled={disabled}
+            isProcessing={isProcessing}
+          />
         </form>
       </ErrorFocusContext.Provider>
     );
@@ -267,6 +241,7 @@ PaymentFormComponent.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   onSubmitButtonClick: PropTypes.func.isRequired,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  fetchCaptureKey: PropTypes.func.isRequired,
 };
 
 PaymentFormComponent.defaultProps = {
@@ -288,4 +263,9 @@ const mapStateToProps = (state) => {
 
 // The key `form` here needs to match the key provided to
 // combineReducers when setting up the form reducer.
-export default reduxForm({ form: 'payment' })(connect(mapStateToProps)(injectIntl(PaymentFormComponent)));
+export default reduxForm({ form: 'payment' })(connect(
+  mapStateToProps,
+  {
+    fetchCaptureKey,
+  },
+)(injectIntl(PaymentFormComponent)));

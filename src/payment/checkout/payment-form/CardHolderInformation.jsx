@@ -25,6 +25,32 @@ export class CardHolderInformationComponent extends React.Component {
     this.props.clearFields('payment', false, false, ['state']);
   };
 
+  handlePostalCodeLabel() {
+    if (this.isPostalCodeRequired()) {
+      return (
+        <FormattedMessage
+          id="payment.card.holder.information.postal.code.label.required"
+          defaultMessage="Zip/Postal Code (required)"
+          description="The label for the card holder zip/postal code field (required)"
+        />
+      );
+    }
+    return (
+      <FormattedMessage
+        id="payment.card.holder.information.postal.code.label"
+        defaultMessage="Zip/Postal Code"
+        description="The label for the card holder zip/postal code field"
+      />
+    );
+  }
+
+  isPostalCodeRequired() {
+    const countryListRequiredPostalCode = ['CA', 'GB', 'US'];
+    const postalCodeRequired = countryListRequiredPostalCode.includes(this.state.selectedCountry)
+    && this.props.enableStripePaymentProcessor;
+    return postalCodeRequired;
+  }
+
   renderCountryOptions() {
     const items = [(
       <option key="" value="">
@@ -207,11 +233,7 @@ export class CardHolderInformationComponent extends React.Component {
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
-              <FormattedMessage
-                id="payment.card.holder.information.postal.code.label"
-                defaultMessage="Zip/Postal Code"
-                description="The label for the card holder zip/postal code field"
-              />
+              {this.handlePostalCodeLabel()}
             </label>
             <Field
               id="postalCode"
@@ -221,6 +243,7 @@ export class CardHolderInformationComponent extends React.Component {
               disabled={disabled}
               autoComplete="postal-code"
               maxLength="9"
+              required={this.isPostalCodeRequired()}
             />
           </div>
         </div>
@@ -257,11 +280,13 @@ CardHolderInformationComponent.propTypes = {
   clearFields: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   disabled: PropTypes.bool,
+  enableStripePaymentProcessor: PropTypes.bool,
   showBulkEnrollmentFields: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   disabled: false,
+  enableStripePaymentProcessor: false,
   showBulkEnrollmentFields: false,
 };
 
