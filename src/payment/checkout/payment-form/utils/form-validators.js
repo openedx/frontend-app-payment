@@ -1,7 +1,14 @@
 import getStates from './countryStatesMap';
 
 // eslint-disable-next-line import/prefer-default-export
-export function getRequiredFields(fieldValues, isBulkOrder) {
+export function isPostalCodeRequired(selectedCountry) {
+  const countryListRequiredPostalCode = ['CA', 'GB', 'US'];
+  const postalCodeRequired = countryListRequiredPostalCode.includes(selectedCountry);
+
+  return postalCodeRequired;
+}
+
+export function getRequiredFields(fieldValues, isBulkOrder = false, enableStripePaymentProcessor = false) {
   const {
     firstName,
     lastName,
@@ -9,6 +16,7 @@ export function getRequiredFields(fieldValues, isBulkOrder) {
     city,
     country,
     state,
+    postalCode,
     cardExpirationMonth,
     cardExpirationYear,
     organization,
@@ -20,9 +28,16 @@ export function getRequiredFields(fieldValues, isBulkOrder) {
     address,
     city,
     country,
-    cardExpirationMonth,
-    cardExpirationYear,
   };
+
+  if (!enableStripePaymentProcessor) {
+    requiredFields.cardExpirationMonth = cardExpirationMonth;
+    requiredFields.cardExpirationYear = cardExpirationYear;
+  }
+
+  if (isPostalCodeRequired(country) && enableStripePaymentProcessor) {
+    requiredFields.postalCode = postalCode;
+  }
 
   if (getStates(country)) {
     requiredFields.state = state;
