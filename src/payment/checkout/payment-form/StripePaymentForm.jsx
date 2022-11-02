@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, SubmissionError } from 'redux-form';
 import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
 import {
@@ -19,6 +21,9 @@ import { issueError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
+import {
+  getRequiredFields, validateRequiredFields, validateAsciiNames,
+} from './utils/form-validators';
 
 import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
 
@@ -32,6 +37,7 @@ function StripePaymentForm({
   isProcessing,
   onSubmitButtonClick,
   options,
+  submitErrors,
   issueError: issueErrorDispatcher,
 }) {
   const stripe = useStripe();
@@ -40,14 +46,40 @@ function StripePaymentForm({
   const context = useContext(AppContext);
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [firstErrorId, setfirstErrorId] = useState(false);
+  const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
+  const inputElement = useRef(null);
 
   // TODO: rename to distinguish loading of data and loading of card details
   const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
+
+  useEffect(() => {
+    // Focus on first input with an errror in the form
+    if (
+      shouldFocusFirstError
+      && Object.keys(submitErrors).length > 0
+    ) {
+      const form = inputElement.current;
+      const elementSelectors = Object.keys(submitErrors).map((fieldName) => `[id=${fieldName}]`);
+      const firstElementWithError = form.querySelector(elementSelectors.join(', '));
+      if (firstElementWithError) {
+        if (['input', 'select'].includes(firstElementWithError.tagName.toLowerCase())) {
+          firstElementWithError.focus();
+          setshouldFocusFirstError(false);
+          setfirstErrorId(null);
+        } else if (firstErrorId !== firstElementWithError.id) {
+          setfirstErrorId(firstElementWithError.id);
+        }
+      }
+    }
+  }, [firstErrorId, shouldFocusFirstError, submitErrors]);
 
   const onSubmit = async (values) => {
     // istanbul ignore if
     if (disabled) { return; }
 
+    setshouldFocusFirstError(true);
+    const requiredFields = getRequiredFields(values, isBulkOrder, enableStripePaymentProcessor);
     const {
       firstName,
       lastName,
@@ -61,7 +93,17 @@ function StripePaymentForm({
       purchasedForOrganization,
     } = values;
 
-    // TODO: CardHolderInformation validation (validateRequiredFields)
+    const errors = {
+      ...validateRequiredFields(requiredFields),
+      ...validateAsciiNames(
+        firstName,
+        lastName,
+      ),
+    };
+
+    if (Object.keys(errors).length > 0) {
+      throw new SubmissionError(errors);
+    }
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
@@ -159,7 +201,7 @@ function StripePaymentForm({
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit(onSubmit)}>
+    <form id="payment-form" ref={inputElement} onSubmit={handleSubmit(onSubmit)} noValidate>
       <CardHolderInformation
         showBulkEnrollmentFields={isBulkOrder}
         disabled={disabled}
@@ -198,6 +240,7 @@ StripePaymentForm.propTypes = {
   isProcessing: PropTypes.bool,
   onSubmitButtonClick: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
+  submitErrors: PropTypes.objectOf(PropTypes.string),
   issueError: PropTypes.func.isRequired,
 };
 
@@ -208,6 +251,7 @@ StripePaymentForm.defaultProps = {
   loading: false,
   isQuantityUpdating: false,
   isProcessing: false,
+  submitErrors: {},
   options: null,
 };
 
