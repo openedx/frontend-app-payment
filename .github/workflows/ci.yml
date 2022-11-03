@@ -3,7 +3,7 @@ name: node_js CI
 on:
   push:
     branches:
-    - master, project-zebra
+    - master
   pull_request:
     branches:
     - '**'
