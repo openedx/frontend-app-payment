@@ -8,6 +8,7 @@ import {
 
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
+import { isPostalCodeRequired } from './utils/form-validators';
 
 import messages from './CardHolderInformation.messages';
 import StateProvinceFormInput from './StateProvinceFormInput';
@@ -25,6 +26,25 @@ export class CardHolderInformationComponent extends React.Component {
     this.props.clearFields('payment', false, false, ['state']);
   };
 
+  handlePostalCodeLabel(shouldRequirePostalCode) {
+    if (shouldRequirePostalCode) {
+      return (
+        <FormattedMessage
+          id="payment.card.holder.information.postal.code.label.required"
+          defaultMessage="Zip/Postal Code (required)"
+          description="The label for the card holder zip/postal code field (required)"
+        />
+      );
+    }
+    return (
+      <FormattedMessage
+        id="payment.card.holder.information.postal.code.label"
+        defaultMessage="Zip/Postal Code"
+        description="The label for the card holder zip/postal code field"
+      />
+    );
+  }
+
   renderCountryOptions() {
     const items = [(
       <option key="" value="">
@@ -40,6 +60,8 @@ export class CardHolderInformationComponent extends React.Component {
 
   render() {
     const { disabled, showBulkEnrollmentFields } = this.props;
+    const shouldRequirePostalCode = isPostalCodeRequired(this.state.selectedCountry)
+    && this.props.enableStripePaymentProcessor;
 
     return (
       <div className="basket-section">
@@ -207,11 +229,7 @@ export class CardHolderInformationComponent extends React.Component {
           </div>
           <div className="col-lg-6 form-group">
             <label htmlFor="postalCode">
-              <FormattedMessage
-                id="payment.card.holder.information.postal.code.label"
-                defaultMessage="Zip/Postal Code"
-                description="The label for the card holder zip/postal code field"
-              />
+              {this.handlePostalCodeLabel(shouldRequirePostalCode)}
             </label>
             <Field
               id="postalCode"
@@ -221,6 +239,7 @@ export class CardHolderInformationComponent extends React.Component {
               disabled={disabled}
               autoComplete="postal-code"
               maxLength="9"
+              required={shouldRequirePostalCode}
             />
           </div>
         </div>
@@ -257,11 +276,13 @@ CardHolderInformationComponent.propTypes = {
   clearFields: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   disabled: PropTypes.bool,
+  enableStripePaymentProcessor: PropTypes.bool,
   showBulkEnrollmentFields: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   disabled: false,
+  enableStripePaymentProcessor: false,
   showBulkEnrollmentFields: false,
 };
 

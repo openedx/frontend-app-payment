@@ -10,12 +10,16 @@ import configureMockStore from 'redux-mock-store';
 
 import { AppContext } from '@edx/frontend-platform/react';
 import PaymentForm, { PaymentFormComponent } from './PaymentForm';
+import * as formValidators from './utils/form-validators';
 import createRootReducer from '../../../data/reducers';
 import '../../__factories__/userAccount.factory';
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
+
+const validateRequiredFieldsMock = jest.spyOn(formValidators, 'validateRequiredFields');
+const validateCardDetailsMock = jest.spyOn(formValidators, 'validateCardDetails');
 
 const mockStore = configureMockStore();
 
@@ -106,7 +110,7 @@ describe('<PaymentForm />', () => {
       ];
 
       testFormValues.forEach((formValues) => {
-        const requiredFields = paymentForm.getRequiredFields(formValues);
+        const requiredFields = formValidators.getRequiredFields(formValues);
         if (formValues.country) {
           const { optionalField, ...expectedRequiredFields } = formValues;
           expect(requiredFields).toEqual(expectedRequiredFields);
@@ -118,7 +122,8 @@ describe('<PaymentForm />', () => {
     });
 
     it('returns organization fields for a bulk order', () => {
-      const wrapper = mount((
+      const isBulkOrder = true;
+      mount((
         <IntlProvider locale="en">
           <AppContext.Provider value={{ authenticatedUser }}>
             <Provider store={store}>
@@ -132,7 +137,6 @@ describe('<PaymentForm />', () => {
           </AppContext.Provider>
         </IntlProvider>
       ));
-      paymentForm = wrapper.find(PaymentFormComponent).first().instance();
 
       const formValues = {
         firstName: '',
@@ -148,14 +152,12 @@ describe('<PaymentForm />', () => {
         organization: 'edx',
       };
 
-      const requiredFields = paymentForm.getRequiredFields(formValues);
+      const requiredFields = formValidators.getRequiredFields(formValues, isBulkOrder);
       expect(formValues.organization).toEqual(requiredFields.organization);
     });
   });
   describe('onSubmit', () => {
     it('throws expected errors', () => {
-      paymentForm.validateRequiredFields = jest.fn();
-      paymentForm.validateCardDetails = jest.fn();
       const testFormValues = {
         firstName: '',
         lastName: '',
@@ -166,9 +168,6 @@ describe('<PaymentForm />', () => {
         cardExpirationYear: '',
       };
       const testData = [
-        // validateRequiredFieldsMock
-        // validateCardDetailsMock
-        // expectedError
         [
           { firstName: 'This field is required', cardNumber: 'This field is required' },
           { cardNumber: 'Card invalid' },
@@ -185,8 +184,8 @@ describe('<PaymentForm />', () => {
       ];
 
       testData.forEach((testCaseData) => {
-        paymentForm.validateRequiredFields.mockReturnValueOnce(testCaseData[0]);
-        paymentForm.validateCardDetails.mockReturnValueOnce(testCaseData[1]);
+        validateRequiredFieldsMock.mockReturnValueOnce(testCaseData[0]);
+        validateCardDetailsMock.mockReturnValueOnce(testCaseData[1]);
         if (testCaseData[2]) {
           expect(() => paymentForm.onSubmit(testFormValues)).toThrow(testCaseData[2]);
         } else {
@@ -200,13 +199,12 @@ describe('<PaymentForm />', () => {
       const currentMonth = new Date().getMonth() + 1;
       const currentYear = new Date().getFullYear();
       const testData = [
-        // cardExpirationMonth, cardExpirationYear, expectedErrors
         ['', '', {}],
         [`${currentMonth - 1}`, `${currentYear}`, { cardExpirationMonth: 'payment.form.errors.card.expired' }],
       ];
 
       testData.forEach((testCaseData) => {
-        expect(paymentForm.validateCardDetails(
+        expect(formValidators.validateCardDetails(
           testCaseData[0],
           testCaseData[1],
         )).toEqual(testCaseData[2]);
@@ -222,7 +220,7 @@ describe('<PaymentForm />', () => {
       const expectedErrors = {
         lastName: 'payment.form.errors.required.field',
       };
-      expect(paymentForm.validateRequiredFields(values)).toEqual(expectedErrors);
+      expect(formValidators.validateRequiredFields(values)).toEqual(expectedErrors);
     });
   });
   describe('focusFirstError', () => {

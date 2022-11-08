@@ -15,6 +15,10 @@ Object {
     "isCaptureKeyProcessing": false,
     "microformStatus": "LOADING",
   },
+  "clientSecret": Object {
+    "clientSecretId": "",
+    "isClientSecretProcessing": false,
+  },
 }
 `;
 
@@ -33,6 +37,10 @@ Object {
     "isCaptureKeyProcessing": false,
     "microformStatus": "LOADING",
   },
+  "clientSecret": Object {
+    "clientSecretId": "",
+    "isClientSecretProcessing": false,
+  },
 }
 `;
 
@@ -50,6 +58,10 @@ Object {
     "captureKeyId": "",
     "isCaptureKeyProcessing": false,
     "microformStatus": "LOADING",
+  },
+  "clientSecret": Object {
+    "clientSecretId": "",
+    "isClientSecretProcessing": false,
   },
 }
 `;
