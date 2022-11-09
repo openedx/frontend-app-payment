@@ -2,7 +2,8 @@
     "allowlist": [
         "GHSA-44c6-4v22-4mhx",
         "GHSA-pfrx-2q88-qq97",
-        "GHSA-f8q6-p94x-37v3"
+        "GHSA-f8q6-p94x-37v3",
+        "GHSA-76p3-8jx3-jpfq"
     ],
     "moderate": true
 }
