@@ -58,7 +58,7 @@
   "payment.card.details.expiration.year.label": "Año de expiración",
   "payment.page.card.details.month": "Mes",
   "payment.page.card.details.year": "Año",
-  "payment.card.holder.information.postal.code.label.required": "Zip/Postal Code (required)",
+  "payment.card.holder.information.postal.code.label.required": "Código postal/zip (requerido)",
   "payment.card.holder.information.postal.code.label": "Código Postal",
   "payment.card.holder.information.heading": "Información del titular de la tarjeta",
   "payment.card.holder.information.first.name.label": "Nombre (requerido)",
