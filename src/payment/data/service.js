@@ -56,6 +56,13 @@ export async function getCaptureKey() {
   return data;
 }
 
+export async function getClientSecret() {
+  const { data } = await getAuthenticatedHttpClient()
+    .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context`)
+    .catch(handleBasketApiError);
+  return data;
+}
+
 export async function getBasket(discountJwt) {
   const discountJwtArg = typeof discountJwt !== 'undefined' ? `?discount_jwt=${discountJwt}` : '';
   const { data } = await getAuthenticatedHttpClient()

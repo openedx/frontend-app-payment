@@ -84,3 +84,12 @@ export const updateCaptureKeySelector = createSelector(
     captureKeyId: captureKey && captureKey.capture_context ? captureKey.capture_context.key_id : null,
   }),
 );
+
+export const clientSecretSelector = state => (state[storeName] ? state[storeName].clientSecret : null);
+
+export const updateClientSecretSelector = createSelector(
+  clientSecretSelector,
+  clientSecret => ({
+    clientSecretId: clientSecret && clientSecret.capture_context ? clientSecret.capture_context.key_id : null,
+  }),
+);
