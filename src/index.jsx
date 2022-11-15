@@ -14,6 +14,7 @@ import {
 } from '@edx/frontend-platform';
 import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { messages as paragonMessages } from '@edx/paragon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
@@ -127,6 +128,7 @@ initialize({
     appMessages,
     headerMessages,
     footerMessages,
+    paragonMessages,
   ],
   requireAuthenticatedUser: true,
   hydrateAuthenticatedUser: true,
