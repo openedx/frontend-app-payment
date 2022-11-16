@@ -14,7 +14,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
 import { paymentSelector, updateClientSecretSelector } from '../data/selectors';
-import { submitPayment } from '../data/actions';
+import { fetchClientSecret, submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
 import PaymentForm from './payment-form/PaymentForm';
@@ -24,6 +24,10 @@ import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
 
 class Checkout extends React.Component {
+  componentDidMount() {
+    this.props.fetchClientSecret();
+  }
+
   handleSubmitPayPal = () => {
     // TO DO: after event parity, track data should be
     // sent only if the payment is processed, not on click
@@ -287,6 +291,7 @@ Checkout.propTypes = {
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
   loaded: PropTypes.bool,
+  fetchClientSecret: PropTypes.func.isRequired,
   submitPayment: PropTypes.func.isRequired,
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
@@ -314,4 +319,4 @@ const mapStateToProps = (state) => ({
   ...updateClientSecretSelector(state),
 });
 
-export default connect(mapStateToProps, { submitPayment })(injectIntl(Checkout));
+export default connect(mapStateToProps, { fetchClientSecret, submitPayment })(injectIntl(Checkout));
