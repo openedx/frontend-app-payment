@@ -210,14 +210,15 @@ function StripePaymentForm({
       <h5 aria-level="2">
         <FormattedMessage
           id="payment.card.details.billing.information.heading"
-          defaultMessage="Billing Information"
-          description="The heading for the credit card details billing information form"
+          defaultMessage="Billing Information (Required)"
+          description="The heading for the required credit card details billing information form"
         />
       </h5>
       <PaymentElement
         id="payment-element"
         options={options}
         onReady={stripeElementsOnReady}
+        role="presentation"
       />
       <PlaceOrderButton
         onSubmitButtonClick={onSubmitButtonClick}

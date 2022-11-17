@@ -156,12 +156,26 @@ class Checkout extends React.Component {
 
     // Stripe element config
     // TODO: Move these to a better home
-    const appearance = {
-      theme: 'stripe',
-    };
     const options = {
       clientSecret: this.props.clientSecretId,
-      appearance,
+      appearance: {
+        rules: {
+          '.Input': {
+            border: 'solid 1px #707070',
+            borderRadius: '0.375rem',
+          },
+          '.Input:hover': {
+            border: 'solid 1px #1f3226',
+          },
+          '.Input:focus': {
+            color: '#454545',
+            backgroundColor: '#FFFFFF',
+            borderColor: '#0A3055',
+            outline: '0',
+            boxShadow: '0 0 0 1px #0A3055',
+          },
+        },
+      },
       fields: {
         billingDetails: {
           address: 'never',
