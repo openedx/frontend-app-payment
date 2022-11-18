@@ -217,6 +217,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
                 id="couponField"
                 name="couponField"
                 onBlur={[Function]}
+                onChange={[Function]}
                 type="text"
               />
             </div>,
@@ -343,6 +344,7 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
                 min="1"
                 name="code-quantity"
                 onBlur={[Function]}
+                onChange={[Function]}
                 style={
                   Object {
                     "width": "5rem",

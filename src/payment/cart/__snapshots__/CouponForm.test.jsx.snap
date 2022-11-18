@@ -45,6 +45,7 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
           id="couponField"
           name="couponField"
           onBlur={[Function]}
+          onChange={[Function]}
           type="text"
         />
       </div>,

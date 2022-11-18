@@ -2364,6 +2364,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       min="1"
                       name="code-quantity"
                       onBlur={[Function]}
+                      onChange={[Function]}
                       style={
                         Object {
                           "width": "5rem",
