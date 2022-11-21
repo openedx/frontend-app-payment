@@ -27,7 +27,7 @@ import {
 
 import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
 
-function StripePaymentForm({
+const StripePaymentForm = ({
   disabled,
   enableStripePaymentProcessor,
   handleSubmit,
@@ -39,7 +39,7 @@ function StripePaymentForm({
   options,
   submitErrors,
   issueError: issueErrorDispatcher,
-}) {
+}) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -228,7 +228,7 @@ function StripePaymentForm({
       {message && <div id="payment-message">{message}</div>}
     </form>
   );
-}
+};
 
 StripePaymentForm.propTypes = {
   disabled: PropTypes.bool,
