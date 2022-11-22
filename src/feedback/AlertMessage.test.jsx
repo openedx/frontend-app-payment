@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import renderer from 'react-test-renderer';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import AlertMessage from './AlertMessage';
 import { MESSAGE_TYPES } from './data/constants';
@@ -12,12 +13,14 @@ describe('AlertMessage', () => {
     const closeHandlerMock = jest.fn();
 
     const component = (
-      <AlertMessage
-        id={123}
-        messageType={MESSAGE_TYPES.ERROR}
-        userMessage="Wondrous message!"
-        closeHandler={closeHandlerMock}
-      />
+      <IntlProvider locale="en">
+        <AlertMessage
+          id={123}
+          messageType={MESSAGE_TYPES.ERROR}
+          userMessage="Wondrous message!"
+          closeHandler={closeHandlerMock}
+        />
+      </IntlProvider>
     );
 
     const wrapper = mount(component);
@@ -30,12 +33,14 @@ describe('AlertMessage', () => {
     const closeHandlerMock = jest.fn();
 
     const component = (
-      <AlertMessage
-        id={123}
-        messageType="unknown"
-        userMessage="Wondrous message!"
-        closeHandler={closeHandlerMock}
-      />
+      <IntlProvider locale="en">
+        <AlertMessage
+          id={123}
+          messageType="unknown"
+          userMessage="Wondrous message!"
+          closeHandler={closeHandlerMock}
+        />
+      </IntlProvider>
     );
 
     const tree = renderer.create(component).toJSON();
@@ -45,11 +50,13 @@ describe('AlertMessage', () => {
 
   it('should render a userMessage function', () => {
     const component = (
-      <AlertMessage
-        id={123}
-        userMessage={() => 'Wondrous message!'}
-        closeHandler={jest.fn()}
-      />
+      <IntlProvider locale="en">
+        <AlertMessage
+          id={123}
+          userMessage={() => 'Wondrous message!'}
+          closeHandler={jest.fn()}
+        />
+      </IntlProvider>
     );
 
     const tree = renderer.create(component).toJSON();
@@ -58,11 +65,13 @@ describe('AlertMessage', () => {
 
   it('should render a userMessage element', () => {
     const component = (
-      <AlertMessage
-        id={123}
-        userMessage={<span>Wondrous message!</span>}
-        closeHandler={jest.fn()}
-      />
+      <IntlProvider locale="en">
+        <AlertMessage
+          id={123}
+          userMessage={<span>Wondrous message!</span>}
+          closeHandler={jest.fn()}
+        />
+      </IntlProvider>
     );
 
     const tree = renderer.create(component).toJSON();
