@@ -254,6 +254,7 @@ class Checkout extends React.Component {
               loading={loading}
               isQuantityUpdating={isQuantityUpdating}
               enableStripePaymentProcessor={enableStripePaymentProcessor}
+              products={this.props.products}
             />
           </Elements>
         ) : (loading && (this.renderBillingFormSkeleton()))}
@@ -300,6 +301,7 @@ Checkout.propTypes = {
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
   clientSecretId: PropTypes.string,
+  products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
 };
 
 Checkout.defaultProps = {
@@ -312,6 +314,7 @@ Checkout.defaultProps = {
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
   clientSecretId: null,
+  products: [],
 };
 
 const mapStateToProps = (state) => ({

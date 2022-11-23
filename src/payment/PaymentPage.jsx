@@ -105,7 +105,9 @@ class PaymentPage extends React.Component {
           />
         </div>
         <div className="col-md-7 pl-md-5">
-          <Checkout />
+          <Checkout
+            products={this.props.products}
+          />
         </div>
       </div>
     );
@@ -164,6 +166,7 @@ PaymentPage.propTypes = {
   fetchBasket: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
+  products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
 };
 
 PaymentPage.defaultProps = {
@@ -171,6 +174,7 @@ PaymentPage.defaultProps = {
   isRedirect: false,
   summaryQuantity: undefined,
   summarySubtotal: undefined,
+  products: [],
 };
 
 const mapStateToProps = (state) => ({
