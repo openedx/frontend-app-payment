@@ -178,6 +178,10 @@ class Checkout extends React.Component {
             outline: '0',
             boxShadow: '0 0 0 1px #0A3055', // $primary
           },
+          '.Label': {
+            fontSize: '1.125rem',
+            marginBottom: '0.5rem',
+          },
         },
       },
       fields: {
