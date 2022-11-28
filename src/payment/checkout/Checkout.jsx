@@ -165,7 +165,7 @@ class Checkout extends React.Component {
         // TODO: Investigate if these values can be pulled into javascript from the Paragon css files
         rules: {
           '.Input': {
-            border: 'solid 1px #707070',
+            border: 'solid 1px #707070', // $gray-500
             borderRadius: '0.375rem',
           },
           '.Input:hover': {
@@ -173,10 +173,10 @@ class Checkout extends React.Component {
           },
           '.Input:focus': {
             color: '#454545',
-            backgroundColor: '#FFFFFF',
-            borderColor: '#0A3055',
+            backgroundColor: '#FFFFFF', // $white
+            borderColor: '#0A3055', // $primary
             outline: '0',
-            boxShadow: '0 0 0 1px #0A3055',
+            boxShadow: '0 0 0 1px #0A3055', // $primary
           },
         },
       },
