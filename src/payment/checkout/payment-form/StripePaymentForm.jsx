@@ -218,7 +218,6 @@ function StripePaymentForm({
         id="payment-element"
         options={options}
         onReady={stripeElementsOnReady}
-        role="presentation"
       />
       <PlaceOrderButton
         onSubmitButtonClick={onSubmitButtonClick}

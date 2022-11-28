@@ -159,6 +159,10 @@ class Checkout extends React.Component {
     const options = {
       clientSecret: this.props.clientSecretId,
       appearance: {
+        // Normally these styling values would come from Paragon,
+        // however since stripe requires styling to be passed
+        // in through the appearance object they are currently placed here.
+        // TODO: Investigate if these values can be pulled into javascript from the Paragon css files
         rules: {
           '.Input': {
             border: 'solid 1px #707070',
