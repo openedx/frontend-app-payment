@@ -38,6 +38,7 @@ function StripePaymentForm({
   onSubmitButtonClick,
   options,
   submitErrors,
+  products,
   issueError: issueErrorDispatcher,
 }) {
   const stripe = useStripe();
@@ -128,7 +129,13 @@ function StripePaymentForm({
       } else {
         // Otherwise send paymentIntent.id to your server
         // TODO: refactor to fetch in service.js
-        const postData = formurlencoded({ payment_intent_id: result.paymentIntent.id });
+
+        // generate comma separated list of product SKUs
+        const skus = products.map(({ sku }) => sku).join(',');
+        const postData = formurlencoded({
+          payment_intent_id: result.paymentIntent.id,
+          skus,
+        });
         await getAuthenticatedHttpClient()
           .post(
             `${process.env.STRIPE_RESPONSE_URL}`,
@@ -241,6 +248,7 @@ StripePaymentForm.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
   issueError: PropTypes.func.isRequired,
 };
 
@@ -252,6 +260,7 @@ StripePaymentForm.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
+  products: [],
   options: null,
 };
 
