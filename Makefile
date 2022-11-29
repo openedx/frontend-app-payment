@@ -10,7 +10,7 @@ transifex_temp = ./temp/babel-plugin-react-intl
 
 precommit:
 	npm run lint
-	npm run audit:whitelisted
+	npm run audit:allowlisted
 
 requirements:
 	npm install

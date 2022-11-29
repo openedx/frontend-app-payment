@@ -41,5 +41,5 @@ jobs:
     - name: Build
       run: npm run build
 
-    - name: Run Whitelist Audit
-      run: npm run audit:whitelisted
+    - name: Run Allowlist Audit
+      run: npm run audit:allowlisted
