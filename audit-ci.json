@@ -4,8 +4,8 @@
         "GHSA-pfrx-2q88-qq97",
         "GHSA-f8q6-p94x-37v3",
         "GHSA-76p3-8jx3-jpfq",
-	"GHSA-3rfm-jhwj-7488",
-	"GHSA-hhq3-ff78-jv3g"
+        "GHSA-3rfm-jhwj-7488",
+        "GHSA-hhq3-ff78-jv3g"
     ],
     "moderate": true
 }
