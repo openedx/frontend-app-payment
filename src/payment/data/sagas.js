@@ -37,11 +37,13 @@ import * as PaymentApiService from './service';
 import { checkoutWithToken } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
+import { checkout as checkoutStripe } from '../payment-methods/stripe';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
   paypal: checkoutPaypal,
   'apple-pay': checkoutApplePay,
+  stripe: checkoutStripe,
 };
 
 function* isBasketProcessing() {

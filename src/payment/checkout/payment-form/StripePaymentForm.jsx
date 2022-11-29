@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
-import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
 import {
   PaymentElement,
@@ -11,13 +10,9 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 
-import { getConfig } from '@edx/frontend-platform';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
-import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { issueError, skuError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
@@ -36,11 +31,10 @@ function StripePaymentForm({
   isQuantityUpdating,
   isProcessing,
   onSubmitButtonClick,
+  onSubmitPayment,
   options,
   submitErrors,
   products,
-  issueError: issueErrorDispatcher,
-  skuError: skuErrorDispatcher,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -54,6 +48,9 @@ function StripePaymentForm({
 
   // TODO: rename to distinguish loading of data and loading of card details
   const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
+
+  // Generate comma separated list of product SKUs
+  const skus = products.map(({ sku }) => sku).join(',');
 
   useEffect(() => {
     // Focus on first input with an errror in the form
@@ -79,6 +76,9 @@ function StripePaymentForm({
   const onSubmit = async (values) => {
     // istanbul ignore if
     if (disabled) { return; }
+
+    // Clear the error message displayed at the bottom of the Stripe form
+    setMessage('');
 
     setshouldFocusFirstError(true);
     const requiredFields = getRequiredFields(values, isBulkOrder, enableStripePaymentProcessor);
@@ -112,90 +112,47 @@ function StripePaymentForm({
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-    setMessage('');
+
+    // Disable submit button before sending billing info to Stripe and calling ecommerce
     setIsLoading(true);
-
-    const stripePaymentMethodHandler = async (
-      result,
-      setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
-    ) => {
-      if (result.error) {
-        // Show error in payment form
-        if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
-          setMessage(result.error.message);
-        } else {
-          setMessage('An unexpected error occurred.');
-        }
-        setIsLoading(false);
-      } else {
-        // Otherwise send paymentIntent.id to your server
-        // TODO: refactor to fetch in service.js
-
-        // generate comma separated list of product SKUs
-        const skus = products.map(({ sku }) => sku).join(',');
-        const postData = formurlencoded({
-          payment_intent_id: result.paymentIntent.id,
-          skus,
-        });
-        await getAuthenticatedHttpClient()
-          .post(
-            `${process.env.STRIPE_RESPONSE_URL}`,
-            postData,
-            {
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    try {
+      const result = await stripe.updatePaymentIntent({
+        elements,
+        params: {
+          payment_method_data: {
+            billing_details: {
+              address: {
+                city,
+                country,
+                line1: address,
+                line2: unit || '',
+                postal_code: postalCode || '',
+                state: state || '',
+              },
+              email: context.authenticatedUser.email,
+              name: `${firstName} ${lastName}`,
             },
-          )
-          .then(response => {
-            setLocation(response.data.receipt_page_url);
-          })
-          .catch(error => {
-            const errorData = error.response ? error.response.data : null;
-            if (errorData && error.response.data.sdn_check_failure) {
-              // SDN failure: redirect to Ecommerce SDN error page.
-              setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
-            } else if (errorData && errorData.sku_error) {
-              skuErrorDispatcher();
-            } else if (errorData && errorData.user_message) {
-              // Stripe error: tell user.
-              issueErrorDispatcher();
-            } else {
-              // Unknown error: log and tell user.
-              logError(error, {
-                messagePrefix: 'Stripe Submit Error',
-                paymentMethod: 'Stripe',
-                paymentErrorType: 'Submit Error',
-              });
-              issueErrorDispatcher();
-            }
-            setIsLoading(false);
-          });
-      }
-    };
-
-    const result = await stripe.updatePaymentIntent({
-      elements,
-      params: {
-        payment_method_data: {
-          billing_details: {
-            address: {
-              city,
-              country,
-              line1: address,
-              line2: unit || '',
-              postal_code: postalCode || '',
-              state: state || '',
+            metadata: {
+              organization, // JK TODO: check how ecommerce is receiving this
+              purchased_for_organization: purchasedForOrganization,
             },
-            email: context.authenticatedUser.email,
-            name: `${firstName} ${lastName}`,
-          },
-          metadata: {
-            organization,
-            purchasedForOrganization,
           },
         },
-      },
-    });
-    stripePaymentMethodHandler(result);
+      });
+      onSubmitPayment({
+        paymentIntentId: result.paymentIntent.id,
+        skus,
+      });
+    } catch (error) {
+      // Show updatePaymentIntent error by the Stripe billing form fields
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setMessage(error.message);
+      } else {
+        setMessage('An unexpected error occurred.');
+      }
+      // Submit button should not be disabled after an error occured that the user can fix and re-submit
+      setIsLoading(false);
+    }
   };
 
   const stripeElementsOnReady = () => {
@@ -249,11 +206,10 @@ StripePaymentForm.propTypes = {
   isQuantityUpdating: PropTypes.bool,
   isProcessing: PropTypes.bool,
   onSubmitButtonClick: PropTypes.func.isRequired,
+  onSubmitPayment: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
   products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
-  issueError: PropTypes.func.isRequired,
-  skuError: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
@@ -270,8 +226,4 @@ StripePaymentForm.defaultProps = {
 
 export default reduxForm({ form: 'stripe' })(connect(
   null,
-  {
-    issueError,
-    skuError,
-  },
 )(injectIntl(StripePaymentForm)));

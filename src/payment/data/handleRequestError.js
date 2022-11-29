@@ -77,3 +77,18 @@ export default function handleRequestError(error) {
   logError(error);
   throw error;
 }
+
+// Processes API errors and converts them to error objects the sagas can use.
+export function handleApiError(requestError) {
+  try {
+    // Always throws an error:
+    handleRequestError(requestError);
+  } catch (errorWithMessages) {
+    const processedError = new Error();
+    processedError.messages = errorWithMessages.messages;
+    processedError.errors = errorWithMessages.errors;
+    processedError.fieldErrors = errorWithMessages.fieldErrors;
+
+    throw processedError;
+  }
+}
