@@ -210,15 +210,8 @@ class Checkout extends React.Component {
 
     const basketClassName = 'basket-section';
 
-    // TODO: fix loading, enableStripePaymentProcessor and clientSecretId distinction
-    // 1. loading should be renamed to loadingBasket
-    // 2. enableStripePaymentProcessor can be temporarily false while loading is true
-    // since the flag is in the BFF basket endpoint. Possibly change this?
-    // 3. Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
+    // TODO: Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
     // so we cannot rely on !options.clientSecret to distinguish btw payment processors
-    // 4. There is a delay from when the basket is done loading (plus the flag value)
-    // and when we get the clientSecretId so there is a point in time when loading skeleton
-    // is hidden but the Stripe billing and credit card fields are not shown
     const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
     const shouldDisplayCyberSourcePaymentForm = !loading && !enableStripePaymentProcessor;
 
