@@ -31,7 +31,6 @@ import {
   CAPTURE_KEY_START_TIMEOUT,
   fetchClientSecret,
   issueError,
-  skuError,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
