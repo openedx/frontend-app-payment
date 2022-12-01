@@ -156,12 +156,34 @@ class Checkout extends React.Component {
 
     // Stripe element config
     // TODO: Move these to a better home
-    const appearance = {
-      theme: 'stripe',
-    };
     const options = {
       clientSecret: this.props.clientSecretId,
-      appearance,
+      appearance: {
+        // Normally these styling values would come from Paragon,
+        // however since stripe requires styling to be passed
+        // in through the appearance object they are currently placed here.
+        // TODO: Investigate if these values can be pulled into javascript from the Paragon css files
+        rules: {
+          '.Input': {
+            border: 'solid 1px #707070', // $gray-500
+            borderRadius: '0.375rem',
+          },
+          '.Input:hover': {
+            border: 'solid 1px #1f3226',
+          },
+          '.Input:focus': {
+            color: '#454545',
+            backgroundColor: '#FFFFFF', // $white
+            borderColor: '#0A3055', // $primary
+            outline: '0',
+            boxShadow: '0 0 0 1px #0A3055', // $primary
+          },
+          '.Label': {
+            fontSize: '1.125rem',
+            marginBottom: '0.5rem',
+          },
+        },
+      },
       fields: {
         billingDetails: {
           address: 'never',

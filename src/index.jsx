@@ -72,7 +72,7 @@ subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={configureStore()}>
       <Header />
-      <main>
+      <main id="main">
         <Switch>
           <Route exact path="/" component={PaymentPage} />
           <Route path="*" component={EcommerceRedirect} />
