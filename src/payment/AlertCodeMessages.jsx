@@ -79,6 +79,16 @@ export function TransactionDeclined() {
   );
 }
 
+export function SkuError() {
+  return (
+    <FormattedMessage
+      id="payment.messages.transaction.error.sku"
+      defaultMessage="Your basket has changed since navigating to this page. Please reload the page and verify the product you are purchasing."
+      description="Notifies the user their basket has changed, so they can reload the page to see what it actually contains."
+    />
+  );
+}
+
 export function CaptureKeyTimeoutExplanation() {
   return (
     <FormattedMessage
