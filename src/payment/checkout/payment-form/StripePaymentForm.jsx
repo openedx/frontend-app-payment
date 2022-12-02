@@ -17,7 +17,7 @@ import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { issueError } from '../../data/actions';
+import { issueError, skuError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
@@ -40,6 +40,7 @@ function StripePaymentForm({
   submitErrors,
   products,
   issueError: issueErrorDispatcher,
+  skuError: skuErrorDispatcher,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -152,6 +153,8 @@ function StripePaymentForm({
             if (errorData && error.response.data.sdn_check_failure) {
               // SDN failure: redirect to Ecommerce SDN error page.
               setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
+            } else if (errorData && errorData.sku_error) {
+              skuErrorDispatcher();
             } else if (errorData && errorData.user_message) {
               // Stripe error: tell user.
               issueErrorDispatcher();
@@ -250,6 +253,7 @@ StripePaymentForm.propTypes = {
   submitErrors: PropTypes.objectOf(PropTypes.string),
   products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
   issueError: PropTypes.func.isRequired,
+  skuError: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
@@ -268,5 +272,6 @@ export default reduxForm({ form: 'stripe' })(connect(
   null,
   {
     issueError,
+    skuError,
   },
 )(injectIntl(StripePaymentForm)));
