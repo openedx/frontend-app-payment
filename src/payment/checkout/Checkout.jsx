@@ -166,7 +166,7 @@ class Checkout extends React.Component {
         rules: {
           '.Input': {
             border: 'solid 1px #707070', // $gray-500
-            borderRadius: '0.375rem',
+            borderRadius: '0',
           },
           '.Input:hover': {
             border: 'solid 1px #1f3226',
@@ -180,6 +180,8 @@ class Checkout extends React.Component {
           },
           '.Label': {
             fontSize: '1.125rem',
+            fontFamily: 'Inter,Helvetica Neue,Arial,sans-serif',
+            fontWeight: '400',
             marginBottom: '0.5rem',
           },
         },
