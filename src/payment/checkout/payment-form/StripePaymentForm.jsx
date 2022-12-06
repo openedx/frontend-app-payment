@@ -17,7 +17,7 @@ import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { issueError, skuError } from '../../data/actions';
+import { issueError, basketChangedError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
@@ -40,7 +40,7 @@ function StripePaymentForm({
   submitErrors,
   products,
   issueError: issueErrorDispatcher,
-  skuError: skuErrorDispatcher,
+  basketChangedError: basketChangedErrorDispatcher,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -123,6 +123,8 @@ function StripePaymentForm({
         // Show error in payment form
         if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
           setMessage(result.error.message);
+        } else if (result.error.type === 'invalid_request_error' && result.error.code === 'payment_intent_unexpected_state') {
+          basketChangedErrorDispatcher();
         } else {
           setMessage('An unexpected error occurred.');
         }
@@ -154,7 +156,7 @@ function StripePaymentForm({
               // SDN failure: redirect to Ecommerce SDN error page.
               setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
             } else if (errorData && errorData.sku_error) {
-              skuErrorDispatcher();
+              basketChangedErrorDispatcher();
             } else if (errorData && errorData.user_message) {
               // Stripe error: tell user.
               issueErrorDispatcher();
@@ -253,7 +255,7 @@ StripePaymentForm.propTypes = {
   submitErrors: PropTypes.objectOf(PropTypes.string),
   products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
   issueError: PropTypes.func.isRequired,
-  skuError: PropTypes.func.isRequired,
+  basketChangedError: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
@@ -272,6 +274,6 @@ export default reduxForm({ form: 'stripe' })(connect(
   null,
   {
     issueError,
-    skuError,
+    basketChangedError,
   },
 )(injectIntl(StripePaymentForm)));

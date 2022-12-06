@@ -24,7 +24,7 @@ import {
   clientSecretProcessing,
   fetchClientSecret,
   issueError,
-  skuError,
+  basketChangedError,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -283,11 +283,11 @@ export function* handleIssueError() {
   }, true);
 }
 
-export function* handleSkuError() {
+export function* handleBasketChangedError() {
   yield call(handleErrors, {
     messages: [
       {
-        code: 'sku-error-message',
+        code: 'basket-changed-error-message',
         messageType: 'error',
       },
     ],
@@ -304,5 +304,5 @@ export default function* saga() {
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);
   yield takeEvery(submitPayment.TRIGGER, handleSubmitPayment);
   yield takeEvery(issueError.TRIGGER, handleIssueError);
-  yield takeEvery(skuError.TRIGGER, handleSkuError);
+  yield takeEvery(basketChangedError.TRIGGER, handleBasketChangedError);
 }
