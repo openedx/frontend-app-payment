@@ -64,7 +64,7 @@ export default function handleRequestError(error) {
 
   // Single API error
   if (error.response && error.response.data.error_code) {
-    logInfo('API Error', error.response.data.errors);
+    logInfo('API Error', error.response.data.error_code);
     handleApiErrors([
       {
         error_code: error.response.data.error_code,
