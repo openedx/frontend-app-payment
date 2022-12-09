@@ -24,6 +24,7 @@ import {
   clientSecretProcessing,
   fetchClientSecret,
   issueError,
+  skuError,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -282,6 +283,17 @@ export function* handleIssueError() {
   }, true);
 }
 
+export function* handleSkuError() {
+  yield call(handleErrors, {
+    messages: [
+      {
+        code: 'sku-error-message',
+        messageType: 'error',
+      },
+    ],
+  }, true);
+}
+
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
@@ -292,4 +304,5 @@ export default function* saga() {
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);
   yield takeEvery(submitPayment.TRIGGER, handleSubmitPayment);
   yield takeEvery(issueError.TRIGGER, handleIssueError);
+  yield takeEvery(skuError.TRIGGER, handleSkuError);
 }

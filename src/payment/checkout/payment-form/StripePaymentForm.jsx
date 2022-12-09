@@ -17,7 +17,7 @@ import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { issueError } from '../../data/actions';
+import { issueError, skuError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
@@ -38,7 +38,9 @@ function StripePaymentForm({
   onSubmitButtonClick,
   options,
   submitErrors,
+  products,
   issueError: issueErrorDispatcher,
+  skuError: skuErrorDispatcher,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -128,7 +130,13 @@ function StripePaymentForm({
       } else {
         // Otherwise send paymentIntent.id to your server
         // TODO: refactor to fetch in service.js
-        const postData = formurlencoded({ payment_intent_id: result.paymentIntent.id });
+
+        // generate comma separated list of product SKUs
+        const skus = products.map(({ sku }) => sku).join(',');
+        const postData = formurlencoded({
+          payment_intent_id: result.paymentIntent.id,
+          skus,
+        });
         await getAuthenticatedHttpClient()
           .post(
             `${process.env.STRIPE_RESPONSE_URL}`,
@@ -145,6 +153,8 @@ function StripePaymentForm({
             if (errorData && error.response.data.sdn_check_failure) {
               // SDN failure: redirect to Ecommerce SDN error page.
               setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
+            } else if (errorData && errorData.sku_error) {
+              skuErrorDispatcher();
             } else if (errorData && errorData.user_message) {
               // Stripe error: tell user.
               issueErrorDispatcher();
@@ -210,8 +220,8 @@ function StripePaymentForm({
       <h5 aria-level="2">
         <FormattedMessage
           id="payment.card.details.billing.information.heading"
-          defaultMessage="Billing Information"
-          description="The heading for the credit card details billing information form"
+          defaultMessage="Billing Information (Required)"
+          description="The heading for the required credit card details billing information form"
         />
       </h5>
       <PaymentElement
@@ -241,7 +251,9 @@ StripePaymentForm.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
   issueError: PropTypes.func.isRequired,
+  skuError: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
@@ -252,6 +264,7 @@ StripePaymentForm.defaultProps = {
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
+  products: [],
   options: null,
 };
 
@@ -259,5 +272,6 @@ export default reduxForm({ form: 'stripe' })(connect(
   null,
   {
     issueError,
+    skuError,
   },
 )(injectIntl(StripePaymentForm)));
