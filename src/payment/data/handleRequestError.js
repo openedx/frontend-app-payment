@@ -73,6 +73,17 @@ export default function handleRequestError(error) {
     ]);
   }
 
+  // SKU error
+  if (error.response && error.response.data.sku_error) {
+    logInfo('SKU Error', error.response.data.sku_error);
+    handleApiErrors([
+      {
+        error_code: 'sku-error-message',
+        user_message: 'error',
+      },
+    ]);
+  }
+
   // Other errors
   logError(error);
   throw error;
