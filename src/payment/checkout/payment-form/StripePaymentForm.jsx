@@ -1,7 +1,7 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import PropTypes from 'prop-types';
 import {
@@ -23,18 +23,14 @@ import {
 import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
 
 function StripePaymentForm({
-  disabled,
-  enableStripePaymentProcessor,
   handleSubmit,
   isBulkOrder,
-  loading,
   isQuantityUpdating,
   isProcessing,
   onSubmitButtonClick,
   onSubmitPayment,
   options,
   submitErrors,
-  products,
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -45,6 +41,10 @@ function StripePaymentForm({
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
   const inputElement = useRef(null);
+
+  const {
+    enableStripePaymentProcessor, loading, submitting, products,
+  } = useSelector(state => state.payment.basket);
 
   // TODO: rename to distinguish loading of data and loading of card details
   const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
@@ -75,7 +75,7 @@ function StripePaymentForm({
 
   const onSubmit = async (values) => {
     // istanbul ignore if
-    if (disabled) { return; }
+    if (submitting) { return; }
 
     // Clear the error message displayed at the bottom of the Stripe form
     setMessage('');
@@ -171,7 +171,7 @@ function StripePaymentForm({
     <form id="payment-form" ref={inputElement} onSubmit={handleSubmit(onSubmit)} noValidate>
       <CardHolderInformation
         showBulkEnrollmentFields={isBulkOrder}
-        disabled={disabled}
+        disabled={submitting}
         enableStripePaymentProcessor={enableStripePaymentProcessor}
       />
       <h5 aria-level="2">
@@ -189,7 +189,7 @@ function StripePaymentForm({
       <PlaceOrderButton
         onSubmitButtonClick={onSubmitButtonClick}
         showLoadingButton={showLoadingButton}
-        disabled={disabled}
+        disabled={submitting}
         isProcessing={isProcessing}
       />
       {message && <div id="payment-message">{message}</div>}
@@ -198,29 +198,21 @@ function StripePaymentForm({
 }
 
 StripePaymentForm.propTypes = {
-  disabled: PropTypes.bool,
-  enableStripePaymentProcessor: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   isBulkOrder: PropTypes.bool,
-  loading: PropTypes.bool,
   isQuantityUpdating: PropTypes.bool,
   isProcessing: PropTypes.bool,
   onSubmitButtonClick: PropTypes.func.isRequired,
   onSubmitPayment: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
-  products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
 };
 
 StripePaymentForm.defaultProps = {
-  disabled: false,
-  enableStripePaymentProcessor: true,
   isBulkOrder: false,
-  loading: false,
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
-  products: [],
   options: null,
 };
 
