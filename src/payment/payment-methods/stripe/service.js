@@ -46,7 +46,7 @@ export default async function checkout(
         }
         logError(error, {
           messagePrefix: 'SDN Check Error',
-          paymentMethod: 'Cybersource',
+          paymentMethod: 'Stripe',
           paymentErrorType: 'SDN Check Submit Api',
           basketId,
         });
@@ -57,6 +57,7 @@ export default async function checkout(
           messagePrefix: 'Stripe Submit Error',
           paymentMethod: 'Stripe',
           paymentErrorType: 'Submit Error',
+          basketId,
         });
         handleApiError(error);
       }
