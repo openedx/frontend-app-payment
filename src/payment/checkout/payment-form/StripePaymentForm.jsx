@@ -34,20 +34,28 @@ function StripePaymentForm({
 }) {
   const stripe = useStripe();
   const elements = useElements();
-
   const context = useContext(AppContext);
+
+  // Local state needed to control the Stripe Element loading state,
+  // since 'stripe' and 'element' instances are there before the PaymentElement actually loads
+  const [isStripeElementLoading, setIsStripeElementLoading] = useState(true);
   const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Show error on CardHolderInformation input box
+  const inputElement = useRef(null);
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
-  const inputElement = useRef(null);
 
   const {
     enableStripePaymentProcessor, loading, submitting, products,
   } = useSelector(state => state.payment.basket);
 
-  // TODO: rename to distinguish loading of data and loading of card details
-  const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
+  // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
+  // isQuantityUpdating is true when isBasketProcessing is true when there is an update in the quantity for
+  // bulk purchases but also happens on submit, when the 'processing' button state should show instead
+  const showLoadingButton = (
+    loading || isQuantityUpdating || !stripe || !elements || isStripeElementLoading
+  ) && !isProcessing;
 
   // Generate comma separated list of product SKUs
   const skus = products.map(({ sku }) => sku).join(',');
@@ -113,8 +121,6 @@ function StripePaymentForm({
       return;
     }
 
-    // Disable submit button before sending billing info to Stripe and calling ecommerce
-    setIsLoading(true);
     try {
       const result = await stripe.updatePaymentIntent({
         elements,
@@ -133,7 +139,7 @@ function StripePaymentForm({
               name: `${firstName} ${lastName}`,
             },
             metadata: {
-              organization, // JK TODO: check how ecommerce is receiving this
+              organization,
               purchased_for_organization: purchasedForOrganization,
             },
           },
@@ -150,13 +156,11 @@ function StripePaymentForm({
       } else {
         setMessage('An unexpected error occurred.');
       }
-      // Submit button should not be disabled after an error occured that the user can fix and re-submit
-      setIsLoading(false);
     }
   };
 
   const stripeElementsOnReady = () => {
-    setIsLoading(false);
+    setIsStripeElementLoading(false);
     markPerformanceIfAble('Stripe Elements component rendered');
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',

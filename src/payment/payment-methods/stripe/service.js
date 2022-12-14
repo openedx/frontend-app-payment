@@ -60,6 +60,5 @@ export default async function checkout(
         });
         handleApiError(error);
       }
-      // TODO setIsLoading(false);
     });
 }
