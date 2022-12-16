@@ -15,7 +15,13 @@ export function* handleErrors(e, clearExistingMessages) {
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
+      if (error.code === 'sku-error-message') {
+        yield put(addMessage(error.code, error.userMessage, {}, MESSAGE_TYPES.ERROR));
+      } else if (error.data === undefined && error.messageType === null) {
+        yield put(addMessage('transaction-declined-message', error.userMessage, {}, MESSAGE_TYPES.ERROR));
+      } else {
+        yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
+      }
     }
   }
   if (e.messages !== undefined) {

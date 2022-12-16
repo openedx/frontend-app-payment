@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import qs from 'qs';
 import { logError } from '@edx/frontend-platform/logging';
-import handleRequestError from '../../data/handleRequestError';
+import { handleApiError } from '../../data/handleRequestError';
 import { CARD_TYPES } from '../../checkout/payment-form/utils/credit-card';
 
 import { checkoutWithToken, normalizeFieldErrors } from './service';
@@ -157,7 +157,7 @@ describe('Cybersource Service', () => {
       expect.hasAssertions();
       await checkoutWithToken(basket, formDetails).catch(() => {
         expectNoCardDataToBePresent(axiosMock.history.post[0].data);
-        expect(handleRequestError).toHaveBeenCalledWith(expect.any(Error));
+        expect(handleApiError).toHaveBeenCalledWith(expect.any(Error));
       });
     });
 
