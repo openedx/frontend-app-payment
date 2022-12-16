@@ -1,7 +1,7 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import PropTypes from 'prop-types';
 import {
@@ -61,7 +61,7 @@ function StripePaymentForm({
   const skus = products.map(({ sku }) => sku).join(',');
 
   useEffect(() => {
-    // Focus on first input with an errror in the form
+    // Focus on first input with an error in the form
     if (
       shouldFocusFirstError
       && Object.keys(submitErrors).length > 0
@@ -220,6 +220,4 @@ StripePaymentForm.defaultProps = {
   options: null,
 };
 
-export default reduxForm({ form: 'stripe' })(connect(
-  null,
-)(injectIntl(StripePaymentForm)));
+export default reduxForm({ form: 'stripe' })((injectIntl(StripePaymentForm)));
