@@ -3,7 +3,7 @@ import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import formurlencoded from 'form-urlencoded';
 import { logError } from '@edx/frontend-platform/logging';
 
-import handleRequestError from '../../data/handleRequestError';
+import { handleApiError } from '../../data/handleRequestError';
 
 import { CARD_ICONS } from '../../checkout/payment-form/utils/credit-card';
 
@@ -38,21 +38,6 @@ export function normalizeFieldErrors(fieldErrors) {
   }
   // Return it unchanged if it isn't an object.
   return fieldErrors;
-}
-
-// Processes API errors and converts them to error objects the sagas can use.
-function handleApiError(requestError) {
-  try {
-    // Always throws an error:
-    handleRequestError(requestError);
-  } catch (errorWithMessages) {
-    const processedError = new Error();
-    processedError.messages = errorWithMessages.messages;
-    processedError.errors = errorWithMessages.errors;
-    processedError.fieldErrors = errorWithMessages.fieldErrors;
-
-    throw processedError;
-  }
 }
 
 function getPaymentToken(microformOptions) {
