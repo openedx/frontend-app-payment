@@ -8,10 +8,10 @@ import { sendPageEvent } from '@edx/frontend-platform/analytics';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket, fetchCaptureKey } from './data/actions';
+import { fetchBasket } from './data/actions';
 
 // Selectors
-import { paymentSelector, updateCaptureKeySelector } from './data/selectors';
+import { paymentSelector } from './data/selectors';
 
 // Components
 import PageLoading from './PageLoading';
@@ -20,6 +20,7 @@ import {
   SingleEnrollmentCodeWarning,
   EnrollmentCodeQuantityUpdated,
   TransactionDeclined,
+  SkuError,
   CaptureKeyTimeoutTwoMinutes,
   CaptureKeyTimeoutOneMinute,
 } from './AlertCodeMessages';
@@ -51,7 +52,6 @@ class PaymentPage extends React.Component {
   componentDidMount() {
     sendPageEvent();
     this.props.fetchBasket();
-    this.props.fetchCaptureKey();
   }
 
   renderContent() {
@@ -140,6 +140,9 @@ class PaymentPage extends React.Component {
             'transaction-declined-message': (
               <TransactionDeclined />
             ),
+            'sku-error-message': (
+              <SkuError />
+            ),
             'capture-key-2mins-message': (
               <CaptureKeyTimeoutTwoMinutes />
             ),
@@ -163,7 +166,6 @@ PaymentPage.propTypes = {
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
-  fetchCaptureKey: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -177,13 +179,6 @@ PaymentPage.defaultProps = {
 
 const mapStateToProps = (state) => ({
   ...paymentSelector(state),
-  ...updateCaptureKeySelector(state),
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    fetchBasket,
-    fetchCaptureKey,
-  },
-)(injectIntl(PaymentPage));
+export default connect(mapStateToProps, { fetchBasket })(injectIntl(PaymentPage));

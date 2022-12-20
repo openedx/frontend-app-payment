@@ -25,5 +25,8 @@ Code Structure
 **paypal**
   Components and API calls associated with using PayPal as a payment method.
 
+**stripe**
+  Components and API calls associated with using Stripe as a payment method.
+
 **utils**
   Payment helper utilities.

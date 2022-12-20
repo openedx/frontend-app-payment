@@ -14,6 +14,7 @@ import paymentSaga, {
   handleAddCoupon,
   handleFetchCaptureKey,
   handleCaptureKeyTimeout,
+  handleFetchClientSecret,
 } from './sagas';
 import { transformResults } from './service';
 import {
@@ -26,6 +27,7 @@ import {
   updateQuantity,
   submitPayment,
   CAPTURE_KEY_START_TIMEOUT,
+  fetchClientSecret,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
@@ -737,6 +739,7 @@ describe('saga tests', () => {
 
     expect(gen.next().value).toEqual(takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey));
     expect(gen.next().value).toEqual(takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout));
+    expect(gen.next().value).toEqual(takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret));
     expect(gen.next().value).toEqual(takeEvery(fetchBasket.TRIGGER, handleFetchBasket));
     expect(gen.next().value).toEqual(takeEvery(addCoupon.TRIGGER, handleAddCoupon));
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));

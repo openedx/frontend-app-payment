@@ -163,9 +163,15 @@ describe('redux tests', () => {
     });
 
     describe('submitPayment actions', () => {
-      it('submitPayment.TRIGGER action', () => {
-        store.dispatch(submitPayment({ method: 'cybersource' }));
-        expect(store.getState().payment.basket.paymentMethod).toBe('cybersource');
+      const paymentProcessors = [
+        'cybersource',
+        'paypal',
+        'stripe',
+      ];
+
+      test.each(paymentProcessors)('submitPayment.TRIGGER action', (processor) => {
+        store.dispatch(submitPayment({ method: processor }));
+        expect(store.getState().payment.basket.paymentMethod).toBe(processor);
       });
 
       it('submitPayment.REQUEST action', () => {
