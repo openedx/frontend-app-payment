@@ -20,6 +20,7 @@ import {
   SingleEnrollmentCodeWarning,
   EnrollmentCodeQuantityUpdated,
   TransactionDeclined,
+  SkuError,
   CaptureKeyTimeoutTwoMinutes,
   CaptureKeyTimeoutOneMinute,
 } from './AlertCodeMessages';
@@ -138,6 +139,9 @@ class PaymentPage extends React.Component {
             ),
             'transaction-declined-message': (
               <TransactionDeclined />
+            ),
+            'sku-error-message': (
+              <SkuError />
             ),
             'capture-key-2mins-message': (
               <CaptureKeyTimeoutTwoMinutes />

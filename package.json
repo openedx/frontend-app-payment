@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "build": "fedx-scripts webpack && node create-apple-merchant-file.js",
-    "audit:whitelisted": "npx audit-ci --config audit-ci.json",
+    "audit:allowlisted": "npx audit-ci --config audit-ci.json",
     "i18n_extract": "BABEL_ENV=i18n fedx-scripts babel src --quiet > /dev/null",
     "lint": "fedx-scripts eslint . --ext .js,.jsx",
     "prepare": "husky install",

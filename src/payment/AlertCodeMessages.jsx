@@ -73,6 +73,14 @@ export const TransactionDeclined = () => (
   />
 );
 
+export const SkuError = () => (
+  <FormattedMessage
+    id="payment.messages.transaction.error.sku"
+    defaultMessage="Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing."
+    description="Notifies the user their cart has changed, so they can reload the page to see what it actually contains."
+  />
+);
+
 export const CaptureKeyTimeoutExplanation = () => (
   <FormattedMessage
     id="payment.messages.key.timeout.body"
