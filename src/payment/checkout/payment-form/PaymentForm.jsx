@@ -129,7 +129,7 @@ export class PaymentFormComponent extends React.Component {
       isQuantityUpdating,
     } = this.props;
 
-    const showLoadingButton = loading || isQuantityUpdating || !window.microform;
+    const showLoadingButton = (loading || isQuantityUpdating || !window.microform) && !isProcessing;
 
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>

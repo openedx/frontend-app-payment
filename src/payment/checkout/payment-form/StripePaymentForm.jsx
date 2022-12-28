@@ -1,9 +1,8 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
-import formurlencoded from 'form-urlencoded';
 import PropTypes from 'prop-types';
 import {
   PaymentElement,
@@ -11,13 +10,9 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 
-import { getConfig } from '@edx/frontend-platform';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
-import { logError } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { issueError } from '../../data/actions';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
@@ -28,33 +23,45 @@ import {
 import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
 
 function StripePaymentForm({
-  disabled,
-  enableStripePaymentProcessor,
   handleSubmit,
   isBulkOrder,
-  loading,
   isQuantityUpdating,
   isProcessing,
   onSubmitButtonClick,
+  onSubmitPayment,
   options,
   submitErrors,
-  issueError: issueErrorDispatcher,
 }) {
   const stripe = useStripe();
   const elements = useElements();
-
   const context = useContext(AppContext);
+
+  // Local state needed to control the Stripe Element loading state,
+  // since 'stripe' and 'element' instances are there before the PaymentElement actually loads
+  const [isStripeElementLoading, setIsStripeElementLoading] = useState(true);
   const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Show error on CardHolderInformation input box
+  const inputElement = useRef(null);
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
-  const inputElement = useRef(null);
 
-  // TODO: rename to distinguish loading of data and loading of card details
-  const showLoadingButton = loading || isQuantityUpdating || isLoading || !stripe || !elements;
+  const {
+    enableStripePaymentProcessor, loading, submitting, products,
+  } = useSelector(state => state.payment.basket);
+
+  // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
+  // isQuantityUpdating is true when isBasketProcessing is true when there is an update in the quantity for
+  // bulk purchases but also happens on submit, when the 'processing' button state should show instead
+  const showLoadingButton = (
+    loading || isQuantityUpdating || !stripe || !elements || isStripeElementLoading
+  ) && !isProcessing;
+
+  // Generate comma separated list of product SKUs
+  const skus = products.map(({ sku }) => sku).join(',');
 
   useEffect(() => {
-    // Focus on first input with an errror in the form
+    // Focus on first input with an error in the form
     if (
       shouldFocusFirstError
       && Object.keys(submitErrors).length > 0
@@ -76,7 +83,10 @@ function StripePaymentForm({
 
   const onSubmit = async (values) => {
     // istanbul ignore if
-    if (disabled) { return; }
+    if (submitting) { return; }
+
+    // Clear the error message displayed at the bottom of the Stripe form
+    setMessage('');
 
     setshouldFocusFirstError(true);
     const requiredFields = getRequiredFields(values, isBulkOrder, enableStripePaymentProcessor);
@@ -110,86 +120,47 @@ function StripePaymentForm({
       // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
-    setMessage('');
-    setIsLoading(true);
 
-    const stripePaymentMethodHandler = async (
-      result,
-      setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
-    ) => {
-      if (result.error) {
-        // Show error in payment form
-        if (result.error.type === 'card_error' || result.error.type === 'validation_error') {
-          setMessage(result.error.message);
-        } else {
-          setMessage('An unexpected error occurred.');
-        }
-        setIsLoading(false);
-      } else {
-        // Otherwise send paymentIntent.id to your server
-        // TODO: refactor to fetch in service.js
-        const postData = formurlencoded({ payment_intent_id: result.paymentIntent.id });
-        await getAuthenticatedHttpClient()
-          .post(
-            `${process.env.STRIPE_RESPONSE_URL}`,
-            postData,
-            {
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    try {
+      const result = await stripe.updatePaymentIntent({
+        elements,
+        params: {
+          payment_method_data: {
+            billing_details: {
+              address: {
+                city,
+                country,
+                line1: address,
+                line2: unit || '',
+                postal_code: postalCode || '',
+                state: state || '',
+              },
+              email: context.authenticatedUser.email,
+              name: `${firstName} ${lastName}`,
             },
-          )
-          .then(response => {
-            setLocation(response.data.receipt_page_url);
-          })
-          .catch(error => {
-            const errorData = error.response ? error.response.data : null;
-            if (errorData && error.response.data.sdn_check_failure) {
-              // SDN failure: redirect to Ecommerce SDN error page.
-              setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
-            } else if (errorData && errorData.user_message) {
-              // Stripe error: tell user.
-              issueErrorDispatcher();
-            } else {
-              // Unknown error: log and tell user.
-              logError(error, {
-                messagePrefix: 'Stripe Submit Error',
-                paymentMethod: 'Stripe',
-                paymentErrorType: 'Submit Error',
-              });
-              issueErrorDispatcher();
-            }
-            setIsLoading(false);
-          });
-      }
-    };
-
-    const result = await stripe.updatePaymentIntent({
-      elements,
-      params: {
-        payment_method_data: {
-          billing_details: {
-            address: {
-              city,
-              country,
-              line1: address,
-              line2: unit || '',
-              postal_code: postalCode || '',
-              state: state || '',
+            metadata: {
+              organization,
+              purchased_for_organization: purchasedForOrganization,
             },
-            email: context.authenticatedUser.email,
-            name: `${firstName} ${lastName}`,
-          },
-          metadata: {
-            organization,
-            purchasedForOrganization,
           },
         },
-      },
-    });
-    stripePaymentMethodHandler(result);
+      });
+      onSubmitPayment({
+        paymentIntentId: result.paymentIntent.id,
+        skus,
+      });
+    } catch (error) {
+      // Show updatePaymentIntent error by the Stripe billing form fields
+      if (error.type === 'card_error' || error.type === 'validation_error') {
+        setMessage(error.message);
+      } else {
+        setMessage('An unexpected error occurred.');
+      }
+    }
   };
 
   const stripeElementsOnReady = () => {
-    setIsLoading(false);
+    setIsStripeElementLoading(false);
     markPerformanceIfAble('Stripe Elements component rendered');
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
@@ -204,14 +175,14 @@ function StripePaymentForm({
     <form id="payment-form" ref={inputElement} onSubmit={handleSubmit(onSubmit)} noValidate>
       <CardHolderInformation
         showBulkEnrollmentFields={isBulkOrder}
-        disabled={disabled}
+        disabled={submitting}
         enableStripePaymentProcessor={enableStripePaymentProcessor}
       />
       <h5 aria-level="2">
         <FormattedMessage
           id="payment.card.details.billing.information.heading"
-          defaultMessage="Billing Information"
-          description="The heading for the credit card details billing information form"
+          defaultMessage="Billing Information (Required)"
+          description="The heading for the required credit card details billing information form"
         />
       </h5>
       <PaymentElement
@@ -222,7 +193,7 @@ function StripePaymentForm({
       <PlaceOrderButton
         onSubmitButtonClick={onSubmitButtonClick}
         showLoadingButton={showLoadingButton}
-        disabled={disabled}
+        disabled={submitting}
         isProcessing={isProcessing}
       />
       {message && <div id="payment-message">{message}</div>}
@@ -231,33 +202,22 @@ function StripePaymentForm({
 }
 
 StripePaymentForm.propTypes = {
-  disabled: PropTypes.bool,
-  enableStripePaymentProcessor: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
   isBulkOrder: PropTypes.bool,
-  loading: PropTypes.bool,
   isQuantityUpdating: PropTypes.bool,
   isProcessing: PropTypes.bool,
   onSubmitButtonClick: PropTypes.func.isRequired,
+  onSubmitPayment: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
-  issueError: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
-  disabled: false,
-  enableStripePaymentProcessor: true,
   isBulkOrder: false,
-  loading: false,
   isQuantityUpdating: false,
   isProcessing: false,
   submitErrors: {},
   options: null,
 };
 
-export default reduxForm({ form: 'stripe' })(connect(
-  null,
-  {
-    issueError,
-  },
-)(injectIntl(StripePaymentForm)));
+export default reduxForm({ form: 'stripe' })((injectIntl(StripePaymentForm)));

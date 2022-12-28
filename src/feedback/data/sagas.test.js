@@ -32,6 +32,54 @@ describe('saga tests', () => {
       expect(caughtErrors).toEqual([]);
     });
 
+    it('should add a transaction declined error message on errors with undefined data', async () => {
+      error.errors = [
+        {
+          data: undefined,
+          userMessage: 'error',
+          messageType: null,
+        },
+      ];
+      try {
+        await runSaga(
+          {
+            dispatch: action => dispatched.push(action),
+            onError: err => caughtErrors.push(err),
+          },
+          handleErrors,
+          error,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      const lastAction = dispatched[dispatched.length - 1];
+      expect(lastAction.payload).toEqual(expect.objectContaining({ code: 'transaction-declined-message' }));
+      expect(caughtErrors).toEqual([]);
+    });
+
+    it('should add a sku error message on sku mismatch error from ecommerce', async () => {
+      error.errors = [
+        {
+          code: 'sku-error-message',
+          userMessage: 'error',
+          messageType: MESSAGE_TYPES.ERROR,
+        },
+      ];
+      try {
+        await runSaga(
+          {
+            dispatch: action => dispatched.push(action),
+            onError: err => caughtErrors.push(err),
+          },
+          handleErrors,
+          error,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      const lastAction = dispatched[dispatched.length - 1];
+      expect(lastAction.payload).toEqual(expect.objectContaining({ code: 'sku-error-message' }));
+      expect(caughtErrors).toEqual([]);
+    });
+
     it('should dispatch addMessage actions on API errors', async () => {
       error.errors = [
         {

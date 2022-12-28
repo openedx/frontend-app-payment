@@ -23,7 +23,6 @@ import {
   fetchCaptureKey,
   clientSecretProcessing,
   fetchClientSecret,
-  issueError,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -36,11 +35,13 @@ import * as PaymentApiService from './service';
 import { checkoutWithToken } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
+import { checkout as checkoutStripe } from '../payment-methods/stripe';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
   paypal: checkoutPaypal,
   'apple-pay': checkoutApplePay,
+  stripe: checkoutStripe,
 };
 
 function* isBasketProcessing() {
@@ -270,18 +271,6 @@ export function* handleSubmitPayment({ payload }) {
   }
 }
 
-export function* handleIssueError() {
-  // Show <TransactionDeclined>:
-  yield call(handleErrors, {
-    messages: [
-      {
-        code: 'transaction-declined-message',
-        messageType: 'error',
-      },
-    ],
-  }, true);
-}
-
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
@@ -291,5 +280,4 @@ export default function* saga() {
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);
   yield takeEvery(submitPayment.TRIGGER, handleSubmitPayment);
-  yield takeEvery(issueError.TRIGGER, handleIssueError);
 }
