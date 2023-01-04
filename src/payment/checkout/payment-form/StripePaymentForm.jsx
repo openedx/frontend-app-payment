@@ -39,7 +39,6 @@ function StripePaymentForm({
   // Local state needed to control the Stripe Element loading state,
   // since 'stripe' and 'element' instances are there before the PaymentElement actually loads
   const [isStripeElementLoading, setIsStripeElementLoading] = useState(true);
-  const [message, setMessage] = useState(null);
 
   // Show error on CardHolderInformation input box
   const inputElement = useRef(null);
@@ -85,22 +84,11 @@ function StripePaymentForm({
     // istanbul ignore if
     if (submitting) { return; }
 
-    // Clear the error message displayed at the bottom of the Stripe form
-    setMessage('');
-
     setshouldFocusFirstError(true);
     const requiredFields = getRequiredFields(values, isBulkOrder, enableStripePaymentProcessor);
     const {
       firstName,
       lastName,
-      address,
-      unit,
-      city,
-      country,
-      state,
-      postalCode,
-      organization,
-      purchasedForOrganization,
     } = values;
 
     const errors = {
@@ -121,42 +109,9 @@ function StripePaymentForm({
       return;
     }
 
-    try {
-      const result = await stripe.updatePaymentIntent({
-        elements,
-        params: {
-          payment_method_data: {
-            billing_details: {
-              address: {
-                city,
-                country,
-                line1: address,
-                line2: unit || '',
-                postal_code: postalCode || '',
-                state: state || '',
-              },
-              email: context.authenticatedUser.email,
-              name: `${firstName} ${lastName}`,
-            },
-            metadata: {
-              organization,
-              purchased_for_organization: purchasedForOrganization,
-            },
-          },
-        },
-      });
-      onSubmitPayment({
-        paymentIntentId: result.paymentIntent.id,
-        skus,
-      });
-    } catch (error) {
-      // Show updatePaymentIntent error by the Stripe billing form fields
-      if (error.type === 'card_error' || error.type === 'validation_error') {
-        setMessage(error.message);
-      } else {
-        setMessage('An unexpected error occurred.');
-      }
-    }
+    onSubmitPayment({
+      skus, elements, stripe, context, values,
+    });
   };
 
   const stripeElementsOnReady = () => {
@@ -196,7 +151,6 @@ function StripePaymentForm({
         disabled={submitting}
         isProcessing={isProcessing}
       />
-      {message && <div id="payment-message">{message}</div>}
     </form>
   );
 }

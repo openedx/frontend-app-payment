@@ -73,12 +73,23 @@ export default function handleRequestError(error) {
     ]);
   }
 
-  // SKU error
+  // SKU mismatch error
   if (error.response && error.response.data.sku_error) {
     logInfo('SKU Error', error.response.data.sku_error);
     handleApiErrors([
       {
-        error_code: 'sku-error-message',
+        error_code: 'basket-changed-error-message',
+        user_message: 'error',
+      },
+    ]);
+  }
+
+  // Basket already purchased
+  if (error.code === 'payment_intent_unexpected_state' && error.type === 'invalid_request_error') {
+    logInfo('Basket Changed Error', error.code);
+    handleApiErrors([
+      {
+        error_code: 'basket-changed-error-message',
         user_message: 'error',
       },
     ]);
