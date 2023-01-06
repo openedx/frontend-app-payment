@@ -64,7 +64,7 @@ export default function handleRequestError(error) {
 
   // Single API error
   if (error.response && error.response.data.error_code) {
-    logInfo('API Error', error.response.data.errors);
+    logInfo('API Error', error.response.data.error_code);
     handleApiErrors([
       {
         error_code: error.response.data.error_code,
@@ -73,7 +73,44 @@ export default function handleRequestError(error) {
     ]);
   }
 
+  // SKU mismatch error
+  if (error.response && error.response.data.sku_error) {
+    logInfo('SKU Error', error.response.data.sku_error);
+    handleApiErrors([
+      {
+        error_code: 'basket-changed-error-message',
+        user_message: 'error',
+      },
+    ]);
+  }
+
+  // Basket already purchased
+  if (error.code === 'payment_intent_unexpected_state' && error.type === 'invalid_request_error') {
+    logInfo('Basket Changed Error', error.code);
+    handleApiErrors([
+      {
+        error_code: 'basket-changed-error-message',
+        user_message: 'error',
+      },
+    ]);
+  }
+
   // Other errors
   logError(error);
   throw error;
+}
+
+// Processes API errors and converts them to error objects the sagas can use.
+export function handleApiError(requestError) {
+  try {
+    // Always throws an error:
+    handleRequestError(requestError);
+  } catch (errorWithMessages) {
+    const processedError = new Error();
+    processedError.messages = errorWithMessages.messages;
+    processedError.errors = errorWithMessages.errors;
+    processedError.fieldErrors = errorWithMessages.fieldErrors;
+
+    throw processedError;
+  }
 }

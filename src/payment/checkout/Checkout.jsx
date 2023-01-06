@@ -87,6 +87,10 @@ class Checkout extends React.Component {
     );
   };
 
+  handleSubmitStripe = (formData) => {
+    this.props.submitPayment({ method: 'stripe', ...formData });
+  };
+
   handleSubmitStripeButtonClick = () => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
@@ -210,15 +214,8 @@ class Checkout extends React.Component {
 
     const basketClassName = 'basket-section';
 
-    // TODO: fix loading, enableStripePaymentProcessor and clientSecretId distinction
-    // 1. loading should be renamed to loadingBasket
-    // 2. enableStripePaymentProcessor can be temporarily false while loading is true
-    // since the flag is in the BFF basket endpoint. Possibly change this?
-    // 3. Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
+    // TODO: Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
     // so we cannot rely on !options.clientSecret to distinguish btw payment processors
-    // 4. There is a delay from when the basket is done loading (plus the flag value)
-    // and when we get the clientSecretId so there is a point in time when loading skeleton
-    // is hidden but the Stripe billing and credit card fields are not shown
     const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
     const shouldDisplayCyberSourcePaymentForm = !loading && !enableStripePaymentProcessor;
 
@@ -271,14 +268,11 @@ class Checkout extends React.Component {
           <Elements options={options} stripe={stripePromise}>
             <StripePaymentForm
               options={options}
+              onSubmitPayment={this.handleSubmitStripe}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-              disabled={submitting}
               isBulkOrder={isBulkOrder}
               isProcessing={stripeIsSubmitting}
-              loading={loading}
               isQuantityUpdating={isQuantityUpdating}
-              enableStripePaymentProcessor={enableStripePaymentProcessor}
-              products={this.props.products}
             />
           </Elements>
         ) : (loading && (this.renderBillingFormSkeleton()))}
@@ -321,11 +315,10 @@ Checkout.propTypes = {
   isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
-  paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource']),
+  paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource', 'stripe']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
   clientSecretId: PropTypes.string,
-  products: PropTypes.array, // eslint-disable-line react/forbid-prop-types,
 };
 
 Checkout.defaultProps = {
@@ -338,7 +331,6 @@ Checkout.defaultProps = {
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
   clientSecretId: null,
-  products: [],
 };
 
 const mapStateToProps = (state) => ({

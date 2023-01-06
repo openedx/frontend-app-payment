@@ -2,88 +2,113 @@
 
 exports[`AlertMessage should default its severity when necessary 1`] = `
 <div
-  className="alert fade alert-dismissible alert-warning show"
-  hidden={false}
+  className="fade alert-content alert alert-warning show"
+  dialog="Wondrous message!"
   role="alert"
 >
-  <button
-    aria-label="Close"
-    className="btn close"
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>
   <div
-    className="alert-dialog"
+    className="pgn__alert-message-wrapper"
   >
-    Wondrous message!
+    <div
+      className="alert-message-content"
+    >
+      Wondrous message!
+    </div>
+    <div
+      className="pgn__alert-actions pgn__action-row"
+    >
+      <span
+        className="pgn__action-row-spacer"
+      />
+      <button
+        className="btn btn-tertiary btn-sm"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Dismiss
+      </button>
+    </div>
   </div>
 </div>
 `;
 
 exports[`AlertMessage should render a userMessage element 1`] = `
 <div
-  className="alert fade alert-dismissible alert-warning show"
-  hidden={false}
-  role="alert"
->
-  <button
-    aria-label="Close"
-    className="btn close"
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>
-  <div
-    className="alert-dialog"
-  >
+  className="fade alert-content alert alert-warning show"
+  dialog={
     <span
       values={Object {}}
     >
       Wondrous message!
     </span>
+  }
+  role="alert"
+>
+  <div
+    className="pgn__alert-message-wrapper"
+  >
+    <div
+      className="alert-message-content"
+    >
+      <span
+        values={Object {}}
+      >
+        Wondrous message!
+      </span>
+    </div>
+    <div
+      className="pgn__alert-actions pgn__action-row"
+    >
+      <span
+        className="pgn__action-row-spacer"
+      />
+      <button
+        className="btn btn-tertiary btn-sm"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Dismiss
+      </button>
+    </div>
   </div>
 </div>
 `;
 
 exports[`AlertMessage should render a userMessage function 1`] = `
 <div
-  className="alert fade alert-dismissible alert-warning show"
-  hidden={false}
+  className="fade alert-content alert alert-warning show"
+  dialog={
+    <userMessage
+      values={Object {}}
+    />
+  }
   role="alert"
 >
-  <button
-    aria-label="Close"
-    className="btn close"
-    onBlur={[Function]}
-    onClick={[Function]}
-    onKeyDown={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>
   <div
-    className="alert-dialog"
+    className="pgn__alert-message-wrapper"
   >
-    Wondrous message!
+    <div
+      className="alert-message-content"
+    >
+      Wondrous message!
+    </div>
+    <div
+      className="pgn__alert-actions pgn__action-row"
+    >
+      <span
+        className="pgn__action-row-spacer"
+      />
+      <button
+        className="btn btn-tertiary btn-sm"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Dismiss
+      </button>
+    </div>
   </div>
 </div>
 `;
