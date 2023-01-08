@@ -7,7 +7,7 @@
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "لقد حدّثنا كميتك.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "في سلتك {quantity, plural,\n   one {رمز تسجيل واحد}\n   two {رمزان للتسجيل}\n   few {# رموز تسجيل}\n   many {# رمز تسجيل}\n   other {# رمز تسجيل}\n} تقدّر تكلفتها بـ {price}, ستصلك عبر البريد الإلكتروني.",
   "payment.messages.transaction.declined.body": "لم نستطع معالجة دفعتك، رجاءً تحقق من معلوماتك الخاصة بالدفع أو تقرب من مصرفك أو مؤسستك المالية من أجل المساعدة.",
-  "payment.messages.transaction.error.sku": "لقد تغيرت عربة تسوقك منذ انتقالك لهذه الصفحة. رجاءً أعد تحميل الصفحة و تحقق من المنتج الذي تشتريه.",
+  "payment.messages.transaction.error.basket_changed": "Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing.",
   "payment.messages.key.timeout.body": "من أجل الأمان، ستحتاج مجددًا لإدخال معلومات بطاقة ائتمانك لإتمام الشراء.",
   "payment.messages.key.timeout.2mins.header": "يرجى إتمام الشراء في دقيقتين.",
   "payment.messages.key.timeout.1min.header": "يرجى إتمام الشراء في دقيقة واحدة.",
