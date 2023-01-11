@@ -17,12 +17,55 @@ ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service'
  */
 export default async function checkout(
   basket,
-  { paymentIntentId, skus },
+  {
+    skus, elements, stripe, context, values,
+  },
   setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
 ) {
+  const {
+    firstName,
+    lastName,
+    address,
+    unit,
+    city,
+    country,
+    state,
+    postalCode,
+    organization,
+    purchasedForOrganization,
+  } = values;
+
+  const result = await stripe.updatePaymentIntent({
+    elements,
+    params: {
+      payment_method_data: {
+        billing_details: {
+          address: {
+            city,
+            country,
+            line1: address,
+            line2: unit || '',
+            postal_code: postalCode || '',
+            state: state || '',
+          },
+          email: context.authenticatedUser.email,
+          name: `${firstName} ${lastName}`,
+        },
+        metadata: {
+          organization,
+          purchased_for_organization: purchasedForOrganization,
+        },
+      },
+    },
+  });
+
+  if (result.error?.code === 'payment_intent_unexpected_state' && result.error?.type === 'invalid_request_error') {
+    handleApiError(result.error);
+  }
+
   const { basketId } = basket;
   const postData = formurlencoded({
-    payment_intent_id: paymentIntentId,
+    payment_intent_id: result.paymentIntent.id,
     skus,
   });
   await getAuthenticatedHttpClient()

@@ -15,7 +15,7 @@ export function* handleErrors(e, clearExistingMessages) {
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      if (error.code === 'sku-error-message') {
+      if (error.code === 'basket-changed-error-message') {
         yield put(addMessage(error.code, error.userMessage, {}, MESSAGE_TYPES.ERROR));
       } else if (error.data === undefined && error.messageType === null) {
         yield put(addMessage('transaction-declined-message', error.userMessage, {}, MESSAGE_TYPES.ERROR));

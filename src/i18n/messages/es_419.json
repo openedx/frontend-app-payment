@@ -7,7 +7,7 @@
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "Hemos actualizado tu cantidad.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "Tu carrito incluye {quantity} códigos de inscripción con un coste total de {price}, que recibirás vía correo electrónico.",
   "payment.messages.transaction.declined.body": "No se pudo procesar su pago. Por favor revise su información de pago o contacte su banco o institución financiera para mayor asistencia.",
-  "payment.messages.transaction.error.sku": "Su carro de compras ha cambiado desde que navegó a esta página. Por favor intente recargar su página y verifique el producto que está comprando.",
+  "payment.messages.transaction.error.basket_changed": "Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing.",
   "payment.messages.key.timeout.body": "Por tu seguridad, la información de tu tarjeta de credito tendrá que ser ingresada nuevamente para completar tu compra. ",
   "payment.messages.key.timeout.2mins.header": "Por favor intenta completar tu compra en un tiempo máximo de dos minutos.",
   "payment.messages.key.timeout.1min.header": "Por favor intenta completar tu compra en un tiempo máximo de dos minutos.",

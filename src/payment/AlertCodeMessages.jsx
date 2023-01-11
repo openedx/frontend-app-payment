@@ -73,9 +73,9 @@ export const TransactionDeclined = () => (
   />
 );
 
-export const SkuError = () => (
+export const BasketChangedError = () => (
   <FormattedMessage
-    id="payment.messages.transaction.error.sku"
+    id="payment.messages.transaction.error.basket_changed"
     defaultMessage="Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing."
     description="Notifies the user their cart has changed, so they can reload the page to see what it actually contains."
   />
