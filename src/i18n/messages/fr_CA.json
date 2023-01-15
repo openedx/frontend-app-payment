@@ -7,7 +7,7 @@
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "Nous avons mis à jour votre quantité.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "Votre panier contient {quantity} codes d'inscription à un coût total de {price}, que vous recevrez pas courriel.",
   "payment.messages.transaction.declined.body": "Votre paiement n'a pu être traité. Veuillez vérifier vos informations de paiement ou contacter votre institution bancaire pour plus d'aide.",
-  "payment.messages.transaction.error.basket_changed": "Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing.",
+  "payment.messages.transaction.error.basket_changed": "Votre panier a changé depuis que vous avez accédé à cette page. Veuillez recharger la page et vérifier le produit que vous achetez.",
   "payment.messages.key.timeout.body": "Pour des raisons de sécurité, les informations de votre carte de crédit devront ensuite être saisies à nouveau pour finaliser votre achat.",
   "payment.messages.key.timeout.2mins.header": "Veuillez terminer votre achat dans un délai de deux minutes",
   "payment.messages.key.timeout.1min.header": "Veuillez terminer votre achat dans un délai d'une minute",
