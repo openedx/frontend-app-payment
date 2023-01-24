@@ -12,7 +12,7 @@ import { localizedCurrencySelector } from '../data/selectors';
  *
  * Since localized prices are an estimate anyway, they are always round numbers (0 decimal points).
  */
-function LocalizedPrice(props) {
+const LocalizedPrice = (props) => {
   if (props.amount === undefined) {
     return null;
   }
@@ -40,7 +40,7 @@ function LocalizedPrice(props) {
       currency={props.currencyCode}
     />
   );
-}
+};
 
 LocalizedPrice.propTypes = {
   amount: PropTypes.oneOfType([

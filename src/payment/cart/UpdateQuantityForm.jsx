@@ -7,7 +7,7 @@ import { StatefulButton, Form } from '@edx/paragon';
 import { updateQuantity } from '../data/actions';
 import { updateQuantityFormSelector } from '../data/selectors';
 
-function UpdateQuantityForm(props) {
+const UpdateQuantityForm = (props) => {
   const id = 'code-quantity';
   const updateQuantityCallback = props.updateQuantity;
 
@@ -80,7 +80,7 @@ function UpdateQuantityForm(props) {
       />
     </form>
   );
-}
+};
 
 UpdateQuantityForm.propTypes = {
   updateQuantity: PropTypes.func.isRequired,

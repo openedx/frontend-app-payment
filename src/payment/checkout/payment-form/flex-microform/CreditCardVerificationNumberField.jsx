@@ -6,7 +6,7 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import FlexMicroformField from './FlexMicroformField';
 import { DEFAULT_STATUS } from './constants';
 
-function CreditCardVerificationNumberField(props) {
+const CreditCardVerificationNumberField = (props) => {
   const label = (
     <FormattedMessage
       id="payment.card.details.security.code.label"
@@ -37,7 +37,7 @@ function CreditCardVerificationNumberField(props) {
       />
     </div>
   );
-}
+};
 
 CreditCardVerificationNumberField.propTypes = {
   microformStatus: PropTypes.string,

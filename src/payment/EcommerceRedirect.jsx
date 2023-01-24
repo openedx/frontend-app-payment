@@ -9,7 +9,7 @@ import { logInfo } from '@edx/frontend-platform/logging';
  *
  * It doesn't actually render anything.
  */
-export default function EcommerceRedirect() {
+const EcommerceRedirect = () => {
   logInfo(`Redirecting to ecommerce for path: ${global.location.pathname}`);
   // We want to redirect to ecommerce for all pages we don't know how to handle here.
   // This is intended as a stopgap until more permanent server-side logic can be put
@@ -17,4 +17,6 @@ export default function EcommerceRedirect() {
   // More info here on why: https://openedx.atlassian.net/browse/ARCH-1074
   global.location.href = `${getConfig().ECOMMERCE_BASE_URL}${global.location.pathname}${global.location.search}${global.location.hash}`;
   return null;
-}
+};
+
+export default EcommerceRedirect;
