@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { StatefulButton, Input } from '@edx/paragon';
+import { StatefulButton, Form } from '@edx/paragon';
 
 import { updateQuantity } from '../data/actions';
 import { updateQuantityFormSelector } from '../data/selectors';
 
-function UpdateQuantityForm(props) {
+const UpdateQuantityForm = (props) => {
   const id = 'code-quantity';
   const updateQuantityCallback = props.updateQuantity;
 
@@ -34,7 +34,7 @@ function UpdateQuantityForm(props) {
           />
         </label>
         <div className="position-relative">
-          <Input
+          <Form.Control
             className="form-control-sm"
             name={id}
             id={id}
@@ -80,7 +80,7 @@ function UpdateQuantityForm(props) {
       />
     </form>
   );
-}
+};
 
 UpdateQuantityForm.propTypes = {
   updateQuantity: PropTypes.func.isRequired,

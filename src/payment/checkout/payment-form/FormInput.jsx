@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import messages from './PaymentForm.messages';
 
 // eslint-disable-next-line object-curly-newline
-function FormInput({
+const FormInput = ({
   input,
   id,
   type,
@@ -12,7 +12,7 @@ function FormInput({
   intl,
   meta: { touched, error },
   ...other
-}) {
+}) => {
   const errorData = {};
   if (touched && error) {
     errorData['aria-describedby'] = `${id}-error`;
@@ -32,7 +32,7 @@ function FormInput({
       {touched && error && <span id={`${id}-error`} className="text-danger">{messages[error] ? intl.formatMessage(messages[error]) : error}</span>}
     </>
   );
-}
+};
 
 FormInput.propTypes = {
   input: PropTypes.shape({}).isRequired,

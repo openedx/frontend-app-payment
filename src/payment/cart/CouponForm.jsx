@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, Input, ValidationFormGroup } from '@edx/paragon';
+import { Button, Form } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
@@ -44,7 +44,7 @@ class CouponForm extends Component {
 
     return (
       <form onSubmit={this.handleAddSubmit} className="summary-row d-flex align-items-end">
-        <ValidationFormGroup for={id} invalid={false} className="mb-0 mr-2">
+        <Form.Group controlId={id} invalid={false} className="mb-0 mr-2">
           <label className="h6 d-block" htmlFor={id}>
             <FormattedMessage
               id="payment.coupon.label"
@@ -52,8 +52,8 @@ class CouponForm extends Component {
               description="Label for the add coupon form"
             />
           </label>
-          <Input name={id} id={id} type="text" defaultValue={code} />
-        </ValidationFormGroup>
+          <Form.Control name={id} id={id} type="text" defaultValue={code} />
+        </Form.Group>
         <Button
           disabled={isBasketProcessing}
           variant="outline-primary"
