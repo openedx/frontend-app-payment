@@ -26,22 +26,30 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
   onSubmit={[Function]}
 >
   <div
-    className="form-group mb-0 mr-2"
+    className="pgn__form-group mb-0 mr-2"
+    invalid={false}
   >
-    <label
-      className="h6 d-block"
-      htmlFor="couponField"
-    >
-      Add coupon code (optional)
-    </label>
-    <input
-      aria-describedby=""
-      className="form-control"
-      defaultValue=""
-      id="couponField"
-      name="couponField"
-      type="text"
-    />
+    Array [
+      <label
+        className="h6 d-block"
+        htmlFor="couponField"
+      >
+        Add coupon code (optional)
+      </label>,
+      <div
+        className="pgn__form-control-decorator-group"
+      >
+        <input
+          className="form-control"
+          defaultValue=""
+          id="couponField"
+          name="couponField"
+          onBlur={[Function]}
+          onChange={[Function]}
+          type="text"
+        />
+      </div>,
+    ]
   </div>
   <button
     className="btn btn-outline-primary"
