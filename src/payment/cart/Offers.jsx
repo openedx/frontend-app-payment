@@ -4,21 +4,21 @@ import { FormattedMessage, FormattedNumber } from '@edx/frontend-platform/i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 
-function Benefit({ benefitType, benefitValue }) {
+const Benefit = ({ benefitType, benefitValue }) => {
   if (benefitType === 'Percentage') {
     return <FormattedNumber value={benefitValue / 100} style="percent" />; // eslint-disable-line react/style-prop-object
   }
   return <LocalizedPrice amount={benefitValue} />;
-}
+};
 
 Benefit.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
   benefitValue: PropTypes.number.isRequired,
 };
 
-function Offer({
+const Offer = ({
   benefitType, benefitValue, provider, isBundle,
-}) {
+}) => {
   let message = null;
   if (provider) {
     message = (
@@ -59,7 +59,7 @@ function Offer({
       {message}
     </p>
   );
-}
+};
 
 Offer.propTypes = {
   benefitType: PropTypes.oneOf(['Percentage', 'Absolute']).isRequired,
@@ -73,7 +73,7 @@ Offer.defaultProps = {
   isBundle: false,
 };
 
-export default function Offers({ offers, discounts, isBundle }) {
+const Offers = ({ offers, discounts, isBundle }) => {
   if ((discounts === undefined || discounts <= 0) && offers.length === 0) { return null; }
 
   return (
@@ -95,7 +95,7 @@ export default function Offers({ offers, discounts, isBundle }) {
       ))}
     </div>
   );
-}
+};
 
 Offers.propTypes = {
   offers: PropTypes.arrayOf(PropTypes.shape({
@@ -112,3 +112,5 @@ Offers.defaultProps = {
   discounts: undefined,
   isBundle: false,
 };
+
+export default Offers;

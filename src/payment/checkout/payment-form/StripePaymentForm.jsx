@@ -22,7 +22,7 @@ import {
 
 import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
 
-function StripePaymentForm({
+const StripePaymentForm = ({
   handleSubmit,
   isBulkOrder,
   isQuantityUpdating,
@@ -31,7 +31,7 @@ function StripePaymentForm({
   onSubmitPayment,
   options,
   submitErrors,
-}) {
+}) => {
   const stripe = useStripe();
   const elements = useElements();
   const context = useContext(AppContext);
@@ -153,7 +153,7 @@ function StripePaymentForm({
       />
     </form>
   );
-}
+};
 
 StripePaymentForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
