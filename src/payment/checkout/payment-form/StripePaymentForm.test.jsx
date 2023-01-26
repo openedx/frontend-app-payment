@@ -127,8 +127,6 @@ describe('<StripePaymentForm />', () => {
           address: '',
           city: '',
           country: 'UK',
-          cardExpirationMonth: '',
-          cardExpirationYear: '',
           optionalField: '',
         },
         {
@@ -137,8 +135,8 @@ describe('<StripePaymentForm />', () => {
           address: '',
           city: '',
           country: 'CA',
-          cardExpirationMonth: '',
-          cardExpirationYear: '',
+          postalCode: '',
+          state: '',
           optionalField: '',
         },
         {
@@ -147,21 +145,16 @@ describe('<StripePaymentForm />', () => {
           address: '',
           city: '',
           country: 'US',
-          cardExpirationMonth: '',
-          cardExpirationYear: '',
+          postalCode: '',
+          state: '',
           optionalField: '',
         },
       ];
 
       testFormValues.forEach((formValues) => {
-        const requiredFields = formValidators.getRequiredFields(formValues);
-        if (formValues.country) {
-          const { optionalField, ...expectedRequiredFields } = formValues;
-          expect(requiredFields).toEqual(expectedRequiredFields);
-        } else {
-          const { optionalField, ...expectedRequiredFields } = formValues;
-          expect(requiredFields).toEqual(expectedRequiredFields);
-        }
+        const requiredFields = formValidators.getRequiredFields(formValues, false, true);
+        const { optionalField, ...expectedRequiredFields } = formValues;
+        expect(requiredFields).toStrictEqual(expectedRequiredFields);
       });
     });
 
