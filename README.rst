@@ -8,7 +8,7 @@ Please tag **@edx/revenue-squad** on any PRs or issues.  Thanks.
 Introduction
 ------------
 
-Micro-frontend for the single-page payment/checkout process; order history and receipt pages are still served by the ecommerce service. This application only supports PayPal and Cybersource credit card payments.
+Micro-frontend for the single-page payment/checkout process; order history and receipt pages are still served by the ecommerce service. This application only supports PayPal, Cybersource, and Stripe credit card payments.
 
 Getting Started
 ---------------
@@ -49,6 +49,12 @@ This frontend is configured in ecommerce Django admin:
 In ``Core > Site configurations > [YOUR CONFIG]``, set "Enable Microfrontend for Basket Page" and set the accompanying url to point to this frontend.
 
 Devstack is configured this way by default.
+
+Payment processors Cybersource and Paypal are enabled by default.
+
+To enable Stripe and disable Cybersource, create and enable waffle flag ``enable_stripe_payment_processor`` in ecommerce Django admin under ``Waffle > Flag``.
+
+This must be also done in Devstack.
 
 API Documentation
 -----------------
@@ -98,6 +104,8 @@ A descriptive paragraph of text which provides additional context on the purchas
 **Payment Methods**
 
   Cybersource
+
+  Stripe
 
   Apple Pay
 
