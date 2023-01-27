@@ -23,16 +23,37 @@ beforeEach(() => {
 });
 
 describe('Stripe Service', () => {
+  const paymentIntent = {
+    id: 'pi_3LsftNIadiFyUl1x2TWxaADZ',
+  };
+  const stripe = { updatePaymentIntent: jest.fn(() => Promise.resolve({ paymentIntent })) };
   const { STRIPE_RESPONSE_URL } = process.env;
   const mockSetLocation = jest.fn();
   const basket = { basketId: 1 };
-  const paymentIntentId = 'pi_3LsftNIadiFyUl1x2TWxaADZ';
   const skus = '8CF08E5';
+  const elements = jest.fn();
+  const context = jest.fn();
+  context.authenticatedUser = { email: 'example@example.com' };
+
+  const values = {
+    firstName: 'John',
+    lastName: 'Smith',
+    address: '123 House Lane',
+    unit: '1',
+    city: 'TownVille',
+    country: 'USA',
+    state: 'New York',
+    postalCode: '12345',
+    organization: 'My Company',
+    purchasedForOrganization: true,
+  };
 
   it('should generate and submit a form on success', async () => {
     const successResponseData = { receipt_page_url: 'mock://receipt.page' };
     axiosMock.onPost(STRIPE_RESPONSE_URL).reply(200, successResponseData);
-    await checkout(basket, { paymentIntentId, skus }, mockSetLocation).then(() => {
+    await checkout(basket, {
+      skus, elements, stripe, context, values,
+    }, mockSetLocation).then(() => {
       expect(mockSetLocation).toHaveBeenCalledWith(successResponseData.receipt_page_url);
     });
   });
@@ -47,7 +68,9 @@ describe('Stripe Service', () => {
     mockSetLocation.mockClear();
 
     expect.hasAssertions();
-    await expect(checkout(basket, { paymentIntentId, skus }, mockSetLocation)).rejects.toEqual(
+    await expect(checkout(basket, {
+      skus, elements, stripe, context, values,
+    }, mockSetLocation)).rejects.toEqual(
       new Error('This card holder did not pass the SDN check.'),
     );
     expect(logError).toHaveBeenCalledWith(expect.any(Error), {
@@ -61,7 +84,9 @@ describe('Stripe Service', () => {
   it('should throw and log on error', async () => {
     axiosMock.onPost(STRIPE_RESPONSE_URL).reply(403);
 
-    await checkout(basket, { paymentIntentId, skus }, mockSetLocation).catch(() => {
+    await checkout(basket, {
+      skus, elements, stripe, context, values,
+    }, mockSetLocation).catch(() => {
       expect(logError)
         .toHaveBeenCalledWith(expect.any(Error), {
           messagePrefix: 'Stripe Submit Error',

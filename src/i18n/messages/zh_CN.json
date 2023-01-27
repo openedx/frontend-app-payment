@@ -7,7 +7,7 @@
   "payment.messages.enrollment.code.product.info.quantity.updated.header": "We've updated your quantity.",
   "payment.messages.enrollment.code.product.info.quantity.updated.body": "Your cart includes {quantity} enrollment codes at a total cost of {price}, that you will receive via email.",
   "payment.messages.transaction.declined.body": "Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance.",
-  "payment.messages.transaction.error.sku": "Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing.",
+  "payment.messages.transaction.error.basket_changed": "Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing.",
   "payment.messages.key.timeout.body": "For security, your credit card information will then need to be re-entered to complete your purchase.",
   "payment.messages.key.timeout.2mins.header": "Please complete your purchase within two minutes",
   "payment.messages.key.timeout.1min.header": "Please complete your purchase within one minute",
