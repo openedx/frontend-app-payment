@@ -86,7 +86,9 @@ Implementation
 Sequence Diagram
 ----------------
 
-TODO.
+.. image:: images/ecom_stripe_seq.png
+  :width: 800
+  :alt: Ecommerce and Stripe Sequence Diagram
 
 
 References
