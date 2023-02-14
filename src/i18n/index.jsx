@@ -9,6 +9,9 @@ import deMessages from './messages/de.json';
 import ruMessages from './messages/ru.json';
 import hiMessages from './messages/hi.json';
 import frCAMessages from './messages/fr_CA.json';
+import deDEMessages from './messages/fr_CA.json';
+import itITMessages from './messages/fr_CA.json';
+import ptPTMessages from './messages/fr_CA.json';
 // no need to import en messages-- they are in the defaultMessage field
 
 const messages = {
@@ -23,6 +26,9 @@ const messages = {
   'fr-ca': frCAMessages,
   ru: ruMessages,
   uk: ukMessages,
+  'de-de': deDEMessages,
+  'it-it': itITMessages,
+  'pt-pt': ptPTMessages
 };
 
 export default messages;
