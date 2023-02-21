@@ -8,6 +8,39 @@ import { handleApiError } from '../../data/handleRequestError';
 
 ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service');
 
+const handleServerResponse = async (response, stripe, setLocation, postData) => {
+  if (response.data.requiresAction) {
+    // Call stripe handleNextAction to open the 3ds authentication page
+    const { error: errorAction, paymentIntent } = await stripe.handleNextAction(
+      { clientSecret: response.data.clientSecret },
+    );
+    if (errorAction) {
+      logError(errorAction, {
+        messagePrefix: 'Stripe 3DS Error',
+        paymentMethod: 'Stripe',
+        paymentErrorType: '3DS Error',
+      });
+      handleApiError(errorAction);
+    } else {
+      // If 3DS is successful tell ecommerce to finish the payment
+      await getAuthenticatedHttpClient()
+        .post(
+          `${process.env.STRIPE_RESPONSE_URL}`,
+          postData,
+          {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          },
+        )
+        .then(actionsResponse => {
+          handleServerResponse(actionsResponse, stripe, setLocation, postData);
+        });
+    }
+  } else {
+    // If no actions needed go to receipt page
+    setLocation(response.data.receipt_page_url);
+  }
+};
+
 /**
  * Checkout with Stripe
  *
@@ -75,70 +108,34 @@ export default async function checkout(
       {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       },
-  )
-  .then(response => {
-    console.log(response);
-    handleServerResponse(response, stripe, setLocation, postData);
-  })
-  .catch(error => {
+    )
+    .then(response => {
+      handleServerResponse(response, stripe, setLocation, postData);
+    })
+    .catch(error => {
       const errorData = error.response ? error.response.data : null;
-        if (errorData && error.response.data.sdn_check_failure) {
-          /* istanbul ignore next */
-          if (getConfig().ENVIRONMENT !== 'test') {
-            // SDN failure: redirect to Ecommerce SDN error page.
-            setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
-          }
-          logError(error, {
-            messagePrefix: 'SDN Check Error',
-            paymentMethod: 'Stripe',
-            paymentErrorType: 'SDN Check Submit Api',
-            basketId,
-          });
-          throw new Error('This card holder did not pass the SDN check.');
-        } else {
-          // Log error and tell user.
-          logError(error, {
-            messagePrefix: 'Stripe Submit Error',
-            paymentMethod: 'Stripe',
-            paymentErrorType: 'Submit Error',
-            basketId,
-          });
-          handleApiError(error);
+      if (errorData && error.response.data.sdn_check_failure) {
+        /* istanbul ignore next */
+        if (getConfig().ENVIRONMENT !== 'test') {
+          // SDN failure: redirect to Ecommerce SDN error page.
+          setLocation(`${getConfig().ECOMMERCE_BASE_URL}/payment/sdn/failure/`);
         }
-  });      
-}
-
-const handleServerResponse = async (response, stripe, setLocation, postData) => {
-  
-  if (response.requires_action) {
-    console.log('b');
-    const { error: errorAction, paymentIntent } = await stripe.handleNextAction({clientSecret: response.payment_intent_client_secret});
-    console.log('c');
-    console.log(paymentIntent);
-    if (errorAction) {
-      console.log(errorAction);
-
-    }
-    else {
-      console.log('Actions handled success');
-      await getAuthenticatedHttpClient()
-        .post(
-          `${process.env.STRIPE_RESPONSE_URL}`,
-          postData,
-          {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          },
-      )
-      .then(response => {
-        console.log(response);
-        handleServerResponse(response, stripe, setLocation);
-      })
-
-    }
-    
-  }
-  else{
-    //simple payment successful
-    setLocation(response.data.receipt_page_url);
-  }
+        logError(error, {
+          messagePrefix: 'SDN Check Error',
+          paymentMethod: 'Stripe',
+          paymentErrorType: 'SDN Check Submit Api',
+          basketId,
+        });
+        throw new Error('This card holder did not pass the SDN check.');
+      } else {
+        // Log error and tell user.
+        logError(error, {
+          messagePrefix: 'Stripe Submit Error',
+          paymentMethod: 'Stripe',
+          paymentErrorType: 'Submit Error',
+          basketId,
+        });
+        handleApiError(error);
+      }
+    });
 }
