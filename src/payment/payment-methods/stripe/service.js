@@ -8,7 +8,7 @@ import { handleApiError } from '../../data/handleRequestError';
 
 ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service');
 
-const handleServerResponse = async (response, stripe, setLocation, postData) => {
+const handleServerResponse = async (response, stripe, setLocation, skus) => {
   if (response.data.requiresAction) {
     // Call stripe handleNextAction to open the 3ds authentication page
     const { error: errorAction, paymentIntent } = await stripe.handleNextAction(
@@ -22,6 +22,11 @@ const handleServerResponse = async (response, stripe, setLocation, postData) => 
       });
       handleApiError(errorAction);
     } else {
+      const postData = formurlencoded({
+        payment_intent_id: paymentIntent.id,
+        skus,
+      });
+      // TODO: move this out as part of REV-3187 to confirm based on where ecommerce redirects.
       // If 3DS is successful tell ecommerce to finish the payment
       await getAuthenticatedHttpClient()
         .post(
@@ -32,7 +37,7 @@ const handleServerResponse = async (response, stripe, setLocation, postData) => 
           },
         )
         .then(actionsResponse => {
-          handleServerResponse(actionsResponse, stripe, setLocation, postData);
+          handleServerResponse(actionsResponse, stripe, setLocation, skus);
         });
     }
   } else {
@@ -110,7 +115,7 @@ export default async function checkout(
       },
     )
     .then(response => {
-      handleServerResponse(response, stripe, setLocation, postData);
+      handleServerResponse(response, stripe, setLocation, skus);
     })
     .catch(error => {
       const errorData = error.response ? error.response.data : null;
