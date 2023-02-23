@@ -3,7 +3,7 @@ name: node_js CI
 on:
   push:
     branches:
-    - master
+    - master, 2u/project-theseus
   pull_request:
     branches:
     - '**'
