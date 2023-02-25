@@ -26,8 +26,14 @@ import Footer, { messages as footerMessages } from '@edx/frontend-component-foot
 
 import appMessages from './i18n';
 import {
-  PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties,
+  PaymentPage,
+  EcommerceRedirect,
+  responseInterceptor,
+  markPerformanceIfAble,
+  getPerformanceProperties,
 } from './payment';
+import { SubscriptionPage } from './subscription';
+
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -75,6 +81,7 @@ subscribe(APP_READY, () => {
       <main id="main">
         <Switch>
           <Route exact path="/" component={PaymentPage} />
+          <Route exact path="/subscription" component={SubscriptionPage} />
           <Route path="*" component={EcommerceRedirect} />
         </Switch>
       </main>
