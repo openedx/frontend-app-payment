@@ -16,6 +16,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
+import SubscriptionSubmitButton from '../../../subscription/checkout/SubmitButton/SubscriptionSubmitButton';
 import {
   getRequiredFields, validateRequiredFields, validateAsciiNames,
 } from './utils/form-validators';
@@ -31,6 +32,7 @@ const StripePaymentForm = ({
   onSubmitPayment,
   options,
   submitErrors,
+  isSubscription,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -145,12 +147,23 @@ const StripePaymentForm = ({
         options={options}
         onReady={stripeElementsOnReady}
       />
-      <PlaceOrderButton
-        onSubmitButtonClick={onSubmitButtonClick}
-        showLoadingButton={showLoadingButton}
-        disabled={submitting}
-        isProcessing={isProcessing}
-      />
+      {/* TODO: update onSubmitButtonClick handler for SubscriptionSubmitButton */}
+      {isSubscription ? (
+        <SubscriptionSubmitButton
+          onSubmitButtonClick={onSubmitButtonClick}
+          showLoadingButton={showLoadingButton}
+          disabled={submitting}
+          isProcessing={isProcessing}
+        />
+      ) : (
+        <PlaceOrderButton
+          onSubmitButtonClick={onSubmitButtonClick}
+          showLoadingButton={showLoadingButton}
+          disabled={submitting}
+          isProcessing={isProcessing}
+        />
+      )}
+
     </form>
   );
 };
@@ -164,6 +177,7 @@ StripePaymentForm.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  isSubscription: PropTypes.bool,
 };
 
 StripePaymentForm.defaultProps = {
@@ -172,6 +186,7 @@ StripePaymentForm.defaultProps = {
   isProcessing: false,
   submitErrors: {},
   options: null,
+  isSubscription: false,
 };
 
 export default reduxForm({ form: 'stripe' })((injectIntl(StripePaymentForm)));
