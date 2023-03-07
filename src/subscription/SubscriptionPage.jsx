@@ -5,42 +5,27 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
 
-import messages from './PaymentPage.messages';
+import messages from '../payment/PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from './data/actions';
+import { fetchBasket } from '../payment/data/actions';
 
 // Selectors
-import { paymentSelector } from './data/selectors';
+import { paymentSelector } from '../payment/data/selectors';
 
 // Components
-import PageLoading from './PageLoading';
-import EmptyCartMessage from './EmptyCartMessage';
-import Cart from './cart/Cart';
-import Checkout from './checkout/Checkout';
+import PageLoading from '../payment/PageLoading';
+import EmptyCartMessage from '../payment/EmptyCartMessage';
+import SubscriptionCart from './cart/SubscriptionCart';
+import Checkout from '../payment/checkout/Checkout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
 
-class PaymentPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const {
-      experimentVariables: {
-        isNumEnrolledExperiment = false,
-        REV1045Experiment = false,
-        isTransparentPricingExperiment = false,
-        enrollmentCountData = [],
-      } = {},
-    } = window;
-
-    this.state = {
-      isNumEnrolledExperiment,
-      REV1045Experiment,
-      isTransparentPricingExperiment,
-      enrollmentCountData,
-    };
-  }
-
+/**
+ * Subscription Page
+ * This page will be responsible to handle all the new
+ * program subscription checkout requests
+ */
+export class SubscriptionPage extends React.Component {
   componentDidMount() {
     sendPageEvent();
     this.props.fetchBasket();
@@ -48,13 +33,6 @@ class PaymentPage extends React.Component {
 
   renderContent() {
     const { isEmpty, isRedirect } = this.props;
-    const {
-      isNumEnrolledExperiment,
-      REV1045Experiment,
-      isTransparentPricingExperiment,
-      enrollmentCountData,
-    } = this.state;
-
     // If we're going to be redirecting to another page instead of showing the user the interface,
     // show a minimal spinner while the redirect is happening.  In other cases we want to show the
     // page skeleton, but in this case that would be misleading.
@@ -80,25 +58,21 @@ class PaymentPage extends React.Component {
     //   2) when we're going to perform a redirect.
     // That means that sometimes it's used during loading, in which case it shows a "skeleton"
     // view of the left-hand side of the interface until the actual content arrives.
+
     return (
-      <div className="row">
+      <div className="row subscription-page">
         <h1 className="sr-only">
           <FormattedMessage
-            id="payment.heading.page"
+            id="subscription.screen.heading.page"
             defaultMessage="Payment"
             description="The screenreader-only page heading"
           />
         </h1>
-        <div className="col-md-5 pr-md-5 col-basket-summary">
-          <Cart
-            isNumEnrolledExperiment={isNumEnrolledExperiment}
-            REV1045Experiment={REV1045Experiment}
-            isTransparentPricingExperiment={isTransparentPricingExperiment}
-            enrollmentCountData={enrollmentCountData}
-          />
+        <div className="col-md-5 pr-lg-5 col-basket-summary">
+          <SubscriptionCart />
         </div>
-        <div className="col-md-7 pl-md-5">
-          <Checkout />
+        <div className="col-md-7 pl-lg-5 checkout-wrapper">
+          <Checkout isSubscription />
         </div>
       </div>
     );
@@ -117,9 +91,9 @@ class PaymentPage extends React.Component {
   }
 }
 
-PaymentPage.contextType = AppContext;
+SubscriptionPage.contextType = AppContext;
 
-PaymentPage.propTypes = {
+SubscriptionPage.propTypes = {
   intl: intlShape.isRequired,
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
@@ -128,7 +102,7 @@ PaymentPage.propTypes = {
   summarySubtotal: PropTypes.number,
 };
 
-PaymentPage.defaultProps = {
+SubscriptionPage.defaultProps = {
   isEmpty: false,
   isRedirect: false,
   summaryQuantity: undefined,
@@ -136,7 +110,8 @@ PaymentPage.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
+  // TODO: update this selector for subscription
   ...paymentSelector(state),
 });
 
-export default connect(mapStateToProps, { fetchBasket })(injectIntl(PaymentPage));
+export default connect(mapStateToProps, { fetchBasket })(injectIntl(SubscriptionPage));
