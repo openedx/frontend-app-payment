@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as SubscriptionPage } from './SubscriptionPage';
+export * from './data';

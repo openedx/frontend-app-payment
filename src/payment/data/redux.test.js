@@ -8,7 +8,8 @@ import {
   submitPayment,
   fetchBasket,
 } from './actions';
-import { localizedCurrencySelector, currencyDisclaimerSelector, paymentSelector } from './selectors';
+import { currencyDisclaimerSelector, paymentSelector } from './selectors';
+import { localizedCurrencySelector } from './utils';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {

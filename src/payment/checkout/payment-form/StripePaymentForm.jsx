@@ -16,7 +16,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-import SubscriptionSubmitButton from '../../../subscription/checkout/SubmitButton/SubscriptionSubmitButton';
+import SubscriptionSubmitButton from '../../../subscription/checkout/submit-button/SubscriptionSubmitButton';
 import {
   getRequiredFields, validateRequiredFields, validateAsciiNames,
 } from './utils/form-validators';
@@ -33,6 +33,7 @@ const StripePaymentForm = ({
   options,
   submitErrors,
   isSubscription,
+  paymentDataSelector,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -49,7 +50,7 @@ const StripePaymentForm = ({
 
   const {
     enableStripePaymentProcessor, loading, submitting, products,
-  } = useSelector(state => state.payment.basket);
+  } = useSelector(paymentDataSelector);
 
   // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
   // isQuantityUpdating is true when isBasketProcessing is true when there is an update in the quantity for
@@ -178,6 +179,7 @@ StripePaymentForm.propTypes = {
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
   isSubscription: PropTypes.bool,
+  paymentDataSelector: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {

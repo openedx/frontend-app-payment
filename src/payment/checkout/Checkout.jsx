@@ -13,7 +13,11 @@ import {
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector, updateClientSecretSelector } from '../data/selectors';
+import {
+  basketSelector,
+  paymentSelector,
+  updateClientSecretSelector,
+} from '../data/selectors';
 import { fetchClientSecret, submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
@@ -231,35 +235,33 @@ class Checkout extends React.Component {
 
     return (
       <>
-        { !this.props.isSubscription ? (
-          <div className={basketClassName}>
-            <h5 aria-level="2">
-              <FormattedMessage
-                id="payment.select.payment.method.heading"
-                defaultMessage="Select Payment Method"
-                description="The heading for the payment type selection section"
+        <div className={basketClassName}>
+          <h5 aria-level="2">
+            <FormattedMessage
+              id="payment.select.payment.method.heading"
+              defaultMessage="Select Payment Method"
+              description="The heading for the payment type selection section"
+            />
+          </h5>
+
+          <p className="d-flex flex-wrap">
+            <button type="button" className="payment-method-button active">
+              <img
+                src={AcceptedCardLogos}
+                alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
               />
-            </h5>
+            </button>
 
-            <p className="d-flex flex-wrap">
-              <button type="button" className="payment-method-button active">
-                <img
-                  src={AcceptedCardLogos}
-                  alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
-                />
-              </button>
+            <PayPalButton
+              onClick={this.handleSubmitPayPal}
+              className={classNames('payment-method-button', { 'skeleton-pulse': loading })}
+              disabled={submissionDisabled}
+              isProcessing={payPalIsSubmitting}
+            />
 
-              <PayPalButton
-                onClick={this.handleSubmitPayPal}
-                className={classNames('payment-method-button', { 'skeleton-pulse': loading })}
-                disabled={submissionDisabled}
-                isProcessing={payPalIsSubmitting}
-              />
-
-              {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
-            </p>
-          </div>
-        ) : null}
+            {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
+          </p>
+        </div>
         {/* Passing the enableStripePaymentProcessor flag down the Stripe form component to
         be used in the CardHolderInformation component (child). We could get the flag value
         from Basket selector from the child component but this would require more change for a temp feature,
@@ -274,7 +276,7 @@ class Checkout extends React.Component {
               isBulkOrder={isBulkOrder}
               isProcessing={stripeIsSubmitting}
               isQuantityUpdating={isQuantityUpdating}
-              isSubscription={this.props.isSubscription}
+              paymentDataSelector={basketSelector}
             />
           </Elements>
         ) : (loading && (this.renderBillingFormSkeleton()))}
@@ -321,7 +323,6 @@ Checkout.propTypes = {
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
   clientSecretId: PropTypes.string,
-  isSubscription: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -334,7 +335,6 @@ Checkout.defaultProps = {
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
   clientSecretId: null,
-  isSubscription: false,
 };
 
 const mapStateToProps = (state) => ({
