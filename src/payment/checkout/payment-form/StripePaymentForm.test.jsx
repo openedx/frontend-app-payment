@@ -15,6 +15,7 @@ import createRootReducer from '../../../data/reducers';
 import '../../__factories__/userAccount.factory';
 import * as mocks from '../stripeMocks';
 import PlaceOrderButton from './PlaceOrderButton';
+import { basketSelector } from '../../data/selectors';
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -97,6 +98,7 @@ describe('<StripePaymentForm />', () => {
                 handleSubmit={() => {}}
                 onSubmitPayment={() => {}}
                 onSubmitButtonClick={() => {}}
+                paymentDataSelector={basketSelector}
               />
             </Elements>
           </reactRedux.Provider>
@@ -170,6 +172,7 @@ describe('<StripePaymentForm />', () => {
                   handleSubmit={() => {}}
                   onSubmitPayment={() => {}}
                   onSubmitButtonClick={() => {}}
+                  paymentDataSelector={basketSelector}
                 />
               </Elements>
             </reactRedux.Provider>
@@ -229,6 +232,7 @@ describe('<StripePaymentForm />', () => {
                   onSubmitButtonClick={() => {}}
                   shouldFocusFirstError
                   firstErrorId={null}
+                  paymentDataSelector={basketSelector}
                 />
               </Elements>
             </reactRedux.Provider>

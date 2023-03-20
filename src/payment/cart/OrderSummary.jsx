@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-import { updateCaptureKeySelector } from '../data/selectors';
 import { markPerformanceIfAble, getPerformanceProperties } from '../performanceEventing';
 
 class OrderSummary extends React.Component {
@@ -53,4 +51,4 @@ OrderSummary.defaultProps = {
   children: undefined,
 };
 
-export default connect(updateCaptureKeySelector, {})(OrderSummary);
+export default OrderSummary;
