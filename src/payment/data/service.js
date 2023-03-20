@@ -2,34 +2,12 @@ import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
 import handleRequestError from './handleRequestError';
-import { camelCaseObject } from './utils';
-import { ORDER_TYPES } from './constants';
+import { transformResults } from './utils';
 
 ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
 ], 'payment API service');
-
-function getOrderType(productType) {
-  switch (productType) {
-    case 'Enrollment Code':
-      return ORDER_TYPES.BULK_ENROLLMENT;
-    case 'Course Entitlement':
-      return ORDER_TYPES.ENTITLEMENT;
-    case 'Seat':
-    default:
-      return ORDER_TYPES.SEAT;
-  }
-}
-
-export function transformResults(data) {
-  const results = camelCaseObject(data);
-
-  const lastProduct = results.products && results.products[results.products.length - 1];
-  results.orderType = getOrderType(lastProduct && lastProduct.productType);
-
-  return results;
-}
 
 function handleBasketApiError(requestError) {
   try {

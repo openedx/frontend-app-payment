@@ -10,7 +10,7 @@ const TotalTable = ({ total, isSubscription }) => (
       {isSubscription ? (
         <FormattedMessage
           id="subscription.summary.table.label.total.to.pay"
-          defaultMessage="Today's Total"
+          defaultMessage="Today's total"
           description="Label for the final total subscription price of an order."
         />
       ) : (

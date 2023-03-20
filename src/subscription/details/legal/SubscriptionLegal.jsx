@@ -13,11 +13,11 @@ const SubscriptionLegal = ({
     <Hyperlink
       destination="https://support.edx.org/hc/en-us/sections/115004173027-Receive-and-Share-edX-Certificates"
     >
-      {intl.formatMessage(messages['subscription.cart.order.legal.link'])}
+      {intl.formatMessage(messages['subscription.details.order.legal.link'])}
     </Hyperlink>
   );
   return (
-    <p className="micro text-gray-500">{intl.formatMessage(messages['subscription.cart.order.legal'], {
+    <p className="micro">{intl.formatMessage(messages['subscription.details.order.legal'], {
       price: intl.formatNumber(price, { style: 'currency', currency: 'USD' }),
       programTitle,
       supportLink,
@@ -27,13 +27,10 @@ const SubscriptionLegal = ({
 };
 
 SubscriptionLegal.propTypes = {
-  programTitle: PropTypes.string,
-  price: PropTypes.number,
+  programTitle: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
-SubscriptionLegal.defaultProps = {
-  programTitle: 'Blockchain Fundamentals',
-  price: 15.99,
-};
+SubscriptionLegal.defaultProps = {};
 
 export default SubscriptionLegal;
