@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-const SummarySkeleton = () => (
+const CartSkeleton = () => (
   <div>
     <span className="sr-only">
       <FormattedMessage
@@ -33,4 +33,4 @@ const SummarySkeleton = () => (
   </div>
 );
 
-export default SummarySkeleton;
+export default CartSkeleton;
