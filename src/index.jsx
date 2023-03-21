@@ -17,7 +17,7 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { messages as paragonMessages } from '@edx/paragon';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { logError } from '@edx/frontend-platform/logging';
@@ -73,10 +73,10 @@ subscribe(APP_READY, () => {
     <AppProvider store={configureStore()}>
       <Header />
       <main id="main">
-        <Switch>
-          <Route exact path="/" component={PaymentPage} />
-          <Route path="*" component={EcommerceRedirect} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<PaymentPage />} />
+          <Route path="*" element={<EcommerceRedirect />} />
+        </Routes>
       </main>
       <Footer />
     </AppProvider>,
