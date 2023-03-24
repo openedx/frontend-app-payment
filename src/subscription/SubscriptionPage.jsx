@@ -5,7 +5,7 @@ import {
 } from '@edx/frontend-platform/i18n';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
 
-import messages from '../payment/PaymentPage.messages';
+import messages from './SubscriptionPage.messages';
 
 // Actions
 import { fetchSubscriptionDetails } from './data/details/actions';
@@ -15,7 +15,6 @@ import { subscriptionSelector } from './data/details/selectors';
 
 // Components
 import PageLoading from '../payment/PageLoading';
-import EmptyCartMessage from '../payment/EmptyCartMessage';
 import { SubscriptionDetails } from './details/SubscriptionDetails';
 import { SubscriptionCheckout } from './checkout/SubscriptionCheckout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
@@ -28,14 +27,11 @@ import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
  */
 export const SubscriptionPage = () => {
   const {
-    isEmpty,
     isRedirect,
-    summaryQuantity,
-    summarySubtotal,
   } = useSelector(subscriptionSelector);
   const intl = useIntl();
   const dispatch = useDispatch();
-  const [isPaymentSuccessfull] = useState(false);
+  const [isPaymentSuccessful] = useState(false);
 
   useEffect(() => {
     sendPageEvent();
@@ -49,14 +45,8 @@ export const SubscriptionPage = () => {
     if (isRedirect) {
       return (
         <PageLoading
-          srMessage={intl.formatMessage(messages['payment.loading.payment'])}
+          srMessage={intl.formatMessage(messages['subscription.loading.details'])}
         />
-      );
-    }
-
-    if (isEmpty) {
-      return (
-        <EmptyCartMessage />
       );
     }
 
@@ -64,8 +54,8 @@ export const SubscriptionPage = () => {
       <div className="row">
         <h1 className="sr-only">
           <FormattedMessage
-            id="subscription.screen.heading.page"
-            defaultMessage="Payment"
+            id="subscription.heading.page"
+            defaultMessage="Subscription Payment"
             description="The screenreader-only page heading"
           />
         </h1>
@@ -81,12 +71,9 @@ export const SubscriptionPage = () => {
 
   return (
     <div className="subscription-page page__payment container-fluid py-5">
-      <FormattedAlertList
-        summaryQuantity={summaryQuantity}
-        summarySubtotal={summarySubtotal}
-      />
+      <FormattedAlertList />
       {renderContent()}
-      <ConfirmationModal isVisible={isPaymentSuccessfull} />
+      <ConfirmationModal isVisible={isPaymentSuccessful} />
     </div>
   );
 };

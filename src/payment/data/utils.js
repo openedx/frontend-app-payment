@@ -138,7 +138,12 @@ export function isWaffleFlagEnabled(flagName, defaultValue = false) {
   return typeof value !== 'undefined' ? value : defaultValue;
 }
 
-function getOrderType(productType) {
+/**
+ * @param {string} productType will be one of
+ * "Enrollment Code" | "Course Entitlement" | "Seat"
+ * @returns ORDER_TYPES[TYPE]
+ */
+export function getOrderType(productType) {
   switch (productType) {
     case 'Enrollment Code':
       return ORDER_TYPES.BULK_ENROLLMENT;
@@ -150,6 +155,13 @@ function getOrderType(productType) {
   }
 }
 
+/**
+ * transformResults convert the basket data snake_case keys to camelCase
+ * and then updates the target object `orderType` to the productType of
+ * last product in the data.products array
+ * @param {object} data {key:value} object to transform
+ * @returns transformed results
+ */
 export function transformResults(data) {
   const results = camelCaseObject(data);
 

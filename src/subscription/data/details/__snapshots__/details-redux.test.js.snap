@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`subscription details redux tests details reducer should return the default state when appropriate 1`] = `
+Object {
+  "certificateType": "verified",
+  "currency": "USD",
+  "isSubscriptionDetailsProcessing": false,
+  "loaded": false,
+  "loading": true,
+  "organization": "University of California, Berkeley",
+  "paymentMethod": "stripe",
+  "price": 49,
+  "products": Array [],
+  "programTitle": "Blockchain Fundamentals",
+  "redirect": false,
+  "submitting": false,
+}
+`;
+
+exports[`subscription details redux tests details reducer should return the default state when appropriate 2`] = `
+Object {
+  "certificateType": "verified",
+  "currency": "USD",
+  "isSubscriptionDetailsProcessing": false,
+  "loaded": false,
+  "loading": true,
+  "organization": "University of California, Berkeley",
+  "paymentMethod": "stripe",
+  "price": 49,
+  "products": Array [],
+  "programTitle": "Blockchain Fundamentals",
+  "redirect": false,
+  "submitting": false,
+}
+`;
+
+exports[`subscription details redux tests details reducer should return the default state when appropriate 3`] = `
+Object {
+  "clientSecret": Object {
+    "clientSecretId": "",
+    "isClientSecretProcessing": false,
+  },
+  "details": Object {
+    "certificateType": "verified",
+    "currency": "USD",
+    "isSubscriptionDetailsProcessing": false,
+    "loaded": false,
+    "loading": true,
+    "organization": "University of California, Berkeley",
+    "paymentMethod": "stripe",
+    "price": 49,
+    "products": Array [],
+    "programTitle": "Blockchain Fundamentals",
+    "redirect": false,
+    "submitting": false,
+  },
+}
+`;
