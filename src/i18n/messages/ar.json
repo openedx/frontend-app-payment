@@ -30,7 +30,7 @@
   "payment.summary.discount.dynamic_offer": "تم تطبيق خصم {benefit} لقاء ترقيتك الأولى.",
   "payment.summary.table.label.discount.total": "الخصوم المطبقة",
   "payment.order.details.course.entitlement": "عند إتمام طلبيتك ستكون قادرًا على تحديد تواريخ المساق من لوحة معلوماتك.",
-  "payment.order.details.course.seat.verified": "يشمل المجموع أعلاه أي ضرائب سارية. بعد إكمال طلبك ، سيتم تسجيلك تلقائيًا في المسار الذي تم التحقق منه للدورة التدريبية.",
+  "payment.order.details.course.seat.verified": "The above total includes any applicable taxes. After you complete your order you will be automatically enrolled in the verified track of the course.",
   "payment.order.details.course.seat.credit": "عند إتمام طلبيتك ستحصل على اعتماد لمساقك.",
   "payment.order.details.course.seat": "عند استكمال طلبيتك سيتم إلحاقك تلقائيًا في للمساق.",
   "payment.order.details.enrollment.code.terms": "عند إتمام الطلب، فإنك توافق أنت ومؤسستك على الشروط التالية:",
