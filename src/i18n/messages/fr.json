@@ -30,7 +30,7 @@
   "payment.summary.discount.dynamic_offer": "{benefit} rabais appliqué pour votre première mise-à-jour.",
   "payment.summary.table.label.discount.total": "Remises Appliquées:",
   "payment.order.details.course.entitlement": "Après avoir terminé votre commande, vous serez en mesure de sélectionner des dates de cours à partir de votre tableau de bord.",
-  "payment.order.details.course.seat.verified": "Le total ci-dessus comprend toutes les taxes applicables. Après avoir terminé votre commande, vous serez automatiquement inscrit à la piste vérifiée du cours.",
+  "payment.order.details.course.seat.verified": "The above total includes any applicable taxes. After you complete your order you will be automatically enrolled in the verified track of the course.",
   "payment.order.details.course.seat.credit": "Après avoir terminé votre commande, vous recevrez un crédit pour votre cours.",
   "payment.order.details.course.seat": "Après avoir terminé votre commande, vous serez automatiquement inscrit au cours.",
   "payment.order.details.enrollment.code.terms": "En effectuant l'achat, vous et votre organisation acceptez les conditions suivantes :",

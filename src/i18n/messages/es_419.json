@@ -30,7 +30,7 @@
   "payment.summary.discount.dynamic_offer": "{benefit} de descuento aplicado por tu primer certificado.",
   "payment.summary.table.label.discount.total": "Descuentos aplicados",
   "payment.order.details.course.entitlement": "Después de completar su orden, podrá seleccionar las fechas del curso desde su panel de control.",
-  "payment.order.details.course.seat.verified": "El total anterior incluye todos los impuestos aplicables. Después de completar su pedido, se lo inscribirá automáticamente en la pista verificada del curso.",
+  "payment.order.details.course.seat.verified": "The above total includes any applicable taxes. After you complete your order you will be automatically enrolled in the verified track of the course.",
   "payment.order.details.course.seat.credit": "Después de completar su orden recibirá crédito para su curso.",
   "payment.order.details.course.seat": "Después de completar su orden será automáticamente inscrito en el curso.",
   "payment.order.details.enrollment.code.terms": "Al comprar, tú y tu organización aceptan los siguientes términos:",
