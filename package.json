@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@edx/browserslist-config": "^1.1.0",
-    "@edx/frontend-build": "12.3.0",
+    "@edx/frontend-build": "12.4.19",
     "@edx/reactifex": "^2.1.0",
     "audit-ci": "^6.3.0",
     "axios-mock-adapter": "^1.21.1",
