@@ -6,7 +6,7 @@ import {
 import {
   clientSecretDataReceived,
   clientSecretProcessing,
-  fetchClientSecret,
+  fetchSubscriptionClientSecret,
 } from './actions';
 
 // Sagas
@@ -36,7 +36,7 @@ export function* handleFetchClientSecret() {
     yield call(handleErrors, error, true);
   } finally {
     yield put(clientSecretProcessing(false));
-    yield put(fetchClientSecret.fulfill());
+    yield put(fetchSubscriptionClientSecret.fulfill());
   }
 }
 

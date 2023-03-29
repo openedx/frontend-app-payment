@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
@@ -8,10 +8,10 @@ import {
 } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
-import messages from '../../payment/checkout/Checkout.messages';
+import messages from './messages';
 import { subscriptionSelector, subscriptionDetailsSelector } from '../data/details/selectors';
 import { submitPayment } from '../data/details/actions';
-import { fetchClientSecret } from '../data/client-secret/actions';
+import { fetchSubscriptionClientSecret } from '../data/client-secret/actions';
 import { getClientSecretSelector } from '../data/client-secret/selectors';
 
 import StripePaymentForm from '../../payment/checkout/payment-form/StripePaymentForm';
@@ -24,6 +24,7 @@ import MonthlyBillingNotification from './monthly-billing-notification/MonthlyBi
  * renders Address and Stripe form
  */
 export const SubscriptionCheckout = () => {
+  // selectors
   const {
     loading,
     loaded,
@@ -32,6 +33,20 @@ export const SubscriptionCheckout = () => {
     paymentMethod,
   } = useSelector(subscriptionSelector);
   const { clientSecretId, isClientSecretProcessing } = useSelector(getClientSecretSelector);
+
+  const options = getStripeOptions(clientSecretId);
+  const shouldDisplayStripePaymentForm = !loading && options.clientSecret;
+  const isQuantityUpdating = isSubscriptionDetailsProcessing && loaded;
+  const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
+
+  // state
+  // Doing this within the Checkout component so locale is configured and available
+  // https://stackoverflow.com/a/64694798
+  const [stripePromise] = useState(() => loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
+    betas: [process.env.STRIPE_BETA_FLAG],
+    apiVersion: process.env.STRIPE_API_VERSION,
+    locale: getLocale(),
+  }));
 
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -57,45 +72,27 @@ export const SubscriptionCheckout = () => {
     );
   };
 
-  const isQuantityUpdating = isSubscriptionDetailsProcessing && loaded;
-  const options = getStripeOptions(clientSecretId);
-
-  // istanbul ignore next
-  const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
-
-  // TODO: Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
-  // so we cannot rely on !options.clientSecret to distinguish btw payment processors
-  const shouldDisplayStripePaymentForm = !loading && options.clientSecret;
-
-  // Doing this within the Checkout component so locale is configured and available
-  let stripePromise;
-  if (shouldDisplayStripePaymentForm) {
-    stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
-      betas: [process.env.STRIPE_BETA_FLAG],
-      apiVersion: process.env.STRIPE_API_VERSION,
-      locale: getLocale(),
-    });
-  }
-
   useEffect(() => {
-    dispatch(fetchClientSecret());
+    dispatch(fetchSubscriptionClientSecret());
   }, [dispatch]);
 
   return (
-    <section aria-label={intl.formatMessage(messages['payment.section.payment.details.label'])}>
+    <section aria-label={intl.formatMessage(messages['subscription.checkout.payment.label'])}>
       {shouldDisplayStripePaymentForm ? (
-        <Elements options={options} stripe={stripePromise}>
-          <StripePaymentForm
-            options={options}
-            onSubmitPayment={handleSubmitStripe}
-            onSubmitButtonClick={handleSubmitStripeButtonClick}
-            isProcessing={stripeIsSubmitting}
-            isQuantityUpdating={isQuantityUpdating}
-            isSubscription
-            paymentDataSelector={subscriptionDetailsSelector}
-          />
+        <>
+          <Elements options={options} stripe={stripePromise}>
+            <StripePaymentForm
+              options={options}
+              onSubmitPayment={handleSubmitStripe}
+              onSubmitButtonClick={handleSubmitStripeButtonClick}
+              isProcessing={stripeIsSubmitting}
+              isQuantityUpdating={isQuantityUpdating}
+              isSubscription
+              paymentDataSelector={subscriptionDetailsSelector}
+            />
+          </Elements>
           <MonthlyBillingNotification />
-        </Elements>
+        </>
       ) : ((loading || isClientSecretProcessing) && (<CheckoutSkeleton />))}
 
     </section>

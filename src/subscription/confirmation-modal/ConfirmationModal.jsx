@@ -32,7 +32,7 @@ const messages = defineMessages({
  */
 export const ConfirmationModal = ({ isVisible }) => {
   const [isOpen] = useState(isVisible);
-  const { details } = useSelector(detailsSelector);
+  const { programTitle, price, currency } = useSelector(detailsSelector);
 
   const intl = useIntl();
   // TODO: add the redirect URL logic for `Goto Dashboard` button
@@ -56,7 +56,7 @@ export const ConfirmationModal = ({ isVisible }) => {
         <ModalDialog.Title as="h3">
           {
             intl.formatMessage(messages['subscription.confirmation.modal.heading'], {
-              programTitle: details.programTitle,
+              programTitle,
             })
           }
         </ModalDialog.Title>
@@ -64,7 +64,7 @@ export const ConfirmationModal = ({ isVisible }) => {
       <ModalDialog.Body>
         {
           intl.formatMessage(messages['subscription.confirmation.modal.body'], {
-            price: intl.formatNumber(details.price, { style: 'currency', currency: 'USD' }),
+            price: intl.formatNumber(price, { style: 'currency', currency: currency || 'USD' }),
             ordersAndSubscriptionLink,
           })
         }

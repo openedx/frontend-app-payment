@@ -1,17 +1,18 @@
 import { createRoutine } from 'redux-saga-routines';
 
 // Created with redux-saga-routines
-export const fetchClientSecret = createRoutine('FETCH_CLIENT_SECRET');
+export const fetchSubscriptionClientSecret = createRoutine('FETCH_SUBSCRIPTION_CLIENT_SECRET');
 
-export const CLIENT_SECRET_PROCESSING = 'CLIENT_SECRET_PROCESSING';
-export const CLIENT_SECRET_DATA_RECEIVED = 'CLIENT_SECRET_DATA_RECEIVED';
+export const SUBSCRIPTION_CLIENT_SECRET_PROCESSING = 'SUBSCRIPTION_CLIENT_SECRET_PROCESSING';
+export const SUBSCRIPTION_CLIENT_SECRET_DATA_RECEIVED = 'SUBSCRIPTION_CLIENT_SECRET_DATA_RECEIVED';
 
 export const clientSecretProcessing = isProcessing => ({
-  type: CLIENT_SECRET_PROCESSING,
+  type: SUBSCRIPTION_CLIENT_SECRET_PROCESSING,
   payload: isProcessing,
 });
 
 export const clientSecretDataReceived = clientSecret => ({
-  type: CLIENT_SECRET_DATA_RECEIVED,
-  payload: clientSecret,
+  type: SUBSCRIPTION_CLIENT_SECRET_DATA_RECEIVED,
+  // TODO: refactor this to get the clientSecretID when fetching from subs BE
+  payload: clientSecret && clientSecret.capture_context ? clientSecret.capture_context.key_id : null,
 });

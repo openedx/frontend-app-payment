@@ -12,7 +12,7 @@ const messages = defineMessages({
   },
 });
 
-const SubscriptionOrderDetails = ({
+export const SubscriptionOrderDetails = ({
   programTitle,
 }) => {
   const intl = useIntl();
