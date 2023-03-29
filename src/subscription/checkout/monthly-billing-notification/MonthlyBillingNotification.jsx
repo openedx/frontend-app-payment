@@ -12,7 +12,7 @@ const messages = defineMessages({
 });
 
 const MonthlyBillingNotification = () => {
-  const { details: { price } } = useSelector(detailsSelector);
+  const { price, currency } = useSelector(detailsSelector);
   // TODO: render different text in case of resubscribe
   const intl = useIntl();
   return (
@@ -20,7 +20,7 @@ const MonthlyBillingNotification = () => {
       <p className="micro">
         {
         intl.formatMessage(messages['subscription.checkout.billing.notification'], {
-          price: intl.formatNumber(price, { style: 'currency', currency: 'USD' }),
+          price: intl.formatNumber(price, { style: 'currency', currency: currency || 'USD' }),
         })
       }
       </p>

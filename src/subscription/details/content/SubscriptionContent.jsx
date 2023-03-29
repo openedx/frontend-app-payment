@@ -52,7 +52,7 @@ SubscriptionContent.propTypes = {
   children: PropTypes.node.isRequired,
   details: PropTypes.shape({
     programTitle: PropTypes.string,
-    certificate_type: PropTypes.string,
+    certificateType: PropTypes.string,
     organization: PropTypes.string,
   }).isRequired,
 };

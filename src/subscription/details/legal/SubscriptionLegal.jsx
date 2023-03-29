@@ -7,6 +7,7 @@ import messages from './messages';
 const SubscriptionLegal = ({
   programTitle,
   price,
+  currency,
 }) => {
   const intl = useIntl();
   const supportLink = (
@@ -18,7 +19,7 @@ const SubscriptionLegal = ({
   );
   return (
     <p className="micro">{intl.formatMessage(messages['subscription.details.order.legal'], {
-      price: intl.formatNumber(price, { style: 'currency', currency: 'USD' }),
+      price: intl.formatNumber(price, { style: 'currency', currency }),
       programTitle,
       supportLink,
     })}
@@ -29,8 +30,11 @@ const SubscriptionLegal = ({
 SubscriptionLegal.propTypes = {
   programTitle: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  currency: PropTypes.string,
 };
 
-SubscriptionLegal.defaultProps = {};
+SubscriptionLegal.defaultProps = {
+  currency: 'USD',
+};
 
 export default SubscriptionLegal;

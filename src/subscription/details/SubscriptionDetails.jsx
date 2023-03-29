@@ -17,7 +17,7 @@ import TotalTable from '../../payment/cart/TotalTable';
 import SubscriptionDetailsSkeleton from './skeleton/SubscriptionDetailsSkeleton';
 import SubscriptionLegal from './legal/SubscriptionLegal';
 import SubscriptionContent from './content/SubscriptionContent';
-import SubscriptionOrderDetails from './order-details/SubscriptionOrderDetails';
+import { SubscriptionOrderDetails } from './order-details/SubscriptionOrderDetails';
 
 /**
  * SubscriptionDetails component
@@ -31,8 +31,19 @@ export const SubscriptionDetails = () => {
     products,
     isCurrencyConverted,
     summaryPrice,
-    details,
+    programTitle,
+    organization,
+    price,
+    certificateType,
+    currency,
   } = useSelector(detailsSelector);
+
+  const programDetails = {
+    programTitle,
+    organization,
+    price,
+    certificateType,
+  };
 
   const renderDetails = () => (
     <div>
@@ -44,7 +55,7 @@ export const SubscriptionDetails = () => {
         />
       </span>
 
-      <SubscriptionContent details={details}>
+      <SubscriptionContent details={programDetails}>
         {products.map(product => (
           <ProductLineItem
             key={product.title}
@@ -56,7 +67,7 @@ export const SubscriptionDetails = () => {
         ? (
           <OrderSummary>
             <SummaryTable price={summaryPrice} isSubscription />
-            <TotalTable total={details.price} isSubscription />
+            <TotalTable total={programDetails.price} isSubscription />
             {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
           </OrderSummary>
         ) : (
@@ -66,8 +77,12 @@ export const SubscriptionDetails = () => {
             <div className="skeleton py-2 mb-5" />
           </>
         )}
-      <SubscriptionOrderDetails programTitle={details.programTitle} />
-      <SubscriptionLegal programTitle={details.programTitle} price={details.price} />
+      <SubscriptionOrderDetails programTitle={programDetails.programTitle} />
+      <SubscriptionLegal
+        programTitle={programDetails.programTitle}
+        price={programDetails.price}
+        currency={currency}
+      />
     </div>
   );
 

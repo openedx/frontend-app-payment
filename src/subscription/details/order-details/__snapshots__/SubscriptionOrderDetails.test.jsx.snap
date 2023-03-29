@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubscriptionOrderDetails should render order details for Dummy Program 1`] = `
+<div
+  className="basket-section order-details"
+>
+  <h5
+    aria-level="2"
+  >
+    Order details
+  </h5>
+  <p
+    className="mb-2"
+  >
+    The above total includes any applicable taxes.
+  </p>
+  <p
+    className="mb-2"
+  >
+    After you complete your order you will have verified access to each course in Dummy Program.
+  </p>
+  <p>
+    Cancel anytime.
+  </p>
+</div>
+`;
+
+exports[`SubscriptionOrderDetails should render skeleton when programTitle is empty string 1`] = `
+Array [
+  <div
+    className="skeleton py-2 mb-3 w-50"
+  />,
+  <div
+    className="skeleton py-2 mb-2 mr-4"
+  />,
+  <div
+    className="skeleton py-2 mb-5 w-75"
+  />,
+]
+`;

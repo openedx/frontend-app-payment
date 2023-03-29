@@ -13,12 +13,12 @@ const subscriptionDetailsInitialState = {
   isSubscriptionDetailsProcessing: false,
   products: [],
   // TODO: remove these once fetched from DB
-  details: {
-    programTitle: 'Blockchain Fundamentals',
-    certificate_type: 'verified',
-    organization: 'University of California, Berkeley',
-    price: 0,
-  },
+  currency: 'USD',
+  programTitle: 'Blockchain Fundamentals',
+  certificateType: 'verified',
+  organization: 'University of California, Berkeley',
+  price: 49,
+  paymentMethod: 'stripe',
 };
 
 export const subscriptionDetailsReducer = (state = subscriptionDetailsInitialState, action = null) => {
