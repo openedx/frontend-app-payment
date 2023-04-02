@@ -30,7 +30,7 @@
   "payment.summary.discount.dynamic_offer": "Sconto {benefit} per il primo upgrade applicato. ",
   "payment.summary.table.label.discount.total": "Sconti applicati ",
   "payment.order.details.course.entitlement": "Una volta completato l'ordine, sarà possibile selezionare le date del corso dalla dashboard. ",
-  "payment.order.details.course.seat.verified": "Una volta completato l'ordine, sarai automaticamente iscritto alla traccia verificata del corso. ",
+  "payment.order.details.course.seat.verified": "The above total includes any applicable taxes. After you complete your order you will be automatically enrolled in the verified track of the course.",
   "payment.order.details.course.seat.credit": "Una volta completato l'ordine riceverai il credito per il corso. ",
   "payment.order.details.course.seat": "Una volta completato l'ordine, sarai automaticamente iscritto al corso. ",
   "payment.order.details.enrollment.code.terms": "Effettuando l'acquisto, l'utente e l'organizzazione accettano i seguenti termini: ",
