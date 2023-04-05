@@ -1,6 +1,7 @@
 import arMessages from './messages/ar.json';
 import frMessages from './messages/fr.json';
 import es419Messages from './messages/es_419.json';
+import es419MessagesProtected from '../subscription/i18n-protected-messages/es_419.json';
 import zhcnMessages from './messages/zh_CN.json';
 import ptMessages from './messages/pt.json';
 import itMessages from './messages/it.json';
@@ -16,7 +17,8 @@ import ptPTMessages from './messages/pt_PT.json';
 
 const messages = {
   ar: arMessages,
-  'es-419': es419Messages,
+  // override the protected translations
+  'es-419': { ...es419Messages, ...es419MessagesProtected },
   fr: frMessages,
   'zh-cn': zhcnMessages,
   pt: ptMessages,
