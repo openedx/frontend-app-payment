@@ -103,6 +103,10 @@ const StripePaymentForm = ({
     };
 
     if (Object.keys(errors).length > 0) {
+      // Trigger form validation and wallet collection
+      if (isSubscription) {
+        await elements.submit();
+      }
       throw new SubmissionError(errors);
     }
 
