@@ -26,15 +26,13 @@ export const SubscriptionCheckout = () => {
   // selectors
   const {
     loading,
-    loaded,
     submitting,
-    isSubscriptionDetailsProcessing,
     paymentMethod,
+    currency,
+    price,
   } = useSelector(subscriptionSelector);
-  // const { clientSecretId, isClientSecretProcessing } = useSelector(getClientSecretSelector);
 
-  const options = getStripeOptions();
-  const isQuantityUpdating = isSubscriptionDetailsProcessing && loaded;
+  const options = getStripeOptions({ currency, price });
   const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
 
   // state
@@ -81,7 +79,6 @@ export const SubscriptionCheckout = () => {
                 onSubmitPayment={handleSubmitStripe}
                 onSubmitButtonClick={handleSubmitStripeButtonClick}
                 isProcessing={stripeIsSubmitting}
-                isQuantityUpdating={isQuantityUpdating}
                 isSubscription
                 paymentDataSelector={subscriptionDetailsSelector}
               />

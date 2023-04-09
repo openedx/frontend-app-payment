@@ -174,6 +174,7 @@ exports[`<SubscriptionDetails /> renders 3 product in a subscription details 1`]
         <span
           className="summary-price"
         >
+          $55.00
           /month USD after 7-day free trial
         </span>
       </div>
@@ -188,7 +189,7 @@ exports[`<SubscriptionDetails /> renders 3 product in a subscription details 1`]
         <span
           className="text-right"
         >
-          $49.00
+          $0.00
         </span>
       </div>
     </div>
@@ -217,7 +218,7 @@ exports[`<SubscriptionDetails /> renders 3 product in a subscription details 1`]
     <p
       className="micro"
     >
-      By signing up for a subscription or starting a free trial, you authorize us to charge your card on file $49.00/month for Blockchain Fundamentals and any applicable taxes. If you signed up for a trial, we won’t charge your card until the end of your trial period. Your Blockchain Fundamentals subscription continues until canceled. Monthly subscriptions can be canceled at any time by 
+      By signing up for a subscription or starting a free trial, you authorize us to charge your card on file $55.00/month for Blockchain Fundamentals and any applicable taxes. If you signed up for a trial, we won’t charge your card until the end of your trial period. Your Blockchain Fundamentals subscription continues until canceled. Monthly subscriptions can be canceled at any time by 
       <a
         className="pgn__hyperlink default-link standalone-link"
         href="https://support.edx.org/hc/en-us/sections/115004173027-Receive-and-Share-edX-Certificates"
@@ -342,6 +343,7 @@ exports[`<SubscriptionDetails /> renders a basic, one product details 1`] = `
         <span
           className="summary-price"
         >
+          $55.00
           /month USD after 7-day free trial
         </span>
       </div>
@@ -356,7 +358,7 @@ exports[`<SubscriptionDetails /> renders a basic, one product details 1`] = `
         <span
           className="text-right"
         >
-          $49.00
+          $0.00
         </span>
       </div>
     </div>
@@ -385,7 +387,7 @@ exports[`<SubscriptionDetails /> renders a basic, one product details 1`] = `
     <p
       className="micro"
     >
-      By signing up for a subscription or starting a free trial, you authorize us to charge your card on file $49.00/month for Blockchain Fundamentals and any applicable taxes. If you signed up for a trial, we won’t charge your card until the end of your trial period. Your Blockchain Fundamentals subscription continues until canceled. Monthly subscriptions can be canceled at any time by 
+      By signing up for a subscription or starting a free trial, you authorize us to charge your card on file $55.00/month for Blockchain Fundamentals and any applicable taxes. If you signed up for a trial, we won’t charge your card until the end of your trial period. Your Blockchain Fundamentals subscription continues until canceled. Monthly subscriptions can be canceled at any time by 
       <a
         className="pgn__hyperlink default-link standalone-link"
         href="https://support.edx.org/hc/en-us/sections/115004173027-Receive-and-Share-edX-Certificates"

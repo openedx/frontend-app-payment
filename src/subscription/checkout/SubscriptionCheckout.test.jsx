@@ -82,9 +82,7 @@ jest.mock('react-tooltip/node_modules/uuid', () => ({
 }));
 
 jest.mock('./StripeOptions', () => ({
-  getStripeOptions: jest.fn().mockReturnValue({
-    // clientSecret: 'secretKey',
-  }),
+  getStripeOptions: jest.fn().mockReturnValue({}),
 }));
 
 // jest.mock('@stripe/stripe-js', () => ({

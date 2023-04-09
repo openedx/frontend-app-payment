@@ -3,17 +3,16 @@
  * @param {string} clientSecretId use to initial stripe
  * @returns stripe options
  */
-export const getStripeOptions = () => ({
+export const getStripeOptions = ({ currency, price }) => ({
   // Stripe element config
   mode: 'subscription',
   /**
-   * TODO: this should be fetched dynamically
    * NOTE: this is important to set the right subscription price as defined within stripe subscription
    * otherwise card details will not load properly
    * https://dashboard.stripe.com/test/subscriptions/sub_1Mtd3sH4caH7G0X1dvzlMT3o
    * */
-  amount: 55.00,
-  currency: 'usd', // TODO: this should be fetched dynamically
+  amount: price,
+  currency: currency && currency.toLowerCase(),
   paymentMethodCreation: 'manual',
   appearance: {
     /**

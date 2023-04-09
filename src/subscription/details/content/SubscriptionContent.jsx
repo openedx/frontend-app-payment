@@ -33,9 +33,13 @@ const SubscriptionContent = ({ children, details }) => (
           description="Professional program certificate type to display subscription certificate type."
         />
       </h4>
-      <p aria-level="2" className="body small mb-5">
-        {details.organization}
-      </p>
+      {
+        details.organizations?.map((org) => (
+          <p key={org} aria-level="2" className="body small mb-5">
+            {org}
+          </p>
+        ))
+      }
       <h5>
         <FormattedMessage
           id="subscription.purchase.details.product.list.heading"
@@ -52,8 +56,8 @@ SubscriptionContent.propTypes = {
   children: PropTypes.node.isRequired,
   details: PropTypes.shape({
     programTitle: PropTypes.string,
-    certificateType: PropTypes.string,
-    organization: PropTypes.string,
+    programType: PropTypes.string,
+    organizations: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
 };
 

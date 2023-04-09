@@ -15,7 +15,7 @@ export const detailsSelector = createSelector(
 );
 
 export const currencyDisclaimerSelector = state => ({
-  actualAmount: state[storeName].details.orderTotal,
+  actualAmount: state[storeName].details.price,
 });
 
 export const queryParamsSelector = () => getQueryParameters(global.location.search);
