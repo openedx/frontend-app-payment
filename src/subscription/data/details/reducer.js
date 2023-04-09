@@ -10,6 +10,7 @@ const subscriptionDetailsInitialState = {
   loaded: false,
   submitting: false,
   redirect: false,
+  enableStripePaymentProcessor: true,
   isSubscriptionDetailsProcessing: false,
   products: [],
   // TODO: remove these once fetched from DB

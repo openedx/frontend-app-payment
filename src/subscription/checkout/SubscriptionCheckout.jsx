@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
@@ -11,8 +11,6 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import messages from './messages';
 import { subscriptionSelector, subscriptionDetailsSelector } from '../data/details/selectors';
 import { submitPayment } from '../data/details/actions';
-import { fetchSubscriptionClientSecret } from '../data/client-secret/actions';
-import { getClientSecretSelector } from '../data/client-secret/selectors';
 
 import StripePaymentForm from '../../payment/checkout/payment-form/StripePaymentForm';
 import CheckoutSkeleton from './skeleton/CheckoutSkeleton';
@@ -22,6 +20,7 @@ import MonthlyBillingNotification from './monthly-billing-notification/MonthlyBi
 /**
  * SubscriptionCheckout component
  * renders Address and Stripe form
+ * TODO: add process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG under production flags
  */
 export const SubscriptionCheckout = () => {
   // selectors
@@ -32,10 +31,9 @@ export const SubscriptionCheckout = () => {
     isSubscriptionDetailsProcessing,
     paymentMethod,
   } = useSelector(subscriptionSelector);
-  const { clientSecretId, isClientSecretProcessing } = useSelector(getClientSecretSelector);
+  // const { clientSecretId, isClientSecretProcessing } = useSelector(getClientSecretSelector);
 
-  const options = getStripeOptions(clientSecretId);
-  const shouldDisplayStripePaymentForm = !loading && options.clientSecret;
+  const options = getStripeOptions();
   const isQuantityUpdating = isSubscriptionDetailsProcessing && loaded;
   const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
 
@@ -43,7 +41,7 @@ export const SubscriptionCheckout = () => {
   // Doing this within the Checkout component so locale is configured and available
   // https://stackoverflow.com/a/64694798
   const [stripePromise] = useState(() => loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
-    betas: [process.env.STRIPE_BETA_FLAG],
+    betas: [process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG],
     apiVersion: process.env.STRIPE_API_VERSION,
     locale: getLocale(),
   }));
@@ -72,28 +70,26 @@ export const SubscriptionCheckout = () => {
     );
   };
 
-  useEffect(() => {
-    dispatch(fetchSubscriptionClientSecret());
-  }, [dispatch]);
-
   return (
     <section aria-label={intl.formatMessage(messages['subscription.checkout.payment.label'])}>
-      {shouldDisplayStripePaymentForm ? (
-        <>
-          <Elements options={options} stripe={stripePromise}>
-            <StripePaymentForm
-              options={options}
-              onSubmitPayment={handleSubmitStripe}
-              onSubmitButtonClick={handleSubmitStripeButtonClick}
-              isProcessing={stripeIsSubmitting}
-              isQuantityUpdating={isQuantityUpdating}
-              isSubscription
-              paymentDataSelector={subscriptionDetailsSelector}
-            />
-          </Elements>
-          <MonthlyBillingNotification />
-        </>
-      ) : ((loading || isClientSecretProcessing) && (<CheckoutSkeleton />))}
+      {
+        !loading ? (
+          <>
+            <Elements options={options} stripe={stripePromise}>
+              <StripePaymentForm
+                options={options}
+                onSubmitPayment={handleSubmitStripe}
+                onSubmitButtonClick={handleSubmitStripeButtonClick}
+                isProcessing={stripeIsSubmitting}
+                isQuantityUpdating={isQuantityUpdating}
+                isSubscription
+                paymentDataSelector={subscriptionDetailsSelector}
+              />
+            </Elements>
+            <MonthlyBillingNotification />
+          </>
+        ) : <CheckoutSkeleton />
+}
 
     </section>
   );

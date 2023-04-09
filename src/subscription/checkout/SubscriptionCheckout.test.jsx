@@ -16,13 +16,11 @@ import { Elements } from '@stripe/react-stripe-js';
 // import { loadStripe } from '@stripe/stripe-js';
 
 import '../__factories__/subscription.factory';
-import '../__factories__/clientSecret.factory';
 import '../../payment/__factories__/userAccount.factory';
 import { AppContext } from '@edx/frontend-platform/react';
 import { SubscriptionCheckout } from './SubscriptionCheckout';
 import createRootReducer from '../../data/reducers';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from '../data/details/actions';
-import { fetchSubscriptionClientSecret, clientSecretDataReceived } from '../data/client-secret/actions';
 import { camelCaseObject } from '../../payment/data/utils';
 
 expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
@@ -85,7 +83,7 @@ jest.mock('react-tooltip/node_modules/uuid', () => ({
 
 jest.mock('./StripeOptions', () => ({
   getStripeOptions: jest.fn().mockReturnValue({
-    clientSecret: 'secretKey',
+    // clientSecret: 'secretKey',
   }),
 }));
 
@@ -143,13 +141,7 @@ describe('<SubscriptionCheckout />', () => {
           camelCaseObject(Factory.build('subscription', {}, { numProducts: 1 })),
         ),
       );
-      store.dispatch(
-        clientSecretDataReceived(
-          Factory.build('clientSecret', {}, {}),
-        ),
-      );
       store.dispatch(fetchSubscriptionDetails.fulfill());
-      store.dispatch(fetchSubscriptionClientSecret.fulfill());
     });
 
     tree.update();
