@@ -12,11 +12,13 @@ Factory.define('subscription')
   .option('numInfoMessages', 0)
   .attrs({
     program_title: 'Blockchain Fundamentals',
-    organization: 'University of California, Berkeley',
-    certificate_type: 'verified',
-    price: 49,
+    organizations: ['University of California, Berkeley'],
+    program_type: 'Professional Certificate',
+    price: 55.00,
+    total_price: 0,
     currency: 'USD',
     paymentMethod: 'stripe',
+    trial_end: 'April 21, 2025',
   })
   .attr('products', ['numProducts', 'productType'], (numProducts, productType) => {
     const products = [];

@@ -13,12 +13,6 @@ const subscriptionDetailsInitialState = {
   enableStripePaymentProcessor: true,
   isSubscriptionDetailsProcessing: false,
   products: [],
-  // TODO: remove these once fetched from DB
-  currency: 'USD',
-  programTitle: 'Blockchain Fundamentals',
-  certificateType: 'verified',
-  organization: 'University of California, Berkeley',
-  price: 49,
   paymentMethod: 'stripe',
 };
 

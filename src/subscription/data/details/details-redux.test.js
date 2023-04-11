@@ -35,41 +35,33 @@ describe('subscription details redux tests', () => {
     it('default state', () => {
       const result = subscriptionSelector(store.getState());
       expect(result).toEqual({
-        isEmpty: false,
-        isRedirect: true,
         loading: true,
         loaded: false,
         submitting: false,
         redirect: false,
+        enableStripePaymentProcessor: true,
         isSubscriptionDetailsProcessing: false,
         products: [],
-        // TODO: remove these once fetched from DB
-        currency: 'USD',
-        programTitle: 'Blockchain Fundamentals',
-        certificateType: 'verified',
-        organization: 'University of California, Berkeley',
-        price: 49,
         paymentMethod: 'stripe',
       });
     });
   });
 
   describe('details reducer', () => {
-    it('should return the default state when appropriate', () => {
+    it('should load the initialState when mount', () => {
       // Its base state
-      expect(store.getState().subscription.details).toMatchSnapshot();
+      expect(store.getState().subscription.details.loading).toBe(true);
 
       // If an action isn't appropriate for it
       store.dispatch({ type: 'SOMETHING_ELSE' });
-      expect(store.getState().subscription.details).toMatchSnapshot();
-
-      // When called with no parameters
-      expect(reducer()).toMatchSnapshot();
+      expect(store.getState().subscription.details.loading).toBe(true);
     });
 
     it('SUBSCRIPTION_DETAILS_RECEIVED action', () => {
       store.dispatch(subscriptionDetailsReceived({ foo: 'bar' }));
       expect(store.getState().subscription.details.foo).toBe('bar');
+      expect(store.getState().subscription.details.loading).toBe(false);
+      expect(store.getState().subscription.details.loaded).toBe(true);
     });
 
     describe('SUBSCRIPTION_DETAILS_PROCESSING action', () => {
@@ -92,6 +84,11 @@ describe('subscription details redux tests', () => {
       test.each(paymentProcessors)('submitPayment.TRIGGER action', (processor) => {
         store.dispatch(submitPayment({ method: processor }));
         expect(store.getState().subscription.details.paymentMethod).toBe(processor);
+      });
+
+      it('submitPayment.REQUEST action', () => {
+        store.dispatch(submitPayment({ method: 'PayPal' }));
+        expect(store.getState().subscription.details.paymentMethod).toBe('PayPal');
       });
 
       it('submitPayment.REQUEST action', () => {

@@ -5,14 +5,14 @@ import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/
 import { Collapsible } from '@edx/paragon';
 
 import messages from './Cart.messages';
-import { cartSelector } from '../data/selectors';
+import { cartSelector, currencyDisclaimerSelector } from '../data/selectors';
 import { ORDER_TYPES } from '../data/constants';
 
 import BulkOrderSummaryTable from './BulkOrderSummaryTable';
 import CartSkeleton from './CartSkeleton';
 import CartContents from './CartContents';
 import CouponForm from './CouponForm';
-import CurrencyDisclaimer from './CurrencyDisclaimer';
+import { CurrencyDisclaimer } from './CurrencyDisclaimer';
 import OrderSummary from './OrderSummary';
 import OrderDetails from './order-details';
 import Offers from './Offers';
@@ -87,7 +87,11 @@ class Cart extends React.Component {
 
               <TotalTable total={orderTotal} />
 
-              {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
+              {isCurrencyConverted ? (
+                <CurrencyDisclaimer
+                  currencyDisclaimerSelector={currencyDisclaimerSelector}
+                />
+              ) : null}
             </OrderSummary>
           ) : (
             <>
