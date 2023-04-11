@@ -6,9 +6,9 @@ import {
 } from '@edx/frontend-platform/i18n';
 
 import messages from '../../payment/cart/Cart.messages';
-import { detailsSelector } from '../data/details/selectors';
+import { detailsSelector, currencyDisclaimerSelector } from '../data/details/selectors';
 
-import CurrencyDisclaimer from '../../payment/cart/CurrencyDisclaimer';
+import { CurrencyDisclaimer } from '../../payment/cart/CurrencyDisclaimer';
 import OrderSummary from '../../payment/cart/OrderSummary';
 import ProductLineItem from '../../payment/cart/ProductLineItem';
 import SummaryTable from '../../payment/cart/SummaryTable';
@@ -29,20 +29,20 @@ export const SubscriptionDetails = () => {
     loading,
     loaded,
     products,
-    isCurrencyConverted,
-    summaryPrice,
     programTitle,
-    organization,
+    organizations,
     price,
-    certificateType,
+    programType,
     currency,
+    isCurrencyConverted,
+    totalPrice,
   } = useSelector(detailsSelector);
 
   const programDetails = {
     programTitle,
-    organization,
+    programType,
+    organizations,
     price,
-    certificateType,
   };
 
   const renderDetails = () => (
@@ -66,9 +66,9 @@ export const SubscriptionDetails = () => {
       {loaded
         ? (
           <OrderSummary>
-            <SummaryTable price={summaryPrice} isSubscription />
-            <TotalTable total={programDetails.price} isSubscription />
-            {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
+            <SummaryTable price={price} isSubscription />
+            <TotalTable total={totalPrice} isSubscription />
+            {isCurrencyConverted ? <CurrencyDisclaimer currencyDisclaimerSelector={currencyDisclaimerSelector} /> : null}
           </OrderSummary>
         ) : (
           <>
