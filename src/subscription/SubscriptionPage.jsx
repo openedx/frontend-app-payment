@@ -17,7 +17,7 @@ import { subscriptionSelector } from './data/details/selectors';
 import PageLoading from '../payment/PageLoading';
 import { SubscriptionDetails } from './details/SubscriptionDetails';
 import { SubscriptionCheckout } from './checkout/SubscriptionCheckout';
-import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
+import { SubscriptionAlerts } from './alerts/SubscriptionAlerts';
 import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 
 /**
@@ -28,6 +28,7 @@ import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 export const SubscriptionPage = () => {
   const {
     isRedirect,
+    errorMessageId,
   } = useSelector(subscriptionSelector);
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -71,8 +72,12 @@ export const SubscriptionPage = () => {
 
   return (
     <div className="subscription-page page__payment container-fluid py-5">
-      <FormattedAlertList />
-      {renderContent()}
+      <SubscriptionAlerts />
+      {
+      (errorMessageId && errorMessageId === 'empty_subscription')
+        ? null
+        : renderContent()
+      }
       <ConfirmationModal isVisible={isPaymentSuccessful} />
     </div>
   );

@@ -13,7 +13,7 @@ import {
 } from './actions';
 
 // Sagas
-import { handleErrors, handleMessages, clearMessages } from '../../../feedback';
+import { handleSubscriptionErrors, handleMessages, clearMessages } from '../../../feedback';
 
 // Services
 import * as SubscriptionApiService from '../service';
@@ -46,7 +46,7 @@ export function* handleFetchSubscriptionDetails() {
     yield put(subscriptionDetailsReceived(result)); // update redux store with details data
     yield call(handleMessages, result.messages, true, window.location.search);
   } catch (error) {
-    yield call(handleErrors, error, true);
+    yield call(handleSubscriptionErrors, error, true);
     if (error.details) {
       yield put(subscriptionDetailsReceived(error.details)); // update redux store with details data
     }
@@ -72,7 +72,8 @@ export function* performSubscriptionDetailsOperation(operation, ...operationArgs
     yield put(subscriptionDetailsReceived(result));
     yield call(handleMessages, result.messages, true, window.location.search);
   } catch (error) {
-    yield call(handleErrors, error, true);
+    // TODO: implement submitSubscriptionPayment errors with handleSubscriptionErrors
+    yield call(handleSubscriptionErrors, error, true);
     if (error.details) {
       yield put(subscriptionDetailsReceived(error.details));
     }
@@ -100,10 +101,11 @@ export function* handleSubmitPayment({ payload }) {
     if (!error.aborted) {
       // Client side generated errors are simple error objects.  If we have one, wrap it in the
       // same format the API uses.
+      // TODO: implement submitSubscriptionPayment errors with handleSubscriptionErrors
       if (error.code) {
-        yield call(handleErrors, { messages: [error] }, true);
+        yield call(handleSubscriptionErrors, { messages: [error] }, true);
       } else {
-        yield call(handleErrors, error, true);
+        yield call(handleSubscriptionErrors, error, true);
         yield call(handleReduxFormValidationErrors, error);
       }
 
