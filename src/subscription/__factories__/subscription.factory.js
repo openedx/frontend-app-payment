@@ -19,6 +19,7 @@ Factory.define('subscription')
     currency: 'USD',
     paymentMethod: 'stripe',
     trial_end: 'April 21, 2025',
+    error_message_id: null,
   })
   .attr('products', ['numProducts', 'productType'], (numProducts, productType) => {
     const products = [];

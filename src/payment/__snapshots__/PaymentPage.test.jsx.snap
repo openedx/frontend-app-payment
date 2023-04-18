@@ -162,6 +162,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a red
     >
       <div
         className="spinner-border text-primary"
+        data-testid="loading-page"
         role="status"
       >
         <span
