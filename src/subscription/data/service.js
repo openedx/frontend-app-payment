@@ -1,7 +1,7 @@
 import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
-import handleRequestError from '../../payment/data/handleRequestError';
+import handleRequestError from './handleRequestError';
 import { camelCaseObject } from '../../payment/data/utils';
 
 /**
