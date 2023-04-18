@@ -76,9 +76,13 @@ export const SubscriptionPage = () => {
       {
       (errorMessageId && errorMessageId === 'empty_subscription')
         ? null
-        : renderContent()
+        : (
+          <>
+            {renderContent()}
+            <ConfirmationModal isVisible={isPaymentSuccessful} />
+          </>
+        )
       }
-      <ConfirmationModal isVisible={isPaymentSuccessful} />
     </div>
   );
 };
