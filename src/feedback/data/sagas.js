@@ -69,7 +69,12 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
+      /**
+       * TODO: fix this for specific errors
+       * ! hardcoding the generic error until get the new error design for all errors
+       * */
+      // yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
+      yield put(addMessage('fallback-error', error.userMessage, error.data, MESSAGE_TYPES.ERROR));
     }
   }
   if (e.messages !== undefined) {
