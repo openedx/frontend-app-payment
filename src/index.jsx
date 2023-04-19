@@ -14,19 +14,19 @@ import {
 } from '@edx/frontend-platform';
 import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { messages as paragonMessages } from '@edx/paragon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getLoggingService, logError } from '@edx/frontend-platform/logging';
-import Header, { messages as headerMessages } from '@edx/frontend-component-header';
-import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
+import Header from '@edx/frontend-component-header';
+import Footer from '@edx/frontend-component-footer';
 
 import { configure as configureI18n } from '@edx/frontend-platform/i18n/lib';
 import { getLocale } from '@edx/frontend-platform/i18n';
-import appMessages from './i18n';
+import messages from './i18n';
+
 import {
   PaymentPage,
   EcommerceRedirect,
@@ -151,12 +151,7 @@ subscribe(APP_AUTH_INITIALIZED, () => {
 });
 
 initialize({
-  messages: [
-    appMessages,
-    headerMessages,
-    footerMessages,
-    paragonMessages,
-  ],
+  messages,
   requireAuthenticatedUser: true,
   hydrateAuthenticatedUser: true,
 });
