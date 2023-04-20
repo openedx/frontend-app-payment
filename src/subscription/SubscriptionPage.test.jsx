@@ -38,6 +38,9 @@ describe('<SubscriptionPage />', () => {
   beforeEach(() => {
     subscriptionDetails = camelCaseObject(Factory.build('subscription', {}, { numProducts: 2 }));
   });
+  afterEach(() => {
+    Factory.resetAll();
+  });
 
   it('should render the <SubscriptionPage/> component with loading state', async () => {
     render(<SubscriptionPage />);
@@ -70,19 +73,18 @@ describe('<SubscriptionPage />', () => {
     expect(screen.queryByText(`You’ll be charged ${subscriptionDetails.price}.00 USD on ${subscriptionDetails.trialEnd} then every 31 days until you cancel your subscription`)).toBeDefined();
   });
 
-  it('should not render the Subscription details and Checkout components', () => {
+  it('should not render the Subscription details when error_code is present', () => {
     render(<SubscriptionPage />);
     act(() => {
       store.dispatch(
         subscriptionDetailsReceived(
-          camelCaseObject(Factory.build('subscription', { error_message_id: 'empty_subscription' }, { numProducts: 1 })),
+          camelCaseObject(Factory.build('subscription', { error_code: 'empty_subscription' }, { numProducts: 1 })),
         ),
       );
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
 
-    // screen.debug();
-    // verify that two `course` are rendered on the same page
+    screen.debug();
     expect(screen.queryByText(/Subscription/)).toBeNull();
     expect(screen.queryByText(/Verified Certificate/)).toBeNull();
     expect(screen.queryByText(/MX$1,050 */)).toBeNull();

@@ -14,6 +14,7 @@ const subscriptionDetailsInitialState = {
   isSubscriptionDetailsProcessing: false,
   products: [],
   paymentMethod: 'stripe',
+  errorCode: null,
 };
 
 export const subscriptionDetailsReducer = (state = subscriptionDetailsInitialState, action = null) => {
