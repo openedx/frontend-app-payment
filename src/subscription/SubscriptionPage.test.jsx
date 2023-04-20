@@ -5,7 +5,6 @@ import { Factory } from 'rosie';
 import Cookies from 'universal-cookie';
 
 import './__factories__/subscription.factory';
-import '../payment/__factories__/userAccount.factory';
 import {
   render, act, screen, store,
 } from './test-utils';
@@ -38,9 +37,6 @@ describe('<SubscriptionPage />', () => {
   beforeEach(() => {
     subscriptionDetails = camelCaseObject(Factory.build('subscription', {}, { numProducts: 2 }));
   });
-  afterEach(() => {
-    Factory.resetAll();
-  });
 
   it('should render the <SubscriptionPage/> component with loading state', async () => {
     render(<SubscriptionPage />);
@@ -61,16 +57,15 @@ describe('<SubscriptionPage />', () => {
     // expect(container).toMatchSnapshot();
     // screen.debug(undefined, 10000);
     // verify that `SubscriptionBadge is present in the DOM
-    expect(screen.getByText('Subscription')).toBeDefined();
+    expect(screen.queryByTestId('subscription-badge')).toHaveTextContent('Subscription');
     // verify that `price` is converted and present in the DOM
     expect(screen.queryByText(/MX$1,050 */)).toBeDefined();
     // verify that two `course` are rendered on the same page
     expect(screen.getAllByText('Verified Certificate')).toHaveLength(2);
-
     // verify that Checkout Form fields are present in the DOM
-    expect(screen.queryByText('Last Name (required)')).toBeDefined();
+    expect(screen.queryAllByText('Last Name (required)')).toHaveLength(1);
     // verify that MonthlySubscriptionNotification is present in the DOM
-    expect(screen.queryByText(`You’ll be charged ${subscriptionDetails.price}.00 USD on ${subscriptionDetails.trialEnd} then every 31 days until you cancel your subscription`)).toBeDefined();
+    expect(screen.queryAllByText('You’ll be charged $55.00 USD on April 21, 2025 then every 31 days until you cancel your subscription.')).toHaveLength(1);
   });
 
   it('should not render the Subscription details when error_code is present', () => {
@@ -84,8 +79,7 @@ describe('<SubscriptionPage />', () => {
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
 
-    screen.debug();
-    expect(screen.queryByText(/Subscription/)).toBeNull();
+    expect(screen.queryByTestId('subscription-badge')).toBeNull();
     expect(screen.queryByText(/Verified Certificate/)).toBeNull();
     expect(screen.queryByText(/MX$1,050 */)).toBeNull();
   });
