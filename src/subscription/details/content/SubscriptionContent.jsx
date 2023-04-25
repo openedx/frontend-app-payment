@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Badge } from '@edx/paragon';
+import { ProgramType } from '../program-type/ProgramType';
 
 const SubscriptionContent = ({ children, details }) => (
   <div className="basket-section">
@@ -26,13 +27,7 @@ const SubscriptionContent = ({ children, details }) => (
         </Badge>
       </div>
 
-      <h4 aria-level="2" className="mb-0">
-        <FormattedMessage
-          id="subscription.certificate.type.professional"
-          defaultMessage="Professional Certificate"
-          description="Professional program certificate type to display subscription certificate type."
-        />
-      </h4>
+      <ProgramType type={details.programType} />
       {
         details.organizations?.map((org) => (
           <p key={org} aria-level="2" className="body small mb-5">
