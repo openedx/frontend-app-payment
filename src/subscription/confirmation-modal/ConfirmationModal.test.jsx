@@ -5,7 +5,7 @@ import { Factory } from 'rosie';
 
 import '../__factories__/subscription.factory';
 import {
-  render, act, fireEvent, store, config,
+  render, act, store, config, // fireEvent
 } from '../test-utils';
 import { ConfirmationModal } from './ConfirmationModal';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from '../data/details/actions';
@@ -18,22 +18,9 @@ describe('<ConfirmationModal />', () => {
   let subscriptionDetails;
   beforeEach(() => {
     subscriptionDetails = camelCaseObject(Factory.build('subscription', {}, { numProducts: 2 }));
-    // delete window.location;
-    // window.location = {
-    //   href: 'about:blank',
-    // };
   });
 
-  // afterAll(() => {
-  //   window.location = new URL('http://localhost/');
-  // });
-
   it('should render the <ConfirmationModal/> with the subscription details', () => {
-    // const mockWindow = {
-    //   location: { href: 'about:blank' },
-    // };
-    // Object.defineProperty(global, 'window', { value: mockWindow });
-
     const { getByText, getByRole } = render(<ConfirmationModal isVisible />);
     act(() => {
       store.dispatch(
@@ -47,17 +34,17 @@ describe('<ConfirmationModal />', () => {
     expect(heading).toBeInTheDocument();
 
     const button = getByRole('button', { name: 'Go to dashboard' });
+    // TODO: test button click behavior
     expect(button).toBeInTheDocument();
 
     const ordersLink = getByRole('link', { name: 'Orders & Subscriptions' });
     expect(ordersLink).toBeInTheDocument();
     expect(ordersLink).toHaveAttribute('href', config.ORDER_HISTORY_URL);
 
-    // debug(ordersLink);
-    fireEvent.click(ordersLink);
-    // // expect(ordersLink).toHaveBeenCalled();
-
+    // Mock window object to test the href change later
+    // fireEvent.click(ordersLink);
     // expect(window.location.href).toEqual(config.ORDER_HISTORY_URL);
+    // // expect(ordersLink).toHaveBeenCalled();
   });
 
   it('should not render the <ConfirmationModal/> when isVisible is false', () => {
