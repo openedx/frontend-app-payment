@@ -15,9 +15,10 @@ import { subscriptionSelector } from './data/details/selectors';
 
 // Components
 import PageLoading from '../payment/PageLoading';
+import EmptyCartMessage from '../payment/EmptyCartMessage';
 import { SubscriptionDetails } from './details/SubscriptionDetails';
 import { SubscriptionCheckout } from './checkout/SubscriptionCheckout';
-import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
+import { SubscriptionAlerts } from './alerts/SubscriptionAlerts';
 import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 
 /**
@@ -28,6 +29,7 @@ import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 export const SubscriptionPage = () => {
   const {
     isRedirect,
+    errorCode,
   } = useSelector(subscriptionSelector);
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -50,6 +52,15 @@ export const SubscriptionPage = () => {
       );
     }
 
+    if (errorCode) {
+      if (errorCode === 'empty_subscription') {
+        return (
+          <EmptyCartMessage />
+        );
+      }
+      return null;
+    }
+
     return (
       <div className="row">
         <h1 className="sr-only">
@@ -65,15 +76,15 @@ export const SubscriptionPage = () => {
         <div className="col-md-7 pl-lg-5 checkout-wrapper">
           <SubscriptionCheckout />
         </div>
+        <ConfirmationModal isVisible={isPaymentSuccessful} />
       </div>
     );
   };
 
   return (
     <div className="subscription-page page__payment container-fluid py-5">
-      <FormattedAlertList />
+      <SubscriptionAlerts />
       {renderContent()}
-      <ConfirmationModal isVisible={isPaymentSuccessful} />
     </div>
   );
 };
