@@ -18,7 +18,7 @@ const SubscriptionContent = ({ children, details }) => (
         <h3 aria-level="2" className="mb-0">
           {details.programTitle}
         </h3>
-        <Badge variant="light">
+        <Badge variant="light" data-testid="subscription-badge">
           <FormattedMessage
             id="subscription.purchase.details.label"
             defaultMessage="Subscription"
