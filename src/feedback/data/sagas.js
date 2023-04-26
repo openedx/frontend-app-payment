@@ -72,7 +72,11 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
       /**
        * TODO: fix this for specific errors
        * ! hardcoding the generic error until get the new error design for all errors
+       * * Also added the transactional Decline TODO here
        * */
+      // if (error.data === undefined && error.messageType === null) {
+      //   yield put(addMessage('transaction-declined-message', error.userMessage, {}, MESSAGE_TYPES.ERROR));
+      // }
       // yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
       yield put(addMessage('fallback-error', error.userMessage, error.data, MESSAGE_TYPES.ERROR));
     }
