@@ -17,6 +17,8 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 import SubscriptionSubmitButton from '../../../subscription/checkout/submit-button/SubscriptionSubmitButton';
+import MonthlyBillingNotification from '../../../subscription/checkout/monthly-billing-notification/MonthlyBillingNotification';
+
 import {
   getRequiredFields, validateRequiredFields, validateAsciiNames,
 } from './utils/form-validators';
@@ -94,6 +96,15 @@ const StripePaymentForm = ({
       lastName,
     } = values;
 
+    let stripeElementErrors = null;
+    if (isSubscription) {
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        stripeElementErrors = submitError;
+      }
+    }
+
     const errors = {
       ...validateRequiredFields(requiredFields),
       ...validateAsciiNames(
@@ -102,12 +113,9 @@ const StripePaymentForm = ({
       ),
     };
 
-    if (Object.keys(errors).length > 0) {
+    if (Object.keys(errors).length > 0 || stripeElementErrors) {
       // Trigger form validation and wallet collection
-      if (isSubscription) {
-        await elements.submit();
-      }
-      throw new SubmissionError(errors);
+      throw new SubmissionError({ ...errors, stripe: stripeElementErrors });
     }
 
     if (!stripe || !elements) {
@@ -154,12 +162,15 @@ const StripePaymentForm = ({
       />
       {/* TODO: update onSubmitButtonClick handler for SubscriptionSubmitButton */}
       {isSubscription ? (
-        <SubscriptionSubmitButton
-          onSubmitButtonClick={onSubmitButtonClick}
-          showLoadingButton={showLoadingButton}
-          disabled={submitting}
-          isProcessing={isProcessing}
-        />
+        <>
+          <MonthlyBillingNotification />
+          <SubscriptionSubmitButton
+            onSubmitButtonClick={onSubmitButtonClick}
+            showLoadingButton={showLoadingButton}
+            disabled={submitting}
+            isProcessing={isProcessing}
+          />
+        </>
       ) : (
         <PlaceOrderButton
           onSubmitButtonClick={onSubmitButtonClick}

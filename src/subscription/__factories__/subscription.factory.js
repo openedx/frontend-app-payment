@@ -11,6 +11,7 @@ Factory.define('subscription')
   .option('numErrorMessages', 0)
   .option('numInfoMessages', 0)
   .attrs({
+    program_uuid: '00000000-0000-0000-0000-00000000001c',
     program_title: 'Blockchain Fundamentals',
     organizations: ['University of California, Berkeley'],
     program_type: 'Professional Certificate',

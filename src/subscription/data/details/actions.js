@@ -12,7 +12,7 @@ import { createRoutine } from 'redux-saga-routines';
 // fetchSubscriptionDetails.FULFILL   |   fetchSubscriptionDetails.fulfill()
 //
 // Created with redux-saga-routines
-export const submitPayment = createRoutine('SUBMIT_PAYMENT');
+export const submitSubscription = createRoutine('SUBMIT_SUBSCRIPTION');
 export const fetchSubscriptionDetails = createRoutine('FETCH_SUBSCRIPTION_DETAILS');
 
 // Actions and their action creators
