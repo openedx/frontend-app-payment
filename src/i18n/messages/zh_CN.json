@@ -83,7 +83,7 @@
   "payment.card.holder.information.state.label": "State/Province (required)",
   "payment.card.holder.information.state.required.label": "State/Province",
   "payment.card.holder.information.state.options.empty": "Choose state/province",
-  "payment.empty.basket.heading": "Your basket is empty.",
+  "payment.empty.basket.heading": "Your cart is empty.",
   "payment.empty.basket.message": "If you attempted to make a purchase, you have not been charged. Return to your {actionLinkOne} to try again, or {actionLinkTwo}.",
   "payment.empty.basket.dashboardURL": "dashboard",
   "payment.empty.basket.supportURL": "contact edX E-commerce Support",

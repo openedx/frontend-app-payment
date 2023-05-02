@@ -217,7 +217,7 @@ describe('<PaymentPage />', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    it('should render an empty basket', () => {
+    it('should render an empty cart', () => {
       const component = (
         <IntlProvider locale="en">
           <AppContext.Provider value={{ authenticatedUser, config, locale }}>
