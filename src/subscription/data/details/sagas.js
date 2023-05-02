@@ -2,6 +2,8 @@ import {
   call, put, select,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
+import { logError } from '@edx/frontend-platform/logging';
+
 import { getReduxFormValidationErrors } from '../../../payment/data/utils';
 
 // Actions
@@ -9,11 +11,13 @@ import {
   subscriptionDetailsReceived,
   subscriptionDetailsProcessing,
   fetchSubscriptionDetails,
-  submitPayment,
+  submitSubscription,
 } from './actions';
 
+import { subscriptionStatusReceived } from '../status/actions';
+
 // Sagas
-import { handleSubscriptionErrors, handleMessages, clearMessages } from '../../../feedback';
+import { handleSubscriptionErrors, clearMessages } from '../../../feedback';
 
 // Services
 import * as SubscriptionApiService from '../service';
@@ -30,9 +34,19 @@ function* isSubscriptionDetailsProcessing() {
 export function* handleReduxFormValidationErrors(error) {
   if (error.fieldErrors) {
     const fieldErrors = getReduxFormValidationErrors(error);
-    yield put(stopSubmit('payment', fieldErrors));
+    yield put(stopSubmit('subscription', fieldErrors));
   }
 }
+
+const handleCustomErrors = (error, fallbackKey) => {
+  const apiErrors = [{
+    code: fallbackKey ? 'fallback-error' : error.cause,
+    userMessage: error.message,
+  }];
+  const err = new Error();
+  err.errors = apiErrors;
+  return err;
+};
 
 export function* handleFetchSubscriptionDetails() {
   if (yield isSubscriptionDetailsProcessing()) {
@@ -43,42 +57,19 @@ export function* handleFetchSubscriptionDetails() {
   try {
     yield put(subscriptionDetailsProcessing(true)); // we are going to modify the details, don't make changes
     const result = yield call(SubscriptionApiService.getDetails);
-    yield put(subscriptionDetailsReceived(result)); // update redux store with details data
-    yield call(handleMessages, result.messages, true, window.location.search);
+    yield put(subscriptionDetailsReceived(result));
   } catch (error) {
-    yield call(handleSubscriptionErrors, error, true);
-    if (error.details) {
-      yield put(subscriptionDetailsReceived(error.details)); // update redux store with details data
+    const errors = error?.errors || [];
+    if (
+      errors.length
+      && errors[0].code === 'empty_subscription'
+    ) {
+      yield put(subscriptionDetailsReceived({ errorCode: 'empty_subscription' })); // update redux store with details data
     }
+    yield call(handleSubscriptionErrors, error, true);
   } finally {
     yield put(subscriptionDetailsProcessing(false)); // we are done modifying the details
     yield put(fetchSubscriptionDetails.fulfill()); // mark the details as finished loading
-  }
-}
-
-/**
- * Many of the handlers here have identical error handling, and are also all processing the same
- * sort of response object (a details).  This helper is just here to dedupe that code, since its
- * all identical.
- */
-export function* performSubscriptionDetailsOperation(operation, ...operationArgs) {
-  if (yield isSubscriptionDetailsProcessing()) {
-    return;
-  }
-
-  try {
-    yield put(subscriptionDetailsProcessing(true));
-    const result = yield call(operation, ...operationArgs);
-    yield put(subscriptionDetailsReceived(result));
-    yield call(handleMessages, result.messages, true, window.location.search);
-  } catch (error) {
-    // TODO: implement submitSubscriptionPayment errors with handleSubscriptionErrors
-    yield call(handleSubscriptionErrors, error, true);
-    if (error.details) {
-      yield put(subscriptionDetailsReceived(error.details));
-    }
-  } finally {
-    yield put(subscriptionDetailsProcessing(false));
   }
 }
 
@@ -91,31 +82,31 @@ export function* handleSubmitPayment({ payload }) {
   try {
     yield put(subscriptionDetailsProcessing(true));
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
-    yield put(submitPayment.request());
+    yield put(submitSubscription.request());
     const paymentMethodCheckout = paymentMethods[method];
     const details = yield select(state => ({ ...state.subscription.details }));
-    yield call(paymentMethodCheckout, details, paymentArgs);
-    yield put(submitPayment.success());
+    const postData = yield call(paymentMethodCheckout, details, paymentArgs);
+    const result = yield call(SubscriptionApiService.postDetails, postData);
+
+    yield put(submitSubscription.success(result));
+    yield put(subscriptionStatusReceived(result));
   } catch (error) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {
-      // Client side generated errors are simple error objects.  If we have one, wrap it in the
-      // same format the API uses.
-      // TODO: implement submitSubscriptionPayment errors with handleSubscriptionErrors
-      if (error.code) {
-        yield call(handleSubscriptionErrors, { messages: [error] }, true);
+      if (error.message && error.cause === 'create-paymentMethod') { // stripe payment method creation error
+        yield call(handleSubscriptionErrors, handleCustomErrors(error, 'fallback'), true);
       } else {
+        logError(error, {
+          messagePrefix: 'Stripe-Checkout Post Error',
+          paymentMethod: 'Create Subscription',
+          paymentErrorType: 'v1/stripe-checkout/ Error',
+        });
         yield call(handleSubscriptionErrors, error, true);
-        yield call(handleReduxFormValidationErrors, error);
-      }
-
-      if (error.details) {
-        yield put(subscriptionDetailsReceived(error.details));
       }
     }
+    yield put(submitSubscription.failure());
   } finally {
     yield put(subscriptionDetailsProcessing(false));
-    yield put(submitPayment.fulfill());
   }
 }
 

@@ -5,7 +5,7 @@ import { reducer } from '../reducers';
 import {
   subscriptionDetailsReceived,
   subscriptionDetailsProcessing,
-  submitPayment,
+  submitSubscription,
   fetchSubscriptionDetails,
 } from './actions';
 import { subscriptionSelector } from './selectors';
@@ -76,33 +76,33 @@ describe('subscription details redux tests', () => {
       });
     });
 
-    describe('submitPayment actions', () => {
+    describe('submitSubscription actions', () => {
       const paymentProcessors = [
         'stripe',
       ];
 
-      test.each(paymentProcessors)('submitPayment.TRIGGER action', (processor) => {
-        store.dispatch(submitPayment({ method: processor }));
+      test.each(paymentProcessors)('submitSubscription.TRIGGER action', (processor) => {
+        store.dispatch(submitSubscription({ method: processor }));
         expect(store.getState().subscription.details.paymentMethod).toBe(processor);
       });
 
-      it('submitPayment.REQUEST action', () => {
-        store.dispatch(submitPayment({ method: 'PayPal' }));
+      it('submitSubscription.REQUEST action', () => {
+        store.dispatch(submitSubscription({ method: 'PayPal' }));
         expect(store.getState().subscription.details.paymentMethod).toBe('PayPal');
       });
 
-      it('submitPayment.REQUEST action', () => {
-        store.dispatch(submitPayment.request());
+      it('submitSubscription.REQUEST action', () => {
+        store.dispatch(submitSubscription.request());
         expect(store.getState().subscription.details.submitting).toBe(true);
       });
 
-      it('submitPayment.SUCCESS action', () => {
-        store.dispatch(submitPayment.success());
+      it('submitSubscription.SUCCESS action', () => {
+        store.dispatch(submitSubscription.success());
         expect(store.getState().subscription.details.redirect).toBe(true);
       });
 
-      it('submitPayment.FULFILL action', () => {
-        store.dispatch(submitPayment.fulfill());
+      it('submitSubscription.FULFILL action', () => {
+        store.dispatch(submitSubscription.fulfill());
         expect(store.getState().subscription.details.submitting).toBe(false);
         expect(store.getState().subscription.details.paymentMethod).toBeUndefined();
       });

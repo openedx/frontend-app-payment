@@ -50,11 +50,17 @@ export const getStripeOptions = ({ currency, price }) => ({
         fontFamily: 'Inter,Helvetica Neue,Arial,sans-serif',
         fontWeight: '400',
         marginBottom: '0.5rem',
+        color: '#454545',
       },
       '.Error': {
         fontSize: '0.875rem',
         fontWeight: 400,
         color: '#D23228',
+      },
+      '.Text--terms': {
+        fontFamily: 'Inter,Helvetica Neue,Arial,sans-serif',
+        fontWeight: '400',
+        color: '#454545',
       },
     },
   },
