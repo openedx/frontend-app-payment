@@ -10,17 +10,15 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './messages';
 import { subscriptionSelector, subscriptionDetailsSelector } from '../data/details/selectors';
-import { submitPayment } from '../data/details/actions';
+import { submitSubscription } from '../data/details/actions';
 
 import StripePaymentForm from '../../payment/checkout/payment-form/StripePaymentForm';
 import CheckoutSkeleton from './skeleton/CheckoutSkeleton';
 import { getStripeOptions } from './StripeOptions';
-import MonthlyBillingNotification from './monthly-billing-notification/MonthlyBillingNotification';
 
 /**
  * SubscriptionCheckout component
  * renders Address and Stripe form
- * TODO: add process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG under production flags
  */
 export const SubscriptionCheckout = () => {
   // selectors
@@ -48,7 +46,7 @@ export const SubscriptionCheckout = () => {
   const intl = useIntl();
 
   const handleSubmitStripe = (formData) => {
-    dispatch(submitPayment({ method: 'stripe', ...formData }));
+    dispatch(submitSubscription({ method: 'stripe', ...formData }));
   };
 
   const handleSubmitStripeButtonClick = () => {
@@ -72,19 +70,16 @@ export const SubscriptionCheckout = () => {
     <section aria-label={intl.formatMessage(messages['subscription.checkout.payment.label'])}>
       {
         !loading ? (
-          <>
-            <Elements options={options} stripe={stripePromise}>
-              <StripePaymentForm
-                options={options}
-                onSubmitPayment={handleSubmitStripe}
-                onSubmitButtonClick={handleSubmitStripeButtonClick}
-                isProcessing={stripeIsSubmitting}
-                isSubscription
-                paymentDataSelector={subscriptionDetailsSelector}
-              />
-            </Elements>
-            <MonthlyBillingNotification />
-          </>
+          <Elements options={options} stripe={stripePromise}>
+            <StripePaymentForm
+              options={options}
+              onSubmitPayment={handleSubmitStripe}
+              onSubmitButtonClick={handleSubmitStripeButtonClick}
+              isProcessing={stripeIsSubmitting}
+              isSubscription
+              paymentDataSelector={subscriptionDetailsSelector}
+            />
+          </Elements>
         ) : <CheckoutSkeleton />
 }
 

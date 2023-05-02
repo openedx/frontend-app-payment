@@ -70,15 +70,13 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
       /**
-       * TODO: fix this for specific errors
-       * ! hardcoding the generic error until get the new error design for all errors
-       * * Also added the transactional Decline TODO here
+       * * If msg has errorCode and userMessage show it otherwise fallback-error
        * */
-      // if (error.data === undefined && error.messageType === null) {
-      //   yield put(addMessage('transaction-declined-message', error.userMessage, {}, MESSAGE_TYPES.ERROR));
-      // }
-      // yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
-      yield put(addMessage('fallback-error', error.userMessage, error.data, MESSAGE_TYPES.ERROR));
+      if (error.code && error.userMessage) {
+        yield put(addMessage(error.code, error.userMessage, error?.data, error.messageType || MESSAGE_TYPES.ERROR));
+      } else {
+        yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+      }
     }
   }
   if (e.messages !== undefined) {

@@ -32,7 +32,7 @@ const SubscriptionSubmitButton = ({
               default: (
                 <FormattedMessage
                   id="subscription.checkout.form.submit.button.text.default"
-                  defaultMessage="Start my 7-day free trial"
+                  defaultMessage="Subscribe"
                   description="The label for the subscription form submit button"
                 />
               ),
