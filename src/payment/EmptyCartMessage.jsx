@@ -9,7 +9,7 @@ const EmptyCartMessage = () => (
       <h5 className="card-title">
         <FormattedMessage
           id="payment.empty.basket.heading"
-          defaultMessage="Your basket is empty."
+          defaultMessage="Your cart is empty."
           description="The heading displayed when there is no basket"
         />
       </h5>
