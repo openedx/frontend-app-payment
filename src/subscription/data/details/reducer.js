@@ -34,23 +34,29 @@ export const subscriptionDetailsReducer = (state = subscriptionDetailsInitialSta
         isSubscriptionDetailsProcessing: action.payload,
       };
 
-      case submitPayment.TRIGGER: return {
-        ...state,
-        paymentMethod: action.payload.method,
-      };
+      // case submitPayment.TRIGGER: return {
+      //   ...state,
+      //   paymentMethod: action.payload.method,
+      // };
       case submitPayment.REQUEST: return {
         ...state,
         submitting: true,
       };
       case submitPayment.SUCCESS: return {
         ...state,
-        redirect: true,
+        submitting: false,
+
+        // redirect: true,
       };
-      case submitPayment.FULFILL: return {
+      case submitPayment.FAILURE: return {
         ...state,
         submitting: false,
-        paymentMethod: undefined,
       };
+      // case submitPayment.FULFILL: return {
+      //   ...state,
+      //   submitting: false,
+      //   // paymentMethod: undefined,
+      // };
 
       default:
     }

@@ -15,7 +15,6 @@ import { submitPayment } from '../data/details/actions';
 import StripePaymentForm from '../../payment/checkout/payment-form/StripePaymentForm';
 import CheckoutSkeleton from './skeleton/CheckoutSkeleton';
 import { getStripeOptions } from './StripeOptions';
-import MonthlyBillingNotification from './monthly-billing-notification/MonthlyBillingNotification';
 
 /**
  * SubscriptionCheckout component
@@ -72,19 +71,16 @@ export const SubscriptionCheckout = () => {
     <section aria-label={intl.formatMessage(messages['subscription.checkout.payment.label'])}>
       {
         !loading ? (
-          <>
-            <Elements options={options} stripe={stripePromise}>
-              <StripePaymentForm
-                options={options}
-                onSubmitPayment={handleSubmitStripe}
-                onSubmitButtonClick={handleSubmitStripeButtonClick}
-                isProcessing={stripeIsSubmitting}
-                isSubscription
-                paymentDataSelector={subscriptionDetailsSelector}
-              />
-            </Elements>
-            <MonthlyBillingNotification />
-          </>
+          <Elements options={options} stripe={stripePromise}>
+            <StripePaymentForm
+              options={options}
+              onSubmitPayment={handleSubmitStripe}
+              onSubmitButtonClick={handleSubmitStripeButtonClick}
+              isProcessing={stripeIsSubmitting}
+              isSubscription
+              paymentDataSelector={subscriptionDetailsSelector}
+            />
+          </Elements>
         ) : <CheckoutSkeleton />
 }
 

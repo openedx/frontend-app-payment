@@ -33,7 +33,6 @@ export const SubscriptionPage = () => {
   } = useSelector(subscriptionSelector);
   const intl = useIntl();
   const dispatch = useDispatch();
-  const [isPaymentSuccessful] = useState(false);
 
   useEffect(() => {
     sendPageEvent();
@@ -76,7 +75,7 @@ export const SubscriptionPage = () => {
         <div className="col-md-7 pl-lg-5 checkout-wrapper">
           <SubscriptionCheckout />
         </div>
-        <ConfirmationModal isVisible={isPaymentSuccessful} />
+        <ConfirmationModal />
       </div>
     );
   };

@@ -12,6 +12,8 @@ import {
   submitPayment,
 } from './actions';
 
+import { subscriptionStatusReceived } from '../status/actions';
+
 // Sagas
 import { handleSubscriptionErrors, handleMessages, clearMessages } from '../../../feedback';
 
@@ -30,7 +32,7 @@ function* isSubscriptionDetailsProcessing() {
 export function* handleReduxFormValidationErrors(error) {
   if (error.fieldErrors) {
     const fieldErrors = getReduxFormValidationErrors(error);
-    yield put(stopSubmit('payment', fieldErrors));
+    yield put(stopSubmit('subscription', fieldErrors));
   }
 }
 
@@ -94,8 +96,11 @@ export function* handleSubmitPayment({ payload }) {
     yield put(submitPayment.request());
     const paymentMethodCheckout = paymentMethods[method];
     const details = yield select(state => ({ ...state.subscription.details }));
-    yield call(paymentMethodCheckout, details, paymentArgs);
-    yield put(submitPayment.success());
+    const postData = yield call(paymentMethodCheckout, details, paymentArgs);
+    const result = yield call(SubscriptionApiService.postDetails, postData);
+
+    yield put(submitPayment.success(result));
+    yield put(subscriptionStatusReceived(result));
   } catch (error) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {
@@ -113,9 +118,10 @@ export function* handleSubmitPayment({ payload }) {
         yield put(subscriptionDetailsReceived(error.details));
       }
     }
+    yield put(submitPayment.failure());
   } finally {
     yield put(subscriptionDetailsProcessing(false));
-    yield put(submitPayment.fulfill());
+    // yield put(submitPayment.fulfill());
   }
 }
 

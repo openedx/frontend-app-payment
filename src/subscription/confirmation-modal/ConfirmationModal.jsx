@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+
 import {
   ModalDialog, ActionRow, Button, Hyperlink,
 } from '@edx/paragon';
@@ -7,6 +7,9 @@ import { useSelector } from 'react-redux';
 import { ArrowForward } from '@edx/paragon/icons';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl, defineMessages, FormattedMessage } from '@edx/frontend-platform/i18n';
+
+import { subscriptionStatusSelector } from '../data/status/selectors';
+
 import { detailsSelector } from '../data/details/selectors';
 
 const messages = defineMessages({
@@ -30,9 +33,17 @@ const messages = defineMessages({
 /**
  * ConfirmationModal
  */
-export const ConfirmationModal = ({ isVisible }) => {
-  const [isOpen] = useState(isVisible);
+export const ConfirmationModal = () => {
   const { programTitle, price, currency } = useSelector(detailsSelector);
+  const { confirmationStatus } = useSelector(subscriptionStatusSelector);
+  const [isOpen, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (confirmationStatus === 'success') {
+      setOpen(true);
+    }
+  }, [confirmationStatus]);
+  // console.log(`confirmationStatus: ${confirmationStatus}`);
 
   const intl = useIntl();
   // TODO: add the redirect URL logic for `Goto Dashboard` button
@@ -85,7 +96,7 @@ export const ConfirmationModal = ({ isVisible }) => {
 };
 
 ConfirmationModal.propTypes = {
-  isVisible: PropTypes.bool.isRequired,
+  // isVisible: PropTypes.bool.isRequired,
 };
 
 export default ConfirmationModal;

@@ -12,6 +12,7 @@ import { camelCaseObject } from '../../payment/data/utils';
 const transformSubscriptionDetails = (data) => {
   const obj = camelCaseObject(data);
   obj.price = parseFloat(obj.price);
+  obj.totalPrice = parseFloat(obj.totalPrice);
   return obj;
 };
 
@@ -43,6 +44,19 @@ export function handleDetailsApiError(requestError) {
 export async function getDetails() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`)
+    .catch(handleDetailsApiError);
+  return transformSubscriptionDetails(data);
+}
+
+export async function postDetails(postData) {
+  const { data } = await getAuthenticatedHttpClient()
+    .post(
+      `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
+      postData,
+      {
+        // headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      },
+    )
     .catch(handleDetailsApiError);
   return transformSubscriptionDetails(data);
 }
