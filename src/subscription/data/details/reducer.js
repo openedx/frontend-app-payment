@@ -2,7 +2,7 @@ import {
   SUBSCRIPTION_DETAILS_RECEIVED,
   SUBSCRIPTION_DETAILS_PROCESSING,
   fetchSubscriptionDetails,
-  submitPayment,
+  submitSubscription,
 } from './actions';
 
 const subscriptionDetailsInitialState = {
@@ -34,25 +34,24 @@ export const subscriptionDetailsReducer = (state = subscriptionDetailsInitialSta
         isSubscriptionDetailsProcessing: action.payload,
       };
 
-      // case submitPayment.TRIGGER: return {
+      // case submitSubscription.TRIGGER: return {
       //   ...state,
       //   paymentMethod: action.payload.method,
       // };
-      case submitPayment.REQUEST: return {
+      case submitSubscription.REQUEST: return {
         ...state,
         submitting: true,
       };
-      case submitPayment.SUCCESS: return {
+      case submitSubscription.SUCCESS: return {
         ...state,
         submitting: false,
 
-        // redirect: true,
       };
-      case submitPayment.FAILURE: return {
+      case submitSubscription.FAILURE: return {
         ...state,
         submitting: false,
       };
-      // case submitPayment.FULFILL: return {
+      // case submitSubscription.FULFILL: return {
       //   ...state,
       //   submitting: false,
       //   // paymentMethod: undefined,

@@ -10,7 +10,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './messages';
 import { subscriptionSelector, subscriptionDetailsSelector } from '../data/details/selectors';
-import { submitPayment } from '../data/details/actions';
+import { submitSubscription } from '../data/details/actions';
 
 import StripePaymentForm from '../../payment/checkout/payment-form/StripePaymentForm';
 import CheckoutSkeleton from './skeleton/CheckoutSkeleton';
@@ -47,7 +47,7 @@ export const SubscriptionCheckout = () => {
   const intl = useIntl();
 
   const handleSubmitStripe = (formData) => {
-    dispatch(submitPayment({ method: 'stripe', ...formData }));
+    dispatch(submitSubscription({ method: 'stripe', ...formData }));
   };
 
   const handleSubmitStripeButtonClick = () => {
