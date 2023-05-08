@@ -20,7 +20,7 @@ const messages = defineMessages({
   },
   'subscription.confirmation.modal.body': {
     id: 'subscription.confirmation.modal.body',
-    defaultMessage: "When your free trial ends, your subscription will begin, and we'll charge your payment method on file {price} per month plus any applicable taxes. This subscription will automatically renew every month unless you cancel from the {ordersAndSubscriptionLink} page.",
+    defaultMessage: "When your free trial ends, your subscription will begin, and we'll charge your payment method on file {price} per month. This subscription will automatically renew every month unless you cancel from the {ordersAndSubscriptionLink} page.",
     description: 'Subscription confirmation success message explaining monthly subscription plan.',
   },
   'subscription.confirmation.modal.body.orders.link': {
@@ -34,7 +34,13 @@ const messages = defineMessages({
  * ConfirmationModal
  */
 export const ConfirmationModal = () => {
-  const { programTitle, price, currency } = useSelector(detailsSelector);
+  const {
+    programTitle,
+    price,
+    currency,
+    programUuid,
+  } = useSelector(detailsSelector);
+  const intl = useIntl();
   const { confirmationStatus } = useSelector(subscriptionStatusSelector);
   const [isOpen, setOpen] = useState(false);
 
@@ -43,10 +49,7 @@ export const ConfirmationModal = () => {
       setOpen(true);
     }
   }, [confirmationStatus]);
-  // console.log(`confirmationStatus: ${confirmationStatus}`);
 
-  const intl = useIntl();
-  // TODO: add the redirect URL logic for `Goto Dashboard` button
   const ordersAndSubscriptionLink = (
     <Hyperlink
       destination={getConfig().ORDER_HISTORY_URL}
@@ -54,6 +57,9 @@ export const ConfirmationModal = () => {
       {intl.formatMessage(messages['subscription.confirmation.modal.body.orders.link'])}
     </Hyperlink>
   );
+
+  if (!isOpen) { return null; }
+
   return (
     <ModalDialog
       title="Subscription Confirmation Dialog"
@@ -82,7 +88,12 @@ export const ConfirmationModal = () => {
       </ModalDialog.Body>
       <ModalDialog.Footer>
         <ActionRow>
-          <Button variant="brand" iconAfter={ArrowForward}>
+          <Button
+            variant="brand"
+            as="a"
+            iconAfter={ArrowForward}
+            href={`${getConfig().LMS_BASE_URL}/dashboard/programs/${programUuid}`}
+          >
             <FormattedMessage
               id="subscription.confirmation.modal.navigation.title"
               defaultMessage="Go to dashboard"
@@ -93,10 +104,6 @@ export const ConfirmationModal = () => {
       </ModalDialog.Footer>
     </ModalDialog>
   );
-};
-
-ConfirmationModal.propTypes = {
-  // isVisible: PropTypes.bool.isRequired,
 };
 
 export default ConfirmationModal;
