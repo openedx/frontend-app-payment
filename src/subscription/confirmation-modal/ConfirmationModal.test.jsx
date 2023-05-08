@@ -31,27 +31,26 @@ describe('<ConfirmationModal />', () => {
   });
 
   it('should render the <ConfirmationModal/> with the subscription details', () => {
+    const subscriptionDetails = camelCaseObject(Factory.build('subscription', {}, { numProducts: 2 }));
+    const subscriptionStatus = camelCaseObject(Factory.build('subscriptionStatus'));
+
     const { getByText, getByRole } = render(<ConfirmationModal />);
     act(() => {
       store.dispatch(
-        subscriptionDetailsReceived(
-          camelCaseObject(Factory.build('subscription', {}, { numProducts: 2 })),
-        ),
+        subscriptionDetailsReceived(subscriptionDetails),
       );
       store.dispatch(
-        subscriptionStatusReceived(
-          camelCaseObject(Factory.build('subscriptionStatus')),
-        ),
+        subscriptionStatusReceived(subscriptionStatus),
       );
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
 
-    const heading = getByText('Congratulations! Your 7-day free trial of Blockchain Fundamentals has started.');
+    const heading = getByText(`Congratulations! Your 7-day free trial of ${subscriptionDetails.programTitle} has started.`);
     expect(heading).toBeInTheDocument();
 
-    const button = getByRole('link', { name: 'Go to dashboard' });
-    // TODO: test button click behavior
-    expect(button).toBeInTheDocument();
+    const gotoDashboardLink = getByRole('link', { name: 'Go to dashboard' });
+    expect(gotoDashboardLink).toBeInTheDocument();
+    expect(gotoDashboardLink).toHaveAttribute('href', `${config.LMS_BASE_URL}/dashboard/programs/${subscriptionDetails.programUuid}`);
 
     const ordersLink = getByRole('link', { name: 'Orders & Subscriptions' });
     expect(ordersLink).toBeInTheDocument();
