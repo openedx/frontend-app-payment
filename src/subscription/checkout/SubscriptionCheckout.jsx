@@ -19,7 +19,6 @@ import { getStripeOptions } from './StripeOptions';
 /**
  * SubscriptionCheckout component
  * renders Address and Stripe form
- * TODO: add process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG under production flags
  */
 export const SubscriptionCheckout = () => {
   // selectors

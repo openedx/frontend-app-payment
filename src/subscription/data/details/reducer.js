@@ -34,10 +34,6 @@ export const subscriptionDetailsReducer = (state = subscriptionDetailsInitialSta
         isSubscriptionDetailsProcessing: action.payload,
       };
 
-      // case submitSubscription.TRIGGER: return {
-      //   ...state,
-      //   paymentMethod: action.payload.method,
-      // };
       case submitSubscription.REQUEST: return {
         ...state,
         submitting: true,
@@ -51,11 +47,6 @@ export const subscriptionDetailsReducer = (state = subscriptionDetailsInitialSta
         ...state,
         submitting: false,
       };
-      // case submitSubscription.FULFILL: return {
-      //   ...state,
-      //   submitting: false,
-      //   // paymentMethod: undefined,
-      // };
 
       default:
     }

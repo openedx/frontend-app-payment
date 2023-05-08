@@ -53,9 +53,6 @@ export async function postDetails(postData) {
     .post(
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
       postData,
-      {
-        // headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      },
     )
     .catch(handleDetailsApiError);
   return transformSubscriptionDetails(data);
