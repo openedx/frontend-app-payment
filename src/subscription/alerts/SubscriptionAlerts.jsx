@@ -2,7 +2,6 @@ import React from 'react';
 import AlertList from '../../feedback/AlertList';
 import {
   EmptySubscriptionMessage,
-  ExpiredSubscription,
 } from './ErrorMessages';
 
 /**
@@ -14,7 +13,6 @@ export const SubscriptionAlerts = () => (
   <AlertList
     messageCodes={{
       empty_subscription: (<EmptySubscriptionMessage />),
-      subscription_expired: (<ExpiredSubscription />),
     }}
   />
 );

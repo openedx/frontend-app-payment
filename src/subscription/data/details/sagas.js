@@ -57,15 +57,6 @@ export function* handleFetchSubscriptionDetails() {
   try {
     yield put(subscriptionDetailsProcessing(true)); // we are going to modify the details, don't make changes
     const result = yield call(SubscriptionApiService.getDetails);
-    // if (result.trialEnd === null || result.trialEnd === undefined) {
-    //   yield put(subscriptionDetailsReceived({
-    //     ...result,
-    //     errorCode: 'subscription_expired',
-    //   })); // update redux store with details data
-    //   throw handleCustomErrors(new Error('Subscription Expired', {
-    //     cause: 'subscription_expired',
-    //   }));
-    // }
     yield put(subscriptionDetailsReceived(result));
   } catch (error) {
     const errors = error?.errors || [];
