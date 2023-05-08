@@ -83,7 +83,7 @@
   "payment.card.holder.information.state.label": "Estado/Provincia (requerido)",
   "payment.card.holder.information.state.required.label": "Estado/Provincia",
   "payment.card.holder.information.state.options.empty": "Elige estado/provincia",
-  "payment.empty.basket.heading": "Su cesto está vacío.",
+  "payment.empty.basket.heading": "Su carro de compras está vacío",
   "payment.empty.basket.message": "Si intentó realizar una compra , no ha sido cargado ningún cobro. Regresa a tu {actionLinkOne} para intentar otra vez, o {actionLinkTwo}.",
   "payment.empty.basket.dashboardURL": "panel de control",
   "payment.empty.basket.supportURL": "contacte a edX E-commerce Support",
