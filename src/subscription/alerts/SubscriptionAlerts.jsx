@@ -1,13 +1,11 @@
 import React from 'react';
 import AlertList from '../../feedback/AlertList';
-// import FallbackErrorMessage from '../../feedback/FallbackErrorMessage';
+import { EmptySubscriptionMessage, ExpiredSubscription } from './ErrorMessages';
 
 /**
  * SubscriptionAlerts
  * Reusable component to show server alerts
  * provide 'fallback-error' key to display fallback error message
- * TODO: fix the other and fallback error messages components
- * ! and remove commented code
  *
  * Add `not` to produce the program_unavailable error message
  * if program_metadata is not None:
@@ -24,9 +22,8 @@ import AlertList from '../../feedback/AlertList';
 export const SubscriptionAlerts = () => (
   <AlertList
     messageCodes={{
-      // empty_subscription: (<FallbackErrorMessage />),
-      // program_unavailable: (<FallbackErrorMessage />),
-      // ineligible_program: (<FallbackErrorMessage />),
+      empty_subscription: (<EmptySubscriptionMessage />),
+      subscription_expired: (<ExpiredSubscription />),
     }}
   />
 );
