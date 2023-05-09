@@ -4,6 +4,7 @@ import {
 import { stopSubmit } from 'redux-form';
 import { logError } from '@edx/frontend-platform/logging';
 
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getReduxFormValidationErrors } from '../../../payment/data/utils';
 
 // Actions
@@ -22,6 +23,23 @@ import { handleSubscriptionErrors, clearMessages } from '../../../feedback';
 // Services
 import * as SubscriptionApiService from '../service';
 import { subscriptionStripeCheckout } from '../../subscription-methods';
+
+const sendSubscriptionEvent = ({ details, success }) => {
+  const eventType = success
+    ? 'edx.bi.user.subscription.program.checkout.success'
+    : 'edx.bi.user.subscription.program.checkout.failure';
+
+  sendTrackEvent(
+    eventType,
+    {
+      paymentProcessor: details.paymentMethod,
+      isTrialEligible: details.isTrialEligible,
+      isNewSubscription: details.isTrialEligible,
+      programUuid: details.programUuid,
+      price: details.price,
+    },
+  );
+};
 
 export const paymentMethods = {
   stripe: subscriptionStripeCheckout,
@@ -78,18 +96,20 @@ export function* handleSubmitPayment({ payload }) {
     return;
   }
 
+  const details = yield select(state => ({ ...state.subscription.details }));
   const { method, ...paymentArgs } = payload;
   try {
     yield put(subscriptionDetailsProcessing(true));
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitSubscription.request());
     const paymentMethodCheckout = paymentMethods[method];
-    const details = yield select(state => ({ ...state.subscription.details }));
     const postData = yield call(paymentMethodCheckout, details, paymentArgs);
     const result = yield call(SubscriptionApiService.postDetails, postData);
 
     yield put(submitSubscription.success(result));
     yield put(subscriptionStatusReceived(result));
+    // success segment event
+    sendSubscriptionEvent({ details, success: true });
   } catch (error) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {
@@ -104,6 +124,8 @@ export function* handleSubmitPayment({ payload }) {
         yield call(handleSubscriptionErrors, error, true);
       }
     }
+    // failure segment event
+    sendSubscriptionEvent({ details, success: false });
     yield put(submitSubscription.failure());
   } finally {
     yield put(subscriptionDetailsProcessing(false));
