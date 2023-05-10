@@ -173,7 +173,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a red
 </div>
 `;
 
-exports[`<PaymentPage /> Renders correctly in various states should render an empty basket 1`] = `
+exports[`<PaymentPage /> Renders correctly in various states should render an empty cart 1`] = `
 <div
   className="page__payment container-fluid py-5"
 >
@@ -186,7 +186,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
       <h5
         className="card-title"
       >
-        Your basket is empty.
+        Your cart is empty.
       </h5>
       <p
         className="card-text"
