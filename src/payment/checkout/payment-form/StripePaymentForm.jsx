@@ -50,9 +50,10 @@ const StripePaymentForm = ({
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
 
+  const checkoutDetails = useSelector(paymentDataSelector);
   const {
     enableStripePaymentProcessor, loading, submitting, products,
-  } = useSelector(paymentDataSelector);
+  } = checkoutDetails;
 
   // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
   // isQuantityUpdating is true when isBasketProcessing is true when there is an update in the quantity for
@@ -132,11 +133,24 @@ const StripePaymentForm = ({
   const stripeElementsOnReady = () => {
     setIsStripeElementLoading(false);
     markPerformanceIfAble('Stripe Elements component rendered');
+
+    let subscriptionEventProps = {};
+
+    if (isSubscription) {
+      subscriptionEventProps = {
+        isTrialEligible: checkoutDetails.isTrialEligible,
+        isNewSubscription: checkoutDetails.isTrialEligible,
+        paymentProcessor: checkoutDetails.paymentMethod,
+        programUuid: checkoutDetails.programUuid,
+      };
+    }
+
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
       {
         ...getPerformanceProperties(),
         paymentProcessor: 'Stripe',
+        ...subscriptionEventProps,
       },
     );
   };
@@ -160,7 +174,6 @@ const StripePaymentForm = ({
         options={options}
         onReady={stripeElementsOnReady}
       />
-      {/* TODO: update onSubmitButtonClick handler for SubscriptionSubmitButton */}
       {isSubscription ? (
         <>
           <MonthlyBillingNotification />
