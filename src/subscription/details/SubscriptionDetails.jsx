@@ -36,6 +36,9 @@ export const SubscriptionDetails = () => {
     currency,
     isCurrencyConverted,
     totalPrice,
+    isTrialEligible,
+    programUuid,
+    paymentMethod,
   } = useSelector(detailsSelector);
 
   const programDetails = {
@@ -65,7 +68,15 @@ export const SubscriptionDetails = () => {
       </SubscriptionContent>
       {loaded
         ? (
-          <OrderSummary>
+          <OrderSummary
+            isSubscription
+            subscriptionEventProps={{
+              isTrialEligible,
+              isNewSubscription: isTrialEligible,
+              paymentProcessor: paymentMethod,
+              programUuid,
+            }}
+          >
             <SummaryTable price={price} isSubscription />
             <TotalTable total={totalPrice} isSubscription />
             {isCurrencyConverted ? <CurrencyDisclaimer currencyDisclaimerSelector={currencyDisclaimerSelector} /> : null}
