@@ -28,6 +28,8 @@ export const SubscriptionCheckout = () => {
     paymentMethod,
     currency,
     price,
+    isTrialEligible,
+    programUuid,
   } = useSelector(subscriptionSelector);
 
   const options = getStripeOptions({ currency, price });
@@ -50,18 +52,22 @@ export const SubscriptionCheckout = () => {
   };
 
   const handleSubmitStripeButtonClick = () => {
-    /**
-     * TODO: update subscription events here
-     * https://2u-internal.atlassian.net/wiki/spaces/RS/pages/377192460/Segment+events+to+monitor+KPIs
-     * */
+    let segmentEvent = 'edx.bi.user.subscription.program.checkout.click';
+    if (isTrialEligible) {
+      segmentEvent = 'edx.bi.user.subscription.program.checkout.start-trial.click';
+    }
     sendTrackEvent(
-      'edx.bi.ecommerce.details.payment_selected',
+      segmentEvent,
       {
         type: 'click',
         category: 'checkout',
         paymentMethod: 'Credit Card - Stripe',
         checkoutType: 'client_side',
         stripeEnabled: true,
+        programUuid,
+        isNewSubscription: isTrialEligible,
+        isTrialEligible,
+        paymentProcessor: paymentMethod,
       },
     );
   };
@@ -81,8 +87,7 @@ export const SubscriptionCheckout = () => {
             />
           </Elements>
         ) : <CheckoutSkeleton />
-}
-
+      }
     </section>
   );
 };

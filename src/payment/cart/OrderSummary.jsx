@@ -9,11 +9,14 @@ import { markPerformanceIfAble, getPerformanceProperties } from '../performanceE
 class OrderSummary extends React.Component {
   componentDidMount() {
     markPerformanceIfAble('Order Summary component rendered');
+    const subsEventProperties = this.props.isSubscription ? this.props.subscriptionEventProps : {};
+
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.order_summary_rendered',
       {
         ...getPerformanceProperties(),
         flexMicroformEnabled: true,
+        ...subsEventProperties,
       },
     );
   }
@@ -45,10 +48,19 @@ class OrderSummary extends React.Component {
 
 OrderSummary.propTypes = {
   children: PropTypes.node,
+  subscriptionEventProps: PropTypes.shape({
+    isTrialEligible: PropTypes.bool,
+    isNewSubscription: PropTypes.bool,
+    paymentProcessor: PropTypes.string,
+    programUuid: PropTypes.string,
+  }),
+  isSubscription: PropTypes.bool,
 };
 
 OrderSummary.defaultProps = {
   children: undefined,
+  isSubscription: false,
+  subscriptionEventProps: null,
 };
 
 export default OrderSummary;

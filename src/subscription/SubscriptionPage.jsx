@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   FormattedMessage, useIntl,
 } from '@edx/frontend-platform/i18n';
-import { sendPageEvent } from '@edx/frontend-platform/analytics';
+import { sendPageEvent, sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './SubscriptionPage.messages';
 
@@ -12,6 +12,10 @@ import { fetchSubscriptionDetails } from './data/details/actions';
 
 // Selectors
 import { subscriptionSelector } from './data/details/selectors';
+import {
+  markPerformanceIfAble,
+  getPerformanceProperties,
+} from '../payment';
 
 // Components
 import PageLoading from '../payment/PageLoading';
@@ -34,8 +38,18 @@ export const SubscriptionPage = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const sendEvents = () => {
     sendPageEvent();
+
+    markPerformanceIfAble('Subscription app began painting');
+    sendTrackEvent(
+      'edx.bi.subscription.program.checkout.started_painting',
+      getPerformanceProperties(),
+    );
+  };
+
+  useEffect(() => {
+    sendEvents();
     dispatch(fetchSubscriptionDetails());
   }, [dispatch]);
 

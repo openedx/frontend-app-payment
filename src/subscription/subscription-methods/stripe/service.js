@@ -62,7 +62,6 @@ export async function subscriptionStripeCheckout(
     });
     throw new Error((error?.message ? `${error?.name}: ${error.message}` : 'Something went wrong!'), {
       cause: 'create-paymentMethod',
-      // cause: error.name,
     });
   }
 }
