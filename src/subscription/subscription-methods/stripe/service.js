@@ -9,7 +9,7 @@ import { logError } from '@edx/frontend-platform/logging';
  * 3. Show confirmation modal for subscription customer
  */
 export async function subscriptionStripeCheckout(
-  { programUuid },
+  { programUuid, programTitle },
   {
     elements, stripe, context, values,
   },
@@ -49,6 +49,7 @@ export async function subscriptionStripeCheckout(
     }
     const postData = {
       program_uuid: programUuid,
+      program_title: programTitle,
       payment_method_id: paymentMethod.id,
       billing_details: { ...paymentMethod.billing_details, firstname: firstName, lastname: lastName },
     };
