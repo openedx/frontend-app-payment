@@ -51,6 +51,7 @@ Object.keys(allQueryParams).forEach((param) => {
     waffleFlags[configKey] = truth.test(allQueryParams[param]);
   }
 });
+
 mergeConfig({
   CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
   SUPPORT_URL: process.env.SUPPORT_URL,
@@ -65,6 +66,7 @@ mergeConfig({
   WAFFLE_FLAGS: waffleFlags,
   STRIPE_DEFERRED_INTENT_BETA_FLAG: process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG,
   SUBSCRIPTIONS_BASE_URL: process.env.SUBSCRIPTIONS_BASE_URL,
+  ENABLE_B2C_SUBSCRIPTIONS: process.env.ENABLE_B2C_SUBSCRIPTIONS,
 });
 
 subscribe(APP_READY, () => {
@@ -83,7 +85,11 @@ subscribe(APP_READY, () => {
       <main id="main">
         <Switch>
           <Route exact path="/" component={PaymentPage} />
-          <Route exact path="/subscription" component={SubscriptionPage} />
+          {
+            getConfig().ENABLE_B2C_SUBSCRIPTIONS === 'true' ? (
+              <Route exact path="/subscription" component={SubscriptionPage} />
+            ) : null
+          }
           <Route path="*" component={EcommerceRedirect} />
         </Switch>
       </main>
