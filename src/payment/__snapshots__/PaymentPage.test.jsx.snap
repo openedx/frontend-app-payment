@@ -176,7 +176,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a red
 </div>
 `;
 
-exports[`<PaymentPage /> Renders correctly in various states should render an empty basket 1`] = `
+exports[`<PaymentPage /> Renders correctly in various states should render an empty cart 1`] = `
 <div
   className="page__payment container-fluid py-5"
 >
@@ -189,7 +189,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
       <h5
         className="card-title"
       >
-        Your basket is empty.
+        Your cart is empty.
       </h5>
       <p
         className="card-text"
@@ -2113,7 +2113,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM288 352c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"
+                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
                         style={Object {}}
                       />
@@ -2133,74 +2133,112 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
+	    border-radius: undefinedpx;
+	    padding: 8px 21px;
   	}
 
   	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        border-top: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: 2;
+        width: 20px;
+        height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         bottom: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-top-color: #222;
-        border-top-style: solid;
-        border-top-width: 6px;
+        margin-left: -6px;
+        transform: rotate(135deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        border-bottom: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 18px;
+        height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         top: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-bottom-color: #222;
-        border-bottom-style: solid;
-        border-bottom-width: 6px;
+        margin-left: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        border-left: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         right: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-left-color: #222;
-        border-left-style: solid;
-        border-left-width: 6px;
+        margin-top: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         left: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-right-color: #222;
-        border-right-style: solid;
-        border-right-width: 6px;
+        margin-top: -6px;
+        transform: rotate(-135deg);
     }
   ",
                         }
@@ -4164,7 +4202,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM288 352c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"
+                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
                         style={Object {}}
                       />
@@ -4184,74 +4222,112 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
+	    border-radius: undefinedpx;
+	    padding: 8px 21px;
   	}
 
   	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        border-top: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: 2;
+        width: 20px;
+        height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         bottom: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-top-color: #222;
-        border-top-style: solid;
-        border-top-width: 6px;
+        margin-left: -6px;
+        transform: rotate(135deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        border-bottom: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 18px;
+        height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         top: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-bottom-color: #222;
-        border-bottom-style: solid;
-        border-bottom-width: 6px;
+        margin-left: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        border-left: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         right: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-left-color: #222;
-        border-left-style: solid;
-        border-left-width: 6px;
+        margin-top: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         left: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-right-color: #222;
-        border-right-style: solid;
-        border-right-width: 6px;
+        margin-top: -6px;
+        transform: rotate(-135deg);
     }
   ",
                         }
@@ -6053,7 +6129,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM288 352c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"
+                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
                         style={Object {}}
                       />
@@ -6073,74 +6149,112 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
+	    border-radius: undefinedpx;
+	    padding: 8px 21px;
   	}
 
   	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        border-top: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: 2;
+        width: 20px;
+        height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         bottom: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-top-color: #222;
-        border-top-style: solid;
-        border-top-width: 6px;
+        margin-left: -6px;
+        transform: rotate(135deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        border-bottom: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 18px;
+        height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         top: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-bottom-color: #222;
-        border-bottom-style: solid;
-        border-bottom-width: 6px;
+        margin-left: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        border-left: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         right: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-left-color: #222;
-        border-left-style: solid;
-        border-left-width: 6px;
+        margin-top: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         left: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-right-color: #222;
-        border-right-style: solid;
-        border-right-width: 6px;
+        margin-top: -6px;
+        transform: rotate(-135deg);
     }
   ",
                         }
@@ -7951,7 +8065,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM288 352c0 17.7-14.3 32-32 32s-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32z"
+                        d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
                         style={Object {}}
                       />
@@ -7971,74 +8085,112 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
 	    color: #fff;
 	    background: #222;
 	    border: 1px solid transparent;
+	    border-radius: undefinedpx;
+	    padding: 8px 21px;
   	}
 
   	.t00000000-0000-0000-0000-000000000000.place-top {
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        border-top: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: 2;
+        width: 20px;
+        height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         bottom: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-top-color: #222;
-        border-top-style: solid;
-        border-top-width: 6px;
+        margin-left: -6px;
+        transform: rotate(135deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-bottom {
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        border-bottom: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 18px;
+        height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         top: -6px;
         left: 50%;
-        margin-left: -8px;
-        border-bottom-color: #222;
-        border-bottom-style: solid;
-        border-bottom-width: 6px;
+        margin-left: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-left {
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        border-left: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         right: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-left-color: #222;
-        border-left-style: solid;
-        border-left-width: 6px;
+        margin-top: -6px;
+        transform: rotate(45deg);
     }
 
     .t00000000-0000-0000-0000-000000000000.place-right {
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        border-right: 8px solid transparent;
+        content: \\"\\";
+        background-color: inherit;
+        position: absolute;
+        z-index: -1;
+        width: 10px;
+        height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
+        content: \\"\\";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-top-right-radius: undefinedpx;
+        border: 1px solid transparent;
+        background-color: #222;
+        z-index: -2;
         left: -6px;
         top: 50%;
-        margin-top: -4px;
-        border-right-color: #222;
-        border-right-style: solid;
-        border-right-width: 6px;
+        margin-top: -6px;
+        transform: rotate(-135deg);
     }
   ",
                         }
