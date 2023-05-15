@@ -1,0 +1,7 @@
+{
+  "subscription.details.order.legal": "Al suscribirse a una suscripción o comenzar una prueba gratuita, nos autoriza a cargar en su tarjeta registrada {price}/mes por {programTitle} y cualquier impuesto aplicable. Si se registró para una prueba, no cargaremos su tarjeta hasta el final de su período de prueba. Su suscripción a Blockchain Fundamentals continúa hasta que se cancela. Las suscripciones mensuales se pueden cancelar en cualquier momento mediante {supportLink}. La cancelación de una suscripción detiene el cargo de suscripción mensual recurrente, pero no reembolsa la transacción por el período de facturación actual. Puede continuar accediendo a la suscripción hasta el final del período de facturación actual.",
+  "subscription.details.order.legal.link": "poniéndose en contacto con el servicio de atención al cliente.",
+  "subscription.confirmation.modal.heading": "¡Felicidades! Ha comenzado su prueba gratuita de 7 días de {programTitle}.",
+  "subscription.confirmation.modal.body": "Cuando finalice su prueba gratuita, comenzará su suscripción y le cobraremos a su método de pago registrado {price} por mes más los impuestos aplicables. Esta suscripción se renovará automáticamente cada mes a menos que la canceles desde la página {ordersAndSubscriptionLink}.",
+  "subscription.confirmation.modal.body.orders.link": "Pedidos y Suscripciones" 
+}

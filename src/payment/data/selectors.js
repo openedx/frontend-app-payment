@@ -1,28 +1,9 @@
-import { getConfig, getQueryParameters } from '@edx/frontend-platform';
+import { getQueryParameters } from '@edx/frontend-platform';
 import { createSelector } from 'reselect';
-import Cookies from 'universal-cookie';
+import { localizedCurrencySelector } from './utils';
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 
 export const storeName = 'payment';
-
-export const localizedCurrencySelector = () => {
-  const cookie = new Cookies().get(getConfig().CURRENCY_COOKIE_NAME);
-  let currencyCode;
-  let conversionRate;
-
-  if (cookie && typeof cookie.code === 'string' && typeof cookie.rate === 'number') {
-    currencyCode = cookie.code;
-    conversionRate = cookie.rate;
-  }
-
-  const showAsLocalizedCurrency = typeof currencyCode === 'string' ? currencyCode !== 'USD' : false;
-
-  return {
-    currencyCode,
-    conversionRate,
-    showAsLocalizedCurrency,
-  };
-};
 
 export const basketSelector = state => state[storeName].basket;
 
