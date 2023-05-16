@@ -13,7 +13,11 @@ import {
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './Checkout.messages';
-import { paymentSelector, updateClientSecretSelector } from '../data/selectors';
+import {
+  basketSelector,
+  paymentSelector,
+  updateClientSecretSelector,
+} from '../data/selectors';
 import { fetchClientSecret, submitPayment } from '../data/actions';
 import AcceptedCardLogos from './assets/accepted-card-logos.png';
 
@@ -258,7 +262,6 @@ class Checkout extends React.Component {
             {/* Apple Pay temporarily disabled per REV-927  - https://github.com/openedx/frontend-app-payment/pull/256 */}
           </p>
         </div>
-
         {/* Passing the enableStripePaymentProcessor flag down the Stripe form component to
         be used in the CardHolderInformation component (child). We could get the flag value
         from Basket selector from the child component but this would require more change for a temp feature,
@@ -273,6 +276,7 @@ class Checkout extends React.Component {
               isBulkOrder={isBulkOrder}
               isProcessing={stripeIsSubmitting}
               isQuantityUpdating={isQuantityUpdating}
+              paymentDataSelector={basketSelector}
             />
           </Elements>
         ) : (loading && (this.renderBillingFormSkeleton()))}

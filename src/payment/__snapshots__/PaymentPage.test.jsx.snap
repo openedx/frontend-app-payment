@@ -38,7 +38,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               Your purchase contains the following:
             </p>
             <div
-              className="row align-items-center mb-3"
+              className="row align-items-center mb-3 product-wrapper"
             >
               <div
                 className="col-5"
@@ -91,7 +91,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render a fre
               >
                 Price
               </span>
-              <span>
+              <span
+                className="summary-price"
+              >
                 $103.07
               </span>
             </div>
@@ -160,6 +162,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a red
     >
       <div
         className="spinner-border text-primary"
+        data-testid="loading-page"
         role="status"
       >
         <span
@@ -435,7 +438,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               Your purchase contains the following:
             </p>
             <div
-              className="row align-items-center mb-3"
+              className="row align-items-center mb-3 product-wrapper"
             >
               <div
                 className="col-5"
@@ -488,7 +491,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               >
                 Price
               </span>
-              <span>
+              <span
+                className="summary-price"
+              >
                 $464.88
               </span>
             </div>
@@ -2345,7 +2350,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               Your purchase contains the following:
             </p>
             <div
-              className="row align-items-center mb-3"
+              className="row align-items-center mb-3 product-wrapper"
             >
               <div
                 className="col-5"
@@ -4434,7 +4439,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               Your purchase contains the following:
             </p>
             <div
-              className="row align-items-center mb-3"
+              className="row align-items-center mb-3 product-wrapper"
             >
               <div
                 className="col-5"
@@ -4487,7 +4492,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               >
                 Price
               </span>
-              <span>
+              <span
+                className="summary-price"
+              >
                 <span>
                   MX$8,500
                    *
@@ -6359,7 +6366,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               Your purchase contains the following:
             </p>
             <div
-              className="row align-items-center mb-3"
+              className="row align-items-center mb-3 product-wrapper"
             >
               <div
                 className="col-5"
@@ -6412,7 +6419,9 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               >
                 Price
               </span>
-              <span>
+              <span
+                className="summary-price"
+              >
                 $158.87
               </span>
             </div>

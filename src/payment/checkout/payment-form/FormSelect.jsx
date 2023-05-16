@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import classNames from 'classnames';
+
 import messages from './PaymentForm.messages';
 
 // eslint-disable-next-line object-curly-newline
@@ -23,7 +25,7 @@ const FormSelect = ({
       <select
         {...other}
         {...input}
-        className="form-control"
+        className={classNames('form-control', { error })}
         id={id}
         disabled={disabled}
         {...errorData}

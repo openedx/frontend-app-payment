@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import messages from './PaymentForm.messages';
 
@@ -25,7 +26,7 @@ const FormInput = ({
         {...other}
         {...input}
         type={type}
-        className="form-control"
+        className={classNames('form-control', { error })}
         id={id}
         disabled={disabled}
       />
