@@ -79,7 +79,7 @@ export const SubscriptionDetails = () => {
           >
             <SubscriptionSummaryTablePrice
               price={price}
-              isTrialEligible
+              isTrialEligible={isTrialEligible}
             />
             <TotalTable
               total={totalPrice}

@@ -15,18 +15,18 @@ export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
     </span>
     <span className="summary-price">
       <LocalizedPrice amount={price} hideFractionZeros />
-      {isTrialEligible
+      { isTrialEligible
         ? (
           <FormattedMessage
-            id="subscription.summary.table.label.resubscribe.price"
-            defaultMessage="/month USD"
+            id="subscription.summary.table.label.trialing.price"
+            defaultMessage="/month USD after 7-day free trial"
             description="Label for subscription on order summary table"
           />
         )
         : (
           <FormattedMessage
-            id="subscription.summary.table.label.trialing.price"
-            defaultMessage="/month USD after 7-day free trial"
+            id="subscription.summary.table.label.resubscribe.price"
+            defaultMessage="/month USD"
             description="Label for subscription on order summary table"
           />
         )}

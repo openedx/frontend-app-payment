@@ -13,19 +13,29 @@ import { subscriptionStatusSelector } from '../data/status/selectors';
 import { detailsSelector } from '../data/details/selectors';
 
 const messages = defineMessages({
-  'subscription.confirmation.modal.heading': {
-    id: 'subscription.confirmation.modal.heading',
+  'subscription.confirmation.modal.trialing.heading': {
+    id: 'subscription.confirmation.modal.trialing.heading',
     defaultMessage: 'Congratulations! Your 7-day free trial of {programTitle} has started.',
-    description: 'Subscription confirmation success heading.',
+    description: 'Subscription trialing confirmation success heading.',
   },
-  'subscription.confirmation.modal.body': {
-    id: 'subscription.confirmation.modal.body',
-    defaultMessage: "When your free trial ends, your subscription will begin, and we'll charge your payment method on file {price} per month. This subscription will automatically renew every month unless you cancel from the {ordersAndSubscriptionLink} page.",
-    description: 'Subscription confirmation success message explaining monthly subscription plan.',
+  'subscription.confirmation.modal.trialing.body': {
+    id: 'subscription.confirmation.modal.trialing.body',
+    defaultMessage: "When your free trial ends, your subscription will begin, and we'll charge your payment method on file {price} {currency} per month. To avoid being charged, you must cancel before your trial expires. This subscription will automatically renew every month unless you cancel from the {ordersAndSubscriptionLink} page.",
+    description: 'Subscription trialing confirmation success message explaining monthly subscription plan.',
+  },
+  'subscription.confirmation.modal.resubscribe.heading': {
+    id: 'subscription.confirmation.modal.resubscribe.heading',
+    defaultMessage: 'Congratulations! Your subscription to {programTitle} has started.',
+    description: 'Subscription resubscribe confirmation success heading.',
+  },
+  'subscription.confirmation.modal.resubscribe.body': {
+    id: 'subscription.confirmation.modal.resubscribe.body',
+    defaultMessage: 'We charged your payment method {price} {currency}. This subscription will be automatically renewed and charged monthly unless you cancel from the {ordersAndSubscriptionLink} page.',
+    description: 'Subscription resubscribe confirmation success message explaining monthly subscription plan.',
   },
   'subscription.confirmation.modal.body.orders.link': {
     id: 'subscription.confirmation.modal.body.orders.link',
-    defaultMessage: 'Orders & Subscriptions',
+    defaultMessage: 'Orders and Subscriptions',
     description: 'Subscription Orders & Subscriptions link placeholder.',
   },
 });
@@ -39,10 +49,12 @@ export const ConfirmationModal = () => {
     price,
     currency,
     programUuid,
+    isTrialEligible,
   } = useSelector(detailsSelector);
   const intl = useIntl();
   const { confirmationStatus } = useSelector(subscriptionStatusSelector);
   const [isOpen, setOpen] = useState(false);
+  const subscriptionState = isTrialEligible ? 'trialing' : 'resubscribe';
 
   useEffect(() => {
     if (confirmationStatus === 'success') {
@@ -72,7 +84,7 @@ export const ConfirmationModal = () => {
       <ModalDialog.Header>
         <ModalDialog.Title as="h3">
           {
-            intl.formatMessage(messages['subscription.confirmation.modal.heading'], {
+            intl.formatMessage(messages[`subscription.confirmation.modal.${subscriptionState}.heading`], {
               programTitle,
             })
           }
@@ -80,8 +92,12 @@ export const ConfirmationModal = () => {
       </ModalDialog.Header>
       <ModalDialog.Body>
         {
-          intl.formatMessage(messages['subscription.confirmation.modal.body'], {
-            price: intl.formatNumber(price, { style: 'currency', currency: currency || 'USD' }),
+          intl.formatMessage(messages[`subscription.confirmation.modal.${subscriptionState}.body`], {
+            currency,
+            price: intl.formatNumber(price, {
+              style: 'currency',
+              currency: currency || 'USD',
+            }),
             ordersAndSubscriptionLink,
           })
         }
