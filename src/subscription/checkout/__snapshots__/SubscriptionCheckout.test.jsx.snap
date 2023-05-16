@@ -1759,7 +1759,7 @@ exports[`<SubscriptionCheckout /> should render the subscription checkout detail
       <p
         className="micro "
       >
-        You’ll be charged $55.00 USD on April 21, 2025 then every 31 days until you cancel your subscription.
+        You’ll be charged $55 USD on April 21, 2025, then every 31 days until you cancel your subscription.
       </p>
     </div>
     <div

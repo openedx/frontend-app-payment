@@ -72,6 +72,6 @@ describe('<SubscriptionDetails />', () => {
     // Total amount should be 0
     expect(screen.queryByText(/$0.00/)).toBeDefined();
     // should render in USD amount
-    expect(screen.queryAllByText('$55.00/month USD after 7-day free trial')).toHaveLength(1);
+    expect(screen.queryAllByText('$55/month USD after 7-day free trial')).toHaveLength(1);
   });
 });

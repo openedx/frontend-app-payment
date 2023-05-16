@@ -65,7 +65,7 @@ describe('<SubscriptionPage />', () => {
     // verify that Checkout Form fields are present in the DOM
     expect(screen.queryAllByText('Last Name (required)')).toHaveLength(1);
     // verify that MonthlySubscriptionNotification is present in the DOM
-    expect(screen.queryAllByText('You’ll be charged $55.00 USD on April 21, 2025 then every 31 days until you cancel your subscription.')).toHaveLength(1);
+    expect(screen.queryAllByText('You’ll be charged $55 USD on April 21, 2025, then every 31 days until you cancel your subscription.')).toHaveLength(1);
   });
 
   it('should not render the Subscription details when error_code is present', () => {
@@ -97,7 +97,7 @@ describe('<SubscriptionPage />', () => {
     });
 
     expect(screen.queryByText(/MX$1,050 */)).toBeNull();
-    expect(screen.getByText('$55.00/month USD after 7-day free trial')).toBeDefined();
+    expect(screen.getByText('$55/month USD after 7-day free trial')).toBeDefined();
   });
 
   it('should render a redirect spinner', () => {
