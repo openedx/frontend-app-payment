@@ -18,14 +18,14 @@ export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
       {isTrialEligible
         ? (
           <FormattedMessage
-            id="subscription.summary.table.label.price"
+            id="subscription.summary.table.label.resubscribe.price"
             defaultMessage="/month USD"
             description="Label for subscription on order summary table"
           />
         )
         : (
           <FormattedMessage
-            id="subscription.summary.table.label.price"
+            id="subscription.summary.table.label.trialing.price"
             defaultMessage="/month USD after 7-day free trial"
             description="Label for subscription on order summary table"
           />

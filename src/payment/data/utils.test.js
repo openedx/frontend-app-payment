@@ -13,6 +13,7 @@ import {
   generateAndSubmitForm,
   getOrderType,
   transformResults,
+  hideFractionZerosProps,
 } from './utils';
 
 describe('modifyObjectKeys', () => {
@@ -238,5 +239,17 @@ describe('transformResults', () => {
       ...camelCaseObject(seatBasketData),
       orderType: ORDER_TYPES.SEAT,
     });
+  });
+});
+
+describe('hideFractionZerosProps', () => {
+  it('should only hide fractional zeros when shouldHide is false', () => {
+    expect(hideFractionZerosProps({ price: 79.00, shouldHide: true })).toEqual({
+      maximumFractionDigits: 0,
+    });
+    expect(hideFractionZerosProps({ price: 79.00, shouldHide: false })).toEqual({ });
+
+    expect(hideFractionZerosProps({ price: 79.43, shouldHide: true })).toEqual({ });
+    expect(hideFractionZerosProps({ price: 79.43, shouldHide: false })).toEqual({ });
   });
 });

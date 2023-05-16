@@ -4,7 +4,7 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 
-const TotalTable = ({ total, isSubscription }) => (
+const TotalTable = ({ total, isSubscription, hideFractionZeros }) => (
   <div className="summary-row font-weight-bold d-flex">
     <span className="flex-grow-1">
       {isSubscription ? (
@@ -22,7 +22,7 @@ const TotalTable = ({ total, isSubscription }) => (
       )}
     </span>
     <span className="text-right">
-      <LocalizedPrice amount={total} />
+      <LocalizedPrice amount={total} hideFractionZeros={hideFractionZeros} />
     </span>
   </div>
 );
@@ -30,10 +30,12 @@ const TotalTable = ({ total, isSubscription }) => (
 TotalTable.propTypes = {
   total: PropTypes.number,
   isSubscription: PropTypes.bool,
+  hideFractionZeros: PropTypes.bool,
 };
 TotalTable.defaultProps = {
   total: undefined,
   isSubscription: false,
+  hideFractionZeros: false,
 };
 
 export default TotalTable;

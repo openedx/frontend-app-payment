@@ -207,3 +207,22 @@ export const localizedCurrencySelector = () => {
     showAsLocalizedCurrency,
   };
 };
+
+/**
+ * hideFractionZeros
+ * this function will hide fractional zeros if shouldHide is true
+ * and price fractional value is zeros
+ */
+export const hideFractionZerosProps = ({ price, shouldHide }) => {
+  let fractionDigitsProps = {};
+  if (shouldHide) {
+    const fractionValue = price.toString().split('.')[1];
+    if (!fractionValue || parseInt(fractionValue, 10) === 0) {
+      // don't show 0's if fraction is 0
+      fractionDigitsProps = {
+        maximumFractionDigits: 0,
+      };
+    }
+  }
+  return fractionDigitsProps;
+};

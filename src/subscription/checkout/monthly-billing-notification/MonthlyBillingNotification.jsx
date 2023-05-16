@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useIntl, defineMessages } from '@edx/frontend-platform/i18n';
 import { detailsSelector } from '../../data/details/selectors';
+import { hideFractionZerosProps } from '../../../payment/data/utils';
 
 const messages = defineMessages({
   'subscription.checkout.billing.notification': {
@@ -22,7 +23,12 @@ const MonthlyBillingNotification = () => {
         intl.formatMessage(messages['subscription.checkout.billing.notification'], {
           currency,
           trialEnd,
-          price: intl.formatNumber(price, { style: 'currency', currency: currency || 'USD' }),
+          price: intl.formatNumber(price, {
+            style: 'currency',
+            currency: currency || 'USD',
+            maximumFractionDigits: 0,
+            ...hideFractionZerosProps({ price, shouldHide: true }),
+          }),
         })
       }
       </p>

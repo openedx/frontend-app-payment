@@ -5,6 +5,6 @@ export const EmptySubscriptionMessage = () => (
   <FormattedMessage
     id="subscription.messages.empty.subscription"
     defaultMessage="You don't have any active subscription."
-    description="Notifies the user their they don't have any active subscriptions available."
+    description="Notifies the user that they don't have any active subscriptions available."
   />
 );

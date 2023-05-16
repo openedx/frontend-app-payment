@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedNumber } from '@edx/frontend-platform/i18n';
 
-import { localizedCurrencySelector } from '../data/utils';
+import { localizedCurrencySelector, hideFractionZerosProps } from '../data/utils';
 
 /**
  * Displays a positive or negative price, according to the currency and the conversion rate set
@@ -38,6 +38,7 @@ const LocalizedPrice = (props) => {
       value={price}
       style="currency" // eslint-disable-line react/style-prop-object
       currency={props.currencyCode}
+      {...hideFractionZerosProps({ price, shouldHide: props.hideFractionZeros })}
     />
   );
 };
@@ -50,6 +51,7 @@ LocalizedPrice.propTypes = {
   conversionRate: PropTypes.number,
   currencyCode: PropTypes.string,
   showAsLocalizedCurrency: PropTypes.bool,
+  hideFractionZeros: PropTypes.bool,
 };
 
 LocalizedPrice.defaultProps = {
@@ -57,6 +59,7 @@ LocalizedPrice.defaultProps = {
   conversionRate: 1,
   currencyCode: 'USD',
   showAsLocalizedCurrency: false,
+  hideFractionZeros: false,
 };
 
 export default connect(localizedCurrencySelector)(LocalizedPrice);
