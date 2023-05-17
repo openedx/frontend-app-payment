@@ -14,7 +14,7 @@ export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
       />
     </span>
     <span className="summary-price">
-      <LocalizedPrice amount={price} hideFractionZeros />
+      <LocalizedPrice amount={price} shouldRemoveFractionZeroDigits />
       { isTrialEligible
         ? (
           <FormattedMessage

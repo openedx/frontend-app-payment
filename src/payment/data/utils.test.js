@@ -13,7 +13,7 @@ import {
   generateAndSubmitForm,
   getOrderType,
   transformResults,
-  hideFractionZerosProps,
+  getPropsToRemoveFractionZeroDigits,
 } from './utils';
 
 describe('modifyObjectKeys', () => {
@@ -242,14 +242,14 @@ describe('transformResults', () => {
   });
 });
 
-describe('hideFractionZerosProps', () => {
-  it('should only hide fractional zeros when shouldHide is false', () => {
-    expect(hideFractionZerosProps({ price: 79.00, shouldHide: true })).toEqual({
+describe('getPropsToRemoveFractionZeroDigits', () => {
+  it('should only hide fractional zeros when shouldRemoveFractionZeroDigits is false', () => {
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.00, shouldRemoveFractionZeroDigits: true })).toEqual({
       maximumFractionDigits: 0,
     });
-    expect(hideFractionZerosProps({ price: 79.00, shouldHide: false })).toEqual({ });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.00, shouldRemoveFractionZeroDigits: false })).toEqual({ });
 
-    expect(hideFractionZerosProps({ price: 79.43, shouldHide: true })).toEqual({ });
-    expect(hideFractionZerosProps({ price: 79.43, shouldHide: false })).toEqual({ });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: true })).toEqual({ });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: false })).toEqual({ });
   });
 });
