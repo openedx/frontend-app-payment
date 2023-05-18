@@ -13,6 +13,7 @@ import {
   generateAndSubmitForm,
   getOrderType,
   transformResults,
+  getPropsToRemoveFractionZeroDigits,
 } from './utils';
 
 describe('modifyObjectKeys', () => {
@@ -238,5 +239,17 @@ describe('transformResults', () => {
       ...camelCaseObject(seatBasketData),
       orderType: ORDER_TYPES.SEAT,
     });
+  });
+});
+
+describe('getPropsToRemoveFractionZeroDigits', () => {
+  it('should only hide fractional zeros when shouldRemoveFractionZeroDigits is false', () => {
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.00, shouldRemoveFractionZeroDigits: true })).toEqual({
+      maximumFractionDigits: 0,
+    });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.00, shouldRemoveFractionZeroDigits: false })).toEqual({ });
+
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: true })).toEqual({ });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: false })).toEqual({ });
   });
 });

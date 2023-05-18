@@ -22,7 +22,6 @@ ensureConfig([
 ], 'subscription API service');
 
 export function handleDetailsApiError(requestError) {
-  // TODO: refactor this method with the new BE service error structure
   try {
     // Always throws an error:
     handleRequestError(requestError);
@@ -40,7 +39,6 @@ export function handleDetailsApiError(requestError) {
   }
 }
 
-// TODO: add SUBSCRIPTIONS_BASE_URL for production environments
 export async function getDetails() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`)
@@ -53,6 +51,7 @@ export async function postDetails(postData) {
     .post(
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
       postData,
+      { timeout: 15000 }, // wait at least 15 seconds
     )
     .catch(handleDetailsApiError);
   return transformSubscriptionDetails(data);

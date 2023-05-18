@@ -207,3 +207,25 @@ export const localizedCurrencySelector = () => {
     showAsLocalizedCurrency,
   };
 };
+
+/**
+ * getPropsToRemoveFractionZeroDigits()
+ * [problem] react-i18n FormattedNumber currency automatically appends .00 fraction zero digits
+ * this function will return i18n props for removing decimal zero fraction only if fraction value is zero
+ * and if shouldRemoveFractionZeroDigits boolean value is true
+ * params {price: number}
+ * params {shouldRemoveFractionZeroDigits: boolean}
+ */
+export const getPropsToRemoveFractionZeroDigits = ({ price, shouldRemoveFractionZeroDigits }) => {
+  let props = {};
+  if (shouldRemoveFractionZeroDigits) {
+    const fractionValue = price.toString().split('.')[1];
+    if (!fractionValue || parseInt(fractionValue, 10) === 0) {
+      // don't show 0's if fraction is 0
+      props = {
+        maximumFractionDigits: 0,
+      };
+    }
+  }
+  return props;
+};

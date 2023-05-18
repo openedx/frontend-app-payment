@@ -66,7 +66,8 @@ export const SubscriptionPage = () => {
     }
 
     if (errorCode) {
-      if (errorCode === 'empty_subscription') {
+      if (errorCode === 'empty_subscription'
+      || errorCode === 'embargo-error') {
         return (
           <EmptyCartMessage />
         );

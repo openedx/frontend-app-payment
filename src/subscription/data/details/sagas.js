@@ -80,9 +80,9 @@ export function* handleFetchSubscriptionDetails() {
     const errors = error?.errors || [];
     if (
       errors.length
-      && errors[0].code === 'empty_subscription'
+      && errors[0].code // safe guard SubscriptionPage to not render the details
     ) {
-      yield put(subscriptionDetailsReceived({ errorCode: 'empty_subscription' })); // update redux store with details data
+      yield put(subscriptionDetailsReceived({ errorCode: errors[0].code })); // update redux store with details data
     }
     yield call(handleSubscriptionErrors, error, true);
   } finally {
