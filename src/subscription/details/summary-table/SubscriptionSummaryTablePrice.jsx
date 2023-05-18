@@ -6,14 +6,14 @@ import LocalizedPrice from '../../../payment/cart/LocalizedPrice';
 
 export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
   <div className="summary-row d-flex">
-    <span className="flex-grow-1">
+    <h4 className="flex-grow-1">
       <FormattedMessage
         id="subscription.summary.table.label.price"
         defaultMessage="Price"
         description="Label for price excluding discount line on order summary table"
       />
-    </span>
-    <span className="summary-price">
+    </h4>
+    <h4 className="summary-price">
       <LocalizedPrice amount={price} shouldRemoveFractionZeroDigits />
       { isTrialEligible
         ? (
@@ -30,7 +30,7 @@ export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
             description="Label for subscription on order summary table"
           />
         )}
-    </span>
+    </h4>
   </div>
 );
 

@@ -61,6 +61,8 @@ export const getStripeOptions = ({ currency, price }) => ({
         fontFamily: 'Inter,Helvetica Neue,Arial,sans-serif',
         fontWeight: '400',
         color: '#454545',
+        fontSize: '18px',
+        lineHeight: '28px',
       },
     },
   },

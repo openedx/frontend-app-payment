@@ -52,15 +52,15 @@ export const ConfirmationModal = () => {
     isTrialEligible,
   } = useSelector(detailsSelector);
   const intl = useIntl();
-  const { confirmationStatus } = useSelector(subscriptionStatusSelector);
+  const { status } = useSelector(subscriptionStatusSelector);
   const [isOpen, setOpen] = useState(false);
   const subscriptionState = isTrialEligible ? 'trialing' : 'resubscribe';
 
   useEffect(() => {
-    if (confirmationStatus === 'success') {
+    if (status === 'success' || status === 'trialing') {
       setOpen(true);
     }
-  }, [confirmationStatus]);
+  }, [status]);
 
   const ordersAndSubscriptionLink = (
     <Hyperlink

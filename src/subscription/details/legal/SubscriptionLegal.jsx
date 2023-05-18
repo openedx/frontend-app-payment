@@ -12,13 +12,13 @@ const SubscriptionLegal = ({
   const intl = useIntl();
   const supportLink = (
     <Hyperlink
-      destination="https://support.edx.org/hc/en-us/sections/115004173027-Receive-and-Share-edX-Certificates"
+      destination="https://support.edx.org/hc/en-us/articles/12975352138007"
     >
       {intl.formatMessage(messages['subscription.details.order.legal.link'])}
     </Hyperlink>
   );
   return (
-    <p className="micro">{intl.formatMessage(messages['subscription.details.order.legal'], {
+    <p>{intl.formatMessage(messages['subscription.details.order.legal'], {
       price: intl.formatNumber(price, { style: 'currency', currency }),
       programTitle,
       supportLink,

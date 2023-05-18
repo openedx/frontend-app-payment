@@ -4,13 +4,14 @@ import {
 } from './actions';
 
 export const CONFIRMATION_STATUS = {
-  succeeded: 'success',
+  trailing: 'trialing',
+  success: 'success',
   requires_action: '3DS',
 };
 
 const subscriptionStatusInitialState = {
   confirmationClientSecret: null,
-  confirmationStatus: null, // CONFIRMATION_STATUS.succeeded,
+  status: null, // CONFIRMATION_STATUS.succeeded,
   subscriptionId: null,
   price: null,
 
@@ -31,7 +32,7 @@ export const subscriptionStatusReducer = (state = subscriptionStatusInitialState
       case SUBSCRIPTION_STATUS_RECEIVED: return {
         ...state,
         ...action.payload,
-        confirmationStatus: CONFIRMATION_STATUS[action.payload.confirmationStatus],
+        status: CONFIRMATION_STATUS[action.payload.status],
       };
       default:
     }

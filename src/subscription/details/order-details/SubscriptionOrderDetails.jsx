@@ -40,7 +40,7 @@ export const SubscriptionOrderDetails = ({
       >
         {text => <p className="mb-2">{text}</p>}
       </FormattedMessage>
-      <p className="mb-2">
+      <p className="mb-2 font-italic">
         {intl.formatMessage(messages['subscription.order.details'], {
           programTitle,
         })}

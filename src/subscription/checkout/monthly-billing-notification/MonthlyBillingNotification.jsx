@@ -32,7 +32,7 @@ const MonthlyBillingNotification = () => {
 
   return (
     <div className="d-flex justify-content-start pt-3 monthly-legal-notification">
-      <p className="micro ">
+      <p>
         {
         intl.formatMessage(messages['subscription.checkout.billing.notification'], {
           currency,

@@ -11,11 +11,11 @@ import { detailsSelector, currencyDisclaimerSelector } from '../data/details/sel
 import { CurrencyDisclaimer } from '../../payment/cart/CurrencyDisclaimer';
 import OrderSummary from '../../payment/cart/OrderSummary';
 import ProductLineItem from '../../payment/cart/ProductLineItem';
-import TotalTable from '../../payment/cart/TotalTable';
 
 import SubscriptionDetailsSkeleton from './skeleton/SubscriptionDetailsSkeleton';
 import SubscriptionLegal from './legal/SubscriptionLegal';
 import SubscriptionContent from './content/SubscriptionContent';
+import { SubscriptionTotalTable } from './total-table/SubscriptionTotalTable';
 import { SubscriptionSummaryTablePrice } from './summary-table/SubscriptionSummaryTablePrice';
 import { SubscriptionOrderDetails } from './order-details/SubscriptionOrderDetails';
 
@@ -81,9 +81,8 @@ export const SubscriptionDetails = () => {
               price={price}
               isTrialEligible={isTrialEligible}
             />
-            <TotalTable
+            <SubscriptionTotalTable
               total={totalPrice}
-              isSubscription
             />
             {
             isCurrencyConverted

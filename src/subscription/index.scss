@@ -50,6 +50,9 @@
   .basket-section.order-details{
     margin-bottom: 2rem !important;
   }
+  h5#summary-heading{
+    color: $gray-500 !important;
+  }
   .summary-price {
     max-width: 70%;
     text-align: right;

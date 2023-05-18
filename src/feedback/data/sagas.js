@@ -71,7 +71,7 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
       const error = e.errors[i];
       const customErrors = [
         'empty_subscription',
-        'embargo-error',
+        'embargo_error',
         'basket-changed-error',
       ];
       if (customErrors.includes(error.code)) {
