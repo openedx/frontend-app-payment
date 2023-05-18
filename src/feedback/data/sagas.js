@@ -69,8 +69,16 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      // there is only fallback-error handling for subscription at this moment.
-      yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+      const customErrors = [
+        'empty_subscription',
+        'embargo-error',
+        'basket-changed-error',
+      ];
+      if (customErrors.includes(error.code)) {
+        yield put(addMessage(error.code, error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+      } else {
+        yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+      }
     }
   }
   if (e.messages !== undefined) {
