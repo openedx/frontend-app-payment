@@ -66,11 +66,6 @@ export const SubscriptionPage = () => {
     }
 
     if (errorCode) {
-      if (errorCode === 'empty_subscription') {
-        return (
-          <EmptyCartMessage />
-        );
-      }
       return null;
     }
 
