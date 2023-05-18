@@ -87,7 +87,7 @@ subscribe(APP_READY, () => {
         <Switch>
           <Route exact path="/" component={PaymentPage} />
           {
-            getConfig().ENABLE_B2C_SUBSCRIPTIONS === 'true' ? (
+            getConfig().ENABLE_B2C_SUBSCRIPTIONS?.toLowerCase() === 'true' ? (
               <Route exact path="/subscription" component={SubscriptionPage} />
             ) : null
           }
