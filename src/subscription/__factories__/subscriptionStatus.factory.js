@@ -3,7 +3,7 @@ import { Factory } from 'rosie'; // eslint-disable-line import/no-extraneous-dep
 Factory.define('subscriptionStatus')
   .attrs({
     confirmation_client_secret: '3asd-3nk3-2kl3-kl32-32lw',
-    confirmation_status: 'succeeded', // CONFIRMATION_STATUS.succeeded,
+    status: 'success', // CONFIRMATION_STATUS.succeeded,
     subscription_id: 'SUB_in32n32ds',
     price: 79.00,
 
