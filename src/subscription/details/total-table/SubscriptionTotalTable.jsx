@@ -14,7 +14,7 @@ export const SubscriptionTotalTable = ({ total }) => (
       { text => <h4 className="flex-grow-1">{text}</h4>}
     </FormattedMessage>
     <h4 className="text-right">
-      <LocalizedPrice amount={total} shouldRemoveFractionZeroDigits={false} />
+      <LocalizedPrice amount={total} shouldRemoveFractionZeroDigits />
     </h4>
   </div>
 );
