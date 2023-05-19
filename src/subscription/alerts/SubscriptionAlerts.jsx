@@ -16,7 +16,7 @@ export const SubscriptionAlerts = () => (
     messageCodes={{
       empty_subscription: (<EmptySubscriptionMessage />),
       embargo_error: (<EmptySubscriptionMessage />),
-      'basket-changed-error': (<BasketChangedError />),
+      basket_changed_error: (<BasketChangedError />),
     }}
   />
 );
