@@ -11,6 +11,7 @@ import { useIntl, defineMessages, FormattedMessage } from '@edx/frontend-platfor
 import { subscriptionStatusSelector } from '../data/status/selectors';
 
 import { detailsSelector } from '../data/details/selectors';
+import { getPropsToRemoveFractionZeroDigits } from '../../payment/data/utils';
 
 const messages = defineMessages({
   'subscription.confirmation.modal.trialing.heading': {
@@ -97,6 +98,7 @@ export const ConfirmationModal = () => {
             price: intl.formatNumber(price, {
               style: 'currency',
               currency: currency || 'USD',
+              ...getPropsToRemoveFractionZeroDigits({ price, shouldRemoveFractionZeroDigits: true }),
             }),
             ordersAndSubscriptionLink,
           })

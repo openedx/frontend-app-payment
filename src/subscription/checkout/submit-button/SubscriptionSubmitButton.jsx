@@ -1,18 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { useSelector } from 'react-redux';
+
 import { StatefulButton, Icon } from '@edx/paragon';
 import { Check as CheckIcon } from '@edx/paragon/icons';
+import { subscriptionStatusSelector } from '../../data/status/selectors';
 
 const SubscriptionSubmitButton = ({
-  showLoadingButton, onSubmitButtonClick, disabled, isProcessing, isSubmitted, resubscribe,
+  showLoadingButton, onSubmitButtonClick, disabled, isProcessing,
 }) => {
+  const { status } = useSelector(subscriptionStatusSelector);
   let submitButtonState = 'default';
   if (disabled) { submitButtonState = 'disabled'; }
   if (isProcessing) { submitButtonState = 'processing'; }
   // handle submitted state
-  if (isSubmitted) { submitButtonState = 'success'; }
-  if (resubscribe) { submitButtonState = 'resubscribe'; }
+  if (status === 'trialing') { submitButtonState = 'trialing'; }
+  if (status === 'success') { submitButtonState = 'success'; }
   return (
     <div className="col-lg-7 col-xl-6 form-group float-right">
       <div className="row justify-content-end mt-4">
@@ -23,7 +27,7 @@ const SubscriptionSubmitButton = ({
           <StatefulButton
             type="submit"
             id="placeOrderButton"
-            variant={isSubmitted ? 'success' : 'brand'}
+            variant={(status === 'success' || status === 'trialing') ? 'success' : 'brand'}
             size="md"
             block
             state={submitButtonState}
@@ -36,17 +40,17 @@ const SubscriptionSubmitButton = ({
                   description="The label for the subscription form submit button"
                 />
               ),
-              success: (
+              trialing: (
                 <FormattedMessage
                   id="subscription.checkout.form.submit.button.text.enrolled"
                   defaultMessage="Free trial started"
                   description="The success label for the enrolled subscription."
                 />
               ),
-              resubscribe: (
+              success: (
                 <FormattedMessage
                   id="subscription.checkout.form.submit.button.text.resubscribe"
-                  defaultMessage="Start my subscription"
+                  defaultMessage="Subscription started"
                   description="The button label for the resubscribe subscription."
                 />
               ),
@@ -54,6 +58,9 @@ const SubscriptionSubmitButton = ({
             icons={{
               processing: (
                 <span className="button-spinner-icon" />
+              ),
+              trialing: (
+                <Icon src={CheckIcon} />
               ),
               success: (
                 <Icon src={CheckIcon} />
@@ -73,16 +80,12 @@ SubscriptionSubmitButton.propTypes = {
   showLoadingButton: PropTypes.bool,
   disabled: PropTypes.bool,
   isProcessing: PropTypes.bool,
-  isSubmitted: PropTypes.bool,
-  resubscribe: PropTypes.bool,
 };
 
 SubscriptionSubmitButton.defaultProps = {
   showLoadingButton: false,
   disabled: false,
   isProcessing: false,
-  isSubmitted: false,
-  resubscribe: false,
 };
 
 export default SubscriptionSubmitButton;
