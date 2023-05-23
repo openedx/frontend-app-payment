@@ -23,7 +23,7 @@ export default class PageLoading extends Component {
             height: '50vh',
           }}
         >
-          <div className="spinner-border text-primary" role="status">
+          <div className="spinner-border text-primary" data-testid="loading-page" role="status">
             {this.renderSrMessage()}
           </div>
         </div>

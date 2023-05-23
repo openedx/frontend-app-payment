@@ -82,7 +82,7 @@ describe('<PaymentForm />', () => {
           lastName: '',
           address: '',
           city: '',
-          country: 'UK',
+          country: 'GB',
           cardExpirationMonth: '',
           cardExpirationYear: '',
           optionalField: '',

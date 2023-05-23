@@ -16,7 +16,7 @@ import paymentSaga, {
   handleCaptureKeyTimeout,
   handleFetchClientSecret,
 } from './sagas';
-import { transformResults } from './service';
+import { transformResults } from './utils';
 import {
   basketDataReceived,
   basketProcessing,

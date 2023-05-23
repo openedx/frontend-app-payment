@@ -1,5 +1,6 @@
 import { put } from 'redux-saga/effects';
 
+import { logError, logInfo } from '@edx/frontend-platform/logging';
 import { addMessage, clearMessages } from './actions';
 import { MESSAGE_TYPES } from './constants';
 
@@ -53,4 +54,39 @@ export function* handleMessages(messages, clearExistingMessages, url) {
     yield put(addMessage(message.code, message.userMessage, message.data, message.messageType));
   }
   return null;
+}
+
+/**
+ * Handle Subscription Errors
+ */
+export function* handleSubscriptionErrors(e, clearExistingMessages) {
+  if (clearExistingMessages) {
+    yield put(clearMessages());
+  }
+  // If this doesn't contain anything we understand, add a fallback error message
+  if (e.errors === undefined && e.fieldErrors === undefined && e.messages === undefined) {
+    yield put(addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR));
+  }
+  if (e.errors !== undefined) {
+    for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
+      const error = e.errors[i];
+      const customErrors = [
+        'empty_subscription',
+        'embargo_error',
+        'basket_changed_error',
+      ];
+      if (customErrors.includes(error.code)) {
+        if (error.code !== 'create-paymentMethod') { // already logged error
+          logInfo('API Error', error.code);
+        }
+        yield put(addMessage(error.code, error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+      } else {
+        logError(error.code, {
+          userMessage: error.userMessage,
+          errorCode: error.code,
+        });
+        yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+      }
+    }
+  }
 }

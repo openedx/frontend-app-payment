@@ -8,7 +8,7 @@ const messages = defineMessages({
   },
   'payment.order.details.course.seat.verified': {
     id: 'payment.order.details.course.seat.verified',
-    defaultMessage: 'After you complete your order you will be automatically enrolled in the verified track of the course.',
+    defaultMessage: 'The above total includes any applicable taxes. After you complete your order you will be automatically enrolled in the verified track of the course.',
     description: 'A paragraph explaining what will happen after the user pays for the verified track of a course.',
   },
   'payment.order.details.course.seat.credit': {

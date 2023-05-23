@@ -13,7 +13,7 @@ const SummaryTable = ({ price }) => (
         description="Label for price excluding discount line on order summary table"
       />
     </span>
-    <span>
+    <span className="summary-price">
       <LocalizedPrice amount={price} />
     </span>
   </div>

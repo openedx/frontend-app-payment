@@ -1,3 +1,7 @@
+import { Factory } from 'rosie';
+import '../__factories__/basket.factory';
+
+import { ORDER_TYPES } from './constants';
 import {
   AsyncActionType,
   modifyObjectKeys,
@@ -7,6 +11,9 @@ import {
   keepKeys,
   getModuleState,
   generateAndSubmitForm,
+  getOrderType,
+  transformResults,
+  getPropsToRemoveFractionZeroDigits,
 } from './utils';
 
 describe('modifyObjectKeys', () => {
@@ -208,5 +215,41 @@ describe('generateAndSubmitForm', () => {
     expect(createElementSpy).toHaveBeenNthCalledWith(3, 'input');
     expect(createElementSpy).toHaveBeenCalledTimes(3);
     expect(submitMock).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('getOrderType', () => {
+  it('should return valid ORDER_TYPE for given productType', () => {
+    expect(getOrderType()).toBe(ORDER_TYPES.SEAT);
+    expect(getOrderType('Seat')).toBe(ORDER_TYPES.SEAT);
+    expect(getOrderType('Enrollment Code')).toBe(ORDER_TYPES.BULK_ENROLLMENT);
+    expect(getOrderType('Course Entitlement')).toBe(ORDER_TYPES.ENTITLEMENT);
+  });
+});
+
+describe('transformResults', () => {
+  it('should transform snake_case basket data to camelCase', () => {
+    const entitlementBasketData = Factory.build('basket', {}, { numProducts: 2, productType: 'Course Entitlement' });
+    expect(transformResults(entitlementBasketData)).toEqual({
+      ...camelCaseObject(entitlementBasketData),
+      orderType: ORDER_TYPES.ENTITLEMENT,
+    });
+    const seatBasketData = Factory.build('basket', {}, { numProducts: 3, productType: 'Seat' });
+    expect(transformResults(seatBasketData)).toEqual({
+      ...camelCaseObject(seatBasketData),
+      orderType: ORDER_TYPES.SEAT,
+    });
+  });
+});
+
+describe('getPropsToRemoveFractionZeroDigits', () => {
+  it('should only hide fractional zeros when shouldRemoveFractionZeroDigits is false', () => {
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.00, shouldRemoveFractionZeroDigits: true })).toEqual({
+      maximumFractionDigits: 0,
+    });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.00, shouldRemoveFractionZeroDigits: false })).toEqual({ });
+
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: true })).toEqual({ });
+    expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: false })).toEqual({ });
   });
 });

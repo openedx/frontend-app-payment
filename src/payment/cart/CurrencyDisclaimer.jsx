@@ -1,37 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage, FormattedNumber, injectIntl } from '@edx/frontend-platform/i18n';
+import { useSelector } from 'react-redux';
+import { FormattedMessage, FormattedNumber } from '@edx/frontend-platform/i18n';
 
-import { currencyDisclaimerSelector } from '../data/selectors';
-
-const CurrencyDisclaimer = (props) => (
-  <div className="text-muted font-italic">
-    <FormattedMessage
-      id="payment.currency.disclaimer"
-      defaultMessage="* This total contains an approximate conversion. You will be charged {actualAmount} {actualCurrencyCode}."
-      description="A notification that shows if we are displaying approximate prices in the user's local currency, instead of USD."
-      values={{
-        actualAmount: (
-          <FormattedNumber
-            value={props.actualAmount}
-            style="currency" // eslint-disable-line react/style-prop-object
-            currency={props.actualCurrencyCode}
-          />
-        ),
-        actualCurrencyCode: props.actualCurrencyCode,
-      }}
-    />
-  </div>
-);
+/**
+ * CurrencyDisclaimer
+ * it tells the user if they will be charged in USD even though
+ * it might show a localized price currency
+ * */
+export const CurrencyDisclaimer = ({
+  actualCurrencyCode,
+  currencyDisclaimerSelector,
+}) => {
+  const { actualAmount } = useSelector(currencyDisclaimerSelector);
+  return (
+    <div className="text-muted font-italic">
+      <FormattedMessage
+        id="payment.currency.disclaimer"
+        defaultMessage="* This total contains an approximate conversion. You will be charged {actualAmount} {actualCurrencyCode}."
+        description="A notification that shows if we are displaying approximate prices in the user's local currency, instead of USD."
+        values={{
+          actualAmount: (
+            <FormattedNumber
+              value={actualAmount}
+              style="currency" // eslint-disable-line react/style-prop-object
+              currency={actualCurrencyCode}
+            />
+          ),
+          actualCurrencyCode,
+        }}
+      />
+    </div>
+  );
+};
 
 CurrencyDisclaimer.propTypes = {
-  actualAmount: PropTypes.number.isRequired,
   actualCurrencyCode: PropTypes.string,
+  currencyDisclaimerSelector: PropTypes.func.isRequired,
 };
 
 CurrencyDisclaimer.defaultProps = {
   actualCurrencyCode: 'USD',
 };
 
-export default connect(currencyDisclaimerSelector)(injectIntl(CurrencyDisclaimer));
+export default CurrencyDisclaimer;

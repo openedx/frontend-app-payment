@@ -89,7 +89,7 @@ class ProductLineItem extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className="row align-items-center mb-3">
+      <div className="row align-items-center mb-3 product-wrapper">
         <div className="col-5">
           <div className="embed-responsive embed-responsive-16by9">
             <img className="img-thumbnail product-thumbnail" src={imageUrl} alt="" />

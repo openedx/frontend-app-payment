@@ -15,7 +15,7 @@ import '../__factories__/userAccount.factory';
 import Cart from './Cart';
 import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
-import { transformResults } from '../data/service';
+import { transformResults } from '../data/utils';
 
 // run enzyme JSON serializer using options compatible with prior snapshots
 expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
