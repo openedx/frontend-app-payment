@@ -5,7 +5,7 @@ import {
 
 export const CONFIRMATION_STATUS = {
   trialing: 'trialing',
-  success: 'success',
+  succeeded: 'success',
   requires_action: '3DS',
 };
 

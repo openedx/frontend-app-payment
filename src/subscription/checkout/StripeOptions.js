@@ -10,8 +10,10 @@ export const getStripeOptions = ({ currency, price }) => ({
    * NOTE: this is important to set the right subscription price as defined within stripe subscription
    * otherwise card details will not load properly
    * https://dashboard.stripe.com/test/subscriptions/sub_1Mtd3sH4caH7G0X1dvzlMT3o
+   * Stripe consider amount in cents and we need to convert and the minimum amount it expects is 0.50 cents
+   * https://stripe.com/docs/currencies#zero-decimal
    * */
-  amount: price,
+  amount: (price * 100),
   currency: currency && currency.toLowerCase(),
   paymentMethodCreation: 'manual',
   appearance: {
