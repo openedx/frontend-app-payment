@@ -11,6 +11,7 @@ import { useIntl, defineMessages, FormattedMessage } from '@edx/frontend-platfor
 import { subscriptionStatusSelector } from '../data/status/selectors';
 
 import { detailsSelector } from '../data/details/selectors';
+import { getPropsToRemoveFractionZeroDigits } from '../../payment/data/utils';
 
 const messages = defineMessages({
   'subscription.confirmation.modal.trialing.heading': {
@@ -52,15 +53,15 @@ export const ConfirmationModal = () => {
     isTrialEligible,
   } = useSelector(detailsSelector);
   const intl = useIntl();
-  const { confirmationStatus } = useSelector(subscriptionStatusSelector);
+  const { status } = useSelector(subscriptionStatusSelector);
   const [isOpen, setOpen] = useState(false);
   const subscriptionState = isTrialEligible ? 'trialing' : 'resubscribe';
 
   useEffect(() => {
-    if (confirmationStatus === 'success') {
+    if (status === 'success' || status === 'trialing') {
       setOpen(true);
     }
-  }, [confirmationStatus]);
+  }, [status]);
 
   const ordersAndSubscriptionLink = (
     <Hyperlink
@@ -97,6 +98,7 @@ export const ConfirmationModal = () => {
             price: intl.formatNumber(price, {
               style: 'currency',
               currency: currency || 'USD',
+              ...getPropsToRemoveFractionZeroDigits({ price, shouldRemoveFractionZeroDigits: true }),
             }),
             ordersAndSubscriptionLink,
           })

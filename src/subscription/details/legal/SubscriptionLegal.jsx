@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Hyperlink } from '@edx/paragon';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import messages from './messages';
+import { getPropsToRemoveFractionZeroDigits } from '../../../payment/data/utils';
 
 const SubscriptionLegal = ({
   programTitle,
@@ -12,16 +13,21 @@ const SubscriptionLegal = ({
   const intl = useIntl();
   const supportLink = (
     <Hyperlink
-      destination="https://support.edx.org/hc/en-us/sections/115004173027-Receive-and-Share-edX-Certificates"
+      destination="https://support.edx.org/hc/en-us/articles/12975352138007"
     >
       {intl.formatMessage(messages['subscription.details.order.legal.link'])}
     </Hyperlink>
   );
   return (
-    <p className="micro">{intl.formatMessage(messages['subscription.details.order.legal'], {
-      price: intl.formatNumber(price, { style: 'currency', currency }),
+    <p>{intl.formatMessage(messages['subscription.details.order.legal'], {
+      price: intl.formatNumber(price, {
+        style: 'currency',
+        currency,
+        ...getPropsToRemoveFractionZeroDigits({ price, shouldRemoveFractionZeroDigits: true }),
+      }),
       programTitle,
       supportLink,
+      currency: currency || 'USD',
     })}
     </p>
   );

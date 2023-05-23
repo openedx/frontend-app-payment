@@ -2,7 +2,6 @@ import {
   call, put, select,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
-import { logError } from '@edx/frontend-platform/logging';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getReduxFormValidationErrors } from '../../../payment/data/utils';
@@ -58,7 +57,7 @@ export function* handleReduxFormValidationErrors(error) {
 
 const handleCustomErrors = (error, fallbackKey) => {
   const apiErrors = [{
-    code: fallbackKey ? 'fallback-error' : error.cause,
+    code: fallbackKey || error.cause,
     userMessage: error.message,
   }];
   const err = new Error();
@@ -114,13 +113,8 @@ export function* handleSubmitPayment({ payload }) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {
       if (error.message && error.cause === 'create-paymentMethod') { // stripe payment method creation error
-        yield call(handleSubscriptionErrors, handleCustomErrors(error, 'fallback'), true);
+        yield call(handleSubscriptionErrors, handleCustomErrors(error, 'create-paymentMethod'), true);
       } else {
-        logError(error, {
-          messagePrefix: 'Stripe-Checkout Post Error',
-          paymentMethod: 'Create Subscription',
-          paymentErrorType: 'v1/stripe-checkout/ Error',
-        });
         yield call(handleSubscriptionErrors, error, true);
       }
     }

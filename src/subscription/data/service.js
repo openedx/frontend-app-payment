@@ -1,7 +1,6 @@
 import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
-import handleRequestError from '../../payment/data/handleRequestError';
 import { camelCaseObject } from '../../payment/data/utils';
 
 /**
@@ -22,21 +21,20 @@ ensureConfig([
 ], 'subscription API service');
 
 export function handleDetailsApiError(requestError) {
-  try {
-    // Always throws an error:
-    handleRequestError(requestError);
-  } catch (errorWithMessages) {
-    const processedError = new Error();
-    processedError.messages = errorWithMessages.messages;
-    processedError.errors = errorWithMessages.errors;
-    processedError.fieldErrors = errorWithMessages.fieldErrors;
-
-    if (requestError.response.data) {
-      processedError.details = transformSubscriptionDetails(requestError.response.data);
-    }
-
-    throw processedError;
+  const errors = [];
+  /* eslint-disable camelcase */
+  // Always throws an error:
+  if (requestError.response && requestError.response.data.error_code) {
+    const { error_code } = requestError.response.data;
+    const { user_message } = requestError.response.data;
+    errors.push({
+      code: error_code,
+      userMessage: user_message,
+    });
   }
+  const apiError = new Error();
+  apiError.errors = errors;
+  throw apiError;
 }
 
 export async function getDetails() {
@@ -51,7 +49,7 @@ export async function postDetails(postData) {
     .post(
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
       postData,
-      { timeout: 15000 }, // wait at least 15 seconds
+      // { timeout: 25000 }, // wait at least 15 seconds
     )
     .catch(handleDetailsApiError);
   return transformSubscriptionDetails(data);

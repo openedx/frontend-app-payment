@@ -13,8 +13,6 @@ import frCAMessages from './messages/fr_CA.json';
 import deDEMessages from './messages/de_DE.json';
 import itITMessages from './messages/it_IT.json';
 import ptPTMessages from './messages/pt_PT.json';
-import faMessages from './messages/fa.json';
-import faIRMessages from './messages/fa_IR.json';
 // no need to import en messages-- they are in the defaultMessage field
 
 const messages = {
@@ -33,8 +31,6 @@ const messages = {
   'de-de': deDEMessages,
   'it-it': itITMessages,
   'pt-pt': ptPTMessages,
-  fa: faMessages,
-  'fa-ir': faIRMessages,
 };
 
 export default messages;

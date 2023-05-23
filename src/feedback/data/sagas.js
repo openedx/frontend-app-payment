@@ -1,5 +1,6 @@
 import { put } from 'redux-saga/effects';
 
+import { logError, logInfo } from '@edx/frontend-platform/logging';
 import { addMessage, clearMessages } from './actions';
 import { MESSAGE_TYPES } from './constants';
 
@@ -71,20 +72,21 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
       const error = e.errors[i];
       const customErrors = [
         'empty_subscription',
-        'embargo-error',
-        'basket-changed-error',
+        'embargo_error',
+        'basket_changed_error',
       ];
       if (customErrors.includes(error.code)) {
+        if (error.code !== 'create-paymentMethod') { // already logged error
+          logInfo('API Error', error.code);
+        }
         yield put(addMessage(error.code, error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
       } else {
+        logError(error.code, {
+          userMessage: error.userMessage,
+          errorCode: error.code,
+        });
         yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
       }
-    }
-  }
-  if (e.messages !== undefined) {
-    for (let i = 0; i < e.messages.length; i++) { // eslint-disable-line no-plusplus
-      const message = e.messages[i];
-      yield put(addMessage(message.code, message.userMessage, message.data, message.messageType));
     }
   }
 }
