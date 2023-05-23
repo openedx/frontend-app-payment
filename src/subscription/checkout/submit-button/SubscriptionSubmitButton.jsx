@@ -15,8 +15,8 @@ const SubscriptionSubmitButton = ({
   if (disabled) { submitButtonState = 'disabled'; }
   if (isProcessing) { submitButtonState = 'processing'; }
   // handle submitted state
-  if (status === 'trialing') { submitButtonState = 'trialing'; }
-  if (status === 'success') { submitButtonState = 'success'; }
+  if (status === 'trialing' || status === 'success') { submitButtonState = 'success'; }
+
   return (
     <div className="col-lg-7 col-xl-6 form-group float-right">
       <div className="row justify-content-end mt-4">
@@ -40,13 +40,6 @@ const SubscriptionSubmitButton = ({
                   description="The label for the subscription form submit button"
                 />
               ),
-              trialing: (
-                <FormattedMessage
-                  id="subscription.checkout.form.submit.button.text.enrolled"
-                  defaultMessage="Free trial started"
-                  description="The success label for the enrolled subscription."
-                />
-              ),
               success: (
                 <FormattedMessage
                   id="subscription.checkout.form.submit.button.text.resubscribe"
@@ -58,9 +51,6 @@ const SubscriptionSubmitButton = ({
             icons={{
               processing: (
                 <span className="button-spinner-icon" />
-              ),
-              trialing: (
-                <Icon src={CheckIcon} />
               ),
               success: (
                 <Icon src={CheckIcon} />

@@ -1,8 +1,6 @@
 import React from 'react';
 import AlertList from '../../feedback/AlertList';
-import {
-  EmptySubscriptionMessage,
-} from './ErrorMessages';
+import FallbackErrorMessage from '../../feedback/FallbackErrorMessage';
 
 import { BasketChangedError } from '../../payment/AlertCodeMessages';
 
@@ -14,8 +12,8 @@ import { BasketChangedError } from '../../payment/AlertCodeMessages';
 export const SubscriptionAlerts = () => (
   <AlertList
     messageCodes={{
-      empty_subscription: (<EmptySubscriptionMessage />),
-      embargo_error: (<EmptySubscriptionMessage />),
+      empty_subscription: (<FallbackErrorMessage />),
+      embargo_error: (<FallbackErrorMessage />),
       basket_changed_error: (<BasketChangedError />),
     }}
   />
