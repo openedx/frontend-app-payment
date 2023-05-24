@@ -30,7 +30,7 @@ describe('<ConfirmationModal />', () => {
   });
 
   it('should render the <ConfirmationModal/> with the resubscribe details', () => {
-    const subscriptionDetails = camelCaseObject(Factory.build('subscription', { is_trial_eligible: false, status: 'success' }, { numProducts: 2 }));
+    const subscriptionDetails = camelCaseObject(Factory.build('subscription', { is_trial_eligible: false, status: 'succeeded' }, { numProducts: 2 }));
     const subscriptionStatus = camelCaseObject(Factory.build('subscriptionStatus'));
 
     const { getByText } = render(<ConfirmationModal />);

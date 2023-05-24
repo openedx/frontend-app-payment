@@ -15,7 +15,7 @@ const SubscriptionSubmitButton = ({
   if (disabled) { submitButtonState = 'disabled'; }
   if (isProcessing) { submitButtonState = 'processing'; }
   // handle submitted state
-  if (status === 'trialing' || status === 'success') { submitButtonState = 'success'; }
+  if (status === 'trialing' || status === 'succeeded') { submitButtonState = 'success'; }
 
   return (
     <div className="col-lg-7 col-xl-6 form-group float-right">
