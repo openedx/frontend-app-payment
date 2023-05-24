@@ -58,7 +58,7 @@ export const ConfirmationModal = () => {
   const subscriptionState = isTrialEligible ? 'trialing' : 'resubscribe';
 
   useEffect(() => {
-    if (status === 'success' || status === 'trialing') {
+    if (status === 'succeeded' || status === 'trialing') {
       setOpen(true);
     }
   }, [status]);

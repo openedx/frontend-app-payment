@@ -7,10 +7,7 @@ export const getStripeOptions = ({ currency, price }) => ({
   // Stripe element config
   mode: 'subscription',
   /**
-   * NOTE: this is important to set the right subscription price as defined within stripe subscription
-   * otherwise card details will not load properly
-   * https://dashboard.stripe.com/test/subscriptions/sub_1Mtd3sH4caH7G0X1dvzlMT3o
-   * Stripe consider amount in cents and minimum amount it expects is 0.50 cents
+   * Stripe expects the amount in cents for USD currency, and minimum amount it expects is 0.50 cents
    * https://stripe.com/docs/currencies#zero-decimal
    * */
   amount: (price * 100),
