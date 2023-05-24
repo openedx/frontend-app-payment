@@ -49,7 +49,6 @@ export async function postDetails(postData) {
     .post(
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
       postData,
-      // { timeout: 25000 }, // wait at least 15 seconds
     )
     .catch(handleDetailsApiError);
   return transformSubscriptionDetails(data);
