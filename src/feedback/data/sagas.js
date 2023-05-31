@@ -74,6 +74,8 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
         'empty_subscription',
         'embargo_error',
         'basket_changed_error',
+        'program_unavailable',
+        'ineligible_program',
       ];
       if (customErrors.includes(error.code)) {
         if (error.code !== 'create-paymentMethod') { // already logged error

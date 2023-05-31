@@ -4,6 +4,12 @@ import FallbackErrorMessage from '../../feedback/FallbackErrorMessage';
 
 import { BasketChangedError } from '../../payment/AlertCodeMessages';
 
+import {
+  EmbargoErrorMessage,
+  ProgramUnavailableMessage,
+  IneligibleProgramErrorMessage,
+} from './ErrorMessages';
+
 /**
  * SubscriptionAlerts
  * Reusable component to show server errors with i18n messages
@@ -13,8 +19,10 @@ export const SubscriptionAlerts = () => (
   <AlertList
     messageCodes={{
       empty_subscription: (<FallbackErrorMessage />),
-      embargo_error: (<FallbackErrorMessage />),
+      embargo_error: (<EmbargoErrorMessage />),
       basket_changed_error: (<BasketChangedError />),
+      program_unavailable: (<ProgramUnavailableMessage />),
+      ineligible_program: (<IneligibleProgramErrorMessage />),
     }}
   />
 );
