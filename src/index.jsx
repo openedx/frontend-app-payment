@@ -20,10 +20,12 @@ import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { logError } from '@edx/frontend-platform/logging';
+import { getLoggingService, logError } from '@edx/frontend-platform/logging';
 import Header, { messages as headerMessages } from '@edx/frontend-component-header';
 import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
 
+import { configure as configureI18n } from '@edx/frontend-platform/i18n/lib';
+import { getLocale } from '@edx/frontend-platform/i18n';
 import appMessages from './i18n';
 import {
   PaymentPage,
@@ -101,6 +103,15 @@ subscribe(APP_READY, () => {
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
+  try {
+    getLocale('en');
+  } catch (e) {
+    configureI18n({
+      messages: {},
+      config: getConfig(),
+      loggingService: getLoggingService(),
+    });
+  }
   ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('root'));
 });
 
