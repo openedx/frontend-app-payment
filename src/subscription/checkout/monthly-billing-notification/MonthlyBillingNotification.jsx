@@ -7,7 +7,7 @@ import { getPropsToRemoveFractionZeroDigits } from '../../../payment/data/utils'
 const messages = defineMessages({
   'subscription.checkout.billing.notification': {
     id: 'subscription.checkout.billing.notification',
-    defaultMessage: 'You’ll be charged {price} {currency} {trialEnd} then every 31 days until you cancel your subscription.',
+    defaultMessage: 'You will be charged {price} {currency} {trialEnd} then monthly until you cancel your subscription.',
     description: 'Subscription monthly billing notification for Users that they will be charged every 31 days for this subscription.',
   },
   'subscription.checkout.billing.trial.date': {
