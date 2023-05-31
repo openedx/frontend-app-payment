@@ -6,7 +6,7 @@ import Cookies from 'universal-cookie';
 
 import './__factories__/subscription.factory';
 import {
-  render, act, screen, store,
+  screen, render, act, store,
 } from './test-utils';
 import { SubscriptionPage } from './SubscriptionPage';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from './data/details/actions';
@@ -55,7 +55,7 @@ describe('<SubscriptionPage />', () => {
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
     // expect(container).toMatchSnapshot();
-    // screen.debug(undefined, 10000);
+    // screen.debug(undefined, 30000);
     // verify that `SubscriptionBadge is present in the DOM
     expect(screen.queryByTestId('subscription-badge')).toHaveTextContent('Subscription');
     // verify that `price` is converted and present in the DOM
@@ -65,7 +65,7 @@ describe('<SubscriptionPage />', () => {
     // verify that Checkout Form fields are present in the DOM
     expect(screen.queryAllByText('Last Name (required)')).toHaveLength(1);
     // verify that MonthlySubscriptionNotification is present in the DOM
-    expect(screen.queryAllByText('You’ll be charged $55 USD on April 21, 2025, then every 31 days until you cancel your subscription.')).toHaveLength(1);
+    expect(screen.queryAllByText('You will be charged $55 USD on April 21, 2025, then monthly until you cancel your subscription.')).toHaveLength(1);
   });
 
   it('should not render the Subscription details when error_code is present', () => {
