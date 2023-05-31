@@ -8,7 +8,7 @@ const messages = defineMessages({
   },
   'subscription.details.order.legal.link': {
     id: 'subscription.details.order.legal.link',
-    defaultMessage: 'Learner Help Center.',
+    defaultMessage: 'Learner Help Center',
     description: 'A link describing how to contact learner help center.',
   },
 });
