@@ -74,18 +74,22 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
         'empty_subscription',
         'embargo_error',
         'basket_changed_error',
+        'program_unavailable',
+        'ineligible_program',
       ];
-      if (customErrors.includes(error.code)) {
-        if (error.code !== 'create-paymentMethod') { // already logged error
-          logInfo('API Error', error.code);
+      if (error.code !== 'empty_subscription') {
+        if (customErrors.includes(error.code)) {
+          if (error.code !== 'create-paymentMethod') { // already logged error
+            logInfo('API Error', error.code);
+          }
+          yield put(addMessage(error.code, error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
+        } else {
+          logError(error.code, {
+            userMessage: error.userMessage,
+            errorCode: error.code,
+          });
+          yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
         }
-        yield put(addMessage(error.code, error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
-      } else {
-        logError(error.code, {
-          userMessage: error.userMessage,
-          errorCode: error.code,
-        });
-        yield put(addMessage('fallback-error', error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
       }
     }
   }
