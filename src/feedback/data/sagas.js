@@ -76,6 +76,7 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
         'basket_changed_error',
         'program_unavailable',
         'ineligible_program',
+        'payment_attachment_error',
       ];
       if (error.code !== 'empty_subscription') {
         if (customErrors.includes(error.code)) {

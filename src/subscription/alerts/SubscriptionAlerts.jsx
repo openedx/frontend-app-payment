@@ -1,7 +1,9 @@
 import React from 'react';
 import AlertList from '../../feedback/AlertList';
-
-import { BasketChangedError } from '../../payment/AlertCodeMessages';
+import {
+  BasketChangedError,
+  TransactionDeclined,
+} from '../../payment/AlertCodeMessages';
 
 import {
   EmbargoErrorMessage,
@@ -21,6 +23,7 @@ export const SubscriptionAlerts = () => (
       basket_changed_error: (<BasketChangedError />),
       program_unavailable: (<ProgramUnavailableMessage />),
       ineligible_program: (<IneligibleProgramErrorMessage />),
+      payment_attachment_error: (<TransactionDeclined />),
     }}
   />
 );

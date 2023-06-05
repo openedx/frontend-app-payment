@@ -4,9 +4,9 @@ import {
 
 // details
 import { fetchSubscriptionDetails, submitSubscription } from './details/actions';
-import { handleFetchSubscriptionDetails, handleSubmitPayment } from './details/sagas';
+import { handleFetchSubscriptionDetails, handleSubmitSubscription } from './details/sagas';
 
 export default function* saga() {
-  yield takeLatest(submitSubscription.TRIGGER, handleSubmitPayment);
+  yield takeLatest(submitSubscription.TRIGGER, handleSubmitSubscription);
   yield takeLatest(fetchSubscriptionDetails.TRIGGER, handleFetchSubscriptionDetails);
 }

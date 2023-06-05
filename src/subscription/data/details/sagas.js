@@ -90,7 +90,7 @@ export function* handleFetchSubscriptionDetails() {
   }
 }
 
-export function* handleSubmitPayment({ payload }) {
+export function* handleSubmitSubscription({ payload }) {
   if (yield isSubscriptionDetailsProcessing()) {
     return;
   }
@@ -126,4 +126,4 @@ export function* handleSubmitPayment({ payload }) {
   }
 }
 
-export default handleSubmitPayment;
+export default handleSubmitSubscription;
