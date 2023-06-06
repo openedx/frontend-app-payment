@@ -45,7 +45,7 @@ const axiosMock = new MockAdapter(axios);
 getAuthenticatedHttpClient.mockReturnValue(axios);
 
 // const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
-const BASKET_API_ENDPOINT = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`
+const BASKET_API_ENDPOINT = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`;
 const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
 const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
 const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
