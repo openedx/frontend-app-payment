@@ -94,7 +94,9 @@ export function* handleFetchBasket() {
 
   try {
     yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
-    const result = yield call(PaymentApiService.getBasket);
+    //TODO: Add switch for calling ecomemrce vs comerce coordinator with waffle flag
+    //const result = yield call(PaymentApiService.getBasket);
+    const result = yield call(PaymentApiService.getActiveOrder);
     yield put(basketDataReceived(result)); // update redux store with basket data
     yield call(handleMessages, result.messages, true, window.location.search);
     yield call(handleDiscountCheck); // check if a discount should be added to the basket

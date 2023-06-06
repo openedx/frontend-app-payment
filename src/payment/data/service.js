@@ -49,6 +49,13 @@ export async function getBasket(discountJwt) {
   return transformResults(data);
 }
 
+export async function getActiveOrder() {
+  const { data } = await getAuthenticatedHttpClient()
+    .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
+    .catch(handleBasketApiError);
+  return transformResults(data);
+}
+
 export async function postQuantity(quantity) {
   const { data } = await getAuthenticatedHttpClient()
     .post(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
