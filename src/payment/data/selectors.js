@@ -74,3 +74,7 @@ export const updateClientSecretSelector = createSelector(
     clientSecretId: clientSecret && clientSecret.capture_context ? clientSecret.capture_context.key_id : null,
   }),
 );
+
+// TODO: We may want to store the server side enum value rather than just a boolean. As such the dialog was coded this
+//  way. And we translate.
+export const paymentProcessStatusSelector = state => (state[storeName].basket.isBasketProcessing ? 'pending' : 'not');
