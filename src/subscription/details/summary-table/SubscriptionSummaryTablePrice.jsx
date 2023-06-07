@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from '@edx/frontend-platform/i18n';
+import { FormattedMessage, FormattedNumber } from '@edx/frontend-platform/i18n';
 
-import LocalizedPrice from '../../../payment/cart/LocalizedPrice';
+import { getPropsToRemoveFractionZeroDigits } from '../../../payment/data/utils';
 
-export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
+export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible, currency }) => (
   <div className="summary-row d-flex">
     <h4 className="flex-grow-1">
       <FormattedMessage
@@ -14,7 +14,15 @@ export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
       />
     </h4>
     <h4 className="summary-price">
-      <LocalizedPrice amount={price} shouldRemoveFractionZeroDigits />
+      <FormattedNumber
+        value={price}
+        style="currency" // eslint-disable-line react/style-prop-object
+        currency={currency}
+        {...getPropsToRemoveFractionZeroDigits({
+          price,
+          shouldRemoveFractionZeroDigits: true,
+        })}
+      />
       { isTrialEligible
         ? (
           <FormattedMessage
@@ -37,10 +45,12 @@ export const SubscriptionSummaryTablePrice = ({ price, isTrialEligible }) => (
 SubscriptionSummaryTablePrice.propTypes = {
   price: PropTypes.number,
   isTrialEligible: PropTypes.bool,
+  currency: PropTypes.string,
 };
 SubscriptionSummaryTablePrice.defaultProps = {
   price: undefined,
   isTrialEligible: false,
+  currency: 'USD',
 };
 
 export default SubscriptionSummaryTablePrice;

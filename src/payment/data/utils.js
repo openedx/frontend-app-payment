@@ -218,7 +218,7 @@ export const localizedCurrencySelector = () => {
  */
 export const getPropsToRemoveFractionZeroDigits = ({ price, shouldRemoveFractionZeroDigits }) => {
   let props = {};
-  if (shouldRemoveFractionZeroDigits) {
+  if (shouldRemoveFractionZeroDigits && price !== null && price !== undefined) {
     const fractionValue = price.toString().split('.')[1];
     if (!fractionValue || parseInt(fractionValue, 10) === 0) {
       // don't show 0's if fraction is 0
