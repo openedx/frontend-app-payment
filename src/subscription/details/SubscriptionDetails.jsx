@@ -6,9 +6,8 @@ import {
 } from '@edx/frontend-platform/i18n';
 
 import messages from '../../payment/cart/Cart.messages';
-import { detailsSelector, currencyDisclaimerSelector } from '../data/details/selectors';
+import { detailsSelector } from '../data/details/selectors';
 
-import { CurrencyDisclaimer } from '../../payment/cart/CurrencyDisclaimer';
 import OrderSummary from '../../payment/cart/OrderSummary';
 import ProductLineItem from '../../payment/cart/ProductLineItem';
 
@@ -34,7 +33,6 @@ export const SubscriptionDetails = () => {
     price,
     programType,
     currency,
-    isCurrencyConverted,
     totalPrice,
     isTrialEligible,
     programUuid,
@@ -80,15 +78,12 @@ export const SubscriptionDetails = () => {
             <SubscriptionSummaryTablePrice
               price={price}
               isTrialEligible={isTrialEligible}
+              currency={currency}
             />
             <SubscriptionTotalTable
               total={totalPrice}
+              currency={currency}
             />
-            {
-            isCurrencyConverted
-              ? <CurrencyDisclaimer currencyDisclaimerSelector={currencyDisclaimerSelector} />
-              : null
-            }
           </OrderSummary>
         ) : (
           <>
