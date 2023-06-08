@@ -7,13 +7,25 @@ import '../__factories__/subscription.factory';
 import '../__factories__/subscriptionStatus.factory';
 
 import {
-  render, act, store, config, // fireEvent
+  screen, render, act, store, config, // fireEvent
 } from '../test-utils';
 import { ConfirmationModal } from './ConfirmationModal';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from '../data/details/actions';
 import { subscriptionStatusReceived } from '../data/status/actions';
 
 import { camelCaseObject } from '../../payment/data/utils';
+
+function getCustomTextContent(content, node) {
+  // eslint-disable-next-line no-shadow
+  // The textContent property sets or returns the text content of the specified node, and all its descendants.
+  const hasText = (elem) => elem.textContent === this.searchFor;
+  const nodeHasText = hasText(node);
+  const childrenDontHaveText = Array.from(node.children).every(
+    (child) => !hasText(child),
+  );
+
+  return nodeHasText && childrenDontHaveText;
+}
 
 /**
  * ConfirmationModal Test
@@ -43,7 +55,8 @@ describe('<ConfirmationModal />', () => {
       );
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
-    const heading = getByText(`Congratulations! Your subscription to ${subscriptionDetails.programTitle} has started.`);
+    screen.debug();
+    const heading = getByText(getCustomTextContent.bind({ searchFor: `Congratulations! Your subscription to ${subscriptionDetails.programTitle} has started.` }));
     expect(heading).toBeInTheDocument();
   });
 
@@ -62,7 +75,7 @@ describe('<ConfirmationModal />', () => {
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
 
-    const heading = getByText(`Congratulations! Your 7-day free trial of ${subscriptionDetails.programTitle} has started.`);
+    const heading = getByText(getCustomTextContent.bind({ searchFor: `Congratulations! Your 7-day free trial of ${subscriptionDetails.programTitle} has started.` }));
     expect(heading).toBeInTheDocument();
 
     const gotoDashboardLink = getByRole('link', { name: 'Go to dashboard' });
