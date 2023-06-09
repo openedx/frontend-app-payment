@@ -94,7 +94,6 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
       const error = e.errors[i];
       if (error.code === 'sdn_check_failure') {
         handleSDNCheckFailure(error);
-        yield put(addMessage(error.code, error.userMessage, error?.data, MESSAGE_TYPES.ERROR));
       } else if (error.code === 'empty_subscription') {
         // do nothing as empty placeholder message will be rendered by Subscription Page
       } else {
