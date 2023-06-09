@@ -5,7 +5,7 @@ import { logError, logInfo } from '@edx/frontend-platform/logging';
 import { addMessage, clearMessages } from './actions';
 import { MESSAGE_TYPES } from './constants';
 
-ensureConfig(['ECOMMERCE_BASE_URL'], 'Stripe API service');
+ensureConfig(['ECOMMERCE_BASE_URL'], 'Alert saga');
 
 export function* handleErrors(e, clearExistingMessages) {
   if (clearExistingMessages) {
