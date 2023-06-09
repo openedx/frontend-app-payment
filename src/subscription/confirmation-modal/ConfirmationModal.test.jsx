@@ -7,7 +7,7 @@ import '../__factories__/subscription.factory';
 import '../__factories__/subscriptionStatus.factory';
 
 import {
-  screen, render, act, store, config, // fireEvent
+  render, act, store, config, // fireEvent
 } from '../test-utils';
 import { ConfirmationModal } from './ConfirmationModal';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from '../data/details/actions';
@@ -55,7 +55,6 @@ describe('<ConfirmationModal />', () => {
       );
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
-    screen.debug();
     const heading = getByText(getCustomTextContent.bind({ searchFor: `Congratulations! Your subscription to ${subscriptionDetails.programTitle} has started.` }));
     expect(heading).toBeInTheDocument();
   });
