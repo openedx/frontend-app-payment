@@ -3,7 +3,6 @@ import { Factory } from 'rosie';
 
 import '../__factories__/subscription.factory';
 import { loadStripe } from '@stripe/stripe-js';
-// import { Elements } from '@stripe/react-stripe-js';
 import {
   render, act, screen, store,
 } from '../test-utils';

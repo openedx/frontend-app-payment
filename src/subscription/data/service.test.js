@@ -73,9 +73,7 @@ describe('getDetails', () => {
         response: errorJSON,
       },
     });
-    // jest.spyOn(axios, 'get').mockRejectedValue(error);
     await expect(getDetails()).rejects.toEqual(error);
-    // await expect(getDetails()).rejects.toThrow(error);
     expect(axios.get).toHaveBeenCalledWith(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`);
   });
 });
