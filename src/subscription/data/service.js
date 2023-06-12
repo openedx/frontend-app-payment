@@ -30,6 +30,7 @@ export function handleDetailsApiError(requestError) {
     errors.push({
       code: error_code,
       userMessage: user_message,
+      data: this?.payload,
     });
   }
   const apiError = new Error();
@@ -50,6 +51,6 @@ export async function postDetails(postData) {
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
       postData,
     )
-    .catch(handleDetailsApiError);
+    .catch(handleDetailsApiError.bind({ payload: postData }));
   return transformSubscriptionDetails(data);
 }

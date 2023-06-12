@@ -60,7 +60,7 @@ export const ConfirmationModal = () => {
         <ModalDialog.Title as="h3">
           {
             intl.formatMessage(messages[`subscription.confirmation.modal.${subscriptionState}.heading`], {
-              programTitle,
+              programTitle: <i>{programTitle}</i>,
             })
           }
         </ModalDialog.Title>
