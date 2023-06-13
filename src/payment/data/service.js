@@ -7,7 +7,6 @@ import { transformResults } from './utils';
 ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
-  'COMMERCE_COORDINATOR_BASE_URL',
 ], 'payment API service');
 
 function handleBasketApiError(requestError) {
@@ -53,7 +52,7 @@ export async function getBasket(discountJwt) {
 export async function getActiveOrder() {
   const { data } = await getAuthenticatedHttpClient()
     // .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
-    .get(`${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
+    .get(`${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active/`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
@@ -92,5 +91,21 @@ export async function getDiscountData(courseKey) {
       withCredentials: true,
     },
   );
+  return data;
+}
+
+export async function getCurrentPaymentState(paymentNumber, basketId) {
+  const { data } = await getAuthenticatedHttpClient()
+    .get(
+      `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`,
+      {
+        params:
+          {
+            payment_number: paymentNumber,
+            order_uuid: basketId,
+          },
+      },
+    )
+    .catch(handleBasketApiError);
   return data;
 }

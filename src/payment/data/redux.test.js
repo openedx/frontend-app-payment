@@ -8,9 +8,12 @@ import {
   submitPayment,
   fetchBasket,
   fetchActiveOrder,
+  updatePaymentState,
+  PAYMENT_STATE_DATA_RECEIVED,
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
 import { localizedCurrencySelector } from './utils';
+import { PAYMENT_STATE } from './constants';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {
@@ -109,7 +112,10 @@ describe('redux tests', () => {
           isBasketProcessing: false,
           isEmpty: false,
           isRedirect: false,
-          paymentState: '',
+          paymentState: PAYMENT_STATE.DEFAULT,
+          paymentStatePolling: {
+            keepPolling: false,
+          },
         });
       });
 
@@ -130,7 +136,10 @@ describe('redux tests', () => {
           isBasketProcessing: false,
           isEmpty: false,
           isRedirect: true, // this is also now true.
-          paymentState: '',
+          paymentState: PAYMENT_STATE.DEFAULT,
+          paymentStatePolling: {
+            keepPolling: false,
+          },
         });
       });
     });
@@ -218,6 +227,42 @@ describe('redux tests', () => {
           expect(store.getState().payment.basket.loading).toBe(false);
           expect(store.getState().payment.basket.loaded).toBe(true);
         });
+      });
+    });
+
+    describe('updatePaymentState actions', () => {
+      it('Round Trip', () => {
+        const triggerStore = createStore(
+          combineReducers({
+            payment: reducer,
+          }),
+          {
+            payment:
+                  {
+                    basket: {
+                      foo: 'bar',
+                      paymentState: PAYMENT_STATE.PROCESSING,
+                      basketId: 7,
+                      payments: [
+                        { paymentNumber: 7 },
+                      ],
+                      isBasketProcessing: false,
+                    },
+                  },
+          },
+        );
+
+        triggerStore.dispatch(updatePaymentState());
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PROCESSING);
+
+        triggerStore.dispatch({ type: PAYMENT_STATE_DATA_RECEIVED, payload: { state: PAYMENT_STATE.COMPLETED } });
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.COMPLETED);
+
+        triggerStore.dispatch(updatePaymentState.fulfill());
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
+        expect(triggerStore.getState().payment.basket.paymentState === PAYMENT_STATE.PROCESSING).toBe(false);
       });
     });
   });

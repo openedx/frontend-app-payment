@@ -19,6 +19,7 @@ import EmptyCartMessage from './EmptyCartMessage';
 import Cart from './cart/Cart';
 import Checkout from './checkout/Checkout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
+import { PaymentProcessingModal } from './PaymentProcessingModal';
 
 class PaymentPage extends React.Component {
   constructor(props) {
@@ -96,6 +97,7 @@ class PaymentPage extends React.Component {
           />
         </h1>
         <div className="col-md-5 pr-md-5 col-basket-summary">
+          <PaymentProcessingModal />
           <Cart
             isNumEnrolledExperiment={isNumEnrolledExperiment}
             REV1045Experiment={REV1045Experiment}

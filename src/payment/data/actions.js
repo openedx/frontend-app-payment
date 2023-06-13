@@ -20,6 +20,7 @@ export const fetchActiveOrder = createRoutine('FETCH_ACTIVE_ORDER');
 export const addCoupon = createRoutine('ADD_COUPON');
 export const removeCoupon = createRoutine('REMOVE_COUPON');
 export const updateQuantity = createRoutine('UPDATE_QUANTITY');
+export const updatePaymentState = createRoutine('UPDATE_PAYMENT_STATE');
 
 // Actions and their action creators
 export const BASKET_DATA_RECEIVED = 'BASKET_DATA_RECEIVED';
@@ -74,4 +75,11 @@ export const CLIENT_SECRET_DATA_RECEIVED = 'CLIENT_SECRET_DATA_RECEIVED';
 export const clientSecretDataReceived = clientSecret => ({
   type: CLIENT_SECRET_DATA_RECEIVED,
   payload: clientSecret,
+});
+
+export const PAYMENT_STATE_DATA_RECEIVED = 'PAYMENT_STATE_DATA_RECEIVED';
+
+export const paymentStateDataReceived = paymentState => ({
+  type: PAYMENT_STATE_DATA_RECEIVED,
+  payload: paymentState,
 });

@@ -1,11 +1,13 @@
 import { getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { runSaga } from 'redux-saga';
 import { takeEvery } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { Factory } from 'rosie';
+
 import paymentSaga, {
   handleFetchBasket,
   handleFetchActiveOrder,
@@ -16,6 +18,7 @@ import paymentSaga, {
   handleFetchCaptureKey,
   handleCaptureKeyTimeout,
   handleFetchClientSecret,
+  handlePaymentState,
 } from './sagas';
 import { transformResults } from './utils';
 import {
@@ -30,12 +33,14 @@ import {
   submitPayment,
   CAPTURE_KEY_START_TIMEOUT,
   fetchClientSecret,
+  updatePaymentState,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
 import '../__factories__/basket.factory';
 
 import * as cybersourceService from '../payment-methods/cybersource';
+import { PAYMENT_STATE } from './constants';
 
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
@@ -48,7 +53,7 @@ getAuthenticatedHttpClient.mockReturnValue(axios);
 
 const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
 // const CC_ORDER_API_ENDPOINT = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`;
-const CC_ORDER_API_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`;
+const CC_ORDER_API_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active/`;
 const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
 const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
 const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
@@ -617,6 +622,126 @@ describe('saga tests', () => {
       );
     });
 
+    describe('Stripe Payments: should successfully call stripe checkout method ', () => {
+      let nativeGlobalLocation;
+
+      beforeEach(() => {
+        const { STRIPE_RESPONSE_URL } = process.env;
+        axiosMock.onPost(STRIPE_RESPONSE_URL).reply(200, { redirect_url: 'http://some-silly-nonsense.com' });
+
+        // We have to override this because we cant pass a location setter function to Stripes Checkout
+        //   We reset it back after each run so future tests do not explode.
+        nativeGlobalLocation = global.location;
+        delete global.location;
+        global.location = jest.fn();// = Object.create(window);
+      });
+
+      afterEach(() => {
+        global.location = nativeGlobalLocation;
+      });
+
+      const mockSetLocation = jest.fn();
+      const context = jest.fn();
+      context.authenticatedUser = { email: 'example@example.com' };
+
+      const stripeArgs = {
+        payload: {
+          method: 'stripe',
+          meh: 'wut',
+          values: {
+            firstName: 'John',
+            lastName: 'Jingleheimer-schmidt',
+            address: '123 Anytown Way',
+            unit: '7',
+            city: 'AnyCity',
+            country: 'US',
+            state: 'AS',
+            postalCode: 11111,
+            organization: null,
+            purchasedForOrganization: false,
+          },
+          stripe: {
+            updatePaymentIntent: jest.fn(() => Promise.resolve({
+              paymentIntent: {
+                id: 'pi_3LsftNIadiFyUl1x2TWxaADZ',
+              },
+            })),
+          },
+          skus: '8CF08E5',
+          elements: jest.fn(),
+          context,
+          mockSetLocation,
+        },
+      };
+
+      it('Processing Payment State', async () => {
+        try {
+          await runSaga(
+            {
+              getState: () => ({
+                payment: {
+                  basket: {
+                    foo: 'bar',
+                    paymentState: PAYMENT_STATE.PROCESSING,
+                    basketId: 7,
+                    payments: [
+                      { paymentNumber: 7 },
+                    ],
+                    isBasketProcessing: false,
+                  },
+                },
+              }),
+              ...sagaOptions,
+            },
+            handleSubmitPayment,
+            stripeArgs,
+          ).toPromise();
+        } catch (e) {} // eslint-disable-line no-empty
+
+        expect(dispatched).toEqual([
+          basketProcessing(true),
+          clearMessages(),
+          submitPayment.request(),
+          submitPayment.success(),
+          updatePaymentState.trigger(),
+          basketProcessing(false),
+          submitPayment.fulfill(),
+        ]);
+        expect(caughtErrors).toEqual([]);
+      });
+
+      it('With normal basket state', async () => {
+        try {
+          await runSaga(
+            {
+              getState: () => ({
+                payment: {
+                  basket: {
+                    foo: 'bar',
+                    isBasketProcessing: false,
+                  },
+                },
+              }),
+              ...sagaOptions,
+            },
+            handleSubmitPayment,
+            stripeArgs,
+          ).toPromise();
+        } catch (e) {} // eslint-disable-line no-empty
+
+        expect(dispatched).toEqual([
+          basketProcessing(true),
+          clearMessages(),
+          submitPayment.request(),
+          //
+          submitPayment.success(),
+          basketProcessing(false),
+          submitPayment.fulfill(),
+        ]);
+        expect(caughtErrors).toEqual([]);
+      });
+    });
+
     it('should bail on error handling if the error was aborted', async () => {
       const error = new Error();
       error.aborted = true;
@@ -802,6 +927,7 @@ describe('saga tests', () => {
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
     expect(gen.next().value).toEqual(takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity));
     expect(gen.next().value).toEqual(takeEvery(submitPayment.TRIGGER, handleSubmitPayment));
+    expect(gen.next().value).toEqual(takeEvery(updatePaymentState.TRIGGER, handlePaymentState));
 
     // If you find yourself adding something here, there are probably more tests to write!
 
