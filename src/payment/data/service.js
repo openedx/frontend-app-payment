@@ -7,6 +7,7 @@ import { transformResults } from './utils';
 ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
+  'COMMERCE_COORDINATOR_BASE_URL',
 ], 'payment API service');
 
 function handleBasketApiError(requestError) {
@@ -51,7 +52,8 @@ export async function getBasket(discountJwt) {
 
 export async function getActiveOrder() {
   const { data } = await getAuthenticatedHttpClient()
-    .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
+    // .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
+    .get(`${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }

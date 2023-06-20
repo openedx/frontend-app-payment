@@ -16,6 +16,7 @@ import {
   captureKeyStartTimeout,
   microformStatus,
   fetchBasket,
+  fetchActiveOrder,
   addCoupon,
   removeCoupon,
   updateQuantity,
@@ -95,8 +96,9 @@ export function* handleFetchBasket() {
   try {
     yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
     // TODO: Add switch for calling ecomemrce vs comerce coordinator with waffle flag
-    // const result = yield call(PaymentApiService.getBasket);
-    const result = yield call(PaymentApiService.getActiveOrder);
+    const result = yield call(PaymentApiService.getBasket);
+
+    // TODO: switch on results.paymentState, show checkout page, trigger polling, show reciept page
     yield put(basketDataReceived(result)); // update redux store with basket data
     yield call(handleMessages, result.messages, true, window.location.search);
     yield call(handleDiscountCheck); // check if a discount should be added to the basket
@@ -109,6 +111,34 @@ export function* handleFetchBasket() {
   } finally {
     yield put(basketProcessing(false)); // we are done modifying the basket
     yield put(fetchBasket.fulfill()); // mark the basket as finished loading
+  }
+}
+
+export function* handleFetchActiveOrder() {
+  if (yield isBasketProcessing()) {
+    // Do nothing if there is a request currently in flight to get or modify the basket
+    return;
+  }
+
+  try {
+    yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
+    // TODO: Add switch for calling ecomemrce vs comerce coordinator with waffle flag
+    const result = yield call(PaymentApiService.getActiveOrder);
+
+    // TODO: switch on result.paymentState, show checkout page, trigger polling, show reciept page
+    // TODO: THES-211 Decide if this should be broken out into a separate store
+    // or use the same that we are for ecommerce
+    yield put(basketDataReceived(result)); // update redux store with basket data
+    // TODO: THES-207 for how coordinator will return errors to mfe
+    // yield call(handleMessages, result.messages, true, window.location.search);
+  } catch (error) {
+    yield call(handleErrors, error, true);
+    if (error.basket) {
+      yield put(basketDataReceived(error.basket)); // update redux store with basket data
+    }
+  } finally {
+    yield put(basketProcessing(false)); // we are done modifying the basket
+    yield put(fetchActiveOrder.fulfill()); // mark the basket as finished loading
   }
 }
 
@@ -265,6 +295,7 @@ export default function* saga() {
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
   yield takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
+  yield takeEvery(fetchActiveOrder.TRIGGER, handleFetchActiveOrder);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);

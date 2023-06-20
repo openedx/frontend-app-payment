@@ -40,6 +40,7 @@ export const paymentSelector = createSelector(
     return {
       ...basket,
       isCouponRedeemRedirect,
+      paymentState: basket.paymentState ? basket.paymentState : '',
       isEmpty:
         basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:
