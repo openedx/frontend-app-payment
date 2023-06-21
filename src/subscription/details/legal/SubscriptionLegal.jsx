@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Hyperlink } from '@edx/paragon';
+import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
+
 import messages from './messages';
 import { getPropsToRemoveFractionZeroDigits } from '../../../payment/data/utils';
 
@@ -13,7 +15,7 @@ const SubscriptionLegal = ({
   const intl = useIntl();
   const supportLink = (
     <Hyperlink
-      destination="https://support.edx.org/hc/en-us/articles/12975352138007"
+      destination={getConfig().SUBSCRIPTIONS_LEGAL_SUPPORT_URL}
     >
       {intl.formatMessage(messages['subscription.details.order.legal.link'])}
     </Hyperlink>
