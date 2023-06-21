@@ -8,7 +8,7 @@ import { sendPageEvent } from '@edx/frontend-platform/analytics';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from './data/actions';
+import { fetchBasket, fetchActiveOrder } from './data/actions';
 
 // Selectors
 import { paymentSelector } from './data/selectors';
@@ -43,7 +43,13 @@ class PaymentPage extends React.Component {
 
   componentDidMount() {
     sendPageEvent();
-    this.props.fetchBasket();
+    // TODO: remove in favor of waffle flag
+    const useCoordinator = true;
+    if (useCoordinator) {
+      this.props.fetchActiveOrder();
+    } else {
+      this.props.fetchBasket();
+    }
   }
 
   renderContent() {
@@ -124,6 +130,7 @@ PaymentPage.propTypes = {
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
+  fetchActiveOrder: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -139,4 +146,4 @@ const mapStateToProps = (state) => ({
   ...paymentSelector(state),
 });
 
-export default connect(mapStateToProps, { fetchBasket })(injectIntl(PaymentPage));
+export default connect(mapStateToProps, { fetchBasket, fetchActiveOrder })(injectIntl(PaymentPage));

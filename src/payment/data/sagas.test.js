@@ -8,6 +8,7 @@ import { stopSubmit } from 'redux-form';
 import { Factory } from 'rosie';
 import paymentSaga, {
   handleFetchBasket,
+  handleFetchActiveOrder,
   handleSubmitPayment,
   handleUpdateQuantity,
   handleRemoveCoupon,
@@ -21,6 +22,7 @@ import {
   basketDataReceived,
   basketProcessing,
   fetchBasket,
+  fetchActiveOrder,
   fetchCaptureKey,
   addCoupon,
   removeCoupon,
@@ -45,6 +47,8 @@ const axiosMock = new MockAdapter(axios);
 getAuthenticatedHttpClient.mockReturnValue(axios);
 
 const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
+// const CC_ORDER_API_ENDPOINT = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`;
+const CC_ORDER_API_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`;
 const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
 const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
 const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
@@ -309,6 +313,58 @@ describe('saga tests', () => {
       ]);
       expect(caughtErrors).toEqual([]);
       expect(axiosMock.history.get.length).toBe(1);
+    });
+  });
+
+  describe('handleFetchActiveOrder', () => {
+    it('should bail if the basket is processing', async () => {
+      try {
+        await runSaga(
+          {
+            getState: () => basketProcessingState,
+            ...sagaOptions,
+          },
+          handleFetchActiveOrder,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([]);
+      expect(caughtErrors).toEqual([]);
+    });
+
+    it('should update basket data', async () => {
+      const basketResponseData = Factory.build(
+        'basket',
+        {
+          // We include offers here solely to exercise some logic in transformResults.  It's
+          // otherwise unrelated to this particular test.
+          offers: [
+            { provider: 'me', benefitValue: '12' },
+            { provider: null, benefitValue: '15' },
+          ],
+        },
+        // We use a different product type here SOLELY to exercise a different clause in
+        // getOrderType in the service.  It's otherwise unrelated to this test.
+        { numProducts: 1, productType: 'Seat' },
+      );
+      axiosMock.onGet(CC_ORDER_API_ENDPOINT).reply(200, basketResponseData);
+
+      try {
+        await runSaga({
+          getState: () => basketNotProcessingState,
+          ...sagaOptions,
+        }, handleFetchActiveOrder).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(dispatched).toEqual([
+        basketProcessing(true),
+        basketDataReceived(transformResults(basketResponseData)),
+        basketProcessing(false),
+        fetchActiveOrder.fulfill(),
+      ]);
+      expect(caughtErrors).toEqual([]);
+      expect(axiosMock.history.get.length).toBe(1);
+      expect(axiosMock.history.get[0].url).toEqual(CC_ORDER_API_ENDPOINT);
     });
   });
 
@@ -741,6 +797,7 @@ describe('saga tests', () => {
     expect(gen.next().value).toEqual(takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout));
     expect(gen.next().value).toEqual(takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret));
     expect(gen.next().value).toEqual(takeEvery(fetchBasket.TRIGGER, handleFetchBasket));
+    expect(gen.next().value).toEqual(takeEvery(fetchActiveOrder.TRIGGER, handleFetchActiveOrder));
     expect(gen.next().value).toEqual(takeEvery(addCoupon.TRIGGER, handleAddCoupon));
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
     expect(gen.next().value).toEqual(takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity));

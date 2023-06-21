@@ -12,6 +12,7 @@ import {
   submitPayment,
   fetchCaptureKey,
   fetchClientSecret,
+  fetchActiveOrder,
 } from './actions';
 
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
@@ -30,6 +31,12 @@ const basket = (state = basketInitialState, action = null) => {
     switch (action.type) {
       case fetchBasket.TRIGGER: return { ...state, loading: true };
       case fetchBasket.FULFILL: return {
+        ...state,
+        loading: false,
+        loaded: true,
+      };
+      case fetchActiveOrder.TRIGGER: return { ...state, loading: true };
+      case fetchActiveOrder.FULFILL: return {
         ...state,
         loading: false,
         loaded: true,

@@ -7,6 +7,7 @@ import {
   basketProcessing,
   submitPayment,
   fetchBasket,
+  fetchActiveOrder,
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
 import { localizedCurrencySelector } from './utils';
@@ -108,6 +109,7 @@ describe('redux tests', () => {
           isBasketProcessing: false,
           isEmpty: false,
           isRedirect: false,
+          paymentState: '',
         });
       });
 
@@ -128,6 +130,7 @@ describe('redux tests', () => {
           isBasketProcessing: false,
           isEmpty: false,
           isRedirect: true, // this is also now true.
+          paymentState: '',
         });
       });
     });
@@ -202,6 +205,19 @@ describe('redux tests', () => {
         store.dispatch(fetchBasket.fulfill());
         expect(store.getState().payment.basket.loading).toBe(false);
         expect(store.getState().payment.basket.loaded).toBe(true);
+      });
+
+      describe('fetchActiveOrder actions', () => {
+        it('fetchActiveOrder.TRIGGER action', () => {
+          store.dispatch(fetchActiveOrder());
+          expect(store.getState().payment.basket.loading).toBe(true);
+        });
+
+        it('fetchActiveOrder.FULFILL action', () => {
+          store.dispatch(fetchActiveOrder.fulfill());
+          expect(store.getState().payment.basket.loading).toBe(false);
+          expect(store.getState().payment.basket.loaded).toBe(true);
+        });
       });
     });
   });
