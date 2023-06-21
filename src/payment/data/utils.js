@@ -164,7 +164,6 @@ export function getOrderType(productType) {
  */
 export function transformResults(data) {
   const results = camelCaseObject(data);
-
   const lastProduct = results.products && results.products[results.products.length - 1];
   results.orderType = getOrderType(lastProduct && lastProduct.productType);
 
