@@ -20,7 +20,7 @@ Factory.define('subscription')
     total_price: 0,
     currency: 'USD',
     paymentMethod: 'stripe',
-    trial_end: 'April 21, 2025',
+    trial_end: '2023-06-29T13:05:04Z',
     error_code: null,
   })
   .attr('products', ['numProducts', 'productType'], (numProducts, productType) => {

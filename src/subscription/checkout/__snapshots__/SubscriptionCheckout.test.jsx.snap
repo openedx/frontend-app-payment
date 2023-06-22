@@ -1450,7 +1450,7 @@ exports[`<SubscriptionCheckout /> should render the <SubscriptionCheckout/> with
         class="d-flex justify-content-start pt-3 monthly-legal-notification"
       >
         <p>
-          You will be charged $55 USD on April 21, 2025, then monthly until you cancel your subscription.
+          You will be charged $55 USD on June 29, 2023 (PKT), then monthly until you cancel your subscription.
         </p>
       </div>
       <div

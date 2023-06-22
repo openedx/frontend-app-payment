@@ -89,9 +89,5 @@ describe('<SubscriptionCheckout />', () => {
 
     // verify that Checkout Form fields are present in the DOM
     expect(screen.queryByText('Last Name (required)')).toBeDefined();
-    // verify that MonthlySubscriptionNotification is present in the DOM
-    expect(
-      screen.queryByText('You’ll be charged $55.00 USD on April 21, 2025 then every 31 days until you cancel your subscription.'),
-    ).toBeDefined();
   });
 });
