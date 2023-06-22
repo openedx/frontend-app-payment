@@ -15,7 +15,7 @@ const SubscriptionLegal = ({
   const intl = useIntl();
   const supportLink = (
     <Hyperlink
-      destination={getConfig().SUBSCRIPTIONS_LEGAL_SUPPORT_URL}
+      destination={getConfig().LEARNER_SUPPORT_URL}
     >
       {intl.formatMessage(messages['subscription.details.order.legal.link'])}
     </Hyperlink>

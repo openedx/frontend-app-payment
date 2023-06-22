@@ -89,5 +89,7 @@ describe('<SubscriptionCheckout />', () => {
 
     // verify that Checkout Form fields are present in the DOM
     expect(screen.queryByText('Last Name (required)')).toBeDefined();
+    expect(screen.queryByLabelText('City')).toBeDefined();
+    expect(screen.queryByLabelText('Country')).toBeDefined();
   });
 });
