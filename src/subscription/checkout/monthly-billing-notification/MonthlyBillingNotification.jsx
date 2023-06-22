@@ -19,15 +19,18 @@ const MonthlyBillingNotification = () => {
   } = useSelector(detailsSelector);
   const intl = useIntl();
   const { authenticatedUser } = useContext(AppContext);
+  let formattedDate = null;
 
-  const userTimezone = (
-    authenticatedUser.timeZone || moment.tz.guess() || 'UTC'
-  );
-  const date = moment(trialEnd);
-  const localizeDate = date.tz(userTimezone);
+  if (isTrialEligible && trialEnd) {
+    const userTimezone = (
+      authenticatedUser.timeZone || moment.tz.guess() || 'UTC'
+    );
+    const date = moment(trialEnd);
+    const localizeDate = date.tz(userTimezone);
 
-  // Format the date as "June 28, 2022 (PKT)"
-  const formattedDate = localizeDate.locale(getLocale()).format('MMMM D, YYYY (z)');
+    // Format the date as "June 28, 2022 (PKT)"
+    formattedDate = localizeDate.locale(getLocale()).format('MMMM D, YYYY (z)');
+  }
 
   const trialDateHelpingText = intl.formatMessage(messages['subscription.checkout.billing.trial.date'], { date: formattedDate });
   const resubscribeDateHelpingText = intl.formatMessage(messages['subscription.checkout.billing.resubscribe.date'], {});
