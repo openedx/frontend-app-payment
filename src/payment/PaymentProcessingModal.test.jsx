@@ -39,7 +39,7 @@ const basketStoreGenerator = (paymentState = PAYMENT_STATE.DEFAULT, keepPolling 
   }
 );
 
-const shouldPoll = (payState) => payState === PAYMENT_STATE.PENDING || payState === PAYMENT_STATE.PROCESSING;
+const shouldPoll = (payState) => payState === PAYMENT_STATE.PENDING;
 
 const buildDescription = (tp) => `is ${shouldPoll(tp.status) ? '' : 'NOT '}shown (status == '${tp.status}')`;
 
@@ -80,7 +80,6 @@ describe('<PaymentProcessingModal />', () => {
 
   /* eslint-disable no-multi-spaces */
   const tests = [
-    { expect: true,  status: PAYMENT_STATE.PROCESSING },
     { expect: true,  status: PAYMENT_STATE.PENDING    },
     { expect: false, status: PAYMENT_STATE.FAILED     },
     { expect: false, status: PAYMENT_STATE.DEFAULT    },

@@ -34,10 +34,6 @@ export const PAYMENT_STATE = (((webserviceEnum = {
    * Payment is Pending
    */
   PENDING: 'pending',
-  /**
-   * Async Processing of payment is ongoing.
-   */
-  PROCESSING: 'processing',
 }) => ({
   ...webserviceEnum,
 
@@ -64,6 +60,6 @@ export const PAYMENT_STATE = (((webserviceEnum = {
  * @see PAYMENT_STATE
  */
 export const POLLING_PAYMENT_STATES = [
-  PAYMENT_STATE.PROCESSING,
+  PAYMENT_STATE.PENDING,
   PAYMENT_STATE.HTTP_ERROR,
 ];

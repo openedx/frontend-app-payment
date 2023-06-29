@@ -241,7 +241,7 @@ describe('redux tests', () => {
                   {
                     basket: {
                       foo: 'bar',
-                      paymentState: PAYMENT_STATE.PROCESSING,
+                      paymentState: PAYMENT_STATE.PENDING,
                       basketId: 7,
                       payments: [
                         { paymentNumber: 7 },
@@ -254,7 +254,7 @@ describe('redux tests', () => {
 
         triggerStore.dispatch(updatePaymentState());
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
-        expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PROCESSING);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PENDING);
 
         triggerStore.dispatch({ type: PAYMENT_STATE_DATA_RECEIVED, payload: { state: PAYMENT_STATE.COMPLETED } });
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
@@ -262,7 +262,7 @@ describe('redux tests', () => {
 
         triggerStore.dispatch(updatePaymentState.fulfill());
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
-        expect(triggerStore.getState().payment.basket.paymentState === PAYMENT_STATE.PROCESSING).toBe(false);
+        expect(triggerStore.getState().payment.basket.paymentState === PAYMENT_STATE.PENDING).toBe(false);
       });
     });
   });

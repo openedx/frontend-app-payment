@@ -682,7 +682,7 @@ describe('saga tests', () => {
                 payment: {
                   basket: {
                     foo: 'bar',
-                    paymentState: PAYMENT_STATE.PROCESSING,
+                    paymentState: PAYMENT_STATE.PENDING,
                     basketId: 7,
                     payments: [
                       { paymentNumber: 7 },
