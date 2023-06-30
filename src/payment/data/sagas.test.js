@@ -33,7 +33,7 @@ import {
   submitPayment,
   CAPTURE_KEY_START_TIMEOUT,
   fetchClientSecret,
-  updatePaymentState,
+  pollPaymentState,
 } from './actions';
 import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 
@@ -633,7 +633,7 @@ describe('saga tests', () => {
         //   We reset it back after each run so future tests do not explode.
         nativeGlobalLocation = global.location;
         delete global.location;
-        global.location = jest.fn();// = Object.create(window);
+        global.location = jest.fn();
       });
 
       afterEach(() => {
@@ -703,7 +703,7 @@ describe('saga tests', () => {
           clearMessages(),
           submitPayment.request(),
           submitPayment.success(),
-          updatePaymentState.trigger(),
+          pollPaymentState.trigger(),
           basketProcessing(false),
           submitPayment.fulfill(),
         ]);
@@ -927,7 +927,7 @@ describe('saga tests', () => {
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
     expect(gen.next().value).toEqual(takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity));
     expect(gen.next().value).toEqual(takeEvery(submitPayment.TRIGGER, handleSubmitPayment));
-    expect(gen.next().value).toEqual(takeEvery(updatePaymentState.TRIGGER, handlePaymentState));
+    expect(gen.next().value).toEqual(takeEvery(pollPaymentState.TRIGGER, handlePaymentState));
 
     // If you find yourself adding something here, there are probably more tests to write!
 

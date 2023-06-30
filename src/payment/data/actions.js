@@ -20,7 +20,7 @@ export const fetchActiveOrder = createRoutine('FETCH_ACTIVE_ORDER');
 export const addCoupon = createRoutine('ADD_COUPON');
 export const removeCoupon = createRoutine('REMOVE_COUPON');
 export const updateQuantity = createRoutine('UPDATE_QUANTITY');
-export const updatePaymentState = createRoutine('UPDATE_PAYMENT_STATE');
+export const pollPaymentState = createRoutine('UPDATE_PAYMENT_STATE');
 
 // Actions and their action creators
 export const BASKET_DATA_RECEIVED = 'BASKET_DATA_RECEIVED';

@@ -8,7 +8,7 @@ import {
   submitPayment,
   fetchBasket,
   fetchActiveOrder,
-  updatePaymentState,
+  pollPaymentState,
   PAYMENT_STATE_DATA_RECEIVED,
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
@@ -230,7 +230,7 @@ describe('redux tests', () => {
       });
     });
 
-    describe('updatePaymentState actions', () => {
+    describe('pollPaymentState actions', () => {
       it('Round Trip', () => {
         const triggerStore = createStore(
           combineReducers({
@@ -252,7 +252,7 @@ describe('redux tests', () => {
           },
         );
 
-        triggerStore.dispatch(updatePaymentState());
+        triggerStore.dispatch(pollPaymentState());
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
         expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PENDING);
 
@@ -260,7 +260,7 @@ describe('redux tests', () => {
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
         expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.COMPLETED);
 
-        triggerStore.dispatch(updatePaymentState.fulfill());
+        triggerStore.dispatch(pollPaymentState.fulfill());
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
         expect(triggerStore.getState().payment.basket.paymentState === PAYMENT_STATE.PENDING).toBe(false);
       });

@@ -17,10 +17,10 @@ import { POLLING_PAYMENT_STATES } from './data/constants';
  * @see paymentProcessStatusSelector
  * @see paymentProcessStatusIsPollingSelector
  *
- * Primary Event: `updatePaymentState`
- * @see updatePaymentState
+ * Primary Event: `pollPaymentState`
+ * @see pollPaymentState
  *
- * If you wish to perform an action as this dialog closes, please register for the updatePaymentState fulfill event.
+ * If you wish to perform an action as this dialog closes, please register for the pollPaymentState fulfill event.
  */
 export const PaymentProcessingModal = () => {
   /**
@@ -49,7 +49,7 @@ export const PaymentProcessingModal = () => {
     <ModalDialog
       title="Your Payment is Processing"
       isOpen={isOpen}
-      onClose={() => { /* Noop, @see updatePaymentState fulfill */ }}
+      onClose={() => { /* Noop, @see pollPaymentState fulfill */ }}
       hasCloseButton={false}
       isFullscreenOnMobile={false}
     >

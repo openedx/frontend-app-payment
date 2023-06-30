@@ -263,9 +263,13 @@ export const chainReducers = (reducers) => {
     default: /* No-op, lets continue execution */ break;
   }
 
-  // if we name this it might be clearer when debugging, TODO: GRM: float the idea.
-  return (initialState, action) => reducers.reduce(
-    (lastState, reducerFn) => reducerFn(lastState, action),
-    initialState,
-  );
+  // Using a function so someone with a debugger doesn't see infinite anonymous functions
+  return function _wrappedSerialChainReducers(initialState, action) {
+    // This loops through the array of reducers, by reducing the array.
+    //     The return of the inner reducerFn becomes the lastState for the next.
+    return reducers.reduce(
+      (lastState, reducerFn) => reducerFn(lastState, action),
+      initialState,
+    );
+  };
 };

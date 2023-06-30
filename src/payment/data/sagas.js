@@ -26,7 +26,7 @@ import {
   clientSecretProcessing,
   fetchClientSecret,
   paymentStateDataReceived,
-  updatePaymentState,
+  pollPaymentState,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -145,7 +145,7 @@ export function* handleFetchActiveOrder() {
     yield put(basketProcessing(false)); // we are done modifying the basket
     yield put(fetchActiveOrder.fulfill()); // mark the basket as finished loading
     if (yield select((state) => paymentProcessStatusShouldRunSelector(state))) {
-      yield put(updatePaymentState());
+      yield put(pollPaymentState());
     }
   }
 }
@@ -278,7 +278,7 @@ export function* handleSubmitPayment({ payload }) {
     yield put(submitPayment.success());
 
     if (yield select((state) => paymentProcessStatusShouldRunSelector(state))) {
-      yield put(updatePaymentState());
+      yield put(pollPaymentState());
     }
   } catch (error) {
     // Do not handle errors on user aborted actions
@@ -328,7 +328,7 @@ export function* handlePaymentState() {
         // This shouldn't happen.
         //   I don't think we need to banner... shouldn't our parent calls recover? (They invoke this)
         keepPolling = false;
-        yield put(updatePaymentState.fulfill());
+        yield put(pollPaymentState.fulfill());
         return;
       }
 
@@ -337,7 +337,7 @@ export function* handlePaymentState() {
 
       if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
         keepPolling = false;
-        yield put(updatePaymentState.fulfill());
+        yield put(pollPaymentState.fulfill());
       } else {
         yield delay(SECS_AS_MS(delaySecs));
       }
@@ -360,5 +360,5 @@ export default function* saga() {
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);
   yield takeEvery(submitPayment.TRIGGER, handleSubmitPayment);
-  yield takeEvery(updatePaymentState.TRIGGER, handlePaymentState);
+  yield takeEvery(pollPaymentState.TRIGGER, handlePaymentState);
 }

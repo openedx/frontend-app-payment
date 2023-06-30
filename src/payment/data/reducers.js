@@ -14,7 +14,7 @@ import {
   fetchCaptureKey,
   fetchClientSecret,
   fetchActiveOrder,
-  updatePaymentState,
+  pollPaymentState,
 } from './actions';
 
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
@@ -151,7 +151,7 @@ const paymentState = (state = basketInitialState, action = null) => {
 
   if (action !== null && action !== undefined) {
     switch (action.type) {
-      case updatePaymentState.TRIGGER:
+      case pollPaymentState.TRIGGER:
         return {
           ...state,
           paymentStatePolling: {
@@ -160,7 +160,7 @@ const paymentState = (state = basketInitialState, action = null) => {
           },
         };
 
-      case updatePaymentState.FULFILL:
+      case pollPaymentState.FULFILL:
         return {
           ...state,
           paymentStatePolling: {
