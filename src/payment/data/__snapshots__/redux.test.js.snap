@@ -6,6 +6,10 @@ Object {
     "isBasketProcessing": false,
     "loaded": false,
     "loading": true,
+    "paymentState": "checkout",
+    "paymentStatePolling": Object {
+      "keepPolling": false,
+    },
     "products": Array [],
     "redirect": false,
     "submitting": false,
@@ -28,6 +32,10 @@ Object {
     "isBasketProcessing": false,
     "loaded": false,
     "loading": true,
+    "paymentState": "checkout",
+    "paymentStatePolling": Object {
+      "keepPolling": false,
+    },
     "products": Array [],
     "redirect": false,
     "submitting": false,
@@ -50,6 +58,10 @@ Object {
     "isBasketProcessing": false,
     "loaded": false,
     "loading": true,
+    "paymentState": "checkout",
+    "paymentStatePolling": Object {
+      "keepPolling": false,
+    },
     "products": Array [],
     "redirect": false,
     "submitting": false,

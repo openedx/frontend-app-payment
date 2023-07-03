@@ -14,6 +14,9 @@ import {
   getOrderType,
   transformResults,
   getPropsToRemoveFractionZeroDigits,
+  SECS_AS_MS,
+  MINS_AS_MS,
+  chainReducers,
 } from './utils';
 
 describe('modifyObjectKeys', () => {
@@ -251,5 +254,119 @@ describe('getPropsToRemoveFractionZeroDigits', () => {
 
     expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: true })).toEqual({ });
     expect(getPropsToRemoveFractionZeroDigits({ price: 79.43, shouldRemoveFractionZeroDigits: false })).toEqual({ });
+  });
+});
+
+describe('Time Functions', () => {
+  const tests = [
+    /* eslint-disable no-multi-spaces */ // Formatted for tabular layout
+    // Functional Tests
+    { fn: SECS_AS_MS, in: 10, out: 10000 },
+    { fn: SECS_AS_MS, in: 1,  out: 1000 },
+    { fn: SECS_AS_MS, in: 0,  out: 0 },
+    { fn: MINS_AS_MS, in: 10, out: 600000 },
+    { fn: MINS_AS_MS, in: 1,  out: 60000 },
+    { fn: MINS_AS_MS, in: 0,  out: 0 },
+
+    // Comparative Result Tests (Since these are pure & mathematical, they should never fail to run, but be wrong.)
+    { name: 'SECS eq MIN Conversions Match', in: MINS_AS_MS(0),   out: SECS_AS_MS(0) },
+    { name: 'SECS eq MIN Conversions Match', in: MINS_AS_MS(2),   out: SECS_AS_MS(120) },
+    { name: 'SECS eq MIN Conversions Match', in: MINS_AS_MS(500), out: SECS_AS_MS(30000) },
+    // intentionally absurd value
+    { name: 'SECS eq MIN Conversions Match', in: MINS_AS_MS(7217), out: SECS_AS_MS(433020) },
+    /* eslint-enable no-multi-spaces */
+  ];
+
+  for (let i = 0, testPlan = tests[i]; i < tests.length; i++, testPlan = tests[i]) {
+    const functionalTest = testPlan.fn !== undefined;
+    const testBaseName = functionalTest ? testPlan.fn.name : testPlan.name;
+
+    it(`${testBaseName} In: ${testPlan.in} Out: ${testPlan.out}`, () => {
+      if (functionalTest) {
+        expect(testPlan.fn(testPlan.in)).toEqual(testPlan.out);
+      } else {
+        expect(testPlan.in).toEqual(testPlan.out);
+      }
+    });
+  }
+});
+
+describe('chainReducers([reducers])', () => {
+  /* Test Constants */
+  const DEFAULT_VALUE = 'x';
+  const SET_VALUE = 'set';
+
+  /* Functors/Data Generators */
+  const addAction = (reducer, testAction) => (state, action) => reducer.call(null, state, action || testAction);
+  const alphaReducer = (val) => (stateX) => ({ ...stateX, myval: val });
+  const testAction = (x = 'test_action') => ({ type: x });
+
+  /* Canned Tests */
+  const tests = [
+    {
+      first: alphaReducer('a'),
+      second: alphaReducer('b'),
+      action: testAction(),
+      value: 'b',
+      msg: 'Should succeed.',
+    },
+    {
+      first: alphaReducer('b'),
+      second: alphaReducer('a'),
+      action: testAction(),
+      value: 'a',
+      msg: 'Should succeed. (tests ordering by running the last test in reverse and expecting the opposite value)',
+    },
+  ];
+
+  for (let i = 0, testPlan = tests[i]; i < tests.length; i++, testPlan = tests[i]) {
+    it(`chain reducers return ${testPlan.value}, ${testPlan.msg}`, () => {
+      const resultingState = addAction(chainReducers([testPlan.first, testPlan.second]), testPlan.action);
+
+      expect(resultingState({ myval: DEFAULT_VALUE }, null).myval).toEqual(testPlan.value);
+    });
+  }
+
+  /* More Complex Stuff */
+  it('chain reducers should accumulate each others state', () => {
+    const reducer1 = (state) => ({ ...state, first_reducer_value: SET_VALUE });
+    const reducer2 = (state) => ({ ...state, second_reducer_value: SET_VALUE });
+
+    const action = testAction();
+
+    const resultingState = addAction(chainReducers([reducer1, reducer2]), action);
+    const resultingStateFlipped = addAction(chainReducers([reducer2, reducer1]), action);
+
+    const firstStateResult = resultingState({ myval: DEFAULT_VALUE }, null);
+    const secondStateResult = resultingStateFlipped({ myval: DEFAULT_VALUE }, null);
+
+    expect(firstStateResult.myval).toEqual(DEFAULT_VALUE);
+    expect(firstStateResult.first_reducer_value).toEqual(SET_VALUE);
+    expect(firstStateResult.second_reducer_value).toEqual(SET_VALUE);
+
+    expect(secondStateResult.myval).toEqual(DEFAULT_VALUE);
+    expect(secondStateResult.first_reducer_value).toEqual(SET_VALUE);
+    expect(secondStateResult.second_reducer_value).toEqual(SET_VALUE);
+  });
+
+  it('chain reducers should fall through if actions arent responded to', () => {
+    const reducer1 = function _reducer1(state, action) {
+      if (action.type !== 'reducer1') { return ({ ...state }); }
+      return ({ ...state, first_reducer_value: SET_VALUE });
+    };
+    const reducer2 = function _reducer2(state, action) {
+      if (action.type !== 'reducer2') { return ({ ...state }); }
+      return ({ ...state, first_reducer_value: SET_VALUE });
+    };
+
+    const action = testAction('reducer1');
+
+    const resultingState = addAction(chainReducers([reducer1, reducer2]), action);
+
+    const firstStateResult = resultingState({ myval: DEFAULT_VALUE }, null);
+
+    expect(firstStateResult.myval).toEqual(DEFAULT_VALUE);
+    expect(firstStateResult.first_reducer_value).toEqual(SET_VALUE);
+    expect(firstStateResult.second_reducer_value).toEqual(undefined);
   });
 });

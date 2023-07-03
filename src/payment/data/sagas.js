@@ -2,7 +2,8 @@ import {
   call, put, takeEvery, select, delay,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
-import { getReduxFormValidationErrors } from './utils';
+import { getConfig } from '@edx/frontend-platform';
+import { getReduxFormValidationErrors, MINS_AS_MS, SECS_AS_MS } from './utils';
 import { MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
@@ -24,6 +25,8 @@ import {
   fetchCaptureKey,
   clientSecretProcessing,
   fetchClientSecret,
+  paymentStateDataReceived,
+  pollPaymentState,
 } from './actions';
 
 import { STATUS_LOADING } from '../checkout/payment-form/flex-microform/constants';
@@ -37,6 +40,8 @@ import { checkoutWithToken } from '../payment-methods/cybersource';
 import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 import { checkout as checkoutStripe } from '../payment-methods/stripe';
+import { paymentProcessStatusShouldRunSelector } from './selectors';
+import { PAYMENT_STATE } from './constants';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
@@ -139,12 +144,15 @@ export function* handleFetchActiveOrder() {
   } finally {
     yield put(basketProcessing(false)); // we are done modifying the basket
     yield put(fetchActiveOrder.fulfill()); // mark the basket as finished loading
+    if (yield select((state) => paymentProcessStatusShouldRunSelector(state))) {
+      yield put(pollPaymentState());
+    }
   }
 }
 
 export function* handleCaptureKeyTimeout() {
   // Start at the 12min mark to leave 1 min of buffer on the 15min timeout
-  yield delay(12 * 60 * 1000);
+  yield delay(MINS_AS_MS(12));
   yield call(
     handleMessages,
     [{
@@ -155,7 +163,7 @@ export function* handleCaptureKeyTimeout() {
     window.location.search,
   );
 
-  yield delay(1 * 60 * 1000);
+  yield delay(MINS_AS_MS(1));
   yield call(
     handleMessages,
     [{
@@ -166,7 +174,7 @@ export function* handleCaptureKeyTimeout() {
     window.location.search,
   );
 
-  yield delay(1 * 60 * 1000);
+  yield delay(MINS_AS_MS(1));
   yield put(clearMessages());
   yield put(fetchCaptureKey());
 }
@@ -263,10 +271,15 @@ export function* handleSubmitPayment({ payload }) {
     yield put(basketProcessing(true));
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
     yield put(submitPayment.request());
+
     const paymentMethodCheckout = paymentMethods[method];
     const basket = yield select(state => ({ ...state.payment.basket }));
     yield call(paymentMethodCheckout, basket, paymentArgs);
     yield put(submitPayment.success());
+
+    if (yield select((state) => paymentProcessStatusShouldRunSelector(state))) {
+      yield put(pollPaymentState());
+    }
   } catch (error) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {
@@ -290,6 +303,53 @@ export function* handleSubmitPayment({ payload }) {
   }
 }
 
+/**
+ * Redux handler for payment status polling and updates
+ *
+ * Note:
+ *  - This handler/worker loops until it is told to stop. via a state property (keepPolling), or a fatal state.
+ */
+export function* handlePaymentState() {
+  const DEFAULT_DELAY_SECS = 5;
+  let keepPolling = true;
+
+  // noinspection JSUnresolvedReference
+  const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_DELAY_SECS;
+
+  // NOTE: We may want to have a max errors check and have a fail state if there's a bad connection or something.
+
+  while (keepPolling) {
+    try {
+      const basketId = yield select(state => state.payment.basket.basketId);
+      const paymentNumber = yield select(state => (state.payment.basket.payments.length === 0
+        ? null : state.payment.basket.payments[0].paymentNumber));
+
+      if (!basketId || !paymentNumber) {
+        // This shouldn't happen.
+        //   I don't think we need to banner... shouldn't our parent calls recover? (They invoke this)
+        keepPolling = false;
+        yield put(pollPaymentState.fulfill());
+        return;
+      }
+
+      const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
+      yield put(paymentStateDataReceived(result));
+
+      if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
+        keepPolling = false;
+        yield put(pollPaymentState.fulfill());
+      } else {
+        yield delay(SECS_AS_MS(delaySecs));
+      }
+    } catch (error) {
+      // We dont quit on error.
+      // yield call(handleErrors, error, true);
+      yield put(paymentStateDataReceived({ state: PAYMENT_STATE.HTTP_ERROR }));
+      yield delay(SECS_AS_MS(delaySecs));
+    }
+  }
+}
+
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
@@ -300,4 +360,5 @@ export default function* saga() {
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);
   yield takeEvery(submitPayment.TRIGGER, handleSubmitPayment);
+  yield takeEvery(pollPaymentState.TRIGGER, handlePaymentState);
 }

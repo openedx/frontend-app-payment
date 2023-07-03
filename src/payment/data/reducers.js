@@ -8,15 +8,35 @@ import {
   CLIENT_SECRET_DATA_RECEIVED,
   CLIENT_SECRET_PROCESSING,
   MICROFORM_STATUS,
+  PAYMENT_STATE_DATA_RECEIVED,
   fetchBasket,
   submitPayment,
   fetchCaptureKey,
   fetchClientSecret,
   fetchActiveOrder,
+  pollPaymentState,
 } from './actions';
 
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
+import { PAYMENT_STATE, POLLING_PAYMENT_STATES } from './constants';
+import { chainReducers } from './utils';
 
+/**
+ * Internal State for the Payment State Polling Mechanism. Used entirely for Project Theseus.
+ */
+const paymentStatePollingInitialState = {
+  /**
+   * @see paymentProcessStatusIsPollingSelector
+   */
+  keepPolling: false,
+};
+
+/**
+ * Initial basket state
+ *
+ * Certain of these values are reused for Theseus, information o how they are remapped can be found in the
+ *   System Manual.
+ */
 const basketInitialState = {
   loading: true,
   loaded: false,
@@ -24,6 +44,10 @@ const basketInitialState = {
   redirect: false,
   isBasketProcessing: false,
   products: [],
+  /** Modified by both getActiveOrder and paymentStatePolling */
+  paymentState: PAYMENT_STATE.DEFAULT,
+  /** state specific to paymentStatePolling */
+  paymentStatePolling: paymentStatePollingInitialState,
 };
 
 const basket = (state = basketInitialState, action = null) => {
@@ -122,8 +146,51 @@ const clientSecret = (state = clientSecretInitialState, action = null) => {
   return state;
 };
 
+const paymentState = (state = basketInitialState, action = null) => {
+  const shouldPoll = (payState) => POLLING_PAYMENT_STATES.includes(payState);
+
+  if (action !== null && action !== undefined) {
+    switch (action.type) {
+      case pollPaymentState.TRIGGER:
+        return {
+          ...state,
+          paymentStatePolling: {
+            ...state.paymentStatePolling,
+            keepPolling: shouldPoll(state.paymentState),
+          },
+        };
+
+      case pollPaymentState.FULFILL:
+        return {
+          ...state,
+          paymentStatePolling: {
+            ...state.paymentStatePolling,
+            keepPolling: false,
+          },
+        };
+
+      case PAYMENT_STATE_DATA_RECEIVED:
+        return {
+          ...state,
+          paymentState: action.payload.state,
+          paymentStatePolling: {
+            ...state.paymentStatePolling,
+            keepPolling: shouldPoll(action.payload.state),
+            // ...action.payload, // debugging
+          },
+        };
+
+      default:
+    }
+  }
+  return state;
+};
+
 const reducer = combineReducers({
-  basket,
+  basket: chainReducers([
+    basket,
+    paymentState,
+  ]),
   captureKey,
   clientSecret,
 });
