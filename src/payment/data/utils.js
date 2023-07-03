@@ -228,3 +228,48 @@ export const getPropsToRemoveFractionZeroDigits = ({ price, shouldRemoveFraction
   }
   return props;
 };
+
+/**
+ * Convert Minutes to Milliseconds
+ * @param x Minutes
+ * @return {number} Milliseconds
+ */
+export const MINS_AS_MS = (x = 0) => x * 60 * 1000;
+
+/**
+ * Convert Seconds to Milliseconds
+ * @param x Seconds
+ * @return {number} Milliseconds
+ */
+export const SECS_AS_MS = (x = 0) => x * 1000;
+
+/**
+ * Chain Reducers allows more than one reducer to alter state before the store modifications are accepted.
+ *
+ * Literally, if we only have one reducer, we return it (wrapping would be useless),
+ *    otherwise we reduce our reducers.
+ *
+ * If you didn't provide any, we return undefined... and i bet React/Redux will be annoyed.
+ *
+ * @param reducers Reducers to loop through sharing state changes from the last in the list as input.
+ * @return A common reducer, so Redux allows independent ones to share state slots
+ */
+export const chainReducers = (reducers) => {
+  switch (reducers.length) {
+    case 0:
+      return undefined;
+    case 1:
+      return reducers[0];
+    default: /* No-op, lets continue execution */ break;
+  }
+
+  // Using a function so someone with a debugger doesn't see infinite anonymous functions
+  return function _wrappedSerialChainReducers(initialState, action) {
+    // This loops through the array of reducers, by reducing the array.
+    //     The return of the inner reducerFn becomes the lastState for the next.
+    return reducers.reduce(
+      (lastState, reducerFn) => reducerFn(lastState, action),
+      initialState,
+    );
+  };
+};

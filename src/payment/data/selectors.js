@@ -2,6 +2,7 @@ import { getQueryParameters } from '@edx/frontend-platform';
 import { createSelector } from 'reselect';
 import { localizedCurrencySelector } from './utils';
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
+import { POLLING_PAYMENT_STATES } from './constants';
 
 export const storeName = 'payment';
 
@@ -76,6 +77,27 @@ export const updateClientSecretSelector = createSelector(
   }),
 );
 
-// TODO: We may want to store the server side enum value rather than just a boolean. As such the dialog was coded this
-//  way. And we translate.
-export const paymentProcessStatusSelector = state => (state[storeName].basket.isBasketProcessing ? 'pending' : 'not');
+/**
+ * Get the current payment processing state
+ * @see PAYMENT_STATE
+ * @param  {*} state global redux state
+ * @return {string} a valid value from PAYMENT_STATE
+ */
+export const paymentProcessStatusSelector = state => (state[storeName].basket.paymentState);
+
+/**
+ * Determine if the current state warrants a run of the Payment Sate Polling Mechanism
+ * @param state
+ * @return boolean
+ * @see POLLING_PAYMENT_STATES
+ */
+export const paymentProcessStatusShouldRunSelector = state => (
+  POLLING_PAYMENT_STATES.includes(paymentProcessStatusSelector(state))
+);
+
+/**
+ * Selector to see if the Payment Status Polling system is running.
+ * @param state global redux state
+ * @return {boolean}
+ */
+export const paymentProcessStatusIsPollingSelector = state => (state[storeName].basket.paymentStatePolling.keepPolling);

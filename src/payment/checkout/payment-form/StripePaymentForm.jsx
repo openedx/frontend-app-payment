@@ -16,7 +16,6 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-import { PaymentProcessingModal } from '../../PaymentProcessingModal';
 import SubscriptionSubmitButton from '../../../subscription/checkout/submit-button/SubscriptionSubmitButton';
 import MonthlyBillingNotification from '../../../subscription/checkout/monthly-billing-notification/MonthlyBillingNotification';
 import { Secure3DModal } from '../../../subscription/secure-3d/secure-3d-modal/Secure3dModal';
@@ -188,18 +187,13 @@ const StripePaymentForm = ({
           <Secure3DModal stripe={stripe} elements={elements} />
         </>
       ) : (
-      // Standard Purchase Flow
-        <>
-          {isProcessing && (
-            <PaymentProcessingModal />
-          ) }
-          <PlaceOrderButton
-            onSubmitButtonClick={onSubmitButtonClick}
-            showLoadingButton={showLoadingButton}
-            disabled={submitting}
-            isProcessing={isProcessing}
-          />
-        </>
+        // Standard Purchase Flow
+        <PlaceOrderButton
+          onSubmitButtonClick={onSubmitButtonClick}
+          showLoadingButton={showLoadingButton}
+          disabled={submitting}
+          isProcessing={isProcessing}
+        />
       )}
 
     </form>

@@ -1,34 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {
-  ModalDialog, Spinner,
-} from '@edx/paragon';
-import { useSelector } from 'react-redux';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { ModalDialog, Spinner } from '@edx/paragon';
+import { connect, useSelector } from 'react-redux';
+import { injectIntl, useIntl } from '@edx/frontend-platform/i18n';
 
 import messages from './PaymentProcessingModal.messages';
-import { paymentProcessStatusSelector } from './data/selectors';
+import { paymentProcessStatusIsPollingSelector, paymentProcessStatusSelector } from './data/selectors';
+import { POLLING_PAYMENT_STATES } from './data/constants';
 
 /**
  * PaymentProcessingModal
+ *
+ * This modal is controlled primarily by some Redux selectors.
+ *
+ * Controls Visibility: `paymentProcessStatusSelector`, `paymentProcessStatusIsPollingSelector`
+ * @see paymentProcessStatusSelector
+ * @see paymentProcessStatusIsPollingSelector
+ *
+ * Primary Event: `pollPaymentState`
+ * @see pollPaymentState
+ *
+ * If you wish to perform an action as this dialog closes, please register for the pollPaymentState fulfill event.
  */
 export const PaymentProcessingModal = () => {
+  /**
+   * Determine if the Dialog should be open based on Redux state input
+   * @param s {PAYMENT_STATE} The value of the payment state as we currently know it (`paymentProcessStatusSelector`)
+   * @param p {boolean} is currently polling/still polling for status (`paymentProcessStatusIsPollingSelector`)
+   * @return {boolean}
+   */
+  const shouldBeOpen = (s, p) => p || POLLING_PAYMENT_STATES.includes(s);
+
   const intl = useIntl();
-  const shouldBeOpen = (status) => status === 'pending';
+
   const status = useSelector(paymentProcessStatusSelector);
-  const [isOpen, setOpen] = useState(shouldBeOpen(status));
+  const isPolling = useSelector(paymentProcessStatusIsPollingSelector);
+  const [isOpen, setOpen] = useState(shouldBeOpen(status, isPolling));
 
   useEffect(() => {
-    setOpen(shouldBeOpen(status));
-  }, [status]);
+    setOpen(shouldBeOpen(status, isPolling));
+  }, [status, isPolling]);
 
-  if (!isOpen) { return null; }
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <ModalDialog
       title="Your Payment is Processing"
       isOpen={isOpen}
-      onClose={() => {}}
+      onClose={() => { /* Noop, @see pollPaymentState fulfill */ }}
       hasCloseButton={false}
       isFullscreenOnMobile={false}
     >
@@ -51,4 +72,4 @@ export const PaymentProcessingModal = () => {
   );
 };
 
-export default PaymentProcessingModal;
+export default connect()(injectIntl(PaymentProcessingModal));
