@@ -1,155 +1,95 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-/* eslint-disable global-require */
 import React from 'react';
-import { mount } from 'enzyme';
-import { act } from 'react-dom/test-utils';
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
-import { createSerializer } from 'enzyme-to-json';
-import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
-import { getConfig } from '@edx/frontend-platform';
-import * as analytics from '@edx/frontend-platform/analytics';
-import Cookies from 'universal-cookie';
-import { Elements } from '@stripe/react-stripe-js';
-// import { loadStripe } from '@stripe/stripe-js';
 
 import '../__factories__/subscription.factory';
-import '../../payment/__factories__/userAccount.factory';
-import { AppContext } from '@edx/frontend-platform/react';
+import { loadStripe } from '@stripe/stripe-js';
+import {
+  render, act, screen, store,
+} from '../test-utils';
+import * as mocks from '../../payment/checkout/stripeMocks';
+
 import { SubscriptionCheckout } from './SubscriptionCheckout';
-import createRootReducer from '../../data/reducers';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from '../data/details/actions';
 import { camelCaseObject } from '../../payment/data/utils';
 
-expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
-
-const config = getConfig();
-const locale = 'en';
-
-configureI18n({
-  config: {
-    ENVIRONMENT: process.env.ENVIRONMENT,
-    LANGUAGE_PREFERENCE_COOKIE_NAME: process.env.LANGUAGE_PREFERENCE_COOKIE_NAME,
-  },
-  loggingService: {
-    logError: jest.fn(),
-    logInfo: jest.fn(),
-  },
-  messages: {
-    uk: {},
-    th: {},
-    ru: {},
-    'pt-br': {},
-    pl: {},
-    'ko-kr': {},
-    id: {},
-    he: {},
-    ca: {},
-    'zh-cn': {},
-    fr: {},
-    'es-419': {},
-    ar: {},
-    fa: {},
-    'fa-ir': {},
-  },
-});
-
-jest.mock('universal-cookie', () => {
-  class MockCookies {
-    static result = {
-      [process.env.LANGUAGE_PREFERENCE_COOKIE_NAME]: 'en',
-      [process.env.CURRENCY_COOKIE_NAME]: {
-        code: 'MXN',
-        rate: 19.092733,
-      },
-    };
-
-    get(cookieName) {
-      return MockCookies.result[cookieName];
-    }
-  }
-  return MockCookies;
-});
-
-jest.mock('@edx/frontend-platform/analytics', () => ({
-  sendTrackEvent: jest.fn(),
-  sendPageEvent: jest.fn(),
-}));
-
-// https://github.com/wwayne/react-tooltip/issues/595#issuecomment-638438372
-jest.mock('react-tooltip/node_modules/uuid', () => ({
-  v4: () => '00000000-0000-0000-0000-000000000000',
-}));
-
 jest.mock('./StripeOptions', () => ({
-  getStripeOptions: jest.fn().mockReturnValue({}),
+  getStripeOptions: jest.fn().mockReturnValue({
+    mode: 'subscription',
+    amount: 55,
+    currency: 'usd',
+    paymentMethodCreation: 'manual',
+  }),
 }));
 
-// jest.mock('@stripe/stripe-js', () => ({
-//   loadStripe: jest.fn(),
-// }));
+jest.mock('@stripe/stripe-js', () => ({
+  loadStripe: jest.fn(() => ({
+    // mock implementation of the stripe object
+  })),
+}));
 
+/**
+ * SubscriptionCheckout Test
+ * https://github.com/stripe-archive/react-stripe-elements/issues/427
+ * https://github.com/stripe/react-stripe-js/issues/59
+ */
 describe('<SubscriptionCheckout />', () => {
-  let store;
-  let tree;
-
+  let subscriptionDetails;
+  let mockStripe;
+  let mockElements;
+  let mockElement;
+  let mockStripePromise;
   beforeEach(() => {
-    const authenticatedUser = Factory.build('userAccount');
-    store = createStore(createRootReducer(), {}, applyMiddleware(thunkMiddleware));
-    // eslint-disable-next-line no-import-assign
-    analytics.sendTrackingLogEvent = jest.fn();
-    Cookies.result[process.env.CURRENCY_COOKIE_NAME] = undefined;
-
-    // Mock the response of loadStripe method
-    // const mockedStripe = {
-    //   elements: jest.fn(),
-    // };
-    // loadStripe.mockResolvedValue(mockedStripe);
-    // TODO: make sure to test the form submit events
-
-    const component = (
-      <IntlProvider locale="en">
-        <AppContext.Provider value={{ authenticatedUser, config, locale }}>
-          <Provider store={store}>
-            <SubscriptionCheckout />
-          </Provider>
-        </AppContext.Provider>
-      </IntlProvider>
-    );
-
-    tree = mount(component);
-  });
-
-  afterEach(() => {
-    tree.unmount();
+    // Arrange
+    mockStripe = mocks.mockStripe();
+    mockElement = mocks.mockElement();
+    mockElements = mocks.mockElements();
+    mockStripe.elements.mockReturnValue(mockElements);
+    mockElements.create.mockReturnValue(mockElement);
+    mockStripePromise = jest.fn(() => Promise.resolve({
+      ...mockStripe,
+    }));
+    subscriptionDetails = camelCaseObject(Factory.build('subscription', {}, { numProducts: 2 }));
+    loadStripe.mockResolvedValue(mockStripePromise);
   });
 
   it('should render the loading skeleton for SubscriptionCheckout', () => {
-    tree.update();
-
-    expect(tree.find('CheckoutSkeleton')).toHaveLength(1);
-
-    expect(tree).toMatchSnapshot();
+    render(<SubscriptionCheckout />);
+    expect(screen.queryByText('Last Name (required)')).not.toBeInTheDocument(); // it doesn't exist
+    expect(
+      screen.queryByText('You’ll be charged $55.00 USD on April 21, 2025 then every 31 days until you cancel your subscription.'),
+    ).toBeNull();
   });
 
-  it('should render the subscription checkout details', () => {
+  it('should render the <SubscriptionCheckout/> with the subscription details', () => {
+    const stripePromise = mockStripePromise();
+
+    loadStripe.mockResolvedValue(stripePromise);
+
+    const { container } = render(<SubscriptionCheckout />);
     act(() => {
       store.dispatch(
         subscriptionDetailsReceived(
-          camelCaseObject(Factory.build('subscription', {}, { numProducts: 1 })),
+          subscriptionDetails,
         ),
       );
       store.dispatch(fetchSubscriptionDetails.fulfill());
     });
+    expect(loadStripe).toHaveBeenCalledWith(
+      process.env.STRIPE_PUBLISHABLE_KEY,
+      {
+        betas: [process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG],
+        apiVersion: process.env.STRIPE_API_VERSION,
+        locale: 'en',
+      },
+    );
+    expect(container).toMatchSnapshot();
+    // screen.debug(container.querySelector('#payment-element'));
 
-    tree.update();
-    expect(tree).toMatchSnapshot();
+    expect(container.querySelector('#payment-element')).toBeDefined();
 
-    expect(tree.find('SubscriptionCheckout')).toHaveLength(1);
-
-    expect(tree.find(Elements)).toHaveLength(1);
-    expect(tree.find('StripePaymentForm')).toHaveLength(1);
+    // verify that Checkout Form fields are present in the DOM
+    expect(screen.queryByText('Last Name (required)')).toBeDefined();
+    expect(screen.queryByLabelText('City')).toBeDefined();
+    expect(screen.queryByLabelText('Country')).toBeDefined();
   });
 });

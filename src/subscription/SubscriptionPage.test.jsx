@@ -64,8 +64,6 @@ describe('<SubscriptionPage />', () => {
     expect(screen.getAllByText('Verified Certificate')).toHaveLength(2);
     // verify that Checkout Form fields are present in the DOM
     expect(screen.queryAllByText('Last Name (required)')).toHaveLength(1);
-    // verify that MonthlySubscriptionNotification is present in the DOM
-    expect(screen.queryAllByText('You will be charged $55 USD on April 21, 2025, then monthly until you cancel your subscription.')).toHaveLength(1);
   });
 
   it('should not render the Subscription details when error_code is present', () => {

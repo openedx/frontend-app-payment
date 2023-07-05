@@ -8,7 +8,7 @@ import { camelCaseObject } from '../../payment/data/utils';
  * @param {data} to transform
  * @returns transformed data
  */
-const transformSubscriptionDetails = (data) => {
+export const transformSubscriptionDetails = (data) => {
   const obj = camelCaseObject(data);
   obj.price = parseFloat(obj.price);
   obj.totalPrice = parseFloat(obj.totalPrice);
