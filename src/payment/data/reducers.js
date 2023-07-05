@@ -196,17 +196,19 @@ const paymentState = (state = basketInitialState, action = null) => {
           },
         };
 
-      case pollPaymentState.RECEIVED:
+      case pollPaymentState.RECEIVED: {
+        const isHttpError = action.payload.state === PAYMENT_STATE.HTTP_ERROR;
+        const currErrorCount = (isHttpError ? state.paymentStatePolling.errorCount - 1 : maxErrors);
         return {
           ...state,
           paymentState: action.payload.state,
           paymentStatePolling: {
             ...state.paymentStatePolling,
-            keepPolling: shouldPoll(action.payload.state),
-            errorCount: (action.payload.state === PAYMENT_STATE.HTTP_ERROR
-              ? state.paymentStatePolling.errorCount - 1 : maxErrors),
+            keepPolling: currErrorCount > 0 && shouldPoll(action.payload.state),
+            errorCount: currErrorCount,
           },
         };
+      }
 
       default:
     }
