@@ -65,17 +65,19 @@ export const POLLING_PAYMENT_STATES = [
 ];
 
 /**
+ * Default Delay between rounds of Payment State Polling
  *
  * @type {number}
  *
- * This can be configured by setting `PAYMENT_STATE_POLLING_DELAY_SECS` in your config.
+ * > Note: This can be configured by setting `PAYMENT_STATE_POLLING_DELAY_SECS` in your config.
  */
 export const DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS = 5;
 
 /**
+ * Default number of maximum HTTP errors before give up
  *
  * @type {number}
  *
- * This can be configured by setting `PAYMENT_STATE_POLLING_MAX_ERRORS` in your config.
+ * > Note: This can be configured by setting `PAYMENT_STATE_POLLING_MAX_ERRORS` in your config.
  */
 export const DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS = 5;

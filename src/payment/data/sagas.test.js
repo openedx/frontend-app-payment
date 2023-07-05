@@ -1,4 +1,4 @@
-import { getConfig } from '@edx/frontend-platform';
+import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
 import axios from 'axios';
@@ -40,10 +40,19 @@ import { clearMessages, MESSAGE_TYPES, addMessage } from '../../feedback';
 import '../__factories__/basket.factory';
 
 import * as cybersourceService from '../payment-methods/cybersource';
-import { PAYMENT_STATE } from './constants';
+import {
+  DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
+  DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+  PAYMENT_STATE,
+  POLLING_PAYMENT_STATES,
+} from './constants';
+import { ERROR_CODES } from '../../feedback/data/constants';
+import { generateApiError } from './handleRequestError';
+import { paymentState } from './reducers';
 
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
+jest.mock('@edx/frontend-platform/logging/interface');
 jest.mock('../payment-methods/cybersource', () => ({
   checkoutWithToken: jest.fn(),
 }));
@@ -53,6 +62,7 @@ getAuthenticatedHttpClient.mockReturnValue(axios);
 
 const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
 const CC_ORDER_API_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`;
+const CC_PAYMENT_STATE_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`;
 const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
 const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
 const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
@@ -859,6 +869,225 @@ describe('saga tests', () => {
         basketProcessing(false),
         submitPayment.fulfill(),
       ]);
+    });
+  });
+
+  describe('handlePaymentState', () => {
+    /** This function allows us to create a canned state */
+    const generateTestBasketState = (inPaymentState, inPayments = []) => ({
+      loading: true,
+      loaded: false,
+      submitting: false,
+      redirect: false,
+      isBasketProcessing: false,
+      basketId: '95472447-7B79-4F3D-A6BB-0231B5E3875B',
+      payments: inPayments,
+      paymentState: inPaymentState,
+      paymentStatePolling: {
+        keepPolling: false,
+        errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+      },
+    });
+
+    /* Our various responses */
+    const expectQuickSuccess = () => ([
+      pollPaymentState.fulfill(),
+    ]);
+
+    const expectPollAndSucceed = () => ([
+      pollPaymentState.received({ state: PAYMENT_STATE.COMPLETED }),
+      pollPaymentState.fulfill(),
+    ]);
+
+    const expectRuntimeFailure = () => {
+      const basketMessageError = generateApiError([
+        {
+          error_code: ERROR_CODES.BASKET_CHANGED,
+          user_message: 'error',
+        },
+      ], false);
+
+      return [
+        pollPaymentState.failure(basketMessageError),
+        addMessage(ERROR_CODES.BASKET_CHANGED, 'error', {}, MESSAGE_TYPES.ERROR),
+      ];
+    };
+
+    const baseStateTable = Object.keys(PAYMENT_STATE)
+      .map((key) => ({
+        stateKey: key,
+        stateValue: PAYMENT_STATE[key],
+      }))
+      .map((dict) => ({
+        stateKey: dict.stateKey,
+        stateValue: dict.stateValue,
+        validToPoll: POLLING_PAYMENT_STATES.includes(dict.stateValue),
+      }));
+
+    const successfulTestPlan = baseStateTable.map((lineItem) => ({
+      stateKey: lineItem.stateKey,
+      stateValue: lineItem.stateValue,
+      validToPoll: lineItem.validToPoll,
+      inputState: generateTestBasketState(lineItem.stateValue, [{ paymentNumber: 'ABCXYZ1' }]),
+      shouldFail: false,
+      expectedResult: lineItem.validToPoll ? expectPollAndSucceed() : expectQuickSuccess(),
+    }));
+
+    const runtimeFailureTestPlan = baseStateTable.filter((lineItem) => lineItem.validToPoll)
+      .map((lineItem) => ({
+        stateKey: lineItem.stateKey,
+        stateValue: lineItem.stateValue,
+        validToPoll: lineItem.validToPoll,
+        inputState: generateTestBasketState(lineItem.stateValue, [{ paymentNumber: null }]),
+        shouldFail: true,
+        expectedResult: expectRuntimeFailure(),
+      }));
+
+    const testPlan = [...successfulTestPlan, ...runtimeFailureTestPlan];
+
+    for (let i = 0, test = testPlan[i]; testPlan.length > i; i++, test = testPlan[i]) {
+      const nt = test.validToPoll ? '' : 'n\'t';
+      const suffix = test.shouldFail ? ', but should fail becase of a missing value' : ', and succeed';
+      it(`PAYMENT_STATE.${test.stateKey} should${nt} poll${suffix}`, async () => {
+        const localDispatched = [];
+        const localCaughtErrors = [];
+        axiosMock.reset();
+
+        axiosMock.onGet(CC_PAYMENT_STATE_ENDPOINT).reply(
+          test.shouldFail ? 404 : 200,
+          { state: PAYMENT_STATE.COMPLETED },
+        );
+
+        const localSagaOptions = {
+          dispatch: action => localDispatched.push(action),
+          onError: err => localCaughtErrors.push(err),
+        };
+
+        try {
+          await runSaga(
+            {
+              getState: () => ({
+                payment:
+                    {
+                      basket: test.inputState,
+                    },
+              }),
+              ...localSagaOptions,
+            },
+            handlePaymentState,
+          ).toPromise();
+        } catch (e) {} // eslint-disable-line no-empty
+
+        expect(localDispatched).toEqual(test.expectedResult);
+        expect(localCaughtErrors).toEqual([]);
+      });
+    }
+
+    it(`Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => {
+      mergeConfig({
+        PAYMENT_STATE_POLLING_DELAY_SECS: 0.1,
+      });
+
+      const localDispatched = [];
+      const localCaughtErrors = [];
+      axiosMock.reset();
+
+      axiosMock.onGet(CC_PAYMENT_STATE_ENDPOINT).reply(404, null);
+
+      const editableState = ({
+        payment:
+            {
+              basket: generateTestBasketState(PAYMENT_STATE.PENDING, [{ paymentNumber: 'QAZWSX' }]),
+            },
+      });
+
+      const localSagaOptions = {
+        dispatch: action => {
+          localDispatched.push(action);
+          editableState.payment.basket = paymentState(editableState.payment.basket, action);
+        },
+        onError: err => localCaughtErrors.push(err),
+      };
+
+      try {
+        await runSaga(
+          {
+            getState: () => editableState,
+            ...localSagaOptions,
+          },
+          handlePaymentState,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(localDispatched).toEqual([
+        ...Array.from({
+          length: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+        }, () => (pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }))),
+        ...expectRuntimeFailure(),
+      ]);
+      expect(localCaughtErrors).toEqual([]);
+
+      mergeConfig({
+        PAYMENT_STATE_POLLING_DELAY_SECS: DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
+      });
+    });
+
+    it('Should Retry until state changes', async () => {
+      mergeConfig({
+        PAYMENT_STATE_POLLING_DELAY_SECS: 0.1,
+      });
+
+      const localDispatched = [];
+      const localCaughtErrors = [];
+      axiosMock.reset();
+
+      /* eslint-disable */ // Formatted for tabular layout
+      axiosMock
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.COMPLETED });
+      /* eslint-enable */ // Formatted for tabular layout
+
+      const editableState = ({
+        payment:
+          {
+            basket: generateTestBasketState(PAYMENT_STATE.PENDING, [{ paymentNumber: 'QAZWSX' }]),
+          },
+      });
+
+      const localSagaOptions = {
+        dispatch: action => {
+          localDispatched.push(action);
+          editableState.payment.basket = paymentState(editableState.payment.basket, action);
+        },
+        onError: err => localCaughtErrors.push(err),
+      };
+
+      try {
+        await runSaga(
+          {
+            getState: () => editableState,
+            ...localSagaOptions,
+          },
+          handlePaymentState,
+        ).toPromise();
+      } catch (e) {} // eslint-disable-line no-empty
+
+      expect(localDispatched).toEqual([
+        ...Array.from({
+          length: 6,
+        }, () => (pollPaymentState.received({ state: PAYMENT_STATE.PENDING }))),
+        ...expectPollAndSucceed(),
+      ]);
+      expect(localCaughtErrors).toEqual([]);
+
+      mergeConfig({
+        PAYMENT_STATE_POLLING_DELAY_SECS: DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
+      });
     });
   });
 

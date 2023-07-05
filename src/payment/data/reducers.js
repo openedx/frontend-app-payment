@@ -53,9 +53,9 @@ const basketInitialState = {
   redirect: false,
   isBasketProcessing: false,
   products: [],
-  /** Modified by both getActiveOrder and paymentStatePolling */
+  /** Modified by both getActiveOrder and pollPaymentState */
   paymentState: PAYMENT_STATE.DEFAULT,
-  /** state specific to paymentStatePolling */
+  /** state specific to pollPaymentState */
   paymentStatePolling: paymentStatePollingInitialState,
 };
 
@@ -155,7 +155,7 @@ const clientSecret = (state = clientSecretInitialState, action = null) => {
   return state;
 };
 
-const paymentState = (state = basketInitialState, action = null) => {
+export const paymentState = (state = basketInitialState, action = null) => {
   // noinspection JSUnresolvedReference
   const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.errorCount;
   const shouldPoll = (payState) => POLLING_PAYMENT_STATES.includes(payState);

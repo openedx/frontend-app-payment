@@ -41,7 +41,7 @@ import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 import { checkout as checkoutStripe } from '../payment-methods/stripe';
 import { paymentProcessStatusShouldRunSelector } from './selectors';
-import { PAYMENT_STATE, DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS } from './constants';
+import { PAYMENT_STATE, DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS, POLLING_PAYMENT_STATES } from './constants';
 import { generateApiError } from './handleRequestError';
 
 export const paymentMethods = {
@@ -311,19 +311,26 @@ export function* handleSubmitPayment({ payload }) {
  *  - This handler/worker loops until it is told to stop. via a state property (keepPolling), or a fatal state.
  */
 export function* handlePaymentState() {
-  // We will be using exceptions to halt execution and fiving us a simpler single path
+  // We will be using exceptions to halt execution and giving us a simpler single path
   //  however this occurs by rethrowing the lower level exceptions.
 
   // noinspection JSUnresolvedReference
   const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS;
 
-  const [basketId, paymentNumber] = yield select(state => ([
+  const [basketId, paymentNumber, paymentState] = yield select(state => ([
     /* basketId */
     state.payment.basket.basketId,
     /* paymentNumber */
     (state.payment.basket.payments.length === 0
       ? null : state.payment.basket.payments[0].paymentNumber),
+    /* paymentState */
+    state.payment.basket.paymentState,
   ]));
+
+  if (!POLLING_PAYMENT_STATES.includes(paymentState)) {
+    yield put(pollPaymentState.fulfill());
+    return;
+  }
 
   try {
     while (true) { //  o/ o/ ive got to break free! o/ o/ ... or throw.
@@ -344,7 +351,6 @@ export function* handlePaymentState() {
           yield delay(SECS_AS_MS(delaySecs));
         }
       } catch (innerError) {
-        debugger;
         const shouldExitExecution = innerError instanceof ReferenceError;
 
         logError(innerError, { basketId, paymentNumber, idFatal: shouldExitExecution });
@@ -356,7 +362,9 @@ export function* handlePaymentState() {
 
         yield put(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
 
-        if (yield select(state => state.payment.basket.paymentStatePolling.errorCount) < 1) {
+        const currentErrorCount = yield select(state => state.payment.basket.paymentStatePolling.errorCount);
+
+        if (currentErrorCount === 0) {
           // noinspection ExceptionCaughtLocallyJS
           throw innerError;
         }
@@ -365,7 +373,6 @@ export function* handlePaymentState() {
       }
     }
   } catch (error) {
-    debugger;
     const basketMessageError = generateApiError([
       {
         error_code: ERROR_CODES.BASKET_CHANGED,
