@@ -9,7 +9,6 @@ import {
   fetchBasket,
   fetchActiveOrder,
   pollPaymentState,
-  PAYMENT_STATE_DATA_RECEIVED,
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
 import { localizedCurrencySelector } from './utils';
@@ -258,7 +257,7 @@ describe('redux tests', () => {
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
         expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PENDING);
 
-        triggerStore.dispatch({ type: PAYMENT_STATE_DATA_RECEIVED, payload: { state: PAYMENT_STATE.COMPLETED } });
+        triggerStore.dispatch(pollPaymentState.received({ state: PAYMENT_STATE.COMPLETED }));
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
         expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.COMPLETED);
 

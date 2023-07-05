@@ -26,7 +26,6 @@ import {
   fetchCaptureKey,
   clientSecretProcessing,
   fetchClientSecret,
-  paymentStateDataReceived,
   pollPaymentState,
 } from './actions';
 
@@ -335,7 +334,8 @@ export function* handlePaymentState() {
         }
 
         const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
-        yield put(paymentStateDataReceived(result));
+
+        yield put(pollPaymentState.received(result));
 
         if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
           yield put(pollPaymentState.fulfill());
@@ -354,7 +354,7 @@ export function* handlePaymentState() {
           throw innerError;
         }
 
-        yield put(paymentStateDataReceived({ state: PAYMENT_STATE.HTTP_ERROR }));
+        yield put(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
 
         if (yield select(state => state.payment.basket.paymentStatePolling.errorCount) < 1) {
           // noinspection ExceptionCaughtLocallyJS

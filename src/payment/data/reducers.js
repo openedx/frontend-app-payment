@@ -9,7 +9,6 @@ import {
   CLIENT_SECRET_DATA_RECEIVED,
   CLIENT_SECRET_PROCESSING,
   MICROFORM_STATUS,
-  PAYMENT_STATE_DATA_RECEIVED,
   fetchBasket,
   submitPayment,
   fetchCaptureKey,
@@ -197,7 +196,7 @@ const paymentState = (state = basketInitialState, action = null) => {
           },
         };
 
-      case PAYMENT_STATE_DATA_RECEIVED:
+      case pollPaymentState.RECEIVED:
         return {
           ...state,
           paymentState: action.payload.state,
