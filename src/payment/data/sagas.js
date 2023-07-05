@@ -3,8 +3,9 @@ import {
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { getConfig } from '@edx/frontend-platform';
+import { logError } from '@edx/frontend-platform/logging/interface';
 import { getReduxFormValidationErrors, MINS_AS_MS, SECS_AS_MS } from './utils';
-import { MESSAGE_TYPES } from '../../feedback/data/constants';
+import { ERROR_CODES, MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
 import {
@@ -41,7 +42,8 @@ import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 import { checkout as checkoutStripe } from '../payment-methods/stripe';
 import { paymentProcessStatusShouldRunSelector } from './selectors';
-import { PAYMENT_STATE } from './constants';
+import { PAYMENT_STATE, DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS } from './constants';
+import { generateApiError } from './handleRequestError';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
@@ -310,43 +312,70 @@ export function* handleSubmitPayment({ payload }) {
  *  - This handler/worker loops until it is told to stop. via a state property (keepPolling), or a fatal state.
  */
 export function* handlePaymentState() {
-  const DEFAULT_DELAY_SECS = 5;
-  let keepPolling = true;
+  // We will be using exceptions to halt execution and fiving us a simpler single path
+  //  however this occurs by rethrowing the lower level exceptions.
 
   // noinspection JSUnresolvedReference
-  const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_DELAY_SECS;
+  const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS;
 
-  // NOTE: We may want to have a max errors check and have a fail state if there's a bad connection or something.
+  const [basketId, paymentNumber] = yield select(state => ([
+    /* basketId */
+    state.payment.basket.basketId,
+    /* paymentNumber */
+    (state.payment.basket.payments.length === 0
+      ? null : state.payment.basket.payments[0].paymentNumber),
+  ]));
 
-  while (keepPolling) {
-    try {
-      const basketId = yield select(state => state.payment.basket.basketId);
-      const paymentNumber = yield select(state => (state.payment.basket.payments.length === 0
-        ? null : state.payment.basket.payments[0].paymentNumber));
+  try {
+    while (true) { //  o/ o/ ive got to break free! o/ o/ ... or throw.
+      try {
+        if (!basketId || !paymentNumber) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw new ReferenceError('Invalid Basket Id or Payment Number');
+        }
 
-      if (!basketId || !paymentNumber) {
-        // This shouldn't happen.
-        //   I don't think we need to banner... shouldn't our parent calls recover? (They invoke this)
-        keepPolling = false;
-        yield put(pollPaymentState.fulfill());
-        return;
-      }
+        const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
+        yield put(paymentStateDataReceived(result));
 
-      const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
-      yield put(paymentStateDataReceived(result));
+        if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
+          yield put(pollPaymentState.fulfill());
+          break;
+        } else {
+          yield delay(SECS_AS_MS(delaySecs));
+        }
+      } catch (innerError) {
+        debugger;
+        const shouldExitExecution = innerError instanceof ReferenceError;
 
-      if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
-        keepPolling = false;
-        yield put(pollPaymentState.fulfill());
-      } else {
+        logError(innerError, { basketId, paymentNumber, idFatal: shouldExitExecution });
+
+        if (shouldExitExecution) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw innerError;
+        }
+
+        yield put(paymentStateDataReceived({ state: PAYMENT_STATE.HTTP_ERROR }));
+
+        if (yield select(state => state.payment.basket.paymentStatePolling.errorCount) < 1) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw innerError;
+        }
+
         yield delay(SECS_AS_MS(delaySecs));
       }
-    } catch (error) {
-      // We dont quit on error.
-      // yield call(handleErrors, error, true);
-      yield put(paymentStateDataReceived({ state: PAYMENT_STATE.HTTP_ERROR }));
-      yield delay(SECS_AS_MS(delaySecs));
     }
+  } catch (error) {
+    debugger;
+    const basketMessageError = generateApiError([
+      {
+        error_code: ERROR_CODES.BASKET_CHANGED,
+        user_message: 'error',
+      },
+    ], false);
+
+    yield put(pollPaymentState.failure(basketMessageError));
+
+    yield handleErrors(basketMessageError);
   }
 }
 

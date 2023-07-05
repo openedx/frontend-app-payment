@@ -13,7 +13,7 @@ import {
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
 import { localizedCurrencySelector } from './utils';
-import { PAYMENT_STATE } from './constants';
+import { DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS, PAYMENT_STATE } from './constants';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {
@@ -114,6 +114,7 @@ describe('redux tests', () => {
           isRedirect: false,
           paymentState: PAYMENT_STATE.DEFAULT,
           paymentStatePolling: {
+            errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
             keepPolling: false,
           },
         });
@@ -138,6 +139,7 @@ describe('redux tests', () => {
           isRedirect: true, // this is also now true.
           paymentState: PAYMENT_STATE.DEFAULT,
           paymentStatePolling: {
+            errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
             keepPolling: false,
           },
         });

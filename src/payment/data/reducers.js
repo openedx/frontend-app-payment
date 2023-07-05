@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import { getConfig } from '@edx/frontend-platform';
 import {
   BASKET_DATA_RECEIVED,
   BASKET_PROCESSING,
@@ -18,7 +19,11 @@ import {
 } from './actions';
 
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
-import { PAYMENT_STATE, POLLING_PAYMENT_STATES } from './constants';
+import {
+  DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+  PAYMENT_STATE,
+  POLLING_PAYMENT_STATES,
+} from './constants';
 import { chainReducers } from './utils';
 
 /**
@@ -29,6 +34,11 @@ const paymentStatePollingInitialState = {
    * @see paymentProcessStatusIsPollingSelector
    */
   keepPolling: false,
+  /**
+   * This is replaceable by a configuration value. (`PAYMENT_STATE_POLLING_MAX_ERRORS`),
+   *     however, this is our default.
+   */
+  errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
 };
 
 /**
@@ -147,16 +157,33 @@ const clientSecret = (state = clientSecretInitialState, action = null) => {
 };
 
 const paymentState = (state = basketInitialState, action = null) => {
+  // noinspection JSUnresolvedReference
+  const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.errorCount;
   const shouldPoll = (payState) => POLLING_PAYMENT_STATES.includes(payState);
 
   if (action !== null && action !== undefined) {
     switch (action.type) {
+      // The modal relies on the basket's paymentState
+      //   The Inner paymentStatePolling object is used only by the saga handler/worker
+
       case pollPaymentState.TRIGGER:
         return {
           ...state,
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: shouldPoll(state.paymentState),
+            errorCount: maxErrors,
+          },
+        };
+
+      case pollPaymentState.FAILURE:
+        return {
+          ...state,
+          paymentState: null,
+          paymentStatePolling: {
+            ...state.paymentStatePolling,
+            keepPolling: false,
+            errorCount: maxErrors,
           },
         };
 
@@ -166,6 +193,7 @@ const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: false,
+            errorCount: maxErrors,
           },
         };
 
@@ -176,7 +204,8 @@ const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: shouldPoll(action.payload.state),
-            // ...action.payload, // debugging
+            errorCount: (action.payload.state === PAYMENT_STATE.HTTP_ERROR
+              ? state.paymentStatePolling.errorCount - 1 : maxErrors),
           },
         };
 

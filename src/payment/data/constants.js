@@ -63,3 +63,19 @@ export const POLLING_PAYMENT_STATES = [
   PAYMENT_STATE.PENDING,
   PAYMENT_STATE.HTTP_ERROR,
 ];
+
+/**
+ *
+ * @type {number}
+ *
+ * This can be configured by setting `PAYMENT_STATE_POLLING_DELAY_SECS` in your config.
+ */
+export const DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS = 5;
+
+/**
+ *
+ * @type {number}
+ *
+ * This can be configured by setting `PAYMENT_STATE_POLLING_MAX_ERRORS` in your config.
+ */
+export const DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS = 5;
