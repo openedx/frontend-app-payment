@@ -37,7 +37,7 @@ const paymentStatePollingInitialState = {
    * This is replaceable by a configuration value. (`PAYMENT_STATE_POLLING_MAX_ERRORS`),
    *     however, this is our default.
    */
-  errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+  retryCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
 };
 
 /**
@@ -155,23 +155,36 @@ const clientSecret = (state = clientSecretInitialState, action = null) => {
   return state;
 };
 
+/**
+ * Payment State (Polling) Reducer
+ *
+ * > NOTE:
+ * > The `PaymentProcessingModal` relies on the basket's `paymentState`, where as, the inner structure
+ * > The Inner paymentStatePolling object in the basket is used only by the saga handler/worker, `handlePaymentState`
+ *
+ * @param {*} state A basket State Representation
+ * @param action The Pending Action/Message for this Handler
+ * @returns {*} A basket State Representation
+ *
+ * @see paymentStatePollingInitialState
+ * @see PaymentProcessingModal
+ * @see basketInitialState
+ * @see handlePaymentState
+ */
 export const paymentState = (state = basketInitialState, action = null) => {
   // noinspection JSUnresolvedReference
-  const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.errorCount;
+  const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.retryCount;
   const shouldPoll = (payState) => POLLING_PAYMENT_STATES.includes(payState);
 
   if (action !== null && action !== undefined) {
     switch (action.type) {
-      // The modal relies on the basket's paymentState
-      //   The Inner paymentStatePolling object is used only by the saga handler/worker
-
       case pollPaymentState.TRIGGER:
         return {
           ...state,
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: shouldPoll(state.paymentState),
-            errorCount: maxErrors,
+            retryCount: maxErrors,
           },
         };
 
@@ -182,7 +195,7 @@ export const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: false,
-            errorCount: maxErrors,
+            retryCount: maxErrors,
           },
         };
 
@@ -192,20 +205,20 @@ export const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: false,
-            errorCount: maxErrors,
+            retryCount: maxErrors,
           },
         };
 
       case pollPaymentState.RECEIVED: {
         const isHttpError = action.payload.state === PAYMENT_STATE.HTTP_ERROR;
-        const currErrorCount = (isHttpError ? state.paymentStatePolling.errorCount - 1 : maxErrors);
+        const currRetryCnt = (isHttpError ? state.paymentStatePolling.retryCount - 1 : maxErrors);
         return {
           ...state,
           paymentState: action.payload.state,
           paymentStatePolling: {
             ...state.paymentStatePolling,
-            keepPolling: currErrorCount > 0 && shouldPoll(action.payload.state),
-            errorCount: currErrorCount,
+            keepPolling: currRetryCnt > 0 && shouldPoll(action.payload.state),
+            retryCount: currRetryCnt,
           },
         };
       }

@@ -8,8 +8,8 @@ Object {
     "loading": true,
     "paymentState": "checkout",
     "paymentStatePolling": Object {
-      "errorCount": 5,
       "keepPolling": false,
+      "retryCount": 5,
     },
     "products": Array [],
     "redirect": false,
@@ -35,8 +35,8 @@ Object {
     "loading": true,
     "paymentState": "checkout",
     "paymentStatePolling": Object {
-      "errorCount": 5,
       "keepPolling": false,
+      "retryCount": 5,
     },
     "products": Array [],
     "redirect": false,
@@ -62,8 +62,8 @@ Object {
     "loading": true,
     "paymentState": "checkout",
     "paymentStatePolling": Object {
-      "errorCount": 5,
       "keepPolling": false,
+      "retryCount": 5,
     },
     "products": Array [],
     "redirect": false,

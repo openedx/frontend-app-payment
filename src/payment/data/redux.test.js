@@ -113,7 +113,7 @@ describe('redux tests', () => {
           isRedirect: false,
           paymentState: PAYMENT_STATE.DEFAULT,
           paymentStatePolling: {
-            errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+            retryCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
             keepPolling: false,
           },
         });
@@ -138,7 +138,7 @@ describe('redux tests', () => {
           isRedirect: true, // this is also now true.
           paymentState: PAYMENT_STATE.DEFAULT,
           paymentStatePolling: {
-            errorCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+            retryCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
             keepPolling: false,
           },
         });
@@ -293,12 +293,12 @@ describe('redux tests', () => {
           triggerStore.dispatch(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
           expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling)
             .toBe(expectedCount > 0);
-          expect(triggerStore.getState().payment.basket.paymentStatePolling.errorCount)
+          expect(triggerStore.getState().payment.basket.paymentStatePolling.retryCount)
             .toBe(expectedCount);
         }
 
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
-        expect(triggerStore.getState().payment.basket.paymentStatePolling.errorCount)
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.retryCount)
           .toBe(0);
 
         triggerStore.dispatch(pollPaymentState.failure(Error('Too many HTTP errors!')));

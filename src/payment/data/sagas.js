@@ -311,9 +311,6 @@ export function* handleSubmitPayment({ payload }) {
  *  - This handler/worker loops until it is told to stop. via a state property (keepPolling), or a fatal state.
  */
 export function* handlePaymentState() {
-  // We will be using exceptions to halt execution and giving us a simpler single path
-  //  however this occurs by rethrowing the lower level exceptions.
-
   // noinspection JSUnresolvedReference
   const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS;
 
@@ -327,13 +324,20 @@ export function* handlePaymentState() {
     state.payment.basket.paymentState,
   ]));
 
+  // Strictly, this shouldn't happen, but let's defend against it. Also makes tests easier.
   if (!POLLING_PAYMENT_STATES.includes(paymentState)) {
     yield put(pollPaymentState.fulfill());
     return;
   }
 
+  // We will be using breaks (success) and exceptions (possible failures) to halt execution and giving us a simpler
+  // single path for execution. However, this often occurs by rethrowing the lower level exceptions.
   try {
+    // Timers are weird in sagas and can cause them to seemingly terminate early.
+    //   So, we went old school, with a run loop.
     while (true) { //  o/ o/ ive got to break free! o/ o/ ... or throw.
+      // We intentionally throw here to end execution with failure. Some failures like our `ReferenceError` are fatal
+      //   Others we want to catch and retry until we hit our maximum error limit.
       try {
         if (!basketId || !paymentNumber) {
           // noinspection ExceptionCaughtLocallyJS
@@ -344,16 +348,18 @@ export function* handlePaymentState() {
 
         yield put(pollPaymentState.received(result));
 
-        if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
+        const shouldKeepPolling = yield select(state => state.payment.basket.paymentStatePolling.keepPolling);
+
+        if (shouldKeepPolling) {
+          yield delay(SECS_AS_MS(delaySecs));
+        } else {
           yield put(pollPaymentState.fulfill());
           break;
-        } else {
-          yield delay(SECS_AS_MS(delaySecs));
         }
       } catch (innerError) {
         const shouldExitExecution = innerError instanceof ReferenceError;
 
-        logError(innerError, { basketId, paymentNumber, idFatal: shouldExitExecution });
+        logError(innerError, { basketId, paymentNumber, isFatalError: shouldExitExecution });
 
         if (shouldExitExecution) {
           // noinspection ExceptionCaughtLocallyJS
@@ -362,9 +368,9 @@ export function* handlePaymentState() {
 
         yield put(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
 
-        const currentErrorCount = yield select(state => state.payment.basket.paymentStatePolling.errorCount);
+        const currentRetryCount = yield select(state => state.payment.basket.paymentStatePolling.retryCount);
 
-        if (currentErrorCount === 0) {
+        if (currentRetryCount === 0) {
           // noinspection ExceptionCaughtLocallyJS
           throw innerError;
         }
@@ -373,6 +379,8 @@ export function* handlePaymentState() {
       }
     }
   } catch (error) {
+    // Here we wrap whatever exception we have (either a fatal one or after the max tries) to display our basket
+    //   inconsistency error banner to the user, forcing them to refresh, and we can get back to moral execution.
     const basketMessageError = generateApiError([
       {
         error_code: ERROR_CODES.BASKET_CHANGED,
@@ -380,6 +388,7 @@ export function* handlePaymentState() {
       },
     ], false);
 
+    // This seems redundant, but we should end our action before terminating.
     yield put(pollPaymentState.failure(basketMessageError));
 
     yield handleErrors(basketMessageError);
