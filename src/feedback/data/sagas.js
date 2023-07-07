@@ -3,7 +3,7 @@ import { getConfig, ensureConfig } from '@edx/frontend-platform';
 
 import { logError, logInfo } from '@edx/frontend-platform/logging';
 import { addMessage, clearMessages } from './actions';
-import { MESSAGE_TYPES } from './constants';
+import { ERROR_CODES, MESSAGE_TYPES } from './constants';
 
 ensureConfig(['ECOMMERCE_BASE_URL'], 'Alert saga');
 
@@ -14,15 +14,15 @@ export function* handleErrors(e, clearExistingMessages) {
 
   // If this doesn't contain anything we understand, add a fallback error message
   if (e.errors === undefined && e.fieldErrors === undefined && e.messages === undefined) {
-    yield put(addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR));
+    yield put(addMessage(ERROR_CODES.FALLBACK, null, {}, MESSAGE_TYPES.ERROR));
   }
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      if (error.code === 'basket-changed-error-message') {
+      if (error.code === ERROR_CODES.BASKET_CHANGED) {
         yield put(addMessage(error.code, error.userMessage, {}, MESSAGE_TYPES.ERROR));
       } else if (error.data === undefined && error.messageType === null) {
-        yield put(addMessage('transaction-declined-message', error.userMessage, {}, MESSAGE_TYPES.ERROR));
+        yield put(addMessage(ERROR_CODES.TRANSACTION_DECLINED, error.userMessage, {}, MESSAGE_TYPES.ERROR));
       } else {
         yield put(addMessage(error.code, error.userMessage, error.data, error.messageType));
       }

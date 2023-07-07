@@ -1,6 +1,7 @@
 import { Factory } from 'rosie';
 import '../__factories__/basket.factory';
 
+import { defaultRoutineStages } from 'redux-saga-routines';
 import { ORDER_TYPES } from './constants';
 import {
   AsyncActionType,
@@ -17,6 +18,7 @@ import {
   SECS_AS_MS,
   MINS_AS_MS,
   chainReducers,
+  createCustomRoutine,
 } from './utils';
 
 describe('modifyObjectKeys', () => {
@@ -369,4 +371,51 @@ describe('chainReducers([reducers])', () => {
     expect(firstStateResult.first_reducer_value).toEqual(SET_VALUE);
     expect(firstStateResult.second_reducer_value).toEqual(undefined);
   });
+});
+
+describe('createCustomRoutine', () => {
+  const tests = [
+    {
+      name: 'Additional Stage (UC) + Inherts Default Stages',
+      params: { name: 'TEST_ROUTINE_1', addtlStages: ['MEOW'], inheritDefaults: true },
+    },
+    {
+      name: 'Additional Stage (LC) + Inherts Default Stages',
+      params: { name: 'TEST_ROUTINE_2', addtlStages: ['meow'], inheritDefaults: true },
+    },
+    {
+      name: 'Additional Stage (LC) + Doesnt Inherit Default Stages',
+      params: { name: 'TEST_ROUTINE_3', addtlStages: ['woof'], inheritDefaults: false },
+    },
+  ];
+
+  for (let i = 0, testPlan = tests[i]; i < tests.length; i++, testPlan = tests[i]) {
+    it(testPlan.name, () => {
+      /* eslint-disable no-underscore-dangle */ // We don't control the fact that we have to access _ props here.
+      const routineUnderTest = createCustomRoutine(
+        testPlan.params.name,
+        testPlan.params.addtlStages,
+        testPlan.params.inheritDefaults,
+      );
+
+      expect(routineUnderTest._PREFIX).toEqual(testPlan.params.name);
+
+      for (let si = 0, stageName = defaultRoutineStages[si];
+        si < defaultRoutineStages.length;
+        si++, stageName = defaultRoutineStages[si]) {
+        if (testPlan.params.inheritDefaults) {
+          expect(routineUnderTest._STAGES).toContain(stageName);
+        } else {
+          expect(routineUnderTest._STAGES).not.toContain(stageName);
+        }
+      }
+
+      for (let si = 0, stageName = testPlan.params.addtlStages[si];
+        si < testPlan.params.addtlStages.length;
+        si++, stageName = testPlan.params.addtlStages[si]) {
+        expect(routineUnderTest._STAGES).toContain(stageName.toUpperCase());
+      }
+      /* eslint-enable no-underscore-dangle */
+    });
+  }
 });

@@ -2,6 +2,7 @@ import camelCase from 'lodash.camelcase';
 import snakeCase from 'lodash.snakecase';
 import { getConfig } from '@edx/frontend-platform';
 import Cookies from 'universal-cookie';
+import { createRoutineCreator, defaultRoutineStages } from 'redux-saga-routines';
 import { ORDER_TYPES } from './constants';
 
 export function modifyObjectKeys(object, modify) {
@@ -273,3 +274,17 @@ export const chainReducers = (reducers) => {
     );
   };
 };
+
+/**
+ * Create a Routine with Custom Steps
+ * @param {string} name Name of the Routine
+ * @param {string[]} addtlStages An Array of Additional Steps (these will be uppercased)
+ * @param {boolean=} keepDefaults If we should include the normal Routine Steps
+ * @returns {*} A Redux Saga Routine
+ */
+export function createCustomRoutine(name, addtlStages, keepDefaults = true) {
+  return createRoutineCreator([
+    ...(keepDefaults ? defaultRoutineStages : []),
+    ...addtlStages.map(x => x.toUpperCase()),
+  ])(name);
+}

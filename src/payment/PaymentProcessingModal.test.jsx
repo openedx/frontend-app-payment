@@ -28,8 +28,8 @@ const basketStoreGenerator = (paymentState = PAYMENT_STATE.DEFAULT, keepPolling 
         /** state specific to paymentStatePolling */
         paymentStatePolling: {
           // eslint-disable-next-line object-shorthand
-          keepPolling: keepPolling, // TODO: GRM: FIX both debugging items (this is one)
-          counter: 5, // debugging
+          keepPolling: keepPolling,
+          counter: 5,
         },
       },
       clientSecret: { isClientSecretProcessing: false, clientSecretId: '' },

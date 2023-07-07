@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import { getConfig } from '@edx/frontend-platform';
 import {
   BASKET_DATA_RECEIVED,
   BASKET_PROCESSING,
@@ -8,7 +9,6 @@ import {
   CLIENT_SECRET_DATA_RECEIVED,
   CLIENT_SECRET_PROCESSING,
   MICROFORM_STATUS,
-  PAYMENT_STATE_DATA_RECEIVED,
   fetchBasket,
   submitPayment,
   fetchCaptureKey,
@@ -18,7 +18,11 @@ import {
 } from './actions';
 
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
-import { PAYMENT_STATE, POLLING_PAYMENT_STATES } from './constants';
+import {
+  DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+  PAYMENT_STATE,
+  POLLING_PAYMENT_STATES,
+} from './constants';
 import { chainReducers } from './utils';
 
 /**
@@ -29,6 +33,11 @@ const paymentStatePollingInitialState = {
    * @see paymentProcessStatusIsPollingSelector
    */
   keepPolling: false,
+  /**
+   * This is replaceable by a configuration value. (`PAYMENT_STATE_POLLING_MAX_ERRORS`),
+   *     however, this is our default.
+   */
+  retriesLeft: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
 };
 
 /**
@@ -44,9 +53,9 @@ const basketInitialState = {
   redirect: false,
   isBasketProcessing: false,
   products: [],
-  /** Modified by both getActiveOrder and paymentStatePolling */
+  /** Modified by both getActiveOrder and pollPaymentState */
   paymentState: PAYMENT_STATE.DEFAULT,
-  /** state specific to paymentStatePolling */
+  /** state specific to pollPaymentState */
   paymentStatePolling: paymentStatePollingInitialState,
 };
 
@@ -146,7 +155,25 @@ const clientSecret = (state = clientSecretInitialState, action = null) => {
   return state;
 };
 
-const paymentState = (state = basketInitialState, action = null) => {
+/**
+ * Payment State (Polling) Reducer
+ *
+ * > NOTE:
+ * > The `PaymentProcessingModal` relies on the basket's `paymentState`, where as, the inner structure
+ * > The Inner paymentStatePolling object in the basket is used only by the saga handler/worker, `handlePaymentState`
+ *
+ * @param {*} state A basket State Representation
+ * @param action The Pending Action/Message for this Handler
+ * @returns {*} A basket State Representation
+ *
+ * @see paymentStatePollingInitialState
+ * @see PaymentProcessingModal
+ * @see basketInitialState
+ * @see handlePaymentState
+ */
+export const paymentState = (state = basketInitialState, action = null) => {
+  // noinspection JSUnresolvedReference
+  const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.retriesLeft;
   const shouldPoll = (payState) => POLLING_PAYMENT_STATES.includes(payState);
 
   if (action !== null && action !== undefined) {
@@ -157,6 +184,18 @@ const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: shouldPoll(state.paymentState),
+            retriesLeft: maxErrors,
+          },
+        };
+
+      case pollPaymentState.FAILURE:
+        return {
+          ...state,
+          paymentState: null,
+          paymentStatePolling: {
+            ...state.paymentStatePolling,
+            keepPolling: false,
+            retriesLeft: maxErrors,
           },
         };
 
@@ -166,19 +205,23 @@ const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: false,
+            retriesLeft: maxErrors,
           },
         };
 
-      case PAYMENT_STATE_DATA_RECEIVED:
+      case pollPaymentState.RECEIVED: {
+        const isHttpError = action.payload.state === PAYMENT_STATE.HTTP_ERROR;
+        const currRetriesLeft = (isHttpError ? state.paymentStatePolling.retriesLeft - 1 : maxErrors);
         return {
           ...state,
           paymentState: action.payload.state,
           paymentStatePolling: {
             ...state.paymentStatePolling,
-            keepPolling: shouldPoll(action.payload.state),
-            // ...action.payload, // debugging
+            keepPolling: currRetriesLeft > 0 && shouldPoll(action.payload.state),
+            retriesLeft: currRetriesLeft,
           },
         };
+      }
 
       default:
     }

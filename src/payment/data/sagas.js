@@ -3,8 +3,9 @@ import {
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { getConfig } from '@edx/frontend-platform';
+import { logError } from '@edx/frontend-platform/logging/interface';
 import { getReduxFormValidationErrors, MINS_AS_MS, SECS_AS_MS } from './utils';
-import { MESSAGE_TYPES } from '../../feedback/data/constants';
+import { ERROR_CODES, MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
 import {
@@ -25,7 +26,6 @@ import {
   fetchCaptureKey,
   clientSecretProcessing,
   fetchClientSecret,
-  paymentStateDataReceived,
   pollPaymentState,
 } from './actions';
 
@@ -41,7 +41,8 @@ import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 import { checkout as checkoutStripe } from '../payment-methods/stripe';
 import { paymentProcessStatusShouldRunSelector } from './selectors';
-import { PAYMENT_STATE } from './constants';
+import { PAYMENT_STATE, DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS, POLLING_PAYMENT_STATES } from './constants';
+import { generateApiError } from './handleRequestError';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
@@ -310,43 +311,87 @@ export function* handleSubmitPayment({ payload }) {
  *  - This handler/worker loops until it is told to stop. via a state property (keepPolling), or a fatal state.
  */
 export function* handlePaymentState() {
-  const DEFAULT_DELAY_SECS = 5;
-  let keepPolling = true;
-
   // noinspection JSUnresolvedReference
-  const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_DELAY_SECS;
+  const delaySecs = getConfig().PAYMENT_STATE_POLLING_DELAY_SECS || DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS;
 
-  // NOTE: We may want to have a max errors check and have a fail state if there's a bad connection or something.
+  const [basketId, paymentNumber, paymentState] = yield select(state => ([
+    /* basketId */
+    state.payment.basket.basketId,
+    /* paymentNumber */
+    (state.payment.basket.payments.length === 0
+      ? null : state.payment.basket.payments[0].paymentNumber),
+    /* paymentState */
+    state.payment.basket.paymentState,
+  ]));
 
-  while (keepPolling) {
-    try {
-      const basketId = yield select(state => state.payment.basket.basketId);
-      const paymentNumber = yield select(state => (state.payment.basket.payments.length === 0
-        ? null : state.payment.basket.payments[0].paymentNumber));
+  // Strictly, this shouldn't happen, but let's defend against it. Also makes tests easier.
+  if (!POLLING_PAYMENT_STATES.includes(paymentState)) {
+    yield put(pollPaymentState.fulfill());
+    return;
+  }
 
-      if (!basketId || !paymentNumber) {
-        // This shouldn't happen.
-        //   I don't think we need to banner... shouldn't our parent calls recover? (They invoke this)
-        keepPolling = false;
-        yield put(pollPaymentState.fulfill());
-        return;
-      }
+  // We will be using breaks (success) and exceptions (possible failures) to halt execution and giving us a simpler
+  // single path for execution. However, this often occurs by rethrowing the lower level exceptions.
+  try {
+    // Timers are weird in sagas and can cause them to seemingly terminate early.
+    //   So, we went old school, with a run loop.
+    while (true) { //  o/ o/ ive got to break free! o/ o/ ... or throw.
+      // We intentionally throw here to end execution with failure. Some failures like our `ReferenceError` are fatal
+      //   Others we want to catch and retry until we hit our maximum error limit.
+      try {
+        if (!basketId || !paymentNumber) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw new ReferenceError('Invalid Basket Id or Payment Number');
+        }
 
-      const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
-      yield put(paymentStateDataReceived(result));
+        const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
 
-      if (!(yield select(state => state.payment.basket.paymentStatePolling.keepPolling))) {
-        keepPolling = false;
-        yield put(pollPaymentState.fulfill());
-      } else {
+        yield put(pollPaymentState.received(result));
+
+        const shouldKeepPolling = yield select(state => state.payment.basket.paymentStatePolling.keepPolling);
+
+        if (shouldKeepPolling) {
+          yield delay(SECS_AS_MS(delaySecs));
+        } else {
+          yield put(pollPaymentState.fulfill());
+          break;
+        }
+      } catch (innerError) {
+        const shouldExitExecution = innerError instanceof ReferenceError;
+
+        logError(innerError, { basketId, paymentNumber, isFatalError: shouldExitExecution });
+
+        if (shouldExitExecution) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw innerError;
+        }
+
+        yield put(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
+
+        const retriesLeft = yield select(state => state.payment.basket.paymentStatePolling.retriesLeft);
+
+        if (retriesLeft === 0) {
+          // noinspection ExceptionCaughtLocallyJS
+          throw innerError;
+        }
+
         yield delay(SECS_AS_MS(delaySecs));
       }
-    } catch (error) {
-      // We dont quit on error.
-      // yield call(handleErrors, error, true);
-      yield put(paymentStateDataReceived({ state: PAYMENT_STATE.HTTP_ERROR }));
-      yield delay(SECS_AS_MS(delaySecs));
     }
+  } catch (error) {
+    // Here we wrap whatever exception we have (either a fatal one or after the max tries) to display our basket
+    //   inconsistency error banner to the user, forcing them to refresh, and we can get back to moral execution.
+    const basketMessageError = generateApiError([
+      {
+        error_code: ERROR_CODES.BASKET_CHANGED,
+        user_message: 'error',
+      },
+    ], false);
+
+    // This seems redundant, but we should end our action before terminating.
+    yield put(pollPaymentState.failure(basketMessageError));
+
+    yield handleErrors(basketMessageError);
   }
 }
 

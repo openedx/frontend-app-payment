@@ -9,11 +9,10 @@ import {
   fetchBasket,
   fetchActiveOrder,
   pollPaymentState,
-  PAYMENT_STATE_DATA_RECEIVED,
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
 import { localizedCurrencySelector } from './utils';
-import { PAYMENT_STATE } from './constants';
+import { DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS, PAYMENT_STATE } from './constants';
 
 jest.mock('universal-cookie', () => {
   class MockCookies {
@@ -114,6 +113,7 @@ describe('redux tests', () => {
           isRedirect: false,
           paymentState: PAYMENT_STATE.DEFAULT,
           paymentStatePolling: {
+            retriesLeft: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
             keepPolling: false,
           },
         });
@@ -138,6 +138,7 @@ describe('redux tests', () => {
           isRedirect: true, // this is also now true.
           paymentState: PAYMENT_STATE.DEFAULT,
           paymentStatePolling: {
+            retriesLeft: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
             keepPolling: false,
           },
         });
@@ -230,9 +231,10 @@ describe('redux tests', () => {
       });
     });
 
-    describe('pollPaymentState actions', () => {
-      it('Round Trip', () => {
-        const triggerStore = createStore(
+    describe('pollPaymentState actions + reducers', () => {
+      let triggerStore;
+      beforeEach(() => {
+        triggerStore = createStore(
           combineReducers({
             payment: reducer,
           }),
@@ -251,18 +253,57 @@ describe('redux tests', () => {
                   },
           },
         );
+      });
 
+      afterEach(() => { triggerStore = undefined; });
+
+      it('Round Trip (No Error)', () => {
         triggerStore.dispatch(pollPaymentState());
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
         expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PENDING);
 
-        triggerStore.dispatch({ type: PAYMENT_STATE_DATA_RECEIVED, payload: { state: PAYMENT_STATE.COMPLETED } });
+        triggerStore.dispatch(pollPaymentState.received({ state: PAYMENT_STATE.COMPLETED }));
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
         expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.COMPLETED);
 
         triggerStore.dispatch(pollPaymentState.fulfill());
         expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
         expect(triggerStore.getState().payment.basket.paymentState === PAYMENT_STATE.PENDING).toBe(false);
+      });
+
+      it('Round Trip (Fatal Error)', () => {
+        triggerStore.dispatch(pollPaymentState());
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PENDING);
+
+        triggerStore.dispatch(pollPaymentState.failure(Error('Something broke!')));
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(null);
+      });
+
+      it('Round Trip (Max HTTP Error)', () => {
+        const pollingMaxErrors = DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS;
+
+        triggerStore.dispatch(pollPaymentState());
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(true);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(PAYMENT_STATE.PENDING);
+
+        for (let i = 0; pollingMaxErrors > i; i++) {
+          const expectedCount = pollingMaxErrors - 1 - i;
+          triggerStore.dispatch(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
+          expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling)
+            .toBe(expectedCount > 0);
+          expect(triggerStore.getState().payment.basket.paymentStatePolling.retriesLeft)
+            .toBe(expectedCount);
+        }
+
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.retriesLeft)
+          .toBe(0);
+
+        triggerStore.dispatch(pollPaymentState.failure(Error('Too many HTTP errors!')));
+        expect(triggerStore.getState().payment.basket.paymentStatePolling.keepPolling).toBe(false);
+        expect(triggerStore.getState().payment.basket.paymentState).toBe(null);
       });
     });
   });

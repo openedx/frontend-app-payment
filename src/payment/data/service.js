@@ -50,9 +50,9 @@ export async function getBasket(discountJwt) {
 }
 
 export async function getActiveOrder() {
+  // This call cant end in `/` or it fails to pattern match in CC
   const { data } = await getAuthenticatedHttpClient()
-    // .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/`)
-    .get(`${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active/`)
+    .get(`${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
