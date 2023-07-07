@@ -1,6 +1,28 @@
 import { logError, logInfo } from '@edx/frontend-platform/logging';
 import { camelCaseObject } from './utils';
+import { ERROR_CODES } from '../../feedback/data/constants';
 
+/**
+ * @class RequestError
+ *
+ * @property {AxiosResponse} [response]
+ * @property {string?} [code]
+ * @property {string?} [type]
+ *
+ * @extends Error
+ */
+/**
+ * @typedef ApiErrorMessage
+ *
+ * @property {string?} [error_code]
+ * @property {string?} [user_message]
+ * @property {string?} [message_type]
+ *
+ */
+
+/**
+ * @throws
+ */
 function handleFieldErrors(errors) {
   const fieldErrors = Object.entries(errors).map(([name, value]) => ({
     code: value.error_code ? value.error_code : null,
@@ -13,7 +35,13 @@ function handleFieldErrors(errors) {
   throw validationError;
 }
 
-function handleApiErrors(errors) {
+/**
+ * Process API Errors and Generate an Error Object
+ * @param {ApiErrorMessage[]} errors
+ * @param {boolean} shouldThrow
+ * @throws {Error} (Conditionally, but usually)
+ */
+export function generateApiError(errors, shouldThrow = true) {
   const apiErrors = errors.map(err => ({
     code: err.error_code ? err.error_code : null,
     userMessage: err.user_message ? err.user_message : null,
@@ -22,9 +50,16 @@ function handleApiErrors(errors) {
 
   const apiError = new Error();
   apiError.errors = apiErrors;
-  throw apiError;
+
+  if (shouldThrow) { throw apiError; }
+
+  return apiError;
 }
 
+/**
+ * @param {*} messages
+ * @throws
+ */
 function handleApiMessages(messages) {
   const apiError = new Error();
   apiError.messages = camelCaseObject(messages);
@@ -39,9 +74,8 @@ function handleApiMessages(messages) {
  *
  * Field errors will be packaged with a fieldErrors field usable by the client.
  *
- * @param error The original error object.
- * @param unpackFunction (Optional) A function to use to unpack the field errors as a replacement
- * for the default.
+ * @param {RequestError|Error} error The original error object.
+ * @throws
  */
 export default function handleRequestError(error) {
   // Validation errors
@@ -53,7 +87,7 @@ export default function handleRequestError(error) {
   // API errors
   if (error.response && error.response.data.errors !== undefined) {
     logInfo('API Errors', error.response.data.errors);
-    handleApiErrors(error.response.data.errors);
+    generateApiError(error.response.data.errors);
   }
 
   // API messages
@@ -65,7 +99,7 @@ export default function handleRequestError(error) {
   // Single API error
   if (error.response && error.response.data.error_code) {
     logInfo('API Error', error.response.data.error_code);
-    handleApiErrors([
+    generateApiError([
       {
         error_code: error.response.data.error_code,
         user_message: error.response.data.user_message,
@@ -76,9 +110,9 @@ export default function handleRequestError(error) {
   // SKU mismatch error
   if (error.response && error.response.data.sku_error) {
     logInfo('SKU Error', error.response.data.sku_error);
-    handleApiErrors([
+    generateApiError([
       {
-        error_code: 'basket-changed-error-message',
+        error_code: ERROR_CODES.BASKET_CHANGED,
         user_message: 'error',
       },
     ]);
@@ -87,9 +121,9 @@ export default function handleRequestError(error) {
   // Basket already purchased
   if (error.code === 'payment_intent_unexpected_state' && error.type === 'invalid_request_error') {
     logInfo('Basket Changed Error', error.code);
-    handleApiErrors([
+    generateApiError([
       {
-        error_code: 'basket-changed-error-message',
+        error_code: ERROR_CODES.BASKET_CHANGED,
         user_message: 'error',
       },
     ]);
@@ -100,7 +134,11 @@ export default function handleRequestError(error) {
   throw error;
 }
 
-// Processes API errors and converts them to error objects the sagas can use.
+/**
+ * Processes API errors and converts them to error objects the sagas can use.
+ * @param requestError
+ * @throws
+ */
 export function handleApiError(requestError) {
   try {
     // Always throws an error:

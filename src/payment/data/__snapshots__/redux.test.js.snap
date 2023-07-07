@@ -9,6 +9,7 @@ Object {
     "paymentState": "checkout",
     "paymentStatePolling": Object {
       "keepPolling": false,
+      "retriesLeft": 5,
     },
     "products": Array [],
     "redirect": false,
@@ -35,6 +36,7 @@ Object {
     "paymentState": "checkout",
     "paymentStatePolling": Object {
       "keepPolling": false,
+      "retriesLeft": 5,
     },
     "products": Array [],
     "redirect": false,
@@ -61,6 +63,7 @@ Object {
     "paymentState": "checkout",
     "paymentStatePolling": Object {
       "keepPolling": false,
+      "retriesLeft": 5,
     },
     "products": Array [],
     "redirect": false,
