@@ -37,7 +37,7 @@ const paymentStatePollingInitialState = {
    * This is replaceable by a configuration value. (`PAYMENT_STATE_POLLING_MAX_ERRORS`),
    *     however, this is our default.
    */
-  retryCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+  retriesLeft: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
 };
 
 /**
@@ -173,7 +173,7 @@ const clientSecret = (state = clientSecretInitialState, action = null) => {
  */
 export const paymentState = (state = basketInitialState, action = null) => {
   // noinspection JSUnresolvedReference
-  const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.retryCount;
+  const maxErrors = getConfig().PAYMENT_STATE_POLLING_MAX_ERRORS || paymentStatePollingInitialState.retriesLeft;
   const shouldPoll = (payState) => POLLING_PAYMENT_STATES.includes(payState);
 
   if (action !== null && action !== undefined) {
@@ -184,7 +184,7 @@ export const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: shouldPoll(state.paymentState),
-            retryCount: maxErrors,
+            retriesLeft: maxErrors,
           },
         };
 
@@ -195,7 +195,7 @@ export const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: false,
-            retryCount: maxErrors,
+            retriesLeft: maxErrors,
           },
         };
 
@@ -205,20 +205,20 @@ export const paymentState = (state = basketInitialState, action = null) => {
           paymentStatePolling: {
             ...state.paymentStatePolling,
             keepPolling: false,
-            retryCount: maxErrors,
+            retriesLeft: maxErrors,
           },
         };
 
       case pollPaymentState.RECEIVED: {
         const isHttpError = action.payload.state === PAYMENT_STATE.HTTP_ERROR;
-        const currRetryCnt = (isHttpError ? state.paymentStatePolling.retryCount - 1 : maxErrors);
+        const currRetriesLeft = (isHttpError ? state.paymentStatePolling.retriesLeft - 1 : maxErrors);
         return {
           ...state,
           paymentState: action.payload.state,
           paymentStatePolling: {
             ...state.paymentStatePolling,
-            keepPolling: currRetryCnt > 0 && shouldPoll(action.payload.state),
-            retryCount: currRetryCnt,
+            keepPolling: currRetriesLeft > 0 && shouldPoll(action.payload.state),
+            retriesLeft: currRetriesLeft,
           },
         };
       }

@@ -368,9 +368,9 @@ export function* handlePaymentState() {
 
         yield put(pollPaymentState.received({ state: PAYMENT_STATE.HTTP_ERROR }));
 
-        const currentRetryCount = yield select(state => state.payment.basket.paymentStatePolling.retryCount);
+        const retriesLeft = yield select(state => state.payment.basket.paymentStatePolling.retriesLeft);
 
-        if (currentRetryCount === 0) {
+        if (retriesLeft === 0) {
           // noinspection ExceptionCaughtLocallyJS
           throw innerError;
         }

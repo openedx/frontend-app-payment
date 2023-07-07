@@ -885,7 +885,7 @@ describe('saga tests', () => {
       paymentState: inPaymentState,
       paymentStatePolling: {
         keepPolling: false,
-        retryCount: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
+        retriesLeft: DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
       },
     });
 
