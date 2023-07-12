@@ -7,6 +7,7 @@ import { transformResults } from './utils';
 ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
+  'COMMERCE_COORDINATOR_BASE_URL',
 ], 'payment API service');
 
 function handleBasketApiError(requestError) {
@@ -27,6 +28,8 @@ function handleBasketApiError(requestError) {
   }
 }
 
+// Ecomm Specific Calls
+
 export async function getCaptureKey() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context/`)
@@ -45,14 +48,6 @@ export async function getBasket(discountJwt) {
   const discountJwtArg = typeof discountJwt !== 'undefined' ? `?discount_jwt=${discountJwt}` : '';
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
-    .catch(handleBasketApiError);
-  return transformResults(data);
-}
-
-export async function getActiveOrder() {
-  // This call cant end in `/` or it fails to pattern match in CC
-  const { data } = await getAuthenticatedHttpClient()
-    .get(`${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
@@ -84,6 +79,8 @@ export async function deleteCoupon(id) {
   return transformResults(data);
 }
 
+// LMS Specific Calls
+
 export async function getDiscountData(courseKey) {
   const { data } = await getAuthenticatedHttpClient().get(
     `${getConfig().LMS_BASE_URL}/api/discounts/course/${courseKey}`,
@@ -94,10 +91,20 @@ export async function getDiscountData(courseKey) {
   return data;
 }
 
+// Commerce Coordinator Specific Calls
+
+export async function getActiveOrder() {
+  // This call cant end in `/` or it fails to pattern match in CC
+  const { data } = await getAuthenticatedHttpClient()
+    .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`)
+    .catch(handleBasketApiError);
+  return transformResults(data);
+}
+
 export async function getCurrentPaymentState(paymentNumber, basketId) {
   const { data } = await getAuthenticatedHttpClient()
     .get(
-      `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`,
+      `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`,
       {
         params:
           {
