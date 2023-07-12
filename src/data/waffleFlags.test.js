@@ -7,15 +7,17 @@ import {
   waffleInterceptor,
 } from './waffleFlags';
 
+/* eslint-disable import/prefer-default-export */
+
 /**
  * Set our JSDOM Window and Document Location
  * @param {string} url The URL we intend to go to, this must be within the domain of `window.origin`
- * @returns {string} The location as it was before we set it. It is important you reset it when your test completes.
+ * @param perform
  * @see window.origin
  * @see history.pushState
  * @throws {SecurityError} if not within the domain of `window.origin`
  */
-const setAndValidateJSDOMLocation = (url) => {
+const performWithModifiedJSDOMLocation = (url, perform) => {
   const lastValue = window.location.href;
 
   /* eslint-disable-next-line no-restricted-globals */ // We need this for some test manipulation (history object)
@@ -24,20 +26,38 @@ const setAndValidateJSDOMLocation = (url) => {
   expect(document.location.href).toBe(url);
   expect(window.location.href).toBe(url);
 
-  return lastValue;
+  perform();
+
+  /* eslint-disable-next-line no-restricted-globals */ // We need this for some test manipulation (history object)
+  history.pushState(history.state, null, new URL(lastValue));
 };
+
+/**
+ * Perform a test with modified waffle flags.
+ *
+ * This function ensures the state is returned to its default.
+ * @param flags
+ * @param perform
+ */
+export function performWithModifiedWaffleFlags(flags, perform) {
+  const initialConfig = getConfig().WAFFLE_FLAGS;
+  mergeConfig({ WAFFLE_FLAGS: flags });
+
+  perform();
+
+  mergeConfig({ WAFFLE_FLAGS: initialConfig });
+}
 
 describe('getWaffleFlags', () => {
   it('should default to document.location when empty', () => {
     // We have to use the Window's origin, otherwise: SecurityError: replaceState cannot update...
     //   This was WAY TOO HARD FOUGHT.
     const testLocation = `${window.origin}/dox.asp?${WAFFLE_PREFIX}xyzzy=on`;
-    const initialLocation = setAndValidateJSDOMLocation(testLocation);
 
-    const result = processUrlWaffleFlags();
-    expect(result).toStrictEqual({ xyzzy: true });
-
-    setAndValidateJSDOMLocation(initialLocation);
+    performWithModifiedJSDOMLocation(testLocation, () => {
+      const result = processUrlWaffleFlags();
+      expect(result).toStrictEqual({ xyzzy: true });
+    });
   });
 
   const baseUrl = 'https://example.com/index.html?';
@@ -78,13 +98,10 @@ describe('waffleInterceptor', () => {
      ${{ x: false }}           | ${makeRequestConfig({ x: 0 })}
      ${{ x: true, y: false }}  | ${makeRequestConfig({ x: 1, y: 0 })}
    `('Config $flags => returns $result.params', async ({ flags, result }) => {
-    const initialConfig = getConfig().WAFFLE_FLAGS;
-    mergeConfig({ WAFFLE_FLAGS: flags });
-
-    const interceptedParams = await waffleInterceptor(makeRequestConfig());
-    expect(interceptedParams).toStrictEqual(result);
-
-    mergeConfig({ WAFFLE_FLAGS: initialConfig });
+    performWithModifiedWaffleFlags(flags, async () => {
+      const interceptedParams = await waffleInterceptor(makeRequestConfig());
+      expect(interceptedParams).toStrictEqual(result);
+    });
   });
 });
 
@@ -97,13 +114,10 @@ describe('isWaffleFlagEnabled', () => {
     ${{ x: true }}            | ${{ y: false, x: true }} | ${'missing flags are false'}  | ${false}
     ${{ x: true }}            | ${{ y: true, x: true }}  | ${'missing flags are true'}   | ${true}
   `('Testing $waffles for $reason', ({ waffles, results, defaultValue }) => {
-    const initialConfig = getConfig().WAFFLE_FLAGS;
-    mergeConfig({ WAFFLE_FLAGS: waffles });
-
-    Object.keys(results).forEach((key) => {
-      expect(isWaffleFlagEnabled(key, defaultValue)).toEqual(results[key]);
+    performWithModifiedWaffleFlags(waffles, () => {
+      Object.keys(results).forEach((key) => {
+        expect(isWaffleFlagEnabled(key, defaultValue)).toEqual(results[key]);
+      });
     });
-
-    mergeConfig({ WAFFLE_FLAGS: initialConfig });
   });
 });
