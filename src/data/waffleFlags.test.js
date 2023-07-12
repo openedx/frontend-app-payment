@@ -42,13 +42,16 @@ describe('getWaffleFlags', () => {
 
   const baseUrl = 'https://example.com/index.html?';
   test.each`
-    url                                                         | result
-    ${`${baseUrl + WAFFLE_PREFIX}x=on`}                         | ${{ x: true }}
-    ${`${baseUrl + WAFFLE_PREFIX}x=1`}                          | ${{ x: true }}
-    ${`${baseUrl + WAFFLE_PREFIX}x=t`}                          | ${{ x: true }}
-    ${`${baseUrl + WAFFLE_PREFIX}x=true`}                       | ${{ x: true }}
-    ${`${baseUrl + WAFFLE_PREFIX}x=true&y=off`}                 | ${{ x: true /* , y isn't a flag */ }}
-    ${`${baseUrl + WAFFLE_PREFIX}x=true&${WAFFLE_PREFIX}y=off`} | ${{ x: true, y: false }}
+    url                                                           | result
+    ${`${baseUrl + WAFFLE_PREFIX}x=on`}                           | ${{ x: true }}
+    ${`${baseUrl + WAFFLE_PREFIX}x=1`}                            | ${{ x: true }}
+    ${`${baseUrl + WAFFLE_PREFIX}x=t`}                            | ${{ x: true }}
+    ${`${baseUrl + WAFFLE_PREFIX}x=true`}                         | ${{ x: true }}
+    ${`${baseUrl + WAFFLE_PREFIX}x=true&y=off`}                   | ${{ x: true /* , y isn't a flag */ }}
+    ${`${baseUrl + WAFFLE_PREFIX}x=true&${WAFFLE_PREFIX}y=off`}   | ${{ x: true, y: false }}
+    ${`env://?${WAFFLE_PREFIX}x=true&${WAFFLE_PREFIX}y=off`}      | ${{ x: true, y: false }}
+    ${'env://?undefined'}                                         | ${{}}
+    ${'env://?'}                                                  | ${{}}
   `('can parse: $url => $result', ({ url, result }) => {
     const returnVal = processUrlWaffleFlags(url);
     expect(returnVal).toStrictEqual(result);
