@@ -13,7 +13,7 @@ import { detailsSelector } from '../../data/details/selectors';
  * Secure3DModal
  * This modal implements the 3DS functionality for
  * both trial and non-trial purchases. It uses the setupIntent
- * for trial purchases and paymentIntent function for non-trial
+ * for trial and paymentIntent function for non-trial
  * purchases in order to load 3DS details inside an iFrame modal
  */
 export const Secure3DModal = ({ stripe }) => {
@@ -54,10 +54,6 @@ export const Secure3DModal = ({ stripe }) => {
       throw new Error(`Error loading 3D secure details): ${e.message}`);
     }
   };
-
-  // useEffect(() => {
-  //   loadSecureDetails('https://hooks.stripe.com/3d_secure_2/hosted?merchant=acct_1Ls7QSH4caH7G0X1&publishable_key=pk_test_51Ls7QSH4caH7G0X1prLj26IWylx2AP5vGA3nd4GMGPRXjVQlA9HATsF2aC5QhbeGNnTr2xijDLQPQzqefrMvHvke00L5eGLK4N&setup_intent=seti_1NT1qtH4caH7G0X1dWG6wrbZ&setup_intent_client_secret=seti_1NT1qtH4caH7G0X1dWG6wrbZ_secret_OFWuX8eF6y1oYQDaPcJF4GGf70jgg4B&source=src_1NT1quH4caH7G0X15pCrAdil');
-  // }, []);
 
   useEffect(() => {
     if (status === '3DS') {
