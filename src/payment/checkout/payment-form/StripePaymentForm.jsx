@@ -18,6 +18,7 @@ import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
 import SubscriptionSubmitButton from '../../../subscription/checkout/submit-button/SubscriptionSubmitButton';
 import MonthlyBillingNotification from '../../../subscription/checkout/monthly-billing-notification/MonthlyBillingNotification';
+import { Secure3DModal } from '../../../subscription/checkout/secure-3d-modal/Secure3dModal';
 
 import {
   getRequiredFields, validateRequiredFields, validateAsciiNames,
@@ -183,6 +184,7 @@ const StripePaymentForm = ({
             disabled={submitting}
             isProcessing={isProcessing}
           />
+          <Secure3DModal stripe={stripe} />
         </>
       ) : (
         <PlaceOrderButton
