@@ -42,3 +42,14 @@ export async function waffleInterceptor(requestConfig) {
   requestConfig.params = params; // eslint-disable-line no-param-reassign
   return requestConfig;
 }
+
+/**
+ * Simple function to test if a waffle flag is enabled.
+ * @param {string} flagName
+ * @param {boolean} [defaultValue=false]
+ * @returns {boolean}
+ */
+export function isWaffleFlagEnabled(flagName, defaultValue = false) {
+  const value = getConfig().WAFFLE_FLAGS[flagName];
+  return typeof value !== 'undefined' ? value : defaultValue;
+}

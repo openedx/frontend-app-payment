@@ -1,5 +1,11 @@
 import { getConfig, mergeConfig } from '@edx/frontend-platform';
-import { processUrlWaffleFlags, WAFFLE_PREFIX, waffleInterceptor } from './waffleFlags';
+
+import {
+  isWaffleFlagEnabled,
+  processUrlWaffleFlags,
+  WAFFLE_PREFIX,
+  waffleInterceptor,
+} from './waffleFlags';
 
 /**
  * Set our JSDOM Window and Document Location
@@ -74,6 +80,26 @@ describe('waffleInterceptor', () => {
 
     const interceptedParams = await waffleInterceptor(makeRequestConfig());
     expect(interceptedParams).toStrictEqual(result);
+
+    mergeConfig({ WAFFLE_FLAGS: initialConfig });
+  });
+});
+
+describe('isWaffleFlagEnabled', () => {
+  test.each`
+    waffles                   | results                  | reason                        | defaultValue
+    ${{ x: true }}            | ${{ x: true }}           | ${'exact equality'}           | ${false}
+    ${{ x: false }}           | ${{ x: false }}          | ${'exact equality'}           | ${false}
+    ${{ x: true, y: false }}  | ${{ x: true, y: false }} | ${'exact equality'}           | ${false}
+    ${{ x: true }}            | ${{ y: false, x: true }} | ${'missing flags are false'}  | ${false}
+    ${{ x: true }}            | ${{ y: true, x: true }}  | ${'missing flags are true'}   | ${true}
+  `('Testing $waffles for $reason', ({ waffles, results, defaultValue }) => {
+    const initialConfig = getConfig().WAFFLE_FLAGS;
+    mergeConfig({ WAFFLE_FLAGS: waffles });
+
+    Object.keys(results).forEach((key) => {
+      expect(isWaffleFlagEnabled(key, defaultValue)).toEqual(results[key]);
+    });
 
     mergeConfig({ WAFFLE_FLAGS: initialConfig });
   });
