@@ -1,9 +1,19 @@
+/**
+ * Order Types
+ * @readonly
+ * @enum {string}
+ */
 export const ORDER_TYPES = {
   BULK_ENROLLMENT: 'Enrollment Code',
   ENTITLEMENT: 'Course Entitlement',
   SEAT: 'Seat',
 };
 
+/**
+ * Possible Standard Certificate Types [Unused?]
+ * @readonly
+ * @enum {string}
+ */
 export const CERTIFICATE_TYPES = {
   VERIFIED: 'verified',
   CREDIT: 'credit',
@@ -15,6 +25,9 @@ export const CERTIFICATE_TYPES = {
  * @see POLLING_PAYMENT_STATES
  *
  * @note: This enum is unique to Commerce Coordinator backend.
+ *
+ * @readonly
+ * @enum {string}
  */
 export const PAYMENT_STATE = (((webserviceEnum = {
   // The enum as the WS Sees it.
@@ -81,3 +94,13 @@ export const DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS = 5;
  * > Note: This can be configured by setting `PAYMENT_STATE_POLLING_MAX_ERRORS` in your config.
  */
 export const DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS = 5;
+
+/**
+ * An enum of known Waffle Flags
+ * @readonly
+ * @enum {string}
+ */
+export const WAFFLE_FLAGS = {
+  /** Flag to determine if Commerce Coordinator is enabled */
+  COMMERCE_COORDINATOR_ENABLED: 'transition_to_coordinator.fulfillment',
+};

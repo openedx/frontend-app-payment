@@ -3,7 +3,7 @@ import snakeCase from 'lodash.snakecase';
 import { getConfig } from '@edx/frontend-platform';
 import Cookies from 'universal-cookie';
 import { createRoutineCreator, defaultRoutineStages } from 'redux-saga-routines';
-import { ORDER_TYPES } from './constants';
+import { ORDER_TYPES, WAFFLE_FLAGS } from './constants';
 import { isWaffleFlagEnabled } from '../../data/waffleFlags';
 
 export function modifyObjectKeys(object, modify) {
@@ -290,5 +290,5 @@ export function createCustomRoutine(name, addtlStages, keepDefaults = true) {
  * @returns {boolean}
  */
 export function isCommerceCoordinatorEnabled() {
-  return isWaffleFlagEnabled('enable_cc');
+  return isWaffleFlagEnabled(WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED);
 }

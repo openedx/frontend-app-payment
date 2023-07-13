@@ -2,7 +2,7 @@ import { Factory } from 'rosie';
 import '../__factories__/basket.factory';
 
 import { defaultRoutineStages } from 'redux-saga-routines';
-import { ORDER_TYPES } from './constants';
+import { ORDER_TYPES, WAFFLE_FLAGS } from './constants';
 import {
   AsyncActionType,
   modifyObjectKeys,
@@ -450,11 +450,16 @@ describe('createCustomRoutine', () => {
 });
 
 describe('isCommerceCoordinatorEnabled', () => {
+  /** Expected CC Waffle Flag */
+  const CC_FLAG = WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED;
+  /** Trash flag, CC should come back false */
+  const XX_FLAG = 'XXX.XXX';
+
   test.each`
     flags                    | expected
-    ${{ enable_cc: true }}   | ${true}
-    ${{ enable_cc: false }}  | ${false}
-    ${{ enable_xx: true }}   | ${false}
+    ${{ [CC_FLAG]: true }}   | ${true}
+    ${{ [CC_FLAG]: false }}  | ${false}
+    ${{ [XX_FLAG]: true }}   | ${false}
   `('Flags $flags should yield $expected', ({ flags, expected }) => {
     performWithModifiedWaffleFlags(flags, () => {
       expect(isCommerceCoordinatorEnabled()).toStrictEqual(expected);

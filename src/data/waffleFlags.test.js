@@ -12,7 +12,7 @@ import {
 /**
  * Set our JSDOM Window and Document Location
  * @param {string} url The URL we intend to go to, this must be within the domain of `window.origin`
- * @param perform
+ * @param {() => void} perform
  * @see window.origin
  * @see history.pushState
  * @throws {SecurityError} if not within the domain of `window.origin`
@@ -36,8 +36,8 @@ const performWithModifiedJSDOMLocation = (url, perform) => {
  * Perform a test with modified waffle flags.
  *
  * This function ensures the state is returned to its default.
- * @param flags
- * @param perform
+ * @param {Object.<string, boolean>} flags
+ * @param {() => void} perform
  */
 export function performWithModifiedWaffleFlags(flags, perform) {
   const initialConfig = getConfig().WAFFLE_FLAGS;

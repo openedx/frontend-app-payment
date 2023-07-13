@@ -12,7 +12,7 @@ export const WAFFLE_PREFIX = 'dwft_';
 /**
  * Get Processed Waffle Flags from the current document location or from any other URL-like String
  * @param {string|URL} [urlString=document.location] The input URL String or any Stringifier
- * @returns {{}} Current Waffle Flags (Keyed by Flag Name, Value is a boolean whether it is enabled.)
+ * @returns {Object.<string, boolean>} Processed Waffle Flags
  */
 export function processUrlWaffleFlags(urlString) {
   const safeUrlString = !urlString ? document.location : urlString;

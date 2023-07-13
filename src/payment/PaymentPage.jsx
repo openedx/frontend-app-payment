@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
+import { isCommerceCoordinatorEnabled } from './data/utils';
 
 import messages from './PaymentPage.messages';
 
@@ -44,9 +45,7 @@ class PaymentPage extends React.Component {
 
   componentDidMount() {
     sendPageEvent();
-    // TODO: remove in favor of waffle flag
-    const useCoordinator = true;
-    if (useCoordinator) {
+    if (isCommerceCoordinatorEnabled()) {
       this.props.fetchActiveOrder();
     } else {
       this.props.fetchBasket();
