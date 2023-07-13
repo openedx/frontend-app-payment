@@ -453,7 +453,7 @@ describe('isCommerceCoordinatorEnabled', () => {
   /** Expected CC Waffle Flag */
   const CC_FLAG = WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED;
   /** Trash flag, CC should come back false */
-  const XX_FLAG = 'XXX.XXX';
+  const XX_FLAG = 'transition_to_coordinator.XXX';
 
   test.each`
     flags                    | expected

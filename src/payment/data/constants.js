@@ -4,8 +4,26 @@
  * @enum {string}
  */
 export const ORDER_TYPES = {
+  /**
+   * The Redemption of a Single Course Enrollment Code
+   *
+   * A bulk-purchases on a single course, usually B2B.
+   */
   BULK_ENROLLMENT: 'Enrollment Code',
+
+  /**
+   * Single Course Entitlement
+   *
+   * This means someone has purchased a full program containing the course,
+   * so they have already paid but may not actually be enrolled in a run.
+   */
   ENTITLEMENT: 'Course Entitlement',
+
+  /**
+   *  A Single Course Purchase
+   *
+   *  A purchased seat in a single course run.
+   */
   SEAT: 'Seat',
 };
 
@@ -27,7 +45,7 @@ export const CERTIFICATE_TYPES = {
  * @note: This enum is unique to Commerce Coordinator backend.
  *
  * @readonly
- * @enum {string}
+ * @enum {string|Symbol}
  */
 export const PAYMENT_STATE = (((webserviceEnum = {
   // The enum as the WS Sees it.
@@ -63,6 +81,8 @@ export const PAYMENT_STATE = (((webserviceEnum = {
    * An HTTP Error has occurred between the client and server, this should not be sent over the line.
    *
    * @note **this is custom to the MFE**, thus a Symbol (which JSON usually skips in serialization)
+   *
+   * @type {Symbol}
    */
   HTTP_ERROR: Symbol('mfe-only_http_error'),
 }))());
@@ -101,6 +121,10 @@ export const DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS = 5;
  * @enum {string}
  */
 export const WAFFLE_FLAGS = {
-  /** Flag to determine if Commerce Coordinator is enabled */
-  COMMERCE_COORDINATOR_ENABLED: 'transition_to_coordinator.fulfillment',
+  /**
+   * Flag to determine if Commerce Coordinator is enabled
+   *
+   * @note this is the flag for Theseus' `MS1`, and was chosen as it is the first point of transition to use of CC.
+   */
+  COMMERCE_COORDINATOR_ENABLED: 'transition_to_coordinator.order_create',
 };
