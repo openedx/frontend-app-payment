@@ -1,6 +1,6 @@
 import { getQueryParameters } from '@edx/frontend-platform';
 import { createSelector } from 'reselect';
-import { localizedCurrencySelector } from './utils';
+import { isCommerceCoordinatorEnabled, localizedCurrencySelector } from './utils';
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
 import { POLLING_PAYMENT_STATES } from './constants';
 
@@ -90,9 +90,10 @@ export const paymentProcessStatusSelector = state => (state[storeName].basket.pa
  * @param state
  * @return boolean
  * @see POLLING_PAYMENT_STATES
+ * @see isCommerceCoordinatorEnabled
  */
 export const paymentProcessStatusShouldRunSelector = state => (
-  POLLING_PAYMENT_STATES.includes(paymentProcessStatusSelector(state))
+  POLLING_PAYMENT_STATES.includes(paymentProcessStatusSelector(state)) && isCommerceCoordinatorEnabled()
 );
 
 /**

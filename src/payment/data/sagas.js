@@ -4,7 +4,9 @@ import {
 import { stopSubmit } from 'redux-form';
 import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging/interface';
-import { getReduxFormValidationErrors, MINS_AS_MS, SECS_AS_MS } from './utils';
+import {
+  getReduxFormValidationErrors, isCommerceCoordinatorEnabled, MINS_AS_MS, SECS_AS_MS,
+} from './utils';
 import { ERROR_CODES, MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
@@ -129,7 +131,7 @@ export function* handleFetchActiveOrder() {
   try {
     yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
     // TODO: Add switch for calling ecomemrce vs comerce coordinator with waffle flag
-    const result = yield call(PaymentApiService.getActiveOrder);
+    const result = yield call(PaymentApiService.CommerceCoordinator.getActiveOrder);
 
     // TODO: switch on result.paymentState, show checkout page, trigger polling, show reciept page
     // TODO: THES-211 Decide if this should be broken out into a separate store
@@ -192,7 +194,11 @@ export function* handleFetchCaptureKey() {
   try {
     yield put(captureKeyProcessing(true)); // we are waiting for a capture key
     yield put(microformStatus(STATUS_LOADING)); // we are refreshing the capture key
-    const result = yield call(PaymentApiService.getCaptureKey);
+    const result = yield call(
+      isCommerceCoordinatorEnabled()
+        ? PaymentApiService.CommerceCoordinator.getCaptureKey
+        : PaymentApiService.getCaptureKey,
+    );
     yield put(captureKeyDataReceived(result)); // update redux store with capture key data
     yield put(captureKeyStartTimeout());
     // only start the timer if we're using the capture key
@@ -215,7 +221,11 @@ export function* handleFetchClientSecret() {
   try {
     yield put(clientSecretProcessing(true));
     // TODO: possibly add status for stripe elements loading?
-    const result = yield call(PaymentApiService.getClientSecret);
+    const result = yield call(
+      isCommerceCoordinatorEnabled()
+        ? PaymentApiService.CommerceCoordinator.getClientSecret
+        : PaymentApiService.getClientSecret,
+    );
     yield put(clientSecretDataReceived(result));
   } catch (error) {
     yield call(handleErrors, error, true);
@@ -344,7 +354,11 @@ export function* handlePaymentState() {
           throw new ReferenceError('Invalid Basket Id or Payment Number');
         }
 
-        const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
+        const result = yield call(
+          PaymentApiService.CommerceCoordinator.getCurrentPaymentState,
+          paymentNumber,
+          basketId,
+        );
 
         yield put(pollPaymentState.received(result));
 

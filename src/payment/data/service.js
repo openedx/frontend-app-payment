@@ -4,6 +4,8 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import handleRequestError from './handleRequestError';
 import { transformResults } from './utils';
 
+/* eslint-disable max-classes-per-file */
+
 ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
@@ -29,7 +31,6 @@ function handleBasketApiError(requestError) {
 }
 
 // Ecomm Specific Calls
-
 export async function getCaptureKey() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context/`)
@@ -92,27 +93,53 @@ export async function getDiscountData(courseKey) {
 }
 
 // Commerce Coordinator Specific Calls
+const CC_BASE = getConfig().COMMERCE_COORDINATOR_BASE_URL;
 
-export async function getActiveOrder() {
-  // This call cant end in `/` or it fails to pattern match in CC
-  const { data } = await getAuthenticatedHttpClient()
-    .get(`${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`)
-    .catch(handleBasketApiError);
-  return transformResults(data);
-}
+export class CommerceCoordinator {
+  static GET_ACTIVE_ORDER_URL = `${CC_BASE}/frontend-app-payment/order/active`;
 
-export async function getCurrentPaymentState(paymentNumber, basketId) {
-  const { data } = await getAuthenticatedHttpClient()
-    .get(
-      `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`,
-      {
-        params:
-          {
-            payment_number: paymentNumber,
-            order_uuid: basketId,
-          },
-      },
-    )
-    .catch(handleBasketApiError);
-  return data;
+  static GET_CURRENT_PAYMENT_STATE_URL = `${CC_BASE}/frontend-app-payment/payment`;
+
+  // TODO: GRM: Validate URLS
+  static GET_CAPTURE_KEY_URL = `${CC_BASE}/frontend-app-payment/v0/capture-context/`;
+
+  static GET_CLIENT_SECRET_URL = `${CC_BASE}/frontend-app-payment/v0/capture-context`;
+
+  static async getActiveOrder() {
+    // This call cant end in `/` or it fails to pattern match in CC
+    const { data } = await getAuthenticatedHttpClient()
+      .get(CommerceCoordinator.GET_ACTIVE_ORDER_URL)
+      .catch(handleBasketApiError);
+    return transformResults(data);
+  }
+
+  static async getCurrentPaymentState(paymentNumber, basketId) {
+    const { data } = await getAuthenticatedHttpClient()
+      .get(
+        CommerceCoordinator.GET_CURRENT_PAYMENT_STATE_URL,
+        {
+          params:
+            {
+              payment_number: paymentNumber,
+              order_uuid: basketId,
+            },
+        },
+      )
+      .catch(handleBasketApiError);
+    return data;
+  }
+
+  static async getCaptureKey() {
+    const { data } = await getAuthenticatedHttpClient()
+      .get(CommerceCoordinator.GET_CAPTURE_KEY_URL)
+      .catch(handleBasketApiError);
+    return data;
+  }
+
+  static async getClientSecret() {
+    const { data } = await getAuthenticatedHttpClient()
+      .get(CommerceCoordinator.GET_CLIENT_SECRET_URL)
+      .catch(handleBasketApiError);
+    return data;
+  }
 }

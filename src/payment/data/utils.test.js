@@ -460,9 +460,7 @@ describe('isCommerceCoordinatorEnabled', () => {
     ${{ [CC_FLAG]: true }}   | ${true}
     ${{ [CC_FLAG]: false }}  | ${false}
     ${{ [XX_FLAG]: true }}   | ${false}
-  `('Flags $flags should yield $expected', ({ flags, expected }) => {
-    performWithModifiedWaffleFlags(flags, () => {
-      expect(isCommerceCoordinatorEnabled()).toStrictEqual(expected);
-    });
-  });
+  `('Flags $flags should yield $expected', ({ flags, expected }) => performWithModifiedWaffleFlags(flags, () => {
+    expect(isCommerceCoordinatorEnabled()).toStrictEqual(expected);
+  }));
 });

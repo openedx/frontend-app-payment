@@ -41,14 +41,15 @@ import '../__factories__/basket.factory';
 
 import * as cybersourceService from '../payment-methods/cybersource';
 import {
-  DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
   DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
   PAYMENT_STATE,
-  POLLING_PAYMENT_STATES,
+  POLLING_PAYMENT_STATES, WAFFLE_FLAGS,
 } from './constants';
 import { ERROR_CODES } from '../../feedback/data/constants';
 import { generateApiError } from './handleRequestError';
 import { paymentState } from './reducers';
+import { CommerceCoordinator } from './service';
+import { performWithModifiedWaffleFlags } from '../../data/waffleFlags.test';
 
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
@@ -60,12 +61,15 @@ jest.mock('../payment-methods/cybersource', () => ({
 const axiosMock = new MockAdapter(axios);
 getAuthenticatedHttpClient.mockReturnValue(axios);
 
+// Ecommerce IDA
 const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
-const CC_ORDER_API_ENDPOINT = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`;
-const CC_PAYMENT_STATE_ENDPOINT = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`;
 const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
 const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
 const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
+
+// Commerce Coordinator
+const CC_ORDER_API_ENDPOINT = CommerceCoordinator.GET_ACTIVE_ORDER_URL;
+const CC_PAYMENT_STATE_ENDPOINT = CommerceCoordinator.GET_CURRENT_PAYMENT_STATE_URL;
 
 axiosMock.reset();
 axiosMock.onAny().reply(200);
@@ -683,40 +687,50 @@ describe('saga tests', () => {
         },
       };
 
-      it('Processing Payment State', async () => {
-        try {
-          await runSaga(
-            {
-              getState: () => ({
-                payment: {
-                  basket: {
-                    foo: 'bar',
-                    paymentState: PAYMENT_STATE.PENDING,
-                    basketId: 7,
-                    payments: [
-                      { paymentNumber: 7 },
-                    ],
-                    isBasketProcessing: false,
-                  },
+      test.each`
+        ccEnabled | name
+        ${true}   | ${'Commerce Coordinator'}
+        ${false}  | ${'Ecommerce IDA'}
+      `('Processing Payment State for $name', async ({ ccEnabled }) => {
+        const waffleFlags = ccEnabled ? { [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true } : {};
+        return performWithModifiedWaffleFlags(
+          waffleFlags,
+          async () => {
+            try {
+              await runSaga(
+                {
+                  getState: () => ({
+                    payment: {
+                      basket: {
+                        foo: 'bar',
+                        paymentState: PAYMENT_STATE.PENDING,
+                        basketId: 7,
+                        payments: [
+                          { paymentNumber: 7 },
+                        ],
+                        isBasketProcessing: false,
+                      },
+                    },
+                  }),
+                  ...sagaOptions,
                 },
-              }),
-              ...sagaOptions,
-            },
-            handleSubmitPayment,
-            stripeArgs,
-          ).toPromise();
-        } catch (e) {} // eslint-disable-line no-empty
+                handleSubmitPayment,
+                stripeArgs,
+              ).toPromise();
+            } catch (e) {} // eslint-disable-line no-empty
 
-        expect(dispatched).toEqual([
-          basketProcessing(true),
-          clearMessages(),
-          submitPayment.request(),
-          submitPayment.success(),
-          pollPaymentState.trigger(),
-          basketProcessing(false),
-          submitPayment.fulfill(),
-        ]);
-        expect(caughtErrors).toEqual([]);
+            expect(dispatched).toEqual([
+              basketProcessing(true),
+              clearMessages(),
+              submitPayment.request(),
+              submitPayment.success(),
+              ccEnabled ? pollPaymentState.trigger() : undefined,
+              basketProcessing(false),
+              submitPayment.fulfill(),
+            ].filter((x) => x !== undefined));
+            expect(caughtErrors).toEqual([]);
+          },
+        );
       });
 
       it('With normal basket state', async () => {
@@ -983,7 +997,9 @@ describe('saga tests', () => {
       });
     }
 
-    it(`Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => {
+    it(`[CC Only] Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
+      // performWithModifiedWaffleFlags snapshots our config before executing this closure, so we will default to the
+      // state before the run after the run. (We no longer need to clean up in these cases)
       mergeConfig({
         PAYMENT_STATE_POLLING_DELAY_SECS: 0.1,
       });
@@ -1026,13 +1042,11 @@ describe('saga tests', () => {
         ...expectRuntimeFailure(),
       ]);
       expect(localCaughtErrors).toEqual([]);
+    }));
 
-      mergeConfig({
-        PAYMENT_STATE_POLLING_DELAY_SECS: DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
-      });
-    });
-
-    it('Should Retry until state changes', async () => {
+    it('[CC Only] Should Retry until state changes', async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
+      // performWithModifiedWaffleFlags snapshots our config before executing this closure, so we will default to the
+      // state before the run after the run. (We no longer need to clean up in these cases)
       mergeConfig({
         PAYMENT_STATE_POLLING_DELAY_SECS: 0.1,
       });
@@ -1084,11 +1098,7 @@ describe('saga tests', () => {
         ...expectPollAndSucceed(),
       ]);
       expect(localCaughtErrors).toEqual([]);
-
-      mergeConfig({
-        PAYMENT_STATE_POLLING_DELAY_SECS: DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
-      });
-    });
+    }));
   });
 
   it('should perform error handling for field errors', async () => {

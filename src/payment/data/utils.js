@@ -287,6 +287,9 @@ export function createCustomRoutine(name, addtlStages, keepDefaults = true) {
 
 /**
  * Determines if the MFE should follow the Commerce Coordinator Flows
+ *
+ * This checks a waffle flag and assumes the CommerceCoordinator has set the flag if the order type is right.
+ *
  * @returns {boolean}
  */
 export function isCommerceCoordinatorEnabled() {

@@ -7,15 +7,15 @@ export const ORDER_TYPES = {
   /**
    * The Redemption of a Single Course Enrollment Code
    *
-   * A bulk-purchases on a single course, usually B2B.
+   * A bulk-purchases on a single course, usually B2C for 100% off of course seats.
    */
   BULK_ENROLLMENT: 'Enrollment Code',
 
   /**
-   * Single Course Entitlement
+   * Program Entitlement
    *
-   * This means someone has purchased a full program containing the course,
-   * so they have already paid but may not actually be enrolled in a run.
+   * This means someone has purchased a full program containing the course, so they have already paid but may not
+   * actually be enrolled in a run.
    */
   ENTITLEMENT: 'Course Entitlement',
 
@@ -28,12 +28,21 @@ export const ORDER_TYPES = {
 };
 
 /**
- * Possible Standard Certificate Types [Unused?]
+ * Possible Standard Certificate Types
+ *
+ * These are marked as unused, however they do exist as constants in Order Details and a few other places.
+ *
  * @readonly
  * @enum {string}
  */
 export const CERTIFICATE_TYPES = {
+  /**
+   * Standard (Paid) Certificate
+   */
   VERIFIED: 'verified',
+  /**
+   * Certificate with College/University Credit
+   */
   CREDIT: 'credit',
 };
 

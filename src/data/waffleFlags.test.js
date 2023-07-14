@@ -10,12 +10,47 @@ import {
 /* eslint-disable import/prefer-default-export */
 
 /**
+ * Takes a potentially Asyncronous function and invokes it wraped as a promise.
+ * @param {Function} fn
+ * @param {Function} then
+ * @returns {Promise<void>}
+ */
+const executePossiblyAsyncFunction = (fn, then) => Promise.resolve(fn()).then(then);
+
+describe('Testing the Testers: executePossiblyAsyncFunction', () => {
+  it('should execute as a Function', () => {
+    const fn = jest.fn();
+    const then = jest.fn();
+
+    executePossiblyAsyncFunction(fn, then)
+      .then(() => {
+        expect(fn).toHaveBeenCalledTimes(1);
+        expect(then).toHaveBeenCalledTimes(1);
+      });
+  });
+
+  it('should execute as a AsyncFunction', async (done) => {
+    const fnInnerMock = jest.fn();
+    const then = jest.fn();
+    const fn = async () => { fnInnerMock(); };
+
+    executePossiblyAsyncFunction(fn, then)
+      .then(() => {
+        expect(fnInnerMock).toHaveBeenCalledTimes(1);
+        expect(then).toHaveBeenCalledTimes(1);
+      })
+      .then(done);
+  });
+});
+
+/**
  * Set our JSDOM Window and Document Location
  * @param {string} url The URL we intend to go to, this must be within the domain of `window.origin`
- * @param {() => void} perform
+ * @param {Function} perform
  * @see window.origin
  * @see history.pushState
  * @throws {SecurityError} if not within the domain of `window.origin`
+ * @return Promise<void>
  */
 const performWithModifiedJSDOMLocation = (url, perform) => {
   const lastValue = window.location.href;
@@ -26,26 +61,31 @@ const performWithModifiedJSDOMLocation = (url, perform) => {
   expect(document.location.href).toBe(url);
   expect(window.location.href).toBe(url);
 
-  perform();
+  const cleanup = () => {
+    /* eslint-disable-next-line no-restricted-globals */ // We need this for some test manipulation (history object)
+    history.pushState(history.state, null, new URL(lastValue));
+  };
 
-  /* eslint-disable-next-line no-restricted-globals */ // We need this for some test manipulation (history object)
-  history.pushState(history.state, null, new URL(lastValue));
+  return executePossiblyAsyncFunction(perform, cleanup);
 };
 
 /**
  * Perform a test with modified waffle flags.
  *
  * This function ensures the state is returned to its default.
- * @param {Object.<string, boolean>} flags
+ * @param {{}} flags
  * @param {() => void} perform
+ * @return Promise<void>
  */
 export function performWithModifiedWaffleFlags(flags, perform) {
   const initialConfig = getConfig().WAFFLE_FLAGS;
   mergeConfig({ WAFFLE_FLAGS: flags });
 
-  perform();
+  const cleanup = () => {
+    mergeConfig({ WAFFLE_FLAGS: initialConfig });
+  };
 
-  mergeConfig({ WAFFLE_FLAGS: initialConfig });
+  return executePossiblyAsyncFunction(perform, cleanup);
 }
 
 describe('getWaffleFlags', () => {
@@ -54,7 +94,7 @@ describe('getWaffleFlags', () => {
     //   This was WAY TOO HARD FOUGHT.
     const testLocation = `${window.origin}/dox.asp?${WAFFLE_PREFIX}xyzzy=on`;
 
-    performWithModifiedJSDOMLocation(testLocation, () => {
+    return performWithModifiedJSDOMLocation(testLocation, () => {
       const result = processUrlWaffleFlags();
       expect(result).toStrictEqual({ xyzzy: true });
     });
@@ -97,12 +137,10 @@ describe('waffleInterceptor', () => {
      ${{ x: true }}            | ${makeRequestConfig({ x: 1 })}
      ${{ x: false }}           | ${makeRequestConfig({ x: 0 })}
      ${{ x: true, y: false }}  | ${makeRequestConfig({ x: 1, y: 0 })}
-   `('Config $flags => returns $result.params', async ({ flags, result }) => {
-    performWithModifiedWaffleFlags(flags, async () => {
-      const interceptedParams = await waffleInterceptor(makeRequestConfig());
-      expect(interceptedParams).toStrictEqual(result);
-    });
-  });
+   `('Config $flags => returns $result.params', async ({ flags, result }) => performWithModifiedWaffleFlags(flags, async () => {
+    const interceptedParams = await waffleInterceptor(makeRequestConfig());
+    expect(interceptedParams).toStrictEqual(result);
+  }));
 });
 
 describe('isWaffleFlagEnabled', () => {
@@ -113,11 +151,9 @@ describe('isWaffleFlagEnabled', () => {
     ${{ x: true, y: false }}  | ${{ x: true, y: false }} | ${'exact equality'}           | ${false}
     ${{ x: true }}            | ${{ y: false, x: true }} | ${'missing flags are false'}  | ${false}
     ${{ x: true }}            | ${{ y: true, x: true }}  | ${'missing flags are true'}   | ${true}
-  `('Testing $waffles for $reason', ({ waffles, results, defaultValue }) => {
-    performWithModifiedWaffleFlags(waffles, () => {
-      Object.keys(results).forEach((key) => {
-        expect(isWaffleFlagEnabled(key, defaultValue)).toEqual(results[key]);
-      });
+  `('Testing $waffles for $reason', ({ waffles, results, defaultValue }) => performWithModifiedWaffleFlags(waffles, () => {
+    Object.keys(results).forEach((key) => {
+      expect(isWaffleFlagEnabled(key, defaultValue)).toEqual(results[key]);
     });
-  });
+  }));
 });
