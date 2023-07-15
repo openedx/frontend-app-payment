@@ -3,8 +3,11 @@ import {
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 
-import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getReduxFormValidationErrors } from '../../../payment/data/utils';
+import {
+  handleCustomErrors,
+  sendSubscriptionEvent,
+} from '../utils';
 
 // Actions
 import {
@@ -23,23 +26,6 @@ import { handleSubscriptionErrors, clearMessages } from '../../../feedback';
 import * as SubscriptionApiService from '../service';
 import { subscriptionStripeCheckout } from '../../subscription-methods';
 
-const sendSubscriptionEvent = ({ details, success }) => {
-  const eventType = success
-    ? 'edx.bi.user.subscription.program.checkout.success'
-    : 'edx.bi.user.subscription.program.checkout.failure';
-
-  sendTrackEvent(
-    eventType,
-    {
-      paymentProcessor: details.paymentMethod,
-      isTrialEligible: details.isTrialEligible,
-      isNewSubscription: details.isTrialEligible,
-      programUuid: details.programUuid,
-      price: details.price,
-    },
-  );
-};
-
 export const paymentMethods = {
   stripe: subscriptionStripeCheckout,
 };
@@ -54,16 +40,6 @@ export function* handleReduxFormValidationErrors(error) {
     yield put(stopSubmit('subscription', fieldErrors));
   }
 }
-
-const handleCustomErrors = (error, fallbackKey) => {
-  const apiErrors = [{
-    code: fallbackKey || error.cause,
-    userMessage: error.message,
-  }];
-  const err = new Error();
-  err.errors = apiErrors;
-  return err;
-};
 
 export function* handleFetchSubscriptionDetails() {
   if (yield isSubscriptionDetailsProcessing()) {
@@ -106,9 +82,12 @@ export function* handleSubmitSubscription({ payload }) {
     const result = yield call(SubscriptionApiService.postDetails, postData);
 
     yield put(submitSubscription.success(result));
-    yield put(subscriptionStatusReceived(result));
+    yield put(subscriptionStatusReceived({ ...result, payment_method_id: postData.payment_method_id }));
     // success segment event
-    sendSubscriptionEvent({ details, success: true });
+    if (result.status === 'trialing'
+    || result.status === 'succeeded') {
+      sendSubscriptionEvent({ details, success: true });
+    }
   } catch (error) {
     // Do not handle errors on user aborted actions
     if (!error.aborted) {

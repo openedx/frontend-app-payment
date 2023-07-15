@@ -20,6 +20,12 @@ ensureConfig([
   'SUBSCRIPTIONS_BASE_URL',
 ], 'subscription API service');
 
+/**
+ * handleDetailsApiError
+ * handle the server api error and
+ * transform them into what feedback alerts
+ * should render
+ */
 export function handleDetailsApiError(requestError) {
   const errors = [];
   /* eslint-disable camelcase */
@@ -38,6 +44,11 @@ export function handleDetailsApiError(requestError) {
   throw apiError;
 }
 
+/**
+ * getDetails
+ * fetches the user cart details for subscription
+ * @returns program details
+ */
 export async function getDetails() {
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`)
@@ -45,10 +56,32 @@ export async function getDetails() {
   return transformSubscriptionDetails(data);
 }
 
+/**
+ * postDetails
+ * will post checkout form details details
+ * @param {object} postData
+ * @returns server response object
+ */
 export async function postDetails(postData) {
   const { data } = await getAuthenticatedHttpClient()
     .post(
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
+      postData,
+    )
+    .catch(handleDetailsApiError.bind({ payload: postData }));
+  return transformSubscriptionDetails(data);
+}
+
+/**
+ * checkoutComplete
+ * notifies the successful 3ds completion
+ * @param {object} postData
+ * @returns server response object
+ */
+export async function checkoutComplete(postData) {
+  const { data } = await getAuthenticatedHttpClient()
+    .post(
+      `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout-complete/`,
       postData,
     )
     .catch(handleDetailsApiError.bind({ payload: postData }));

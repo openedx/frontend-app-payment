@@ -6,7 +6,7 @@ import {
 export const CONFIRMATION_STATUS = {
   trialing: 'trialing',
   succeeded: 'succeeded',
-  requires_action: '3DS',
+  requires_action: 'requires_action',
 };
 
 const subscriptionStatusInitialState = {

@@ -16,7 +16,7 @@ import { detailsSelector } from '../../data/details/selectors';
  * for trial and paymentIntent function for non-trial
  * purchases in order to load 3DS details inside an iFrame modal
  */
-export const Secure3DModal = ({ stripe }) => {
+export const Secure3DModal = ({ stripe, elements }) => {
   const { status, confirmationClientSecret } = useSelector(subscriptionStatusSelector);
   const { isTrialEligible } = useSelector(detailsSelector);
   const [isOpen, setOpen] = useState(false);
@@ -60,7 +60,7 @@ export const Secure3DModal = ({ stripe }) => {
   };
 
   useEffect(() => {
-    if (status === '3DS' || status === 'trialing') {
+    if (status === 'requires_action') {
       fetchSecureDetails();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,10 +72,15 @@ export const Secure3DModal = ({ stripe }) => {
     try {
       const fetchPaymentDetails = isTrialEligible ? retrieveSetupIntent : retrievePaymentIntent;
       const paymentDetails = await fetchPaymentDetails();
-      if (paymentDetails.paymentIntent.status === 'succeeded') {
+      if (paymentDetails.status === 'succeeded') {
         // Show your customer that the payment has succeeded
-      } else if (paymentDetails.paymentIntent.status === 'requires_payment_method') {
+        console.log('make stripe-fulfill api call');
+      } else if (paymentDetails.status === 'requires_payment_method') {
+        elements.clear();
+        elements.focus();
+
         // Authentication failed, prompt the customer to enter another payment method
+        console.log('clear the stripe elements and ask user to submit new details');
       }
     } catch (e) {
       // TODO: log the error to segment
@@ -109,6 +114,10 @@ Secure3DModal.propTypes = {
   stripe: PropTypes.shape({
     retrievePaymentIntent: () => {},
     retrieveSetupIntent: () => {},
+  }).isRequired,
+  elements: PropTypes.shape({
+    clear: () => {},
+    focus: () => {},
   }).isRequired,
 };
 

@@ -184,7 +184,7 @@ const StripePaymentForm = ({
             disabled={submitting}
             isProcessing={isProcessing}
           />
-          <Secure3DModal stripe={stripe} />
+          <Secure3DModal stripe={stripe} elements={elements} />
         </>
       ) : (
         <PlaceOrderButton
