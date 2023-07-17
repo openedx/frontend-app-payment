@@ -68,7 +68,10 @@ export async function postDetails(postData) {
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`,
       postData,
     )
-    .catch(handleDetailsApiError.bind({ payload: postData }));
+    .catch(handleDetailsApiError.bind({
+      // binding the postData data so we can extract programUuid to send a SDN segment event
+      payload: postData,
+    }));
   return transformSubscriptionDetails(data);
 }
 
@@ -84,6 +87,6 @@ export async function checkoutComplete(postData) {
       `${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout-complete/`,
       postData,
     )
-    .catch(handleDetailsApiError.bind({ payload: postData }));
+    .catch(handleDetailsApiError);
   return transformSubscriptionDetails(data);
 }

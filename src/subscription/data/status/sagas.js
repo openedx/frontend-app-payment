@@ -13,7 +13,10 @@ import { handleSubscriptionErrors, clearMessages } from '../../../feedback';
 // Services
 import * as SubscriptionApiService from '../service';
 
-export function* handleSuccessful3DS({ payload }) {
+/**
+ * post the successful 3DS status to stripe-checkout-complete endpoint
+ */
+export function* successful3DS({ payload }) {
   const details = yield select(state => ({ ...state.subscription.details }));
   const status = yield select(state => ({ ...state.subscription.status }));
   try {
@@ -24,13 +27,14 @@ export function* handleSuccessful3DS({ payload }) {
       program_title: details.programTitle,
       payment_method_id: status.paymentMethodId,
       confirmation_client_secret: status.confirmationClientSecret,
-      subscription_id: status.subscription_id,
+      subscription_id: status.subscriptionId,
       secure_3d_status: payload.status,
     };
-    const result = yield call(SubscriptionApiService.checkoutComplete, postData);
+    yield call(SubscriptionApiService.checkoutComplete, postData);
 
-    // yield put(submitSubscription.success(result));
-    yield put(subscriptionStatusReceived(result));
+    yield put(subscriptionStatusReceived({
+      status: details.isTrialEligible ? 'trialing' : 'succeeded',
+    }));
     // success segment event
     sendSubscriptionEvent({ details, success: true });
   } catch (error) {
@@ -41,7 +45,10 @@ export function* handleSuccessful3DS({ payload }) {
   }
 }
 
-export function* handleUnSuccessful3DS() {
+/**
+ * display an alert for unsuccessful 3DS status
+ */
+export function* unSuccessful3DS() {
   const details = yield select(state => ({ ...state.subscription.details }));
   try {
     yield put(clearMessages()); // Don't leave messages floating on the page after clicking submit
@@ -65,4 +72,4 @@ export function* handleUnSuccessful3DS() {
   }
 }
 
-export default handleSuccessful3DS;
+export default successful3DS;

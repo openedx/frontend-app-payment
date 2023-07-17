@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 /**
  * Secure3dRedirectPage
@@ -9,7 +9,9 @@ import React from 'react';
  * should be close now.
  */
 export const Secure3dRedirectPage = () => {
-  window.top.postMessage('3DS-authentication-complete');
+  useEffect(() => {
+    window.top.postMessage('3DS-authentication-complete');
+  }, []);
   return (
     <div className="secure-page-container">
       <div className="spinner-border" />

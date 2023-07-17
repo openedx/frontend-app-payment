@@ -9,6 +9,7 @@ import {
   EmbargoErrorMessage,
   ProgramUnavailableMessage,
   IneligibleProgramErrorMessage,
+  Unsuccessful3DSMessage,
 } from './ErrorMessages';
 
 /**
@@ -24,6 +25,7 @@ export const SubscriptionAlerts = () => (
       program_unavailable: (<ProgramUnavailableMessage />),
       ineligible_program: (<IneligibleProgramErrorMessage />),
       payment_attachment_error: (<TransactionDeclined />),
+      requires_payment_method: (<Unsuccessful3DSMessage />),
     }}
   />
 );

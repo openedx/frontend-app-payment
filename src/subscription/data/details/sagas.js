@@ -82,7 +82,7 @@ export function* handleSubmitSubscription({ payload }) {
     const result = yield call(SubscriptionApiService.postDetails, postData);
 
     yield put(submitSubscription.success(result));
-    yield put(subscriptionStatusReceived({ ...result, payment_method_id: postData.payment_method_id }));
+    yield put(subscriptionStatusReceived({ ...result, paymentMethodId: postData.payment_method_id }));
     // success segment event
     if (result.status === 'trialing'
     || result.status === 'succeeded') {
