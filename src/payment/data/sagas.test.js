@@ -43,7 +43,8 @@ import * as cybersourceService from '../payment-methods/cybersource';
 import {
   DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
   PAYMENT_STATE,
-  POLLING_PAYMENT_STATES, WAFFLE_FLAGS,
+  POLLING_PAYMENT_STATES,
+  WAFFLE_FLAGS,
 } from './constants';
 import { ERROR_CODES } from '../../feedback/data/constants';
 import { generateApiError } from './handleRequestError';

@@ -31,14 +31,15 @@ function handleBasketApiError(requestError) {
 }
 
 // Ecomm Specific Calls
-export async function getCaptureKey() {
+
+export async function getCaptureKey() { // CyberSource Only
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context/`)
     .catch(handleBasketApiError);
   return data;
 }
 
-export async function getClientSecret() {
+export async function getClientSecret() { // Stripe Only
   const { data } = await getAuthenticatedHttpClient()
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context`)
     .catch(handleBasketApiError);
@@ -96,17 +97,14 @@ export async function getDiscountData(courseKey) {
 const CC_BASE = getConfig().COMMERCE_COORDINATOR_BASE_URL;
 
 export class CommerceCoordinator {
+  // This URL cant end in `/` or it fails to pattern match in CC
   static GET_ACTIVE_ORDER_URL = `${CC_BASE}/frontend-app-payment/order/active`;
 
   static GET_CURRENT_PAYMENT_STATE_URL = `${CC_BASE}/frontend-app-payment/payment`;
 
-  // TODO: GRM: Validate URLS
-  static GET_CAPTURE_KEY_URL = `${CC_BASE}/frontend-app-payment/v0/capture-context/`;
-
-  static GET_CLIENT_SECRET_URL = `${CC_BASE}/frontend-app-payment/v0/capture-context`;
+  static GET_CLIENT_SECRET_URL = `${CC_BASE}/frontend-app-payment/payment/draft`;
 
   static async getActiveOrder() {
-    // This call cant end in `/` or it fails to pattern match in CC
     const { data } = await getAuthenticatedHttpClient()
       .get(CommerceCoordinator.GET_ACTIVE_ORDER_URL)
       .catch(handleBasketApiError);
@@ -129,16 +127,14 @@ export class CommerceCoordinator {
     return data;
   }
 
-  static async getCaptureKey() {
-    const { data } = await getAuthenticatedHttpClient()
-      .get(CommerceCoordinator.GET_CAPTURE_KEY_URL)
-      .catch(handleBasketApiError);
-    return data;
-  }
-
+  /**
+   * Get the Client Secret for a Payment Intent
+   * @note This is used only for the Stripe Payment Processor
+   * @return {Promise<*>}
+   */
   static async getClientSecret() {
     const { data } = await getAuthenticatedHttpClient()
-      .get(CommerceCoordinator.GET_CLIENT_SECRET_URL)
+      .put(CommerceCoordinator.GET_CLIENT_SECRET_URL)
       .catch(handleBasketApiError);
     return data;
   }
