@@ -50,7 +50,7 @@ export const Unsuccessful3DSMessage = () => (
   <FormattedMessage
     FormattedMessage
     id="subscription.alerts.error.requires_payment_method"
-    defaultMessage="We're sorry, the details you provided could not pass the 3d secure check. Please try different payment details."
+    defaultMessage="We're sorry, the details you provided could not pass the 3D Secure check. Please try different payment details."
     description="Telling user that there was an error completing 3DS flow for purchasing a subscription."
   >
     {text => <p aria-level="2">{text}</p>}

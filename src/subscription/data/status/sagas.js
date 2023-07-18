@@ -60,6 +60,9 @@ export function* unSuccessful3DS() {
       true,
     );
     // failure segment event
+    yield put(subscriptionStatusReceived({
+      status: null,
+    }));
     sendSubscriptionEvent({ details, success: false });
   } catch (error) {
     yield call(
