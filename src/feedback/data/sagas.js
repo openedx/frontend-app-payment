@@ -103,6 +103,7 @@ export function* handleSubscriptionErrors(e, clearExistingMessages) {
           'program_unavailable',
           'ineligible_program',
           'payment_attachment_error',
+          'requires_payment_method',
         ];
 
         if (customErrors.includes(error.code)) {
