@@ -13,8 +13,7 @@ import { subscriptionStatusSelector } from '../../data/status/selectors';
 import { detailsSelector } from '../../data/details/selectors';
 
 import {
-  handleSuccessful3DS,
-  handleUnSuccessful3DS,
+  onSuccessful3DS,
 } from '../../data/status/actions';
 
 /**
@@ -26,7 +25,7 @@ import {
  */
 export const Secure3DModal = ({ stripe, elements }) => {
   const dispatch = useDispatch();
-  const modalRef = useRef(false);
+  const modalRef = useRef('inActive');
   const [isOpen, setOpen] = useState(false);
 
   const { isTrialEligible } = useSelector(detailsSelector);
@@ -75,31 +74,8 @@ export const Secure3DModal = ({ stripe, elements }) => {
     if (modalRef.current === 'active') {
       // completed 3DS, set to inActive so multiple state updates doesn't trigger the 3DS update
       modalRef.current = 'inActive';
-      const error = new Error('Could not complete the payment', { cause: 'requires_payment_method' });
-      try {
-        const fetchPaymentDetails = isTrialEligible ? retrieveSetupIntent : retrievePaymentIntent;
-        const paymentDetails = await fetchPaymentDetails();
-        if (paymentDetails.status === 'succeeded') {
-          // Show your customer that the payment has succeeded
-          dispatch(handleSuccessful3DS({ status: paymentDetails.status }));
-        } else if (paymentDetails.status === 'requires_payment_method') {
-          // clear the stripe elements and ask user to submit new details
-          // Authentication failed, prompt the customer to enter another payment method
-          const paymentElement = elements.getElement(PaymentElement);
-          paymentElement.clear();
-          paymentElement.focus();
-          dispatch(handleUnSuccessful3DS({ error }));
-        } else {
-          // Status unknown
-          dispatch(handleUnSuccessful3DS({ error }));
-        }
-        window.removeEventListener('message', null);
-        setOpen(false);
-      } catch (e) {
-        setOpen(false);
-        dispatch(handleUnSuccessful3DS({ error }));
-        window.removeEventListener('message', null);
-      }
+      dispatch(onSuccessful3DS({}));
+      window.removeEventListener('message', null);
     }
   };
 
@@ -131,6 +107,17 @@ export const Secure3DModal = ({ stripe, elements }) => {
   useEffect(() => {
     if (status === 'requires_action') {
       fetchSecureDetails();
+    } else if (status === 'requires_payment_method') {
+      // clear the stripe elements and ask user to submit new details
+      // 3DS failed, prompt the customer to re-enter payment details
+      const paymentElement = elements.getElement(PaymentElement);
+      paymentElement.clear();
+      paymentElement.focus();
+    }
+
+    if (status !== 'requires_action' && isOpen) {
+      // hide the modal for all other states
+      setOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
