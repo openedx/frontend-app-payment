@@ -26,9 +26,9 @@
     }
   }
   .product-wrapper {
-    .col-7 {
-      @extend .pl-0;
-    }
+    // .col-7 {
+    //   @extend .pl-0;
+    // }
     @include media-breakpoint-down(xl){
       @include product-title-column;
     }
@@ -101,9 +101,9 @@
 .secure-3d-modal {
   max-width: none !important;
   max-height: none !important;
-  height: 660px;
-  width: 400px;
-  overflow: hidden;
+  height: 660px !important;;
+  width: 400px !important;
+  overflow: hidden !important;;
   .secure-3ds-wrapper {
     height: 100%;
     width: 100%;
