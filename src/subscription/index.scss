@@ -101,9 +101,11 @@
 .secure-3d-modal {
   max-width: none !important;
   max-height: none !important;
-  height: 90vh;
+  height: 660px;
+  width: 400px;
   .secure-3ds-wrapper {
     height: 100%;
+    width: 100%;
     margin-bottom: 0;
   }
   iframe {
