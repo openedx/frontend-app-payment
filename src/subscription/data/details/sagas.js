@@ -79,7 +79,8 @@ export function* handleSubmitSubscription({ payload }) {
     yield put(submitSubscription.request());
     const paymentMethodCheckout = paymentMethods[method];
     const postData = yield call(paymentMethodCheckout, details, paymentArgs);
-    const result = yield call(SubscriptionApiService.postDetails, postData);
+    // sending subscription price
+    const result = yield call(SubscriptionApiService.postDetails, { ...postData, price: details.price });
 
     yield put(submitSubscription.success(result));
     yield put(subscriptionStatusReceived({ ...result, paymentMethodId: postData.payment_method_id }));

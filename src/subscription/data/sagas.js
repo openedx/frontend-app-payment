@@ -12,17 +12,14 @@ import {
   handleSubmitSubscription,
 } from './details/sagas';
 import {
-  handleSuccessful3DS,
-  handleUnSuccessful3DS,
+  onSuccessful3DS,
 } from './status/actions';
 import {
-  successful3DS,
-  unSuccessful3DS,
+  handleSuccessful3DS,
 } from './status/sagas';
 
 export default function* saga() {
   yield takeLatest(fetchSubscriptionDetails.TRIGGER, handleFetchSubscriptionDetails);
   yield takeLatest(submitSubscription.TRIGGER, handleSubmitSubscription);
-  yield takeLatest(handleSuccessful3DS.TRIGGER, successful3DS);
-  yield takeLatest(handleUnSuccessful3DS.TRIGGER, unSuccessful3DS);
+  yield takeLatest(onSuccessful3DS.TRIGGER, handleSuccessful3DS);
 }
