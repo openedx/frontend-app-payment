@@ -25,7 +25,7 @@ import {
  */
 export const Secure3DModal = ({ stripe, elements }) => {
   const dispatch = useDispatch();
-  const modalRef = useRef('inActive');
+  const modalRef = useRef('inactive');
   const [isOpen, setOpen] = useState(false);
 
   const { isTrialEligible } = useSelector(detailsSelector);
@@ -72,8 +72,8 @@ export const Secure3DModal = ({ stripe, elements }) => {
   const on3DSComplete = async () => {
     // Hide the 3DS UI
     if (modalRef.current === 'active') {
-      // completed 3DS, set to inActive so multiple state updates doesn't trigger the 3DS update
-      modalRef.current = 'inActive';
+      // completed 3DS, set to inactive so multiple state updates doesn't trigger the 3DS update
+      modalRef.current = 'inactive';
       dispatch(onSuccessful3DS({}));
       window.removeEventListener('message', null);
     }

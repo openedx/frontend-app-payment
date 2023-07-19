@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 
 /**
  * Secure3dRedirectPage
- * On the completion of 3DS step bank site will
- * redirect user to this page. On loading this
+ * On the completion of 3DS authentication from the bank site,
+ * user will be redirected to this page. Loading this
  * page will update its parent window that 3DS
  * flow has been completed and iframe, modal
  * should be close now.
