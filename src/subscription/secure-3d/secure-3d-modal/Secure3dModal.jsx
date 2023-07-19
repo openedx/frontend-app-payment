@@ -39,6 +39,7 @@ export const Secure3DModal = ({ stripe, elements }) => {
       const container = document.getElementById('secure-3ds-wrapper');
       const iframe = document.createElement('iframe');
       iframe.src = url;
+      iframe.id = 'secure-3d-iframe';
       iframe.width = '100%';
       iframe.height = '100%';
       container.appendChild(iframe);
