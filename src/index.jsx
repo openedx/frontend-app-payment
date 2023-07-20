@@ -36,7 +36,7 @@ import {
 } from './payment';
 import { SubscriptionPage } from './subscription';
 import { Secure3dRedirectPage } from './subscription/secure-3d/Secure3dRedirectPage';
-
+import { HelmetHeader } from './components/helmet-header/HelmetHeader';
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -86,6 +86,7 @@ subscribe(APP_READY, () => {
 
   ReactDOM.render(
     <AppProvider store={configureStore()}>
+      <HelmetHeader />
       <Header />
       <main id="main">
         <Switch>
