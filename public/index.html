@@ -5,6 +5,7 @@
     <link rel="preconnect" href="<%= preconnectURL %>" />
     <% }); %>
     <title>Payment | edX</title>
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'self' https://js.stripe.com https://hooks.stripe.com;"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="<%=htmlWebpackPlugin.options.FAVICON_URL%>" type="image/x-icon" />
