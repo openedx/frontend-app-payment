@@ -45,6 +45,10 @@ describe('Testing the Testers: executePossiblyAsyncFunction', () => {
 
 /**
  * Set our JSDOM Window and Document Location
+ *
+ * **NOTE**: You *MUST* include your tests async DoneCallback as the final action of your `perform`'s closure.
+ * failure to do so will lead to test timeouts.
+ *
  * @param {string} url The URL we intend to go to, this must be within the domain of `window.origin`
  * @param {Function} perform
  * @see window.origin
@@ -73,6 +77,10 @@ const performWithModifiedJSDOMLocation = (url, perform) => {
  * Perform a test with modified waffle flags.
  *
  * This function ensures the state is returned to its default.
+ *
+ * **NOTE**: You *MUST* include your tests async DoneCallback as the final action of your `perform`'s closure.
+ * failure to do so will lead to test timeouts.
+ *
  * @param {{}} flags
  * @param {() => void} perform
  * @return Promise<void>

@@ -7,7 +7,6 @@ import {
   basketProcessing,
   submitPayment,
   fetchBasket,
-  fetchActiveOrder,
   pollPaymentState,
 } from './actions';
 import { currencyDisclaimerSelector, paymentSelector } from './selectors';
@@ -215,19 +214,6 @@ describe('redux tests', () => {
         store.dispatch(fetchBasket.fulfill());
         expect(store.getState().payment.basket.loading).toBe(false);
         expect(store.getState().payment.basket.loaded).toBe(true);
-      });
-
-      describe('fetchActiveOrder actions', () => {
-        it('fetchActiveOrder.TRIGGER action', () => {
-          store.dispatch(fetchActiveOrder());
-          expect(store.getState().payment.basket.loading).toBe(true);
-        });
-
-        it('fetchActiveOrder.FULFILL action', () => {
-          store.dispatch(fetchActiveOrder.fulfill());
-          expect(store.getState().payment.basket.loading).toBe(false);
-          expect(store.getState().payment.basket.loaded).toBe(true);
-        });
       });
     });
 

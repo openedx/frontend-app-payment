@@ -3,8 +3,7 @@ import snakeCase from 'lodash.snakecase';
 import { getConfig } from '@edx/frontend-platform';
 import Cookies from 'universal-cookie';
 import { createRoutineCreator, defaultRoutineStages } from 'redux-saga-routines';
-import { ORDER_TYPES, WAFFLE_FLAGS } from './constants';
-import { isWaffleFlagEnabled } from '../../data/waffleFlags';
+import { ORDER_TYPES } from './constants';
 
 export function modifyObjectKeys(object, modify) {
   // If the passed in object is not an object, return it.
@@ -283,15 +282,4 @@ export function createCustomRoutine(name, addtlStages, keepDefaults = true) {
     ...(keepDefaults ? defaultRoutineStages : []),
     ...addtlStages.map(x => x.toUpperCase()),
   ])(name);
-}
-
-/**
- * Determines if the MFE should follow the Commerce Coordinator Flows
- *
- * This checks a waffle flag and assumes the CommerceCoordinator has set the flag if the order type is right.
- *
- * @returns {boolean}
- */
-export function isCommerceCoordinatorEnabled() {
-  return isWaffleFlagEnabled(WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED);
 }

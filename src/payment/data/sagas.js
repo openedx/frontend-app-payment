@@ -5,7 +5,9 @@ import { stopSubmit } from 'redux-form';
 import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging/interface';
 import {
-  getReduxFormValidationErrors, isCommerceCoordinatorEnabled, MINS_AS_MS, SECS_AS_MS,
+  getReduxFormValidationErrors,
+  MINS_AS_MS,
+  SECS_AS_MS,
 } from './utils';
 import { ERROR_CODES, MESSAGE_TYPES } from '../../feedback/data/constants';
 
@@ -20,7 +22,6 @@ import {
   captureKeyStartTimeout,
   microformStatus,
   fetchBasket,
-  fetchActiveOrder,
   addCoupon,
   removeCoupon,
   updateQuantity,
@@ -43,8 +44,13 @@ import { checkout as checkoutPaypal } from '../payment-methods/paypal';
 import { checkout as checkoutApplePay } from '../payment-methods/apple-pay';
 import { checkout as checkoutStripe } from '../payment-methods/stripe';
 import { paymentProcessStatusShouldRunSelector } from './selectors';
-import { PAYMENT_STATE, DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS, POLLING_PAYMENT_STATES } from './constants';
+import {
+  PAYMENT_STATE,
+  DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
+  POLLING_PAYMENT_STATES,
+} from './constants';
 import { generateApiError } from './handleRequestError';
+import { getCurrentPaymentState } from './service';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
@@ -119,35 +125,7 @@ export function* handleFetchBasket() {
   } finally {
     yield put(basketProcessing(false)); // we are done modifying the basket
     yield put(fetchBasket.fulfill()); // mark the basket as finished loading
-  }
-}
-
-export function* handleFetchActiveOrder() {
-  if (yield isBasketProcessing()) {
-    // Do nothing if there is a request currently in flight to get or modify the basket
-    return;
-  }
-
-  try {
-    yield put(basketProcessing(true)); // we are going to modify the basket, don't make changes
-    // TODO: Add switch for calling ecomemrce vs comerce coordinator with waffle flag
-    const result = yield call(PaymentApiService.CommerceCoordinator.getActiveOrder);
-
-    // TODO: switch on result.paymentState, show checkout page, trigger polling, show reciept page
-    // TODO: THES-211 Decide if this should be broken out into a separate store
-    // or use the same that we are for ecommerce
-    yield put(basketDataReceived(result)); // update redux store with basket data
-    // TODO: THES-207 for how coordinator will return errors to mfe
-    // yield call(handleMessages, result.messages, true, window.location.search);
-  } catch (error) {
-    yield call(handleErrors, error, true);
-    if (error.basket) {
-      yield put(basketDataReceived(error.basket)); // update redux store with basket data
-    }
-  } finally {
-    yield put(basketProcessing(false)); // we are done modifying the basket
-    yield put(fetchActiveOrder.fulfill()); // mark the basket as finished loading
-    if (yield select((state) => paymentProcessStatusShouldRunSelector(state))) {
+    if (yield select((state) => paymentProcessStatusShouldRunSelector(state))) { // Checks CC Waffle Flag
       yield put(pollPaymentState());
     }
   }
@@ -217,11 +195,7 @@ export function* handleFetchClientSecret() {
   try {
     yield put(clientSecretProcessing(true));
     // TODO: possibly add status for stripe elements loading?
-    const result = yield call(
-      isCommerceCoordinatorEnabled()
-        ? PaymentApiService.CommerceCoordinator.getClientSecret
-        : PaymentApiService.getClientSecret,
-    );
+    const result = yield call(PaymentApiService.getClientSecret);
     yield put(clientSecretDataReceived(result));
   } catch (error) {
     yield call(handleErrors, error, true);
@@ -350,11 +324,7 @@ export function* handlePaymentState() {
           throw new ReferenceError('Invalid Basket Id or Payment Number');
         }
 
-        const result = yield call(
-          PaymentApiService.CommerceCoordinator.getCurrentPaymentState,
-          paymentNumber,
-          basketId,
-        );
+        const result = yield call(getCurrentPaymentState, paymentNumber, basketId);
 
         yield put(pollPaymentState.received(result));
 
@@ -410,7 +380,6 @@ export default function* saga() {
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
   yield takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);
-  yield takeEvery(fetchActiveOrder.TRIGGER, handleFetchActiveOrder);
   yield takeEvery(addCoupon.TRIGGER, handleAddCoupon);
   yield takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon);
   yield takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity);

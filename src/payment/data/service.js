@@ -3,14 +3,66 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
 import handleRequestError from './handleRequestError';
 import { transformResults } from './utils';
-
-/* eslint-disable max-classes-per-file */
+import { isWaffleFlagEnabled } from '../../data/waffleFlags';
+import { WAFFLE_FLAGS } from './constants';
 
 ensureConfig([
   'ECOMMERCE_BASE_URL',
   'LMS_BASE_URL',
-  'COMMERCE_COORDINATOR_BASE_URL',
 ], 'payment API service');
+
+/* eslint-disable no-use-before-define */ /* Chicken vs Egg...
+    but it is preferred the interpreter pickup errors rather than use magic strings */
+
+/**
+ * Ecommerce IDA/Coordinator IDA URLs keyed by the function name they are meant for.
+ *
+ * @type {{[p: string]: string}}
+ */
+const urlsByFunction = {
+  /* Shared common paths */
+  [getClientSecret.name]: '/bff/payment/v0/capture-context', // no forward slash at the end or we will explode
+  [getBasket.name]: '/bff/payment/v0/payment/',
+
+  /* Ecommerce IDA Specific */
+  [getCaptureKey.name]: '/bff/payment/v0/payment/',
+  [postQuantity.name]: '/bff/payment/v0/quantity/',
+  [postCoupon.name]: '/bff/payment/v0/vouchers/',
+  [deleteCoupon.name]: '/bff/payment/v0/vouchers/',
+
+  /* Commerce Coordinator Specific */
+  [getCurrentPaymentState.name]: '/payment',
+};
+
+/* eslint-enable no-use-before-define */
+
+/**
+ * Get a fully resolvable base URL by function name.
+ *
+ * @param {Function} serviceFunction the function.name value for the URL intended to be resolved
+ * @param {boolean} [testsOnlyForceCoordinator=false] **TEST-CODE ONLY**; Forces the base URL to be Coordinators
+ * @return {string|undefined} A resolved URL or `undefined` if not found.
+ *
+ * @see getUrlBase
+ * @see WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED
+ */
+export const resolveUrlForFunction = (serviceFunction, testsOnlyForceCoordinator = false) => {
+  let base = getConfig().ECOMMERCE_BASE_URL;
+
+  if (isWaffleFlagEnabled(WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED) || testsOnlyForceCoordinator) {
+    ensureConfig(['COMMERCE_COORDINATOR_BASE_URL']);
+    // CC Endpoints must target receiving app, even though we use the root in the config for consistency's sake.
+    base = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment`;
+  }
+
+  const url = urlsByFunction[serviceFunction.name];
+
+  if (url === undefined) {
+    return undefined;
+  }
+
+  return `${base}${url}`;
+};
 
 function handleBasketApiError(requestError) {
   try {
@@ -30,41 +82,41 @@ function handleBasketApiError(requestError) {
   }
 }
 
-// Ecomm Specific Calls
-
-export async function getCaptureKey() { // CyberSource Only
+// Shared Service Calls
+export async function getClientSecret() { // Stripe Only, Both backends
   const { data } = await getAuthenticatedHttpClient()
-    .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context/`)
+    .get(resolveUrlForFunction(getClientSecret))
     .catch(handleBasketApiError);
   return data;
 }
 
-export async function getClientSecret() { // Stripe Only
-  const { data } = await getAuthenticatedHttpClient()
-    .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/capture-context`)
-    .catch(handleBasketApiError);
-  return data;
-}
-
-export async function getBasket(discountJwt) {
+export async function getBasket(discountJwt) { // Both Backends
   const discountJwtArg = typeof discountJwt !== 'undefined' ? `?discount_jwt=${discountJwt}` : '';
   const { data } = await getAuthenticatedHttpClient()
-    .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
+    .get(`${resolveUrlForFunction(getBasket)}${discountJwtArg}`)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
-export async function postQuantity(quantity) {
+// Ecomm Specific Calls
+export async function getCaptureKey() { // CyberSource Only, Ecomm Only
   const { data } = await getAuthenticatedHttpClient()
-    .post(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
+    .get(resolveUrlForFunction(getCaptureKey))
+    .catch(handleBasketApiError);
+  return data;
+}
+
+export async function postQuantity(quantity) { // Ecomm Only
+  const { data } = await getAuthenticatedHttpClient()
+    .post(resolveUrlForFunction(postQuantity), { quantity })
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
-export async function postCoupon(code) {
+export async function postCoupon(code) { // Ecomm Only
   const { data } = await getAuthenticatedHttpClient()
     .post(
-      `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
+      resolveUrlForFunction(postCoupon),
       { code },
       {
         headers: { 'Content-Type': 'application/json' },
@@ -74,15 +126,14 @@ export async function postCoupon(code) {
   return transformResults(data);
 }
 
-export async function deleteCoupon(id) {
+export async function deleteCoupon(id) { // Ecomm Only
   const { data } = await getAuthenticatedHttpClient()
-    .delete(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
+    .delete(resolveUrlForFunction(deleteCoupon) + id)
     .catch(handleBasketApiError);
   return transformResults(data);
 }
 
 // LMS Specific Calls
-
 export async function getDiscountData(courseKey) {
   const { data } = await getAuthenticatedHttpClient().get(
     `${getConfig().LMS_BASE_URL}/api/discounts/course/${courseKey}`,
@@ -94,48 +145,18 @@ export async function getDiscountData(courseKey) {
 }
 
 // Commerce Coordinator Specific Calls
-const CC_BASE = getConfig().COMMERCE_COORDINATOR_BASE_URL;
-
-export class CommerceCoordinator {
-  // This URL cant end in `/` or it fails to pattern match in CC
-  static GET_ACTIVE_ORDER_URL = `${CC_BASE}/frontend-app-payment/order/active`;
-
-  static GET_CURRENT_PAYMENT_STATE_URL = `${CC_BASE}/frontend-app-payment/payment`;
-
-  static GET_CLIENT_SECRET_URL = `${CC_BASE}/frontend-app-payment/payment/draft`;
-
-  static async getActiveOrder() {
-    const { data } = await getAuthenticatedHttpClient()
-      .get(CommerceCoordinator.GET_ACTIVE_ORDER_URL)
-      .catch(handleBasketApiError);
-    return transformResults(data);
-  }
-
-  static async getCurrentPaymentState(paymentNumber, basketId) {
-    const { data } = await getAuthenticatedHttpClient()
-      .get(
-        CommerceCoordinator.GET_CURRENT_PAYMENT_STATE_URL,
-        {
-          params:
+export async function getCurrentPaymentState(paymentNumber, basketId) {
+  const { data } = await getAuthenticatedHttpClient()
+    .get(
+      resolveUrlForFunction(getCurrentPaymentState),
+      {
+        params:
             {
               payment_number: paymentNumber,
               order_uuid: basketId,
             },
-        },
-      )
-      .catch(handleBasketApiError);
-    return data;
-  }
-
-  /**
-   * Get the Client Secret for a Payment Intent
-   * @note This is used only for the Stripe Payment Processor
-   * @return {Promise<*>}
-   */
-  static async getClientSecret() {
-    const { data } = await getAuthenticatedHttpClient()
-      .put(CommerceCoordinator.GET_CLIENT_SECRET_URL)
-      .catch(handleBasketApiError);
-    return data;
-  }
+      },
+    )
+    .catch(handleBasketApiError);
+  return data;
 }

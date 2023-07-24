@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
-import { isCommerceCoordinatorEnabled } from './data/utils';
 
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket, fetchActiveOrder } from './data/actions';
+import { fetchBasket } from './data/actions';
 
 // Selectors
 import { paymentSelector } from './data/selectors';
@@ -45,11 +44,7 @@ class PaymentPage extends React.Component {
 
   componentDidMount() {
     sendPageEvent();
-    if (isCommerceCoordinatorEnabled()) {
-      this.props.fetchActiveOrder();
-    } else {
-      this.props.fetchBasket();
-    }
+    this.props.fetchBasket();
   }
 
   renderContent() {
@@ -131,7 +126,6 @@ PaymentPage.propTypes = {
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
-  fetchActiveOrder: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
 };
@@ -147,4 +141,4 @@ const mapStateToProps = (state) => ({
   ...paymentSelector(state),
 });
 
-export default connect(mapStateToProps, { fetchBasket, fetchActiveOrder })(injectIntl(PaymentPage));
+export default connect(mapStateToProps, { fetchBasket })(injectIntl(PaymentPage));
