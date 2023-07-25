@@ -1,4 +1,4 @@
-const { getBaseConfig } = require('@edx/frontend-build');
+const { createConfig } = require('@edx/frontend-build');
 // NOTE: This version of html-webpack-plugin must be the same major version as the one in
 // frontend-build to avoid potential issues.
 
@@ -9,7 +9,7 @@ const { getBaseConfig } = require('@edx/frontend-build');
  * various domains.  See the public/index.html file for the companion usage of this configuration.
  */
 
-const config = getBaseConfig('webpack-prod');
+const config = createConfig('webpack-prod');
 
 /* eslint-disable no-param-reassign */
 config.plugins.forEach((plugin) => {

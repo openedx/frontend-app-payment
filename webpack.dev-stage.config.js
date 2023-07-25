@@ -1,11 +1,11 @@
-const { getBaseConfig } = require('@edx/frontend-build');
+const { createConfig } = require('@edx/frontend-build');
 
 /**
  * We customize the plugins here for the following reasons:
  *
  * - We want a custom html-webpack-plugin config
  */
-const config = getBaseConfig('webpack-dev-stage');
+const config = createConfig('webpack-dev-stage');
 
 config.devServer.proxy = {
   '/proxy/ecommerce': {
