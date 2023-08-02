@@ -1,6 +1,7 @@
 import {
   call, put, select,
 } from 'redux-saga/effects';
+import { logInfo } from '@edx/frontend-platform/logging';
 
 import { sendSubscriptionEvent, handleCustomErrors } from '../utils';
 
@@ -26,7 +27,11 @@ export function* handleSuccessful3DS({ payload }) {
       subscription_id: status.subscriptionId,
       program_title: details.programTitle,
     };
-    const result = yield call(SubscriptionApiService.checkoutComplete, { ...payload, ...postData });
+    const result = yield call(SubscriptionApiService.checkoutComplete, {
+      ...payload?.payload,
+      ...postData,
+      payment_method_id: status.paymentMethodId,
+    });
 
     yield put(subscriptionStatusReceived({
       status: result.status,
@@ -35,6 +40,12 @@ export function* handleSuccessful3DS({ payload }) {
     if (result.status === 'requires_payment_method') {
       throw new Error('Could not complete the payment', { cause: 'requires_payment_method' });
     }
+
+    // TODO: remove these temporary logs once 3DS gets fix on prod
+    logInfo('3ds/stripe-checkout-complete/success', {
+      status: result.status,
+      username: payload.username,
+    });
 
     // success segment event
     sendSubscriptionEvent({ details, success: true });

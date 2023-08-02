@@ -15,6 +15,11 @@ import { subscriptionStatusReceived } from '../../data/status/actions';
 
 import { camelCaseObject } from '../../../payment/data/utils';
 
+// Mock the logInfo function
+jest.mock('@edx/frontend-platform/logging', () => ({
+  logInfo: jest.fn(),
+}));
+
 // Mock stripe and elements objects
 const setupIntentPromise = Promise.resolve({
   error: false,
