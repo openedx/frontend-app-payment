@@ -1,5 +1,10 @@
 import { getConfig } from '@edx/frontend-platform';
 
+/*
+ * Feature toggling has a whole HOWTO:
+ *   https://github.com/openedx/frontend-app-payment/pull/774/files#:~:text=Feature%20Toggle%20HOWTO
+ */
+
 const isTruthy = /^\s*(true|t|1|on)\s*$/i;
 
 /**
@@ -10,7 +15,7 @@ const isTruthy = /^\s*(true|t|1|on)\s*$/i;
 export const WAFFLE_PREFIX = 'dwft_';
 
 /**
- * Get Processed Waffle Flags from the current document location or from any other URL-like String
+ * Parse Waffle Flags from the current document location or from any other URL-like string
  * @param {string|URL} [urlString=document.location] The input URL String or any Stringifier
  * @returns {Object.<string, boolean>} Processed Waffle Flags
  */
@@ -29,6 +34,9 @@ export function processUrlWaffleFlags(urlString) {
 
 /**
  * Intercept and set Waffle Flags from incoming API Calls
+ *
+ * **Note**: this is an example of an AxiosInterceptor, https://axios-http.com/docs/interceptors.
+ *
  * @param requestConfig
  * @returns {Promise<*>}
  */
@@ -44,7 +52,7 @@ export async function waffleInterceptor(requestConfig) {
 }
 
 /**
- * Simple function to test if a waffle flag is enabled.
+ * Check configuration if a waffle flag is enabled.
  * @param {string} flagName
  * @param {boolean} [defaultValue=false]
  * @returns {boolean}

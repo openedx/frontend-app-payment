@@ -51,8 +51,9 @@ export const resolveUrlForFunction = (serviceFunction, testsOnlyForceCoordinator
 
   if (isWaffleFlagEnabled(WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED) || testsOnlyForceCoordinator) {
     ensureConfig(['COMMERCE_COORDINATOR_BASE_URL']);
+    const coordBase = getConfig().COMMERCE_COORDINATOR_BASE_URL;
     // CC Endpoints must target receiving app, even though we use the root in the config for consistency's sake.
-    base = `${getConfig().COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment`;
+    base = `${coordBase}/frontend-app-payment`;
   }
 
   const url = urlsByFunction[serviceFunction.name];
