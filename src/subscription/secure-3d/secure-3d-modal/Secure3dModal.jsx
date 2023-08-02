@@ -1,6 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useContext, useRef, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { AppContext } from '@edx/frontend-platform/react';
+import { logInfo, logError } from '@edx/frontend-platform/logging';
 
 import {
   ModalDialog,
@@ -25,6 +29,7 @@ import {
  */
 export const Secure3DModal = ({ stripe, elements }) => {
   const dispatch = useDispatch();
+  const context = useContext(AppContext);
   const modalRef = useRef('inactive');
   const [isOpen, setOpen] = useState(false);
 
@@ -75,7 +80,7 @@ export const Secure3DModal = ({ stripe, elements }) => {
     if (modalRef.current === 'active') {
       // completed 3DS, set to inactive so multiple state updates doesn't trigger the 3DS update
       modalRef.current = 'inactive';
-      dispatch(onSuccessful3DS({}));
+      dispatch(onSuccessful3DS({ payload: {}, username: context.authenticatedUser.username }));
       window.removeEventListener('message', null);
     }
   };
@@ -100,14 +105,20 @@ export const Secure3DModal = ({ stripe, elements }) => {
         }
       }, false);
     } catch (e) {
-      // TODO: log the error to segment
-      throw new Error(`Error loading 3D secure details): ${e.message}`);
+      logError(`Error loading 3D secure details): ${e.message}`, {
+        username: context.authenticatedUser.username,
+      });
     }
   };
 
   useEffect(() => {
     if (status === 'requires_action') {
       fetchSecureDetails();
+      // TODO: remove these temporary logs once 3DS gets fix on prod
+      logInfo('3ds/initiate-modal', {
+        status,
+        username: context.authenticatedUser.username,
+      });
     } else if (status === 'requires_payment_method') {
       // clear the stripe elements and ask user to submit new details
       // 3DS failed, prompt the customer to re-enter payment details

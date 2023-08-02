@@ -1,6 +1,7 @@
 import {
   call, put, select,
 } from 'redux-saga/effects';
+import { logInfo } from '@edx/frontend-platform/logging';
 import { stopSubmit } from 'redux-form';
 
 import { getReduxFormValidationErrors } from '../../../payment/data/utils';
@@ -84,6 +85,12 @@ export function* handleSubmitSubscription({ payload }) {
 
     yield put(submitSubscription.success(result));
     yield put(subscriptionStatusReceived({ ...result, paymentMethodId: postData.payment_method_id }));
+
+    // TODO: remove these temporary logs once 3DS gets fix on prod
+    logInfo('3ds/stripe-checkout/success', {
+      status: result.status,
+      username: paymentArgs?.context?.authenticatedUser?.username,
+    });
     // success segment event
     if (result.status === 'trialing'
     || result.status === 'succeeded') {
