@@ -79,7 +79,7 @@ Working locally and need the set for every call?
 
 Waffle flags can also be set in various ``.env`` files, but if youd like them to survive various resets of your working copy you may set them in a ``.env.private`` file.
 
-The environment variable's name is ``WAFFLE_FLAGS``, and the format of the string is the same as that of an URL's Query parameters (without the ``?`` prefix). Thus if you want to se the flags ``A`` and ``B`` the ``WAFFLE_FLAGS`` value would be ``dwft_A=1&dwft_B=1``.
+The environment variable's name is ``WAFFLE_FLAGS``, and the format of the string is the same as that of an URL's Query parameters (without the ``?`` prefix). Thus if you want to set the flags ``A`` and ``B`` the ``WAFFLE_FLAGS`` value would be ``dwft_A=1&dwft_B=1``.
 .. _.env.private file: https://github.com/openedx/frontend-build/tree/0f8f54476d63b259934b8d0f6d3d2dcae0213a0e#override-default-envdevelopment-environment-variables-with-envprivate
 
 What should I do?
