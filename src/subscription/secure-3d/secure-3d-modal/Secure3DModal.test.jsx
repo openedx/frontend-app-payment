@@ -7,7 +7,7 @@ import '../../__factories__/subscription.factory';
 import '../../__factories__/subscriptionStatus.factory';
 
 import {
-  screen, render, act, store, // fireEvent
+  render, act, store, // fireEvent
 } from '../../test-utils';
 import { Secure3DModal } from './Secure3dModal';
 import { fetchSubscriptionDetails, subscriptionDetailsReceived } from '../../data/details/actions';
@@ -17,6 +17,7 @@ import { camelCaseObject } from '../../../payment/data/utils';
 
 // Mock the logError function
 jest.mock('@edx/frontend-platform/logging', () => ({
+  logInfo: jest.fn(),
   logError: jest.fn(),
 }));
 
@@ -115,7 +116,7 @@ describe('<Secure3DModal />', () => {
     await act(() => paymentIntentPromise);
 
     // Expect the modal to be rendered
-    screen.debug();
+    // screen.debug();
     const iframe = container.querySelector('#secure-3d-iframe');
     expect(iframe).toBeDefined();
     expect(container.querySelector('#secure-3d-iframe')).toBeDefined();

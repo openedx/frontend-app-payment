@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { logError } from '@edx/frontend-platform/logging';
+import { logError, logInfo } from '@edx/frontend-platform/logging';
 
 import {
   ModalDialog,
@@ -47,7 +47,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
       iframe.width = '100%';
       iframe.height = '100%';
       container.appendChild(iframe);
-      console.log('Testing 3ds - 6 loading iframe details');
     });
   };
 
@@ -77,15 +76,11 @@ export const Secure3DModal = ({ stripe, elements }) => {
    */
   const on3DSComplete = async () => {
     // Hide the 3DS UI
-    // TODO: remove this after testing
-    console.log('Testing 3ds - 7 on3DSComplete initial');
     if (modalRef.current === 'active') {
       // completed 3DS, set to inactive so multiple state updates doesn't trigger the 3DS update
       modalRef.current = 'inactive';
       dispatch(onSuccessful3DS({}));
       window.removeEventListener('message', null);
-      // TODO: remove this after testing
-      console.log('Testing 3ds - 8 on3DSComplete end');
     }
   };
 
@@ -97,15 +92,15 @@ export const Secure3DModal = ({ stripe, elements }) => {
     try {
       const fetchPaymentDetails = isTrialEligible ? retrieveSetupIntent : retrievePaymentIntent;
       // TODO: remove this after testing
-      console.log('Testing 3ds - 2 -- fetchingPaymentDetails');
+      logInfo('3DS - fetchingPaymentDetails');
       const paymentDetails = await fetchPaymentDetails();
       // TODO: remove this after testing
-      console.log(`Testing 3ds - 3 -- paymentDetailsLoaded: ${!paymentDetails.next_action.redirect_to_url.url}`);
+      logInfo('3DS - successfully fetched the paymentDetails', {
+        hasUrl: !!paymentDetails.next_action.redirect_to_url.url,
+      });
       loadSecureDetails(paymentDetails.next_action.redirect_to_url.url);
       setOpen(() => {
         // attempting 3ds, because state changes doesn't work with window listeners
-        // TODO: remove this after testing
-        console.log('Testing 3ds - 4 -- openingModal');
         modalRef.current = 'active';
         return true;
       });
@@ -115,16 +110,20 @@ export const Secure3DModal = ({ stripe, elements }) => {
         }
       }, false);
     } catch (e) {
-      // TODO: remove this after testing
-      console.log(`Testing 3ds - 5 --Error Message: ${e.message}, Error: ${JSON.stringify(e)}`);
-      logError(`Error loading 3D secure details): ${e.message}`);
+      logError(`Error loading 3DS details): ${e.message}`);
     }
   };
 
   useEffect(() => {
+    // TODO: remove this after testing
+    logInfo('3DS - status change effect', {
+      status,
+    });
     if (status === 'requires_action') {
       // TODO: remove this after testing
-      console.log(`Testing 3ds - 1 -- fetchSecureDetails -- status: ${status}`);
+      logInfo('3DS - fetchingSecureDetails', {
+        status,
+      });
       fetchSecureDetails();
     } else if (status === 'requires_payment_method') {
       // clear the stripe elements and ask user to submit new details
@@ -136,8 +135,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
 
     if (status !== 'requires_action' && isOpen) {
       // hide the modal for all other states
-      // TODO: remove this after testing
-      console.log('Testing 3ds - 9 -- hideModal');
       setOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
