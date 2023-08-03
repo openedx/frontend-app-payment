@@ -41,16 +41,19 @@ First, users must arrive in frontend-app-payment with a `Waffle Flag testing mod
 
 frontend-app-payment ensures any user arriving with a `Waffle Flag testing mode query string parameter`_ will pass on that Waffle Flag's name and value to any Open edX backend API requests the user makes.
 
-Specifically: when a user visits any page in frontend-app-payment, frontend-app-payment looks for Waffle Flags in the `query string`_ of a user's URL. `src/index.jsx saves`_ any fields of the query string that start with ``dwft_``. It understands the rest of the field name as the Waffle Flag name, and the value of that field as the Waffle Flag value.
+Specifically: when a user visits any page in frontend-app-payment, frontend-app-payment looks for Waffle Flags in the `query string`_ of a user's URL. `src/index.jsx saves (and merges from .env files)`_ any fields of the query string that start with ``dwft_``. It understands the rest of the field name as the Waffle Flag name, and the value of that field as the Waffle Flag value.
 
 Then, whenever frontend-app-payment calls an Open edX backend using ``getAuthenticatedHttpClient()``, `src/index.jsx intercepts`_ the outgoing API call and tacks on all saved Waffle Flags to the query parameters of the call.
+
+All waffle flag implementation code can be found in `src/data/waffleFlags.js function definitions`_.
 
 Open edX backends configured with a Waffle Flag in testing mode `will check incoming requests for query parameter keys starting with dwft_ followed by the Waffle Flag's name`_ and will enable or disable the Waffle Flag for the user's session according to the value of that query string parameter.
 
 .. _Waffle Flag testing mode query string parameter: https://waffle.readthedocs.io/en/latest/testing/user.html#querystring-parameter
 .. _query string: https://en.wikipedia.org/wiki/Query_string
-.. _src/index.jsx saves: https://github.com/openedx/frontend-app-payment/blob/40c96bdc343f455a41858a679233a4c6f7780a63/src/index.jsx#L38-L47
-.. _src/index.jsx intercepts: https://github.com/openedx/frontend-app-payment/blob/40c96bdc343f455a41858a679233a4c6f7780a63/src/index.jsx#L94-L104
+.. _src/data/waffleFlags.js function definitions: https://github.com/openedx/frontend-app-payment/blob/fd871f44c7031292e1904fb3db761ff5445734f2/src/data/waffleFlags.js
+.. _src/index.jsx saves (and merges from .env files): https://github.com/openedx/frontend-app-payment/blob/fd871f44c7031292e1904fb3db761ff5445734f2/src/index.jsx#L57-L60
+.. _src/index.jsx intercepts: https://github.com/openedx/frontend-app-payment/blob/fd871f44c7031292e1904fb3db761ff5445734f2/src/index.jsx#L114
 .. _will check incoming requests for query parameter keys starting with dwft_ followed by the Waffle Flag's name: https://waffle.readthedocs.io/en/latest/testing/user.html#querystring-parameter
 
 
@@ -70,6 +73,13 @@ Usually, Waffle saves a host-only cookie to persist a Waffle Flag for a user's s
 That means it also cannot forward those cookies when making subsequent requests to the backend. If a Waffle Flag is set to rollout a feature to a percentage of users, the backend will have no way to remember what rollout group a user was originally assigned to.
 
 By forwarding received Waffle Flag testing mode query string parameters to subsequent requests to the backend, a user assigned to a Waffle Flag percentage rollout group will continue to be a part of the same rollout group throughout their user journey. 
+
+Working locally and need the set for every call?
+------------------------------------------------
+
+Waffle flags can also be set in various ``.env`` files, but if youd like them to survive various resets of your working copy you may set them in a ``.env.private`` file.
+
+The environment variable's name is ``WAFFLE_FLAGS``, and the format of the string is the same as that of an URL's Query parameters (without the ``?`` prefix). Thus if you want to se the flags ``A`` and ``B`` the ``WAFFLE_FLAGS`` value would be ``dwft_A=1&dwft_B=1``.
 
 
 What should I do?
