@@ -33,16 +33,17 @@ export const subscriptionStatusReducer = (state = subscriptionStatusInitialState
       case SUBSCRIPTION_STATUS_RECEIVED: return {
         ...state,
         ...action.payload,
-        // Checking if 3DS leads to neither `succeeded` nor `requires_payment_method`
-        // then setting status to `requires_payment_method`
-        // eslint-disable-next-line no-nested-ternary
-        status: CONFIRMATION_STATUS[action.payload.status]
-          ? CONFIRMATION_STATUS[action.payload.status] : (
-            // if 3DS was active, and empty status received setting it to `requires_payment_method`
-            state.status === CONFIRMATION_STATUS.requires_action
-              ? CONFIRMATION_STATUS.requires_payment_method
-              : null
-          ),
+        // TODO: remove this commented code
+        // // Checking if 3DS leads to neither `succeeded` nor `requires_payment_method`
+        // // then setting status to `requires_payment_method`
+        // // eslint-disable-next-line no-nested-ternary
+        // status: CONFIRMATION_STATUS[action.payload.status]
+        //   ? CONFIRMATION_STATUS[action.payload.status] : (
+        //     // if 3DS was active, and empty status received setting it to `requires_payment_method`
+        //     state.status === CONFIRMATION_STATUS.requires_action
+        //       ? CONFIRMATION_STATUS.requires_payment_method
+        //       : null
+        //   ),
       };
       default:
     }
