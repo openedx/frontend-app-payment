@@ -2,7 +2,7 @@ import { getConfig } from '@edx/frontend-platform';
 
 /*
  * Feature toggling has a whole HOWTO:
- *   https://github.com/openedx/frontend-app-payment/pull/774/files#:~:text=Feature%20Toggle%20HOWTO
+ *   https://github.com/openedx/frontend-app-payment/blob/master/docs/how_tos/feature_toggle.rst
  */
 
 const isTruthy = /^\s*(true|t|1|on)\s*$/i;
