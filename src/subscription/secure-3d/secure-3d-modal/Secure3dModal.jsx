@@ -94,10 +94,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
       // TODO: remove this after testing
       logInfo('3DS - fetchingPaymentDetails');
       const paymentDetails = await fetchPaymentDetails();
-      // TODO: remove this after testing
-      logInfo('3DS - successfully fetched the paymentDetails', {
-        hasUrl: !!paymentDetails.next_action.redirect_to_url.url,
-      });
       loadSecureDetails(paymentDetails.next_action.redirect_to_url.url);
       setOpen(() => {
         // attempting 3ds, because state changes doesn't work with window listeners
@@ -120,10 +116,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
       status,
     });
     if (status === 'requires_action') {
-      // TODO: remove this after testing
-      logInfo('3DS - fetchingSecureDetails', {
-        status,
-      });
       fetchSecureDetails();
     } else if (status === 'requires_payment_method') {
       // clear the stripe elements and ask user to submit new details
@@ -139,9 +131,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
-
-  // TODO: remove this after testing
-  logInfo('3DS - Component before render', { status });
 
   if (!isOpen || !stripe || !elements) { return null; }
 

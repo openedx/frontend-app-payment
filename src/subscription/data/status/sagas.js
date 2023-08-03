@@ -25,6 +25,7 @@ export function* handleSuccessful3DS({ payload }) {
       confirmation_client_secret: status.confirmationClientSecret,
       subscription_id: status.subscriptionId,
       program_title: details.programTitle,
+      program_uuid: details.programUuid,
     };
     const result = yield call(SubscriptionApiService.checkoutComplete, {
       ...payload,
