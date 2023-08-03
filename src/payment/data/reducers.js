@@ -13,7 +13,6 @@ import {
   submitPayment,
   fetchCaptureKey,
   fetchClientSecret,
-  fetchActiveOrder,
   pollPaymentState,
 } from './actions';
 
@@ -68,12 +67,6 @@ const basket = (state = basketInitialState, action = null) => {
         loading: false,
         loaded: true,
       };
-      case fetchActiveOrder.TRIGGER: return { ...state, loading: true };
-      case fetchActiveOrder.FULFILL: return {
-        ...state,
-        loading: false,
-        loaded: true,
-      };
 
       case BASKET_DATA_RECEIVED: return { ...state, ...action.payload };
 
@@ -112,6 +105,7 @@ const captureContextInitialState = {
   captureKeyId: '',
 };
 
+// Ecomm IDA Backend only, CyberSource Only
 const captureKey = (state = captureContextInitialState, action = null) => {
   if (action !== null) {
     switch (action.type) {
@@ -141,6 +135,7 @@ const clientSecretInitialState = {
   clientSecretId: '',
 };
 
+// Commerce Coordinator & Ecommerce IDA Backends, Stripe
 const clientSecret = (state = clientSecretInitialState, action = null) => {
   if (action != null) {
     switch (action.type) {

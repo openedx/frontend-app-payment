@@ -10,7 +10,6 @@ import { Factory } from 'rosie';
 
 import paymentSaga, {
   handleFetchBasket,
-  handleFetchActiveOrder,
   handleSubmitPayment,
   handleUpdateQuantity,
   handleRemoveCoupon,
@@ -25,7 +24,6 @@ import {
   basketDataReceived,
   basketProcessing,
   fetchBasket,
-  fetchActiveOrder,
   fetchCaptureKey,
   addCoupon,
   removeCoupon,
@@ -41,14 +39,22 @@ import '../__factories__/basket.factory';
 
 import * as cybersourceService from '../payment-methods/cybersource';
 import {
-  DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
   DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
   PAYMENT_STATE,
   POLLING_PAYMENT_STATES,
+  WAFFLE_FLAG_NAMES,
 } from './constants';
 import { ERROR_CODES } from '../../feedback/data/constants';
 import { generateApiError } from './handleRequestError';
 import { paymentState } from './reducers';
+import {
+  getBasket,
+  getCurrentPaymentState,
+  postCoupon,
+  postQuantity,
+  resolveUrlForFunction,
+} from './service';
+import { performWithModifiedWaffleFlags } from '../../data/waffleFlags.test';
 
 jest.mock('@edx/frontend-platform/auth');
 jest.mock('@edx/frontend-platform/logging');
@@ -60,15 +66,20 @@ jest.mock('../payment-methods/cybersource', () => ({
 const axiosMock = new MockAdapter(axios);
 getAuthenticatedHttpClient.mockReturnValue(axios);
 
-const BASKET_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/`;
-const CC_ORDER_API_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/order/active`;
-const CC_PAYMENT_STATE_ENDPOINT = `${process.env.COMMERCE_COORDINATOR_BASE_URL}/frontend-app-payment/payment`;
-const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
-const COUPON_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`;
-const QUANTITY_API_ENDPOINT = `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`;
-
 axiosMock.reset();
 axiosMock.onAny().reply(200);
+
+// Ecommerce IDA
+const BASKET_API_ENDPOINT = resolveUrlForFunction(getBasket);
+const COUPON_API_ENDPOINT = resolveUrlForFunction(postCoupon);
+const QUANTITY_API_ENDPOINT = resolveUrlForFunction(postQuantity);
+
+// Commerce Coordinator
+const COMMERCE_COORDINATOR_ORDER_API_ENDPOINT = resolveUrlForFunction(getBasket, true);
+const COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT = resolveUrlForFunction(getCurrentPaymentState, true);
+
+// LMS
+const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
 
 describe('saga tests', () => {
   let dispatched;
@@ -97,288 +108,259 @@ describe('saga tests', () => {
   });
 
   describe('handleFetchBasket', () => {
-    it('should bail if the basket is processing', async () => {
-      try {
-        await runSaga(
+    describe.each`
+        name                      | flags                                                    | url
+        ${'Commerce Coordinator'} | ${{ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }} | ${COMMERCE_COORDINATOR_ORDER_API_ENDPOINT}
+        ${'Ecommerce'}            | ${{}}                                                    | ${BASKET_API_ENDPOINT}
+      `('$name', async (test) => {
+      it('should bail if the basket is processing', async (done) => {
+        await performWithModifiedWaffleFlags(test.flags, async () => {
+          try {
+            await runSaga(
+              {
+                getState: () => basketProcessingState,
+                ...sagaOptions,
+              },
+              handleFetchBasket,
+            ).toPromise();
+          } catch (e) {} // eslint-disable-line no-empty
+
+          expect(dispatched).toEqual([]);
+          expect(caughtErrors).toEqual([]);
+          done();
+        });
+      });
+
+      it('should update basket data', async (done) => {
+        await performWithModifiedWaffleFlags(test.flags, async () => {
+          const basketResponseData = Factory.build(
+            'basket',
+            {
+            // We include offers here solely to exercise some logic in transformResults.  It's
+            // otherwise unrelated to this particular test.
+              offers: [
+                { provider: 'me', benefitValue: '12' },
+                { provider: null, benefitValue: '15' },
+              ],
+            },
+            // We use a different product type here SOLELY to exercise a different clause in
+            // getOrderType in the service.  It's otherwise unrelated to this test.
+            { numProducts: 1, productType: 'Seat' },
+          );
+
+          axiosMock.onGet(test.url).reply(200, basketResponseData);
+          axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`).reply(200, { discount_applicable: true });
+
+          try {
+            await runSaga({
+              getState: () => basketNotProcessingState,
+              ...sagaOptions,
+            }, handleFetchBasket).toPromise();
+          } catch (e) {} // eslint-disable-line no-empty
+
+          expect(dispatched).toEqual([
+            basketProcessing(true),
+            basketDataReceived(transformResults(basketResponseData)),
+            clearMessages(),
+            basketDataReceived(transformResults(basketResponseData)),
+            basketProcessing(false),
+            fetchBasket.fulfill(),
+          ]);
+          expect(caughtErrors).toEqual([]);
+          expect(axiosMock.history.get.length).toBe(3);
+          expect(axiosMock.history.get[0].url).toEqual(test.url);
+          expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
+          expect(axiosMock.history.get[1].withCredentials).toBe(true);
+          expect(axiosMock.history.get[2].url).toEqual(test.url);
+          done();
+        });
+      });
+
+      it('should update basket data and show an info message', async (done) => {
+        await performWithModifiedWaffleFlags(test.flags, async () => {
+          const basketResponseData = Factory.build('basket', {}, { numProducts: 1, numInfoMessages: 1 });
+
+          axiosMock.onGet(test.url).reply(200, basketResponseData);
+          axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+            .reply(200, { discount_applicable: false });
+
+          try {
+            await runSaga(
+              {
+                getState: () => basketNotProcessingState,
+                ...sagaOptions,
+              },
+              handleFetchBasket,
+            ).toPromise();
+          } catch (e) {} // eslint-disable-line no-empty
+
+          const message = basketResponseData.messages[0];
+
+          expect(dispatched).toEqual([
+            basketProcessing(true),
+            basketDataReceived(transformResults(basketResponseData)),
+            clearMessages(),
+            addMessage(message.code, null, message.data, MESSAGE_TYPES.INFO),
+            basketProcessing(false),
+            fetchBasket.fulfill(),
+          ]);
+          expect(caughtErrors).toEqual([]);
+          expect(axiosMock.history.get.length).toBe(2);
+          done();
+        });
+      });
+
+      it('should update basket data and show an error message', async (done) => {
+        await performWithModifiedWaffleFlags(test.flags, async () => {
+          const basketResponseData = Factory.build(
+            'basket',
+            {},
+            { numProducts: 1, numErrorMessages: 1 },
+          );
+
+          axiosMock.onGet(test.url).replyOnce(403, basketResponseData);
+          axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+            .reply(200, { discount_applicable: true });
+          axiosMock.onGet(test.url).replyOnce(200, basketResponseData);
+
+          try {
+            await runSaga(
+              {
+                getState: () => basketNotProcessingState,
+                ...sagaOptions,
+              },
+              handleFetchBasket,
+            ).toPromise();
+          } catch (e) {} // eslint-disable-line no-empty
+
+          const message = basketResponseData.messages[0];
+          expect(dispatched).toEqual([
+            basketProcessing(true),
+            clearMessages(),
+            addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
+            basketDataReceived(transformResults(basketResponseData)),
+            basketDataReceived(transformResults(basketResponseData)),
+            addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
+            basketProcessing(false),
+            fetchBasket.fulfill(),
+          ]);
+          expect(caughtErrors).toEqual([]);
+          expect(axiosMock.history.get.length).toBe(3);
+          done();
+        });
+      });
+
+      it('should show a fallback error message', async (done) => {
+        await performWithModifiedWaffleFlags(test.flags, async () => {
+          axiosMock.onGet(test.url).reply(403);
+
+          try {
+            await runSaga(
+              {
+                getState: () => basketNotProcessingState,
+                ...sagaOptions,
+              },
+              handleFetchBasket,
+            ).toPromise();
+          } catch (e) {} // eslint-disable-line no-empty
+
+          expect(dispatched).toEqual([
+            basketProcessing(true),
+            clearMessages(),
+            addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR),
+            basketProcessing(false),
+            fetchBasket.fulfill(),
+          ]);
+          expect(caughtErrors).toEqual([]);
+          expect(axiosMock.history.get.length).toBe(1);
+          done();
+        });
+      });
+    });
+
+    describe('Ecommerce Only', () => {
+      it('should update basket data with jwt on second call', async () => {
+        const basketResponseData = Factory.build(
+          'basket',
           {
-            getState: () => basketProcessingState,
-            ...sagaOptions,
+            // We include offers here solely to exercise some logic in transformResults.  It's
+            // otherwise unrelated to this particular test.
+            offers: [
+              { provider: 'me', benefitValue: '12' },
+              { provider: null, benefitValue: '15' },
+            ],
           },
-          handleFetchBasket,
-        ).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
+          // We use a different product type here SOLELY to exercise a different clause in
+          // getOrderType in the service.  It's otherwise unrelated to this test.
+          { numProducts: 1, productType: 'Seat' },
+        );
+        const basketResponseData2 = {
+          ...basketResponseData,
+          discountJwt: 'i_am_a_jwt',
+        };
 
-      expect(dispatched).toEqual([]);
-      expect(caughtErrors).toEqual([]);
-    });
+        axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
+        axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+          .reply(200, { discount_applicable: true, jwt: 'i_am_a_jwt' });
+        axiosMock.onGet(`${BASKET_API_ENDPOINT}?discount_jwt=i_am_a_jwt`)
+          .reply(200, basketResponseData2);
 
-    it('should update basket data', async () => {
-      const basketResponseData = Factory.build(
-        'basket',
-        {
-          // We include offers here solely to exercise some logic in transformResults.  It's
-          // otherwise unrelated to this particular test.
-          offers: [
-            { provider: 'me', benefitValue: '12' },
-            { provider: null, benefitValue: '15' },
-          ],
-        },
-        // We use a different product type here SOLELY to exercise a different clause in
-        // getOrderType in the service.  It's otherwise unrelated to this test.
-        { numProducts: 1, productType: 'Seat' },
-      );
-
-      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
-      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`).reply(200, { discount_applicable: true });
-
-      try {
-        await runSaga({
-          getState: () => basketNotProcessingState,
-          ...sagaOptions,
-        }, handleFetchBasket).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
-
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        basketDataReceived(transformResults(basketResponseData)),
-        clearMessages(),
-        basketDataReceived(transformResults(basketResponseData)),
-        basketProcessing(false),
-        fetchBasket.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-      expect(axiosMock.history.get.length).toBe(3);
-      expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
-      expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
-      expect(axiosMock.history.get[1].withCredentials).toBe(true);
-      expect(axiosMock.history.get[2].url).toEqual(BASKET_API_ENDPOINT);
-    });
-
-    it('should update basket data with jwt on second call', async () => {
-      const basketResponseData = Factory.build(
-        'basket',
-        {
-          // We include offers here solely to exercise some logic in transformResults.  It's
-          // otherwise unrelated to this particular test.
-          offers: [
-            { provider: 'me', benefitValue: '12' },
-            { provider: null, benefitValue: '15' },
-          ],
-        },
-        // We use a different product type here SOLELY to exercise a different clause in
-        // getOrderType in the service.  It's otherwise unrelated to this test.
-        { numProducts: 1, productType: 'Seat' },
-      );
-      const basketResponseData2 = {
-        ...basketResponseData,
-        discountJwt: 'i_am_a_jwt',
-      };
-
-      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
-      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
-        .reply(200, { discount_applicable: true, jwt: 'i_am_a_jwt' });
-      axiosMock.onGet(`${BASKET_API_ENDPOINT}?discount_jwt=i_am_a_jwt`)
-        .reply(200, basketResponseData2);
-
-      try {
-        await runSaga({
-          getState: () => basketNotProcessingState,
-          ...sagaOptions,
-        }, handleFetchBasket).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
-
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        basketDataReceived(transformResults(basketResponseData)),
-        clearMessages(),
-        basketDataReceived(transformResults(basketResponseData2)),
-        basketProcessing(false),
-        fetchBasket.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-
-      expect(axiosMock.history.get.length).toBe(3);
-      expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
-      expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
-      expect(axiosMock.history.get[1].withCredentials).toBe(true);
-      expect(axiosMock.history.get[2].url).toEqual(`${BASKET_API_ENDPOINT}?discount_jwt=i_am_a_jwt`);
-    });
-
-    it('should update basket data without calling discount check API', async () => {
-      const basketResponseData = Factory.build('basket'); // No products!
-
-      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
-      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
-        .reply(200, { discount_applicable: true });
-
-      try {
-        await runSaga(
-          {
-            getState: () => ({
-              // No products in store either
-              payment: { basket: { isBasketProcessing: false, products: [] } },
-            }),
-            ...sagaOptions,
-          },
-          handleFetchBasket,
-        ).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
-
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        basketDataReceived(transformResults(basketResponseData)),
-        clearMessages(),
-        basketProcessing(false),
-        fetchBasket.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-
-      expect(axiosMock.history.get.length).toBe(1);
-      expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
-    });
-
-    it('should update basket data and show an info message', async () => {
-      const basketResponseData = Factory.build('basket', {}, { numProducts: 1, numInfoMessages: 1 });
-
-      axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
-      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
-        .reply(200, { discount_applicable: false });
-
-      try {
-        await runSaga(
-          {
+        try {
+          await runSaga({
             getState: () => basketNotProcessingState,
             ...sagaOptions,
-          },
-          handleFetchBasket,
-        ).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
+          }, handleFetchBasket).toPromise();
+        } catch (e) {} // eslint-disable-line no-empty
 
-      const message = basketResponseData.messages[0];
+        expect(dispatched).toEqual([
+          basketProcessing(true),
+          basketDataReceived(transformResults(basketResponseData)),
+          clearMessages(),
+          basketDataReceived(transformResults(basketResponseData2)),
+          basketProcessing(false),
+          fetchBasket.fulfill(),
+        ]);
+        expect(caughtErrors).toEqual([]);
 
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        basketDataReceived(transformResults(basketResponseData)),
-        clearMessages(),
-        addMessage(message.code, null, message.data, MESSAGE_TYPES.INFO),
-        basketProcessing(false),
-        fetchBasket.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-      expect(axiosMock.history.get.length).toBe(2);
-    });
+        expect(axiosMock.history.get.length).toBe(3);
+        expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
+        expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
+        expect(axiosMock.history.get[1].withCredentials).toBe(true);
+        expect(axiosMock.history.get[2].url).toEqual(`${BASKET_API_ENDPOINT}?discount_jwt=i_am_a_jwt`);
+      });
 
-    it('should update basket data and show an error message', async () => {
-      const basketResponseData = Factory.build(
-        'basket',
-        {},
-        { numProducts: 1, numErrorMessages: 1 },
-      );
+      it('should update basket data without calling discount check API', async () => {
+        const basketResponseData = Factory.build('basket'); // No products!
 
-      axiosMock.onGet(BASKET_API_ENDPOINT).replyOnce(403, basketResponseData);
-      axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
-        .reply(200, { discount_applicable: true });
-      axiosMock.onGet(BASKET_API_ENDPOINT).replyOnce(200, basketResponseData);
+        axiosMock.onGet(BASKET_API_ENDPOINT).reply(200, basketResponseData);
+        axiosMock.onGet(`${DISCOUNT_API_ENDPOINT}${courseKey}`)
+          .reply(200, { discount_applicable: true });
 
-      try {
-        await runSaga(
-          {
-            getState: () => basketNotProcessingState,
-            ...sagaOptions,
-          },
-          handleFetchBasket,
-        ).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
+        try {
+          await runSaga(
+            {
+              getState: () => ({
+                // No products in store either
+                payment: { basket: { isBasketProcessing: false, products: [] } },
+              }),
+              ...sagaOptions,
+            },
+            handleFetchBasket,
+          ).toPromise();
+        } catch (e) {} // eslint-disable-line no-empty
 
-      const message = basketResponseData.messages[0];
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        clearMessages(),
-        addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
-        basketDataReceived(transformResults(basketResponseData)),
-        basketDataReceived(transformResults(basketResponseData)),
-        addMessage(message.code, message.user_message, message.data, MESSAGE_TYPES.ERROR),
-        basketProcessing(false),
-        fetchBasket.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-      expect(axiosMock.history.get.length).toBe(3);
-    });
+        expect(dispatched).toEqual([
+          basketProcessing(true),
+          basketDataReceived(transformResults(basketResponseData)),
+          clearMessages(),
+          basketProcessing(false),
+          fetchBasket.fulfill(),
+        ]);
+        expect(caughtErrors).toEqual([]);
 
-    it('should show a fallback error message', async () => {
-      axiosMock.onGet(BASKET_API_ENDPOINT).reply(403);
-
-      try {
-        await runSaga(
-          {
-            getState: () => basketNotProcessingState,
-            ...sagaOptions,
-          },
-          handleFetchBasket,
-        ).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
-
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        clearMessages(),
-        addMessage('fallback-error', null, {}, MESSAGE_TYPES.ERROR),
-        basketProcessing(false),
-        fetchBasket.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-      expect(axiosMock.history.get.length).toBe(1);
-    });
-  });
-
-  describe('handleFetchActiveOrder', () => {
-    it('should bail if the basket is processing', async () => {
-      try {
-        await runSaga(
-          {
-            getState: () => basketProcessingState,
-            ...sagaOptions,
-          },
-          handleFetchActiveOrder,
-        ).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
-
-      expect(dispatched).toEqual([]);
-      expect(caughtErrors).toEqual([]);
-    });
-
-    it('should update basket data', async () => {
-      const basketResponseData = Factory.build(
-        'basket',
-        {
-          // We include offers here solely to exercise some logic in transformResults.  It's
-          // otherwise unrelated to this particular test.
-          offers: [
-            { provider: 'me', benefitValue: '12' },
-            { provider: null, benefitValue: '15' },
-          ],
-        },
-        // We use a different product type here SOLELY to exercise a different clause in
-        // getOrderType in the service.  It's otherwise unrelated to this test.
-        { numProducts: 1, productType: 'Seat' },
-      );
-      axiosMock.onGet(CC_ORDER_API_ENDPOINT).reply(200, basketResponseData);
-
-      try {
-        await runSaga({
-          getState: () => basketNotProcessingState,
-          ...sagaOptions,
-        }, handleFetchActiveOrder).toPromise();
-      } catch (e) {} // eslint-disable-line no-empty
-
-      expect(dispatched).toEqual([
-        basketProcessing(true),
-        basketDataReceived(transformResults(basketResponseData)),
-        basketProcessing(false),
-        fetchActiveOrder.fulfill(),
-      ]);
-      expect(caughtErrors).toEqual([]);
-      expect(axiosMock.history.get.length).toBe(1);
-      expect(axiosMock.history.get[0].url).toEqual(CC_ORDER_API_ENDPOINT);
+        expect(axiosMock.history.get.length).toBe(1);
+        expect(axiosMock.history.get[0].url).toEqual(BASKET_API_ENDPOINT);
+      });
     });
   });
 
@@ -683,40 +665,50 @@ describe('saga tests', () => {
         },
       };
 
-      it('Processing Payment State', async () => {
-        try {
-          await runSaga(
-            {
-              getState: () => ({
-                payment: {
-                  basket: {
-                    foo: 'bar',
-                    paymentState: PAYMENT_STATE.PENDING,
-                    basketId: 7,
-                    payments: [
-                      { paymentNumber: 7 },
-                    ],
-                    isBasketProcessing: false,
-                  },
+      test.each`
+        ccEnabled | name
+        ${true}   | ${'Commerce Coordinator'}
+        ${false}  | ${'Ecommerce IDA'}
+      `('Processing Payment State for $name', async ({ ccEnabled }) => {
+        const waffleFlags = ccEnabled ? { [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true } : {};
+        return performWithModifiedWaffleFlags(
+          waffleFlags,
+          async () => {
+            try {
+              await runSaga(
+                {
+                  getState: () => ({
+                    payment: {
+                      basket: {
+                        foo: 'bar',
+                        paymentState: PAYMENT_STATE.PENDING,
+                        basketId: 7,
+                        payments: [
+                          { paymentNumber: 7 },
+                        ],
+                        isBasketProcessing: false,
+                      },
+                    },
+                  }),
+                  ...sagaOptions,
                 },
-              }),
-              ...sagaOptions,
-            },
-            handleSubmitPayment,
-            stripeArgs,
-          ).toPromise();
-        } catch (e) {} // eslint-disable-line no-empty
+                handleSubmitPayment,
+                stripeArgs,
+              ).toPromise();
+            } catch (e) {} // eslint-disable-line no-empty
 
-        expect(dispatched).toEqual([
-          basketProcessing(true),
-          clearMessages(),
-          submitPayment.request(),
-          submitPayment.success(),
-          pollPaymentState.trigger(),
-          basketProcessing(false),
-          submitPayment.fulfill(),
-        ]);
-        expect(caughtErrors).toEqual([]);
+            expect(dispatched).toEqual([
+              basketProcessing(true),
+              clearMessages(),
+              submitPayment.request(),
+              submitPayment.success(),
+              ccEnabled ? pollPaymentState.trigger() : undefined,
+              basketProcessing(false),
+              submitPayment.fulfill(),
+            ].filter((x) => x !== undefined));
+            expect(caughtErrors).toEqual([]);
+          },
+        );
       });
 
       it('With normal basket state', async () => {
@@ -872,7 +864,7 @@ describe('saga tests', () => {
     });
   });
 
-  describe('handlePaymentState', () => {
+  describe('[Coordinator Only] handlePaymentState', () => {
     /** This function allows us to create a canned state */
     const generateTestBasketState = (inPaymentState, inPayments = []) => ({
       loading: true,
@@ -943,47 +935,58 @@ describe('saga tests', () => {
         expectedResult: expectRuntimeFailure(),
       }));
 
-    const testPlan = [...successfulTestPlan, ...runtimeFailureTestPlan];
+    const testPlan = [...successfulTestPlan, ...runtimeFailureTestPlan]
+      .map((lineItem) => {
+        const nt = lineItem.validToPoll ? '' : 'n\'t';
+        const suffix = lineItem.shouldFail ? ', but should fail because of a missing value' : ', and succeed';
+        const desc = `PAYMENT_STATE.${lineItem.stateKey} should${nt} poll${suffix}`;
 
-    for (let i = 0, test = testPlan[i]; testPlan.length > i; i++, test = testPlan[i]) {
-      const nt = test.validToPoll ? '' : 'n\'t';
-      const suffix = test.shouldFail ? ', but should fail becase of a missing value' : ', and succeed';
-      it(`PAYMENT_STATE.${test.stateKey} should${nt} poll${suffix}`, async () => {
-        const localDispatched = [];
-        const localCaughtErrors = [];
-        axiosMock.reset();
+        return [desc, lineItem];
+      });
 
-        axiosMock.onGet(CC_PAYMENT_STATE_ENDPOINT).reply(
-          test.shouldFail ? 404 : 200,
-          { state: PAYMENT_STATE.COMPLETED },
-        );
+    it.each(testPlan)('%s', async (_, test, done) => {
+      await performWithModifiedWaffleFlags(
+        { [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true },
+        async () => {
+          const localDispatched = [];
+          const localCaughtErrors = [];
+          axiosMock.reset();
 
-        const localSagaOptions = {
-          dispatch: action => localDispatched.push(action),
-          onError: err => localCaughtErrors.push(err),
-        };
+          axiosMock.onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).reply(
+            test.shouldFail ? 404 : 200,
+            { state: PAYMENT_STATE.COMPLETED },
+          );
 
-        try {
-          await runSaga(
-            {
-              getState: () => ({
-                payment:
+          const localSagaOptions = {
+            dispatch: action => localDispatched.push(action),
+            onError: err => localCaughtErrors.push(err),
+          };
+
+          try {
+            await runSaga(
+              {
+                getState: () => ({
+                  payment:
                     {
                       basket: test.inputState,
                     },
-              }),
-              ...localSagaOptions,
-            },
-            handlePaymentState,
-          ).toPromise();
-        } catch (e) {} // eslint-disable-line no-empty
+                }),
+                ...localSagaOptions,
+              },
+              handlePaymentState,
+            ).toPromise();
+          } catch (e) {} // eslint-disable-line no-empty
 
-        expect(localDispatched).toEqual(test.expectedResult);
-        expect(localCaughtErrors).toEqual([]);
-      });
-    }
+          expect(localDispatched).toEqual(test.expectedResult);
+          expect(localCaughtErrors).toEqual([]);
+          done();
+        },
+      );
+    });
 
-    it(`Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => {
+    it(`Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
+      // performWithModifiedWaffleFlags snapshots our config before executing this closure, so we will default to the
+      // state before the run after the run. (We no longer need to clean up in these cases)
       mergeConfig({
         PAYMENT_STATE_POLLING_DELAY_SECS: 0.1,
       });
@@ -992,7 +995,7 @@ describe('saga tests', () => {
       const localCaughtErrors = [];
       axiosMock.reset();
 
-      axiosMock.onGet(CC_PAYMENT_STATE_ENDPOINT).reply(404, null);
+      axiosMock.onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).reply(404, null);
 
       const editableState = ({
         payment:
@@ -1026,13 +1029,11 @@ describe('saga tests', () => {
         ...expectRuntimeFailure(),
       ]);
       expect(localCaughtErrors).toEqual([]);
+    }));
 
-      mergeConfig({
-        PAYMENT_STATE_POLLING_DELAY_SECS: DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
-      });
-    });
-
-    it('Should Retry until state changes', async () => {
+    it('Should Retry until state changes', async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
+      // performWithModifiedWaffleFlags snapshots our config before executing this closure, so we will default to the
+      // state before the run after the run. (We no longer need to clean up in these cases)
       mergeConfig({
         PAYMENT_STATE_POLLING_DELAY_SECS: 0.1,
       });
@@ -1043,13 +1044,13 @@ describe('saga tests', () => {
 
       /* eslint-disable */ // Formatted for tabular layout
       axiosMock
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.COMPLETED });
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.COMPLETED });
       /* eslint-enable */ // Formatted for tabular layout
 
       const editableState = ({
@@ -1084,11 +1085,7 @@ describe('saga tests', () => {
         ...expectPollAndSucceed(),
       ]);
       expect(localCaughtErrors).toEqual([]);
-
-      mergeConfig({
-        PAYMENT_STATE_POLLING_DELAY_SECS: DEFAULT_PAYMENT_STATE_POLLING_DELAY_SECS,
-      });
-    });
+    }));
   });
 
   it('should perform error handling for field errors', async () => {
@@ -1150,7 +1147,6 @@ describe('saga tests', () => {
     expect(gen.next().value).toEqual(takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout));
     expect(gen.next().value).toEqual(takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret));
     expect(gen.next().value).toEqual(takeEvery(fetchBasket.TRIGGER, handleFetchBasket));
-    expect(gen.next().value).toEqual(takeEvery(fetchActiveOrder.TRIGGER, handleFetchActiveOrder));
     expect(gen.next().value).toEqual(takeEvery(addCoupon.TRIGGER, handleAddCoupon));
     expect(gen.next().value).toEqual(takeEvery(removeCoupon.TRIGGER, handleRemoveCoupon));
     expect(gen.next().value).toEqual(takeEvery(updateQuantity.TRIGGER, handleUpdateQuantity));

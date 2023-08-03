@@ -9,6 +9,9 @@ dist/
 src/i18n/transifex_input.json
 temp/babel-plugin-react-intl
 
+# See: https://github.com/openedx/frontend-build/tree/0f8f54476d63b259934b8d0f6d3d2dcae0213a0e#override-default-envdevelopment-environment-variables-with-envprivate
+.env.private
+
 ### pyenv ###
 .python-version
 

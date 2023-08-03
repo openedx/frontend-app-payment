@@ -134,11 +134,6 @@ export function generateAndSubmitForm(url, params = {}) {
   form.submit();
 }
 
-export function isWaffleFlagEnabled(flagName, defaultValue = false) {
-  const value = getConfig().WAFFLE_FLAGS[flagName];
-  return typeof value !== 'undefined' ? value : defaultValue;
-}
-
 /**
  * @param {string} productType will be one of
  * "Enrollment Code" | "Course Entitlement" | "Seat"

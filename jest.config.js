@@ -12,7 +12,7 @@ module.exports = createConfig('jest', {
     'src/payment/performanceEventing.js',
     'src/i18n',
     'src/store',
-    'src/data',
+    'src/data/configureStore.js',
     'src/payment/EcommerceRedirect.jsx',
     'src/payment/PageLoading.jsx',
     'src/payment/checkout/payment-form/FormInput.jsx',
