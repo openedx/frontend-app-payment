@@ -20,7 +20,6 @@ export const fetchCaptureKey = createRoutine('FETCH_CAPTURE_KEY');
 export const fetchClientSecret = createRoutine('FETCH_CLIENT_SECRET');
 export const submitPayment = createRoutine('SUBMIT_PAYMENT');
 export const fetchBasket = createRoutine('FETCH_BASKET');
-export const fetchActiveOrder = createRoutine('FETCH_ACTIVE_ORDER');
 export const addCoupon = createRoutine('ADD_COUPON');
 export const removeCoupon = createRoutine('REMOVE_COUPON');
 export const updateQuantity = createRoutine('UPDATE_QUANTITY');

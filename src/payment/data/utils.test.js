@@ -299,7 +299,10 @@ describe('chainReducers([reducers])', () => {
   const SET_VALUE = 'set';
 
   /* Functors/Data Generators */
-  const addAction = (reducer, testAction) => (state, action) => reducer.call(null, state, action || testAction);
+  const addAction = (reducer, testAction) => (state, action) => (
+    reducer
+      ? reducer.call(null, state, action || testAction) : undefined
+  );
   const alphaReducer = (val) => (stateX) => ({ ...stateX, myval: val });
   const testAction = (x = 'test_action') => ({ type: x });
 
@@ -319,15 +322,39 @@ describe('chainReducers([reducers])', () => {
       value: 'a',
       msg: 'Should succeed. (tests ordering by running the last test in reverse and expecting the opposite value)',
     },
-  ];
+    {
+      first: alphaReducer('c'),
+      second: undefined,
+      action: testAction(),
+      value: 'c',
+      msg: 'Should succeed. (returning the original reducer)',
+    },
+    {
+      first: undefined,
+      second: undefined,
+      action: testAction(),
+      value: undefined,
+      msg: 'Should succeed. (undefined use is considered... undefined... react will likely explode.)',
+    },
+  ].map((x) => ([`chain reducers return ${x.value}, ${x.msg}`, x]));
 
-  for (let i = 0, testPlan = tests[i]; i < tests.length; i++, testPlan = tests[i]) {
-    it(`chain reducers return ${testPlan.value}, ${testPlan.msg}`, () => {
-      const resultingState = addAction(chainReducers([testPlan.first, testPlan.second]), testPlan.action);
+  test.each(tests)('%s', (label, testPlan) => {
+    const reducers = [testPlan.first, testPlan.second]
+      .reduce((arry, reducer) => {
+        if (reducer) {
+          arry.push(reducer); // eslint-disable-line no-param-reassign
+        }
+        return arry;
+      }, []);
 
+    const resultingState = addAction(chainReducers(reducers), testPlan.action);
+
+    if (testPlan.value === undefined) {
+      expect(resultingState({ myval: DEFAULT_VALUE }, null)).toEqual(testPlan.value);
+    } else {
       expect(resultingState({ myval: DEFAULT_VALUE }, null).myval).toEqual(testPlan.value);
-    });
-  }
+    }
+  });
 
   /* More Complex Stuff */
   it('chain reducers should accumulate each others state', () => {
