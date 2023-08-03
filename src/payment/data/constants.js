@@ -140,7 +140,7 @@ export const DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS = 5;
 /**
  * An enum of known Waffle Flags
  *
- * Waffle flags my be set in the various .env files under the variable `WAFFLE_FLAGS` as well
+ * Waffle flags maybe set in the various .env files under the variable `WAFFLE_FLAGS` as well
  * as via query params in your browser's address bar... Both cases are processed via the same
  * processor and must be prefixed with `dwft_`.
  *
