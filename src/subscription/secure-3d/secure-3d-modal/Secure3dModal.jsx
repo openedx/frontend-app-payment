@@ -1,10 +1,9 @@
 import React, {
-  useState, useContext, useRef, useEffect,
+  useState, useRef, useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppContext } from '@edx/frontend-platform/react';
-import { logInfo, logError } from '@edx/frontend-platform/logging';
+import { logError } from '@edx/frontend-platform/logging';
 
 import {
   ModalDialog,
@@ -27,9 +26,9 @@ import {
  * for trial and paymentIntent for non-trial
  * purchases in order to load 3DS details inside an iFrame modal
  */
+/* eslint-disable no-console */
 export const Secure3DModal = ({ stripe, elements }) => {
   const dispatch = useDispatch();
-  const context = useContext(AppContext);
   const modalRef = useRef('inactive');
   const [isOpen, setOpen] = useState(false);
 
@@ -48,6 +47,7 @@ export const Secure3DModal = ({ stripe, elements }) => {
       iframe.width = '100%';
       iframe.height = '100%';
       container.appendChild(iframe);
+      console.log('Testing 3ds - 6 loading iframe details');
     });
   };
 
@@ -77,11 +77,15 @@ export const Secure3DModal = ({ stripe, elements }) => {
    */
   const on3DSComplete = async () => {
     // Hide the 3DS UI
+    // TODO: remove this after testing
+    console.log('Testing 3ds - 7 on3DSComplete initial');
     if (modalRef.current === 'active') {
       // completed 3DS, set to inactive so multiple state updates doesn't trigger the 3DS update
       modalRef.current = 'inactive';
-      dispatch(onSuccessful3DS({ payload: {}, username: context.authenticatedUser.username }));
+      dispatch(onSuccessful3DS({}));
       window.removeEventListener('message', null);
+      // TODO: remove this after testing
+      console.log('Testing 3ds - 8 on3DSComplete end');
     }
   };
 
@@ -92,10 +96,16 @@ export const Secure3DModal = ({ stripe, elements }) => {
   const fetchSecureDetails = async () => {
     try {
       const fetchPaymentDetails = isTrialEligible ? retrieveSetupIntent : retrievePaymentIntent;
+      // TODO: remove this after testing
+      console.log('Testing 3ds - 2 -- fetchingPaymentDetails');
       const paymentDetails = await fetchPaymentDetails();
+      // TODO: remove this after testing
+      console.log(`Testing 3ds - 3 -- paymentDetailsLoaded: ${!paymentDetails.next_action.redirect_to_url.url}`);
       loadSecureDetails(paymentDetails.next_action.redirect_to_url.url);
       setOpen(() => {
         // attempting 3ds, because state changes doesn't work with window listeners
+        // TODO: remove this after testing
+        console.log('Testing 3ds - 4 -- openingModal');
         modalRef.current = 'active';
         return true;
       });
@@ -105,20 +115,17 @@ export const Secure3DModal = ({ stripe, elements }) => {
         }
       }, false);
     } catch (e) {
-      logError(`Error loading 3D secure details): ${e.message}`, {
-        username: context.authenticatedUser.username,
-      });
+      // TODO: remove this after testing
+      console.log(`Testing 3ds - 5 --Error Message: ${e.message}, Error: ${JSON.stringify(e)}`);
+      logError(`Error loading 3D secure details): ${e.message}`);
     }
   };
 
   useEffect(() => {
     if (status === 'requires_action') {
+      // TODO: remove this after testing
+      console.log(`Testing 3ds - 1 -- fetchSecureDetails -- status: ${status}`);
       fetchSecureDetails();
-      // TODO: remove these temporary logs once 3DS gets fix on prod
-      logInfo('3ds/initiate-modal', {
-        status,
-        username: context.authenticatedUser.username,
-      });
     } else if (status === 'requires_payment_method') {
       // clear the stripe elements and ask user to submit new details
       // 3DS failed, prompt the customer to re-enter payment details
@@ -129,6 +136,8 @@ export const Secure3DModal = ({ stripe, elements }) => {
 
     if (status !== 'requires_action' && isOpen) {
       // hide the modal for all other states
+      // TODO: remove this after testing
+      console.log('Testing 3ds - 9 -- hideModal');
       setOpen(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
