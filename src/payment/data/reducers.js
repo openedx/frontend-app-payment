@@ -135,7 +135,7 @@ const clientSecretInitialState = {
   clientSecretId: '',
 };
 
-// CC & Ecomm IDA Backends, Stripe
+// Commerce Coordinator & Ecommerce IDA Backends, Stripe
 const clientSecret = (state = clientSecretInitialState, action = null) => {
   if (action != null) {
     switch (action.type) {

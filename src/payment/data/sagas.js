@@ -50,7 +50,6 @@ import {
   POLLING_PAYMENT_STATES,
 } from './constants';
 import { generateApiError } from './handleRequestError';
-import { getCurrentPaymentState } from './service';
 
 export const paymentMethods = {
   cybersource: checkoutWithToken,
@@ -324,7 +323,7 @@ export function* handlePaymentState() {
           throw new ReferenceError('Invalid Basket Id or Payment Number');
         }
 
-        const result = yield call(getCurrentPaymentState, paymentNumber, basketId);
+        const result = yield call(PaymentApiService.getCurrentPaymentState, paymentNumber, basketId);
 
         yield put(pollPaymentState.received(result));
 

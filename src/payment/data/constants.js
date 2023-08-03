@@ -10,7 +10,9 @@
  */
 export const ORDER_TYPES = {
   /**
-   * The Redemption of a Single Course Enrollment Code
+   * Bulk Enrollment Code Purchases
+   *
+   * Permits selective quantity purchases of enrollment codes
    *
    * A bulk-purchases on a single course, usually B2C for 100% off of course seats.
    */
@@ -85,7 +87,7 @@ export const PAYMENT_STATE = (((commerceCoordinatorEnumValues = {
    */
   PENDING: 'pending',
 }) => ({
-  // Inherit values as defined within the CC and its API Spec
+  // Inherit values as defined within the Commerce Coordinator and its API Spec
   ...commerceCoordinatorEnumValues,
 
   // MFE Specific additions for initial state (defaults) and error handling.
@@ -147,7 +149,7 @@ export const DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS = 5;
  *
  * @see processUrlWaffleFlags
  */
-export const WAFFLE_FLAGS = {
+export const WAFFLE_FLAG_NAMES = {
   /**
    * Flag to determine if Commerce Coordinator is enabled.
    */

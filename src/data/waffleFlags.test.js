@@ -46,8 +46,11 @@ describe('Testing the Testers: executePossiblyAsyncFunction', () => {
 /**
  * Set our JSDOM Window and Document Location
  *
- * **NOTE**: You *MUST* include your tests async DoneCallback as the final action of your `perform`'s closure.
- * failure to do so will lead to test timeouts.
+ * **NOTE**: You *MUST* include your tests async `done()` as the final action of your `perform`'s closure.
+ * failure to do so will lead to test timeouts. For more information see: https://jestjs.io/docs/asynchronous#callbacks
+ *
+ * We accept both Function and AsyncFunction, this means we use a promise to resolve which is out of line with the
+ *  invoker, thus if the invoker is itself Async, it must provide a done/resolves function to the end of its execution.
  *
  * @param {string} url The URL we intend to go to, this must be within the domain of `window.origin`
  * @param {Function} perform
@@ -99,7 +102,8 @@ export function performWithModifiedWaffleFlags(flags, perform) {
 describe('getWaffleFlags', () => {
   it('should default to document.location when empty', () => {
     // We have to use the Window's origin, otherwise: SecurityError: replaceState cannot update...
-    //   This was WAY TOO HARD FOUGHT.
+    //   Which is deep within the DOM as the window/document.location objects are monitored by
+    //   other mechanisms such as history, not to mention their own counterparts.
     const testLocation = `${window.origin}/dox.asp?${WAFFLE_PREFIX}xyzzy=on`;
 
     return performWithModifiedJSDOMLocation(testLocation, () => {

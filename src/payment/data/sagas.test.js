@@ -42,7 +42,7 @@ import {
   DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS,
   PAYMENT_STATE,
   POLLING_PAYMENT_STATES,
-  WAFFLE_FLAGS,
+  WAFFLE_FLAG_NAMES,
 } from './constants';
 import { ERROR_CODES } from '../../feedback/data/constants';
 import { generateApiError } from './handleRequestError';
@@ -75,8 +75,8 @@ const COUPON_API_ENDPOINT = resolveUrlForFunction(postCoupon);
 const QUANTITY_API_ENDPOINT = resolveUrlForFunction(postQuantity);
 
 // Commerce Coordinator
-const CC_ORDER_API_ENDPOINT = resolveUrlForFunction(getBasket, true);
-const CC_PAYMENT_STATE_ENDPOINT = resolveUrlForFunction(getCurrentPaymentState, true);
+const COMMERCE_COORDINATOR_ORDER_API_ENDPOINT = resolveUrlForFunction(getBasket, true);
+const COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT = resolveUrlForFunction(getCurrentPaymentState, true);
 
 // LMS
 const DISCOUNT_API_ENDPOINT = `${getConfig().LMS_BASE_URL}/api/discounts/course/`;
@@ -110,7 +110,7 @@ describe('saga tests', () => {
   describe('handleFetchBasket', () => {
     describe.each`
         name                      | flags                                                    | url
-        ${'Commerce Coordinator'} | ${{ [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true }} | ${CC_ORDER_API_ENDPOINT}
+        ${'Commerce Coordinator'} | ${{ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }} | ${COMMERCE_COORDINATOR_ORDER_API_ENDPOINT}
         ${'Ecommerce'}            | ${{}}                                                    | ${BASKET_API_ENDPOINT}
       `('$name', async (test) => {
       it('should bail if the basket is processing', async (done) => {
@@ -670,7 +670,7 @@ describe('saga tests', () => {
         ${true}   | ${'Commerce Coordinator'}
         ${false}  | ${'Ecommerce IDA'}
       `('Processing Payment State for $name', async ({ ccEnabled }) => {
-        const waffleFlags = ccEnabled ? { [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true } : {};
+        const waffleFlags = ccEnabled ? { [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true } : {};
         return performWithModifiedWaffleFlags(
           waffleFlags,
           async () => {
@@ -946,13 +946,13 @@ describe('saga tests', () => {
 
     it.each(testPlan)('%s', async (_, test, done) => {
       await performWithModifiedWaffleFlags(
-        { [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true },
+        { [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true },
         async () => {
           const localDispatched = [];
           const localCaughtErrors = [];
           axiosMock.reset();
 
-          axiosMock.onGet(CC_PAYMENT_STATE_ENDPOINT).reply(
+          axiosMock.onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).reply(
             test.shouldFail ? 404 : 200,
             { state: PAYMENT_STATE.COMPLETED },
           );
@@ -984,7 +984,7 @@ describe('saga tests', () => {
       );
     });
 
-    it(`Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
+    it(`Should Retry HTTP Errors ${DEFAULT_PAYMENT_STATE_POLLING_MAX_ERRORS}x then fail`, async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
       // performWithModifiedWaffleFlags snapshots our config before executing this closure, so we will default to the
       // state before the run after the run. (We no longer need to clean up in these cases)
       mergeConfig({
@@ -995,7 +995,7 @@ describe('saga tests', () => {
       const localCaughtErrors = [];
       axiosMock.reset();
 
-      axiosMock.onGet(CC_PAYMENT_STATE_ENDPOINT).reply(404, null);
+      axiosMock.onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).reply(404, null);
 
       const editableState = ({
         payment:
@@ -1031,7 +1031,7 @@ describe('saga tests', () => {
       expect(localCaughtErrors).toEqual([]);
     }));
 
-    it('Should Retry until state changes', async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
+    it('Should Retry until state changes', async () => performWithModifiedWaffleFlags({ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }, async () => {
       // performWithModifiedWaffleFlags snapshots our config before executing this closure, so we will default to the
       // state before the run after the run. (We no longer need to clean up in these cases)
       mergeConfig({
@@ -1044,13 +1044,13 @@ describe('saga tests', () => {
 
       /* eslint-disable */ // Formatted for tabular layout
       axiosMock
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
-        .onGet(CC_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.COMPLETED });
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.PENDING })
+        .onGet(COMMERCE_COORDINATOR_PAYMENT_STATE_ENDPOINT).replyOnce(200, { state: PAYMENT_STATE.COMPLETED });
       /* eslint-enable */ // Formatted for tabular layout
 
       const editableState = ({

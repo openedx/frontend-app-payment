@@ -2,7 +2,7 @@ import { getQueryParameters } from '@edx/frontend-platform';
 import { createSelector } from 'reselect';
 import { localizedCurrencySelector } from './utils';
 import { DEFAULT_STATUS } from '../checkout/payment-form/flex-microform/constants';
-import { POLLING_PAYMENT_STATES, WAFFLE_FLAGS } from './constants';
+import { POLLING_PAYMENT_STATES, WAFFLE_FLAG_NAMES } from './constants';
 import { isWaffleFlagEnabled } from '../../data/waffleFlags';
 
 export const storeName = 'payment';
@@ -91,11 +91,11 @@ export const paymentProcessStatusSelector = state => (state[storeName].basket.pa
  * @param state
  * @return boolean
  * @see POLLING_PAYMENT_STATES
- * @see WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED
+ * @see WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED
  */
 export const paymentProcessStatusShouldRunSelector = state => (
   POLLING_PAYMENT_STATES.includes(paymentProcessStatusSelector(state))
-  && isWaffleFlagEnabled(WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED)
+  && isWaffleFlagEnabled(WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED)
 );
 
 /**

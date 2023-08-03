@@ -4,7 +4,7 @@ import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import handleRequestError from './handleRequestError';
 import { transformResults } from './utils';
 import { isWaffleFlagEnabled } from '../../data/waffleFlags';
-import { WAFFLE_FLAGS } from './constants';
+import { WAFFLE_FLAG_NAMES } from './constants';
 
 ensureConfig([
   'ECOMMERCE_BASE_URL',
@@ -12,7 +12,11 @@ ensureConfig([
 ], 'payment API service');
 
 /* eslint-disable no-use-before-define */ /* Chicken vs Egg...
-    but it is preferred the interpreter pickup errors rather than use magic strings */
+    We are using function names, that don't exist yet by this line,
+    but it is preferred the interpreter pickup errors rather than use
+    magic strings, and since modern languages read everything through
+    before erroring, at least within the same code unit, we will break
+    this rule for ease of maintenance. */
 
 /**
  * Ecommerce IDA/Coordinator IDA URLs keyed by the function name they are meant for.
@@ -21,7 +25,7 @@ ensureConfig([
  */
 const urlsByFunction = {
   /* Shared common paths */
-  [getClientSecret.name]: '/bff/payment/v0/capture-context', // no forward slash at the end or we will explode
+  [getClientSecret.name]: '/bff/payment/v0/capture-context', // no forward slash at the end, or we hit 400/404 errors
   [getBasket.name]: '/bff/payment/v0/payment/',
 
   /* Ecommerce IDA Specific */
@@ -44,12 +48,12 @@ const urlsByFunction = {
  * @return {string|undefined} A resolved URL or `undefined` if not found.
  *
  * @see getUrlBase
- * @see WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED
+ * @see WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED
  */
 export const resolveUrlForFunction = (serviceFunction, testsOnlyForceCoordinator = false) => {
   let base = getConfig().ECOMMERCE_BASE_URL;
 
-  if (isWaffleFlagEnabled(WAFFLE_FLAGS.COMMERCE_COORDINATOR_ENABLED) || testsOnlyForceCoordinator) {
+  if (isWaffleFlagEnabled(WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED) || testsOnlyForceCoordinator) {
     ensureConfig(['COMMERCE_COORDINATOR_BASE_URL']);
     const coordBase = getConfig().COMMERCE_COORDINATOR_BASE_URL;
     // CC Endpoints must target receiving app, even though we use the root in the config for consistency's sake.
