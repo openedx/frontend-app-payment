@@ -140,6 +140,9 @@ export const Secure3DModal = ({ stripe, elements }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
+  // TODO: remove this after testing
+  logInfo('3DS - Component before render', { status });
+
   if (!isOpen || !stripe || !elements) { return null; }
 
   return (
