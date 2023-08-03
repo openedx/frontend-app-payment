@@ -123,6 +123,7 @@ describe('getWaffleFlags', () => {
     ${`${baseUrl + WAFFLE_PREFIX}x=true&${WAFFLE_PREFIX}y=off`}   | ${{ x: true, y: false }}
     ${`env://?${WAFFLE_PREFIX}x=true&${WAFFLE_PREFIX}y=off`}      | ${{ x: true, y: false }}
     ${'env://?undefined'}                                         | ${{}}
+    ${'env://?null'}                                              | ${{}}
     ${'env://?'}                                                  | ${{}}
   `('can parse: $url => $result', ({ url, result }) => {
     const returnVal = processUrlWaffleFlags(url);
