@@ -23,12 +23,15 @@ them to the feedback module to show the user a nicely formatted error.
 .. _payment module: https://github.com/openedx/frontend-app-payment/tree/master/src/payment
 
 .. contents:: Table of Contents
+   :depth: 1
 
 
 What should the API do?
 -----------------------
 
-Return a JSON response with in one of the following formats.
+Return a JSON response with in one of the following formats:
+
+.. contents:: :local:
 
 The feedback module will ignore dictionary keys not listed in the formats
 below. Thus, it is safe to include additional keys in the API's response.
@@ -360,6 +363,8 @@ implementation in `feedback/data/sagas.js`_.
 
 Future work
 -----------
+
+.. contents:: :local:
 
 Remove special error codes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
