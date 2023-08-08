@@ -1,5 +1,5 @@
-Feedback HOWTO
-==============
+Feedback & Error Handling HOWTO
+===============================
 
 Status: Draft
 
@@ -14,6 +14,10 @@ frontend-app-payment contacts.
 This HOWTO explains how the API should act to use this feedback module within
 the `payment module`_ and overviews where and how frontend-app-payment puts the
 message from the API's response.
+
+This HOWTO also explores how frontend-app-payment handles API call errors in
+the payment module. The payment module catches most API call errors and sends
+them to the feedback module to show the user a nicely formatted error.
 
 .. _feedback module: https://github.com/openedx/frontend-app-payment/tree/master/src/feedback
 .. _payment module: https://github.com/openedx/frontend-app-payment/tree/master/src/payment
