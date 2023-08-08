@@ -26,6 +26,79 @@ them to the feedback module to show the user a nicely formatted error.
    :depth: 1
 
 
+How does the feedback module work?
+----------------------------------
+
+Via exceptions
+~~~~~~~~~~~~~~
+
+* `payment/data/service.js`_ catches most exceptions thrown by the Axios client
+  calling the APIs and runs `handleBasketApiError()`_
+
+* `handleBasketApiError()`_ calls `payment/data/handleRequestError.js`_, which
+  reformats and transforms the feedback module JSON and re-throws the error.
+
+* `payment/data/sagas.js`_ catches most errors thrown by
+  `payment/data/service.js`_ and calls `feedback/data/sagas.js`_
+  `handleErrors()`_.
+
+* `handleErrors()`_ uses the ``addMessage()`` action and the associated
+  `addMessage() reducer helper function`_ to store the feedback message in
+  Redux's store.
+
+* `feedback/AlertList.jsx`_ is connected to the Redux store and formats each
+  feedback message into the props of a new `feedback/AlertMessage.jsx`_.
+
+.. _addMessage() reducer helper function: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/reducers.js#L22-L34
+.. _feedback/AlertList.jsx: https://github.com/openedx/frontend-app-payment/blob/master/src/feedback/AlertList.jsx
+.. _feedback/AlertMessage.jsx: https://github.com/openedx/frontend-app-payment/blob/master/src/feedback/AlertMessage.jsx
+
+.. _Via messages:
+
+Via messages
+~~~~~~~~~~~~
+
+* `payment/data/sagas.js`_ passes selected API responses into
+  `handleMessages()`_.
+
+* `handleMessages()`_ works similarly to `handleErrors()`_. See above.
+
+.. _handleMessages(): https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/sagas.js#L39
+
+
+How do I add a new error message in the payment module?
+-------------------------------------------------------
+
+* In `payment/data/service.js`_, add ``.catch(handleBasketApiError)`` to the
+  method chain of the Axios request (usually ``post()`` or ``get()``) to
+  reformat the error into the correct format, then rethrow.
+
+    * `handleBasketApiError()`_ is a thin wrapper around
+      `payment/data/handleRequestError.js`_.
+
+* In `payment/data/sagas.js`_, add a try-catch that catches the error
+  reformatted and rethrown by `handleBasketApiError()`_ and calls the
+  appropriate error handler:
+
+    * ``yield call(handleErrors, error, clearExistingMessages)`` for the
+      `List of errors`_ or `Single error`_ formats
+    * ``yield call(handleReduxFormValidationErrors, error,
+      clearExistingMessages)`` for the `Dictionary of field errors`_ format
+
+* In `payment/AlertCodeMessages.jsx`_, add a new component for your message.
+
+* In `components/formatted-alert-list/FormattedAlertList.jsx`_, add the new
+  component you created in ``<AlertCodeMessages>`` to ``messagesCode`` under
+  key named after the ``error_code`` you want the API to call to trigger this
+  error message.
+
+.. _payment/data/service.js: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/data/service.js
+.. _payment/data/handleRequestError.js: https://github.com/openedx/frontend-app-payment/blob/master/src/payment/data/handleRequestError.js
+.. _payment/data/sagas.js: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/data/sagas.js
+.. _payment/AlertCodeMessages.jsx: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/AlertCodeMessages.jsx
+.. _components/formatted-alert-list/FormattedAlertList.jsx: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/components/formatted-alert-list/FormattedAlertList.jsx
+
+
 What should the API do?
 -----------------------
 
@@ -210,44 +283,15 @@ Some error codes are connected to pre-built components. See:
 .. _AlertCodeMessages: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/AlertCodeMessages.jsx
 
 
-How does the feedback module work?
-----------------------------------
+What is the fallback error?
+---------------------------
 
-Via exceptions
-~~~~~~~~~~~~~~
+If a saga calls `handleErrors()`_ but the API response is not in one of the
+formats above or ``error_code`` is ``fallback-error``, ``handleErrors()`` will
+throw up the `FallbackErrorMessage`_.
 
-* `payment/data/service.js`_ catches most exceptions thrown by the Axios client
-  calling the APIs and runs `handleBasketApiError()`_
-
-* `handleBasketApiError()`_ calls `payment/data/handleRequestError.js`_, which
-  reformats and transforms the feedback module JSON and re-throws the error.
-
-* `payment/data/sagas.js`_ catches most errors thrown by
-  `payment/data/service.js`_ and calls `feedback/data/sagas.js`_
-  `handleErrors()`_.
-
-* `handleErrors()`_ uses the ``addMessage()`` action and the associated
-  `addMessage() reducer helper function`_ to store the feedback message in
-  Redux's store.
-
-* `feedback/AlertList.jsx`_ is connected to the Redux store and formats each
-  feedback message into the props of a new `feedback/AlertMessage.jsx`_.
-
-.. _addMessage() reducer helper function: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/reducers.js#L22-L34
-.. _feedback/AlertList.jsx: https://github.com/openedx/frontend-app-payment/blob/master/src/feedback/AlertList.jsx
-.. _feedback/AlertMessage.jsx: https://github.com/openedx/frontend-app-payment/blob/master/src/feedback/AlertMessage.jsx
-
-.. _Via messages:
-
-Via messages
-~~~~~~~~~~~~
-
-* `payment/data/sagas.js`_ passes selected API responses into
-  `handleMessages()`_.
-
-* `handleMessages()`_ works similarly to `handleErrors()`_. See above.
-
-.. _handleMessages(): https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/sagas.js#L39
+.. _FallbackErrorMessage: https://github.com/openedx/frontend-app-payment/blob/master/src/feedback/FallbackErrorMessage.jsx
+.. _handleErrors(): https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/sagas.js#L10C22-L10C22
 
 
 How to clear the list of feedback?
@@ -277,50 +321,6 @@ See the `URL parameter error message implementation`_.
 
 .. _query string: https://developer.mozilla.org/en-US/docs/Web/API/Location/search
 .. _URL parameter error message implementation: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/sagas.js#L49-L53
-
-
-How do I add a new error message in the payment module?
--------------------------------------------------------
-
-* In `payment/data/service.js`_, add ``.catch(handleBasketApiError)`` to the
-  method chain of the Axios request (usually ``post()`` or ``get()``) to
-  reformat the error into the correct format, then rethrow.
-
-    * `handleBasketApiError()`_ is a thin wrapper around
-      `payment/data/handleRequestError.js`_.
-
-* In `payment/data/sagas.js`_, add a try-catch that catches the error
-  reformatted and rethrown by `handleBasketApiError()`_ and calls the
-  appropriate error handler:
-
-    * ``yield call(handleErrors, error, clearExistingMessages)`` for the
-      `List of errors`_ or `Single error`_ formats
-    * ``yield call(handleReduxFormValidationErrors, error,
-      clearExistingMessages)`` for the `Dictionary of field errors`_ format
-
-* In `payment/AlertCodeMessages.jsx`_, add a new component for your message.
-
-* In `components/formatted-alert-list/FormattedAlertList.jsx`_, add the new
-  component you created in ``<AlertCodeMessages>`` to ``messagesCode`` under
-  key named after the ``error_code`` you want the API to call to trigger this
-  error message.
-
-.. _payment/data/service.js: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/data/service.js
-.. _payment/data/handleRequestError.js: https://github.com/openedx/frontend-app-payment/blob/master/src/payment/data/handleRequestError.js
-.. _payment/data/sagas.js: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/data/sagas.js
-.. _payment/AlertCodeMessages.jsx: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/payment/AlertCodeMessages.jsx
-.. _components/formatted-alert-list/FormattedAlertList.jsx: https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/components/formatted-alert-list/FormattedAlertList.jsx
-
-
-What is the fallback error?
----------------------------
-
-If a saga calls `handleErrors()`_ but the API response is not in one of the
-formats above or ``error_code`` is ``fallback-error``, ``handleErrors()`` will
-throw up the `FallbackErrorMessage`_.
-
-.. _FallbackErrorMessage: https://github.com/openedx/frontend-app-payment/blob/master/src/feedback/FallbackErrorMessage.jsx
-.. _handleErrors(): https://github.com/openedx/frontend-app-payment/blob/1d631c51035eb8405ce9b03e0fa64a5a6e386268/src/feedback/data/sagas.js#L10C22-L10C22
 
 
 When are snake_case dictionary keys auto-converted to camelCase?
