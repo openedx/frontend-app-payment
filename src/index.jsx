@@ -36,7 +36,6 @@ import {
 } from './payment';
 import { SubscriptionPage } from './subscription';
 import { Secure3dRedirectPage } from './subscription/secure-3d/Secure3dRedirectPage';
-
 import configureStore from './data/configureStore';
 
 import './index.scss';

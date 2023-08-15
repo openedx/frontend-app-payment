@@ -1,6 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {
+  useState, useRef, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { logError, logInfo } from '@edx/frontend-platform/logging';
 
 import {
   ModalDialog,
@@ -23,6 +26,7 @@ import {
  * for trial and paymentIntent for non-trial
  * purchases in order to load 3DS details inside an iFrame modal
  */
+/* eslint-disable no-console */
 export const Secure3DModal = ({ stripe, elements }) => {
   const dispatch = useDispatch();
   const modalRef = useRef('inactive');
@@ -87,6 +91,8 @@ export const Secure3DModal = ({ stripe, elements }) => {
   const fetchSecureDetails = async () => {
     try {
       const fetchPaymentDetails = isTrialEligible ? retrieveSetupIntent : retrievePaymentIntent;
+      // TODO: remove this after testing
+      logInfo('3DS - fetchingPaymentDetails');
       const paymentDetails = await fetchPaymentDetails();
       loadSecureDetails(paymentDetails.next_action.redirect_to_url.url);
       setOpen(() => {
@@ -100,12 +106,15 @@ export const Secure3DModal = ({ stripe, elements }) => {
         }
       }, false);
     } catch (e) {
-      // TODO: log the error to segment
-      throw new Error(`Error loading 3D secure details): ${e.message}`);
+      logError(`Error loading 3DS details): ${e.message}`);
     }
   };
 
   useEffect(() => {
+    // TODO: remove this after testing
+    logInfo('3DS - status change effect', {
+      status,
+    });
     if (status === 'requires_action') {
       fetchSecureDetails();
     } else if (status === 'requires_payment_method') {
