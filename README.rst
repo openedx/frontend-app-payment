@@ -229,3 +229,29 @@ Appendix B: Adding No-Op Stuff to Test Sandbox Deploys
 ----------------------------------------------------------
 
 Let's try this.
+
+
+Subscriptions
+-------------
+
+This payment mfe introduced another react route `payment.stage.edx.org/subscription` to handle recurring payments. For we're only allowing one payment method to handle recurring purchases i.e. stripe subscriptions.
+
+Development
+-----------
+
+All the Subscription related functionality build under the `src/subscription` directory. It uses most of the existing stripe logic to implement this new functionality and add anything new on top of it. Below list defines some key notes where it deviates from the `src/purchase` flow.
+
+- `src/subscription/SubscriptionPage.jsx` includes it's own `index.scss` file to add / override the styles.
+- `src/subscription/i18n-protected-messages` overrides the *Transifex* messages with the locally (hardcoded) defined messages.
+- `src/subscription/test-utils` defines the new test wrapper with `react-testing-library`. We use `react-testing-library` to write unit tests for `src/subscription` code.
+- `src/subscription/alerts` defines its new set of alerts specific to `Subscription` page.
+- `SUBSCRIPTIONS_BASE_URL` exposes all the endpoints for `GET` and `POST` subscription actions.
+
+3DS
+---
+
+For recurring payments we have also enabled the 3D Secure payment flow. All the basic functionality for 3DS is implemented under `src/subscription/secure-3d` directory. Follow are some key points with 3DS implementation.
+
+- We render 3DS bank details inside an `iframe` within a modal. User completes the 3DS check and bank redirects user back to our provided return address i.e. `payment.stage.edx.org/subscription/3ds`.
+- `src/subscription/secure-3d` introduce new react route page where banks redirect user after the completion of 3ds flow.
+- In order for payment mfe to load other scripts in `iframe` we allowed the `frame-src` and `frame-ancestors` content-security-policy header directives via `terraform` configuration.
