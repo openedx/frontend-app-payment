@@ -6,6 +6,7 @@ import MockAdapter from 'axios-mock-adapter';
 import {
   getDetails,
   postDetails,
+  checkoutComplete,
   handleDetailsApiError,
   transformSubscriptionDetails,
 } from './service';
@@ -118,6 +119,62 @@ describe('postDetails', () => {
     });
     await expect(postDetails(payload)).rejects.toEqual(error);
     expect(axios.post).toHaveBeenCalledWith(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout/`, payload);
+  });
+});
+
+describe('checkoutComplete', () => {
+  const payload = {
+    program_title: 'Blockchain Fundamentals',
+    subscription_id: 'si-3in2h9i2nkn2c3sds',
+    confirmation_client_secret: 'pi-si93n3939393m489i',
+  };
+  let secure3DStatusResponse = {
+    price: NaN,
+    status: 'requires_payment_method',
+    totalPrice: NaN,
+  };
+
+  test('should return requires_payment_method in case of unsuccessful 3DS', async () => {
+    axios.post.mockResolvedValue({
+      data: secure3DStatusResponse,
+    });
+
+    const result = await checkoutComplete(payload);
+
+    expect(result).toEqual({
+      price: NaN,
+      totalPrice: NaN,
+      status: 'requires_payment_method',
+    });
+    expect(axios.post).toHaveBeenCalledWith(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout-complete/`, payload);
+  });
+
+  test('should return succeeded in case of successful 3DS', async () => {
+    secure3DStatusResponse = { ...secure3DStatusResponse, status: 'succeeded' };
+    axios.post.mockResolvedValue({
+      data: secure3DStatusResponse,
+    });
+
+    const result = await checkoutComplete(payload);
+
+    expect(result).toEqual({
+      status: 'succeeded',
+      price: NaN,
+      totalPrice: NaN,
+    });
+    expect(axios.post).toHaveBeenCalledWith(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout-complete/`, payload);
+  });
+
+  test('should throw an error on API failure', async () => {
+    const error = new Error();
+    error.errors = [errorJSON];
+    axios.post.mockRejectedValue({
+      data: {
+        response: errorJSON,
+      },
+    });
+    await expect(checkoutComplete(payload)).rejects.toEqual(error);
+    expect(axios.post).toHaveBeenCalledWith(`${getConfig().SUBSCRIPTIONS_BASE_URL}/api/v1/stripe-checkout-complete/`, payload);
   });
 });
 

@@ -33,9 +33,8 @@ const UpdateQuantityForm = (props) => {
             description="Label for updating a quantity of enrollment codes to purchase"
           />
         </label>
-        <div className="position-relative">
+        <div className="position-relative ml-2">
           <Form.Control
-            className="form-control-sm"
             name={id}
             id={id}
             max="100"

@@ -39,8 +39,19 @@ export const IneligibleProgramErrorMessage = () => (
   <FormattedMessage
     FormattedMessage
     id="subscription.alerts.error.ineligible_program"
-    defaultMessage="We're sorry, this program is no longer offering a subscription option. Please search our catalog for current availability"
+    defaultMessage="We're sorry, this program is no longer offering a subscription option. Please search our catalog for current availability."
     description="Telling user that this program is not available for not available for subscription anymore."
+  >
+    {text => <p aria-level="2">{text}</p>}
+  </FormattedMessage>
+);
+
+export const Unsuccessful3DSMessage = () => (
+  <FormattedMessage
+    FormattedMessage
+    id="subscription.alerts.error.requires_payment_method"
+    defaultMessage="We're sorry, the details you provided could not pass the 3D Secure check. Please try different payment details."
+    description="Telling user that there was an error completing 3DS flow for purchasing a subscription."
   >
     {text => <p aria-level="2">{text}</p>}
   </FormattedMessage>

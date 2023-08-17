@@ -335,10 +335,10 @@ exports[`<Cart /> renders a bulk enrollment cart 1`] = `
             Quantity
           </label>
           <div
-            className="position-relative"
+            className="position-relative ml-2"
           >
             <div
-              className="pgn__form-control-decorator-group form-control-sm"
+              className="pgn__form-control-decorator-group"
             >
               <input
                 className="has-value form-control"

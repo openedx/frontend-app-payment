@@ -31,6 +31,12 @@ import createRootReducer from '../data/reducers';
 const config = getConfig();
 const locale = 'en';
 
+// Mock the logError function
+jest.mock('@edx/frontend-platform/logging', () => ({
+  logInfo: jest.fn(),
+  logError: jest.fn(),
+}));
+
 configureI18n({
   config: {
     ENVIRONMENT: process.env.ENVIRONMENT,

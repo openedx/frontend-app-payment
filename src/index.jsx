@@ -35,7 +35,7 @@ import {
   getPerformanceProperties,
 } from './payment';
 import { SubscriptionPage } from './subscription';
-
+import { Secure3dRedirectPage } from './subscription/secure-3d/Secure3dRedirectPage';
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -91,7 +91,10 @@ subscribe(APP_READY, () => {
           <Route exact path="/" component={PaymentPage} />
           {
             getConfig().ENABLE_B2C_SUBSCRIPTIONS?.toLowerCase() === 'true' ? (
-              <Route exact path="/subscription" component={SubscriptionPage} />
+              <>
+                <Route exact path="/subscription" component={SubscriptionPage} />
+                <Route exact path="/subscription/3ds" component={Secure3dRedirectPage} />
+              </>
             ) : null
           }
           <Route path="*" component={EcommerceRedirect} />
