@@ -19,7 +19,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { PaymentPage } from '.';
 import createRootReducer from '../data/reducers';
 import { fetchBasket, basketDataReceived } from './data/actions';
-import { transformResults } from './data/service';
+import { transformResults } from './data/utils';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
 
@@ -217,7 +217,7 @@ describe('<PaymentPage />', () => {
       expect(tree).toMatchSnapshot();
     });
 
-    it('should render an empty basket', () => {
+    it('should render an empty cart', () => {
       const component = (
         <IntlProvider locale="en">
           <AppContext.Provider value={{ authenticatedUser, config, locale }}>

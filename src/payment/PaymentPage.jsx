@@ -15,18 +15,10 @@ import { paymentSelector } from './data/selectors';
 
 // Components
 import PageLoading from './PageLoading';
-import AlertList from '../feedback/AlertList';
-import {
-  SingleEnrollmentCodeWarning,
-  EnrollmentCodeQuantityUpdated,
-  TransactionDeclined,
-  BasketChangedError,
-  CaptureKeyTimeoutTwoMinutes,
-  CaptureKeyTimeoutOneMinute,
-} from './AlertCodeMessages';
 import EmptyCartMessage from './EmptyCartMessage';
 import Cart from './cart/Cart';
 import Checkout from './checkout/Checkout';
+import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
 
 class PaymentPage extends React.Component {
   constructor(props) {
@@ -113,45 +105,11 @@ class PaymentPage extends React.Component {
   }
 
   render() {
-    const {
-      summaryQuantity, summarySubtotal, intl,
-    } = this.props;
-
     return (
       <div className="page__payment container-fluid py-5">
-        <AlertList
-          /*
-            For complex messages, the server will return a message code instead of a user message
-            string. The values in the messageCodes object below will handle these messages. They can
-            be a class/function, JSX element, or string. Class/functions and jsx elements will
-            receive a 'values' prop of relevant data about the message. Strings will be rendered
-            as-is.
-          */
-          messageCodes={{
-            'single-enrollment-code-warning': SingleEnrollmentCodeWarning,
-            'quantity-update-success-message': (
-              <EnrollmentCodeQuantityUpdated
-                values={{
-                  quantity: summaryQuantity,
-                  price: summarySubtotal,
-                }}
-              />
-            ),
-            'transaction-declined-message': (
-              <TransactionDeclined />
-            ),
-            'basket-changed-error-message': (
-              <BasketChangedError />
-            ),
-            'capture-key-2mins-message': (
-              <CaptureKeyTimeoutTwoMinutes />
-            ),
-            'capture-key-1min-message': (
-              <CaptureKeyTimeoutOneMinute />
-            ),
-            'apple-pay-merchant-validation-failure': intl.formatMessage(messages['payment.apple.pay.merchant.validation.failure']),
-            'apple-pay-authorization-failure': intl.formatMessage(messages['payment.apple.pay.authorization.failure']),
-          }}
+        <FormattedAlertList
+          summaryQuantity={this.props.summaryQuantity}
+          summarySubtotal={this.props.summarySubtotal}
         />
         {this.renderContent()}
       </div>

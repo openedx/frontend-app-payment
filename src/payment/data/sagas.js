@@ -2,7 +2,7 @@ import {
   call, put, takeEvery, select, delay,
 } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
-import { camelCaseObject, convertKeyNames } from './utils';
+import { getReduxFormValidationErrors } from './utils';
 import { MESSAGE_TYPES } from '../../feedback/data/constants';
 
 // Actions
@@ -57,25 +57,12 @@ function* isClientSecretProcessing() {
 }
 
 export function* handleReduxFormValidationErrors(error) {
-  // error.fieldErrors is an array, and the fieldName key in it is snake case.
-  // We need to convert this into an object with snakeCase keys and values that are the
-  // userMessages.
   if (error.fieldErrors) {
-    let fieldErrors = {};
-    // Turn the error objects into key-value pairs on our new fieldErrors object.
-    error.fieldErrors.forEach((fieldError) => {
-      fieldErrors[fieldError.fieldName] = fieldError.userMessage;
-    });
-
-    // Modify the key names to be what the UI needs and then camelCase the whole thing.
-    fieldErrors = camelCaseObject(convertKeyNames(fieldErrors, {
-      address_line1: 'address',
-      address_line2: 'unit',
-    }));
-
+    const fieldErrors = getReduxFormValidationErrors(error);
     yield put(stopSubmit('payment', fieldErrors));
   }
 }
+
 export function* handleDiscountCheck() {
   const basket = yield select(state => state.payment.basket);
   if (basket.products.length === 1) {

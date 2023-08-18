@@ -16,6 +16,10 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
+import SubscriptionSubmitButton from '../../../subscription/checkout/submit-button/SubscriptionSubmitButton';
+import MonthlyBillingNotification from '../../../subscription/checkout/monthly-billing-notification/MonthlyBillingNotification';
+import { Secure3DModal } from '../../../subscription/secure-3d/secure-3d-modal/Secure3dModal';
+
 import {
   getRequiredFields, validateRequiredFields, validateAsciiNames,
 } from './utils/form-validators';
@@ -31,6 +35,8 @@ const StripePaymentForm = ({
   onSubmitPayment,
   options,
   submitErrors,
+  isSubscription,
+  paymentDataSelector,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -45,9 +51,10 @@ const StripePaymentForm = ({
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
 
+  const checkoutDetails = useSelector(paymentDataSelector);
   const {
     enableStripePaymentProcessor, loading, submitting, products,
-  } = useSelector(state => state.payment.basket);
+  } = checkoutDetails;
 
   // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
   // isQuantityUpdating is true when isBasketProcessing is true when there is an update in the quantity for
@@ -91,6 +98,15 @@ const StripePaymentForm = ({
       lastName,
     } = values;
 
+    let stripeElementErrors = null;
+    if (isSubscription) {
+      // Trigger form validation and wallet collection
+      const { error: submitError } = await elements.submit();
+      if (submitError) {
+        stripeElementErrors = submitError;
+      }
+    }
+
     const errors = {
       ...validateRequiredFields(requiredFields),
       ...validateAsciiNames(
@@ -99,8 +115,9 @@ const StripePaymentForm = ({
       ),
     };
 
-    if (Object.keys(errors).length > 0) {
-      throw new SubmissionError(errors);
+    if (Object.keys(errors).length > 0 || stripeElementErrors) {
+      // Trigger form validation and wallet collection
+      throw new SubmissionError({ ...errors, stripe: stripeElementErrors });
     }
 
     if (!stripe || !elements) {
@@ -117,11 +134,24 @@ const StripePaymentForm = ({
   const stripeElementsOnReady = () => {
     setIsStripeElementLoading(false);
     markPerformanceIfAble('Stripe Elements component rendered');
+
+    let subscriptionEventProps = {};
+
+    if (isSubscription) {
+      subscriptionEventProps = {
+        isTrialEligible: checkoutDetails.isTrialEligible,
+        isNewSubscription: checkoutDetails.isTrialEligible,
+        paymentProcessor: checkoutDetails.paymentMethod,
+        programUuid: checkoutDetails.programUuid,
+      };
+    }
+
     sendTrackEvent(
       'edx.bi.ecommerce.payment_mfe.payment_form_rendered',
       {
         ...getPerformanceProperties(),
         paymentProcessor: 'Stripe',
+        ...subscriptionEventProps,
       },
     );
   };
@@ -145,12 +175,26 @@ const StripePaymentForm = ({
         options={options}
         onReady={stripeElementsOnReady}
       />
-      <PlaceOrderButton
-        onSubmitButtonClick={onSubmitButtonClick}
-        showLoadingButton={showLoadingButton}
-        disabled={submitting}
-        isProcessing={isProcessing}
-      />
+      {isSubscription ? (
+        <>
+          <MonthlyBillingNotification />
+          <SubscriptionSubmitButton
+            onSubmitButtonClick={onSubmitButtonClick}
+            showLoadingButton={showLoadingButton}
+            disabled={submitting}
+            isProcessing={isProcessing}
+          />
+          <Secure3DModal stripe={stripe} elements={elements} />
+        </>
+      ) : (
+        <PlaceOrderButton
+          onSubmitButtonClick={onSubmitButtonClick}
+          showLoadingButton={showLoadingButton}
+          disabled={submitting}
+          isProcessing={isProcessing}
+        />
+      )}
+
     </form>
   );
 };
@@ -164,6 +208,8 @@ StripePaymentForm.propTypes = {
   onSubmitPayment: PropTypes.func.isRequired,
   options: PropTypes.object, // eslint-disable-line react/forbid-prop-types,
   submitErrors: PropTypes.objectOf(PropTypes.string),
+  isSubscription: PropTypes.bool,
+  paymentDataSelector: PropTypes.func.isRequired,
 };
 
 StripePaymentForm.defaultProps = {
@@ -172,6 +218,7 @@ StripePaymentForm.defaultProps = {
   isProcessing: false,
   submitErrors: {},
   options: null,
+  isSubscription: false,
 };
 
 export default reduxForm({ form: 'stripe' })((injectIntl(StripePaymentForm)));

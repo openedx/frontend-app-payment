@@ -1,0 +1,115 @@
+
+.subscription-page {
+  @mixin badge-responsive{
+    flex-direction: column-reverse;
+    .badge{
+      margin-bottom: 1rem;
+    }
+  }
+  @mixin product-title-column {
+    flex-direction: column;
+    align-items: flex-start !important;
+    .col-7 {
+      padding-left: 1rem !important;
+      margin-top: 0.5rem !important;
+    }
+  }
+  .heading-badge-wrapper {
+    @extend .d-flex;
+    @extend .justify-content-between;
+    @extend .align-items-start;
+    @include media-breakpoint-between(md, lg){
+      @include badge-responsive;
+    }
+    @include media-breakpoint-down(xs){
+      @include badge-responsive;
+    }
+  }
+  .product-wrapper {
+    // .col-7 {
+    //   @extend .pl-0;
+    // }
+    @include media-breakpoint-down(xl){
+      @include product-title-column;
+    }
+    @include media-breakpoint-down(lg) {
+      flex-direction: row;
+      align-items: center !important;
+      .col-7 {
+        padding-left: 0px !important;
+        margin-top: 0px !important;
+      }
+    }
+    @include media-breakpoint-down(xs){
+      @include product-title-column;
+      .col-5 .embed-responsive {
+        min-width: 98px;
+      }
+    }
+  }
+  .basket-section.order-details{
+    margin-bottom: 2rem !important;
+  }
+  h5#summary-heading{
+    color: $gray-500 !important;
+  }
+  .summary-price {
+    max-width: 70%;
+    text-align: right;
+  }
+  .form-group {
+    .form-control.error{
+      border-color: $brand-500;
+    }
+    span.text-danger{
+      color: $brand-500 !important;
+      @extend small;
+    }
+  }
+
+  .monthly-legal-notification p.micro {
+    font-size: 12px !important;
+  }
+  //skeleton changes
+  .sub-cart-skeleton {
+    .sub-skeleton-title{
+      flex: 1;
+    }
+    .sub-skeleton-badge{
+      width: 50px;
+      height: 24px
+    }
+    .embed-responsive {
+      border: 4px solid white;
+      box-shadow: 0px 0px 0px 1px $light-700;
+    }
+    .price {
+      height: 19px;
+      .section-left {
+        display: flex;
+        flex: 1;
+      }
+      .section-right {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
+.secure-3d-modal {
+  max-width: none !important;
+  max-height: none !important;
+  height: 660px !important;;
+  width: 400px !important;
+  overflow: hidden !important;;
+  .secure-3ds-wrapper {
+    height: 100%;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  iframe {
+    border: 0;
+  }
+}

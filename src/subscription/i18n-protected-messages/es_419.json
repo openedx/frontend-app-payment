@@ -1,0 +1,15 @@
+{
+  "subscription.order.details.taxes": "El total mencionado arriba incluye cualquier impuesto que pudiera aplicar.",
+  "subscription.order.details": "Después de completar su pedido, tendrá acceso verificado a cada uno de los cursos en {programTitle}.",
+  "subscription.order.details.cancel": "Puede cancelar en cualquier momento.",
+  "subscription.details.order.legal": "Al registrarse para una subscripción o si se registra para un periodo de prueba gratis, usted nos autoriza a cobrarle a su tarjeta en el expediente {price} dólares estadounidenses por mes por el programa {programTitle}, más cualquier impuesto que pudiera aplicar. La subscripción a {programTitle} se renovará automáticamente hasta que cancele. Las subscripciones mensuales pueden cancelarse en cualquier momento. Revise el proceso de cancelación en el {supportLink}. Al cancelar una subscripción, cesa el cargo mensual recurrente de subscripción, pero no reembolsa la transacción del ciclo de facturación actual. Usted seguirá teniendo acceso a la subscripción hasta el final del ciclo de facturación actual.", 
+  "subscription.details.order.legal.link": "Centro de Ayuda",
+  "subscription.checkout.billing.notification": "Se le cobrará {price} dólares estadounidenses {trialEnd} luego cada mes hasta que cancele su subscripción.",
+  "subscription.checkout.billing.trial.date": "el {date},", 
+  "subscription.checkout.billing.resubscribe.date": "hoy y",
+  "subscription.confirmation.modal.trialing.heading": "¡Felicidades! Su prueba gratis de 7 días {programTitle} ya comenzó.", 
+  "subscription.confirmation.modal.trialing.body": "Cuando termine su periodo de prueba gratis, comenzará su subscripción y cargaremos {price} dólares estadounidenses a su tarjeta en el expediente. Para evitar este cargo a su tarjeta, deberá cancelar antes de que termine el periodo de prueba. Esta subscripción se renovará automáticamente cada mes a menos de que cancele en la página de {ordersAndSubscriptionLink}.",
+  "subscription.confirmation.modal.resubscribe.heading": "¡Felicidades! Su subscripción a {programTitle} ya comenzó.",
+  "subscription.confirmation.modal.resubscribe.body": "Le hicimos un cargo de {price} dólares estadounidense a su tarjeta en el expediente.  Esta subscripción se renovará automáticamente cada mes a menos de que cancele en la página de {ordersAndSubscriptionLink}.",
+  "subscription.confirmation.modal.body.orders.link": "Pedidos y Subscripciones"
+}

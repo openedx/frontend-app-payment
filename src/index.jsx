@@ -14,20 +14,28 @@ import {
 } from '@edx/frontend-platform';
 import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { messages as paragonMessages } from '@edx/paragon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Routes } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { logError } from '@edx/frontend-platform/logging';
-import Header, { messages as headerMessages } from '@edx/frontend-component-header';
-import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
+import { getLoggingService, logError } from '@edx/frontend-platform/logging';
+import Header from '@edx/frontend-component-header';
+import Footer from '@edx/frontend-component-footer';
 
-import appMessages from './i18n';
+import { configure as configureI18n } from '@edx/frontend-platform/i18n/lib';
+import { getLocale } from '@edx/frontend-platform/i18n';
+import messages from './i18n';
+
 import {
-  PaymentPage, EcommerceRedirect, responseInterceptor, markPerformanceIfAble, getPerformanceProperties,
+  PaymentPage,
+  EcommerceRedirect,
+  responseInterceptor,
+  markPerformanceIfAble,
+  getPerformanceProperties,
 } from './payment';
+import { SubscriptionPage } from './subscription';
+import { Secure3dRedirectPage } from './subscription/secure-3d/Secure3dRedirectPage';
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -45,6 +53,7 @@ Object.keys(allQueryParams).forEach((param) => {
     waffleFlags[configKey] = truth.test(allQueryParams[param]);
   }
 });
+
 mergeConfig({
   CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,
   SUPPORT_URL: process.env.SUPPORT_URL,
@@ -57,6 +66,11 @@ mergeConfig({
   APPLE_PAY_SUPPORTED_NETWORKS: process.env.APPLE_PAY_SUPPORTED_NETWORKS && process.env.APPLE_PAY_SUPPORTED_NETWORKS.split(','),
   APPLE_PAY_MERCHANT_CAPABILITIES: process.env.APPLE_PAY_MERCHANT_CAPABILITIES && process.env.APPLE_PAY_MERCHANT_CAPABILITIES.split(','),
   WAFFLE_FLAGS: waffleFlags,
+  STRIPE_RESPONSE_URL: process.env.STRIPE_RESPONSE_URL,
+  STRIPE_DEFERRED_INTENT_BETA_FLAG: process.env.STRIPE_DEFERRED_INTENT_BETA_FLAG,
+  SUBSCRIPTIONS_BASE_URL: process.env.SUBSCRIPTIONS_BASE_URL,
+  ENABLE_B2C_SUBSCRIPTIONS: process.env.ENABLE_B2C_SUBSCRIPTIONS,
+  SUBSCRIPTIONS_LEARNER_HELP_CENTER_URL: process.env.SUBSCRIPTIONS_LEARNER_HELP_CENTER_URL,
 });
 
 subscribe(APP_READY, () => {
@@ -75,6 +89,14 @@ subscribe(APP_READY, () => {
       <main id="main">
         <Routes>
           <Route path="/" element={<PaymentPage />} />
+          {
+            getConfig().ENABLE_B2C_SUBSCRIPTIONS?.toLowerCase() === 'true' ? (
+              <>
+                <Route path="/subscription" element={<SubscriptionPage />} />
+                <Route path="/subscription/3ds" element={<Secure3dRedirectPage />} />
+              </>
+            ) : null
+          }
           <Route path="*" element={<EcommerceRedirect />} />
         </Routes>
       </main>
@@ -85,6 +107,15 @@ subscribe(APP_READY, () => {
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
+  try {
+    getLocale('en');
+  } catch (e) {
+    configureI18n({
+      messages: {},
+      config: getConfig(),
+      loggingService: getLoggingService(),
+    });
+  }
   ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('root'));
 });
 
@@ -124,12 +155,7 @@ subscribe(APP_AUTH_INITIALIZED, () => {
 });
 
 initialize({
-  messages: [
-    appMessages,
-    headerMessages,
-    footerMessages,
-    paragonMessages,
-  ],
+  messages,
   requireAuthenticatedUser: true,
   hydrateAuthenticatedUser: true,
 });

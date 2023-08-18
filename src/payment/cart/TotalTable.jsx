@@ -6,13 +6,13 @@ import LocalizedPrice from './LocalizedPrice';
 
 const TotalTable = ({ total }) => (
   <div className="summary-row font-weight-bold d-flex">
-    <span className="flex-grow-1">
-      <FormattedMessage
-        id="payment.summary.table.label.total.to.pay"
-        defaultMessage="TOTAL"
-        description="Label for the final total price of an order."
-      />
-    </span>
+    <FormattedMessage
+      id="payment.summary.table.label.total.to.pay"
+      defaultMessage="TOTAL"
+      description="Label for the final total price of an order."
+    >
+      { text => <span className="flex-grow-1">{text}</span>}
+    </FormattedMessage>
     <span className="text-right">
       <LocalizedPrice amount={total} />
     </span>
@@ -22,6 +22,7 @@ const TotalTable = ({ total }) => (
 TotalTable.propTypes = {
   total: PropTypes.number,
 };
+
 TotalTable.defaultProps = {
   total: undefined,
 };

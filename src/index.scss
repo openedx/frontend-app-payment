@@ -1,9 +1,11 @@
-@import "@edx/brand/paragon/fonts.scss";
-@import "@edx/brand/paragon/variables.scss";
-@import "@edx/paragon/scss/core/core.scss";
-@import "@edx/brand/paragon/overrides.scss";
+@import "~@edx/brand/paragon/fonts";
+@import "~@edx/brand/paragon/variables";
+@import "~@edx/paragon/scss/core/core";
+@import "~@edx/brand/paragon/overrides";
 
 @import './payment/index.scss';
+@import './subscription/index.scss';
+@import './subscription/secure-3d/index.scss';
 
 @import "~@edx/frontend-component-header/dist/index";
 @import "~@edx/frontend-component-footer/dist/footer";
