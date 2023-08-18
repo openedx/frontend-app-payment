@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { logError, logInfo } from '@edx/frontend-platform/logging';
+import { logError } from '@edx/frontend-platform/logging';
 
 import {
   ModalDialog,
@@ -91,8 +91,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
   const fetchSecureDetails = async () => {
     try {
       const fetchPaymentDetails = isTrialEligible ? retrieveSetupIntent : retrievePaymentIntent;
-      // TODO: remove this after testing
-      logInfo('3DS - fetchingPaymentDetails');
       const paymentDetails = await fetchPaymentDetails();
       loadSecureDetails(paymentDetails.next_action.redirect_to_url.url);
       setOpen(() => {
@@ -111,10 +109,6 @@ export const Secure3DModal = ({ stripe, elements }) => {
   };
 
   useEffect(() => {
-    // TODO: remove this after testing
-    logInfo('3DS - status change effect', {
-      status,
-    });
     if (status === 'requires_action') {
       fetchSecureDetails();
     } else if (status === 'requires_payment_method') {
