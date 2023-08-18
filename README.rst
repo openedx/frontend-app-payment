@@ -234,25 +234,25 @@ Let's try this.
 Subscriptions
 -------------
 
-This payment MFE has introduced an additional React route, `payment.stage.edx.org/subscription`, specifically designed to handle recurring payments. Currently, we are only permitting one payment method to manage recurring purchases, namely stripe subscriptions.
+This payment MFE has introduced an additional React route, ``payment.stage.edx.org/subscription``, specifically designed to handle recurring payments. Currently, we are only permitting one payment method to manage recurring purchases, namely stripe subscriptions.
 
 Development
 -----------
 
-All functionality related to subscriptions is built under the `src/subscription` directory. It seeks to optimize the utilization of existing functionality to implement this new feature, adding any necessary enhancements on top of it. The following list outlines key points where it diverges from the `src/payment` flow:
+All functionality related to subscriptions is built under the ``src/subscription`` directory. It seeks to optimize the utilization of existing functionality to implement this new feature, adding any necessary enhancements on top of it. The following list outlines key points where it diverges from the ``src/payment`` flow:
 
-- Main `src/index.scss` includes `src/subscription/index.scss` after `src/payment/index.scss` allowing it to override the payment page styles.
-- `src/subscription/i18n-protected-messages` overrides the *Transifex* messages with the locally (hardcoded) defined messages, specifically for `es-419` locale.
-- `src/subscription/test-utils` defines the new test wrapper with `react-testing-library`. We use `react-testing-library` to write unit tests for `src/subscription` code.
-- `src/subscription/alerts` defines its new set of alerts specific to `Subscription` page.
-- `SUBSCRIPTIONS_BASE_URL` exposes different endpoints for `GET` and `POST` subscription CTAs.
+- Main ``src/index.scss`` includes ``src/subscription/index.scss`` after ``src/payment/index.scss`` allowing it to override the payment page styles.
+- ``src/subscription/i18n-protected-messages`` overrides the *Transifex* messages with the locally (hardcoded) defined messages, specifically for ``es-419`` locale.
+- ``src/subscription/test-utils`` defines the new test wrapper with ``react-testing-library``. We use ``react-testing-library`` to write unit tests for ``src/subscription`` code.
+- ``src/subscription/alerts`` defines its new set of alerts specific to ``Subscription`` page.
+- ``SUBSCRIPTIONS_BASE_URL`` exposes different endpoints for ``GET`` and ``POST`` subscription CTAs.
 
 3DS
 ---
 
-For recurring payments, we have also enabled the 3D Secure payment flow. All the basic functionality for 3DS is implemented under the `src/subscription/secure-3d` directory. The following key points outline the 3DS implementation:
+For recurring payments, we have also enabled the 3D Secure payment flow. All the basic functionality for 3DS is implemented under the ``src/subscription/secure-3d`` directory. The following key points outline the 3DS implementation:
 
-- We render 3DS bank details inside an `iframe` within a modal. . The user completes the 3DS check, and the bank redirects the user back to our provided return address, i.e., `payment.stage.edx.org/subscription/3ds`.
-- To enable the payment MFE to load stripe bank scripts inside an `iframe`, we allowed the `frame-src` and `frame-ancestors` content-security-policy header directives through `terraform` configuration.
-- `src/subscription/secure-3d/` introduces a new React route page where banks redirect the user after the completion of the 3ds flow.
+- We render 3DS bank details inside an ``iframe`` within a modal. . The user completes the 3DS check, and the bank redirects the user back to our provided return address, i.e., ``payment.stage.edx.org/subscription/3ds``.
+- To enable the payment MFE to load stripe bank scripts inside an ``iframe``, we allowed the ``frame-src`` and ``frame-ancestors`` content-security-policy header directives through ``terraform`` configuration.
+- ``src/subscription/secure-3d/`` introduces a new React route page where banks redirect the user after the completion of the 3ds flow.
 - When 3DS is unsuccessful, we simply display an error alert message at the top of the page and clear the card details so the user can re-enter different details later.
