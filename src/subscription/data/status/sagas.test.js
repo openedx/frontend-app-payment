@@ -29,18 +29,13 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
 
-// Mock the checkoutComplete
-jest.mock('../service', () => ({
-  checkoutComplete: jest.fn(),
-}));
-
 // Mock the utils
 jest.mock('../utils', () => ({
   sendSubscriptionEvent: jest.fn(),
   handleCustomErrors: jest.fn(),
 }));
 
-describe('handleSuccessful3DS saga', () => {
+describe('status saga', () => {
   const payload = { /* your payload data */ };
   const details = camelCaseObject(Factory.build('subscription', { is_trial_eligible: true, status: 'succeeded' }, { numProducts: 2 }));
   const status = camelCaseObject(Factory.build('subscriptionStatus'));

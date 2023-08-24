@@ -5,7 +5,7 @@ import {
   submitSubscription,
 } from './actions';
 
-const subscriptionDetailsInitialState = {
+export const subscriptionDetailsInitialState = {
   loading: true,
   loaded: false,
   submitting: false,
