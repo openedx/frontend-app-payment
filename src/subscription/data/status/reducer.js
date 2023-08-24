@@ -15,6 +15,7 @@ const subscriptionStatusInitialState = {
   status: null, // CONFIRMATION_STATUS.succeeded,
   subscriptionId: null,
   price: null,
+  paymentMethodId: null,
 
   // 3DS
   submitting: false,
