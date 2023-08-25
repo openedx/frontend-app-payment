@@ -7,14 +7,6 @@ import {
   Unsuccessful3DSMessage,
 } from './ErrorMessages';
 
-// Mocking getConfig to provide a test URL
-jest.mock('@edx/frontend-platform', () => ({
-  ensureConfig: () => (['ECOMMERCE_BASE_URL']),
-  getConfig: () => ({
-    SUPPORT_URL: 'https://example.com/support',
-  }),
-}));
-
 function getCustomTextContent(content, node) {
   // eslint-disable-next-line no-shadow
   // The textContent property sets or returns the text content of the specified node, and all its descendants.
@@ -41,7 +33,7 @@ describe('ErrorMessages', () => {
 
     const supportLink = getByRole('link', { name: /contact support/i });
     expect(supportLink).toBeInTheDocument();
-    expect(supportLink.href).toBe('https://example.com/support');
+    expect(supportLink.href).toBe('http://localhost:18000/support');
   });
 
   it('should render an IneligibleProgramErrorMessage', () => {
