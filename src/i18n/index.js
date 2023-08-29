@@ -1,3 +1,7 @@
+import { messages as paragonMessages } from '@edx/paragon';
+import { messages as headerMessages } from '@edx/frontend-component-header';
+import { messages as footerMessages } from '@edx/frontend-component-footer';
+
 import arMessages from './messages/ar.json';
 import frMessages from './messages/fr.json';
 import es419Messages from './messages/es_419.json';
@@ -15,7 +19,7 @@ import itITMessages from './messages/it_IT.json';
 import ptPTMessages from './messages/pt_PT.json';
 // no need to import en messages-- they are in the defaultMessage field
 
-const messages = {
+const appMessages = {
   ar: arMessages,
   // override the protected translations
   'es-419': { ...es419Messages, ...es419MessagesProtected },
@@ -33,4 +37,9 @@ const messages = {
   'pt-pt': ptPTMessages,
 };
 
-export default messages;
+export default [
+  headerMessages,
+  footerMessages,
+  paragonMessages,
+  appMessages,
+];

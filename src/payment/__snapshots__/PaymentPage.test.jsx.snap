@@ -2394,10 +2394,10 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   Quantity
                 </label>
                 <div
-                  className="position-relative"
+                  className="position-relative ml-2"
                 >
                   <div
-                    className="pgn__form-control-decorator-group form-control-sm"
+                    className="pgn__form-control-decorator-group"
                   >
                     <input
                       className="has-value form-control"

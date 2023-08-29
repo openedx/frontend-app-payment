@@ -15,7 +15,9 @@ const SubscriptionSubmitButton = ({
   if (disabled) { submitButtonState = 'disabled'; }
   if (isProcessing) { submitButtonState = 'processing'; }
   // handle submitted state
-  if (status === 'trialing' || status === 'succeeded') { submitButtonState = 'success'; }
+  if (status === 'trialing' || status === 'succeeded') {
+    submitButtonState = 'success';
+  }
 
   return (
     <div className="col-lg-7 col-xl-6 form-group float-right">
@@ -27,7 +29,7 @@ const SubscriptionSubmitButton = ({
           <StatefulButton
             type="submit"
             id="placeOrderButton"
-            variant={(status === 'success' || status === 'trialing') ? 'success' : 'brand'}
+            variant={(status === 'succeeded' || status === 'trialing') ? 'success' : 'brand'}
             size="md"
             block
             state={submitButtonState}

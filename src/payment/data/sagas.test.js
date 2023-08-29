@@ -112,8 +112,8 @@ describe('saga tests', () => {
         name                      | flags                                                    | url
         ${'Commerce Coordinator'} | ${{ [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true }} | ${COMMERCE_COORDINATOR_ORDER_API_ENDPOINT}
         ${'Ecommerce'}            | ${{}}                                                    | ${BASKET_API_ENDPOINT}
-      `('$name', async (test) => {
-      it('should bail if the basket is processing', async (done) => {
+      `('$name', (test) => {
+      it('should bail if the basket is processing', async () => {
         await performWithModifiedWaffleFlags(test.flags, async () => {
           try {
             await runSaga(
@@ -127,11 +127,10 @@ describe('saga tests', () => {
 
           expect(dispatched).toEqual([]);
           expect(caughtErrors).toEqual([]);
-          done();
         });
       });
 
-      it('should update basket data', async (done) => {
+      it('should update basket data', async () => {
         await performWithModifiedWaffleFlags(test.flags, async () => {
           const basketResponseData = Factory.build(
             'basket',
@@ -172,11 +171,10 @@ describe('saga tests', () => {
           expect(axiosMock.history.get[1].url).toMatch(`${DISCOUNT_API_ENDPOINT}${courseKey}`);
           expect(axiosMock.history.get[1].withCredentials).toBe(true);
           expect(axiosMock.history.get[2].url).toEqual(test.url);
-          done();
         });
       });
 
-      it('should update basket data and show an info message', async (done) => {
+      it('should update basket data and show an info message', async () => {
         await performWithModifiedWaffleFlags(test.flags, async () => {
           const basketResponseData = Factory.build('basket', {}, { numProducts: 1, numInfoMessages: 1 });
 
@@ -206,11 +204,10 @@ describe('saga tests', () => {
           ]);
           expect(caughtErrors).toEqual([]);
           expect(axiosMock.history.get.length).toBe(2);
-          done();
         });
       });
 
-      it('should update basket data and show an error message', async (done) => {
+      it('should update basket data and show an error message', async () => {
         await performWithModifiedWaffleFlags(test.flags, async () => {
           const basketResponseData = Factory.build(
             'basket',
@@ -246,11 +243,10 @@ describe('saga tests', () => {
           ]);
           expect(caughtErrors).toEqual([]);
           expect(axiosMock.history.get.length).toBe(3);
-          done();
         });
       });
 
-      it('should show a fallback error message', async (done) => {
+      it('should show a fallback error message', async () => {
         await performWithModifiedWaffleFlags(test.flags, async () => {
           axiosMock.onGet(test.url).reply(403);
 
@@ -273,7 +269,6 @@ describe('saga tests', () => {
           ]);
           expect(caughtErrors).toEqual([]);
           expect(axiosMock.history.get.length).toBe(1);
-          done();
         });
       });
     });
@@ -944,7 +939,7 @@ describe('saga tests', () => {
         return [desc, lineItem];
       });
 
-    it.each(testPlan)('%s', async (_, test, done) => {
+    it.each(testPlan)('%s', async (_, test) => {
       await performWithModifiedWaffleFlags(
         { [WAFFLE_FLAG_NAMES.COMMERCE_COORDINATOR_ENABLED]: true },
         async () => {
@@ -979,7 +974,6 @@ describe('saga tests', () => {
 
           expect(localDispatched).toEqual(test.expectedResult);
           expect(localCaughtErrors).toEqual([]);
-          done();
         },
       );
     });

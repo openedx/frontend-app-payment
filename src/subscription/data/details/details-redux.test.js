@@ -108,13 +108,13 @@ describe('subscription details redux tests', () => {
       });
     });
 
-    describe('fetchBasket actions', () => {
-      test.only('fetchBasket.TRIGGER action', () => {
+    describe('fetchSubscriptionDetails actions', () => {
+      test.only('fetchSubscriptionDetails.TRIGGER action', () => {
         store.dispatch(fetchSubscriptionDetails());
         expect(store.getState().subscription.details.loading).toBe(true);
       });
 
-      it('fetchBasket.FULFILL action', () => {
+      it('fetchSubscriptionDetails.FULFILL action', () => {
         store.dispatch(fetchSubscriptionDetails.fulfill());
         expect(store.getState().subscription.details.loading).toBe(false);
         expect(store.getState().subscription.details.loaded).toBe(true);
