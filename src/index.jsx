@@ -13,19 +13,19 @@ import {
 } from '@edx/frontend-platform';
 import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
-import { messages as paragonMessages } from '@edx/paragon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getLoggingService, logError } from '@edx/frontend-platform/logging';
-import Header, { messages as headerMessages } from '@edx/frontend-component-header';
-import Footer, { messages as footerMessages } from '@edx/frontend-component-footer';
+import Header from '@edx/frontend-component-header';
+import Footer from '@edx/frontend-component-footer';
 
 import { configure as configureI18n } from '@edx/frontend-platform/i18n/lib';
 import { getLocale } from '@edx/frontend-platform/i18n';
-import appMessages from './i18n';
+import messages from './i18n';
+
 import {
   PaymentPage,
   EcommerceRedirect,
@@ -34,7 +34,7 @@ import {
   getPerformanceProperties,
 } from './payment';
 import { SubscriptionPage } from './subscription';
-
+import { Secure3dRedirectPage } from './subscription/secure-3d/Secure3dRedirectPage';
 import configureStore from './data/configureStore';
 
 import './index.scss';
@@ -63,6 +63,7 @@ mergeConfig({
   SUBSCRIPTIONS_BASE_URL: process.env.SUBSCRIPTIONS_BASE_URL,
   ENABLE_B2C_SUBSCRIPTIONS: process.env.ENABLE_B2C_SUBSCRIPTIONS,
   COMMERCE_COORDINATOR_BASE_URL: process.env.COMMERCE_COORDINATOR_BASE_URL,
+  SUBSCRIPTIONS_LEARNER_HELP_CENTER_URL: process.env.SUBSCRIPTIONS_LEARNER_HELP_CENTER_URL,
 });
 
 subscribe(APP_READY, () => {
@@ -83,7 +84,10 @@ subscribe(APP_READY, () => {
           <Route exact path="/" component={PaymentPage} />
           {
             getConfig().ENABLE_B2C_SUBSCRIPTIONS?.toLowerCase() === 'true' ? (
-              <Route exact path="/subscription" component={SubscriptionPage} />
+              <>
+                <Route exact path="/subscription" component={SubscriptionPage} />
+                <Route exact path="/subscription/3ds" component={Secure3dRedirectPage} />
+              </>
             ) : null
           }
           <Route path="*" component={EcommerceRedirect} />
@@ -134,12 +138,7 @@ subscribe(APP_AUTH_INITIALIZED, () => {
 });
 
 initialize({
-  messages: [
-    appMessages,
-    headerMessages,
-    footerMessages,
-    paragonMessages,
-  ],
+  messages,
   requireAuthenticatedUser: true,
   hydrateAuthenticatedUser: true,
 });

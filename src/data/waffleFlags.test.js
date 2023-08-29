@@ -29,7 +29,7 @@ describe('Testing the Testers: executePossiblyAsyncFunction', () => {
       });
   });
 
-  it('should execute as a AsyncFunction', async (done) => {
+  it('should execute as a AsyncFunction', async () => {
     const fnInnerMock = jest.fn();
     const then = jest.fn();
     const fn = async () => { fnInnerMock(); };
@@ -38,8 +38,7 @@ describe('Testing the Testers: executePossiblyAsyncFunction', () => {
       .then(() => {
         expect(fnInnerMock).toHaveBeenCalledTimes(1);
         expect(then).toHaveBeenCalledTimes(1);
-      })
-      .then(done);
+      });
   });
 });
 

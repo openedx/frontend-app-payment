@@ -6,7 +6,8 @@ import {
 export const CONFIRMATION_STATUS = {
   trialing: 'trialing',
   succeeded: 'succeeded',
-  requires_action: '3DS',
+  requires_action: 'requires_action',
+  requires_payment_method: 'requires_payment_method',
 };
 
 const subscriptionStatusInitialState = {
@@ -32,7 +33,6 @@ export const subscriptionStatusReducer = (state = subscriptionStatusInitialState
       case SUBSCRIPTION_STATUS_RECEIVED: return {
         ...state,
         ...action.payload,
-        status: CONFIRMATION_STATUS[action.payload.status],
       };
       default:
     }

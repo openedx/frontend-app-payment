@@ -10,6 +10,7 @@ Factory.define('userAccount')
     name: null,
     country: null,
     socialLinks: null,
+    timeZone: 'America/Los_Angeles',
     profileImage: {
       imageUrlMedium: 'http://localhost/image_medium.jpg',
       imageUrlLarge: 'http://localhost/image_large.jpg',
