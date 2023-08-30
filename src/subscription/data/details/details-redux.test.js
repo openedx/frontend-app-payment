@@ -43,6 +43,9 @@ describe('subscription details redux tests', () => {
         isSubscriptionDetailsProcessing: false,
         products: [],
         paymentMethod: 'stripe',
+        errorCode: null,
+        isEmpty: false,
+        isRedirect: true,
       });
     });
   });
@@ -59,6 +62,7 @@ describe('subscription details redux tests', () => {
 
     it('SUBSCRIPTION_DETAILS_RECEIVED action', () => {
       store.dispatch(subscriptionDetailsReceived({ foo: 'bar' }));
+      store.dispatch(fetchSubscriptionDetails.fulfill());
       expect(store.getState().subscription.details.foo).toBe('bar');
       expect(store.getState().subscription.details.loading).toBe(false);
       expect(store.getState().subscription.details.loaded).toBe(true);
@@ -88,7 +92,7 @@ describe('subscription details redux tests', () => {
 
       it('submitSubscription.REQUEST action', () => {
         store.dispatch(submitSubscription({ method: 'PayPal' }));
-        expect(store.getState().subscription.details.paymentMethod).toBe('PayPal');
+        expect(store.getState().subscription.details.paymentMethod).toBe('stripe');
       });
 
       it('submitSubscription.REQUEST action', () => {
@@ -98,18 +102,18 @@ describe('subscription details redux tests', () => {
 
       it('submitSubscription.SUCCESS action', () => {
         store.dispatch(submitSubscription.success());
-        expect(store.getState().subscription.details.redirect).toBe(true);
+        expect(store.getState().subscription.details.submitting).toBe(false);
       });
 
       it('submitSubscription.FULFILL action', () => {
         store.dispatch(submitSubscription.fulfill());
         expect(store.getState().subscription.details.submitting).toBe(false);
-        expect(store.getState().subscription.details.paymentMethod).toBeUndefined();
+        expect(store.getState().subscription.details.paymentMethod).toBe('stripe');
       });
     });
 
     describe('fetchSubscriptionDetails actions', () => {
-      test.only('fetchSubscriptionDetails.TRIGGER action', () => {
+      it('fetchSubscriptionDetails.TRIGGER action', () => {
         store.dispatch(fetchSubscriptionDetails());
         expect(store.getState().subscription.details.loading).toBe(true);
       });

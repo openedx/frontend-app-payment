@@ -37,6 +37,23 @@ jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 
+// Mocking getConfig to provide a test URL
+jest.mock('@edx/frontend-platform', () => ({
+  ensureConfig: () => ({
+    LMS_BASE_URL: process.env.LMS_BASE_URL,
+    SUBSCRIPTION_BASE_URL: process.env.SUBSCRIPTION_BASE_URL,
+    ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+  }),
+  getConfig: () => ({
+    SUBSCRIPTIONS_LEARNER_HELP_CENTER_URL: process.env.SUBSCRIPTIONS_LEARNER_HELP_CENTER_URL,
+    SUPPORT_URL: process.env.SUPPORT_URL,
+    LMS_BASE_URL: process.env.LMS_BASE_URL,
+    SUBSCRIPTION_BASE_URL: process.env.SUBSCRIPTION_BASE_URL,
+    ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+  }),
+  getQueryParameters: jest.fn().mockResolvedValue({}),
+}));
+
 configureI18n({
   config: {
     ENVIRONMENT: process.env.ENVIRONMENT,

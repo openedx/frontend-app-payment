@@ -38,18 +38,18 @@ export function* handleSuccessful3DS({ payload }) {
     }));
 
     if (result.status === 'requires_payment_method') {
-      throw new Error('Could not complete the payment', { cause: 'requires_payment_method' });
+      throw new Error('Could not complete the payment.', { cause: 'requires_payment_method' });
     }
     // success segment event
     sendSubscriptionEvent({ details, success: true });
   } catch (error) {
+    // failure segment event
+    sendSubscriptionEvent({ details, success: false });
     yield call(
       handleSubscriptionErrors,
       handleCustomErrors(error, error.cause ? error.cause : 'fallback-error'),
       true,
     );
-    // failure segment event
-    sendSubscriptionEvent({ details, success: false });
   }
 }
 
