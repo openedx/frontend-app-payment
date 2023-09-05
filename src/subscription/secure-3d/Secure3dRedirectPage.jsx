@@ -10,11 +10,11 @@ import React, { useEffect } from 'react';
  */
 export const Secure3dRedirectPage = () => {
   useEffect(() => {
-    window.top.postMessage('3DS-authentication-complete');
+    window.top.postMessage('3DS-authentication-complete', '*');
   }, []);
   return (
     <div className="secure-page-container">
-      <div className="spinner-border" />
+      <div className="spinner-border" data-testid="3ds-spinner" />
     </div>
   );
 };

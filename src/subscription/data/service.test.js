@@ -20,14 +20,6 @@ jest.mock('@edx/frontend-platform/auth', () => ({
   getAuthenticatedHttpClient: jest.fn(),
 }));
 
-// Mock the getConfig function
-jest.mock('@edx/frontend-platform', () => ({
-  getConfig: jest.fn(() => ({
-    SUBSCRIPTIONS_BASE_URL: process.env.SUBSCRIPTIONS_BASE_URL,
-  })),
-  ensureConfig: jest.fn(),
-}));
-
 getAuthenticatedHttpClient.mockReturnValue(axios);
 
 beforeEach(() => {

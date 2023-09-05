@@ -6,6 +6,7 @@ Factory.define('subscriptionStatus')
     status: 'succeeded', // CONFIRMATION_STATUS.succeeded,
     subscription_id: 'SUB_in32n32ds',
     price: 79.00,
+    paymentMethodId: 'pm_3A3d3g4yg4',
 
     // 3DS
     submitting: false,
