@@ -16,7 +16,7 @@ import { ErrorPage, AppProvider } from '@edx/frontend-platform/react';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getLoggingService, logError } from '@edx/frontend-platform/logging';
@@ -87,18 +87,18 @@ subscribe(APP_READY, () => {
     <AppProvider store={configureStore()}>
       <Header />
       <main id="main">
-        <Switch>
-          <Route exact path="/" component={PaymentPage} />
+        <Routes>
+          <Route path="/" element={<PaymentPage />} />
           {
             getConfig().ENABLE_B2C_SUBSCRIPTIONS?.toLowerCase() === 'true' ? (
               <>
-                <Route exact path="/subscription" component={SubscriptionPage} />
-                <Route exact path="/subscription/3ds" component={Secure3dRedirectPage} />
+                <Route path="/subscription" element={<SubscriptionPage />} />
+                <Route path="/subscription/3ds" element={<Secure3dRedirectPage />} />
               </>
             ) : null
           }
-          <Route path="*" component={EcommerceRedirect} />
-        </Switch>
+          <Route path="*" element={<EcommerceRedirect />} />
+        </Routes>
       </main>
       <Footer />
     </AppProvider>,
