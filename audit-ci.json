@@ -1,7 +1,6 @@
 {
     "allowlist": [
-        "GHSA-hpx4-r86g-5jrg",
-        "GHSA-7fh5-64p2-3v2j"
+        "GHSA-hpx4-r86g-5jrg"
     ],
     "moderate": true
 }
