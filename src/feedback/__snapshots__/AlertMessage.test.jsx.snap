@@ -38,7 +38,7 @@ exports[`AlertMessage should render a userMessage element 1`] = `
   className="fade alert-content alert alert-warning show"
   dialog={
     <span
-      values={Object {}}
+      values={{}}
     >
       Wondrous message!
     </span>
@@ -52,7 +52,7 @@ exports[`AlertMessage should render a userMessage element 1`] = `
       className="alert-message-content"
     >
       <span
-        values={Object {}}
+        values={{}}
       >
         Wondrous message!
       </span>
@@ -81,7 +81,7 @@ exports[`AlertMessage should render a userMessage function 1`] = `
   className="fade alert-content alert alert-warning show"
   dialog={
     <userMessage
-      values={Object {}}
+      values={{}}
     />
   }
   role="alert"

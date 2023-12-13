@@ -1,22 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`redux tests should return the default state when appropriate 1`] = `
-Object {
-  "byId": Object {},
-  "orderedIds": Array [],
+{
+  "byId": {},
+  "orderedIds": [],
 }
 `;
 
 exports[`redux tests should return the default state when appropriate 2`] = `
-Object {
-  "byId": Object {},
-  "orderedIds": Array [],
+{
+  "byId": {},
+  "orderedIds": [],
 }
 `;
 
 exports[`redux tests should return the default state when appropriate 3`] = `
-Object {
-  "byId": Object {},
-  "orderedIds": Array [],
+{
+  "byId": {},
+  "orderedIds": [],
 }
 `;

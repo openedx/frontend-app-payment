@@ -3,7 +3,7 @@
 exports[`AlertList should be null by default 1`] = `null`;
 
 exports[`AlertList should render messages of each type 1`] = `
-Array [
+[
   <div
     className="fade alert-content alert alert-warning show"
     dialog="Boo indeed!"
@@ -158,7 +158,7 @@ Array [
     className="fade alert-content alert alert-danger show"
     dialog={
       <FallbackErrorMessage
-        values={Object {}}
+        values={{}}
       />
     }
     role="alert"

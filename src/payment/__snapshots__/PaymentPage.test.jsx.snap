@@ -155,7 +155,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render a red
     <div
       className="d-flex justify-content-center align-items-center flex-column"
       style={
-        Object {
+        {
           "height": "50vh",
         }
       }
@@ -194,7 +194,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render an em
       <p
         className="card-text"
       >
-        Array [
+        [
           "If you attempted to make a purchase, you have not been charged. Return to your ",
           <a
             className="pgn__hyperlink default-link standalone-link"
@@ -735,7 +735,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onFocus={[Function]}
                     required={true}
                     style={
-                      Object {
+                      {
                         "MozAppearance": "none",
                         "WebkitAppearance": "none",
                       }
@@ -2007,7 +2007,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                Array [
+                [
                   <label
                     htmlFor="state"
                   >
@@ -2108,14 +2108,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       data-prefix="fas"
                       focusable="false"
                       role="img"
-                      style={Object {}}
+                      style={{}}
                       viewBox="0 0 512 512"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
-                        style={Object {}}
+                        style={{}}
                       />
                     </svg>
                   </span>
@@ -2127,7 +2127,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     <style
                       aria-hidden="true"
                       dangerouslySetInnerHTML={
-                        Object {
+                        {
                           "__html": "
   	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
@@ -2141,7 +2141,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: 2;
@@ -2149,7 +2149,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -2167,7 +2167,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -2175,7 +2175,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -2193,7 +2193,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -2201,7 +2201,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -2219,7 +2219,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -2227,7 +2227,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -2409,7 +2409,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       onBlur={[Function]}
                       onChange={[Function]}
                       style={
-                        Object {
+                        {
                           "width": "5rem",
                         }
                       }
@@ -2419,7 +2419,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                   <small
                     className="text-muted small"
                     style={
-                      Object {
+                      {
                         "left": 0,
                         "position": "absolute",
                         "top": "100%",
@@ -2792,7 +2792,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onFocus={[Function]}
                     required={true}
                     style={
-                      Object {
+                      {
                         "MozAppearance": "none",
                         "WebkitAppearance": "none",
                       }
@@ -4064,7 +4064,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                Array [
+                [
                   <label
                     htmlFor="state"
                   >
@@ -4197,14 +4197,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       data-prefix="fas"
                       focusable="false"
                       role="img"
-                      style={Object {}}
+                      style={{}}
                       viewBox="0 0 512 512"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
-                        style={Object {}}
+                        style={{}}
                       />
                     </svg>
                   </span>
@@ -4216,7 +4216,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     <style
                       aria-hidden="true"
                       dangerouslySetInnerHTML={
-                        Object {
+                        {
                           "__html": "
   	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
@@ -4230,7 +4230,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: 2;
@@ -4238,7 +4238,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -4256,7 +4256,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -4264,7 +4264,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -4282,7 +4282,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -4290,7 +4290,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -4308,7 +4308,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -4316,7 +4316,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -4521,7 +4521,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
             <div
               className="text-muted font-italic"
             >
-              Array [
+              [
                 "* This total contains an approximate conversion. You will be charged ",
                 "$445.19",
                 " USD.",
@@ -4751,7 +4751,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onFocus={[Function]}
                     required={true}
                     style={
-                      Object {
+                      {
                         "MozAppearance": "none",
                         "WebkitAppearance": "none",
                       }
@@ -6023,7 +6023,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                Array [
+                [
                   <label
                     htmlFor="state"
                   >
@@ -6124,14 +6124,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       data-prefix="fas"
                       focusable="false"
                       role="img"
-                      style={Object {}}
+                      style={{}}
                       viewBox="0 0 512 512"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
-                        style={Object {}}
+                        style={{}}
                       />
                     </svg>
                   </span>
@@ -6143,7 +6143,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     <style
                       aria-hidden="true"
                       dangerouslySetInnerHTML={
-                        Object {
+                        {
                           "__html": "
   	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
@@ -6157,7 +6157,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: 2;
@@ -6165,7 +6165,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -6183,7 +6183,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -6191,7 +6191,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -6209,7 +6209,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -6217,7 +6217,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -6235,7 +6235,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -6243,7 +6243,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -6443,7 +6443,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <p
                 className="m-0 text-muted"
               >
-                Array [
+                [
                   "50%",
                   " discount provided by Pied Piper.",
                 ]
@@ -6687,7 +6687,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     onFocus={[Function]}
                     required={true}
                     style={
-                      Object {
+                      {
                         "MozAppearance": "none",
                         "WebkitAppearance": "none",
                       }
@@ -7959,7 +7959,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
               <div
                 className="col-lg-6 form-group"
               >
-                Array [
+                [
                   <label
                     htmlFor="state"
                   >
@@ -8060,14 +8060,14 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                       data-prefix="fas"
                       focusable="false"
                       role="img"
-                      style={Object {}}
+                      style={{}}
                       viewBox="0 0 512 512"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
                         d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM169.8 165.3c7.9-22.3 29.1-37.3 52.8-37.3h58.3c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L280 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24V250.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1H222.6c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                         fill="currentColor"
-                        style={Object {}}
+                        style={{}}
                       />
                     </svg>
                   </span>
@@ -8079,7 +8079,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
                     <style
                       aria-hidden="true"
                       dangerouslySetInnerHTML={
-                        Object {
+                        {
                           "__html": "
   	.t00000000-0000-0000-0000-000000000000 {
 	    color: #fff;
@@ -8093,7 +8093,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: 2;
@@ -8101,7 +8101,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 12px;
     }
     .t00000000-0000-0000-0000-000000000000.place-top::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -8119,7 +8119,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-top: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -8127,7 +8127,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-bottom::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -8145,7 +8145,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: -10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -8153,7 +8153,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-left::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
@@ -8171,7 +8171,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         margin-left: 10px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::before {
-        content: \\"\\";
+        content: "";
         background-color: inherit;
         position: absolute;
         z-index: -1;
@@ -8179,7 +8179,7 @@ exports[`<PaymentPage /> Renders correctly in various states should render the b
         height: 18px;
     }
     .t00000000-0000-0000-0000-000000000000.place-right::after {
-        content: \\"\\";
+        content: "";
         position: absolute;
         width: 10px;
         height: 10px;
