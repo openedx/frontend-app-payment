@@ -1,7 +1,7 @@
 import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { Hyperlink } from '@edx/paragon';
+import { Hyperlink } from '@openedx/paragon';
 
 const EmptyCartMessage = () => (
   <div className="card">

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
-import { StatefulButton } from '@edx/paragon';
+import { StatefulButton } from '@openedx/paragon';
 
 const PlaceOrderButton = ({
   showLoadingButton, onSubmitButtonClick, disabled, isProcessing,

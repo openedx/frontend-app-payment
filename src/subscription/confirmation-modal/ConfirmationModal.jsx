@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import {
   ModalDialog, ActionRow, Button, Hyperlink,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import { useSelector } from 'react-redux';
-import { ArrowForward } from '@edx/paragon/icons';
+import { ArrowForward } from '@openedx/paragon/icons';
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 
