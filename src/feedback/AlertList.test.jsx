@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import renderer, { act } from 'react-test-renderer';
+import { render, act } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import ConnectedAlertList from './AlertList';
@@ -28,7 +28,7 @@ describe('AlertList', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
@@ -46,7 +46,7 @@ describe('AlertList', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component);
+    const { container: tree } = render(component);
     act(() => {
       store.dispatch(addMessage('boo', null, { needed: 'data' }, MESSAGE_TYPES.WARNING));
       store.dispatch(addMessage('bah', 'Bah!', null, MESSAGE_TYPES.INFO));
@@ -55,6 +55,6 @@ describe('AlertList', () => {
       store.dispatch(addMessage(null, 'Debug debug', null, MESSAGE_TYPES.DEBUG));
       store.dispatch(addMessage('fallback-error', null, null, MESSAGE_TYPES.ERROR));
     });
-    expect(tree.toJSON()).toMatchSnapshot();
+    expect(tree).toMatchSnapshot();
   });
 });

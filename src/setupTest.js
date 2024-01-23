@@ -2,11 +2,9 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import Enzyme from 'enzyme';
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
-import { mergeConfig } from '@edx/frontend-platform';
+import '@testing-library/jest-dom';
 
-Enzyme.configure({ adapter: new Adapter() });
+import { mergeConfig } from '@edx/frontend-platform';
 
 mergeConfig({
   CURRENCY_COOKIE_NAME: process.env.CURRENCY_COOKIE_NAME,

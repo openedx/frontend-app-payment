@@ -1,13 +1,12 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable global-require */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { Factory } from 'rosie';
-import { createSerializer } from 'enzyme-to-json';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 import * as analytics from '@edx/frontend-platform/analytics';
@@ -22,9 +21,6 @@ import { fetchBasket, basketDataReceived } from './data/actions';
 import { transformResults } from './data/utils';
 import { ENROLLMENT_CODE_PRODUCT_TYPE } from './cart/order-details';
 import { MESSAGE_TYPES, addMessage } from '../feedback';
-
-// run enzyme JSON serializer using options compatible with prior snapshots
-expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
 
 jest.mock('universal-cookie', () => {
   class MockCookies {
@@ -109,7 +105,7 @@ describe('<PaymentPage />', () => {
         </IntlProvider>
       );
 
-      const tree = mount(component);
+      const tree = render(component);
       expect(tree).toMatchSnapshot();
     });
 
@@ -123,12 +119,11 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 1 }))));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -152,12 +147,11 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 1 }))));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -171,7 +165,7 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build(
           'basket',
@@ -189,7 +183,6 @@ describe('<PaymentPage />', () => {
         store.dispatch(fetchBasket.fulfill());
       });
 
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -204,7 +197,7 @@ describe('<PaymentPage />', () => {
         </IntlProvider>
       );
 
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build(
           'basket',
@@ -213,7 +206,6 @@ describe('<PaymentPage />', () => {
         ))));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -227,12 +219,11 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 0 }))));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -246,7 +237,7 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build(
           'basket',
@@ -257,7 +248,6 @@ describe('<PaymentPage />', () => {
         ))));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -271,7 +261,7 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      const tree = render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build(
           'basket',
@@ -282,7 +272,6 @@ describe('<PaymentPage />', () => {
         ))));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
@@ -296,7 +285,7 @@ describe('<PaymentPage />', () => {
           </AppContext.Provider>
         </IntlProvider>
       );
-      const tree = mount(component);
+      render(component);
       act(() => {
         store.dispatch(basketDataReceived(transformResults(Factory.build(
           'basket',
@@ -310,7 +299,6 @@ describe('<PaymentPage />', () => {
         }, MESSAGE_TYPES.INFO));
         store.dispatch(fetchBasket.fulfill());
       });
-      tree.update();
       // TODO: Disabling for now update once we can swap between stripe and cybersource
       // expect(tree).toMatchSnapshot();
     });

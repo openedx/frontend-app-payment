@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
@@ -19,7 +19,7 @@ describe('SingleEnrollmentCodeWarning', () => {
         <SingleEnrollmentCodeWarning values={{ courseAboutUrl: 'http://edx.org' }} />
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 });
@@ -35,7 +35,7 @@ describe('EnrollmentCodeQuantityUpdated', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 });
@@ -47,7 +47,7 @@ describe('TransactionDeclined', () => {
         <TransactionDeclined />
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 });

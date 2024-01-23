@@ -1,23 +1,28 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 import {
   IntlProvider,
   configure as configureI18n,
 } from '@edx/frontend-platform/i18n';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { AppContext } from '@edx/frontend-platform/react';
 import { Factory } from 'rosie';
 import { createStore } from 'redux';
 
-import CardHolderInformation, { CardHolderInformationComponent } from './CardHolderInformation';
+import CardHolderInformation from './CardHolderInformation';
 import PaymentForm from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
+import countryStatesMap from './utils/countryStatesMap';
 
 import '../../__factories__/userAccount.factory';
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
+}));
+jest.mock('./utils/countryStatesMap', () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
 
 configureI18n({
@@ -54,7 +59,7 @@ describe('<CardHolderInformation />', () => {
       const authenticatedUser = Factory.build('userAccount');
 
       store = createStore(createRootReducer(), {});
-      const component = (
+      render(
         <IntlProvider locale="en">
           <AppContext.Provider value={{ authenticatedUser }}>
             <Provider store={store}>
@@ -63,23 +68,17 @@ describe('<CardHolderInformation />', () => {
               </PaymentForm>
             </Provider>
           </AppContext.Provider>
-        </IntlProvider>
+        </IntlProvider>,
       );
-      const wrapper = mount(component);
-      const cardHolderInformation = wrapper
-        .find(CardHolderInformationComponent)
-        .first()
-        .instance();
-      const eventMock = jest.fn();
 
-      cardHolderInformation.handleSelectCountry(eventMock, 'US');
+      fireEvent.change(screen.getByLabelText('Country (required)'), { target: { value: 'US' } });
 
-      expect(cardHolderInformation.state).toEqual({ selectedCountry: 'US' });
+      expect(countryStatesMap).toHaveBeenCalledWith('US');
     });
   });
   describe('purchasedForOrganization field', () => {
     it('renders for bulk purchase', () => {
-      const wrapper = mount((
+      const wrapper = render((
         <IntlProvider locale="en">
           <Provider store={store}>
             <PaymentForm
@@ -91,10 +90,10 @@ describe('<CardHolderInformation />', () => {
           </Provider>
         </IntlProvider>
       ));
-      expect(wrapper.exists('#purchasedForOrganization')).toEqual(true);
+      expect(wrapper.container.querySelector('#purchasedForOrganization')).toBeTruthy();
     });
     it('does not render if not bulk purchase', () => {
-      const wrapper = mount((
+      const wrapper = render((
         <IntlProvider locale="en">
           <Provider store={store}>
             <PaymentForm
@@ -105,7 +104,7 @@ describe('<CardHolderInformation />', () => {
           </Provider>
         </IntlProvider>
       ));
-      expect(wrapper.exists('#purchasedForOrganization')).toEqual(false);
+      expect(wrapper.container.querySelector('#purchasedForOrganization')).toBeFalsy();
     });
   });
 });

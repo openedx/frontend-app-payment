@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
@@ -51,8 +51,8 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
-    expect(tree).toBeNull();
+    const { container: tree } = render(component);
+    expect(tree.children.length).toBe(0);
   });
 
   it('should render if given a store path', () => {
@@ -65,8 +65,8 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
-    expect(tree).toBeNull();
+    const { container: tree } = render(component);
+    expect(tree.children.length).toBe(0);
   });
 
   it('should render nothing if given an unknown product type', () => {
@@ -84,8 +84,8 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
-    expect(tree).toBeNull();
+    const { container: tree } = render(component);
+    expect(tree.children.length).toBe(0);
   });
 
   it('should render course entitlement product message', () => {
@@ -103,7 +103,7 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     // This snapshot should be the message for the course entitlement product - a single sentence.
     expect(tree).toMatchSnapshot();
   });
@@ -125,7 +125,7 @@ describe('OrderDetails', () => {
         </AppContext.Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     // This snapshot should be a big list of bullet points and include the user's email at the end.
     expect(tree).toMatchSnapshot();
   });
@@ -145,7 +145,7 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     // This snapshot should be the message for the verified seat product - a single sentence.
     expect(tree).toMatchSnapshot();
   });
@@ -165,7 +165,7 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     // This snapshot should be the message for the credit seat product - a single sentence.
     expect(tree).toMatchSnapshot();
   });
@@ -185,7 +185,7 @@ describe('OrderDetails', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     // This snapshot should be the message for a generic seat product - a single sentence.
     expect(tree).toMatchSnapshot();
   });
