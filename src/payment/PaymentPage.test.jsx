@@ -106,7 +106,7 @@ describe('<PaymentPage />', () => {
       );
 
       const tree = render(component);
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render the basket', () => {
@@ -124,7 +124,7 @@ describe('<PaymentPage />', () => {
         store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 1 }))));
         store.dispatch(fetchBasket.fulfill());
       });
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render the basket in a different currency', () => {
@@ -152,7 +152,7 @@ describe('<PaymentPage />', () => {
         store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 1 }))));
         store.dispatch(fetchBasket.fulfill());
       });
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render the basket with an enterprise offer', () => {
@@ -183,7 +183,7 @@ describe('<PaymentPage />', () => {
         store.dispatch(fetchBasket.fulfill());
       });
 
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render the basket for a bulk order', () => {
@@ -206,7 +206,7 @@ describe('<PaymentPage />', () => {
         ))));
         store.dispatch(fetchBasket.fulfill());
       });
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render an empty cart', () => {
@@ -224,7 +224,7 @@ describe('<PaymentPage />', () => {
         store.dispatch(basketDataReceived(transformResults(Factory.build('basket', {}, { numProducts: 0 }))));
         store.dispatch(fetchBasket.fulfill());
       });
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render a redirect spinner', () => {
@@ -248,7 +248,7 @@ describe('<PaymentPage />', () => {
         ))));
         store.dispatch(fetchBasket.fulfill());
       });
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render a free basket', () => {
@@ -272,7 +272,7 @@ describe('<PaymentPage />', () => {
         ))));
         store.dispatch(fetchBasket.fulfill());
       });
-      expect(tree).toMatchSnapshot();
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('should render all custom alert messages', () => {
@@ -300,7 +300,7 @@ describe('<PaymentPage />', () => {
         store.dispatch(fetchBasket.fulfill());
       });
       // TODO: Disabling for now update once we can swap between stripe and cybersource
-      // expect(tree).toMatchSnapshot();
+      // expect(tree.container).toMatchSnapshot();
     });
   });
 });

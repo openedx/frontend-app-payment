@@ -52,7 +52,7 @@ describe('<Cart />', () => {
   });
 
   it('renders the loading skeleton', () => {
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a basic, one product cart', () => {
@@ -65,7 +65,7 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a basic, one product cart with coupon form', () => {
@@ -78,7 +78,7 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a cart with an offer', () => {
@@ -93,7 +93,7 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a cart in non USD currency', () => {
@@ -126,7 +126,7 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a bulk enrollment cart', () => {
@@ -139,6 +139,6 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 });

@@ -76,10 +76,8 @@ describe('<PaymentForm />', () => {
   });
 
   afterEach(() => {
-    wrapper.unmount();
     formValidators.validateRequiredFields({});
     formValidators.validateCardDetails({});
-    jest.clearAllMocks();
   });
 
   describe('getRequiredFields', () => {
@@ -228,8 +226,6 @@ describe('<PaymentForm />', () => {
       const expectedErrors = {
         lastName: 'payment.form.errors.required.field',
       };
-
-      // formValidators.validateRequiredFields();
       expect(formValidators.validateRequiredFields(values)).toEqual(expectedErrors);
     });
   });
