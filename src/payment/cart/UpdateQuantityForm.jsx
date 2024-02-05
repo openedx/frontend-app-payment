@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { StatefulButton, Form } from '@edx/paragon';
+import { StatefulButton, Form } from '@openedx/paragon';
 
 import { updateQuantity } from '../data/actions';
 import { updateQuantityFormSelector } from '../data/selectors';

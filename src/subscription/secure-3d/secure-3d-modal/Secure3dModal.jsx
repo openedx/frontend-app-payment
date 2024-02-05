@@ -7,7 +7,7 @@ import { logError } from '@edx/frontend-platform/logging';
 
 import {
   ModalDialog,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import {
   PaymentElement,
 } from '@stripe/react-stripe-js';

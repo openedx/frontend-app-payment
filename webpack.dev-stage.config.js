@@ -1,4 +1,4 @@
-const { getBaseConfig } = require('@edx/frontend-build');
+const { getBaseConfig } = require('@openedx/frontend-build');
 
 /**
  * We customize the plugins here for the following reasons:
