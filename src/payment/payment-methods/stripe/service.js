@@ -56,6 +56,18 @@ export default async function checkout(
           purchased_for_organization: purchasedForOrganization,
         },
       },
+      // Shipping is required for processing Afterpay payments
+      shipping: {
+        address: {
+          city,
+          country,
+          line1: address,
+          line2: unit || '',
+          postal_code: postalCode || '',
+          state: state || '',
+        },
+        name: `${firstName} ${lastName}`,
+      },
     },
   });
 
@@ -67,6 +79,10 @@ export default async function checkout(
   const postData = formurlencoded({
     payment_intent_id: result.paymentIntent.id,
     skus,
+    // TEMP TODO: hardcoded true temporarily, until we decide if/what logic we want to have here.
+    // Stripe A/B Tool doesn't have an experiment attribute to signal it's DPM or an experiment.
+    // Can look the presence of more than just 'card' in payment_method_types
+    dynamic_payment_methods_enabled: true,
   });
   await getAuthenticatedHttpClient()
     .post(
@@ -76,8 +92,15 @@ export default async function checkout(
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       },
     )
-    .then(response => {
-      setLocation(response.data.receipt_page_url);
+    .then(async response => {
+      if (response.data.receipt_page_url) {
+        setLocation(response.data.receipt_page_url);
+      } else {
+        const { paymentIntent } = await stripe.retrievePaymentIntent(response.data.confirmation_client_secret);
+        if (paymentIntent && paymentIntent.status !== 'succeeded') {
+          // TEMP TODO: Payment Intent hasn't been successfully confirmed yet (aka no receipt_page_url)
+        }
+      }
     })
     .catch(error => {
       const errorData = error.response ? error.response.data : null;

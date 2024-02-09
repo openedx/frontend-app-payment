@@ -8,6 +8,7 @@ import {
   EnrollmentCodeQuantityUpdated,
   TransactionDeclined,
   BasketChangedError,
+  PaymentIntentUnexpectedStateError,
   CaptureKeyTimeoutTwoMinutes,
   CaptureKeyTimeoutOneMinute,
 } from '../../payment/AlertCodeMessages';
@@ -46,6 +47,9 @@ export const FormattedAlertList = (props) => {
         ),
         'basket-changed-error-message': (
           <BasketChangedError />
+        ),
+        'payment-intent-unexpected-state': (
+          <PaymentIntentUnexpectedStateError />
         ),
         'capture-key-2mins-message': (
           <CaptureKeyTimeoutTwoMinutes />
