@@ -73,6 +73,15 @@ export const TransactionDeclined = () => (
   />
 );
 
+export const PaymentIntentUnexpectedStateError = () => (
+  // TEMP TODO: temp copy, not approved by Product/UX yet
+  <FormattedMessage
+    id="payment.messages.transaction.error.payment_intent_unexpected_state"
+    defaultMessage="Your previous payment attempt requires action and needs to be processed. Please reach out to your bank of financial institution for further assistance."
+    description="Notifies the user their payment requires action."
+  />
+);
+
 export const BasketChangedError = () => (
   <FormattedMessage
     id="payment.messages.transaction.error.basket_changed"
