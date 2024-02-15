@@ -1,4 +1,4 @@
-const { getBaseConfig } = require('@edx/frontend-build');
+const { getBaseConfig } = require('@openedx/frontend-build');
 // NOTE: This version of html-webpack-plugin must be the same major version as the one in
 // frontend-build to avoid potential issues.
 

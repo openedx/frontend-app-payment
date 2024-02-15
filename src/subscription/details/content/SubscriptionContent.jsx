@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
-import { Badge } from '@edx/paragon';
+import { Badge } from '@openedx/paragon';
 import { ProgramType } from '../program-type/ProgramType';
 
 const SubscriptionContent = ({ children, details }) => (

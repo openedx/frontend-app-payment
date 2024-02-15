@@ -1,7 +1,7 @@
 // import FallbackErrorMessage from '../../feedback/FallbackErrorMessage';
 import React from 'react';
 import { getConfig } from '@edx/frontend-platform';
-import { Hyperlink } from '@edx/paragon';
+import { Hyperlink } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 // eslint-disable-next-line import/prefer-default-export

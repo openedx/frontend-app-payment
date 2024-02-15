@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Collapsible } from '@edx/paragon';
+import { Collapsible } from '@openedx/paragon';
 
 import messages from './Cart.messages';
 import { cartSelector, currencyDisclaimerSelector } from '../data/selectors';

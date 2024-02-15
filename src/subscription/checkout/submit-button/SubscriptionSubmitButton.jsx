@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { useSelector } from 'react-redux';
 
-import { StatefulButton, Icon } from '@edx/paragon';
-import { Check as CheckIcon } from '@edx/paragon/icons';
+import { StatefulButton, Icon } from '@openedx/paragon';
+import { Check as CheckIcon } from '@openedx/paragon/icons';
 import { subscriptionStatusSelector } from '../../data/status/selectors';
 
 const SubscriptionSubmitButton = ({
