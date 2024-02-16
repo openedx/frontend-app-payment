@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { Elements } from '@stripe/react-stripe-js';
 import {
   getLocale,
@@ -226,6 +226,7 @@ class Checkout extends React.Component {
     // Doing this within the Checkout component so locale is configured and available
     let stripePromise;
     if (shouldDisplayStripePaymentForm) {
+      loadStripe.setParameters({ advancedFraudSignals: false });
       stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
         betas: [process.env.STRIPE_BETA_FLAG],
         apiVersion: process.env.STRIPE_API_VERSION,
