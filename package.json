@@ -47,6 +47,7 @@
     "bootstrap": "4.6.1",
     "classnames": "^2.3.1",
     "core-js": "^3.23.5",
+    "country-state-city": "^3.2.1",
     "form-urlencoded": "^6.0.6",
     "lodash.camelcase": "^4.3.0",
     "lodash.snakecase": "^4.1.1",
