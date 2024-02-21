@@ -1,17 +1,20 @@
-|Build Status| |Coveralls| |npm_version| |npm_downloads| |license|
-
+####################
 frontend-app-payment
-====================
+####################
+
+|Build Status| |Coveralls| |npm_version| |npm_downloads| |license|
 
 Please tag **@edx/revenue-squad** on any PRs or issues.  Thanks.
 
-Introduction
-------------
+*******
+Purpose
+*******
 
 Micro-frontend for the single-page payment/checkout process; order history and receipt pages are still served by the ecommerce service. This application only supports PayPal, Cybersource, and Stripe credit card payments.
 
+***************
 Getting Started
----------------
+***************
 
 This MFE is bundled with `Devstack <https://github.com/openedx/devstack>`_, see the `Getting Started <https://github.com/openedx/devstack#getting-started>`_ section for setup instructions.
 
@@ -25,7 +28,7 @@ Once set up, this frontend and all its prerequisites can be started with:
 The frontend runs at `http://localhost:1998 <http://localhost:1998>`_, though it is rare to interact with it directly because the course key needs to be passed in a URL parameter to determine basket contents to check out.  Rather, log into the LMS at http://localhost:18000/login and enroll in a course, choosing to upgrade to be taken to the checkout page.
 
 Development
------------
+===========
 
 To work on this frontend: with the prerequisites running as above, bring down the ``frontend-app-payment`` container, then start the development server *outside* Docker as follows:
 
@@ -42,7 +45,7 @@ Note: ``npm ci`` is recommended over ``npm install`` to match the way CI and pro
 The dev server also runs at `http://localhost:1998 <http://localhost:1998>`_, but again, it is rare to interact with it directly.  By default it will show an empty basket view.
 
 Configuration
--------------
+=============
 
 This frontend is configured in ecommerce Django admin:
 
@@ -57,7 +60,7 @@ To enable Stripe and disable Cybersource, create and enable waffle flag ``enable
 This must be also done in Devstack.
 
 API Documentation
------------------
+=================
 
 To view the API documentation, navigate to `http://localhost:18130/api-docs`_ and log in with a staff account. Related endpoints:
 
@@ -72,7 +75,7 @@ To view the API documentation, navigate to `http://localhost:18130/api-docs`_ an
 Note: bff means "Backend for frontend". BFF endpoints are designed specifically for this application.
 
 Cart States
------------
+===========
 
 **Empty Cart**
 
@@ -87,7 +90,7 @@ Assuming you have a fairly standard devstack setup, if you click the "Upgrade to
 *To be added. (Program Purchase, Bulk Enrollment Code Purchase)*
 
 Glossary
---------
+========
 
 **Cart Summary**
 
@@ -126,7 +129,7 @@ More on Enterprise coupons: `Ecommerce (Enterprise) coupons explained <https://o
 A discount offered to a user automatically. It can be applied to a subset of users or everyone. It can be created by edX or partners. An offer is based on a user group.
 
 Project Structure
------------------
+=================
 
 The source for this project is organized into nested submodules according to the ADR `Feature-based Application Organization <https://github.com/openedx/frontend-cookiecutter-application/blob/master/docs/decisions/0002-feature-based-application-organization.rst>`_.
 
@@ -159,12 +162,12 @@ Breakdown of the ``src`` directory:
   The redux store configuration for dev and production.
 
 Configuration
--------------
+==============
 
 All API keys, endpoints, etc are provided through the webpack EnvironmentPlugin at build time as configured in `webpack/`
 
 Notable Libraries Leveraged
----------------------------
+===========================
 
 This application uses:
 
@@ -174,19 +177,20 @@ This application uses:
   - redux-form
 
 Build Process Notes
--------------------
+====================
 
 **Production Build**
 
 The production build is created with ``npm run build``.
 
+
 Internationalization
---------------------
+====================
 
 Please see `edx/frontend-i18n <https://github.com/openedx/frontend-i18n>`_ for documentation on internationalization.  The repository README.rst explains how to use it, and the `How To <https://github.com/openedx/frontend-i18n/blob/master/docs/how_tos/i18n.rst>`_ has more detail.
 
 Localized Pricing
------------------
+=================
 
 The LocalizedPrice.jsx component makes use of a currency cookie to determine the user's preferred currency.  The code for localized pricing can be found in:
 
@@ -202,8 +206,13 @@ The "currency" reducer reads the cookie as part of its initial state.
 
 The "localizedCurrencySelector" reads the currency information defined in redux and is used to provide it to the LocalizedCurrency.jsx component.
 
+Known Issues
+============
+
+None
+
 Appendix A: Using Local Dev Server with stage.edx.org APIs
-----------------------------------------------------------
+===========================================================
 
 If you would like to run this frontend against stage.edx.org you can run ``npm run start:stage`` and access your development server at `https://local.stage.edx.org <https://local.stage.edx.org>`_ after the initial setup described below:
 
@@ -226,6 +235,61 @@ If you would like to run this frontend against stage.edx.org you can run ``npm r
 
 
 Appendix B: Adding No-Op Stuff to Test Sandbox Deploys
-----------------------------------------------------------
+======================================================
 
 Let's try this.
+
+License
+=======
+
+The code in this repository is licensed under the GNU Affero General Public License v3.0, unless
+otherwise noted.
+
+Contributing
+============
+
+Contributions are very welcome.  Please read `How To Contribute`_ for details.
+
+.. _How To Contribute: https://openedx.org/r/how-to-contribute
+
+This project is currently accepting all types of contributions, bug fixes,
+security fixes, maintenance work, or new features.  However, please make sure
+to have a discussion about your new feature idea with the maintainers prior to
+beginning development to maximize the chances of your change being accepted.
+You can start a conversation by creating a new issue on this repo summarizing
+your idea.
+
+Getting Help
+===========
+
+If you're having trouble, we have discussion forums at
+https://discuss.openedx.org where you can connect with others in the community.
+
+Our real-time conversations are on Slack. You can request a `Slack
+invitation`_, then join our `community Slack workspace`_.  Because this is a
+frontend repository, the best place to discuss it would be in the `#wg-frontend
+channel`_.
+
+For anything non-trivial, the best path is to open an issue in this repository
+with as many details about the issue you are facing as you can provide.
+
+https://github.com/openedx/frontend-app-payment/issues
+
+For more information about these options, see the `Getting Help`_ page.
+
+.. _Slack invitation: https://openedx.org/slack
+.. _community Slack workspace: https://openedx.slack.com/
+.. _#wg-frontend channel: https://openedx.slack.com/archives/C04BM6YC7A6
+.. _Getting Help: https://openedx.org/community/connect
+
+The Open edX Code of Conduct
+============================
+
+All community members are expected to follow the `Open edX Code of Conduct`_.
+
+.. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
+
+Reporting Security Issues
+=========================
+
+Please do not report security issues in public. Please email security@openedx.org.
