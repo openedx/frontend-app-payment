@@ -128,7 +128,8 @@ describe('<StripePaymentForm />', () => {
           lastName: '',
           address: '',
           city: '',
-          country: 'AQ', // Antarctica does not have states, postal code not required
+          country: 'GB',
+          postalCode: '',
           optionalField: '',
         },
         {
@@ -136,7 +137,7 @@ describe('<StripePaymentForm />', () => {
           lastName: '',
           address: '',
           city: '',
-          country: 'GB', // United Kingdom has states, state becomes required, postal code is required
+          country: 'US',
           postalCode: '',
           state: '',
           optionalField: '',
@@ -146,27 +147,7 @@ describe('<StripePaymentForm />', () => {
           lastName: '',
           address: '',
           city: '',
-          country: 'CA', // Canada state and postal code are required
-          postalCode: '',
-          state: '',
-          optionalField: '',
-        },
-        {
-          firstName: '',
-          lastName: '',
-          address: '',
-          city: '',
-          country: 'US', // United States state and postal code are required
-          postalCode: '',
-          state: '',
-          optionalField: '',
-        },
-        {
-          firstName: '',
-          lastName: '',
-          address: '',
-          city: '',
-          country: 'IN', // India state is required
+          country: 'IN',
           state: '',
           optionalField: '',
         },
