@@ -1,4 +1,18 @@
-import getStates from './countryStatesMap';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { State } from 'country-state-city';
+
+export const getCountryStatesMap = (country) => {
+  const states = State.getStatesOfCountry(country);
+
+  if (!states.length) {
+    return null;
+  }
+  const statesMap = {};
+  states.forEach((state) => {
+    statesMap[state.isoCode] = state.name;
+  });
+  return country && statesMap;
+};
 
 // eslint-disable-next-line import/prefer-default-export
 export function isPostalCodeRequired(selectedCountry) {
@@ -39,7 +53,9 @@ export function getRequiredFields(fieldValues, isBulkOrder = false, enableStripe
     requiredFields.postalCode = postalCode;
   }
 
-  if (getStates(country)) {
+  // By using the country-state-city library to populate states, every country that
+  //  has states from the ISO 3166-2 list will have states as a required field
+  if (getCountryStatesMap(country)) {
     requiredFields.state = state;
   }
 
