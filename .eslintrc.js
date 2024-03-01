@@ -1,5 +1,5 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"peerDependencies": false}] */
-const { createConfig } = require('@edx/frontend-build');
+const { createConfig } = require('@openedx/frontend-build');
 
 module.exports = createConfig('eslint', {
   rules: {

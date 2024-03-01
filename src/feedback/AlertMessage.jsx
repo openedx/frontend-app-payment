@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { Alert } from '@edx/paragon';
+import { Alert } from '@openedx/paragon';
 import { ALERT_TYPES, MESSAGE_TYPES } from './data/constants';
 
 // Put in a message type, get an alert type.

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton } from '@edx/paragon';
+import { Skeleton } from '@openedx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 const SubscriptionDetailsSkeleton = () => (
