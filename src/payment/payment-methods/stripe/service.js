@@ -71,7 +71,7 @@ export default async function checkout(
     },
   });
 
-  if (result.error?.code === 'payment_intent_unexpected_state' && result.error?.type === 'invalid_request_error') {
+  if (result.error) {
     handleApiError(result.error);
   }
 
@@ -79,10 +79,7 @@ export default async function checkout(
   const postData = formurlencoded({
     payment_intent_id: result.paymentIntent.id,
     skus,
-    // TEMP TODO: hardcoded true temporarily, until we decide if/what logic we want to have here.
-    // Stripe A/B Tool doesn't have an experiment attribute to signal it's DPM or an experiment.
-    // Can look the presence of more than just 'card' in payment_method_types
-    dynamic_payment_methods_enabled: true,
+    dynamic_payment_methods_enabled: basket.isDynamicPaymentMethodsEnabled,
   });
   await getAuthenticatedHttpClient()
     .post(
@@ -95,11 +92,6 @@ export default async function checkout(
     .then(async response => {
       if (response.data.receipt_page_url) {
         setLocation(response.data.receipt_page_url);
-      } else {
-        const { paymentIntent } = await stripe.retrievePaymentIntent(response.data.confirmation_client_secret);
-        if (paymentIntent && paymentIntent.status !== 'succeeded') {
-          // TEMP TODO: Payment Intent hasn't been successfully confirmed yet (aka no receipt_page_url)
-        }
       }
     })
     .catch(error => {
