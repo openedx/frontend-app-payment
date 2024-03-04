@@ -9,6 +9,7 @@ import {
   TransactionDeclined,
   BasketChangedError,
   PaymentIntentUnexpectedStateError,
+  DynamicPaymentMethodsNotCompatibleError,
   CaptureKeyTimeoutTwoMinutes,
   CaptureKeyTimeoutOneMinute,
 } from '../../payment/AlertCodeMessages';
@@ -50,6 +51,9 @@ export const FormattedAlertList = (props) => {
         ),
         'payment-intent-unexpected-state': (
           <PaymentIntentUnexpectedStateError />
+        ),
+        'dynamic-payment-methods-country-not-compatible': (
+          <DynamicPaymentMethodsNotCompatibleError />
         ),
         'capture-key-2mins-message': (
           <CaptureKeyTimeoutTwoMinutes />

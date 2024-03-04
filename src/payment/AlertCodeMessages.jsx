@@ -82,6 +82,15 @@ export const PaymentIntentUnexpectedStateError = () => (
   />
 );
 
+export const DynamicPaymentMethodsNotCompatibleError = () => (
+  // TEMP TODO: temp copy, not approved by Product/UX yet
+  <FormattedMessage
+    id="payment.messages.transaction.error.dynamic_payment_methods_not_compatible"
+    defaultMessage="The payment method you selected is not available in your country. Please select another payment method."
+    description="Notifies the user their billing country is not compatible with the Dynamic Payment Method selected."
+  />
+);
+
 export const BasketChangedError = () => (
   <FormattedMessage
     id="payment.messages.transaction.error.basket_changed"
