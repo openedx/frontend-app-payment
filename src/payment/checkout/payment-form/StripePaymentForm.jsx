@@ -53,7 +53,7 @@ const StripePaymentForm = ({
 
   const checkoutDetails = useSelector(paymentDataSelector);
   const {
-    enableStripePaymentProcessor, loading, submitting, products,
+    enableStripePaymentProcessor, loading, submitting, products, isDynamicPaymentMethodsEnabled,
   } = checkoutDetails;
 
   // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
@@ -162,6 +162,7 @@ const StripePaymentForm = ({
         showBulkEnrollmentFields={isBulkOrder}
         disabled={submitting}
         enableStripePaymentProcessor={enableStripePaymentProcessor}
+        isDynamicPaymentMethodsEnabled={isDynamicPaymentMethodsEnabled}
       />
       <h5 aria-level="2">
         <FormattedMessage
