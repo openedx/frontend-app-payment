@@ -19,7 +19,7 @@ export function* handleErrors(e, clearExistingMessages) {
   if (e.errors !== undefined) {
     for (let i = 0; i < e.errors.length; i++) { // eslint-disable-line no-plusplus
       const error = e.errors[i];
-      if (error.code === 'basket-changed-error-message' || error.code === 'payment-intent-unexpected-state') {
+      if (error.code === 'basket-changed-error-message' || error.code === 'payment-intent-unexpected-state' || error.code === 'dynamic-payment-methods-country-not-compatible') {
         yield put(addMessage(error.code, error.userMessage, {}, MESSAGE_TYPES.ERROR));
       } else if (error.data === undefined && error.messageType === null) {
         yield put(addMessage('transaction-declined-message', error.userMessage, {}, MESSAGE_TYPES.ERROR));
