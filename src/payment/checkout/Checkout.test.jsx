@@ -1,17 +1,21 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import { mount } from 'enzyme';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { Factory } from 'rosie';
 
 import Checkout from './Checkout';
+import * as formValidators from './payment-form/utils/form-validators';
 import { submitPayment } from '../data/actions';
 import '../__factories__/basket.factory';
 import '../__factories__/userAccount.factory';
 import { transformResults } from '../data/utils';
 import { getPerformanceProperties } from '../performanceEventing';
+
+const validateRequiredFieldsMock = jest.spyOn(formValidators, 'validateRequiredFields');
+const validateCardDetailsMock = jest.spyOn(formValidators, 'validateCardDetails');
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -52,7 +56,6 @@ global.ApplePaySession = jest.fn().mockImplementation(() => applePaySession);
 global.ApplePaySession.canMakePayments = () => true;
 
 describe('<Checkout />', () => {
-  let checkoutComponent; // eslint-disable-line no-unused-vars
   let wrapper;
   let store;
   let state;
@@ -84,19 +87,12 @@ describe('<Checkout />', () => {
           </Provider>
         </IntlProvider>
       );
-      wrapper = mount(component);
-      checkoutComponent = wrapper
-        .find('Checkout')
-        .first()
-        .instance();
+      wrapper = render(component);
     });
 
-    it('submits and tracks paypal', () => {
-      const paypalButton = wrapper
-        .find('PayPalButton')
-        .find('button')
-        .hostNodes();
-      paypalButton.simulate('click');
+    it('submits and tracks paypal', async () => {
+      const paypalButton = await screen.findByTestId('PayPalButton');
+      fireEvent.click(paypalButton);
 
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.payment_selected', {
         type: 'click',
@@ -114,8 +110,8 @@ describe('<Checkout />', () => {
         ...getPerformanceProperties(),
         paymentProcessor: 'Cybersource',
       });
-      const formSubmitButton = wrapper.find('form button[type="submit"]').hostNodes();
-      formSubmitButton.simulate('click');
+      const formSubmitButton = wrapper.container.querySelector('form button[type="submit"]');
+      fireEvent.click(formSubmitButton);
 
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.payment_selected', {
         type: 'click',
@@ -124,15 +120,22 @@ describe('<Checkout />', () => {
         checkoutType: 'client_side',
         flexMicroformEnabled: true,
         stripeEnabled: false,
-
       });
     });
 
     it('fires an action when handling a cybersource submission', () => {
-      const formData = { name: 'test' };
-      checkoutComponent.handleSubmitCybersource(formData);
+      validateRequiredFieldsMock.mockReturnValueOnce({});
+      validateCardDetailsMock.mockReturnValueOnce({});
 
-      expect(store.getActions().pop()).toEqual(submitPayment({ method: 'cybersource', ...formData }));
+      const firstNameField = wrapper.container.querySelector('#firstName');
+      const lastNameField = wrapper.container.querySelector('#lastName');
+
+      fireEvent.change(firstNameField, { target: { value: 'John' } });
+      fireEvent.change(lastNameField, { target: { value: 'Doe' } });
+      fireEvent.submit(screen.getByTestId('payment-form'));
+
+      store.getActions().pop();
+      expect(store.getActions().pop()).toMatchObject(submitPayment({ method: 'cybersource' }));
     });
   });
 
@@ -162,21 +165,17 @@ describe('<Checkout />', () => {
       store = mockStore(state);
     });
 
-    it('renders and tracks free checkout', () => {
-      const component = (
+    it('renders and tracks free checkout', async () => {
+      render(
         <IntlProvider locale="en">
           <Provider store={store}>
             <Checkout />
           </Provider>
-        </IntlProvider>
+        </IntlProvider>,
       );
-      wrapper = mount(component);
 
-      const freeCheckoutButton = wrapper
-        .find('FreeCheckoutOrderButton')
-        .find('a')
-        .hostNodes();
-      freeCheckoutButton.simulate('click');
+      const freeCheckoutButton = await screen.findByRole('link', { name: /place order/i });
+      fireEvent.click(freeCheckoutButton);
 
       expect(sendTrackEvent).toHaveBeenCalledWith('edx.bi.ecommerce.basket.free_checkout', {
         type: 'click',

@@ -1,105 +1,100 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CouponForm should render a coupon even if no known benefitType is supplied 1`] = `
-<form
-  className="d-flex align-items-center mb-3"
-  onSubmit={[Function]}
->
-  <span
-    className="text-muted"
+<div>
+  <form
+    class="d-flex align-items-center mb-3"
   >
-    Coupon COUPONCODE applied
-  </span>
-  <button
-    className="display-inline p-0 pl-3 border-0 btn btn-link"
-    disabled={false}
-    type="submit"
-  >
-    Remove
-  </button>
-</form>
+    <span
+      class="text-muted"
+    >
+      Coupon COUPONCODE applied
+    </span>
+    <button
+      class="display-inline p-0 pl-3 border-0 btn btn-link"
+      type="submit"
+    >
+      Remove
+    </button>
+  </form>
+</div>
 `;
 
 exports[`CouponForm should render a form when there is no coupon 1`] = `
-<form
-  className="summary-row d-flex align-items-end"
-  onSubmit={[Function]}
->
-  <div
-    className="pgn__form-group mb-0 mr-2"
-    invalid={false}
+<div>
+  <form
+    class="summary-row d-flex align-items-end"
   >
-    Array [
+    <div
+      class="pgn__form-group mb-0 mr-2"
+    >
       <label
-        className="h6 d-block"
-        htmlFor="couponField"
+        class="h6 d-block"
+        for="couponField"
       >
         Add coupon code (optional)
-      </label>,
+      </label>
       <div
-        className="pgn__form-control-decorator-group"
+        class="pgn__form-control-decorator-group"
       >
         <input
-          className="form-control"
-          defaultValue=""
+          class="form-control"
+          data-testid="couponField"
           id="couponField"
           name="couponField"
-          onBlur={[Function]}
-          onChange={[Function]}
           type="text"
+          value=""
         />
-      </div>,
-    ]
-  </div>
-  <button
-    className="btn btn-outline-primary"
-    disabled={false}
-    onClick={[Function]}
-    type="submit"
-  >
-    Apply
-  </button>
-</form>
+      </div>
+    </div>
+    <button
+      class="btn btn-outline-primary"
+      type="submit"
+    >
+      Apply
+    </button>
+  </form>
+</div>
 `;
 
 exports[`CouponForm should render a percentage value coupon 1`] = `
-<form
-  className="d-flex align-items-center mb-3"
-  onSubmit={[Function]}
->
-  <span
-    className="text-muted"
+<div>
+  <form
+    class="d-flex align-items-center mb-3"
   >
-    Coupon COUPONCODE applied for 10% off
-  </span>
-  <button
-    className="display-inline p-0 pl-3 border-0 btn btn-link"
-    disabled={false}
-    type="submit"
-  >
-    Remove
-  </button>
-</form>
+    <span
+      class="text-muted"
+    >
+      Coupon COUPONCODE applied for 10% off
+    </span>
+    <button
+      class="display-inline p-0 pl-3 border-0 btn btn-link"
+      type="submit"
+    >
+      Remove
+    </button>
+  </form>
+</div>
 `;
 
 exports[`CouponForm should render an absolute value coupon 1`] = `
-<form
-  className="d-flex align-items-center mb-3"
-  onSubmit={[Function]}
->
-  <span
-    className="text-muted"
+<div>
+  <form
+    class="d-flex align-items-center mb-3"
   >
-    Coupon COUPONCODE applied for 
-    $10.00
-     off
-  </span>
-  <button
-    className="display-inline p-0 pl-3 border-0 btn btn-link"
-    disabled={false}
-    type="submit"
-  >
-    Remove
-  </button>
-</form>
+    <span
+      class="text-muted"
+    >
+      Coupon COUPONCODE applied for 
+      $10.00
+       off
+    </span>
+    <button
+      class="display-inline p-0 pl-3 border-0 btn btn-link"
+      type="submit"
+    >
+      Remove
+    </button>
+  </form>
+</div>
 `;

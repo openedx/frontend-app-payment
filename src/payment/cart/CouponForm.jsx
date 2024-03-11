@@ -52,7 +52,7 @@ class CouponForm extends Component {
               description="Label for the add coupon form"
             />
           </label>
-          <Form.Control name={id} id={id} type="text" defaultValue={code} />
+          <Form.Control name={id} id={id} type="text" defaultValue={code} data-testid={id} />
         </Form.Group>
         <Button
           disabled={isBasketProcessing}

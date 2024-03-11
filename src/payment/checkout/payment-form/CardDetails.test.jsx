@@ -1,16 +1,26 @@
 /* eslint-disable global-require */
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { Provider } from 'react-redux';
+import { reduxForm } from 'redux-form';
 
 import { CardDetailsComponent } from './CardDetails';
 
-const mockIntl = {
-  formatMessage: () => 'I18N_TEXT',
-};
+const mockStore = configureMockStore();
 
 describe('<CardDetails />', () => {
   it('exists', () => {
-    const cardDetails = shallow(<CardDetailsComponent intl={mockIntl} />).instance();
-    expect(cardDetails).toBeTruthy();
+    const cardDetails = render(reduxForm(
+      <IntlProvider locale="en">
+        <Provider
+          store={mockStore()}
+        >
+          <CardDetailsComponent />
+        </Provider>
+      </IntlProvider>,
+    ));
+    expect(cardDetails.container).toBeTruthy();
   });
 });

@@ -1,6 +1,6 @@
 import React from 'react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import ProductLineItem from './ProductLineItem';
 
@@ -15,65 +15,65 @@ const product = {
 describe('<ProductLineItem />', () => {
   describe('Rendering', () => {
     it('should render the product details', () => {
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for professional certificate', () => {
       product.certificateType = 'professional';
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for no-id-professional certificate', () => {
       product.certificateType = 'no-id-professional';
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for verified certificate', () => {
       product.certificateType = 'verified';
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for unknown seat type', () => {
       product.certificateType = null;
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for honor certificate', () => {
       product.certificateType = 'honor';
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should render the product details for audit certificate', () => {
       product.certificateType = 'audit';
-      const tree = renderer.create((
+      const { container: tree } = render(
         <IntlProvider locale="en">
           <ProductLineItem {...product} />
-        </IntlProvider>
-      )).toJSON();
+        </IntlProvider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });

@@ -134,6 +134,7 @@ export class PaymentFormComponent extends React.Component {
     return (
       <ErrorFocusContext.Provider value={this.state.firstErrorId}>
         <form
+          data-testid="payment-form"
           onSubmit={handleSubmit(this.onSubmit)}
           ref={this.formRef}
           noValidate

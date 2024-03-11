@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import renderer from 'react-test-renderer';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import { getConfig } from '@edx/frontend-platform';
@@ -23,38 +22,38 @@ global.ApplePaySession.canMakePayments = () => true;
 
 describe('<ApplePayButton />', () => {
   it('should render properly', () => {
-    const tree = renderer
-      .create((
-        <IntlProvider locale="en">
-          <ApplePayButton />
-        </IntlProvider>
-      ))
-      .toJSON();
+    const { container: tree } = render(
+      <IntlProvider locale="en">
+        <ApplePayButton />
+      </IntlProvider>,
+    );
 
     expect(tree).toMatchSnapshot();
   });
 
   it('should call an onClick handler if it is supplied', () => {
     const clickHandler = jest.fn();
-    const wrapper = mount((
+    render((
       <IntlProvider locale="en">
         <ApplePayButton onClick={clickHandler} />
       </IntlProvider>
     ));
 
-    wrapper.find('ApplePayButton').simulate('click');
+    const applyPayButton = screen.getByTestId('applePayBtn');
+    fireEvent.click(applyPayButton);
     expect(clickHandler).toHaveBeenCalled();
   });
 
   it('should not call an onClick handler if it is disabled', () => {
     const clickHandler = jest.fn();
-    const wrapper = mount((
+    render((
       <IntlProvider locale="en">
         <ApplePayButton onClick={clickHandler} disabled />
       </IntlProvider>
     ));
 
-    wrapper.find('ApplePayButton').simulate('click');
+    const applyPayButton = screen.getByTestId('applePayBtn');
+    fireEvent.click(applyPayButton);
     expect(clickHandler).not.toHaveBeenCalled();
   });
 
@@ -73,7 +72,7 @@ describe('<ApplePayButton />', () => {
     });
 
     it('should log an error if it catches one in constructor', () => {
-      mount((
+      render((
         <IntlProvider locale="en">
           <ApplePayButton />
         </IntlProvider>
