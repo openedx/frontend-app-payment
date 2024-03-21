@@ -38,6 +38,7 @@ describe('redux tests', () => {
         expect(result).toEqual({
           currencyCode: undefined,
           conversionRate: undefined,
+          locationCountryCode: undefined,
           showAsLocalizedCurrency: false,
         });
       });
@@ -46,12 +47,14 @@ describe('redux tests', () => {
         Cookies.result = {
           code: 'USD',
           rate: 1,
+          countryCode: 'US',
         };
 
         const result = localizedCurrencySelector();
         expect(result).toEqual({
           currencyCode: 'USD',
           conversionRate: 1,
+          locationCountryCode: 'US',
           showAsLocalizedCurrency: false,
         });
       });
@@ -60,12 +63,14 @@ describe('redux tests', () => {
         Cookies.result = {
           code: 'EUR',
           rate: 1.5,
+          countryCode: 'FR',
         };
 
         const result = localizedCurrencySelector();
         expect(result).toEqual({
           currencyCode: 'EUR',
           conversionRate: 1.5,
+          locationCountryCode: 'FR',
           showAsLocalizedCurrency: true,
         });
       });
