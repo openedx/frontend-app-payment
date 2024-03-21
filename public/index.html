@@ -1,81 +1,31 @@
-<!DOCTYPE html>
-<!-- saved from url=(0064)https://s3.amazonaws.com/edx-static/maintenance/maintenance.html -->
-<html class="no-js" lang="en"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <% _.forEach(htmlWebpackPlugin.options.preconnect, function(preconnectURL) { %>
+    <link rel="preconnect" href="<%= preconnectURL %>" />
+    <% }); %>
+    <title>Payment | edX</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="<%=htmlWebpackPlugin.options.FAVICON_URL%>" type="image/x-icon" />
 
-  <title></title>
+    <% _.forEach(htmlWebpackPlugin.files.css, function(file) { %>
+      <% /* NOTE: A future version of html-webpack-plugin will allow us to inject the scripts with
+            htmlWebpackPlugin.tags.headTags instead of our manual looping. */ %>
+    <link href="<%= file %>" rel="stylesheet">
+    <% }); %>
 
-  <meta name="description" content="edX is performing scheduled maintenance currently">
-  <meta name="author" content="edX">
-
-  <link rel="stylesheet" href="https://files.edx.org/maintenance/style-application.css">
-</head>
-
-<body class="view-system-maintenance">
-  <nav class="nav-contents">
-    <h2 class="title">Skip to parts of this page:</h2>
-
-    <ol class="list list-nav">
-      <li class="list-nav-item">
-        <a class="action" href="#content-primary">this page's main content</a>
-      </li>
-
-      <li class="list-nav-item">
-        <a class="action" href="#content-secondary">this page's secondary content</a>
-      </li>
-    </ol>
-  </nav>
-
-  <section class="messages">
-    <div class="message message-flash-maintenance">
-      <h2 class="message-title sr">Scheduled maintenance:</h2>
-      <p class="message-copy">edX services are not available.</p>
-    </div>
-  </section>
-
-  <div class="wrapper-view">
-    <div class="view">
-      <header class="header-primary" role="banner" aria-label="page header">
-        <h1 class="header-primary-logo">
-          <span class="logo">
-            <a href="http://www.edx.org/"><img class="header-primary-logo-img img-logo" src="https://files.edx.org/maintenance/edx-logo.svg" alt="edX"></a>
-          </span>
-        </h1>
-      </header>
-
-      <div class="content">
-        <main class="content-primary" id="content-primary" role="main" aria-label="primary content">
-          <div class="maintenance-summary">
-
-            <h1 class="maintenance-summary-title">
-              <span class="hd-e">Hang On To Your Homework!</span>
-              <span class="hd-a">We're performing some scheduled maintenance</span>
-            </h1>
-
-            <div class="maintenance-summary-timeline">
-              <p class="hd-d">During this time, you may be temporarily unable to make purchases, check receipts, check your order history, and request refunds.</p>
-              <p>Thank you for your patience while we make edX better for our students and users.</p>
-            </div>
-          </div>
-        </main>
-
-        <aside class="content-secondary" id="content-secondary" role="complementary" aria-label="secondary content">
-          <div class="maintenance-status">
-            <p class="copy">Up-to-the-minute status is available via the <a rel="external" href="https://twitter.com/edXstatus">@edXstatus</a> Twitter account.</p>
-          </div>
-        </aside>
+    <% if (htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID) { %>
+    <script src="https://www.edx.org/optimizelyjs/<%= htmlWebpackPlugin.options.OPTIMIZELY_PROJECT_ID %>.js"></script>
+    <% } %>
+  </head>
+  <body>
+    <div id="root">
+      <div class="d-flex p-5 justify-content-center">
+        <div class="spinner-border" role="status"></div>
       </div>
-
-      <footer class="footer-primary" role="contentinfo">
-        <div class="copyright copy-supplemental">
-          <p>© 2023 edX. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
-  </div>
 
-
-
-</body></html>
+    <script type="text/javascript" src="https://flex.cybersource.com/cybersource/assets/microform/0.11/flex-microform.min.js"></script>
+  </body>
+</html>
