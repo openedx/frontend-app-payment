@@ -18,7 +18,7 @@ ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service'
 export default async function checkout(
   basket,
   {
-    skus, elements, stripe, context, values,
+    skus, elements, stripe, context, values, stripePaymentMethodType,
   },
   setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
 ) {
@@ -34,6 +34,21 @@ export default async function checkout(
     organization,
     purchasedForOrganization,
   } = values;
+
+  let shippingAddress;
+  if (stripePaymentMethodType === 'afterpay_clearpay') {
+    shippingAddress = {
+      address: {
+        city,
+        country,
+        line1: address,
+        line2: unit || '',
+        postal_code: postalCode || '',
+        state: state || '',
+      },
+      name: `${firstName} ${lastName}`,
+    };
+  }
 
   const result = await stripe.updatePaymentIntent({
     elements,
@@ -57,17 +72,7 @@ export default async function checkout(
         },
       },
       // Shipping is required for processing Afterpay payments
-      shipping: {
-        address: {
-          city,
-          country,
-          line1: address,
-          line2: unit || '',
-          postal_code: postalCode || '',
-          state: state || '',
-        },
-        name: `${firstName} ${lastName}`,
-      },
+      shipping: shippingAddress,
     },
   });
 

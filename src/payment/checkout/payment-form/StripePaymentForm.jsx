@@ -51,6 +51,9 @@ const StripePaymentForm = ({
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
 
+  // Check payment type before submitting since BNPL requires state/zip code and Afterpay requires a shipping address
+  let stripePaymentMethodType;
+
   const checkoutDetails = useSelector(paymentDataSelector);
   const {
     enableStripePaymentProcessor, loading, submitting, products, isDynamicPaymentMethodsEnabled,
@@ -127,8 +130,14 @@ const StripePaymentForm = ({
     }
 
     onSubmitPayment({
-      skus, elements, stripe, context, values,
+      skus, elements, stripe, context, values, stripePaymentMethodType,
     });
+  };
+
+  const handleStripeElementOnChange = (event) => {
+    if (event.value) {
+      stripePaymentMethodType = event.value.type;
+    }
   };
 
   const stripeElementsOnReady = () => {
@@ -175,6 +184,7 @@ const StripePaymentForm = ({
         id="payment-element"
         options={options}
         onReady={stripeElementsOnReady}
+        onChange={handleStripeElementOnChange}
       />
       {isSubscription ? (
         <>
