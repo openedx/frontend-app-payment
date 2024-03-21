@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import PayPalButton from './PayPalButton';
@@ -11,7 +11,7 @@ describe('OrderDetails', () => {
         <PayPalButton />
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
   it('should render the button with a spinner when processing', () => {
@@ -20,7 +20,7 @@ describe('OrderDetails', () => {
         <PayPalButton isProcessing />
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 });

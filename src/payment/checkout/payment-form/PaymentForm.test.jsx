@@ -2,14 +2,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { mount } from 'enzyme';
 import { SubmissionError } from 'redux-form';
 import { IntlProvider, configure as configureI18n } from '@edx/frontend-platform/i18n';
 import { Factory } from 'rosie';
 import configureMockStore from 'redux-mock-store';
 
 import { AppContext } from '@edx/frontend-platform/react';
-import PaymentForm, { PaymentFormComponent } from './PaymentForm';
+import { fireEvent, render, screen } from '@testing-library/react';
+import PaymentForm from './PaymentForm';
 import * as formValidators from './utils/form-validators';
 import createRootReducer from '../../../data/reducers';
 import '../../__factories__/userAccount.factory';
@@ -54,11 +54,12 @@ const authenticatedUser = Factory.build('userAccount');
 describe('<PaymentForm />', () => {
   let paymentForm;
   let store;
+  let wrapper;
 
   beforeEach(() => {
     store = createStore(createRootReducer(), {});
 
-    const wrapper = mount((
+    wrapper = render((
       <IntlProvider locale="en">
         <AppContext.Provider value={{ authenticatedUser }}>
           <Provider store={store}>
@@ -71,7 +72,12 @@ describe('<PaymentForm />', () => {
         </AppContext.Provider>
       </IntlProvider>
     ));
-    paymentForm = wrapper.find(PaymentFormComponent).first().instance();
+    paymentForm = screen.getByTestId('payment-form');
+  });
+
+  afterEach(() => {
+    formValidators.validateRequiredFields({});
+    formValidators.validateCardDetails({});
   });
 
   describe('getRequiredFields', () => {
@@ -123,7 +129,7 @@ describe('<PaymentForm />', () => {
 
     it('returns organization fields for a bulk order', () => {
       const isBulkOrder = true;
-      mount((
+      render((
         <IntlProvider locale="en">
           <AppContext.Provider value={{ authenticatedUser }}>
             <Provider store={store}>
@@ -187,9 +193,9 @@ describe('<PaymentForm />', () => {
         validateRequiredFieldsMock.mockReturnValueOnce(testCaseData[0]);
         validateCardDetailsMock.mockReturnValueOnce(testCaseData[1]);
         if (testCaseData[2]) {
-          expect(() => paymentForm.onSubmit(testFormValues)).toThrow(testCaseData[2]);
+          expect(() => fireEvent.submit(paymentForm, (testFormValues)).toThrow(testCaseData[2]));
         } else {
-          expect(() => paymentForm.onSubmit(testFormValues)).not.toThrow();
+          expect(() => fireEvent.submit(paymentForm, testFormValues)).not.toThrow();
         }
       });
     });
@@ -225,7 +231,7 @@ describe('<PaymentForm />', () => {
   });
   describe('focusFirstError', () => {
     it('focuses on the input name of the first error', () => {
-      const wrapper = mount((
+      wrapper = render((
         <IntlProvider locale="en">
           <AppContext.Provider value={{ authenticatedUser }}>
             <Provider store={mockStore({
@@ -237,7 +243,6 @@ describe('<PaymentForm />', () => {
             })}
             >
               <PaymentForm
-                handleSubmit={() => {}}
                 onSubmitPayment={() => {}}
                 onSubmitButtonClick={() => {}}
               />
@@ -245,13 +250,10 @@ describe('<PaymentForm />', () => {
           </AppContext.Provider>
         </IntlProvider>
       ));
-      paymentForm = wrapper.find(PaymentFormComponent).first().instance();
-      const firstNameField = wrapper.find('#firstName').hostNodes().getDOMNode();
+      paymentForm = screen.getAllByTestId('payment-form');
+      const firstNameField = wrapper.container.querySelector('#firstName');
       firstNameField.focus = jest.fn();
-      paymentForm.setState({
-        shouldFocusFirstError: true,
-        firstErrorId: null,
-      });
+      fireEvent.submit(paymentForm[1]);
       expect(firstNameField.focus).toHaveBeenCalled();
     });
   });
