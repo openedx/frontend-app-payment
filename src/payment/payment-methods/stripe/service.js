@@ -95,8 +95,25 @@ export default async function checkout(
       },
     )
     .then(async response => {
+      // If response contains receipt_page_url, it's not a DPM payment
       if (response.data.receipt_page_url) {
         setLocation(response.data.receipt_page_url);
+      }
+      if (response.data.status === 'requires_action') {
+        const { error } = await stripe.handleNextAction({
+          clientSecret: response.data.confirmation_client_secret,
+        });
+
+        if (error) {
+          // Log error and tell user.
+          logError(error, {
+            messagePrefix: 'Stripe Submit Error',
+            paymentMethod: 'Stripe',
+            paymentErrorType: 'Submit Error',
+            basketId,
+          });
+          handleApiError(error);
+        }
       }
     })
     .catch(error => {
