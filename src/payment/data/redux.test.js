@@ -112,6 +112,7 @@ describe('redux tests', () => {
           isCouponRedeemRedirect: false,
           isBasketProcessing: false,
           isEmpty: false,
+          isPaymentRedirect: false,
           isRedirect: false,
         });
       });
@@ -132,6 +133,7 @@ describe('redux tests', () => {
           isCouponRedeemRedirect: true, // this is now true
           isBasketProcessing: false,
           isEmpty: false,
+          isPaymentRedirect: false,
           isRedirect: true, // this is also now true.
         });
       });
