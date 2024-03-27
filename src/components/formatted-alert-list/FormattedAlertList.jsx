@@ -8,7 +8,6 @@ import {
   EnrollmentCodeQuantityUpdated,
   TransactionDeclined,
   BasketChangedError,
-  PaymentIntentUnexpectedStateError,
   DynamicPaymentMethodsNotCompatibleError,
   CaptureKeyTimeoutTwoMinutes,
   CaptureKeyTimeoutOneMinute,
@@ -48,9 +47,6 @@ export const FormattedAlertList = (props) => {
         ),
         'basket-changed-error-message': (
           <BasketChangedError />
-        ),
-        'payment-intent-unexpected-state': (
-          <PaymentIntentUnexpectedStateError />
         ),
         'dynamic-payment-methods-country-not-compatible': (
           <DynamicPaymentMethodsNotCompatibleError />
