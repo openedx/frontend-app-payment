@@ -4,12 +4,15 @@ import React, {
 import { useSelector } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import PropTypes from 'prop-types';
+import Cookies from 'universal-cookie';
 import {
   PaymentElement,
+  PaymentMethodMessagingElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
 
+import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
@@ -51,10 +54,28 @@ const StripePaymentForm = ({
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
 
+  // Check payment type before submitting since BNPL requires state/zip code and Afterpay requires a shipping address
+  let stripePaymentMethodType;
+
   const checkoutDetails = useSelector(paymentDataSelector);
   const {
-    enableStripePaymentProcessor, loading, submitting, products,
+    enableStripePaymentProcessor,
+    loading,
+    submitting,
+    products,
+    isDynamicPaymentMethodsEnabled,
+    currency,
+    locationCountryCode,
+    orderTotal,
   } = checkoutDetails;
+
+  // Check if should show PaymentMethodMessagingElement, as it only renders
+  // for specific countries, if country code and currency are known, and they must match
+  const userLocationCountryCode = new Cookies().get(getConfig().LOCATION_OVERRIDE_COOKIE)
+    || new Cookies().get(getConfig().USER_LOCATION_COOKIE_NAME);
+  const shouldDisplayPaymentMethodMessagingElement = (
+    (!!userLocationCountryCode || !!locationCountryCode) && !!orderTotal && !!currency
+  );
 
   // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting
   // isQuantityUpdating is true when isBasketProcessing is true when there is an update in the quantity for
@@ -127,8 +148,14 @@ const StripePaymentForm = ({
     }
 
     onSubmitPayment({
-      skus, elements, stripe, context, values,
+      skus, elements, stripe, context, values, stripePaymentMethodType,
     });
+  };
+
+  const handleStripeElementOnChange = (event) => {
+    if (event.value) {
+      stripePaymentMethodType = event.value.type;
+    }
   };
 
   const stripeElementsOnReady = () => {
@@ -162,6 +189,7 @@ const StripePaymentForm = ({
         showBulkEnrollmentFields={isBulkOrder}
         disabled={submitting}
         enableStripePaymentProcessor={enableStripePaymentProcessor}
+        isDynamicPaymentMethodsEnabled={isDynamicPaymentMethodsEnabled}
       />
       <h5 aria-level="2">
         <FormattedMessage
@@ -174,7 +202,17 @@ const StripePaymentForm = ({
         id="payment-element"
         options={options}
         onReady={stripeElementsOnReady}
+        onChange={handleStripeElementOnChange}
       />
+      {shouldDisplayPaymentMethodMessagingElement ? (
+        <PaymentMethodMessagingElement options={{
+          amount: orderTotal * 100,
+          currency: currency && currency.toUpperCase(),
+          // the country that the end-buyer is in
+          countryCode: userLocationCountryCode,
+        }}
+        />
+      ) : null }
       {isSubscription ? (
         <>
           <MonthlyBillingNotification />

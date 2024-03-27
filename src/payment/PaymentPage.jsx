@@ -1,11 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { loadStripe } from '@stripe/stripe-js';
+import { getConfig } from '@edx/frontend-platform';
+import {
+  FormattedMessage,
+  getLocale,
+  injectIntl,
+  intlShape,
+} from '@edx/frontend-platform/i18n';
+import { logInfo } from '@edx/frontend-platform/logging';
 import { AppContext } from '@edx/frontend-platform/react';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './PaymentPage.messages';
+import { handleApiError } from './data/handleRequestError';
 
 // Actions
 import { fetchBasket } from './data/actions';
@@ -38,6 +47,9 @@ class PaymentPage extends React.Component {
       REV1045Experiment,
       isTransparentPricingExperiment,
       enrollmentCountData,
+      stripe: null,
+      paymentStatus: null, // only available when redirected back to payment.edx.org from dynamic payment methods
+      orderNumber: null, // order number associated with the Payment Intent from dynamic payment methods
     };
   }
 
@@ -46,14 +58,79 @@ class PaymentPage extends React.Component {
     this.props.fetchBasket();
   }
 
+  componentDidUpdate(prevProps) {
+    const { enableStripePaymentProcessor } = this.props;
+    if (!prevProps.enableStripePaymentProcessor && enableStripePaymentProcessor) {
+      this.initializeStripe();
+      this.getPaymentStatus();
+    }
+  }
+
+  getPaymentStatus() {
+    const searchParams = new URLSearchParams(global.location.search);
+    const redirectStatus = searchParams.get('redirect_status');
+    this.setState({ paymentStatus: redirectStatus });
+  }
+
+  initializeStripe = async () => {
+    const stripePromise = await loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
+      betas: [process.env.STRIPE_BETA_FLAG],
+      apiVersion: process.env.STRIPE_API_VERSION,
+      locale: getLocale(),
+    });
+    this.setState({ stripe: stripePromise }, () => {
+      this.retrieveOrderNumber();
+    });
+  };
+
+  retrieveOrderNumber = async () => {
+    // Get Payment Intent to retrieve the order number associated with this DPM payment.
+    // If this is not a Stripe dynamic payment methods (BNPL), URL will not contain any params
+    // and should not retrieve the Payment Intent.
+    const searchParams = new URLSearchParams(global.location.search);
+    const clientSecretId = searchParams.get('payment_intent_client_secret');
+    if (clientSecretId) {
+      const { paymentIntent, error } = await this.state.stripe.retrievePaymentIntent(clientSecretId);
+      if (error) { handleApiError(error); }
+      this.setState({ orderNumber: paymentIntent.description });
+    }
+  };
+
+  redirectToReceiptPage(orderNumber) {
+    logInfo(`Payment succeeded for edX order number ${orderNumber}, redirecting to ecommerce receipt page.`);
+    const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(true)}`;
+    if (getConfig().ENVIRONMENT !== 'test') {
+      /* istanbul ignore next */
+      global.location.assign(`${getConfig().ECOMMERCE_BASE_URL}/checkout/receipt/?${queryParams}`);
+    }
+  }
+
   renderContent() {
-    const { isEmpty, isRedirect } = this.props;
+    const { isEmpty, isRedirect, isPaymentRedirect } = this.props;
+
     const {
       isNumEnrolledExperiment,
       REV1045Experiment,
       isTransparentPricingExperiment,
       enrollmentCountData,
+      paymentStatus,
+      stripe,
+      orderNumber,
     } = this.state;
+
+    // If this is a redirect from Stripe Dynamic Payment Methods with a successful payment, redirect to the receipt page
+    if (paymentStatus === 'succeeded') {
+      this.redirectToReceiptPage(orderNumber);
+    }
+
+    // If this is a redirect from Stripe Dynamic Payment Methods, show loading icon until getPaymentStatus is done.
+    if (isPaymentRedirect) {
+      return (
+        <PageLoading
+          srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}
+        />
+      );
+    }
 
     // If we're going to be redirecting to another page instead of showing the user the interface,
     // show a minimal spinner while the redirect is happening.  In other cases we want to show the
@@ -98,7 +175,7 @@ class PaymentPage extends React.Component {
           />
         </div>
         <div className="col-md-7 pl-md-5">
-          <Checkout />
+          { stripe ? <Checkout stripe={stripe} /> : <Checkout />}
         </div>
       </div>
     );
@@ -123,6 +200,8 @@ PaymentPage.propTypes = {
   intl: intlShape.isRequired,
   isEmpty: PropTypes.bool,
   isRedirect: PropTypes.bool,
+  isPaymentRedirect: PropTypes.bool,
+  enableStripePaymentProcessor: PropTypes.bool,
   fetchBasket: PropTypes.func.isRequired,
   summaryQuantity: PropTypes.number,
   summarySubtotal: PropTypes.number,
@@ -131,6 +210,8 @@ PaymentPage.propTypes = {
 PaymentPage.defaultProps = {
   isEmpty: false,
   isRedirect: false,
+  isPaymentRedirect: false,
+  enableStripePaymentProcessor: false,
   summaryQuantity: undefined,
   summarySubtotal: undefined,
 };

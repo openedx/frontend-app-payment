@@ -193,10 +193,12 @@ export const localizedCurrencySelector = () => {
   const cookie = new Cookies().get(getConfig().CURRENCY_COOKIE_NAME);
   let currencyCode;
   let conversionRate;
+  let locationCountryCode;
 
   if (cookie && typeof cookie.code === 'string' && typeof cookie.rate === 'number') {
     currencyCode = cookie.code;
     conversionRate = cookie.rate;
+    locationCountryCode = cookie.countryCode;
   }
 
   const showAsLocalizedCurrency = typeof currencyCode === 'string' ? currencyCode !== 'USD' : false;
@@ -204,6 +206,7 @@ export const localizedCurrencySelector = () => {
   return {
     currencyCode,
     conversionRate,
+    locationCountryCode,
     showAsLocalizedCurrency,
   };
 };
