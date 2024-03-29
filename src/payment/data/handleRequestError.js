@@ -89,10 +89,7 @@ export default function handleRequestError(error) {
     logInfo('Basket Changed Error', error.code);
     handleApiErrors([
       {
-        error_code: 'payment-intent-unexpected-state',
-        // TEMP TODO: Now that we have different Payment Intent statuses, this type of error can mean different things
-        // Which message did it say when the basket was already purchased?
-        // error_code: 'payment-intent-unexpected-state',
+        error_code: 'basket-changed-error-message',
         user_message: 'error',
       },
     ]);
