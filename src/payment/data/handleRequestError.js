@@ -99,7 +99,9 @@ export default function handleRequestError(error) {
   }
 
   // Country not DPM compatible
-  if (error.type === 'invalid_request_error' && error.param === 'payment_method_data[billing_details][address][country]') {
+  if (error.type === 'invalid_request_error' && (
+    error.param === 'payment_method_data[billing_details][address][country]' || error.param === 'billing_details[address][state]' || error.param === 'billing_details[address][postal_code]'
+  )) {
     logInfo('Dynamic Payment Method Country Error', error.param);
     handleApiErrors([
       {
