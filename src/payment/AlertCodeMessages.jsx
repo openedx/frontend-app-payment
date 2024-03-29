@@ -73,20 +73,10 @@ export const TransactionDeclined = () => (
   />
 );
 
-export const PaymentIntentUnexpectedStateError = () => (
-  // TEMP TODO: temp copy, not approved by Product/UX yet
-  <FormattedMessage
-    id="payment.messages.transaction.error.payment_intent_unexpected_state"
-    defaultMessage="Your previous payment attempt requires action and needs to be processed. Please reach out to your bank of financial institution for further assistance."
-    description="Notifies the user their payment requires action."
-  />
-);
-
 export const DynamicPaymentMethodsNotCompatibleError = () => (
-  // TEMP TODO: temp copy, not approved by Product/UX yet
   <FormattedMessage
     id="payment.messages.transaction.error.dynamic_payment_methods_not_compatible"
-    defaultMessage="The payment method you selected is not available in your country. Please select another payment method."
+    defaultMessage="The payment method you have selected is not available in your country. Please select another payment method."
     description="Notifies the user their billing country is not compatible with the Dynamic Payment Method selected."
   />
 );
