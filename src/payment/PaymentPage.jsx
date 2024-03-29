@@ -62,14 +62,7 @@ class PaymentPage extends React.Component {
     const { enableStripePaymentProcessor } = this.props;
     if (!prevProps.enableStripePaymentProcessor && enableStripePaymentProcessor) {
       this.initializeStripe();
-      this.getPaymentStatus();
     }
-  }
-
-  getPaymentStatus() {
-    const searchParams = new URLSearchParams(global.location.search);
-    const redirectStatus = searchParams.get('redirect_status');
-    this.setState({ paymentStatus: redirectStatus });
   }
 
   initializeStripe = async () => {
@@ -79,12 +72,12 @@ class PaymentPage extends React.Component {
       locale: getLocale(),
     });
     this.setState({ stripe: stripePromise }, () => {
-      this.retrieveOrderNumber();
+      this.retrievePaymentIntentInfo();
     });
   };
 
-  retrieveOrderNumber = async () => {
-    // Get Payment Intent to retrieve the order number associated with this DPM payment.
+  retrievePaymentIntentInfo = async () => {
+    // Get Payment Intent to retrieve the payment status and order number associated with this DPM payment.
     // If this is not a Stripe dynamic payment methods (BNPL), URL will not contain any params
     // and should not retrieve the Payment Intent.
     const searchParams = new URLSearchParams(global.location.search);
@@ -93,6 +86,7 @@ class PaymentPage extends React.Component {
       const { paymentIntent, error } = await this.state.stripe.retrievePaymentIntent(clientSecretId);
       if (error) { handleApiError(error); }
       this.setState({ orderNumber: paymentIntent.description });
+      this.setState({ paymentStatus: paymentIntent.status });
     }
   };
 
@@ -124,7 +118,7 @@ class PaymentPage extends React.Component {
     }
 
     // If this is a redirect from Stripe Dynamic Payment Methods, show loading icon until getPaymentStatus is done.
-    if (isPaymentRedirect) {
+    if (isPaymentRedirect && (paymentStatus !== 'requires_payment_method' || paymentStatus !== 'canceled')) {
       return (
         <PageLoading
           srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}
