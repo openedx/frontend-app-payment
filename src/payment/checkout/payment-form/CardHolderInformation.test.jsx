@@ -13,16 +13,16 @@ import { createStore } from 'redux';
 import CardHolderInformation from './CardHolderInformation';
 import PaymentForm from './PaymentForm';
 import createRootReducer from '../../../data/reducers';
-import countryStatesMap from './utils/countryStatesMap';
+import { getCountryStatesMap, isPostalCodeRequired } from './utils/form-validators';
 
 import '../../__factories__/userAccount.factory';
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
-jest.mock('./utils/countryStatesMap', () => ({
-  __esModule: true,
-  default: jest.fn(),
+jest.mock('./utils/form-validators', () => ({
+  getCountryStatesMap: jest.fn(),
+  isPostalCodeRequired: jest.fn(),
 }));
 
 configureI18n({
@@ -73,7 +73,8 @@ describe('<CardHolderInformation />', () => {
 
       fireEvent.change(screen.getByLabelText('Country (required)'), { target: { value: 'US' } });
 
-      expect(countryStatesMap).toHaveBeenCalledWith('US');
+      expect(getCountryStatesMap).toHaveBeenCalledWith('US');
+      expect(isPostalCodeRequired).toHaveBeenCalledWith('US');
     });
   });
   describe('purchasedForOrganization field', () => {
