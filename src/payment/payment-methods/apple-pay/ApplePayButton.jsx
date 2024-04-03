@@ -34,6 +34,7 @@ class ApplePayButton extends React.Component {
         title={intl.formatMessage(messages['payment.apple.pay.pay.with.apple.pay'])}
         type="button"
         lang={intl.locale}
+        data-testid="applePayBtn"
       />
     );
   }

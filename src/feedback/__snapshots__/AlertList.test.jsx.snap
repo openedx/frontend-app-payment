@@ -1,179 +1,164 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AlertList should be null by default 1`] = `null`;
+exports[`AlertList should be null by default 1`] = `<div />`;
 
 exports[`AlertList should render messages of each type 1`] = `
-Array [
+<div>
   <div
-    className="fade alert-content alert alert-warning show"
+    class="fade alert-content alert alert-warning show"
     dialog="Boo indeed!"
     role="alert"
   >
     <div
-      className="pgn__alert-message-wrapper"
+      class="pgn__alert-message-wrapper"
     >
       <div
-        className="alert-message-content"
+        class="alert-message-content"
       >
         Boo indeed!
       </div>
       <div
-        className="pgn__alert-actions pgn__action-row"
+        class="pgn__alert-actions pgn__action-row"
       >
         <span
-          className="pgn__action-row-spacer"
+          class="pgn__action-row-spacer"
         />
         <button
-          className="btn btn-tertiary btn-sm"
-          disabled={false}
-          onClick={[Function]}
+          class="btn btn-tertiary btn-sm"
           type="button"
         >
           Dismiss
         </button>
       </div>
     </div>
-  </div>,
+  </div>
   <div
-    className="fade alert-content alert alert-info show"
+    class="fade alert-content alert alert-info show"
     dialog="Bah!"
     role="alert"
   >
     <div
-      className="pgn__alert-message-wrapper"
+      class="pgn__alert-message-wrapper"
     >
       <div
-        className="alert-message-content"
+        class="alert-message-content"
       >
         Bah!
       </div>
       <div
-        className="pgn__alert-actions pgn__action-row"
+        class="pgn__alert-actions pgn__action-row"
       >
         <span
-          className="pgn__action-row-spacer"
+          class="pgn__action-row-spacer"
         />
         <button
-          className="btn btn-tertiary btn-sm"
-          disabled={false}
-          onClick={[Function]}
+          class="btn btn-tertiary btn-sm"
           type="button"
         >
           Dismiss
         </button>
       </div>
     </div>
-  </div>,
+  </div>
   <div
-    className="fade alert-content alert alert-success show"
+    class="fade alert-content alert alert-success show"
     dialog="Meh!"
     role="alert"
   >
     <div
-      className="pgn__alert-message-wrapper"
+      class="pgn__alert-message-wrapper"
     >
       <div
-        className="alert-message-content"
+        class="alert-message-content"
       >
         Meh!
       </div>
       <div
-        className="pgn__alert-actions pgn__action-row"
+        class="pgn__alert-actions pgn__action-row"
       >
         <span
-          className="pgn__action-row-spacer"
+          class="pgn__action-row-spacer"
         />
         <button
-          className="btn btn-tertiary btn-sm"
-          disabled={false}
-          onClick={[Function]}
+          class="btn btn-tertiary btn-sm"
           type="button"
         >
           Dismiss
         </button>
       </div>
     </div>
-  </div>,
+  </div>
   <div
-    className="fade alert-content alert alert-danger show"
+    class="fade alert-content alert alert-danger show"
     dialog="Gah!  An error!"
     role="alert"
   >
     <div
-      className="pgn__alert-message-wrapper"
+      class="pgn__alert-message-wrapper"
     >
       <div
-        className="alert-message-content"
+        class="alert-message-content"
       >
         Gah!  An error!
       </div>
       <div
-        className="pgn__alert-actions pgn__action-row"
+        class="pgn__alert-actions pgn__action-row"
       >
         <span
-          className="pgn__action-row-spacer"
+          class="pgn__action-row-spacer"
         />
         <button
-          className="btn btn-tertiary btn-sm"
-          disabled={false}
-          onClick={[Function]}
+          class="btn btn-tertiary btn-sm"
           type="button"
         >
           Dismiss
         </button>
       </div>
     </div>
-  </div>,
+  </div>
   <div
-    className="fade alert-content alert alert-warning show"
+    class="fade alert-content alert alert-warning show"
     dialog="Debug debug"
     role="alert"
   >
     <div
-      className="pgn__alert-message-wrapper"
+      class="pgn__alert-message-wrapper"
     >
       <div
-        className="alert-message-content"
+        class="alert-message-content"
       >
         Debug debug
       </div>
       <div
-        className="pgn__alert-actions pgn__action-row"
+        class="pgn__alert-actions pgn__action-row"
       >
         <span
-          className="pgn__action-row-spacer"
+          class="pgn__action-row-spacer"
         />
         <button
-          className="btn btn-tertiary btn-sm"
-          disabled={false}
-          onClick={[Function]}
+          class="btn btn-tertiary btn-sm"
           type="button"
         >
           Dismiss
         </button>
       </div>
     </div>
-  </div>,
+  </div>
   <div
-    className="fade alert-content alert alert-danger show"
-    dialog={
-      <FallbackErrorMessage
-        values={Object {}}
-      />
-    }
+    class="fade alert-content alert alert-danger show"
+    dialog="[object Object]"
     role="alert"
   >
     <div
-      className="pgn__alert-message-wrapper"
+      class="pgn__alert-message-wrapper"
     >
       <div
-        className="alert-message-content"
+        class="alert-message-content"
       >
         There was an unexpected problem. If the problem persists, please 
         <a
-          className="pgn__hyperlink default-link standalone-link"
+          class="pgn__hyperlink default-link standalone-link"
           href="http://localhost:18000/support"
-          onClick={[Function]}
           target="_self"
         >
           contact support
@@ -181,21 +166,19 @@ Array [
         .
       </div>
       <div
-        className="pgn__alert-actions pgn__action-row"
+        class="pgn__alert-actions pgn__action-row"
       >
         <span
-          className="pgn__action-row-spacer"
+          class="pgn__action-row-spacer"
         />
         <button
-          className="btn btn-tertiary btn-sm"
-          disabled={false}
-          onClick={[Function]}
+          class="btn btn-tertiary btn-sm"
           type="button"
         >
           Dismiss
         </button>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;

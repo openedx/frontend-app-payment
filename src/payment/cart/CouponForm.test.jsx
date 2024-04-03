@@ -1,18 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
+import { fireEvent, render } from '@testing-library/react';
 import defaultsDeep from 'lodash.defaultsdeep';
 import configureMockStore from 'redux-mock-store';
-import { createSerializer } from 'enzyme-to-json';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CouponForm from './CouponForm';
 import { addCoupon, removeCoupon } from '../data/actions';
-
-// run enzyme JSON serializer using options compatible with prior snapshots
-expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -53,7 +48,7 @@ describe('CouponForm', () => {
         },
       },
     }, baseState)));
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
@@ -65,7 +60,7 @@ describe('CouponForm', () => {
         },
       },
     }, baseState)));
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
@@ -77,23 +72,22 @@ describe('CouponForm', () => {
         },
       },
     }, baseState)));
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
   it('should render a form when there is no coupon', () => {
     const component = renderCouponFormWithState(mockStore(baseState));
-    const tree = mount(component);
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
   describe('Add Coupon', () => {
-    const store = mockStore(baseState);
-    const component = renderCouponFormWithState(store);
-    const wrapper = mount(component);
-
     it('sends a track event on clicking the add submit coupon button', () => {
-      wrapper.find('button[type="submit"]').hostNodes().simulate('click');
+      const store = mockStore(baseState);
+      const component = renderCouponFormWithState(store);
+      const { container } = render(component);
+      fireEvent.click(container.querySelector('button[type="submit"]'));
 
       expect(sendTrackEvent).toHaveBeenCalledWith(
         'edx.bi.ecommerce.basket.voucher_applied',
@@ -102,7 +96,10 @@ describe('CouponForm', () => {
     });
 
     it('fires an add coupon action on submit', () => {
-      wrapper.find('form').hostNodes().simulate('submit', {
+      const store = mockStore(baseState);
+      const component = renderCouponFormWithState(store);
+      const { container } = render(component);
+      fireEvent.submit(container.querySelector('button[type="submit"]'), {
         target: { elements: { couponField: { value: 'testvalue' } } },
       });
 
@@ -121,10 +118,10 @@ describe('CouponForm', () => {
       },
     }, baseState));
     const component = renderCouponFormWithState(store);
-    const wrapper = mount(component);
 
     it('fires an remove coupon action on submit', () => {
-      wrapper.find('form').hostNodes().simulate('submit');
+      const { container } = render(component);
+      fireEvent.submit(container.querySelector('form'));
 
       expect(store.getActions()).toEqual([
         removeCoupon({ id: 1234 }),

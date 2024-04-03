@@ -1,827 +1,813 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Cart /> renders a basic, one product cart 1`] = `
-<section
-  aria-label="Shopping Cart Details"
-  aria-live="polite"
-  aria-relevant="all"
->
-  <div>
-    <span
-      className="sr-only"
-    >
-      Shopping cart details are loaded.
-    </span>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
+<div>
+  <section
+    aria-label="Shopping Cart Details"
+    aria-live="polite"
+    aria-relevant="all"
+  >
+    <div>
+      <span
+        class="sr-only"
       >
-        In Your Cart
-      </h5>
-      <p>
-        Your purchase contains the following:
-      </p>
+        Shopping cart details are loaded.
+      </span>
       <div
-        className="row align-items-center mb-3 product-wrapper"
+        class="basket-section"
       >
+        <h5
+          aria-level="2"
+        >
+          In Your Cart
+        </h5>
+        <p>
+          Your purchase contains the following:
+        </p>
         <div
-          className="col-5"
+          class="row align-items-center mb-3 product-wrapper"
         >
           <div
-            className="embed-responsive embed-responsive-16by9"
+            class="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail product-thumbnail"
-              src="https://edx.org/vot.png"
-            />
+            <div
+              class="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                class="img-thumbnail product-thumbnail"
+                src="https://edx.org/vot.png"
+              />
+            </div>
+          </div>
+          <div
+            class="col-7"
+          >
+            <h6
+              aria-level="3"
+              class="m-0"
+            >
+              Introduction to Llamass
+            </h6>
+            <p
+              class="m-0"
+            >
+              Verified Certificate
+            </p>
           </div>
         </div>
-        <div
-          className="col-7"
+      </div>
+      <div
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        class="basket-section"
+        role="region"
+      >
+        <h5
+          aria-level="2"
+          id="summary-heading"
         >
-          <h6
-            aria-level="3"
-            className="m-0"
+          Summary
+        </h5>
+         
+        <div
+          class="summary-row d-flex"
+        >
+          <span
+            class="flex-grow-1"
           >
-            Introduction to Llamass
-          </h6>
-          <p
-            className="m-0"
+            Price
+          </span>
+          <span
+            class="summary-price"
           >
-            Verified Certificate
-          </p>
+            $464.88
+          </span>
+        </div>
+        <div
+          class="summary-row font-weight-bold d-flex"
+        >
+          <span
+            class="flex-grow-1"
+          >
+            TOTAL
+          </span>
+          <span
+            class="text-right"
+          >
+            $464.88
+          </span>
         </div>
       </div>
-    </div>
-    <div
-      aria-labelledby="summary-heading"
-      aria-live="polite"
-      className="basket-section"
-      role="region"
-    >
-      <h5
-        aria-level="2"
-        id="summary-heading"
-      >
-        Summary
-      </h5>
-       
       <div
-        className="summary-row d-flex"
+        class="basket-section"
       >
-        <span
-          className="flex-grow-1"
+        <h5
+          aria-level="2"
         >
-          Price
-        </span>
-        <span
-          className="summary-price"
-        >
-          $464.88
-        </span>
-      </div>
-      <div
-        className="summary-row font-weight-bold d-flex"
-      >
-        <span
-          className="flex-grow-1"
-        >
-          TOTAL
-        </span>
-        <span
-          className="text-right"
-        >
-          $464.88
-        </span>
+          Order Details
+        </h5>
+        <p>
+          After you complete your order you will be able to select course dates from your dashboard.
+        </p>
       </div>
     </div>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
-      >
-        Order Details
-      </h5>
-      <p>
-        After you complete your order you will be able to select course dates from your dashboard.
-      </p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 `;
 
 exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
-<section
-  aria-label="Shopping Cart Details"
-  aria-live="polite"
-  aria-relevant="all"
->
-  <div>
-    <span
-      className="sr-only"
-    >
-      Shopping cart details are loaded.
-    </span>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
+<div>
+  <section
+    aria-label="Shopping Cart Details"
+    aria-live="polite"
+    aria-relevant="all"
+  >
+    <div>
+      <span
+        class="sr-only"
       >
-        In Your Cart
-      </h5>
-      <p>
-        Your purchase contains the following:
-      </p>
+        Shopping cart details are loaded.
+      </span>
       <div
-        className="row align-items-center mb-3 product-wrapper"
+        class="basket-section"
       >
+        <h5
+          aria-level="2"
+        >
+          In Your Cart
+        </h5>
+        <p>
+          Your purchase contains the following:
+        </p>
         <div
-          className="col-5"
+          class="row align-items-center mb-3 product-wrapper"
         >
           <div
-            className="embed-responsive embed-responsive-16by9"
+            class="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail product-thumbnail"
-              src="https://edx.org/watpewal.gif"
-            />
+            <div
+              class="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                class="img-thumbnail product-thumbnail"
+                src="https://edx.org/watpewal.gif"
+              />
+            </div>
+          </div>
+          <div
+            class="col-7"
+          >
+            <h6
+              aria-level="3"
+              class="m-0"
+            >
+              Introduction to Pigeonss
+            </h6>
+            <p
+              class="m-0"
+            >
+              Verified Certificate
+            </p>
           </div>
         </div>
-        <div
-          className="col-7"
-        >
-          <h6
-            aria-level="3"
-            className="m-0"
-          >
-            Introduction to Pigeonss
-          </h6>
-          <p
-            className="m-0"
-          >
-            Verified Certificate
-          </p>
-        </div>
       </div>
-    </div>
-    <div
-      aria-labelledby="summary-heading"
-      aria-live="polite"
-      className="basket-section"
-      role="region"
-    >
-      <h5
-        aria-level="2"
-        id="summary-heading"
-      >
-        Summary
-      </h5>
-       
       <div
-        className="summary-row d-flex"
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        class="basket-section"
+        role="region"
       >
-        <span
-          className="flex-grow-1"
+        <h5
+          aria-level="2"
+          id="summary-heading"
         >
-          Price
-        </span>
-        <span
-          className="summary-price"
-        >
-          $445.19
-        </span>
-      </div>
-      <form
-        className="summary-row d-flex align-items-end"
-        onSubmit={[Function]}
-      >
+          Summary
+        </h5>
+         
         <div
-          className="pgn__form-group mb-0 mr-2"
-          invalid={false}
+          class="summary-row d-flex"
         >
-          Array [
+          <span
+            class="flex-grow-1"
+          >
+            Price
+          </span>
+          <span
+            class="summary-price"
+          >
+            $445.19
+          </span>
+        </div>
+        <form
+          class="summary-row d-flex align-items-end"
+        >
+          <div
+            class="pgn__form-group mb-0 mr-2"
+          >
             <label
-              className="h6 d-block"
-              htmlFor="couponField"
+              class="h6 d-block"
+              for="couponField"
             >
               Add coupon code (optional)
-            </label>,
+            </label>
             <div
-              className="pgn__form-control-decorator-group"
+              class="pgn__form-control-decorator-group"
             >
               <input
-                className="form-control"
-                defaultValue=""
+                class="form-control"
+                data-testid="couponField"
                 id="couponField"
                 name="couponField"
-                onBlur={[Function]}
-                onChange={[Function]}
                 type="text"
+                value=""
               />
-            </div>,
-          ]
+            </div>
+          </div>
+          <button
+            class="btn btn-outline-primary"
+            type="submit"
+          >
+            Apply
+          </button>
+        </form>
+        <div
+          class="summary-row font-weight-bold d-flex"
+        >
+          <span
+            class="flex-grow-1"
+          >
+            TOTAL
+          </span>
+          <span
+            class="text-right"
+          >
+            $445.19
+          </span>
         </div>
-        <button
-          className="btn btn-outline-primary"
-          disabled={false}
-          onClick={[Function]}
-          type="submit"
-        >
-          Apply
-        </button>
-      </form>
+      </div>
       <div
-        className="summary-row font-weight-bold d-flex"
+        class="basket-section"
       >
-        <span
-          className="flex-grow-1"
+        <h5
+          aria-level="2"
         >
-          TOTAL
-        </span>
-        <span
-          className="text-right"
-        >
-          $445.19
-        </span>
+          Order Details
+        </h5>
+        <p>
+          After you complete your order you will be able to select course dates from your dashboard.
+        </p>
       </div>
     </div>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
-      >
-        Order Details
-      </h5>
-      <p>
-        After you complete your order you will be able to select course dates from your dashboard.
-      </p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 `;
 
 exports[`<Cart /> renders a bulk enrollment cart 1`] = `
-<section
-  aria-label="Shopping Cart Details"
-  aria-live="polite"
-  aria-relevant="all"
->
-  <div>
-    <span
-      className="sr-only"
-    >
-      Shopping cart details are loaded.
-    </span>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
+<div>
+  <section
+    aria-label="Shopping Cart Details"
+    aria-live="polite"
+    aria-relevant="all"
+  >
+    <div>
+      <span
+        class="sr-only"
       >
-        In Your Cart
-      </h5>
-      <p>
-        Your purchase contains the following:
-      </p>
+        Shopping cart details are loaded.
+      </span>
       <div
-        className="row align-items-center mb-3 product-wrapper"
+        class="basket-section"
       >
+        <h5
+          aria-level="2"
+        >
+          In Your Cart
+        </h5>
+        <p>
+          Your purchase contains the following:
+        </p>
         <div
-          className="col-5"
+          class="row align-items-center mb-3 product-wrapper"
         >
           <div
-            className="embed-responsive embed-responsive-16by9"
-          >
-            <img
-              alt=""
-              className="img-thumbnail product-thumbnail"
-              src="https://edx.org/eckifega.png"
-            />
-          </div>
-        </div>
-        <div
-          className="col-7"
-        >
-          <h6
-            aria-level="3"
-            className="m-0"
-          >
-            Introduction to Chickenss
-          </h6>
-          <p
-            className="m-0"
-          >
-            Verified Certificate
-          </p>
-        </div>
-      </div>
-      <form
-        className="summary-row form-inline"
-        onSubmit={[Function]}
-      >
-        <div
-          className="form-group mr-2"
-        >
-          <label
-            htmlFor="code-quantity"
-          >
-            Quantity
-          </label>
-          <div
-            className="position-relative ml-2"
+            class="col-5"
           >
             <div
-              className="pgn__form-control-decorator-group"
+              class="embed-responsive embed-responsive-16by9"
             >
-              <input
-                className="has-value form-control"
-                defaultValue={1}
-                id="code-quantity"
-                max="100"
-                min="1"
-                name="code-quantity"
-                onBlur={[Function]}
-                onChange={[Function]}
-                style={
-                  Object {
-                    "width": "5rem",
-                  }
-                }
-                type="number"
+              <img
+                alt=""
+                class="img-thumbnail product-thumbnail"
+                src="https://edx.org/eckifega.png"
               />
             </div>
-            <small
-              className="text-muted small"
-              style={
-                Object {
-                  "left": 0,
-                  "position": "absolute",
-                  "top": "100%",
-                }
-              }
+          </div>
+          <div
+            class="col-7"
+          >
+            <h6
+              aria-level="3"
+              class="m-0"
             >
-              Max: 100
-            </small>
+              Introduction to Chickenss
+            </h6>
+            <p
+              class="m-0"
+            >
+              Verified Certificate
+            </p>
           </div>
         </div>
-        <button
-          aria-disabled={false}
-          aria-live="assertive"
-          className="pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-sm"
-          disabled={false}
-          onClick={[Function]}
-          type="submit"
+        <form
+          class="summary-row form-inline"
+        >
+          <div
+            class="form-group mr-2"
+          >
+            <label
+              for="code-quantity"
+            >
+              Quantity
+            </label>
+            <div
+              class="position-relative ml-2"
+            >
+              <div
+                class="pgn__form-control-decorator-group"
+              >
+                <input
+                  class="has-value form-control"
+                  id="code-quantity"
+                  max="100"
+                  min="1"
+                  name="code-quantity"
+                  style="width: 5rem;"
+                  type="number"
+                  value="1"
+                />
+              </div>
+              <small
+                class="text-muted small"
+                style="position: absolute; top: 100%; left: 0px;"
+              >
+                Max: 100
+              </small>
+            </div>
+          </div>
+          <button
+            aria-disabled="false"
+            aria-live="assertive"
+            class="pgn__stateful-btn pgn__stateful-btn-state-default btn btn-primary btn-sm"
+            type="submit"
+          >
+            <span
+              class="d-flex align-items-center justify-content-center"
+            >
+              <span>
+                Update
+              </span>
+            </span>
+          </button>
+        </form>
+      </div>
+      <div
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        class="basket-section"
+        role="region"
+      >
+        <h5
+          aria-level="2"
+          id="summary-heading"
+        >
+          Summary
+        </h5>
+         
+        <div
+          class="summary-row"
+        >
+          <table
+            class="w-100"
+          >
+            <thead>
+              <tr>
+                <th
+                  class="font-weight-normal"
+                >
+                  Price
+                </th>
+                <th
+                  class="font-weight-normal"
+                >
+                  Quantity
+                </th>
+                <th
+                  class="font-weight-normal text-right"
+                >
+                  Subtotal
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  $92.77
+                </td>
+                <td>
+                  1
+                </td>
+                <td
+                  class="text-right"
+                >
+                  $92.77
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="summary-row font-weight-bold d-flex"
         >
           <span
-            className="d-flex align-items-center justify-content-center"
+            class="flex-grow-1"
           >
-            <span>
-              Update
-            </span>
+            TOTAL
           </span>
-        </button>
-      </form>
-    </div>
-    <div
-      aria-labelledby="summary-heading"
-      aria-live="polite"
-      className="basket-section"
-      role="region"
-    >
-      <h5
-        aria-level="2"
-        id="summary-heading"
-      >
-        Summary
-      </h5>
-       
-      <div
-        className="summary-row"
-      >
-        <table
-          className="w-100"
-        >
-          <thead>
-            <tr>
-              <th
-                className="font-weight-normal"
-              >
-                Price
-              </th>
-              <th
-                className="font-weight-normal"
-              >
-                Quantity
-              </th>
-              <th
-                className="font-weight-normal text-right"
-              >
-                Subtotal
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                $92.77
-              </td>
-              <td>
-                1
-              </td>
-              <td
-                className="text-right"
-              >
-                $92.77
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <span
+            class="text-right"
+          >
+            $92.77
+          </span>
+        </div>
       </div>
       <div
-        className="summary-row font-weight-bold d-flex"
+        class="basket-section"
       >
-        <span
-          className="flex-grow-1"
+        <h5
+          aria-level="2"
         >
-          TOTAL
-        </span>
-        <span
-          className="text-right"
-        >
-          $92.77
-        </span>
+          Order Details
+        </h5>
+        <p>
+          By purchasing, you and your organization agree to the following terms:
+        </p>
+        <ul>
+          <li>
+            Each code is valid for the one course covered and can be used only one time.
+          </li>
+          <li>
+            You are responsible for distributing codes to your learners in your organization.
+          </li>
+          <li>
+            Each code will expire in one year from date of purchase or, if earlier, once the course is closed.
+          </li>
+          <li>
+            If a course is not designated as self-paced, you should confirm that a course run is available before expiration.
+          </li>
+          <li>
+            You may not resell codes to third parties.
+          </li>
+          <li>
+            All edX for Business sales are final and not eligible for refunds.
+          </li>
+        </ul>
+        <p>
+          You will receive an email at person@edx.org with your enrollment code(s).
+        </p>
       </div>
     </div>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
-      >
-        Order Details
-      </h5>
-      <p>
-        By purchasing, you and your organization agree to the following terms:
-      </p>
-      <ul>
-        <li>
-          Each code is valid for the one course covered and can be used only one time.
-        </li>
-        <li>
-          You are responsible for distributing codes to your learners in your organization.
-        </li>
-        <li>
-          Each code will expire in one year from date of purchase or, if earlier, once the course is closed.
-        </li>
-        <li>
-          If a course is not designated as self-paced, you should confirm that a course run is available before expiration.
-        </li>
-        <li>
-          You may not resell codes to third parties.
-        </li>
-        <li>
-          All edX for Business sales are final and not eligible for refunds.
-        </li>
-      </ul>
-      <p>
-        You will receive an email at person@edx.org with your enrollment code(s).
-      </p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 `;
 
 exports[`<Cart /> renders a cart in non USD currency 1`] = `
-<section
-  aria-label="Shopping Cart Details"
-  aria-live="polite"
-  aria-relevant="all"
->
-  <div>
-    <span
-      className="sr-only"
-    >
-      Shopping cart details are loaded.
-    </span>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
+<div>
+  <section
+    aria-label="Shopping Cart Details"
+    aria-live="polite"
+    aria-relevant="all"
+  >
+    <div>
+      <span
+        class="sr-only"
       >
-        In Your Cart
-      </h5>
-      <p>
-        Your purchase contains the following:
-      </p>
+        Shopping cart details are loaded.
+      </span>
       <div
-        className="row align-items-center mb-3 product-wrapper"
+        class="basket-section"
       >
+        <h5
+          aria-level="2"
+        >
+          In Your Cart
+        </h5>
+        <p>
+          Your purchase contains the following:
+        </p>
         <div
-          className="col-5"
+          class="row align-items-center mb-3 product-wrapper"
         >
           <div
-            className="embed-responsive embed-responsive-16by9"
+            class="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail product-thumbnail"
-              src="https://edx.org/lu.jpg"
-            />
+            <div
+              class="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                class="img-thumbnail product-thumbnail"
+                src="https://edx.org/lu.jpg"
+              />
+            </div>
+          </div>
+          <div
+            class="col-7"
+          >
+            <h6
+              aria-level="3"
+              class="m-0"
+            >
+              Introduction to Guanacos
+            </h6>
+            <p
+              class="m-0"
+            >
+              Verified Certificate
+            </p>
           </div>
         </div>
-        <div
-          className="col-7"
+      </div>
+      <div
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        class="basket-section"
+        role="region"
+      >
+        <h5
+          aria-level="2"
+          id="summary-heading"
         >
-          <h6
-            aria-level="3"
-            className="m-0"
+          Summary
+        </h5>
+         
+        <div
+          class="summary-row d-flex"
+        >
+          <span
+            class="flex-grow-1"
           >
-            Introduction to Guanacos
-          </h6>
-          <p
-            className="m-0"
+            Price
+          </span>
+          <span
+            class="summary-price"
           >
-            Verified Certificate
-          </p>
+            <span>
+              MX$1,264
+               *
+            </span>
+          </span>
+        </div>
+        <div
+          class="summary-row font-weight-bold d-flex"
+        >
+          <span
+            class="flex-grow-1"
+          >
+            TOTAL
+          </span>
+          <span
+            class="text-right"
+          >
+            <span>
+              MX$1,264
+               *
+            </span>
+          </span>
+        </div>
+        <div
+          class="text-muted font-italic"
+        >
+          * This total contains an approximate conversion. You will be charged 
+          $66.22
+           USD.
         </div>
       </div>
-    </div>
-    <div
-      aria-labelledby="summary-heading"
-      aria-live="polite"
-      className="basket-section"
-      role="region"
-    >
-      <h5
-        aria-level="2"
-        id="summary-heading"
-      >
-        Summary
-      </h5>
-       
       <div
-        className="summary-row d-flex"
+        class="basket-section"
       >
-        <span
-          className="flex-grow-1"
+        <h5
+          aria-level="2"
         >
-          Price
-        </span>
-        <span
-          className="summary-price"
-        >
-          <span>
-            MX$1,264
-             *
-          </span>
-        </span>
-      </div>
-      <div
-        className="summary-row font-weight-bold d-flex"
-      >
-        <span
-          className="flex-grow-1"
-        >
-          TOTAL
-        </span>
-        <span
-          className="text-right"
-        >
-          <span>
-            MX$1,264
-             *
-          </span>
-        </span>
-      </div>
-      <div
-        className="text-muted font-italic"
-      >
-        Array [
-          "* This total contains an approximate conversion. You will be charged ",
-          "$66.22",
-          " USD.",
-        ]
+          Order Details
+        </h5>
+        <p>
+          After you complete your order you will be able to select course dates from your dashboard.
+        </p>
       </div>
     </div>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
-      >
-        Order Details
-      </h5>
-      <p>
-        After you complete your order you will be able to select course dates from your dashboard.
-      </p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 `;
 
 exports[`<Cart /> renders a cart with an offer 1`] = `
-<section
-  aria-label="Shopping Cart Details"
-  aria-live="polite"
-  aria-relevant="all"
->
-  <div>
-    <span
-      className="sr-only"
-    >
-      Shopping cart details are loaded.
-    </span>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
+<div>
+  <section
+    aria-label="Shopping Cart Details"
+    aria-live="polite"
+    aria-relevant="all"
+  >
+    <div>
+      <span
+        class="sr-only"
       >
-        In Your Cart
-      </h5>
-      <p>
-        Your purchase contains the following:
-      </p>
+        Shopping cart details are loaded.
+      </span>
       <div
-        className="row align-items-center mb-3 product-wrapper"
+        class="basket-section"
       >
+        <h5
+          aria-level="2"
+        >
+          In Your Cart
+        </h5>
+        <p>
+          Your purchase contains the following:
+        </p>
         <div
-          className="col-5"
+          class="row align-items-center mb-3 product-wrapper"
         >
           <div
-            className="embed-responsive embed-responsive-16by9"
+            class="col-5"
           >
-            <img
-              alt=""
-              className="img-thumbnail product-thumbnail"
-              src="https://edx.org/lekigud.gif"
-            />
+            <div
+              class="embed-responsive embed-responsive-16by9"
+            >
+              <img
+                alt=""
+                class="img-thumbnail product-thumbnail"
+                src="https://edx.org/lekigud.gif"
+              />
+            </div>
+          </div>
+          <div
+            class="col-7"
+          >
+            <h6
+              aria-level="3"
+              class="m-0"
+            >
+              Introduction to Pigs
+            </h6>
+            <p
+              class="m-0"
+            >
+              Verified Certificate
+            </p>
           </div>
         </div>
+      </div>
+      <div
+        aria-labelledby="summary-heading"
+        aria-live="polite"
+        class="basket-section"
+        role="region"
+      >
+        <h5
+          aria-level="2"
+          id="summary-heading"
+        >
+          Summary
+        </h5>
+         
         <div
-          className="col-7"
-        >
-          <h6
-            aria-level="3"
-            className="m-0"
-          >
-            Introduction to Pigs
-          </h6>
-          <p
-            className="m-0"
-          >
-            Verified Certificate
-          </p>
-        </div>
-      </div>
-    </div>
-    <div
-      aria-labelledby="summary-heading"
-      aria-live="polite"
-      className="basket-section"
-      role="region"
-    >
-      <h5
-        aria-level="2"
-        id="summary-heading"
-      >
-        Summary
-      </h5>
-       
-      <div
-        className="summary-row d-flex"
-      >
-        <span
-          className="flex-grow-1"
-        >
-          Price
-        </span>
-        <span
-          className="summary-price"
-        >
-          $158.87
-        </span>
-      </div>
-      <div
-        className="summary-row"
-      >
-        <p
-          className="d-flex m-0"
+          class="summary-row d-flex"
         >
           <span
-            className="flex-grow-1"
+            class="flex-grow-1"
           >
-            Discounts applied
+            Price
           </span>
-          <span>
-            $0.00
+          <span
+            class="summary-price"
+          >
+            $158.87
           </span>
-        </p>
-        <p
-          className="m-0 text-muted"
+        </div>
+        <div
+          class="summary-row"
         >
-          Array [
-            "50%",
-            " discount provided by Pied Piper.",
-          ]
-        </p>
+          <p
+            class="d-flex m-0"
+          >
+            <span
+              class="flex-grow-1"
+            >
+              Discounts applied
+            </span>
+            <span>
+              $0.00
+            </span>
+          </p>
+          <p
+            class="m-0 text-muted"
+          >
+            50%
+             discount provided by Pied Piper.
+          </p>
+        </div>
+        <div
+          class="summary-row font-weight-bold d-flex"
+        >
+          <span
+            class="flex-grow-1"
+          >
+            TOTAL
+          </span>
+          <span
+            class="text-right"
+          >
+            $158.87
+          </span>
+        </div>
       </div>
       <div
-        className="summary-row font-weight-bold d-flex"
+        class="basket-section"
       >
-        <span
-          className="flex-grow-1"
+        <h5
+          aria-level="2"
         >
-          TOTAL
-        </span>
-        <span
-          className="text-right"
-        >
-          $158.87
-        </span>
+          Order Details
+        </h5>
+        <p>
+          After you complete your order you will be able to select course dates from your dashboard.
+        </p>
       </div>
     </div>
-    <div
-      className="basket-section"
-    >
-      <h5
-        aria-level="2"
-      >
-        Order Details
-      </h5>
-      <p>
-        After you complete your order you will be able to select course dates from your dashboard.
-      </p>
-    </div>
-  </div>
-</section>
+  </section>
+</div>
 `;
 
 exports[`<Cart /> renders the loading skeleton 1`] = `
-<section
-  aria-label="Shopping Cart Details"
-  aria-live="polite"
-  aria-relevant="all"
->
-  <div>
-    <span
-      className="sr-only"
-    >
-      Loading, please wait...
-    </span>
-    <div
-      className="skeleton py-2 mb-3 w-50"
-    />
-    <div
-      className="skeleton py-2 mb-4 mr-4"
-    />
-    <div
-      className="row align-items-center mb-5"
-    >
+<div>
+  <section
+    aria-label="Shopping Cart Details"
+    aria-live="polite"
+    aria-relevant="all"
+  >
+    <div>
+      <span
+        class="sr-only"
+      >
+        Loading, please wait...
+      </span>
       <div
-        className="col-5"
+        class="skeleton py-2 mb-3 w-50"
+      />
+      <div
+        class="skeleton py-2 mb-4 mr-4"
+      />
+      <div
+        class="row align-items-center mb-5"
       >
         <div
-          className="skeleton embed-responsive embed-responsive-16by9"
-        />
+          class="col-5"
+        >
+          <div
+            class="skeleton embed-responsive embed-responsive-16by9"
+          />
+        </div>
+        <div
+          class="col-7"
+        >
+          <div
+            class="skeleton py-2 mb-3 w-50"
+          />
+          <div
+            class="skeleton py-2 mr-4"
+          />
+        </div>
       </div>
       <div
-        className="col-7"
-      >
-        <div
-          className="skeleton py-2 mb-3 w-50"
-        />
-        <div
-          className="skeleton py-2 mr-4"
-        />
-      </div>
+        class="skeleton py-2 mb-3 w-50"
+      />
+      <div
+        class="skeleton py-2 mb-2"
+      />
+      <div
+        class="skeleton py-2 mb-5"
+      />
+      <div
+        class="skeleton py-2 mb-3 w-50"
+      />
+      <div
+        class="skeleton py-2 mb-2 mr-4"
+      />
+      <div
+        class="skeleton py-2 mb-5 w-75"
+      />
     </div>
-    <div
-      className="skeleton py-2 mb-3 w-50"
-    />
-    <div
-      className="skeleton py-2 mb-2"
-    />
-    <div
-      className="skeleton py-2 mb-5"
-    />
-    <div
-      className="skeleton py-2 mb-3 w-50"
-    />
-    <div
-      className="skeleton py-2 mb-2 mr-4"
-    />
-    <div
-      className="skeleton py-2 mb-5 w-75"
-    />
-  </div>
-</section>
+  </section>
+</div>
 `;

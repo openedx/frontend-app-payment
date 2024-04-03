@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import renderer from 'react-test-renderer';
+import { fireEvent, render } from '@testing-library/react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 
 import AlertMessage from './AlertMessage';
@@ -23,8 +22,9 @@ describe('AlertMessage', () => {
       </IntlProvider>
     );
 
-    const wrapper = mount(component);
-    wrapper.find('.btn').simulate('click');
+    const { container } = render(component);
+    const button = container.querySelector('.btn');
+    fireEvent.click(button);
 
     expect(closeHandlerMock).toHaveBeenCalledWith(123);
   });
@@ -43,7 +43,7 @@ describe('AlertMessage', () => {
       </IntlProvider>
     );
 
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     // The alert should have an 'alert-warning' class.  That's the default in the code.
     expect(tree).toMatchSnapshot();
   });
@@ -59,7 +59,7 @@ describe('AlertMessage', () => {
       </IntlProvider>
     );
 
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
@@ -74,7 +74,7 @@ describe('AlertMessage', () => {
       </IntlProvider>
     );
 
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 });

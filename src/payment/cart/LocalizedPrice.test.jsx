@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import Cookies from 'universal-cookie';
@@ -54,8 +54,8 @@ describe('LocalizedPrice', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
-    expect(tree).toBeNull();
+    const { container: tree } = render(component);
+    expect(tree.children.length).toBe(0);
   });
 
   it('should render unlocalized currency', () => {
@@ -68,7 +68,7 @@ describe('LocalizedPrice', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 
@@ -86,7 +86,7 @@ describe('LocalizedPrice', () => {
         </Provider>
       </IntlProvider>
     );
-    const tree = renderer.create(component).toJSON();
+    const { container: tree } = render(component);
     expect(tree).toMatchSnapshot();
   });
 });

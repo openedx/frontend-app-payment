@@ -1,32 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EnrollmentCodeQuantityUpdated should render with values 1`] = `
-Array [
+<div>
   <h6>
     We've updated your quantity.
-  </h6>,
-  "Your cart includes 2 enrollment codes at a total cost of ",
-  "$100.00",
-  ", that you will receive via email.",
-]
+  </h6>
+  Your cart includes 2 enrollment codes at a total cost of 
+  $100.00
+  , that you will receive via email.
+</div>
 `;
 
 exports[`SingleEnrollmentCodeWarning should render with values 1`] = `
-Array [
+<div>
   <h6>
     Purchasing just for yourself?
-  </h6>,
-  "If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner ",
+  </h6>
+  If you are purchasing a single code for someone else, please continue with checkout. However, if you are the learner 
   <a
-    className="pgn__hyperlink default-link standalone-link"
+    class="pgn__hyperlink default-link standalone-link"
     href="http://edx.org"
-    onClick={[Function]}
     target="_self"
   >
     click here to enroll directly
-  </a>,
-  ".",
-]
+  </a>
+  .
+</div>
 `;
 
-exports[`TransactionDeclined should render with values 1`] = `"Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance."`;
+exports[`TransactionDeclined should render with values 1`] = `
+<div>
+  Your payment could not be processed. Please check your payment information or reach out to your bank or financial institution for further assistance.
+</div>
+`;

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
@@ -8,7 +8,6 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { Factory } from 'rosie';
 import { createStore } from 'redux';
 import Cookies from 'universal-cookie';
-import { createSerializer } from 'enzyme-to-json';
 
 import '../__factories__/basket.factory';
 import '../__factories__/userAccount.factory';
@@ -16,9 +15,6 @@ import Cart from './Cart';
 import createRootReducer from '../../data/reducers';
 import { fetchBasket, basketDataReceived } from '../data/actions';
 import { transformResults } from '../data/utils';
-
-// run enzyme JSON serializer using options compatible with prior snapshots
-expect.addSnapshotSerializer(createSerializer({ mode: 'deep', noKey: true }));
 
 jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
@@ -52,11 +48,11 @@ describe('<Cart />', () => {
         </AppContext.Provider>
       </IntlProvider>
     );
-    tree = mount(component);
+    tree = render(component);
   });
 
   it('renders the loading skeleton', () => {
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a basic, one product cart', () => {
@@ -68,8 +64,8 @@ describe('<Cart />', () => {
       ))));
       store.dispatch(fetchBasket.fulfill());
     });
-    tree.update();
-    expect(tree).toMatchSnapshot();
+
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a basic, one product cart with coupon form', () => {
@@ -81,8 +77,8 @@ describe('<Cart />', () => {
       ))));
       store.dispatch(fetchBasket.fulfill());
     });
-    tree.update();
-    expect(tree).toMatchSnapshot();
+
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a cart with an offer', () => {
@@ -96,8 +92,8 @@ describe('<Cart />', () => {
       ))));
       store.dispatch(fetchBasket.fulfill());
     });
-    tree.update();
-    expect(tree).toMatchSnapshot();
+
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a cart in non USD currency', () => {
@@ -119,7 +115,7 @@ describe('<Cart />', () => {
         </Provider>
       </IntlProvider>
     );
-    tree = mount(component);
+    tree = render(component);
 
     act(() => {
       store.dispatch(basketDataReceived(transformResults(Factory.build(
@@ -130,8 +126,7 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    tree.update();
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a bulk enrollment cart', () => {
@@ -144,7 +139,6 @@ describe('<Cart />', () => {
       store.dispatch(fetchBasket.fulfill());
     });
 
-    tree.update();
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 });
