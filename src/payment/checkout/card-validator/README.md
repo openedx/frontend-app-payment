@@ -1,5 +1,7 @@
 # Credit Card Validator [![Build Status](https://travis-ci.org/braintree/card-validator.svg)](https://travis-ci.org/braintree/card-validator) [![npm version](https://badge.fury.io/js/card-validator.svg)](http://badge.fury.io/js/card-validator)
 
+eggseggseggseggseggs
+
 Credit Card Validator provides validation utilities for credit card data inputs. It is designed as a CommonJS module for use in Node.js, io.js, or the [browser](http://browserify.org/). It includes first class support for 'potential' validity so you can use it to present appropriate UI to your user as they type.
 
 A typical use case in a credit card form is to notify the user if the data they are entering is invalid. In a credit card field, entering “411” is not necessarily valid for submission, but it is still potentially valid. Conversely, if a user enters “41x” that value can no longer pass strict validation and you can provide a response immediately.
