@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
+import { getConfig } from '@edx/frontend-platform';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from './data/actions';
+import { fetchBasket, fetchExistingBasket } from './data/actions';
 
 // Selectors
 import { paymentSelector } from './data/selectors';
@@ -42,8 +43,17 @@ class PaymentPage extends React.Component {
   }
 
   componentDidMount() {
+    const sku = localStorage.getItem('sku');
+
+    // Check if SKU is not null
+    if (sku !== null) {
+      const paymentPage = `${getConfig().ECOMMERCE_BASE_URL}/basket/add/?sku=${sku}`;
+      window.location.href = paymentPage;
+    }
+
     sendPageEvent();
     this.props.fetchBasket();
+    localStorage.removeItem('sku');
   }
 
   renderContent() {

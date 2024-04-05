@@ -16,6 +16,7 @@ import {
   captureKeyStartTimeout,
   microformStatus,
   fetchBasket,
+  fetchExistingBasket,
   addCoupon,
   removeCoupon,
   updateQuantity,
@@ -260,6 +261,7 @@ export function* handleSubmitPayment({ payload }) {
 
 export default function* saga() {
   yield takeEvery(fetchCaptureKey.TRIGGER, handleFetchCaptureKey);
+  // yield takeEvery(fetchExistingBasket, handleFetchBasket);
   yield takeEvery(CAPTURE_KEY_START_TIMEOUT, handleCaptureKeyTimeout);
   yield takeEvery(fetchClientSecret.TRIGGER, handleFetchClientSecret);
   yield takeEvery(fetchBasket.TRIGGER, handleFetchBasket);

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import {
   BASKET_DATA_RECEIVED,
   BASKET_PROCESSING,
+  FETCH_EXISTING_BASKET,
   CAPTURE_KEY_DATA_RECEIVED,
   CAPTURE_KEY_PROCESSING,
   CLIENT_SECRET_DATA_RECEIVED,
@@ -29,13 +30,16 @@ const basket = (state = basketInitialState, action = null) => {
   if (action !== null) {
     switch (action.type) {
       case fetchBasket.TRIGGER: return { ...state, loading: true };
+      case FETCH_EXISTING_BASKET: return { ...state, loading: true };
       case fetchBasket.FULFILL: return {
         ...state,
         loading: false,
         loaded: true,
       };
 
-      case BASKET_DATA_RECEIVED: return { ...state, ...action.payload };
+      case BASKET_DATA_RECEIVED:
+        localStorage.setItem('sku', action.payload.products[0].sku);
+        return { ...state, ...action.payload };
 
       case BASKET_PROCESSING: return {
         ...state,
