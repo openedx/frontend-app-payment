@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
 
+import { getCountryStatesMap } from './utils/form-validators';
 import FormInput from './FormInput';
 import FormSelect from './FormSelect';
-import getStates from './utils/countryStatesMap';
 import messages from './StateProvinceFormInput.messages';
 
 class StateProvinceFormInput extends React.Component {
   getOptions() {
     const options = [];
     const { country } = this.props;
-    const states = getStates(country);
+    const states = getCountryStatesMap(country);
 
     if (states) {
       options.push([(
