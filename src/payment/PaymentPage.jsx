@@ -49,12 +49,11 @@ class PaymentPage extends React.Component {
     if (sku !== null) {
       const paymentPage = `${getConfig().ECOMMERCE_BASE_URL}/basket/add/?sku=${sku}`;
       window.location.href = paymentPage;
+      localStorage.removeItem('sku');
     } else {
       this.props.fetchBasket();
       sendPageEvent();
     }
-
-    localStorage.removeItem('sku');
   }
 
   renderContent() {
