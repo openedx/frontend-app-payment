@@ -35,13 +35,6 @@ export const basketProcessing = isProcessing => ({
   payload: isProcessing,
 });
 
-export const FETCH_EXISTING_BASKET = 'FETCH_EXISTING_BASKET';
-
-export const fetchExistingBasket = sku => ({
-  type: FETCH_EXISTING_BASKET,
-  payload: sku,
-});
-
 export const CAPTURE_KEY_PROCESSING = 'CAPTURE_KEY_PROCESSING';
 
 export const captureKeyProcessing = isProcessing => ({
