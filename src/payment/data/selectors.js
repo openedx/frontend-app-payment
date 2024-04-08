@@ -41,7 +41,7 @@ export const paymentSelector = createSelector(
       ...basket,
       isCouponRedeemRedirect,
       isEmpty:
-        basket.loaded && !basket.redirect && localStorage.getItem('sku') === null && (!basket.products || basket.products.length === 0),
+        basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:
         (basket.loaded && !!basket.redirect) || (!basket.loaded && isCouponRedeemRedirect),
     };

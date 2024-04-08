@@ -9,7 +9,7 @@ import { sendPageEvent } from '@edx/frontend-platform/analytics';
 import messages from './PaymentPage.messages';
 
 // Actions
-import { fetchBasket, fetchExistingBasket } from './data/actions';
+import { fetchBasket } from './data/actions';
 
 // Selectors
 import { paymentSelector } from './data/selectors';
@@ -49,10 +49,11 @@ class PaymentPage extends React.Component {
     if (sku !== null) {
       const paymentPage = `${getConfig().ECOMMERCE_BASE_URL}/basket/add/?sku=${sku}`;
       window.location.href = paymentPage;
+    } else {
+      this.props.fetchBasket();
+      sendPageEvent();
     }
 
-    sendPageEvent();
-    this.props.fetchBasket();
     localStorage.removeItem('sku');
   }
 
