@@ -59,7 +59,7 @@
     select#cardExpirationYear,
     select#country {
       &:disabled {
-        background-color: #ebebeb !important;
+        background-color: $gray-100 !important;
       }
     }
   }
