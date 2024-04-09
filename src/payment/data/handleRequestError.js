@@ -84,17 +84,6 @@ export default function handleRequestError(error) {
     ]);
   }
 
-  // For a Payment Intent to be confirmable, it must be in requires_payment_method or requires_confirmation
-  if (error.code === 'payment_intent_unexpected_state' && error.type === 'invalid_request_error') {
-    logInfo('Basket Changed Error', error.code);
-    handleApiErrors([
-      {
-        error_code: 'basket-changed-error-message',
-        user_message: 'error',
-      },
-    ]);
-  }
-
   // Country not DPM compatible
   if (error.type === 'invalid_request_error' && (
     error.param === 'payment_method_data[billing_details][address][country]' || error.param === 'billing_details[address][state]' || error.param === 'billing_details[address][postal_code]'
@@ -103,6 +92,17 @@ export default function handleRequestError(error) {
     handleApiErrors([
       {
         error_code: 'dynamic-payment-methods-country-not-compatible',
+        user_message: 'error',
+      },
+    ]);
+  }
+
+  // For a Payment Intent to be confirmable, it must be in requires_payment_method or requires_confirmation
+  if (error.code === 'payment_intent_unexpected_state' && error.type === 'invalid_request_error') {
+    logInfo('Basket Changed Error', error.code);
+    handleApiErrors([
+      {
+        error_code: 'basket-changed-error-message',
         user_message: 'error',
       },
     ]);
