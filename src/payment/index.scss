@@ -54,6 +54,14 @@
   }
   .basket-section {
     @extend .mb-5;
+
+    select#cardExpirationMonth,
+    select#cardExpirationYear,
+    select#country {
+      &:disabled {
+        background-color: $gray-100 !important;
+      }
+    }
   }
   .summary-row {
     margin-bottom: map-get($spacers, 3);
