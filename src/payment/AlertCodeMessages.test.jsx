@@ -8,6 +8,8 @@ import {
   SingleEnrollmentCodeWarning,
   EnrollmentCodeQuantityUpdated,
   TransactionDeclined,
+  DynamicPaymentMethodsNotCompatibleError,
+  BasketChangedError,
 } from './AlertCodeMessages';
 
 const mockStore = configureMockStore();
@@ -45,6 +47,30 @@ describe('TransactionDeclined', () => {
     const component = (
       <IntlProvider locale="en">
         <TransactionDeclined />
+      </IntlProvider>
+    );
+    const { container: tree } = render(component);
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('DynamicPaymentMethodsNotCompatibleError', () => {
+  it('should render with values', () => {
+    const component = (
+      <IntlProvider locale="en">
+        <DynamicPaymentMethodsNotCompatibleError />
+      </IntlProvider>
+    );
+    const { container: tree } = render(component);
+    expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('BasketChangedError', () => {
+  it('should render with values', () => {
+    const component = (
+      <IntlProvider locale="en">
+        <BasketChangedError />
       </IntlProvider>
     );
     const { container: tree } = render(component);

@@ -137,6 +137,27 @@ describe('redux tests', () => {
           isRedirect: true, // this is also now true.
         });
       });
+
+      it('is a Stripe dynamic payment methods redirect', () => {
+        global.history.pushState({}, '', '?payment_intent=pi_123dummy');
+        store = createStore(combineReducers({
+          payment: reducer,
+        }));
+
+        const result = paymentSelector(store.getState());
+        expect(result).toEqual({
+          loading: true,
+          loaded: false,
+          submitting: false,
+          redirect: false, // This is a different kind of redirect, so still false.
+          products: [],
+          isCouponRedeemRedirect: false,
+          isBasketProcessing: false,
+          isEmpty: false,
+          isPaymentRedirect: true, // this is now true
+          isRedirect: false,
+        });
+      });
     });
   });
 
