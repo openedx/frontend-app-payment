@@ -92,7 +92,7 @@ class PaymentPage extends React.Component {
 
   redirectToReceiptPage(orderNumber) {
     logInfo(`Payment succeeded for edX order number ${orderNumber}, redirecting to ecommerce receipt page.`);
-    const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(true)}`;
+    const queryParams = `order_number=${orderNumber}&disable_back_button=${Number(true)}&dpm_enabled=${true}`;
     if (getConfig().ENVIRONMENT !== 'test') {
       /* istanbul ignore next */
       global.location.assign(`${getConfig().ECOMMERCE_BASE_URL}/checkout/receipt/?${queryParams}`);
