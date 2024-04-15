@@ -4,7 +4,7 @@ import { injectIntl, FormattedMessage } from '@edx/frontend-platform/i18n';
 import { StatefulButton } from '@openedx/paragon';
 
 const PlaceOrderButton = ({
-  showLoadingButton, onSubmitButtonClick, disabled, isProcessing,
+  showLoadingButton, onSubmitButtonClick, stripeSelectedPaymentMethod, disabled, isProcessing,
 }) => {
   let submitButtonState = 'default';
   // istanbul ignore if
@@ -26,7 +26,7 @@ const PlaceOrderButton = ({
             size="lg"
             block
             state={submitButtonState}
-            onClick={onSubmitButtonClick}
+            onClick={() => onSubmitButtonClick(stripeSelectedPaymentMethod)}
             labels={{
               default: (
                 <FormattedMessage
@@ -52,6 +52,7 @@ const PlaceOrderButton = ({
 
 PlaceOrderButton.propTypes = {
   onSubmitButtonClick: PropTypes.func.isRequired,
+  stripeSelectedPaymentMethod: PropTypes.string,
   showLoadingButton: PropTypes.bool,
   disabled: PropTypes.bool,
   isProcessing: PropTypes.bool,
@@ -59,6 +60,7 @@ PlaceOrderButton.propTypes = {
 
 PlaceOrderButton.defaultProps = {
   showLoadingButton: false,
+  stripeSelectedPaymentMethod: null,
   disabled: false,
   isProcessing: false,
 };

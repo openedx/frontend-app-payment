@@ -93,13 +93,13 @@ class Checkout extends React.Component {
     this.props.submitPayment({ method: 'stripe', ...formData });
   };
 
-  handleSubmitStripeButtonClick = () => {
+  handleSubmitStripeButtonClick = (stripeSelectedPaymentMethod) => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
       {
         type: 'click',
         category: 'checkout',
-        paymentMethod: 'Credit Card - Stripe',
+        paymentMethod: stripeSelectedPaymentMethod === 'affirm' ? 'Affirm - Stripe' : 'Credit Card - Stripe',
         checkoutType: 'client_side',
         stripeEnabled: this.props.enableStripePaymentProcessor,
       },

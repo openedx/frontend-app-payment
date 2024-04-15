@@ -41,6 +41,9 @@ const StripePaymentForm = ({
   isSubscription,
   paymentDataSelector,
 }) => {
+  // Check payment type before submitting since BNPL requires state/zip code and Afterpay requires a shipping address.
+  // This is also used for analytics on "Place Order" click event.
+  const [stripeSelectedPaymentMethod, setStripeSelectedPaymentMethod] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
   const context = useContext(AppContext);
@@ -53,9 +56,6 @@ const StripePaymentForm = ({
   const inputElement = useRef(null);
   const [firstErrorId, setfirstErrorId] = useState(false);
   const [shouldFocusFirstError, setshouldFocusFirstError] = useState(false);
-
-  // Check payment type before submitting since BNPL requires state/zip code and Afterpay requires a shipping address
-  let stripePaymentMethodType;
 
   const checkoutDetails = useSelector(paymentDataSelector);
   const {
@@ -148,13 +148,13 @@ const StripePaymentForm = ({
     }
 
     onSubmitPayment({
-      skus, elements, stripe, context, values, stripePaymentMethodType,
+      skus, elements, stripe, context, values, stripeSelectedPaymentMethod,
     });
   };
 
   const handleStripeElementOnChange = (event) => {
     if (event.value) {
-      stripePaymentMethodType = event.value.type;
+      setStripeSelectedPaymentMethod(event.value.type);
     }
   };
 
@@ -227,6 +227,7 @@ const StripePaymentForm = ({
       ) : (
         <PlaceOrderButton
           onSubmitButtonClick={onSubmitButtonClick}
+          stripeSelectedPaymentMethod={stripeSelectedPaymentMethod}
           showLoadingButton={showLoadingButton}
           disabled={submitting}
           isProcessing={isProcessing}

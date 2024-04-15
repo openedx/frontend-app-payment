@@ -18,7 +18,7 @@ ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service'
 export default async function checkout(
   basket,
   {
-    skus, elements, stripe, context, values, stripePaymentMethodType,
+    skus, elements, stripe, context, values, stripeSelectedPaymentMethod,
   },
   setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
 ) {
@@ -36,7 +36,7 @@ export default async function checkout(
   } = values;
 
   let shippingAddress;
-  if (stripePaymentMethodType === 'afterpay_clearpay') {
+  if (stripeSelectedPaymentMethod === 'afterpay_clearpay') {
     shippingAddress = {
       address: {
         city,
