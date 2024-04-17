@@ -2,10 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import {
-  getLocale,
   FormattedMessage,
   injectIntl,
   intlShape,
@@ -95,13 +93,13 @@ class Checkout extends React.Component {
     this.props.submitPayment({ method: 'stripe', ...formData });
   };
 
-  handleSubmitStripeButtonClick = () => {
+  handleSubmitStripeButtonClick = (stripeSelectedPaymentMethod) => {
     sendTrackEvent(
       'edx.bi.ecommerce.basket.payment_selected',
       {
         type: 'click',
         category: 'checkout',
-        paymentMethod: 'Credit Card - Stripe',
+        paymentMethod: stripeSelectedPaymentMethod === 'affirm' ? 'Affirm - Stripe' : 'Credit Card - Stripe',
         checkoutType: 'client_side',
         stripeEnabled: this.props.enableStripePaymentProcessor,
       },
@@ -157,6 +155,7 @@ class Checkout extends React.Component {
       paymentMethod,
       submitting,
       orderType,
+      stripe,
     } = this.props;
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
@@ -223,16 +222,6 @@ class Checkout extends React.Component {
     const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
     const shouldDisplayCyberSourcePaymentForm = !loading && !enableStripePaymentProcessor;
 
-    // Doing this within the Checkout component so locale is configured and available
-    let stripePromise;
-    if (shouldDisplayStripePaymentForm) {
-      stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY, {
-        betas: [process.env.STRIPE_BETA_FLAG],
-        apiVersion: process.env.STRIPE_API_VERSION,
-        locale: getLocale(),
-      });
-    }
-
     return (
       <>
         <div className={basketClassName}>
@@ -269,7 +258,7 @@ class Checkout extends React.Component {
         since the flag will not be needed when we remove CyberSource.
         This is not needed in CyberSource form component since the default is set to false. */}
         {shouldDisplayStripePaymentForm ? (
-          <Elements options={options} stripe={stripePromise}>
+          <Elements options={options} stripe={stripe}>
             <StripePaymentForm
               options={options}
               onSubmitPayment={this.handleSubmitStripe}
@@ -323,6 +312,7 @@ Checkout.propTypes = {
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource', 'stripe']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
+  stripe: PropTypes.func,
   clientSecretId: PropTypes.string,
 };
 
@@ -335,6 +325,7 @@ Checkout.defaultProps = {
   paymentMethod: undefined,
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
+  stripe: null,
   clientSecretId: null,
 };
 

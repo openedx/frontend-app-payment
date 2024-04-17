@@ -74,7 +74,7 @@ describe('<CardHolderInformation />', () => {
       fireEvent.change(screen.getByLabelText('Country (required)'), { target: { value: 'US' } });
 
       expect(getCountryStatesMap).toHaveBeenCalledWith('US');
-      expect(isPostalCodeRequired).toHaveBeenCalledWith('US');
+      expect(isPostalCodeRequired).toHaveBeenCalledWith('US', false); // DPM enabled added to the call
     });
   });
   describe('purchasedForOrganization field', () => {

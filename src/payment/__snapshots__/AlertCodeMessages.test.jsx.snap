@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`BasketChangedError should render with values 1`] = `
+<div>
+  Your cart has changed since navigating to this page. Please reload the page and verify the product you are purchasing.
+</div>
+`;
+
+exports[`DynamicPaymentMethodsNotCompatibleError should render with values 1`] = `
+<div>
+  The payment method you have selected is not available in your country. Please select another payment method.
+</div>
+`;
+
 exports[`EnrollmentCodeQuantityUpdated should render with values 1`] = `
 <div>
   <h6>

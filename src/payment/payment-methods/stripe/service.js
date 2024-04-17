@@ -18,7 +18,7 @@ ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service'
 export default async function checkout(
   basket,
   {
-    skus, elements, stripe, context, values,
+    skus, elements, stripe, context, values, stripeSelectedPaymentMethod,
   },
   setLocation = href => { global.location.href = href; }, // HACK: allow tests to mock setting location
 ) {
@@ -34,6 +34,21 @@ export default async function checkout(
     organization,
     purchasedForOrganization,
   } = values;
+
+  let shippingAddress;
+  if (stripeSelectedPaymentMethod === 'afterpay_clearpay') {
+    shippingAddress = {
+      address: {
+        city,
+        country,
+        line1: address,
+        line2: unit || '',
+        postal_code: postalCode || '',
+        state: state || '',
+      },
+      name: `${firstName} ${lastName}`,
+    };
+  }
 
   const result = await stripe.updatePaymentIntent({
     elements,
@@ -56,10 +71,12 @@ export default async function checkout(
           purchased_for_organization: purchasedForOrganization,
         },
       },
+      // Shipping is required for processing Afterpay payments
+      shipping: shippingAddress,
     },
   });
 
-  if (result.error?.code === 'payment_intent_unexpected_state' && result.error?.type === 'invalid_request_error') {
+  if (result.error) {
     handleApiError(result.error);
   }
 
@@ -67,6 +84,7 @@ export default async function checkout(
   const postData = formurlencoded({
     payment_intent_id: result.paymentIntent.id,
     skus,
+    dynamic_payment_methods_enabled: basket.isDynamicPaymentMethodsEnabled,
   });
   await getAuthenticatedHttpClient()
     .post(
@@ -76,8 +94,27 @@ export default async function checkout(
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       },
     )
-    .then(response => {
-      setLocation(response.data.receipt_page_url);
+    .then(async response => {
+      // If response contains receipt_page_url, it's not a DPM payment
+      if (response.data.receipt_page_url) {
+        setLocation(response.data.receipt_page_url);
+      }
+      if (response.data.status === 'requires_action') {
+        const { error } = await stripe.handleNextAction({
+          clientSecret: response.data.confirmation_client_secret,
+        });
+
+        if (error) {
+          // Log error and tell user.
+          logError(error, {
+            messagePrefix: 'Stripe Submit Error',
+            paymentMethod: 'Stripe',
+            paymentErrorType: 'Submit Error',
+            basketId,
+          });
+          handleApiError(error);
+        }
+      }
     })
     .catch(error => {
       const errorData = error.response ? error.response.data : null;

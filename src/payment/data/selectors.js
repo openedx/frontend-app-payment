@@ -37,9 +37,12 @@ export const paymentSelector = createSelector(
   (basket, queryParams) => {
     const isCouponRedeemRedirect = !!queryParams
       && queryParams.coupon_redeem_redirect == 1; // eslint-disable-line eqeqeq
+    const isPaymentRedirect = !!queryParams
+      && Boolean(queryParams.payment_intent); // Only klarna has redirect_status on URL
     return {
       ...basket,
       isCouponRedeemRedirect,
+      isPaymentRedirect,
       isEmpty:
         basket.loaded && !basket.redirect && (!basket.products || basket.products.length === 0),
       isRedirect:
