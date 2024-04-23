@@ -374,6 +374,7 @@ pre-built APIs that do not follow the format of the feedback module in the:
 * `feedback/data/sagas.js`_
 
     * ``basket-changed-error-message``
+    * ``dynamic-payment-methods-country-not-compatible``
     * ``transaction-declined-message``
     * ``error_message`` in URL parameters
 

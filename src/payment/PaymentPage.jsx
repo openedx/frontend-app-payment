@@ -14,7 +14,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
 
 import messages from './PaymentPage.messages';
-import { handleApiError } from './data/handleRequestError';
+import handleRequestError from './data/handleRequestError';
 
 // Actions
 import { fetchBasket } from './data/actions';
@@ -80,13 +80,18 @@ class PaymentPage extends React.Component {
     // Get Payment Intent to retrieve the payment status and order number associated with this DPM payment.
     // If this is not a Stripe dynamic payment methods (BNPL), URL will not contain any params
     // and should not retrieve the Payment Intent.
+    // TODO: depending on if we'll use this MFE in the future, refactor to follow the redux pattern with actions
+    // and reducers for getting the Payment Intent is more appropriate.
     const searchParams = new URLSearchParams(global.location.search);
     const clientSecretId = searchParams.get('payment_intent_client_secret');
     if (clientSecretId) {
-      const { paymentIntent, error } = await this.state.stripe.retrievePaymentIntent(clientSecretId);
-      if (error) { handleApiError(error); }
-      this.setState({ orderNumber: paymentIntent.description });
-      this.setState({ paymentStatus: paymentIntent.status });
+      try {
+        const { paymentIntent } = await this.state.stripe.retrievePaymentIntent(clientSecretId);
+        this.setState({ orderNumber: paymentIntent?.description });
+        this.setState({ paymentStatus: paymentIntent?.status });
+      } catch (error) {
+        handleRequestError(error);
+      }
     }
   };
 
@@ -118,7 +123,7 @@ class PaymentPage extends React.Component {
     }
 
     // If this is a redirect from Stripe Dynamic Payment Methods, show loading icon until getPaymentStatus is done.
-    if (isPaymentRedirect && (paymentStatus !== 'requires_payment_method' || paymentStatus !== 'canceled')) {
+    if (isPaymentRedirect && paymentStatus === null) {
       return (
         <PageLoading
           srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}

@@ -312,7 +312,7 @@ Checkout.propTypes = {
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource', 'stripe']),
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
-  stripe: PropTypes.func,
+  stripe: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   clientSecretId: PropTypes.string,
 };
 

@@ -126,6 +126,26 @@ export function validateRequiredFields(values) {
   return errors;
 }
 
+export function validateCountryPaymentMethodCompatibility(
+  isDynamicPaymentMethodsEnabled,
+  stripeSelectedPaymentMethod,
+  selectedCountry,
+) {
+  const errors = {};
+
+  // Only adding country validation on the form level for BNPL Affirm.
+  // For Klarna, there is validation on the Stripe API level,
+  // which is handled with error code 'dynamic-payment-methods-country-not-compatible'
+  if (isDynamicPaymentMethodsEnabled && stripeSelectedPaymentMethod === 'affirm') {
+    const countryListCompatibleAffirm = ['CA', 'US'];
+    if (!countryListCompatibleAffirm.includes(selectedCountry)) {
+      errors.country = 'payment.form.errors.dynamic_payment_methods_not_compatible.country';
+    }
+  }
+
+  return errors;
+}
+
 export function validateCardDetails(cardExpirationMonth, cardExpirationYear) {
   const errors = {};
 

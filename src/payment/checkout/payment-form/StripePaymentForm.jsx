@@ -24,7 +24,10 @@ import MonthlyBillingNotification from '../../../subscription/checkout/monthly-b
 import { Secure3DModal } from '../../../subscription/secure-3d/secure-3d-modal/Secure3dModal';
 
 import {
-  getRequiredFields, validateRequiredFields, validateAsciiNames,
+  getRequiredFields,
+  validateRequiredFields,
+  validateAsciiNames,
+  validateCountryPaymentMethodCompatibility,
 } from './utils/form-validators';
 
 import { getPerformanceProperties, markPerformanceIfAble } from '../../performanceEventing';
@@ -117,6 +120,7 @@ const StripePaymentForm = ({
     const {
       firstName,
       lastName,
+      country,
     } = values;
 
     let stripeElementErrors = null;
@@ -133,6 +137,11 @@ const StripePaymentForm = ({
       ...validateAsciiNames(
         firstName,
         lastName,
+      ),
+      ...validateCountryPaymentMethodCompatibility(
+        isDynamicPaymentMethodsEnabled,
+        stripeSelectedPaymentMethod,
+        country,
       ),
     };
 

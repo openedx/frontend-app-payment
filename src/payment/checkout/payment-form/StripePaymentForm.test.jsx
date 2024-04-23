@@ -23,7 +23,7 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
 jest.useFakeTimers('modern');
 
 const validateRequiredFieldsMock = jest.spyOn(formValidators, 'validateRequiredFields');
-
+const validateCountryPaymentMethodCompatibilityMock = jest.spyOn(formValidators, 'validateCountryPaymentMethodCompatibility');
 const mockStore = configureMockStore();
 
 configureI18n({
@@ -260,8 +260,10 @@ describe('<StripePaymentForm />', () => {
       const testData = [
         [
           { firstName: 'This field is required' },
+          { country: 'Country not available with selected payment method' },
           new SubmissionError({
             firstName: 'This field is required',
+            country: 'Country not available with selected payment method',
           }),
         ],
         [
@@ -272,6 +274,7 @@ describe('<StripePaymentForm />', () => {
 
       testData.forEach((testCaseData) => {
         validateRequiredFieldsMock.mockReturnValueOnce(testCaseData[0]);
+        validateCountryPaymentMethodCompatibilityMock.mockReturnValueOnce(testCaseData[0]);
         if (testCaseData[1]) {
           expect(() => fireEvent.click(screen.getByText('Place Order')));
           expect(submitStripePayment).not.toHaveBeenCalled();
@@ -292,6 +295,24 @@ describe('<StripePaymentForm />', () => {
         lastName: 'payment.form.errors.required.field',
       };
       expect(formValidators.validateRequiredFields(values)).toEqual(expectedErrors);
+    });
+  });
+
+  describe('validateCountryPaymentMethodCompatibility', () => {
+    it('returns errors if country is not compatible with Dynamic Payment Method (BNPL Affirm)', () => {
+      const values = {
+        country: 'BR',
+      };
+      const expectedErrors = {
+        country: 'payment.form.errors.dynamic_payment_methods_not_compatible.country',
+      };
+      const isDynamicPaymentMethodsEnabled = true;
+      const stripeSelectedPaymentMethod = 'affirm';
+      expect(formValidators.validateCountryPaymentMethodCompatibility(
+        isDynamicPaymentMethodsEnabled,
+        stripeSelectedPaymentMethod,
+        values.country,
+      )).toEqual(expectedErrors);
     });
   });
 });
