@@ -74,10 +74,10 @@ const StripePaymentForm = ({
 
   // Check if should show PaymentMethodMessagingElement, as it only renders
   // for specific countries, if country code and currency are known, and they must match
-  const userLocationCountryCode = new Cookies().get(getConfig().LOCATION_OVERRIDE_COOKIE)
-    || new Cookies().get(getConfig().USER_LOCATION_COOKIE_NAME);
+  const userLocationCountryCode = new Cookies().get(getConfig().USER_LOCATION_COOKIE_NAME)
+    || new Cookies().get(getConfig().LOCATION_OVERRIDE_COOKIE);
   const shouldDisplayPaymentMethodMessagingElement = (
-    (!!userLocationCountryCode || !!locationCountryCode) && !!orderTotal && !!currency
+    !!(userLocationCountryCode || locationCountryCode) && !!orderTotal && !!currency
   );
 
   // Loading button should appear when: basket and stripe elements are loading, quantity is updating and not submitting

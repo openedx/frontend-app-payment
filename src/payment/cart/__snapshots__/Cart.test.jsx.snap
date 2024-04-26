@@ -205,6 +205,7 @@ exports[`<Cart /> renders a basic, one product cart with coupon form 1`] = `
         >
           <div
             class="pgn__form-group mb-0 mr-2"
+            invalid="false"
           >
             <label
               class="h6 d-block"

@@ -27,6 +27,7 @@ exports[`CouponForm should render a form when there is no coupon 1`] = `
   >
     <div
       class="pgn__form-group mb-0 mr-2"
+      invalid="false"
     >
       <label
         class="h6 d-block"

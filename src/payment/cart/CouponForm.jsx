@@ -44,7 +44,7 @@ class CouponForm extends Component {
 
     return (
       <form onSubmit={this.handleAddSubmit} className="summary-row d-flex align-items-end">
-        <Form.Group controlId={id} invalid={false} className="mb-0 mr-2">
+        <Form.Group controlId={id} invalid={false.toString()} className="mb-0 mr-2">
           <label className="h6 d-block" htmlFor={id}>
             <FormattedMessage
               id="payment.coupon.label"

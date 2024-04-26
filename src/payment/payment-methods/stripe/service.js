@@ -84,7 +84,7 @@ export default async function checkout(
   const postData = formurlencoded({
     payment_intent_id: result.paymentIntent.id,
     skus,
-    dynamic_payment_methods_enabled: basket.isDynamicPaymentMethodsEnabled,
+    dynamic_payment_methods_enabled: basket.isDynamicPaymentMethodsEnabled || false,
   });
   await getAuthenticatedHttpClient()
     .post(
