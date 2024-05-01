@@ -108,6 +108,19 @@ class PaymentPage extends React.Component {
 
     const shouldRedirectToReceipt = paymentStatus === 'succeeded';
 
+    // If this is a redirect from Stripe Dynamic Payment Methods with a successful payment,
+    // redirect to the receipt page. PageLoading render is required first otherwise there is a
+    // lag between when the paymentStatus is no longer null but the redirect hasn't happened yet.
+    if (shouldRedirectToReceipt) {
+      return (
+        <PageLoading
+          srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}
+          shouldRedirectToReceipt={shouldRedirectToReceipt}
+          orderNumber={orderNumber}
+        />
+      );
+    }
+
     // If this is a redirect from Stripe Dynamic Payment Methods, show loading icon until getPaymentStatus is done.
     if (isPaymentRedirect && paymentStatus !== undefined && paymentStatus === null) {
       return (
@@ -131,19 +144,6 @@ class PaymentPage extends React.Component {
     if (isEmpty) {
       return (
         <EmptyCartMessage />
-      );
-    }
-
-    // If this is a redirect from Stripe Dynamic Payment Methods with a successful payment,
-    // redirect to the receipt page. PageLoading render is required first otherwise there is a
-    // lag between when the paymentStatus is no longer null but the redirect hasn't happened yet.
-    if (shouldRedirectToReceipt) {
-      return (
-        <PageLoading
-          srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}
-          shouldRedirectToReceipt={shouldRedirectToReceipt}
-          orderNumber={orderNumber}
-        />
       );
     }
 
