@@ -198,7 +198,6 @@ const StripePaymentForm = ({
         showBulkEnrollmentFields={isBulkOrder}
         disabled={submitting}
         enableStripePaymentProcessor={enableStripePaymentProcessor}
-        isDynamicPaymentMethodsEnabled={isDynamicPaymentMethodsEnabled}
       />
       <h5 aria-level="2">
         <FormattedMessage

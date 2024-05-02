@@ -59,9 +59,10 @@ export class CardHolderInformationComponent extends React.Component {
   }
 
   render() {
-    const { disabled, showBulkEnrollmentFields, isDynamicPaymentMethodsEnabled } = this.props;
-    const shouldRequirePostalCode = isPostalCodeRequired(this.state.selectedCountry, isDynamicPaymentMethodsEnabled)
-    && this.props.enableStripePaymentProcessor;
+    const { disabled, showBulkEnrollmentFields } = this.props;
+    const shouldRequirePostalCode = isPostalCodeRequired(
+      this.state.selectedCountry,
+    ) && this.props.enableStripePaymentProcessor;
 
     return (
       <div className="basket-section">
@@ -277,14 +278,12 @@ CardHolderInformationComponent.propTypes = {
   intl: intlShape.isRequired,
   disabled: PropTypes.bool,
   enableStripePaymentProcessor: PropTypes.bool,
-  isDynamicPaymentMethodsEnabled: PropTypes.bool,
   showBulkEnrollmentFields: PropTypes.bool,
 };
 
 CardHolderInformationComponent.defaultProps = {
   disabled: false,
   enableStripePaymentProcessor: false,
-  isDynamicPaymentMethodsEnabled: false,
   showBulkEnrollmentFields: false,
 };
 

@@ -15,41 +15,10 @@ export const getCountryStatesMap = (country) => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export function isPostalCodeRequired(selectedCountry, isDynamicPaymentMethodsEnabled) {
-  // Stripe recommends to have state and zip code since it can have a material effect on
+export function isPostalCodeRequired(selectedCountry) {
+  // Stripe recommends to have state and zip code required since it can have a material effect on
   // our card authorization rates and fees that the card networks and issuers charge.
-  // 'CA', 'GB' and 'US' were alreay required prior to implementing Dynamic Payment Methods.
-  // The Stripe API also requires state and zip code for BNPL options (Affirm, Afterpay, Klarna)
-  // for the countries that these payment methods are compatible with.
-  let countryListRequiredPostalCode = [];
-  if (isDynamicPaymentMethodsEnabled) {
-    countryListRequiredPostalCode = [
-      'CA', // Affirm, Afterpay, Klarna
-      'GB', // Afterpay, Klarna
-      'US', // Affirm, Afterpay, Klarna
-      'AU', // Afterpay, Klarna
-      'AT', // Klarna
-      'BE', // Klarna
-      'CH', // Klarna
-      'CZ', // Klarna
-      'DE', // Klarna
-      'DK', // Klarna
-      'ES', // Klarna
-      'FI', // Klarna
-      'FR', // Klarna
-      'GR', // Klarna
-      'IE', // Klarna
-      'IT', // Klarna
-      'NL', // Klarna
-      'NO', // Klarna
-      'NZ', // Afterpay, Klarna
-      'PL', // Klarna
-      'PT', // Klarna
-      'SE', // Klarna
-    ];
-  } else {
-    countryListRequiredPostalCode = ['CA', 'GB', 'US'];
-  }
+  const countryListRequiredPostalCode = ['CA', 'GB', 'US'];
 
   const postalCodeRequired = countryListRequiredPostalCode.includes(selectedCountry);
 

@@ -84,10 +84,23 @@ export default function handleRequestError(error) {
     ]);
   }
 
-  // Country not DPM compatible
-  if (error.type === 'invalid_request_error' && (
-    error.param === 'payment_method_data[billing_details][address][country]' || error.param === 'billing_details[address][state]' || error.param === 'billing_details[address][postal_code]'
-  )) {
+  // Country not DPM compatible Stripe error
+  // Note: with Affirm, if the billing country is not supported, it will not fail at the Stripe level,
+  // for which we have form validation in place to avoid that, instead of erroring at the Affirm payment environment.
+  // For other BNPL, Stripe will give the below error if the country is not compatible and/or
+  // if the state and/or postal code are missing.
+  // There is country and state validation at the form level, but the below error handling
+  // is a fallback if the form validation does not catch the country incompatibility.
+  const billingAddressErrors = [
+    'payment_method_data[billing_details][address][country]',
+    'payment_method_data[billing_details][address][state]',
+    'payment_method_data[billing_details][address][postal_code]',
+    'billing_details[address][country]',
+    'billing_details[address][state]',
+    'billing_details[address][postal_code]',
+  ];
+
+  if (error.type === 'invalid_request_error' && billingAddressErrors.includes(error.param)) {
     logInfo('Dynamic Payment Method Country Error', error.param);
     handleApiErrors([
       {
