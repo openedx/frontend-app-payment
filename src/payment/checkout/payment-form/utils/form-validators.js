@@ -106,7 +106,7 @@ export function validateCountryPaymentMethodCompatibility(
   // For Klarna, there is validation on the Stripe API level,
   // which is handled with error code 'dynamic-payment-methods-country-not-compatible'
   if (isDynamicPaymentMethodsEnabled && stripeSelectedPaymentMethod === 'affirm') {
-    const countryListCompatibleAffirm = ['CA', 'US'];
+    const countryListCompatibleAffirm = ['US']; // leaving this is as list in case in the future we have Canada business compatibility
     if (!countryListCompatibleAffirm.includes(selectedCountry)) {
       errors.country = 'payment.form.errors.dynamic_payment_methods_not_compatible.country';
     }
