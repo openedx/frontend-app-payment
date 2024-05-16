@@ -26,6 +26,7 @@ import EmptyCartMessage from './EmptyCartMessage';
 import Cart from './cart/Cart';
 import Checkout from './checkout/Checkout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
+import PageLoadingDynamicPaymentMethods from './PageLoadingDynamicPaymentMethods';
 
 class PaymentPage extends React.Component {
   constructor(props) {
@@ -113,9 +114,8 @@ class PaymentPage extends React.Component {
     // lag between when the paymentStatus is no longer null but the redirect hasn't happened yet.
     if (shouldRedirectToReceipt) {
       return (
-        <PageLoading
+        <PageLoadingDynamicPaymentMethods
           srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}
-          shouldRedirectToReceipt={shouldRedirectToReceipt}
           orderNumber={orderNumber}
         />
       );

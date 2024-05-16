@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageLoadingDynamicPaymentMethods renders <PageLoadingDynamicPaymentMethods /> 1`] = `
+<div>
+  <div>
+    <div
+      class="d-flex justify-content-center align-items-center flex-column"
+      style="height: 50vh;"
+    >
+      <div
+        class="spinner-border text-primary"
+        data-testid="loading-page"
+        role="status"
+      />
+    </div>
+  </div>
+</div>
+`;
