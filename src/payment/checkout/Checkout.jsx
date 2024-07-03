@@ -157,10 +157,16 @@ class Checkout extends React.Component {
       paymentMethod,
       submitting,
       orderType,
+      isPaypalRedirect,
     } = this.props;
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
+
+    if (!submissionDisabled && isPaypalRedirect) {
+      // auto submit to paypal since the paypal redirect flag is set in the incoming rquiest
+      this.handleSubmitPayPal();
+    }
 
     // Stripe element config
     // TODO: Move these to a better home
@@ -324,6 +330,7 @@ Checkout.propTypes = {
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
   clientSecretId: PropTypes.string,
+  isPaypalRedirect: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -336,6 +343,7 @@ Checkout.defaultProps = {
   orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
   clientSecretId: null,
+  isPaypalRedirect: false,
 };
 
 const mapStateToProps = (state) => ({
