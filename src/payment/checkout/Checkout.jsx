@@ -163,7 +163,7 @@ class Checkout extends React.Component {
     const isQuantityUpdating = isBasketProcessing && loaded;
 
     if (!submissionDisabled && isPaypalRedirect) {
-      // auto submit to paypal since the paypal redirect flag is set in the incoming rquiest
+      // auto submit to paypal since the paypal redirect flag is set in the incoming request
       this.handleSubmitPayPal();
     }
 
