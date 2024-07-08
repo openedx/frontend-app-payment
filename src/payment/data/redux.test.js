@@ -114,6 +114,7 @@ describe('redux tests', () => {
           isEmpty: false,
           isPaymentRedirect: false,
           isRedirect: false,
+          isPaypalRedirect: false,
         });
       });
 
@@ -135,6 +136,7 @@ describe('redux tests', () => {
           isEmpty: false,
           isPaymentRedirect: false,
           isRedirect: true, // this is also now true.
+          isPaypalRedirect: false,
         });
       });
 
@@ -156,6 +158,7 @@ describe('redux tests', () => {
           isEmpty: false,
           isPaymentRedirect: true, // this is now true
           isRedirect: false,
+          isPaypalRedirect: false,
         });
       });
     });

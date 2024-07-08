@@ -26,9 +26,27 @@ import { PayPalButton } from '../payment-methods/paypal';
 import { ORDER_TYPES } from '../data/constants';
 
 class Checkout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasRedirectedToPaypal: false,
+    };
+  }
+
   componentDidMount() {
     this.props.fetchClientSecret();
   }
+
+  handleRedirectToPaypal = () => {
+    const { loading, isBasketProcessing, isPaypalRedirect } = this.props;
+    const { hasRedirectedToPaypal } = this.state;
+    const submissionDisabled = loading || isBasketProcessing;
+
+    if (!submissionDisabled && isPaypalRedirect && !hasRedirectedToPaypal) {
+      this.setState({ hasRedirectedToPaypal: true });
+      this.handleSubmitPayPal();
+    }
+  };
 
   handleSubmitPayPal = () => {
     // TO DO: after event parity, track data should be
@@ -160,6 +178,8 @@ class Checkout extends React.Component {
     const submissionDisabled = loading || isBasketProcessing;
     const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
+
+    this.handleRedirectToPaypal();
 
     // Stripe element config
     // TODO: Move these to a better home
@@ -314,6 +334,7 @@ Checkout.propTypes = {
   enableStripePaymentProcessor: PropTypes.bool,
   stripe: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   clientSecretId: PropTypes.string,
+  isPaypalRedirect: PropTypes.bool,
 };
 
 Checkout.defaultProps = {
@@ -327,6 +348,7 @@ Checkout.defaultProps = {
   enableStripePaymentProcessor: false,
   stripe: null,
   clientSecretId: null,
+  isPaypalRedirect: false,
 };
 
 const mapStateToProps = (state) => ({

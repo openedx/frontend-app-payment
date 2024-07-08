@@ -1,7 +1,9 @@
 {
     "allowlist": [
         "GHSA-wf5p-g6vw-rhxx",
-        "GHSA-rv95-896h-c2vc"
+        "GHSA-rv95-896h-c2vc",
+        "GHSA-grv7-fg5c-xmjg",
+        "GHSA-3h5v-q93c-6h6q"
     ],
     "moderate": true
 }
