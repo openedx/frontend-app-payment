@@ -218,6 +218,10 @@ class Checkout extends React.Component {
           address: 'never',
         },
       },
+      wallets: {
+        applePay: 'never',
+        googlePay: 'never',
+      },
     };
 
     // istanbul ignore next

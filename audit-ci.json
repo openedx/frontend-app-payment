@@ -3,7 +3,10 @@
         "GHSA-wf5p-g6vw-rhxx",
         "GHSA-rv95-896h-c2vc",
         "GHSA-grv7-fg5c-xmjg",
-        "GHSA-3h5v-q93c-6h6q"
+        "GHSA-3h5v-q93c-6h6q",
+        "GHSA-vc8w-jr9v-vj7f",
+        "GHSA-952p-6rrq-rcjv",
+        "GHSA-4vvj-4cpr-p986"
     ],
     "moderate": true
 }
