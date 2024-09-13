@@ -3,6 +3,8 @@
 frontend-app-payment
 ====================
 
+TEST
+
 Please tag **@edx/revenue-squad** on any PRs or issues.  Thanks.
 
 Introduction
