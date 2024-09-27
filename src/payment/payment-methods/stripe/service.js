@@ -8,6 +8,44 @@ import { handleApiError } from '../../data/handleRequestError';
 
 ensureConfig(['ECOMMERCE_BASE_URL', 'STRIPE_RESPONSE_URL'], 'Stripe API service');
 
+const handleServerResponse = async (response, stripe, setLocation, skus) => {
+  if (response.data.requiresAction) {
+    // Call stripe handleNextAction to open the 3ds authentication page
+    const { error: errorAction, paymentIntent } = await stripe.handleNextAction(
+      { clientSecret: response.data.clientSecret },
+    );
+    if (errorAction) {
+      logError(errorAction, {
+        messagePrefix: 'Stripe 3DS Error',
+        paymentMethod: 'Stripe',
+        paymentErrorType: '3DS Error',
+      });
+      handleApiError(errorAction);
+    } else {
+      const postData = formurlencoded({
+        payment_intent_id: paymentIntent.id,
+        skus,
+      });
+      // TODO: move this out as part of REV-3187 to confirm based on where ecommerce redirects.
+      // If 3DS is successful tell ecommerce to finish the payment
+      await getAuthenticatedHttpClient()
+        .post(
+          `${process.env.STRIPE_RESPONSE_URL}`,
+          postData,
+          {
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          },
+        )
+        .then(actionsResponse => {
+          handleServerResponse(actionsResponse, stripe, setLocation, skus);
+        });
+    }
+  } else {
+    // If no actions needed go to receipt page
+    setLocation(response.data.receipt_page_url);
+  }
+};
+
 /**
  * Checkout with Stripe
  *
@@ -77,7 +115,7 @@ export default async function checkout(
       },
     )
     .then(response => {
-      setLocation(response.data.receipt_page_url);
+      handleServerResponse(response, stripe, setLocation, skus);
     })
     .catch(error => {
       const errorData = error.response ? error.response.data : null;
