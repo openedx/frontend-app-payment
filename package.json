@@ -80,7 +80,7 @@
     "axios-mock-adapter": "^1.21.1",
     "chance": "^1.1.8",
     "html-webpack-plugin": "^5.5.0",
-    "husky": "^8.0.1",
+    "husky": "^9.0.0",
     "lodash.defaultsdeep": "^4.6.1",
     "qs": "^6.11.0",
     "redux-mock-store": "^1.5.4",
