@@ -76,7 +76,7 @@
     "@openedx/frontend-build": "^14.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.1.5",
-    "audit-ci": "^6.3.0",
+    "audit-ci": "^7.0.0",
     "axios-mock-adapter": "^1.21.1",
     "chance": "^1.1.8",
     "html-webpack-plugin": "^5.5.0",
